@@ -1,0 +1,53 @@
+namespace GameServer.Template;
+
+public class EquipmentItem : GameItem
+{
+    public bool DestroyOnDeath;
+    public bool CanRemove;
+    public bool CanRepair;
+    public int RepairCost;
+    public int SpecialRepairCost;
+    public int NeedAttack;
+    public int NeedMagic;
+    public int NeedTaoism;
+    public int NeedPiercing;
+    public int NeedArchery;
+    public int BasePower;
+    public int MinDC;
+    public int MaxDC;
+    public int MinMC;
+    public int MaxMC;
+    public int MinSC;
+    public int MaxSC;
+    public int MinNC;
+    public int MaxNC;
+    public int MinBC;
+    public int MaxBC;
+    public int MinDef;
+    public int MaxDef;
+    public int MinMCDef;
+    public int MaxMCDef;
+    public int MaxHP;
+    public int MaxMP;
+    public int PhysicalAccuracy;
+    public int PhysicalAgility;
+    public int AttackSpeed;
+    public int Luck;
+    public int 怪物伤害;
+    public int MagicEvade;
+    public bool CanBePunched;
+    public GameObjectRace PunchRace;
+    public int PunchCap;
+    public int OneHoleCost;
+    public int TwoHoleCost;
+    public int ReforgeSpiritStone;
+    public int SpiritStonesAmount;
+    public int CoinAmount;
+    public string 装备特技;
+    public GameItemSet EquipSet;
+    public int MinHC;
+    public int MaxHC;
+    //public GameObjectRace InscriptionRace;
+    //public int SoulTiePoints;
+    //public int HolyDamageLimit;
+}

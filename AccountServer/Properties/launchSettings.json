@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "AccountServer": {
+      "commandName": "Project",
+      "workingDirectory": "D:\\Conquera\\AccountServer"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "GameServer": {
+      "commandName": "Project",
+      "workingDirectory": "D:\\Conquera\\GameServer"
+    }
+  }
+}

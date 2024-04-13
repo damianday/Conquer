@@ -1,0 +1,275 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--
+    Microsoft ResX Schema 
+
+    Version 2.0
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
+    associated with the data types.
+
+    Example:
+
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+
+    There are any number of "resheader" rows that contain simple
+    name/value pairs.
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
+    mimetype set.
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
+    extensible. For a given mimetype the value must be set accordingly:
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
+    read any of the formats listed below.
+
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <metadata name="角色右键菜单.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="界面定时更新.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>143, 17</value>
+  </metadata>
+  <metadata name="保存数据提醒.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>269, 17</value>
+  </metadata>
+  <metadata name="定时发送公告.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>395, 17</value>
+  </metadata>
+  <data name="label690.Text" xml:space="preserve">
+    <value>Users can choose whether to count the monsters in the nine-story demon tower.
+If you don't count players, you can directly download the picture, if you count.
+Recall type monsters etc. cannot be written.
+</value>
+  </data>
+  <data name="label725.Text" xml:space="preserve">
+    <value>The dialog mode in the group can be modified by yourself.
+If you don't understand, you can communicate in the group.
+Do not run commercially and take it out for sale.
+
+Notice
+When setting monsters, it is not possible to set summoned monsters.
+It is recommended that users write down the custom clearance within 60 minutes</value>
+  </data>
+  <data name="label719.Text" xml:space="preserve">
+    <value>The nine-story demon tower module can be downloaded in the group.
+Users can set each floor BOSS and elite monsters and the number of elites 
+on the stand-alone version. 
+Controllable time, controllable level, entry items, ingots, gold coins, 
+quantity, times and so on.
+Do not write summoned monsters</value>
+  </data>
+  <data name="label766.Text" xml:space="preserve">
+    <value>The dialog mode in the group can be modified by yourself.
+If you don't understand, you can communicate in the group
+Do not run commercially and take it out for sale.
+
+Note: Monster settings automatically read TXT text
+If you are setting a copy: it is better to remove the normal map.</value>
+  </data>
+  <data name="label772.Text" xml:space="preserve">
+    <value>Can be marked on monsters:
+Monster Level (or Class?): Dark Portal Monster
+Random dark portals can be triggered after killing
+Set the map of the Dark Portal dungeon
+The map needs to spawn monsters and needs to 
+set up a copy area
+Others can be set in the module function</value>
+  </data>
+  <data name="label888.Text" xml:space="preserve">
+    <value>After automatic Sabak is enabled, 
+you cannot apply for siege. 
+You can register only on the set date 
+of the week.
+
+Registered guilds can attack the city 
+on the same day!
+
+Settings: 0 Siege is always possible
+Setting: 1~7 specified date</value>
+  </data>
+  <data name="label775.Text" xml:space="preserve">
+    <value>(The upper limit of repairing mediation is up to level 30)
+Initial practice setting: later calculation method *2 + 5
+Physical repair: Warrior, Dragon Spear, Assassin, Archer's damage % bonus
+Magic repair: Taoist, Mage damage % bonus
+Physical resistance repair: the percentage reduction of physical damage
+Magic resistance modifier: % reduction in magic damage
+Others waiting for update...  
+
+normal late increase
+Five elements damage
+Skill Resistance Damage
+Air shield damage absorption
+Air Shield Protection Value
+Pet Attack Repair</value>
+  </data>
+  <data name="label439.Text" xml:space="preserve">
+    <value>VIP system: It can be used with reference to files in the group.
+The VIP system can be set up to 10 levels.
+NPC fixed: 7101
+
+VIP points: recharge 1:1 point mode.
+
+Note: The writing ratio of ingots is 1:100
+Note: Intervals are calculated in minutes (for regular users)</value>
+  </data>
+  <data name="label628.Text" xml:space="preserve">
+    <value>The amount of currency is a random value from 1 to the 
+maximum amount of currency.
+
+Currency Type: View Open Source
+
+Release time: can be modified at any time 
+(can only be obtained once in the current period)</value>
+  </data>
+  <data name="label797.Text" xml:space="preserve">
+    <value>Guaranteed number of lucky necklaces: natural income is not excluded
+Must succeed, you can set the number of times and must succeed lucky points
+1~3 setting, the maximum number of times setting is 1000000
+
+Thanks: ALL</value>
+  </data>
+  <data name="label818.Text" xml:space="preserve">
+    <value>Prevent brushing currency rules, everyone can own items
+Set dead objects, and then you can do superimposed business exchange
+You can set the number of exchanged ingots, etc., and you can set the exchange
+Exchange items.
+ID: 634000000
+ID: 634000001 (insufficient items)</value>
+  </data>
+  <data name="label825.Text" xml:space="preserve">
+    <value>Player level reward module, when the player reaches the level, 
+he can receive appropriate rewards, the item function writes 
+items, and cannot write equipment.
+ID:715100000
+ID:715100001(prompt sentence)
+You can view group files for copying and modification.</value>
+  </data>
+  <data name="label764.Text" xml:space="preserve">
+    <value>New Drop Rate Settings:
+
+Remarks: Each monster can set a maximum of 20 BOSS module groups
+Module group number ID: 1000~1020
+for example: write at the monster drop rate
+             "Drop Rate Grouping": 1000,
+You can write more than one drop rate in the same group, 
+the drop rate can be written 1/3, 1/2, 1/1
+
+Free Date: December 25, 2022</value>
+  </data>
+  <data name="label780.Text" xml:space="preserve">
+    <value>@member: You can call out the shortcut panel
+All @ shortcut modes can be turned on or off
+@member panel ID: 848200000
+Automatic decomposition panel ID: 848201000
+This module is to pick up the decomposition mode</value>
+  </data>
+  <data name="label700.Text" xml:space="preserve">
+    <value>Server name; primary sponsorship gift packs, such items, pay attention to the ID writing 
+(the database ID is the same as the client PAK ID)
+(The database name is the same as the server name)
+
+- Acknowledgments:
+  剑魔     aLL</value>
+  </data>
+  <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>523, 17</value>
+  </metadata>
+  <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>638, 17</value>
+  </metadata>
+</root>

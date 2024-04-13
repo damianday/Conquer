@@ -1,0 +1,19 @@
+
+SimSun, 9pt
+
+Calibri, 9.75pt, style=Bold
+Calibri, 9pt, style=Bold
+0, 64, 64
+
+---
+
+Segoe UI, 9.75pt, style=Bold
+
+Segoe UI, 12pt, style=Bold
+
+Segoe UI, 18pt, style=Bold
+
+Blue
+0, 0, 192
+
+DarkGreen

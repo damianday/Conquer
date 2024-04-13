@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<AssemblyName>AccountServer</AssemblyName>
+		<GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+		<OutputType>WinExe</OutputType>
+		<UseWindowsForms>True</UseWindowsForms>
+		<PlatformTarget>x64</PlatformTarget>
+		<LangVersion>11.0</LangVersion>
+		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+		<ApplicationIcon>app.ico</ApplicationIcon>
+		<BaseOutputPath>..\Build\AccountServer\</BaseOutputPath>
+		<StartupObject>AccountServer.Program</StartupObject>
+	</PropertyGroup>
+	<ItemGroup>
+	  <Content Include="app.ico" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<Reference Include="System.Core" />
+		<Reference Include="AlibabaCloud.SDK.Dysmsapi20170525">
+			<HintPath>..\AlibabaCloud.SDK.Dysmsapi20170525.dll</HintPath>
+		</Reference>
+		<Reference Include="AlibabaCloud.OpenApiClient">
+			<HintPath>..\AlibabaCloud.OpenApiClient.dll</HintPath>
+		</Reference>
+		<Reference Include="AlibabaCloud.TeaUtil">
+			<HintPath>..\AlibabaCloud.TeaUtil.dll</HintPath>
+		</Reference>
+		<Reference Include="ICSharpCode.SharpZipLib">
+			<HintPath>..\ICSharpCode.SharpZipLib.dll</HintPath>
+		</Reference>
+		<Reference Include="Newtonsoft.Json">
+			<HintPath>..\Newtonsoft.Json.dll</HintPath>
+		</Reference>
+
+		<ProjectReference Include="..\Library\Library.csproj" />
+		<ProjectReference Include="..\GamePackets\GamePackets.csproj" />
+	</ItemGroup>
+</Project>
