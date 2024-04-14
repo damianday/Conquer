@@ -36,7 +36,7 @@ public sealed class MonsterObject : MapObject
     public bool Disappeared { get; set; }
 
     public DateTime AttackTime { get; set; }
-    public DateTime RoamingTime { get; set; }
+    public DateTime RoamTime { get; set; }
     public DateTime ResurrectionTime { get; set; }
     public DateTime DisappearTime { get; set; }
     public DateTime SurvivalTime { get; set; }
@@ -107,12 +107,7 @@ public sealed class MonsterObject : MapObject
             if (CurrentDirection != value)
             {
                 base.CurrentDirection = value;
-                SendPacket(new SyncObjectDirectionPacket
-                {
-                    ActionTime = 100,
-                    ObjectID = ObjectID,
-                    Direction = (ushort)value
-                });
+                SendPacket(new SyncObjectDirectionPacket { ActionTime = 100, ObjectID = ObjectID, Direction = (ushort)value });
             }
         }
     }
@@ -172,7 +167,7 @@ public sealed class MonsterObject : MapObject
         SurvivalTime = SEngine.CurrentTime.AddHours(2.0);
         RecoveryTime = SEngine.CurrentTime.AddSeconds(5.0);
         AttackTime = SEngine.CurrentTime.AddSeconds(1.0);
-        RoamingTime = SEngine.CurrentTime.AddMilliseconds(RoamInterval);
+        RoamTime = SEngine.CurrentTime.AddMilliseconds(RoamInterval);
 
         BonusStats[this] = obj.BaseStats;
         RefreshStats();
@@ -266,14 +261,11 @@ public sealed class MonsterObject : MapObject
 
     public override void Process()
     {
-        if (SEngine.CurrentTime < base.ProcessTime)
-        {
+        if (SEngine.CurrentTime < ProcessTime)
             return;
-        }
+
         if (ForbidResurrection && SEngine.CurrentTime >= SurvivalTime)
-        {
             Despawn();
-        }
         else if (Dead)
         {
             if (!Disappeared && SEngine.CurrentTime >= DisappearTime)
@@ -299,13 +291,11 @@ public sealed class MonsterObject : MapObject
         else
         {
             foreach (KeyValuePair<ushort, BuffInfo> item in Buffs.ToList())
-            {
                 轮询Buff时处理(item.Value);
-            }
-            foreach (SkillObject item2 in ActiveSkills.ToList())
-            {
-                item2.Process();
-            }
+
+            foreach (SkillObject skill in ActiveSkills)
+                skill.Process();
+
             if (SEngine.CurrentTime > base.RecoveryTime)
             {
                 if (!CheckStatus(GameObjectState.Poisoned))
@@ -314,12 +304,14 @@ public sealed class MonsterObject : MapObject
                 }
                 base.RecoveryTime = SEngine.CurrentTime.AddSeconds(5.0);
             }
+
             if (SEngine.CurrentTime > base.HealTime && base.治疗次数 > 0)
             {
                 base.治疗次数--;
                 base.HealTime = SEngine.CurrentTime.AddMilliseconds(500.0);
                 CurrentHP += base.治疗基数;
             }
+
             if (SEngine.CurrentTime > BusyTime && SEngine.CurrentTime > HardStunTime)
             {
                 if (EnterCombatSkill != null && !base.CombatStance && Target.TargetList.Count != 0)
@@ -478,38 +470,29 @@ public sealed class MonsterObject : MapObject
 
     public void ProcessRoam()
     {
-        if (ForbbidenMove || SEngine.CurrentTime < RoamingTime)
-            return;
+        if (ForbbidenMove || Dead) return;
+        if (SEngine.CurrentTime < RoamTime) return;
 
-        if (CanWalk())
+        RoamTime = SEngine.CurrentTime.AddMilliseconds(RoamInterval + SEngine.Random.Next(5_000));
+
+        switch (SEngine.Random.Next(3))
         {
-            Point location = Compute.GetNextPosition(CurrentPosition, Compute.RandomDirection(), 1);
-            if (CurrentMap.CanMove(location))
-            {
-                BusyTime = SEngine.CurrentTime.AddMilliseconds(WalkInterval);
-                WalkTime = SEngine.CurrentTime.AddMilliseconds(WalkInterval + MoveInterval);
-                CurrentDirection = Compute.DirectionFromPoint(CurrentPosition, location);
-                
-                if (!Dead)
-                {
-                    SendPacket(new ObjectWalkPacket
-                    {
-                        ObjectID = ObjectID,
-                        Position = CurrentPosition,
-                        MovementSpeed = WalkSpeed
-                    });
-                    OnMoved(location);
-                }
-            }
+            case 0:
+                Turn(Compute.RandomDirection());
+                break;
+            default:
+                Walk(CurrentDirection);
+                break;
         }
-        RoamingTime = SEngine.CurrentTime.AddMilliseconds(RoamInterval + SEngine.Random.Next(5000));
     }
 
     public void ProcessAttack()
     {
-        base.AttackStopTime = SEngine.CurrentTime.AddSeconds(10.0);
+        if (Dead) return;
 
-        GameSkill skill = null;
+        AttackStopTime = SEngine.CurrentTime.AddSeconds(10.0);
+
+        GameSkill skill;
         if (RandomAttackSkill != null && (!Cooldowns.ContainsKey(RandomAttackSkill.OwnSkillID | 0x1000000) || SEngine.CurrentTime > Cooldowns[RandomAttackSkill.OwnSkillID | 0x1000000]) && Compute.CalculateProbability(RandomAttackSkill.CalculateTriggerProbability))
         {
             skill = RandomAttackSkill;
@@ -522,75 +505,72 @@ public sealed class MonsterObject : MapObject
             }
             skill = NormalAttackSkill;
         }
+
         if (CheckStatus(GameObjectState.BusyGreen | GameObjectState.Paralyzed | GameObjectState.Unconscious))
             return;
 
+        if (skill == null) return;
+
         if (GetDistance(Target.Target) > skill.MaxDistance)
         {
-            if (ForbbidenMove || !CanWalk())
-                return;
-
-            GameDirection dir = Compute.DirectionFromPoint(CurrentPosition, Target.Target.CurrentPosition);
-            Point point = default(Point);
-
+            var dir = Compute.DirectionFromPoint(CurrentPosition, Target.Target.CurrentPosition);
             for (var i = 0; i < 8; i++)
             {
-                if (CurrentMap.CanMove(point = Compute.GetNextPosition(CurrentPosition, dir, 1)))
+                var point = Compute.GetNextPosition(CurrentPosition, dir, 1);
+                if (CurrentMap.CanMove(point))
                     break;
 
                 dir = Compute.RotateDirection(dir, (SEngine.Random.Next(2) != 0) ? 1 : -1);
             }
 
-            BusyTime = SEngine.CurrentTime.AddMilliseconds(WalkInterval);
-            WalkTime = SEngine.CurrentTime.AddMilliseconds(WalkInterval + MoveInterval);
-            CurrentDirection = Compute.DirectionFromPoint(CurrentPosition, point);
-            SendPacket(new ObjectWalkPacket
-            {
-                ObjectID = ObjectID,
-                Position = point,
-                MovementSpeed = base.WalkSpeed
-            });
-            OnMoved(point);
+            Walk(dir);
         }
         else if (skill.NeedMoveForward && !Compute.直线方向(CurrentPosition, Target.Target.CurrentPosition))
         {
-            if (ForbbidenMove || !CanWalk())
-                return;
-
-            GameDirection dir = Compute.正向方向(CurrentPosition, Target.Target.CurrentPosition);
-            Point point2 = default(Point);
-
+            var dir = Compute.正向方向(CurrentPosition, Target.Target.CurrentPosition);
             for (var i = 0; i < 8; i++)
             {
-                if (CurrentMap.CanMove(point2 = Compute.GetNextPosition(CurrentPosition, dir, 1)))
+                var point = Compute.GetNextPosition(CurrentPosition, dir, 1);
+                if (CurrentMap.CanMove(point))
                     break;
 
                 dir = Compute.RotateDirection(dir, (SEngine.Random.Next(2) != 0) ? 1 : -1);
             }
 
-            CurrentDirection = Compute.DirectionFromPoint(CurrentPosition, point2);
-            BusyTime = SEngine.CurrentTime.AddMilliseconds(WalkInterval);
-            WalkTime = SEngine.CurrentTime.AddMilliseconds(WalkInterval + MoveInterval);
-            
-            if (!Dead)
-            {
-                SendPacket(new ObjectWalkPacket
-                {
-                    ObjectID = ObjectID,
-                    Position = point2,
-                    MovementSpeed = base.WalkSpeed
-                });
-                OnMoved(point2);
-            }
+            Walk(dir);
         }
         else if (SEngine.CurrentTime > AttackTime)
         {
             new SkillObject(this, skill, null, base.ActionID++, CurrentMap, CurrentPosition, Target.Target, Target.Target.CurrentPosition, null);
             AttackTime = SEngine.CurrentTime.AddMilliseconds(Compute.Clamp(0, 10 - this[Stat.AttackSpeed], 10) * 500);
         }
-        else if (!ForbbidenMove && CanTurn())
+        else
         {
-            CurrentDirection = Compute.DirectionFromPoint(CurrentPosition, Target.Target.CurrentPosition);
+            var dir = Compute.DirectionFromPoint(CurrentPosition, Target.Target.CurrentPosition);
+            Turn(dir);
+        }
+    }
+
+    private void Turn(GameDirection direction)
+    {
+        if (ForbbidenMove || !CanTurn()) return;
+
+        CurrentDirection = direction;
+    }
+
+    private void Walk(GameDirection direction)
+    {
+        if (ForbbidenMove || !CanWalk()) return;
+
+        var location = Compute.GetNextPosition(CurrentPosition, direction, 1);
+        if (CurrentMap.CanMove(location))
+        {
+            BusyTime = SEngine.CurrentTime.AddMilliseconds(WalkInterval);
+            WalkTime = SEngine.CurrentTime.AddMilliseconds(WalkInterval + MoveInterval);
+            CurrentDirection = Compute.DirectionFromPoint(CurrentPosition, location);
+
+            SendPacket(new ObjectWalkPacket { ObjectID = ObjectID, Position = location, Speed = WalkSpeed });
+            OnLocationChanged(location);
         }
     }
 
@@ -1599,29 +1579,35 @@ public sealed class MonsterObject : MapObject
         CurrentDirection = Compute.RandomDirection();
         CurrentHP = this[Stat.MaxHP];
         CurrentPosition = BirthRange[SEngine.Random.Next(0, BirthRange.Length)];
-        Point point = CurrentPosition;
-        for (int i = 0; i < 100; i++)
+
+        for (var i = 0; i < 100; i++)
         {
-            if (!CurrentMap.IsBlocking(point = Compute.GetPositionAround(CurrentPosition, i)))
+            var point = Compute.GetPositionAround(CurrentPosition, i);
+            if (!CurrentMap.IsBlocking(point))
             {
                 CurrentPosition = point;
                 break;
             }
         }
+
         AttackTime = SEngine.CurrentTime.AddSeconds(1.0);
-        base.RecoveryTime = SEngine.CurrentTime.AddMilliseconds(SEngine.Random.Next(5000));
-        RoamingTime = SEngine.CurrentTime.AddMilliseconds(SEngine.Random.Next(5000) + RoamInterval);
+        RecoveryTime = SEngine.CurrentTime.AddMilliseconds(SEngine.Random.Next(5000));
+        RoamTime = SEngine.CurrentTime.AddMilliseconds(SEngine.Random.Next(5000) + RoamInterval);
+        
         Target = new HateObject();
         SecondaryObject = false;
         Dead = false;
-        base.CombatStance = false;
+        CombatStance = false;
         Blocking = true;
+
         BindGrid();
         UpdateAllNeighbours();
+
         if (Grade == MonsterGradeType.Boss && Config.BOSS刷新提示开关 == 1)
         {
             NetworkManager.SendAnnouncement($"{Info.MonsterName}在{CurrentMap}刷新！", rolling: true);
         }
+
         if (!Activated)
         {
             if (Info.OutWarAutomaticPetrochemical)
@@ -1641,11 +1627,13 @@ public sealed class MonsterObject : MapObject
         Disappeared = true;
         Dead = true;
         Blocking = false;
+
         if (ForbidResurrection)
         {
             Despawn();
             return;
         }
+
         RemoveAllNeighbors();
         UnbindGrid();
         ResurrectionTime = SEngine.CurrentTime.AddMilliseconds(ResurrectionInterval);
@@ -1684,7 +1672,7 @@ public sealed class MonsterObject : MapObject
 
             RecoveryTime = RecoveryTime.AddSeconds(5.0);
             AttackTime = SEngine.CurrentTime.AddSeconds(1.0);
-            RoamingTime = SEngine.CurrentTime.AddMilliseconds(SEngine.Random.Next(5000) + RoamInterval);
+            RoamTime = SEngine.CurrentTime.AddMilliseconds(SEngine.Random.Next(5000) + RoamInterval);
             BusyTime = SEngine.CurrentTime.AddMilliseconds(WalkInterval);
             WalkTime = SEngine.CurrentTime.AddMilliseconds(WalkInterval + MoveInterval);
         }
