@@ -1415,25 +1415,9 @@ public sealed class PlayerObject : MapObject
         });
         Enqueue(new SyncSkillInfoPacket
         {
-            /*Description = new byte[]
-            {
-                0, 0, 0, 0, 
-                4, 0, 0, 0, 
-                24,  4,  0, 0, 0, 0, 
-                184, 11, 0, 0, 0, 0, 
-                184, 11, 0, 0, 0, 0, 
-                212, 11, 0, 0, 0, 0
-            }*/
             UnknownInt32 = 0,
             SkillCount = Skills.Count,
             Description = 全部技能描述()
-            /*Description = new byte[]
-            {
-                24,  4,  0, 0, 0, 0,
-                184, 11, 0, 0, 0, 0,
-                184, 11, 0, 0, 0, 0,
-                //212, 11, 0, 0, 0, 0
-            }*/
         });
         Enqueue(new SyncSkillSlotPacket
         {
@@ -32762,9 +32746,9 @@ public sealed class PlayerObject : MapObject
         foreach (var skill in Skills.Values)
         {
             writer.Write(skill.ID.V);
+            writer.Write(skill.Experience.V);
             writer.Write(skill.InscriptionID);
             writer.Write(skill.Level.V);
-            writer.Write(skill.Experience.V);
         }
         return ms.ToArray();
     }
