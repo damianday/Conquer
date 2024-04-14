@@ -1,11 +1,55 @@
-.vs/
-bin/
-obj/
+# Windows File Cache
+Thumbs.db
+ehthumbs.db
+
+# Windows Icon Database
+Desktop.ini
+
+# Windows Installer Files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows Shortcuts
+*.lnk
+
+# Recycle Bin
+$RECYCLE.BIN/
+
+# Macintosh System Files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
+
+# External Disk
+.Spotlight-V100
+.Trashes
+
+# Remote AFP Share
+.apdisk
+.AppleDB
+.AppleDesktop
+Temporary Items
+Network Trash Folder
+
+# Visual Studio User Configuration
+*.suo
 *.csproj.user
 *.pubxml.user
-packages/
-Database/User
-Mir3DEditor/Mir3DCrypto/Properties/PublishProfiles/FolderProfile.pubxml
 
-GameServer/Properties/PublishProfiles/FolderProfile.pubxml
-Database/System/GameMasters.json
+# Visual Studio Build Files
+obj/
+bin/
+/Build
+.vs/
+/packages
+Release
+Debug
+obj
+
+# Custom Files and Folders
+/Notes
