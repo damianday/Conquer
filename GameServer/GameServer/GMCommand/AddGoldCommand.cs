@@ -20,7 +20,7 @@ public sealed class AddGoldCommand : GMCommand
         if (Session.CharacterInfoTable.SearchTable.TryGetValue(UserName, out var value) && value is CharacterInfo character)
         {
             character.Gold += Gold;
-            character.Enqueue(new 货币数量变动
+            character.Enqueue(new SyncCurrencyPacket
             {
                 Currency = 1,
                 Amount = character.Gold

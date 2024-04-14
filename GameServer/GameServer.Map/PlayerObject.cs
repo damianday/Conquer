@@ -24,7 +24,7 @@ public sealed class PlayerObject : MapObject
 
     public InscriptionSkill 洗练铭文;
 
-    public 玩家交易 CurrentTrade;
+    public TradingObject CurrentTrade;
 
     public StallObject CurrentStall;
 
@@ -476,11 +476,7 @@ public sealed class PlayerObject : MapObject
                 base[stat] = value;
                 if ((byte)stat <= 120)
                 {
-                    Enqueue(new SyncStatPacket
-                    {
-                        Stat = (byte)stat,
-                        Value = value
-                    });
+                    Enqueue(new SyncStatPacket { Stat = (byte)stat, Value = value });
                 }
             }
         }
@@ -558,11 +554,7 @@ public sealed class PlayerObject : MapObject
             if (Character.Gold != value)
             {
                 Character.Gold = value;
-                Enqueue(new 货币数量变动
-                {
-                    Currency = 1,
-                    Amount = value
-                });
+                Enqueue(new SyncCurrencyPacket { Currency = 1, Amount = value });
             }
         }
     }
@@ -575,31 +567,20 @@ public sealed class PlayerObject : MapObject
             if (Character.Ingot != value)
             {
                 Character.Ingot = value;
-                Enqueue(new 货币数量变动
-                {
-                    Currency = 3,
-                    Amount = value
-                });
+                Enqueue(new SyncCurrencyPacket { Currency = 3, Amount = value });
             }
         }
     }
 
     public int 师门声望
     {
-        get
-        {
-            return Character.师门声望;
-        }
+        get { return Character.师门声望; }
         set
         {
             if (Character.师门声望 != value)
             {
                 Character.师门声望 = value;
-                Enqueue(new 货币数量变动
-                {
-                    Currency = 6,
-                    Amount = value
-                });
+                Enqueue(new SyncCurrencyPacket { Currency = 6, Amount = value });
             }
         }
     }
@@ -933,11 +914,7 @@ public sealed class PlayerObject : MapObject
             if (Character.AttackMode.V != value)
             {
                 Character.AttackMode.V = value;
-                Enqueue(new SyncAttackModePacket
-                {
-                    ObjectID = ObjectID,
-                    Mode = (byte)value
-                });
+                Enqueue(new SyncAttackModePacket { ObjectID = ObjectID, Mode = (byte)value });
             }
         }
     }
@@ -1073,15 +1050,16 @@ public sealed class PlayerObject : MapObject
 
     public PlayerObject(CharacterInfo character, SConnection conn)
     {
-        this.Character = character;
+        Character = character;
         Pets = new List<PetObject>();
         被动技能 = new Dictionary<ushort, SkillInfo>();
         BonusStats[this] = CharacterProgression.GetData(Job, CurrentLevel);
         CombatPowerBonus = new Dictionary<object, int> { [this] = CurrentLevel * 10 };
         TitleTime = DateTime.MaxValue;
         PickUpTime = SEngine.CurrentTime.AddSeconds(1.0);
-        base.RecoveryTime = SEngine.CurrentTime.AddSeconds(5.0);
+        RecoveryTime = SEngine.CurrentTime.AddSeconds(5.0);
         特权时间 = ((本期特权 > 0) ? 本期日期.AddDays(30.0) : DateTime.MaxValue);
+
         foreach (EquipmentInfo value80 in Equipment.Values)
         {
             CombatPowerBonus[value80] = value80.装备战力;
@@ -1833,7 +1811,7 @@ public sealed class PlayerObject : MapObject
         回魔次数 = 0;
         回血次数 = 0;
         base.治疗次数 = 0;
-        CurrentTrade?.结束交易();
+        CurrentTrade?.BreakTrade();
         foreach (PetObject item2 in Pets)
         {
             item2.Die(null, false);
@@ -3992,7 +3970,7 @@ public sealed class PlayerObject : MapObject
             Character.Currencies[(CurrencyType)Config.全服红包货币类型] += num;
             int amount = Character.Currencies[(CurrencyType)Config.全服红包货币类型];
             byte currency = (byte)Config.全服红包货币类型;
-            Enqueue(new 货币数量变动
+            Enqueue(new SyncCurrencyPacket
             {
                 Currency = currency,
                 Amount = amount
@@ -7662,7 +7640,7 @@ public sealed class PlayerObject : MapObject
             CurrentAutoState = AutoSystem.Disabled;
             挂机参数.Clear();
         }
-        CurrentTrade?.结束交易();
+        CurrentTrade?.BreakTrade();
         Team?.Broadcast(new 同步队员状态
         {
             ObjectID = ObjectID,
@@ -7978,9 +7956,9 @@ public sealed class PlayerObject : MapObject
         {
             ObjectID = ObjectID,
             Position = point,
-            MovementSpeed = base.WalkSpeed
+            Speed = base.WalkSpeed
         });
-        OnMoved(point);
+        OnLocationChanged(point);
     }
 
     public void RunTo(Point location)
@@ -8046,7 +8024,7 @@ public sealed class PlayerObject : MapObject
                 Position = point2,
                 MovementSpeed = base.RunSpeed
             });
-            OnMoved(point2);
+            OnLocationChanged(point2);
         }
         else if (CanWalk())
         {
@@ -14902,7 +14880,7 @@ public sealed class PlayerObject : MapObject
                                 foreach (CharacterInfo item4 in Team.Members)
                                 {
                                     PlayerObject 玩家实例2 = MapManager.ActiveObjects[item4.ID] as PlayerObject;
-                                    玩家实例2.CurrentTrade?.结束交易();
+                                    玩家实例2.CurrentTrade?.BreakTrade();
                                     玩家实例2.Gold -= 扣除金币;
                                     玩家实例2.Teleport(地图实例24, AreaType.Teleportation);
                                     玩家实例2.Character.屠魔次数.V++;
@@ -19910,7 +19888,7 @@ public sealed class PlayerObject : MapObject
                     Character.Currencies[(CurrencyType)v.CurrencyModel] += v.货币面额;
                     int 货币数量 = Character.Currencies[(CurrencyType)v.CurrencyModel];
                     byte 货币类型 = (byte)v.CurrencyModel;
-                    Enqueue(new 货币数量变动
+                    Enqueue(new SyncCurrencyPacket
                     {
                         Currency = 货币类型,
                         Amount = 货币数量
@@ -27721,7 +27699,7 @@ public sealed class PlayerObject : MapObject
                     {
                         if (CurrentLevel < Config.可摆摊等级 && 本期特权 == 0)
                         {
-                            CurrentTrade?.结束交易();
+                            CurrentTrade?.BreakTrade();
                             Enqueue(new GameErrorMessagePacket
                             {
                                 ErrorCode = 65538
@@ -31108,7 +31086,7 @@ public sealed class PlayerObject : MapObject
             PlayerObject value;
             if (CurrentLevel < 30 && 本期特权 == 0)
             {
-                CurrentTrade?.结束交易();
+                CurrentTrade?.BreakTrade();
                 Enqueue(new GameErrorMessagePacket
                 {
                     ErrorCode = 65538
@@ -31116,12 +31094,12 @@ public sealed class PlayerObject : MapObject
             }
             else if (对象编号 == ObjectID)
             {
-                CurrentTrade?.结束交易();
+                CurrentTrade?.BreakTrade();
                 Connection.Disconnect(new Exception("错误操作: 玩家申请交易. 错误: 不能交易自己"));
             }
             else if (!MapManager.Players.TryGetValue(对象编号, out value))
             {
-                CurrentTrade?.结束交易();
+                CurrentTrade?.BreakTrade();
                 Enqueue(new GameErrorMessagePacket
                 {
                     ErrorCode = 5635
@@ -31129,7 +31107,7 @@ public sealed class PlayerObject : MapObject
             }
             else if (CurrentMap != value.CurrentMap)
             {
-                CurrentTrade?.结束交易();
+                CurrentTrade?.BreakTrade();
                 Enqueue(new GameErrorMessagePacket
                 {
                     ErrorCode = 5636
@@ -31137,7 +31115,7 @@ public sealed class PlayerObject : MapObject
             }
             else if (GetDistance(value) > 12)
             {
-                CurrentTrade?.结束交易();
+                CurrentTrade?.BreakTrade();
                 Enqueue(new GameErrorMessagePacket
                 {
                     ErrorCode = 5636
@@ -31145,9 +31123,9 @@ public sealed class PlayerObject : MapObject
             }
             else if (!value.Dead && value.StallState == 0 && value.TradeState < 3)
             {
-                CurrentTrade?.结束交易();
-                value.CurrentTrade?.结束交易();
-                CurrentTrade = (value.CurrentTrade = new 玩家交易(this, value));
+                CurrentTrade?.BreakTrade();
+                value.CurrentTrade?.BreakTrade();
+                CurrentTrade = (value.CurrentTrade = new TradingObject(this, value));
                 Enqueue(new GameErrorMessagePacket
                 {
                     ErrorCode = 5633
@@ -31155,7 +31133,7 @@ public sealed class PlayerObject : MapObject
             }
             else
             {
-                CurrentTrade?.结束交易();
+                CurrentTrade?.BreakTrade();
                 Enqueue(new GameErrorMessagePacket
                 {
                     ErrorCode = 5637
@@ -31164,7 +31142,7 @@ public sealed class PlayerObject : MapObject
         }
         else
         {
-            CurrentTrade?.结束交易();
+            CurrentTrade?.BreakTrade();
             Enqueue(new GameErrorMessagePacket
             {
                 ErrorCode = 5634
@@ -31179,7 +31157,7 @@ public sealed class PlayerObject : MapObject
             PlayerObject value;
             if (CurrentLevel < 30 && 本期特权 == 0)
             {
-                CurrentTrade?.结束交易();
+                CurrentTrade?.BreakTrade();
                 Enqueue(new GameErrorMessagePacket
                 {
                     ErrorCode = 65538
@@ -31187,12 +31165,12 @@ public sealed class PlayerObject : MapObject
             }
             else if (对象编号 == ObjectID)
             {
-                CurrentTrade?.结束交易();
+                CurrentTrade?.BreakTrade();
                 Connection.Disconnect(new Exception("错误操作: 玩家申请交易. 错误: 不能交易自己"));
             }
             else if (!MapManager.Players.TryGetValue(对象编号, out value))
             {
-                CurrentTrade?.结束交易();
+                CurrentTrade?.BreakTrade();
                 Enqueue(new GameErrorMessagePacket
                 {
                     ErrorCode = 5635
@@ -31200,7 +31178,7 @@ public sealed class PlayerObject : MapObject
             }
             else if (CurrentMap != value.CurrentMap)
             {
-                CurrentTrade?.结束交易();
+                CurrentTrade?.BreakTrade();
                 Enqueue(new GameErrorMessagePacket
                 {
                     ErrorCode = 5636
@@ -31208,7 +31186,7 @@ public sealed class PlayerObject : MapObject
             }
             else if (GetDistance(value) > 12)
             {
-                CurrentTrade?.结束交易();
+                CurrentTrade?.BreakTrade();
                 Enqueue(new GameErrorMessagePacket
                 {
                     ErrorCode = 5636
@@ -31221,7 +31199,7 @@ public sealed class PlayerObject : MapObject
                     CurrentTrade.更改状态(3);
                     return;
                 }
-                CurrentTrade?.结束交易();
+                CurrentTrade?.BreakTrade();
                 Enqueue(new GameErrorMessagePacket
                 {
                     ErrorCode = 5634
@@ -31229,7 +31207,7 @@ public sealed class PlayerObject : MapObject
             }
             else
             {
-                CurrentTrade?.结束交易();
+                CurrentTrade?.BreakTrade();
                 Enqueue(new GameErrorMessagePacket
                 {
                     ErrorCode = 5637
@@ -31238,7 +31216,7 @@ public sealed class PlayerObject : MapObject
         }
         else
         {
-            CurrentTrade?.结束交易();
+            CurrentTrade?.BreakTrade();
             Enqueue(new GameErrorMessagePacket
             {
                 ErrorCode = 5634
@@ -31248,14 +31226,14 @@ public sealed class PlayerObject : MapObject
 
     public void 玩家结束交易()
     {
-        CurrentTrade?.结束交易();
+        CurrentTrade?.BreakTrade();
     }
 
     public void 玩家放入金币(int 金币数量)
     {
         if (TradeState != 3)
         {
-            CurrentTrade?.结束交易();
+            CurrentTrade?.BreakTrade();
             Enqueue(new GameErrorMessagePacket
             {
                 ErrorCode = 5634
@@ -31263,7 +31241,7 @@ public sealed class PlayerObject : MapObject
         }
         else if (CurrentMap != CurrentTrade.对方玩家(this).CurrentMap)
         {
-            CurrentTrade?.结束交易();
+            CurrentTrade?.BreakTrade();
             Enqueue(new GameErrorMessagePacket
             {
                 ErrorCode = 5636
@@ -31271,7 +31249,7 @@ public sealed class PlayerObject : MapObject
         }
         else if (GetDistance(CurrentTrade.对方玩家(this)) > 12)
         {
-            CurrentTrade?.结束交易();
+            CurrentTrade?.BreakTrade();
             Enqueue(new GameErrorMessagePacket
             {
                 ErrorCode = 5636
@@ -31281,7 +31259,7 @@ public sealed class PlayerObject : MapObject
         {
             if (CurrentTrade.金币重复(this))
             {
-                CurrentTrade?.结束交易();
+                CurrentTrade?.BreakTrade();
                 Connection.Disconnect(new Exception("错误操作: 玩家放入金币. 错误: 重复放入金币"));
             }
             else
@@ -31291,7 +31269,7 @@ public sealed class PlayerObject : MapObject
         }
         else
         {
-            CurrentTrade?.结束交易();
+            CurrentTrade?.BreakTrade();
             Connection.Disconnect(new Exception("错误操作: 玩家放入金币. 错误: 金币数量错误"));
         }
     }
@@ -31301,7 +31279,7 @@ public sealed class PlayerObject : MapObject
         ItemInfo v;
         if (TradeState != 3)
         {
-            CurrentTrade?.结束交易();
+            CurrentTrade?.BreakTrade();
             Enqueue(new GameErrorMessagePacket
             {
                 ErrorCode = 5634
@@ -31309,7 +31287,7 @@ public sealed class PlayerObject : MapObject
         }
         else if (CurrentMap != CurrentTrade.对方玩家(this).CurrentMap)
         {
-            CurrentTrade?.结束交易();
+            CurrentTrade?.BreakTrade();
             Enqueue(new GameErrorMessagePacket
             {
                 ErrorCode = 5636
@@ -31317,7 +31295,7 @@ public sealed class PlayerObject : MapObject
         }
         else if (GetDistance(CurrentTrade.对方玩家(this)) > 12)
         {
-            CurrentTrade?.结束交易();
+            CurrentTrade?.BreakTrade();
             Enqueue(new GameErrorMessagePacket
             {
                 ErrorCode = 5636
@@ -31325,37 +31303,37 @@ public sealed class PlayerObject : MapObject
         }
         else if (放入位置 >= 6)
         {
-            CurrentTrade?.结束交易();
+            CurrentTrade?.BreakTrade();
             Connection.Disconnect(new Exception("错误操作: 玩家放入物品. 错误: 放入位置错误"));
         }
         else if (CurrentTrade.物品重复(this, 放入位置))
         {
-            CurrentTrade?.结束交易();
+            CurrentTrade?.BreakTrade();
             Connection.Disconnect(new Exception("错误操作: 玩家放入物品. 错误: 放入位置重复"));
         }
         else if (放入物品 != 1)
         {
-            CurrentTrade?.结束交易();
+            CurrentTrade?.BreakTrade();
             Connection.Disconnect(new Exception("错误操作: 玩家放入物品. 错误: 禁止取回物品"));
         }
         else if (背包类型 != 1)
         {
-            CurrentTrade?.结束交易();
+            CurrentTrade?.BreakTrade();
             Connection.Disconnect(new Exception("错误操作: 玩家放入物品. 错误: 背包类型错误"));
         }
         else if (!Inventory.TryGetValue(物品位置, out v))
         {
-            CurrentTrade?.结束交易();
+            CurrentTrade?.BreakTrade();
             Connection.Disconnect(new Exception("错误操作: 玩家放入物品. 错误: 物品数据错误"));
         }
         else if (v.IsBound)
         {
-            CurrentTrade?.结束交易();
+            CurrentTrade?.BreakTrade();
             Connection.Disconnect(new Exception("错误操作: 玩家放入物品. 错误: 放入绑定物品"));
         }
         else if (CurrentTrade.物品重复(this, v))
         {
-            CurrentTrade?.结束交易();
+            CurrentTrade?.BreakTrade();
             Connection.Disconnect(new Exception("错误操作: 玩家放入物品. 错误: 重复放入物品"));
         }
         else
@@ -31368,7 +31346,7 @@ public sealed class PlayerObject : MapObject
     {
         if (TradeState != 3)
         {
-            CurrentTrade?.结束交易();
+            CurrentTrade?.BreakTrade();
             Enqueue(new GameErrorMessagePacket
             {
                 ErrorCode = 5634
@@ -31376,7 +31354,7 @@ public sealed class PlayerObject : MapObject
         }
         else if (CurrentMap != CurrentTrade.对方玩家(this).CurrentMap)
         {
-            CurrentTrade?.结束交易();
+            CurrentTrade?.BreakTrade();
             Enqueue(new GameErrorMessagePacket
             {
                 ErrorCode = 5636
@@ -31384,7 +31362,7 @@ public sealed class PlayerObject : MapObject
         }
         else if (GetDistance(CurrentTrade.对方玩家(this)) > 12)
         {
-            CurrentTrade?.结束交易();
+            CurrentTrade?.BreakTrade();
             Enqueue(new GameErrorMessagePacket
             {
                 ErrorCode = 5636
@@ -31400,7 +31378,7 @@ public sealed class PlayerObject : MapObject
     {
         if (TradeState < 4)
         {
-            CurrentTrade?.结束交易();
+            CurrentTrade?.BreakTrade();
             Enqueue(new GameErrorMessagePacket
             {
                 ErrorCode = 5634
@@ -31408,7 +31386,7 @@ public sealed class PlayerObject : MapObject
         }
         else if (CurrentMap != CurrentTrade.对方玩家(this).CurrentMap)
         {
-            CurrentTrade?.结束交易();
+            CurrentTrade?.BreakTrade();
             Enqueue(new GameErrorMessagePacket
             {
                 ErrorCode = 5636
@@ -31416,7 +31394,7 @@ public sealed class PlayerObject : MapObject
         }
         else if (GetDistance(CurrentTrade.对方玩家(this)) > 12)
         {
-            CurrentTrade?.结束交易();
+            CurrentTrade?.BreakTrade();
             Enqueue(new GameErrorMessagePacket
             {
                 ErrorCode = 5636
@@ -31433,7 +31411,7 @@ public sealed class PlayerObject : MapObject
         PlayerObject 玩家;
         if (TradeState != 4)
         {
-            CurrentTrade?.结束交易();
+            CurrentTrade?.BreakTrade();
             Enqueue(new GameErrorMessagePacket
             {
                 ErrorCode = 5634
@@ -31441,7 +31419,7 @@ public sealed class PlayerObject : MapObject
         }
         else if (CurrentMap != CurrentTrade.对方玩家(this).CurrentMap)
         {
-            CurrentTrade?.结束交易();
+            CurrentTrade?.BreakTrade();
             Enqueue(new GameErrorMessagePacket
             {
                 ErrorCode = 5636
@@ -31449,7 +31427,7 @@ public sealed class PlayerObject : MapObject
         }
         else if (GetDistance(CurrentTrade.对方玩家(this)) > 12)
         {
-            CurrentTrade?.结束交易();
+            CurrentTrade?.BreakTrade();
             Enqueue(new GameErrorMessagePacket
             {
                 ErrorCode = 5636
@@ -31461,7 +31439,7 @@ public sealed class PlayerObject : MapObject
         }
         else if (CurrentTrade.背包已满(out 玩家))
         {
-            CurrentTrade?.结束交易();
+            CurrentTrade?.BreakTrade();
             CurrentTrade.发送封包(new GameErrorMessagePacket
             {
                 ErrorCode = 5639,
@@ -31481,7 +31459,7 @@ public sealed class PlayerObject : MapObject
         {
             if (CurrentLevel < Config.可摆摊等级 && 本期特权 == 0)
             {
-                CurrentTrade?.结束交易();
+                CurrentTrade?.BreakTrade();
                 Enqueue(new GameErrorMessagePacket
                 {
                     ErrorCode = 65538
@@ -31549,7 +31527,7 @@ public sealed class PlayerObject : MapObject
         }
         if (CurrentLevel < Config.可摆摊等级 && 本期特权 == 0)
         {
-            CurrentTrade?.结束交易();
+            CurrentTrade?.BreakTrade();
             Enqueue(new GameErrorMessagePacket
             {
                 ErrorCode = 65538
@@ -32824,37 +32802,30 @@ public sealed class PlayerObject : MapObject
 
     public byte[] 全部物品描述()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
-        foreach (EquipmentInfo item in Equipment.Values.ToList())
+        using var ms = new MemoryStream();
+        using var writer = new BinaryWriter(ms);
+
+        foreach (var item in Equipment.Values)
         {
             if (item != null)
-            {
-                binaryWriter.Write(item.ToArray());
-            }
+                writer.Write(item.ToArray());
         }
-        foreach (ItemInfo item2 in Inventory.Values.ToList())
+        foreach (var item in Inventory.Values)
         {
-            if (item2 != null)
-            {
-                binaryWriter.Write(item2.ToArray());
-            }
+            if (item != null)
+                writer.Write(item.ToArray());
         }
-        foreach (ItemInfo item3 in Storage.Values.ToList())
+        foreach (var item in Storage.Values)
         {
-            if (item3 != null)
-            {
-                binaryWriter.Write(item3.ToArray());
-            }
+            if (item != null)
+                writer.Write(item.ToArray());
         }
-        foreach (ItemInfo item4 in 角色资源背包.Values.ToList())
+        foreach (var item in 角色资源背包.Values)
         {
-            if (item4 != null)
-            {
-                binaryWriter.Write(item4.ToArray());
-            }
+            if (item != null)
+                writer.Write(item.ToArray());
         }
-        return memoryStream.ToArray();
+        return ms.ToArray();
     }
 
     public byte[] 全部邮件描述()

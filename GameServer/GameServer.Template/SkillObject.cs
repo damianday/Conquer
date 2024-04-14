@@ -1070,7 +1070,7 @@ public class SkillObject
                         位移朝向 = (ushort)obj.CurrentDirection,
                         位移速度 = task.目标位移耗时
                     });
-                    obj.OnMoved(point);
+                    obj.OnLocationChanged(point);
                     if (task.推动增加经验 && !CanGainExperience)
                     {
                         (Caster as PlayerObject)?.GainSkillExperience(SkillID);
@@ -1091,7 +1091,7 @@ public class SkillObject
                     位移朝向 = (ushort)Caster.CurrentDirection,
                     位移速度 = (ushort)num18
                 });
-                Caster.OnMoved(终点);
+                Caster.OnLocationChanged(终点);
                 if (Caster is PlayerObject player && task.DisplacementIncreaseExp && !CanGainExperience)
                 {
                     player.GainSkillExperience(SkillID);
@@ -1176,7 +1176,7 @@ public class SkillObject
                         ObjectID = hitter.Value.Target.ObjectID,
                         位移朝向 = (ushort)hitter.Value.Target.CurrentDirection
                     });
-                    hitter.Value.Target.OnMoved(终点2);
+                    hitter.Value.Target.OnLocationChanged(终点2);
                     if (task.推动增加经验 && !CanGainExperience)
                     {
                         (Caster as PlayerObject)?.GainSkillExperience(SkillID);

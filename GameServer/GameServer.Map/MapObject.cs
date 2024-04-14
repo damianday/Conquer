@@ -1658,11 +1658,11 @@ public abstract class MapObject
         }
     }
 
-    public void OnMoved(Point location)
+    public void OnLocationChanged(Point location)
     {
         if (this is PlayerObject player)
         {
-            player.CurrentTrade?.结束交易();
+            player.CurrentTrade?.BreakTrade();
             foreach (BuffInfo item in Buffs.Values.ToList())
             {
                 if ((item.Buff效果 & BuffEffectType.CreateTrap) != 0 && SkillTrap.DataSheet.TryGetValue(item.Template.TriggerTrapSkills, out var 陷阱模板2))
@@ -1719,19 +1719,19 @@ public abstract class MapObject
                 }
             }
         }
+        
         UnbindGrid();
         CurrentPosition = location;
         BindGrid();
         UpdateAllNeighbours();
-        foreach (MapObject obj in Neighbors.ToList())
-        {
+
+        foreach (var obj in Neighbors)
             obj.ProcessOnMoved(this);
-        }
     }
 
     public void RemoveAllNeighbors()
     {
-        foreach (MapObject obj in Neighbors)
+        foreach (var obj in Neighbors)
             obj.Disappear(this);
         Neighbors.Clear();
         ImportantNeighbors.Clear();

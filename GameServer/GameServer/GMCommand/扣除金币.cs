@@ -21,7 +21,7 @@ public sealed class 扣除金币 : GMCommand
         if (Session.CharacterInfoTable.SearchTable.TryGetValue(UserName, out var value) && value is CharacterInfo 角色数据)
         {
             角色数据.Gold = Math.Max(0, 角色数据.Gold - 金币数量);
-            角色数据.Enqueue(new 货币数量变动
+            角色数据.Enqueue(new SyncCurrencyPacket
             {
                 Currency = 1,
                 Amount = 角色数据.Gold

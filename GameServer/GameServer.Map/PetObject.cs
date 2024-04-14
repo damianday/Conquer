@@ -582,12 +582,12 @@ public sealed class PetObject : MapObject
                         BusyTime = SEngine.CurrentTime.AddMilliseconds(WalkInterval);
                         WalkTime = SEngine.CurrentTime.AddMilliseconds(WalkInterval + MoveInterval);
                         CurrentDirection = Compute.DirectionFromPoint(CurrentPosition, point2);
-                        OnMoved(point2);
+                        OnLocationChanged(point2);
                         SendPacket(new ObjectWalkPacket
                         {
                             ObjectID = ObjectID,
                             Position = CurrentPosition,
-                            MovementSpeed = base.WalkSpeed
+                            Speed = base.WalkSpeed
                         });
                     }
                 }
@@ -614,12 +614,12 @@ public sealed class PetObject : MapObject
             BusyTime = SEngine.CurrentTime.AddMilliseconds(WalkInterval);
             WalkTime = SEngine.CurrentTime.AddMilliseconds(WalkInterval + MoveInterval);
             CurrentDirection = Compute.DirectionFromPoint(CurrentPosition, point3);
-            OnMoved(point3);
+            OnLocationChanged(point3);
             SendPacket(new ObjectWalkPacket
             {
                 ObjectID = ObjectID,
                 Position = CurrentPosition,
-                MovementSpeed = base.WalkSpeed
+                Speed = base.WalkSpeed
             });
         }
         else
@@ -666,12 +666,12 @@ public sealed class PetObject : MapObject
                 BusyTime = SEngine.CurrentTime.AddMilliseconds(WalkInterval);
                 WalkTime = SEngine.CurrentTime.AddMilliseconds(WalkInterval + MoveInterval);
                 CurrentDirection = Compute.DirectionFromPoint(CurrentPosition, point);
-                OnMoved(point);
+                OnLocationChanged(point);
                 SendPacket(new ObjectWalkPacket
                 {
                     ObjectID = ObjectID,
                     Position = point,
-                    MovementSpeed = base.WalkSpeed
+                    Speed = base.WalkSpeed
                 });
                 flag = true;
                 break;

@@ -133,7 +133,7 @@ public sealed class TrapObject : MapObject
         {
             if (TrapInfo.MoveInCurrentDirection)
             {
-                OnMoved(Compute.GetNextPosition(CurrentPosition, CurrentDirection, 1));
+                OnLocationChanged(Compute.GetNextPosition(CurrentPosition, CurrentDirection, 1));
                 SendPacket(new SyncTrapPositionPacket
                 {
                     TrapID = ObjectID,
