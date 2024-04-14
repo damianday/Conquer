@@ -19,22 +19,22 @@ public sealed class PetObject : MapObject
 
     public HateObject Target;
 
-    public GameSkill 普通攻击技能;
-    public GameSkill 概率触发技能;
-    public GameSkill 进入战斗技能;
-    public GameSkill 退出战斗技能;
-    public GameSkill 死亡释放技能;
-    public GameSkill 移动释放技能;
-    public GameSkill 出生释放技能;
+    public GameSkill NormalAttackSkill;
+    public GameSkill RandomAttackSkill;
+    public GameSkill EnterCombatSkill;
+    public GameSkill ExitCombatSkill;
+    public GameSkill DeathSkill;
+    public GameSkill MoveSkill;
+    public GameSkill BirthSkill;
 
     public PetInfo PInfo;
 
-    public bool 尸体消失 { get; set; }
+    public bool Vanished { get; set; }
 
     public DateTime AttackTime { get; set; }
     public DateTime RoamingTime { get; set; }
-    public DateTime 复活时间 { get; set; }
-    public DateTime VanishingTime { get; set; }
+    public DateTime ResurrectionTime { get; set; }
+    public DateTime DisappearTime { get; set; }
 
     public int CurrentExp
     {
@@ -206,11 +206,11 @@ public sealed class PetObject : MapObject
         }
     }
 
-    public PetObject(PlayerObject master, PetInfo data)
+    public PetObject(PlayerObject master, PetInfo peti)
     {
-        this.Master = master;
-        PInfo = data;
-        MInfo = MonsterInfo.DataSheet[data.Name.V];
+        Master = master;
+        PInfo = peti;
+        MInfo = MonsterInfo.DataSheet[peti.Name.V];
         CurrentPosition = master.CurrentPosition;
         CurrentMap = master.CurrentMap;
         CurrentDirection = Compute.RandomDirection();
@@ -226,45 +226,9 @@ public sealed class PetObject : MapObject
             }
         }
         RefreshStats();
-        base.RecoveryTime = SEngine.CurrentTime.AddSeconds(5.0);
-        AttackTime = SEngine.CurrentTime.AddSeconds(1.0);
-        RoamingTime = SEngine.CurrentTime.AddMilliseconds(SEngine.Random.Next(5000) + RoamInterval);
-        Target = new HateObject();
-        string text = MInfo.NormalAttackSkills;
-        if (text != null && text.Length > 0)
-        {
-            GameSkill.DataSheet.TryGetValue(MInfo.NormalAttackSkills, out 普通攻击技能);
-        }
-        string text2 = MInfo.ProbabilityTriggerSkills;
-        if (text2 != null && text2.Length > 0)
-        {
-            GameSkill.DataSheet.TryGetValue(MInfo.ProbabilityTriggerSkills, out 概率触发技能);
-        }
-        string text3 = MInfo.EnterCombatSkills;
-        if (text3 != null && text3.Length > 0)
-        {
-            GameSkill.DataSheet.TryGetValue(MInfo.EnterCombatSkills, out 进入战斗技能);
-        }
-        string text4 = MInfo.ExitCombatSkills;
-        if (text4 != null && text4.Length > 0)
-        {
-            GameSkill.DataSheet.TryGetValue(MInfo.ExitCombatSkills, out 退出战斗技能);
-        }
-        string text5 = MInfo.DeathReleaseSkill;
-        if (text5 != null && text5.Length > 0)
-        {
-            GameSkill.DataSheet.TryGetValue(MInfo.DeathReleaseSkill, out 死亡释放技能);
-        }
-        string text6 = MInfo.MoveReleaseSkill;
-        if (text6 != null && text6.Length > 0)
-        {
-            GameSkill.DataSheet.TryGetValue(MInfo.MoveReleaseSkill, out 移动释放技能);
-        }
-        string text7 = MInfo.BirthReleaseSkill;
-        if (text7 != null && text7.Length > 0)
-        {
-            GameSkill.DataSheet.TryGetValue(MInfo.BirthReleaseSkill, out 出生释放技能);
-        }
+
+        Initialize();
+
         ObjectID = ++MapManager.ObjectID;
         MapManager.AddObject(this);
         Activated = true;
@@ -273,11 +237,11 @@ public sealed class PetObject : MapObject
         PetRecall();
     }
 
-    public PetObject(PlayerObject master, MonsterInfo data, byte level, byte levelMax, bool bindWeapon)
+    public PetObject(PlayerObject master, MonsterInfo moni, byte level, byte levelMax, bool bindWeapon)
     {
-        this.Master = master;
-        MInfo = data;
-        PInfo = new PetInfo(data.MonsterName, level, levelMax, bindWeapon, DateTime.MaxValue);
+        Master = master;
+        MInfo = moni;
+        PInfo = new PetInfo(moni.MonsterName, level, levelMax, bindWeapon, DateTime.MaxValue);
         CurrentPosition = master.CurrentPosition;
         CurrentMap = master.CurrentMap;
         CurrentDirection = Compute.RandomDirection();
@@ -294,46 +258,11 @@ public sealed class PetObject : MapObject
             }
         }
         RefreshStats();
+
         CurrentHP = this[Stat.MaxHP];
-        base.RecoveryTime = SEngine.CurrentTime.AddSeconds(5.0);
-        AttackTime = SEngine.CurrentTime.AddSeconds(1.0);
-        RoamingTime = SEngine.CurrentTime.AddMilliseconds(SEngine.Random.Next(5000) + RoamInterval);
-        Target = new HateObject();
-        string text = MInfo.NormalAttackSkills;
-        if (text != null && text.Length > 0)
-        {
-            GameSkill.DataSheet.TryGetValue(MInfo.NormalAttackSkills, out 普通攻击技能);
-        }
-        string text2 = MInfo.ProbabilityTriggerSkills;
-        if (text2 != null && text2.Length > 0)
-        {
-            GameSkill.DataSheet.TryGetValue(MInfo.ProbabilityTriggerSkills, out 概率触发技能);
-        }
-        string text3 = MInfo.EnterCombatSkills;
-        if (text3 != null && text3.Length > 0)
-        {
-            GameSkill.DataSheet.TryGetValue(MInfo.EnterCombatSkills, out 进入战斗技能);
-        }
-        string text4 = MInfo.ExitCombatSkills;
-        if (text4 != null && text4.Length > 0)
-        {
-            GameSkill.DataSheet.TryGetValue(MInfo.ExitCombatSkills, out 退出战斗技能);
-        }
-        string text5 = MInfo.DeathReleaseSkill;
-        if (text5 != null && text5.Length > 0)
-        {
-            GameSkill.DataSheet.TryGetValue(MInfo.DeathReleaseSkill, out 死亡释放技能);
-        }
-        string text6 = MInfo.MoveReleaseSkill;
-        if (text6 != null && text6.Length > 0)
-        {
-            GameSkill.DataSheet.TryGetValue(MInfo.MoveReleaseSkill, out 移动释放技能);
-        }
-        string text7 = MInfo.BirthReleaseSkill;
-        if (text7 != null && text7.Length > 0)
-        {
-            GameSkill.DataSheet.TryGetValue(MInfo.BirthReleaseSkill, out 出生释放技能);
-        }
+
+        Initialize();
+
         MapManager.AddObject(this);
         Activated = true;
         MapManager.AddActiveObject(this);
@@ -341,58 +270,22 @@ public sealed class PetObject : MapObject
         PetRecall();
     }
 
-    public PetObject(PlayerObject master, MonsterObject 诱惑怪物, byte 初始等级, bool 绑定武器, int 宠物时长)
+    public PetObject(PlayerObject master, MonsterObject moni, byte level, bool bindWeapon, int duration)
     {
-        this.Master = master;
-        MInfo = 诱惑怪物.Info;
-        PInfo = new PetInfo(诱惑怪物.Name, 初始等级, 7, 绑定武器, SEngine.CurrentTime.AddMinutes(宠物时长));
-        CurrentPosition = 诱惑怪物.CurrentPosition;
-        CurrentMap = 诱惑怪物.CurrentMap;
-        CurrentDirection = 诱惑怪物.CurrentDirection;
+        Master = master;
+        MInfo = moni.Info;
+        PInfo = new PetInfo(moni.Name, level, 7, bindWeapon, SEngine.CurrentTime.AddMinutes(duration));
+        CurrentPosition = moni.CurrentPosition;
+        CurrentMap = moni.CurrentMap;
+        CurrentDirection = moni.CurrentDirection;
         BonusStats[this] = BaseStats;
         RefreshStats();
-        CurrentHP = Math.Min(诱惑怪物.CurrentHP, this[Stat.MaxHP]);
-        base.RecoveryTime = SEngine.CurrentTime.AddSeconds(5.0);
-        AttackTime = SEngine.CurrentTime.AddSeconds(1.0);
-        BusyTime = SEngine.CurrentTime.AddSeconds(1.0);
-        RoamingTime = SEngine.CurrentTime.AddMilliseconds(RoamInterval);
-        Target = new HateObject();
-        string text = MInfo.NormalAttackSkills;
-        if (text != null && text.Length > 0)
-        {
-            GameSkill.DataSheet.TryGetValue(MInfo.NormalAttackSkills, out 普通攻击技能);
-        }
-        string text2 = MInfo.ProbabilityTriggerSkills;
-        if (text2 != null && text2.Length > 0)
-        {
-            GameSkill.DataSheet.TryGetValue(MInfo.ProbabilityTriggerSkills, out 概率触发技能);
-        }
-        string text3 = MInfo.EnterCombatSkills;
-        if (text3 != null && text3.Length > 0)
-        {
-            GameSkill.DataSheet.TryGetValue(MInfo.EnterCombatSkills, out 进入战斗技能);
-        }
-        string text4 = MInfo.ExitCombatSkills;
-        if (text4 != null && text4.Length > 0)
-        {
-            GameSkill.DataSheet.TryGetValue(MInfo.ExitCombatSkills, out 退出战斗技能);
-        }
-        string text5 = MInfo.DeathReleaseSkill;
-        if (text5 != null && text5.Length > 0)
-        {
-            GameSkill.DataSheet.TryGetValue(MInfo.DeathReleaseSkill, out 死亡释放技能);
-        }
-        string text6 = MInfo.MoveReleaseSkill;
-        if (text6 != null && text6.Length > 0)
-        {
-            GameSkill.DataSheet.TryGetValue(MInfo.MoveReleaseSkill, out 移动释放技能);
-        }
-        string text7 = MInfo.BirthReleaseSkill;
-        if (text7 != null && text7.Length > 0)
-        {
-            GameSkill.DataSheet.TryGetValue(MInfo.BirthReleaseSkill, out 出生释放技能);
-        }
-        诱惑怪物.怪物诱惑处理();
+
+        CurrentHP = moni.CurrentHP;
+
+        Initialize();
+        
+        moni.怪物诱惑处理();
         ObjectID = ++MapManager.ObjectID;
         Blocking = true;
         BindGrid();
@@ -402,58 +295,22 @@ public sealed class PetObject : MapObject
         UpdateAllNeighbours();
     }
 
-    public PetObject(PlayerObject master, PetObject 诱惑宠物, byte 初始等级, bool 绑定武器, int 宠物时长)
+    public PetObject(PlayerObject master, PetObject pet, byte level, bool bindWeapon, int duration)
     {
-        this.Master = master;
-        MInfo = 诱惑宠物.MInfo;
-        PInfo = new PetInfo(诱惑宠物.Name, 初始等级, 7, 绑定武器, SEngine.CurrentTime.AddMinutes(宠物时长));
-        CurrentPosition = 诱惑宠物.CurrentPosition;
-        CurrentMap = 诱惑宠物.CurrentMap;
-        CurrentDirection = 诱惑宠物.CurrentDirection;
+        Master = master;
+        MInfo = pet.MInfo;
+        PInfo = new PetInfo(pet.Name, level, 7, bindWeapon, SEngine.CurrentTime.AddMinutes(duration));
+        CurrentPosition = pet.CurrentPosition;
+        CurrentMap = pet.CurrentMap;
+        CurrentDirection = pet.CurrentDirection;
         BonusStats[this] = BaseStats;
         RefreshStats();
-        CurrentHP = Math.Min(诱惑宠物.CurrentHP, this[Stat.MaxHP]);
-        base.RecoveryTime = SEngine.CurrentTime.AddSeconds(5.0);
-        AttackTime = SEngine.CurrentTime.AddSeconds(1.0);
-        BusyTime = SEngine.CurrentTime.AddSeconds(1.0);
-        RoamingTime = SEngine.CurrentTime.AddMilliseconds(RoamInterval);
-        Target = new HateObject();
-        string text = MInfo.NormalAttackSkills;
-        if (text != null && text.Length > 0)
-        {
-            GameSkill.DataSheet.TryGetValue(MInfo.NormalAttackSkills, out 普通攻击技能);
-        }
-        string text2 = MInfo.ProbabilityTriggerSkills;
-        if (text2 != null && text2.Length > 0)
-        {
-            GameSkill.DataSheet.TryGetValue(MInfo.ProbabilityTriggerSkills, out 概率触发技能);
-        }
-        string text3 = MInfo.EnterCombatSkills;
-        if (text3 != null && text3.Length > 0)
-        {
-            GameSkill.DataSheet.TryGetValue(MInfo.EnterCombatSkills, out 进入战斗技能);
-        }
-        string text4 = MInfo.ExitCombatSkills;
-        if (text4 != null && text4.Length > 0)
-        {
-            GameSkill.DataSheet.TryGetValue(MInfo.ExitCombatSkills, out 退出战斗技能);
-        }
-        string text5 = MInfo.DeathReleaseSkill;
-        if (text5 != null && text5.Length > 0)
-        {
-            GameSkill.DataSheet.TryGetValue(MInfo.DeathReleaseSkill, out 死亡释放技能);
-        }
-        string text6 = MInfo.MoveReleaseSkill;
-        if (text6 != null && text6.Length > 0)
-        {
-            GameSkill.DataSheet.TryGetValue(MInfo.MoveReleaseSkill, out 移动释放技能);
-        }
-        string text7 = MInfo.BirthReleaseSkill;
-        if (text7 != null && text7.Length > 0)
-        {
-            GameSkill.DataSheet.TryGetValue(MInfo.BirthReleaseSkill, out 出生释放技能);
-        }
-        诱惑宠物.Die(null, 技能击杀: false);
+
+        CurrentHP = pet.CurrentHP;
+
+        Initialize();
+
+        pet.Die(null, skillDeath: false);
         Blocking = true;
         BindGrid();
         ObjectID = ++MapManager.ObjectID;
@@ -461,17 +318,46 @@ public sealed class PetObject : MapObject
         Activated = true;
         MapManager.AddActiveObject(this);
         UpdateAllNeighbours();
+    }
+
+    private void Initialize()
+    {
+        RecoveryTime = SEngine.CurrentTime.AddSeconds(5.0);
+        AttackTime = SEngine.CurrentTime.AddSeconds(1.0);
+        BusyTime = SEngine.CurrentTime.AddSeconds(1.0);
+        RoamingTime = SEngine.CurrentTime.AddMilliseconds(SEngine.Random.Next(5000) + RoamInterval);
+        Target = new HateObject();
+
+        if (!string.IsNullOrEmpty(MInfo.NormalAttackSkills))
+            GameSkill.DataSheet.TryGetValue(MInfo.NormalAttackSkills, out NormalAttackSkill);
+
+        if (!string.IsNullOrEmpty(MInfo.ProbabilityTriggerSkills))
+            GameSkill.DataSheet.TryGetValue(MInfo.ProbabilityTriggerSkills, out RandomAttackSkill);
+
+        if (!string.IsNullOrEmpty(MInfo.EnterCombatSkills))
+            GameSkill.DataSheet.TryGetValue(MInfo.EnterCombatSkills, out EnterCombatSkill);
+
+        if (!string.IsNullOrEmpty(MInfo.ExitCombatSkills))
+            GameSkill.DataSheet.TryGetValue(MInfo.ExitCombatSkills, out ExitCombatSkill);
+
+        if (!string.IsNullOrEmpty(MInfo.BirthReleaseSkill))
+            GameSkill.DataSheet.TryGetValue(MInfo.BirthReleaseSkill, out BirthSkill);
+
+        if (!string.IsNullOrEmpty(MInfo.DeathReleaseSkill))
+            GameSkill.DataSheet.TryGetValue(MInfo.DeathReleaseSkill, out DeathSkill);
+
+        if (!string.IsNullOrEmpty(MInfo.MoveReleaseSkill))
+            GameSkill.DataSheet.TryGetValue(MInfo.MoveReleaseSkill, out MoveSkill);
     }
 
     public override void Process()
     {
-        if (SEngine.CurrentTime < base.ProcessTime)
-        {
+        if (SEngine.CurrentTime < ProcessTime)
             return;
-        }
+
         if (Dead)
         {
-            if (!尸体消失 && SEngine.CurrentTime >= VanishingTime)
+            if (!Vanished && SEngine.CurrentTime >= DisappearTime)
             {
                 Despawn();
             }
@@ -486,74 +372,68 @@ public sealed class PetObject : MapObject
             {
                 轮询Buff时处理(item.Value);
             }
-            foreach (SkillObject item2 in ActiveSkills.ToList())
-            {
-                item2.Process();
-            }
-            if (SEngine.CurrentTime > base.RecoveryTime)
+
+            foreach (var skill in ActiveSkills)
+                skill.Process();
+
+            if (SEngine.CurrentTime > RecoveryTime)
             {
                 if (!CheckStatus(GameObjectState.Poisoned))
                 {
                     CurrentHP += this[Stat.HealthRecovery];
                 }
-                base.RecoveryTime = SEngine.CurrentTime.AddSeconds(5.0);
+                RecoveryTime = SEngine.CurrentTime.AddSeconds(5.0);
             }
-            if (SEngine.CurrentTime > base.HealTime && base.治疗次数 > 0)
+            if (SEngine.CurrentTime > HealTime && base.治疗次数 > 0)
             {
                 base.治疗次数--;
-                base.HealTime = SEngine.CurrentTime.AddMilliseconds(500.0);
+                HealTime = SEngine.CurrentTime.AddMilliseconds(500.0);
                 CurrentHP += base.治疗基数;
             }
-            if (进入战斗技能 != null && !base.CombatStance && Target.TargetList.Count != 0)
+            if (EnterCombatSkill != null && !CombatStance && Target.TargetList.Count != 0)
             {
-                new SkillObject(this, 进入战斗技能, null, base.ActionID++, CurrentMap, CurrentPosition, null, CurrentPosition, null);
-                base.CombatStance = true;
-                base.AttackStopTime = SEngine.CurrentTime.AddSeconds(10.0);
+                new SkillObject(this, EnterCombatSkill, null, ActionID++, CurrentMap, CurrentPosition, null, CurrentPosition, null);
+                CombatStance = true;
+                AttackStopTime = SEngine.CurrentTime.AddSeconds(10.0);
             }
-            else if (退出战斗技能 != null && base.CombatStance && Target.TargetList.Count == 0 && SEngine.CurrentTime > base.AttackStopTime)
+            else if (ExitCombatSkill != null && CombatStance && Target.TargetList.Count == 0 && SEngine.CurrentTime > AttackStopTime)
             {
-                new SkillObject(this, 退出战斗技能, null, base.ActionID++, CurrentMap, CurrentPosition, null, CurrentPosition, null);
-                base.CombatStance = false;
+                new SkillObject(this, ExitCombatSkill, null, ActionID++, CurrentMap, CurrentPosition, null, CurrentPosition, null);
+                CombatStance = false;
             }
             else if (Master.PetMode == PetMode.Attack && SEngine.CurrentTime > BusyTime && SEngine.CurrentTime > HardStunTime)
             {
                 if (Target.Target == null && !Neighbors.Contains(Master))
                 {
-                    宠物智能跟随();
+                    ProcessFollow();
                 }
                 else if (UpdateTargets())
                 {
-                    宠物智能攻击();
+                    ProcessAttack();
                 }
                 else
                 {
-                    宠物智能跟随();
+                    ProcessFollow();
                 }
             }
         }
         base.Process();
     }
 
-    public override void Die(MapObject 对象, bool 技能击杀)
+    public override void Die(MapObject attacker, bool skillDeath)
     {
-        if (死亡释放技能 != null && 对象 != null)
+        if (DeathSkill != null && attacker != null)
         {
-            new SkillObject(this, 死亡释放技能, null, base.ActionID++, CurrentMap, CurrentPosition, null, CurrentPosition, null).Process();
+            new SkillObject(this, DeathSkill, null, ActionID++, CurrentMap, CurrentPosition, null, CurrentPosition, null).Process();
         }
-        base.Die(对象, 技能击杀);
-        VanishingTime = SEngine.CurrentTime.AddMilliseconds(CorpsePreservationDuration);
+
+        base.Die(attacker, skillDeath);
+
+        DisappearTime = SEngine.CurrentTime.AddMilliseconds(CorpsePreservationDuration);
+
         RemoveTargets();
-        Master?.宠物死亡处理(this);
-        Master?.PetInfo.Remove(PInfo);
-        Master?.Pets.Remove(this);
-        int? num = Master?.PetCount;
-        if ((num.GetValueOrDefault() == 0) & num.HasValue)
-        {
-            Master?.Enqueue(new GameErrorMessagePacket
-            {
-                ErrorCode = 9473
-            });
-        }
+        Master?.RemovePet(this);
+
         Buffs.Clear();
         PInfo?.Remove();
         SecondaryObject = true;
@@ -562,134 +442,111 @@ public sealed class PetObject : MapObject
         MapManager.RemoveActiveObject(this);
     }
 
-    public void 宠物智能跟随()
+    public void ProcessFollow()
     {
-        if (!CanWalk())
-        {
-            return;
-        }
-        if (Neighbors.Contains(Master))
-        {
-            Point point = Compute.GetNextPosition(Master.CurrentPosition, Compute.RotateDirection(Master.CurrentDirection, 4), 2);
-            if (GetDistance(Master) <= 2 && GetDistance(point) <= 2)
-            {
-                if (SEngine.CurrentTime > RoamingTime)
-                {
-                    RoamingTime = SEngine.CurrentTime.AddMilliseconds(RoamInterval + SEngine.Random.Next(5000));
-                    Point point2 = Compute.GetNextPosition(CurrentPosition, Compute.RandomDirection(), 1);
-                    if (CurrentMap.CanMove(point2))
-                    {
-                        BusyTime = SEngine.CurrentTime.AddMilliseconds(WalkInterval);
-                        WalkTime = SEngine.CurrentTime.AddMilliseconds(WalkInterval + MoveInterval);
-                        CurrentDirection = Compute.DirectionFromPoint(CurrentPosition, point2);
-                        OnLocationChanged(point2);
-                        SendPacket(new ObjectWalkPacket
-                        {
-                            ObjectID = ObjectID,
-                            Position = CurrentPosition,
-                            Speed = base.WalkSpeed
-                        });
-                    }
-                }
-                return;
-            }
-            GameDirection 方向 = Compute.DirectionFromPoint(CurrentPosition, point);
-            int num = 0;
-            Point point3;
-            while (true)
-            {
-                if (num < 8)
-                {
-                    point3 = Compute.GetNextPosition(CurrentPosition, 方向, 1);
-                    if (CurrentMap.CanMove(point3))
-                    {
-                        break;
-                    }
-                    方向 = Compute.RotateDirection(方向, (SEngine.Random.Next(2) != 0) ? 1 : (-1));
-                    num++;
-                    continue;
-                }
-                return;
-            }
-            BusyTime = SEngine.CurrentTime.AddMilliseconds(WalkInterval);
-            WalkTime = SEngine.CurrentTime.AddMilliseconds(WalkInterval + MoveInterval);
-            CurrentDirection = Compute.DirectionFromPoint(CurrentPosition, point3);
-            OnLocationChanged(point3);
-            SendPacket(new ObjectWalkPacket
-            {
-                ObjectID = ObjectID,
-                Position = CurrentPosition,
-                Speed = base.WalkSpeed
-            });
-        }
-        else
+        if (Master == null || !CanWalk()) return;
+
+        if (!Neighbors.Contains(Master))
         {
             PetRecall();
-        }
-    }
-
-    public void 宠物智能攻击()
-    {
-        if (CheckStatus(GameObjectState.Paralyzed | GameObjectState.Unconscious))
-        {
             return;
         }
-        GameSkill 游戏技能;
-        if (概率触发技能 != null && (!Cooldowns.ContainsKey(普通攻击技能.OwnSkillID | 0x1000000) || SEngine.CurrentTime > Cooldowns[普通攻击技能.OwnSkillID | 0x1000000]) && Compute.CalculateProbability(概率触发技能.CalculateLuckyProbability ? Compute.CalcLuck(this[Stat.Luck]) : 概率触发技能.CalculateTriggerProbability))
+
+        var point = Compute.GetNextPosition(Master.CurrentPosition, Compute.RotateDirection(Master.CurrentDirection, 4), 2);
+        if (GetDistance(Master) <= 2 && GetDistance(point) <= 2)
         {
-            游戏技能 = 概率触发技能;
+            if (SEngine.CurrentTime > RoamingTime)
+            {
+                RoamingTime = SEngine.CurrentTime.AddMilliseconds(RoamInterval + SEngine.Random.Next(5_000));
+
+                Walk(Compute.RandomDirection());
+            }
+            return;
+        }
+
+        var dir = Compute.DirectionFromPoint(CurrentPosition, point);
+        for (var i = 0; i < 8; i++)
+        {
+            var next = Compute.GetNextPosition(CurrentPosition, dir, 1);
+            if (CurrentMap.CanMove(next))
+                break;
+
+            dir = Compute.RotateDirection(dir, (SEngine.Random.Next(2) != 0) ? 1 : -1);
+        }
+
+        Walk(dir);
+    }
+
+    public void ProcessAttack()
+    {
+        if (CheckStatus(GameObjectState.Paralyzed | GameObjectState.Unconscious))
+            return;
+
+        GameSkill skill;
+        if (RandomAttackSkill != null && (!Cooldowns.ContainsKey(NormalAttackSkill.OwnSkillID | 0x1000000) || SEngine.CurrentTime > Cooldowns[NormalAttackSkill.OwnSkillID | 0x1000000]) && Compute.CalculateProbability(RandomAttackSkill.CalculateLuckyProbability ? Compute.CalcLuck(this[Stat.Luck]) : RandomAttackSkill.CalculateTriggerProbability))
+        {
+            skill = RandomAttackSkill;
         }
         else
         {
-            if (普通攻击技能 == null || (Cooldowns.ContainsKey(普通攻击技能.OwnSkillID | 0x1000000) && !(SEngine.CurrentTime > Cooldowns[普通攻击技能.OwnSkillID | 0x1000000])))
+            if (NormalAttackSkill == null || (Cooldowns.ContainsKey(NormalAttackSkill.OwnSkillID | 0x1000000) && !(SEngine.CurrentTime > Cooldowns[NormalAttackSkill.OwnSkillID | 0x1000000])))
             {
                 return;
             }
-            游戏技能 = 普通攻击技能;
+            skill = NormalAttackSkill;
         }
-        if (GetDistance(Target.Target) > 游戏技能.MaxDistance)
+
+        if (skill == null) return;
+
+        if (GetDistance(Target.Target) > skill.MaxDistance)
         {
-            if (!CanWalk())
+            var dir = Compute.DirectionFromPoint(CurrentPosition, Target.Target.CurrentPosition);
+            for (var i = 0; i < 8; i++)
             {
-                return;
+                var point = Compute.GetNextPosition(CurrentPosition, dir, 1);
+                if (CurrentMap.CanMove(point))
+                    break;
+
+                dir = Compute.RotateDirection(dir, (SEngine.Random.Next(2) != 0) ? 1 : -1);
             }
-            GameDirection 方向 = Compute.DirectionFromPoint(CurrentPosition, Target.Target.CurrentPosition);
-            bool flag = false;
-            for (int i = 0; i < 10; i++)
-            {
-                Point point = Compute.GetNextPosition(CurrentPosition, 方向, 1);
-                if (!CurrentMap.CanMove(point))
-                {
-                    方向 = Compute.RotateDirection(方向, (SEngine.Random.Next(2) != 0) ? 1 : (-1));
-                    continue;
-                }
-                BusyTime = SEngine.CurrentTime.AddMilliseconds(WalkInterval);
-                WalkTime = SEngine.CurrentTime.AddMilliseconds(WalkInterval + MoveInterval);
-                CurrentDirection = Compute.DirectionFromPoint(CurrentPosition, point);
-                OnLocationChanged(point);
-                SendPacket(new ObjectWalkPacket
-                {
-                    ObjectID = ObjectID,
-                    Position = point,
-                    Speed = base.WalkSpeed
-                });
-                flag = true;
-                break;
-            }
-            if (!flag)
-            {
+
+            if (!Walk(dir))
                 Target.Remove(Target.Target);
-            }
         }
         else if (SEngine.CurrentTime > AttackTime)
         {
-            new SkillObject(this, 游戏技能, null, base.ActionID++, CurrentMap, CurrentPosition, Target.Target, Target.Target.CurrentPosition, null);
+            new SkillObject(this, skill, null, base.ActionID++, CurrentMap, CurrentPosition, Target.Target, Target.Target.CurrentPosition, null);
             AttackTime = SEngine.CurrentTime.AddMilliseconds(Compute.Clamp(0, 10 - this[Stat.AttackSpeed], 10) * 500);
         }
-        else if (CanTurn())
+        else
         {
-            CurrentDirection = Compute.DirectionFromPoint(CurrentPosition, Target.Target.CurrentPosition);
+            var dir = Compute.DirectionFromPoint(CurrentPosition, Target.Target.CurrentPosition);
+            Turn(dir);
         }
+    }
+
+    private bool Turn(GameDirection direction)
+    {
+        if (!CanTurn()) return false;
+
+        CurrentDirection = direction;
+        return true;
+    }
+
+    private bool Walk(GameDirection direction)
+    {
+        if (!CanWalk()) return false;
+
+        var location = Compute.GetNextPosition(CurrentPosition, direction, 1);
+        if (!CurrentMap.CanMove(location)) return false;
+
+        BusyTime = SEngine.CurrentTime.AddMilliseconds(WalkInterval);
+        WalkTime = SEngine.CurrentTime.AddMilliseconds(WalkInterval + MoveInterval);
+        CurrentDirection = Compute.DirectionFromPoint(CurrentPosition, location);
+
+        SendPacket(new ObjectWalkPacket { ObjectID = ObjectID, Position = location, Speed = WalkSpeed });
+        OnLocationChanged(location);
+        return true;
     }
 
     public void GainExperience()
@@ -706,7 +563,7 @@ public sealed class PetObject : MapObject
                 改变类型 = 2,
                 对象编号 = ObjectID
             });
-            SendPacket(new 同步宠物等级
+            SendPacket(new SyncPetLevelPacket
             {
                 ObjectID = ObjectID,
                 PetLevel = PetLevel
@@ -716,21 +573,24 @@ public sealed class PetObject : MapObject
 
     public void PetRecall()
     {
-        Point location = Master.CurrentPosition;
-        for (int i = 1; i <= 120; i++)
+        if (Master == null) return;
+
+        var location = Master.CurrentPosition;
+        for (var i = 1; i <= 120; i++)
         {
-            Point point = Compute.GetPositionAround(location, i);
-            if (Master.CurrentMap.CanMove(point))
+            Point next = Compute.GetPositionAround(location, i);
+            if (Master.CurrentMap.CanMove(next))
             {
-                location = point;
+                location = next;
                 break;
             }
         }
+
         RemoveTargets();
         RemoveAllNeighbors();
         UnbindGrid();
         CurrentPosition = location;
-        CurrentMap = Master?.CurrentMap;
+        CurrentMap = Master.CurrentMap;
         BindGrid();
         UpdateAllNeighbours();
     }
