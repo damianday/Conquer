@@ -1691,6 +1691,7 @@ public partial class SMain : Form
         S_特权玛法豪杰元宝.Value = (Config.特权玛法豪杰元宝 = Settings.Default.特权玛法豪杰元宝);
         S_特权玛法战将元宝.Value = (Config.特权玛法战将元宝 = Settings.Default.特权玛法战将元宝);
         S_御兽切换开关.Value = (Config.御兽切换开关 = Settings.Default.御兽切换开关);
+        Config.GuardKillWillDrop = Settings.Default.GuardKillWillDrop == 1;
 
         Task.Run(delegate
         {

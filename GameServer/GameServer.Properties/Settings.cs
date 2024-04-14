@@ -15222,4 +15222,19 @@ internal sealed class Settings : ApplicationSettingsBase
             this["武斗场杀人开关"] = value;
         }
     }
+
+    [UserScopedSetting]
+    [DebuggerNonUserCode]
+    [DefaultSettingValue("0")]
+    public int GuardKillWillDrop
+    {
+        get
+        {
+            return (int)this["GuardKillWillDrop"];
+        }
+        set
+        {
+            this["GuardKillWillDrop"] = value;
+        }
+    }
 }

@@ -2041,6 +2041,7 @@ public static class Config
     public static string 合成模块控件;
 
     public static bool DebugPackets { get; set; }
+    public static bool GuardKillWillDrop { get; set; }
 
     static Config()
     {
