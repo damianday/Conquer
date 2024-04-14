@@ -4027,7 +4027,7 @@ public sealed class PlayerObject : MapObject
         return true;
     }
 
-    public void 宠物死亡处理(PetObject pet)
+    public void RemovePet(PetObject pet)
     {
         PetInfo.Remove(pet.PInfo);
         Pets.Remove(pet);
@@ -4543,7 +4543,7 @@ public sealed class PlayerObject : MapObject
                 {
                     if (item2.BoundWeapon)
                     {
-                        item2.Die(null, 技能击杀: false);
+                        item2.Die(null, skillDeath: false);
                     }
                 }
             }
@@ -7310,7 +7310,7 @@ public sealed class PlayerObject : MapObject
                 int 宠物时长 = Config.怪物诱惑时长 + 额外诱惑时长 + num6;
                 bool 绑定武器 = flag2 || num4 != 0 || 额外诱惑时长 != 0 || 额外诱惑概率 != 0f || Pets.Count >= num3;
                 PetObject 宠物实例2 = ((诱惑目标 is MonsterObject 怪物实例2) ? new PetObject(this, 怪物实例2, (byte)Math.Max(怪物实例2.PetLevel, num9), 绑定武器, 宠物时长) : new PetObject(this, (PetObject)诱惑目标, (byte)num9, 绑定武器, 宠物时长));
-                Enqueue(new 同步宠物等级
+                Enqueue(new SyncPetLevelPacket
                 {
                     ObjectID = 宠物实例2.ObjectID,
                     PetLevel = 宠物实例2.PetLevel
@@ -7763,7 +7763,7 @@ public sealed class PlayerObject : MapObject
             {
                 PetObject 宠物实例2 = new PetObject(this, item);
                 Pets.Add(宠物实例2);
-                Enqueue(new 同步宠物等级
+                Enqueue(new SyncPetLevelPacket
                 {
                     ObjectID = 宠物实例2.ObjectID,
                     PetLevel = 宠物实例2.PetLevel
