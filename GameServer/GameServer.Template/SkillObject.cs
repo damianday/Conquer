@@ -1229,7 +1229,7 @@ public class SkillObject
             {
                 byte levelMax = (byte)((task.LevelCap?.Length > SkillLevel) ? task.LevelCap[SkillLevel] : 0);
                 PetObject pet = new PetObject(player, moni, SkillLevel, levelMax, task.PetBoundWeapons);
-                player.Enqueue(new 同步宠物等级
+                player.Enqueue(new SyncPetLevelPacket
                 {
                     ObjectID = pet.ObjectID,
                     PetLevel = pet.PetLevel
