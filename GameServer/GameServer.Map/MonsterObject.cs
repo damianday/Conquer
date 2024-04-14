@@ -293,47 +293,47 @@ public sealed class MonsterObject : MapObject
             foreach (KeyValuePair<ushort, BuffInfo> item in Buffs.ToList())
                 轮询Buff时处理(item.Value);
 
-            foreach (SkillObject skill in ActiveSkills)
+            foreach (var skill in ActiveSkills)
                 skill.Process();
 
-            if (SEngine.CurrentTime > base.RecoveryTime)
+            if (SEngine.CurrentTime > RecoveryTime)
             {
                 if (!CheckStatus(GameObjectState.Poisoned))
                 {
                     CurrentHP += this[Stat.HealthRecovery];
                 }
-                base.RecoveryTime = SEngine.CurrentTime.AddSeconds(5.0);
+                RecoveryTime = SEngine.CurrentTime.AddSeconds(5.0);
             }
 
-            if (SEngine.CurrentTime > base.HealTime && base.治疗次数 > 0)
+            if (SEngine.CurrentTime > HealTime && base.治疗次数 > 0)
             {
                 base.治疗次数--;
-                base.HealTime = SEngine.CurrentTime.AddMilliseconds(500.0);
+                HealTime = SEngine.CurrentTime.AddMilliseconds(500.0);
                 CurrentHP += base.治疗基数;
             }
 
             if (SEngine.CurrentTime > BusyTime && SEngine.CurrentTime > HardStunTime)
             {
-                if (EnterCombatSkill != null && !base.CombatStance && Target.TargetList.Count != 0)
+                if (EnterCombatSkill != null && !CombatStance && Target.TargetList.Count != 0)
                 {
-                    new SkillObject(this, EnterCombatSkill, null, base.ActionID++, CurrentMap, CurrentPosition, null, CurrentPosition, null);
-                    base.CombatStance = true;
-                    base.AttackStopTime = SEngine.CurrentTime.AddSeconds(10.0);
+                    new SkillObject(this, EnterCombatSkill, null, ActionID++, CurrentMap, CurrentPosition, null, CurrentPosition, null);
+                    CombatStance = true;
+                    AttackStopTime = SEngine.CurrentTime.AddSeconds(10.0);
                 }
-                else if (ExitCombatSkill != null && base.CombatStance && Target.TargetList.Count == 0 && SEngine.CurrentTime > base.AttackStopTime)
+                else if (ExitCombatSkill != null && CombatStance && Target.TargetList.Count == 0 && SEngine.CurrentTime > AttackStopTime)
                 {
-                    new SkillObject(this, ExitCombatSkill, null, base.ActionID++, CurrentMap, CurrentPosition, null, CurrentPosition, null);
-                    base.CombatStance = false;
+                    new SkillObject(this, ExitCombatSkill, null, ActionID++, CurrentMap, CurrentPosition, null, CurrentPosition, null);
+                    CombatStance = false;
                 }
-                else if (Info.OutWarAutomaticPetrochemical && !base.CombatStance && Target.TargetList.Count != 0)
+                else if (Info.OutWarAutomaticPetrochemical && !CombatStance && Target.TargetList.Count != 0)
                 {
-                    base.CombatStance = true;
+                    CombatStance = true;
                     移除Buff时处理(Info.PetrochemicalStatusID);
-                    base.AttackStopTime = SEngine.CurrentTime.AddSeconds(10.0);
+                    AttackStopTime = SEngine.CurrentTime.AddSeconds(10.0);
                 }
-                else if (Info.OutWarAutomaticPetrochemical && base.CombatStance && Target.TargetList.Count == 0 && SEngine.CurrentTime > base.AttackStopTime)
+                else if (Info.OutWarAutomaticPetrochemical && CombatStance && Target.TargetList.Count == 0 && SEngine.CurrentTime > AttackStopTime)
                 {
-                    base.CombatStance = false;
+                    CombatStance = false;
                     AddBuff(Info.PetrochemicalStatusID, this);
                 }
                 else if ((Grade == MonsterGradeType.Boss) ? UpdateTargets() : 更新对象仇恨())
@@ -355,9 +355,10 @@ public sealed class MonsterObject : MapObject
             skill.Stop();
 
         base.Die(attacker, skillDeath);
+
         if (DeathSkill != null && attacker != null)
         {
-            new SkillObject(this, DeathSkill, null, base.ActionID++, CurrentMap, CurrentPosition, null, CurrentPosition, null).Process();
+            new SkillObject(this, DeathSkill, null, ActionID++, CurrentMap, CurrentPosition, null, CurrentPosition, null).Process();
         }
 
         if (CurrentMap.QuestMap || !ForbidResurrection)
@@ -368,6 +369,8 @@ public sealed class MonsterObject : MapObject
         Disappeared = false;
         DisappearTime = SEngine.CurrentTime.AddMilliseconds(CorpsePreservationDuration);
         ResurrectionTime = SEngine.CurrentTime.AddMilliseconds(Math.Max(ResurrectionInterval, CorpsePreservationDuration + 5000));
+
+       var guardKill = (attacker is GuardObject) ? true : false;
 
         (attacker as PetObject)?.GainExperience();
         if (Grade == MonsterGradeType.DarkGateMonster)
@@ -432,27 +435,30 @@ public sealed class MonsterObject : MapObject
             }
             else
             {
-                DropItems(hitter);
-
-                if (hitter.Team == null)
+                if (!guardKill || Config.GuardKillWillDrop)
                 {
-                    hitter.GainExperience(this, Experience);
-                }
-                else
-                {
-                    List<PlayerObject> nearby = new List<PlayerObject>();
-                    nearby.Add(hitter);
+                    DropItems(hitter);
 
-                    foreach (var obj in ImportantNeighbors)
+                    if (hitter.Team == null)
                     {
-                        if (obj != hitter && obj is PlayerObject player && player.Team == hitter.Team)
-                            nearby.Add(player);
+                        hitter.GainExperience(this, Experience);
                     }
-                    float rate = (float)Experience * (1f + (float)(nearby.Count - 1) * 0.2f);
-                    float sumlv = nearby.Sum(x => x.CurrentLevel);
-                    foreach (var player in nearby)
+                    else
                     {
-                        player.GainExperience(this, (int)(rate * (float)(int)player.CurrentLevel / sumlv));
+                        List<PlayerObject> nearby = new List<PlayerObject>();
+                        nearby.Add(hitter);
+
+                        foreach (var obj in ImportantNeighbors)
+                        {
+                            if (obj != hitter && obj is PlayerObject player && player.Team == hitter.Team)
+                                nearby.Add(player);
+                        }
+                        float rate = (float)Experience * (1f + (float)(nearby.Count - 1) * 0.2f);
+                        float sumlv = nearby.Sum(x => x.CurrentLevel);
+                        foreach (var player in nearby)
+                        {
+                            player.GainExperience(this, (int)(rate * (float)(int)player.CurrentLevel / sumlv));
+                        }
                     }
                 }
             }
@@ -492,6 +498,9 @@ public sealed class MonsterObject : MapObject
 
         AttackStopTime = SEngine.CurrentTime.AddSeconds(10.0);
 
+        if (CheckStatus(GameObjectState.BusyGreen | GameObjectState.Paralyzed | GameObjectState.Unconscious))
+            return;
+
         GameSkill skill;
         if (RandomAttackSkill != null && (!Cooldowns.ContainsKey(RandomAttackSkill.OwnSkillID | 0x1000000) || SEngine.CurrentTime > Cooldowns[RandomAttackSkill.OwnSkillID | 0x1000000]) && Compute.CalculateProbability(RandomAttackSkill.CalculateTriggerProbability))
         {
@@ -505,9 +514,6 @@ public sealed class MonsterObject : MapObject
             }
             skill = NormalAttackSkill;
         }
-
-        if (CheckStatus(GameObjectState.BusyGreen | GameObjectState.Paralyzed | GameObjectState.Unconscious))
-            return;
 
         if (skill == null) return;
 
@@ -551,27 +557,28 @@ public sealed class MonsterObject : MapObject
         }
     }
 
-    private void Turn(GameDirection direction)
+    private bool Turn(GameDirection direction)
     {
-        if (ForbbidenMove || !CanTurn()) return;
+        if (ForbbidenMove || !CanTurn()) return false;
 
         CurrentDirection = direction;
+        return true;
     }
 
-    private void Walk(GameDirection direction)
+    private bool Walk(GameDirection direction)
     {
-        if (ForbbidenMove || !CanWalk()) return;
+        if (ForbbidenMove || !CanWalk()) return false;
 
         var location = Compute.GetNextPosition(CurrentPosition, direction, 1);
-        if (CurrentMap.CanMove(location))
-        {
-            BusyTime = SEngine.CurrentTime.AddMilliseconds(WalkInterval);
-            WalkTime = SEngine.CurrentTime.AddMilliseconds(WalkInterval + MoveInterval);
-            CurrentDirection = Compute.DirectionFromPoint(CurrentPosition, location);
+        if (!CurrentMap.CanMove(location)) return false;
 
-            SendPacket(new ObjectWalkPacket { ObjectID = ObjectID, Position = location, Speed = WalkSpeed });
-            OnLocationChanged(location);
-        }
+        BusyTime = SEngine.CurrentTime.AddMilliseconds(WalkInterval);
+        WalkTime = SEngine.CurrentTime.AddMilliseconds(WalkInterval + MoveInterval);
+        CurrentDirection = Compute.DirectionFromPoint(CurrentPosition, location);
+
+        SendPacket(new ObjectWalkPacket { ObjectID = ObjectID, Position = location, Speed = WalkSpeed });
+        OnLocationChanged(location);
+        return true;
     }
 
     private void DropItems(PlayerObject hitter)
