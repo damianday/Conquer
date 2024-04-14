@@ -10,7 +10,7 @@ using GamePackets.Server;
 
 namespace GameServer.Map;
 
-public sealed class 玩家交易
+public sealed class TradingObject
 {
     public PlayerObject 交易申请方;
     public PlayerObject 交易接收方;
@@ -24,7 +24,7 @@ public sealed class 玩家交易
     public Dictionary<byte, ItemInfo> 申请方物品;
     public Dictionary<byte, ItemInfo> 接收方物品;
 
-    public 玩家交易(PlayerObject 申请方, PlayerObject 接收方)
+    public TradingObject(PlayerObject 申请方, PlayerObject 接收方)
     {
         申请方物品 = new Dictionary<byte, ItemInfo>();
         接收方物品 = new Dictionary<byte, ItemInfo>();
@@ -46,7 +46,7 @@ public sealed class 玩家交易
         });
     }
 
-    public void 结束交易()
+    public void BreakTrade()
     {
         交易申请方.Enqueue(new 交易状态改变
         {
@@ -152,7 +152,7 @@ public sealed class 玩家交易
             交易申请方.Gold += 接收方金币;
         }
         更改状态(6);
-        结束交易();
+        BreakTrade();
     }
 
     public void 更改状态(byte 状态, PlayerObject 玩家 = null)
@@ -195,7 +195,7 @@ public sealed class 玩家交易
         }
         else
         {
-            结束交易();
+            BreakTrade();
         }
     }
 
@@ -221,7 +221,7 @@ public sealed class 玩家交易
         }
         else
         {
-            结束交易();
+            BreakTrade();
         }
     }
 
@@ -251,7 +251,7 @@ public sealed class 玩家交易
         }
         else
         {
-            结束交易();
+            BreakTrade();
         }
     }
 
