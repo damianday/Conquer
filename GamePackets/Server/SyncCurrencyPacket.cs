@@ -1,7 +1,7 @@
 namespace GamePackets.Server;
 
 [PacketInfo(Source = PacketSource.Server, ID = 149, Length = 30, Description = "货币数量变动")]
-public sealed class 货币数量变动 : GamePacket
+public sealed class SyncCurrencyPacket : GamePacket
 {
     [FieldAttribute(Position = 2, Length = 1)]
     public byte Currency;
