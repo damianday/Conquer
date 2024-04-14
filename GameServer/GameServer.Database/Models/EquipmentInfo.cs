@@ -1175,6 +1175,7 @@ public class EquipmentInfo : ItemInfo
         {
             writer.Write(0);
         }
+        writer.Write(0); // Unknown
         return ms.ToArray();
     }
 }

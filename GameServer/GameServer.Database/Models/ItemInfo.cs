@@ -7,7 +7,7 @@ namespace GameServer.Database;
 
 public class ItemInfo : DBObject
 {
-    public const byte Version = 14;
+    public const byte Version = 15;
 
     public readonly DataMonitor<GameItem> Item;
     public readonly DataMonitor<DateTime> CreatedDate;
@@ -367,6 +367,7 @@ public class ItemInfo : DBObject
         writer.Write((byte)(IsBound ? 10u : 0u));
         writer.Write((ushort)0);
         writer.Write(0);
+        writer.Write(0); // Unknown
         return ms.ToArray();
     }
 }
