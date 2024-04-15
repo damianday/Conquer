@@ -5525,7 +5525,7 @@ public partial class SMain : Form
                         int num723 = (Config.平台开关模式 = 平台开关模式);
                         break;
                     }
-                 // TODO: Not used
+                // TODO: Not used
                 /*case nameof(S_平台金币充值模块):
                     {
                         int num2 = (Settings.Default.平台金币充值模块 = (int)numericUpDown.Value);
@@ -8453,121 +8453,6 @@ public partial class SMain : Form
         }
     }
 
-    private void ButtonMonsterInfo_Click(object sender, EventArgs e)
-    {
-        SystemDataGateway.LoadMonsters();
-    }
-
-    private void ButtonGuard_Click(object sender, EventArgs e)
-    {
-        SystemDataGateway.LoadGuards();
-    }
-
-    private void 对话数据_Click(object sender, EventArgs e)
-    {
-        SystemDataGateway.对话数据();
-    }
-
-    private void 游戏地图_Click(object sender, EventArgs e)
-    {
-        SystemDataGateway.游戏地图();
-    }
-
-    private void ButtonTerrain_Click(object sender, EventArgs e)
-    {
-        SystemDataGateway.LoadTerrains();
-    }
-
-    private void 地图区域_Click(object sender, EventArgs e)
-    {
-        SystemDataGateway.地图区域();
-    }
-
-    private void 传送法阵_Click(object sender, EventArgs e)
-    {
-        SystemDataGateway.传送法阵();
-    }
-
-    private void 怪物刷新_Click(object sender, EventArgs e)
-    {
-        SystemDataGateway.怪物刷新();
-    }
-
-    private void 守卫刷新_Click(object sender, EventArgs e)
-    {
-        SystemDataGateway.守卫刷新();
-    }
-
-    private void 游戏物品_Click(object sender, EventArgs e)
-    {
-        SystemDataGateway.游戏物品();
-    }
-
-    private void 随机属性_Click(object sender, EventArgs e)
-    {
-        SystemDataGateway.随机属性();
-    }
-
-    private void 装备属性_Click(object sender, EventArgs e)
-    {
-        SystemDataGateway.装备属性();
-    }
-
-    private void 游戏商店_Click(object sender, EventArgs e)
-    {
-        SystemDataGateway.游戏商店();
-    }
-
-    private void 珍宝商品_Click(object sender, EventArgs e)
-    {
-        SystemDataGateway.珍宝商品();
-    }
-
-    private void 游戏称号_Click(object sender, EventArgs e)
-    {
-        SystemDataGateway.游戏称号();
-    }
-
-    private void 铭文技能_Click(object sender, EventArgs e)
-    {
-        SystemDataGateway.铭文技能();
-    }
-
-    private void 游戏技能_Click(object sender, EventArgs e)
-    {
-        SystemDataGateway.游戏技能();
-    }
-
-    private void 技能陷阱_Click(object sender, EventArgs e)
-    {
-        SystemDataGateway.技能陷阱();
-    }
-
-    private void 游戏Buff_Click(object sender, EventArgs e)
-    {
-        SystemDataGateway.游戏Buff();
-    }
-
-    private void 游戏坐骑_Click(object sender, EventArgs e)
-    {
-        SystemDataGateway.游戏坐骑();
-    }
-
-    private void 合成数据_Click(object sender, EventArgs e)
-    {
-        SystemDataGateway.合成数据();
-    }
-
-    private void VIP数据_Click(object sender, EventArgs e)
-    {
-        SystemDataGateway.VIP数据();
-    }
-
-    private void 宝箱数据_Click(object sender, EventArgs e)
-    {
-        SystemDataGateway.宝箱数据();
-    }
-
     private void S_BOSS二地图名字_TextChanged(object sender, EventArgs e)
     {
         if (sender is TextBox textBox)
@@ -9526,16 +9411,6 @@ public partial class SMain : Form
             }
             Settings.Default.Save();
         }
-    }
-
-    private void 坐骑御兽_Click(object sender, EventArgs e)
-    {
-        SystemDataGateway.坐骑御兽();
-    }
-
-    private void 装备套装_Click(object sender, EventArgs e)
-    {
-        SystemDataGateway.套装数据();
     }
 
     private void S_浏览平台目录_Click(object sender, EventArgs e)
@@ -11414,5 +11289,130 @@ public partial class SMain : Form
     private void allToolStripMenuItem_Click(object sender, EventArgs e)
     {
         SystemDataGateway.ReloadData();
+    }
+
+    private void gameMonsterToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        SystemDataGateway.LoadMonsterInfos();
+    }
+
+    private void mapGuardToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        SystemDataGateway.LoadGuardInfos();
+    }
+
+    private void dialogDataToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        SystemDataGateway.LoadNpcDialogs();
+    }
+
+    private void gameMapToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        SystemDataGateway.LoadGameMaps();
+    }
+
+    private void terrainDataToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        SystemDataGateway.LoadTerrains();
+    }
+
+    private void mapAreaToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        SystemDataGateway.LoadMapAreas();
+    }
+
+    private void teleportCircleToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        SystemDataGateway.LoadTeleportGates();
+    }
+
+    private void monsterRefreshToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        SystemDataGateway.LoadMonsterSpawns();
+    }
+
+    private void guardRefreshToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        SystemDataGateway.LoadMapGuards();
+    }
+
+    private void gameItemsToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        SystemDataGateway.LoadGameItems();
+    }
+
+    private void equipmentSetToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        SystemDataGateway.LoadItemSetInfos();
+    }
+
+    private void syntheticDataToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        SystemDataGateway.LoadItemCraftings();
+    }
+
+    private void chestDataToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        SystemDataGateway.LoadTreasureChestInfos();
+    }
+
+    private void randomAttributeToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        SystemDataGateway.LoadRandomStats();
+    }
+
+    private void itemAttributeToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        SystemDataGateway.LoadEquipmentStats();
+    }
+
+    private void gameShopToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        SystemDataGateway.LoadGameStores();
+    }
+
+    private void treasuresToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        SystemDataGateway.LoadRareTreasureItems();
+    }
+
+    private void gameTitleToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        SystemDataGateway.LoadGameTitles();
+    }
+
+    private void inscriptionSkillsToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        SystemDataGateway.LoadInscriptionSkills();
+    }
+
+    private void gameSkillsToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        SystemDataGateway.LoadGameSkills();
+    }
+
+    private void skillTrapToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        SystemDataGateway.LoadSkillTraps();
+    }
+
+    private void gameBuffToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        SystemDataGateway.LoadGameBuffs();
+    }
+
+    private void gameMountToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        SystemDataGateway.LoadGameMounts();
+    }
+
+    private void mountRoyalBeastToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        SystemDataGateway.LoadMountBeasts();
+    }
+
+    private void vIPDataToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        SystemDataGateway.LoadVIPSystem();
     }
 }

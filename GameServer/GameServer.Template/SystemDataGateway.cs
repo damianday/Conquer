@@ -47,61 +47,58 @@ public static class SystemDataGateway
 
     private static void ReloadDataType(Type type)
     {
-        Task.Run(delegate
-        {
-            LoadDataType(type);
-        }).Wait();
+        Task.Run(() => { LoadDataType(type); }).Wait();
     }
 
-    public static void LoadMonsters() => ReloadDataType(typeof(MonsterInfo));
+    public static void LoadMonsterInfos() => ReloadDataType(typeof(MonsterInfo));
 
-    public static void LoadGuards() => ReloadDataType(typeof(GuardInfo));
+    public static void LoadGuardInfos() => ReloadDataType(typeof(GuardInfo));
 
-    public static void 对话数据() => ReloadDataType(typeof(NpcDialogs));
+    public static void LoadNpcDialogs() => ReloadDataType(typeof(NpcDialog));
 
-    public static void 游戏地图() => ReloadDataType(typeof(GameMap));
+    public static void LoadGameMaps() => ReloadDataType(typeof(GameMap));
     
     public static void LoadTerrains() => ReloadDataType(typeof(Terrain));
     
-    public static void 地图区域() => ReloadDataType(typeof(MapArea));
+    public static void LoadMapAreas() => ReloadDataType(typeof(MapArea));
     
-    public static void 传送法阵() => ReloadDataType(typeof(TeleportGate));
+    public static void LoadTeleportGates() => ReloadDataType(typeof(TeleportGate));
     
-    public static void 怪物刷新() => ReloadDataType(typeof(MonsterSpawn));
+    public static void LoadMonsterSpawns() => ReloadDataType(typeof(MonsterSpawn));
     
-    public static void 守卫刷新() => ReloadDataType(typeof(MapGuard));
+    public static void LoadMapGuards() => ReloadDataType(typeof(MapGuard));
     
-    public static void 游戏物品() => ReloadDataType(typeof(GameItem));
+    public static void LoadGameItems() => ReloadDataType(typeof(GameItem));
  
-    public static void 随机属性() => ReloadDataType(typeof(RandomStats));
+    public static void LoadRandomStats() => ReloadDataType(typeof(RandomStats));
 
-    public static void 装备属性() => ReloadDataType(typeof(EquipmentStats));
+    public static void LoadEquipmentStats() => ReloadDataType(typeof(EquipmentStats));
 
-    public static void 游戏商店() => ReloadDataType(typeof(GameStore));
+    public static void LoadGameStores() => ReloadDataType(typeof(GameStore));
 
-    public static void 珍宝商品() => ReloadDataType(typeof(RareTreasureItem));
+    public static void LoadRareTreasureItems() => ReloadDataType(typeof(RareTreasureItem));
     
-    public static void 游戏称号() => ReloadDataType(typeof(GameTitle));
+    public static void LoadGameTitles() => ReloadDataType(typeof(GameTitle));
 
-    public static void 铭文技能() => ReloadDataType(typeof(InscriptionSkill));
+    public static void LoadInscriptionSkills() => ReloadDataType(typeof(InscriptionSkill));
 
-    public static void 游戏技能() => ReloadDataType(typeof(GameSkill));
+    public static void LoadGameSkills() => ReloadDataType(typeof(GameSkill));
 
-    public static void 技能陷阱() => ReloadDataType(typeof(SkillTrap));
+    public static void LoadSkillTraps() => ReloadDataType(typeof(SkillTrap));
 
-    public static void 游戏Buff() => ReloadDataType(typeof(GameBuff));
+    public static void LoadGameBuffs() => ReloadDataType(typeof(GameBuff));
     
-    public static void 游戏坐骑() => ReloadDataType(typeof(GameMount));
+    public static void LoadGameMounts() => ReloadDataType(typeof(GameMount));
 
-    public static void 套装数据() => ReloadDataType(typeof(ItemSetInfo));
+    public static void LoadItemSetInfos() => ReloadDataType(typeof(ItemSetInfo));
 
-    public static void 坐骑御兽() => ReloadDataType(typeof(MountBeast));
+    public static void LoadMountBeasts() => ReloadDataType(typeof(MountBeast));
 
-    public static void 合成数据() => ReloadDataType(typeof(ItemCrafting));
+    public static void LoadItemCraftings() => ReloadDataType(typeof(ItemCrafting));
 
-    public static void VIP数据() => ReloadDataType(typeof(VIPSystem));
+    public static void LoadVIPSystem() => ReloadDataType(typeof(VIPSystem));
 
-    public static void 宝箱数据() => ReloadDataType(typeof(TreasureChestInfo));
+    public static void LoadTreasureChestInfos() => ReloadDataType(typeof(TreasureChestInfo));
    
     public static void ReloadData()
     {
@@ -109,7 +106,7 @@ public static class SystemDataGateway
         {
             typeof(MonsterInfo),
             typeof(GuardInfo),
-            typeof(NpcDialogs),
+            typeof(NpcDialog),
             typeof(GameMap),
             typeof(Terrain),
             typeof(MapArea),
@@ -147,7 +144,7 @@ public static class SystemDataGateway
         {
             typeof(MonsterInfo),
             typeof(GuardInfo),
-            typeof(NpcDialogs),
+            typeof(NpcDialog),
             typeof(GameMap),
             typeof(Terrain),
             typeof(MapArea),

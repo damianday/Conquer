@@ -2421,32 +2421,6 @@ public partial class SMain
         角色浏览表 = new DataGridView();
         主选项卡 = new TabControl();
         日志页面 = new TabPage();
-        groupBox1 = new GroupBox();
-        宝箱数据 = new Button();
-        VIP数据 = new Button();
-        合成数据 = new Button();
-        坐骑御兽 = new Button();
-        装备套装 = new Button();
-        技能陷阱 = new Button();
-        游戏Buff = new Button();
-        游戏坐骑 = new Button();
-        装备属性 = new Button();
-        游戏商店 = new Button();
-        珍宝商品 = new Button();
-        游戏称号 = new Button();
-        铭文技能 = new Button();
-        游戏技能 = new Button();
-        随机属性 = new Button();
-        游戏物品 = new Button();
-        地图区域 = new Button();
-        传送法阵 = new Button();
-        怪物刷新 = new Button();
-        守卫刷新 = new Button();
-        对话数据 = new Button();
-        游戏地图 = new Button();
-        ButtonTerrain = new Button();
-        ButtonGuard = new Button();
-        ButtonMonsterInfo = new Button();
         StatObjectsStatistics = new Label();
         日志选项卡 = new TabControl();
         系统日志页面 = new TabPage();
@@ -2530,6 +2504,31 @@ public partial class SMain
         toolStripMenuItem2 = new ToolStripSeparator();
         reloadToolStripMenuItem = new ToolStripMenuItem();
         allToolStripMenuItem = new ToolStripMenuItem();
+        gameMonsterToolStripMenuItem = new ToolStripMenuItem();
+        mapGuardToolStripMenuItem = new ToolStripMenuItem();
+        dialogDataToolStripMenuItem = new ToolStripMenuItem();
+        gameMapToolStripMenuItem = new ToolStripMenuItem();
+        terrainDataToolStripMenuItem = new ToolStripMenuItem();
+        mapAreaToolStripMenuItem = new ToolStripMenuItem();
+        teleportCircleToolStripMenuItem = new ToolStripMenuItem();
+        monsterRefreshToolStripMenuItem = new ToolStripMenuItem();
+        guardRefreshToolStripMenuItem = new ToolStripMenuItem();
+        gameItemsToolStripMenuItem = new ToolStripMenuItem();
+        equipmentSetToolStripMenuItem = new ToolStripMenuItem();
+        syntheticDataToolStripMenuItem = new ToolStripMenuItem();
+        chestDataToolStripMenuItem = new ToolStripMenuItem();
+        randomAttributeToolStripMenuItem = new ToolStripMenuItem();
+        itemAttributeToolStripMenuItem = new ToolStripMenuItem();
+        gameShopToolStripMenuItem = new ToolStripMenuItem();
+        treasuresToolStripMenuItem = new ToolStripMenuItem();
+        gameTitleToolStripMenuItem = new ToolStripMenuItem();
+        inscriptionSkillsToolStripMenuItem = new ToolStripMenuItem();
+        gameSkillsToolStripMenuItem = new ToolStripMenuItem();
+        skillTrapToolStripMenuItem = new ToolStripMenuItem();
+        gameBuffToolStripMenuItem = new ToolStripMenuItem();
+        gameMountToolStripMenuItem = new ToolStripMenuItem();
+        mountRoyalBeastToolStripMenuItem = new ToolStripMenuItem();
+        vIPDataToolStripMenuItem = new ToolStripMenuItem();
         savaDatabaseToolStripMenuItem = new ToolStripMenuItem();
         toolStripMenuItem4 = new ToolStripSeparator();
         exitToolStripMenuItem = new ToolStripMenuItem();
@@ -3831,7 +3830,6 @@ public partial class SMain
         ((ISupportInitialize)角色浏览表).BeginInit();
         主选项卡.SuspendLayout();
         日志页面.SuspendLayout();
-        groupBox1.SuspendLayout();
         日志选项卡.SuspendLayout();
         系统日志页面.SuspendLayout();
         聊天日志页面.SuspendLayout();
@@ -3915,7 +3913,7 @@ public partial class SMain
         读取本地运行程序ToolStripMenuItem.Size = new Size(195, 22);
         读取本地运行程序ToolStripMenuItem.Text = "Read Local Program";
         // 
-        // 界面定时更新
+        // UIUpdateTimer
         // 
         UIUpdateTimer.Interval = 2500;
         // 
@@ -20713,12 +20711,12 @@ public partial class SMain
         label763.TabIndex = 2;
         label763.Text = "(Note: Set 0 to turn OFF and 1 to turn ON the new Drop rate module)";
         // 
-        // S_新老爆率开关
+        // S_DropRateModifier
         // 
         S_DropRateModifier.Location = new Point(176, 31);
         S_DropRateModifier.Margin = new Padding(4, 3, 4, 3);
         S_DropRateModifier.Maximum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_DropRateModifier.Name = "S_新老爆率开关";
+        S_DropRateModifier.Name = "S_DropRateModifier";
         S_DropRateModifier.Size = new Size(44, 23);
         S_DropRateModifier.TabIndex = 1;
         S_DropRateModifier.TextAlign = HorizontalAlignment.Center;
@@ -25194,96 +25192,96 @@ public partial class SMain
         groupBox151.TabStop = false;
         groupBox151.Text = "Random Chest 2";
         // 
-        // s_随机宝箱三数量8
+        // S_随机宝箱三数量8
         // 
         S_随机宝箱三数量8.Location = new Point(254, 282);
         S_随机宝箱三数量8.Margin = new Padding(4, 3, 4, 3);
         S_随机宝箱三数量8.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱三数量8.Name = "s_随机宝箱三数量8";
+        S_随机宝箱三数量8.Name = "S_随机宝箱三数量8";
         S_随机宝箱三数量8.Size = new Size(47, 23);
         S_随机宝箱三数量8.TabIndex = 146;
         S_随机宝箱三数量8.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱三数量8.Value = new decimal(new int[] { 1, 0, 0, 0 });
         S_随机宝箱三数量8.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
         // 
-        // s_随机宝箱三数量7
+        // S_随机宝箱三数量7
         // 
         S_随机宝箱三数量7.Location = new Point(254, 248);
         S_随机宝箱三数量7.Margin = new Padding(4, 3, 4, 3);
         S_随机宝箱三数量7.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱三数量7.Name = "s_随机宝箱三数量7";
+        S_随机宝箱三数量7.Name = "S_随机宝箱三数量7";
         S_随机宝箱三数量7.Size = new Size(47, 23);
         S_随机宝箱三数量7.TabIndex = 145;
         S_随机宝箱三数量7.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱三数量7.Value = new decimal(new int[] { 1, 0, 0, 0 });
         S_随机宝箱三数量7.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
         // 
-        // s_随机宝箱三数量6
+        // S_随机宝箱三数量6
         // 
         S_随机宝箱三数量6.Location = new Point(254, 215);
         S_随机宝箱三数量6.Margin = new Padding(4, 3, 4, 3);
         S_随机宝箱三数量6.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱三数量6.Name = "s_随机宝箱三数量6";
+        S_随机宝箱三数量6.Name = "S_随机宝箱三数量6";
         S_随机宝箱三数量6.Size = new Size(47, 23);
         S_随机宝箱三数量6.TabIndex = 144;
         S_随机宝箱三数量6.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱三数量6.Value = new decimal(new int[] { 1, 0, 0, 0 });
         S_随机宝箱三数量6.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
         // 
-        // s_随机宝箱三数量5
+        // S_随机宝箱三数量5
         // 
         S_随机宝箱三数量5.Location = new Point(254, 181);
         S_随机宝箱三数量5.Margin = new Padding(4, 3, 4, 3);
         S_随机宝箱三数量5.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱三数量5.Name = "s_随机宝箱三数量5";
+        S_随机宝箱三数量5.Name = "S_随机宝箱三数量5";
         S_随机宝箱三数量5.Size = new Size(47, 23);
         S_随机宝箱三数量5.TabIndex = 143;
         S_随机宝箱三数量5.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱三数量5.Value = new decimal(new int[] { 1, 0, 0, 0 });
         S_随机宝箱三数量5.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
         // 
-        // s_随机宝箱三数量4
+        // S_随机宝箱三数量4
         // 
         S_随机宝箱三数量4.Location = new Point(254, 147);
         S_随机宝箱三数量4.Margin = new Padding(4, 3, 4, 3);
         S_随机宝箱三数量4.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱三数量4.Name = "s_随机宝箱三数量4";
+        S_随机宝箱三数量4.Name = "S_随机宝箱三数量4";
         S_随机宝箱三数量4.Size = new Size(47, 23);
         S_随机宝箱三数量4.TabIndex = 142;
         S_随机宝箱三数量4.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱三数量4.Value = new decimal(new int[] { 1, 0, 0, 0 });
         S_随机宝箱三数量4.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
         // 
-        // s_随机宝箱三数量3
+        // S_随机宝箱三数量3
         // 
         S_随机宝箱三数量3.Location = new Point(254, 113);
         S_随机宝箱三数量3.Margin = new Padding(4, 3, 4, 3);
         S_随机宝箱三数量3.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱三数量3.Name = "s_随机宝箱三数量3";
+        S_随机宝箱三数量3.Name = "S_随机宝箱三数量3";
         S_随机宝箱三数量3.Size = new Size(47, 23);
         S_随机宝箱三数量3.TabIndex = 141;
         S_随机宝箱三数量3.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱三数量3.Value = new decimal(new int[] { 1, 0, 0, 0 });
         S_随机宝箱三数量3.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
         // 
-        // s_随机宝箱三数量2
+        // S_随机宝箱三数量2
         // 
         S_随机宝箱三数量2.Location = new Point(254, 80);
         S_随机宝箱三数量2.Margin = new Padding(4, 3, 4, 3);
         S_随机宝箱三数量2.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱三数量2.Name = "s_随机宝箱三数量2";
+        S_随机宝箱三数量2.Name = "S_随机宝箱三数量2";
         S_随机宝箱三数量2.Size = new Size(47, 23);
         S_随机宝箱三数量2.TabIndex = 140;
         S_随机宝箱三数量2.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱三数量2.Value = new decimal(new int[] { 1, 0, 0, 0 });
         S_随机宝箱三数量2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
         // 
-        // s_随机宝箱三数量1
+        // S_随机宝箱三数量1
         // 
         S_随机宝箱三数量1.Location = new Point(254, 46);
         S_随机宝箱三数量1.Margin = new Padding(4, 3, 4, 3);
         S_随机宝箱三数量1.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱三数量1.Name = "s_随机宝箱三数量1";
+        S_随机宝箱三数量1.Name = "S_随机宝箱三数量1";
         S_随机宝箱三数量1.Size = new Size(47, 23);
         S_随机宝箱三数量1.TabIndex = 139;
         S_随机宝箱三数量1.TextAlign = HorizontalAlignment.Center;
@@ -25659,96 +25657,96 @@ public partial class SMain
         groupBox150.TabStop = false;
         groupBox150.Text = "Random Chest 1";
         // 
-        // s_随机宝箱二数量8
+        // S_随机宝箱二数量8
         // 
         S_随机宝箱二数量8.Location = new Point(266, 284);
         S_随机宝箱二数量8.Margin = new Padding(4, 3, 4, 3);
         S_随机宝箱二数量8.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱二数量8.Name = "s_随机宝箱二数量8";
+        S_随机宝箱二数量8.Name = "S_随机宝箱二数量8";
         S_随机宝箱二数量8.Size = new Size(47, 23);
         S_随机宝箱二数量8.TabIndex = 137;
         S_随机宝箱二数量8.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱二数量8.Value = new decimal(new int[] { 1, 0, 0, 0 });
         S_随机宝箱二数量8.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
         // 
-        // s_随机宝箱二数量7
+        // S_随机宝箱二数量7
         // 
         S_随机宝箱二数量7.Location = new Point(266, 250);
         S_随机宝箱二数量7.Margin = new Padding(4, 3, 4, 3);
         S_随机宝箱二数量7.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱二数量7.Name = "s_随机宝箱二数量7";
+        S_随机宝箱二数量7.Name = "S_随机宝箱二数量7";
         S_随机宝箱二数量7.Size = new Size(47, 23);
         S_随机宝箱二数量7.TabIndex = 136;
         S_随机宝箱二数量7.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱二数量7.Value = new decimal(new int[] { 1, 0, 0, 0 });
         S_随机宝箱二数量7.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
         // 
-        // s_随机宝箱二数量6
+        // S_随机宝箱二数量6
         // 
         S_随机宝箱二数量6.Location = new Point(266, 217);
         S_随机宝箱二数量6.Margin = new Padding(4, 3, 4, 3);
         S_随机宝箱二数量6.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱二数量6.Name = "s_随机宝箱二数量6";
+        S_随机宝箱二数量6.Name = "S_随机宝箱二数量6";
         S_随机宝箱二数量6.Size = new Size(47, 23);
         S_随机宝箱二数量6.TabIndex = 135;
         S_随机宝箱二数量6.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱二数量6.Value = new decimal(new int[] { 1, 0, 0, 0 });
         S_随机宝箱二数量6.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
         // 
-        // s_随机宝箱二数量5
+        // S_随机宝箱二数量5
         // 
         S_随机宝箱二数量5.Location = new Point(266, 183);
         S_随机宝箱二数量5.Margin = new Padding(4, 3, 4, 3);
         S_随机宝箱二数量5.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱二数量5.Name = "s_随机宝箱二数量5";
+        S_随机宝箱二数量5.Name = "S_随机宝箱二数量5";
         S_随机宝箱二数量5.Size = new Size(47, 23);
         S_随机宝箱二数量5.TabIndex = 134;
         S_随机宝箱二数量5.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱二数量5.Value = new decimal(new int[] { 1, 0, 0, 0 });
         S_随机宝箱二数量5.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
         // 
-        // s_随机宝箱二数量4
+        // S_随机宝箱二数量4
         // 
         S_随机宝箱二数量4.Location = new Point(266, 149);
         S_随机宝箱二数量4.Margin = new Padding(4, 3, 4, 3);
         S_随机宝箱二数量4.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱二数量4.Name = "s_随机宝箱二数量4";
+        S_随机宝箱二数量4.Name = "S_随机宝箱二数量4";
         S_随机宝箱二数量4.Size = new Size(47, 23);
         S_随机宝箱二数量4.TabIndex = 133;
         S_随机宝箱二数量4.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱二数量4.Value = new decimal(new int[] { 1, 0, 0, 0 });
         S_随机宝箱二数量4.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
         // 
-        // s_随机宝箱二数量3
+        // S_随机宝箱二数量3
         // 
         S_随机宝箱二数量3.Location = new Point(266, 115);
         S_随机宝箱二数量3.Margin = new Padding(4, 3, 4, 3);
         S_随机宝箱二数量3.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱二数量3.Name = "s_随机宝箱二数量3";
+        S_随机宝箱二数量3.Name = "S_随机宝箱二数量3";
         S_随机宝箱二数量3.Size = new Size(47, 23);
         S_随机宝箱二数量3.TabIndex = 132;
         S_随机宝箱二数量3.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱二数量3.Value = new decimal(new int[] { 1, 0, 0, 0 });
         S_随机宝箱二数量3.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
         // 
-        // s_随机宝箱二数量2
+        // S_随机宝箱二数量2
         // 
         S_随机宝箱二数量2.Location = new Point(266, 82);
         S_随机宝箱二数量2.Margin = new Padding(4, 3, 4, 3);
         S_随机宝箱二数量2.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱二数量2.Name = "s_随机宝箱二数量2";
+        S_随机宝箱二数量2.Name = "S_随机宝箱二数量2";
         S_随机宝箱二数量2.Size = new Size(47, 23);
         S_随机宝箱二数量2.TabIndex = 131;
         S_随机宝箱二数量2.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱二数量2.Value = new decimal(new int[] { 1, 0, 0, 0 });
         S_随机宝箱二数量2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
         // 
-        // s_随机宝箱二数量1
+        // S_随机宝箱二数量1
         // 
         S_随机宝箱二数量1.Location = new Point(266, 48);
         S_随机宝箱二数量1.Margin = new Padding(4, 3, 4, 3);
         S_随机宝箱二数量1.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱二数量1.Name = "s_随机宝箱二数量1";
+        S_随机宝箱二数量1.Name = "S_随机宝箱二数量1";
         S_随机宝箱二数量1.Size = new Size(47, 23);
         S_随机宝箱二数量1.TabIndex = 130;
         S_随机宝箱二数量1.TextAlign = HorizontalAlignment.Center;
@@ -26124,96 +26122,96 @@ public partial class SMain
         groupBox149.TabStop = false;
         groupBox149.Text = "Shacheng Daily Treasure Chest";
         // 
-        // s_随机宝箱一数量8
+        // S_随机宝箱一数量8
         // 
         S_随机宝箱一数量8.Location = new Point(281, 285);
         S_随机宝箱一数量8.Margin = new Padding(4, 3, 4, 3);
         S_随机宝箱一数量8.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱一数量8.Name = "s_随机宝箱一数量8";
+        S_随机宝箱一数量8.Name = "S_随机宝箱一数量8";
         S_随机宝箱一数量8.Size = new Size(47, 23);
         S_随机宝箱一数量8.TabIndex = 128;
         S_随机宝箱一数量8.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱一数量8.Value = new decimal(new int[] { 1, 0, 0, 0 });
         S_随机宝箱一数量8.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
         // 
-        // s_随机宝箱一数量7
+        // S_随机宝箱一数量7
         // 
         S_随机宝箱一数量7.Location = new Point(281, 252);
         S_随机宝箱一数量7.Margin = new Padding(4, 3, 4, 3);
         S_随机宝箱一数量7.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱一数量7.Name = "s_随机宝箱一数量7";
+        S_随机宝箱一数量7.Name = "S_随机宝箱一数量7";
         S_随机宝箱一数量7.Size = new Size(47, 23);
         S_随机宝箱一数量7.TabIndex = 127;
         S_随机宝箱一数量7.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱一数量7.Value = new decimal(new int[] { 1, 0, 0, 0 });
         S_随机宝箱一数量7.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
         // 
-        // s_随机宝箱一数量6
+        // S_随机宝箱一数量6
         // 
         S_随机宝箱一数量6.Location = new Point(281, 218);
         S_随机宝箱一数量6.Margin = new Padding(4, 3, 4, 3);
         S_随机宝箱一数量6.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱一数量6.Name = "s_随机宝箱一数量6";
+        S_随机宝箱一数量6.Name = "S_随机宝箱一数量6";
         S_随机宝箱一数量6.Size = new Size(47, 23);
         S_随机宝箱一数量6.TabIndex = 126;
         S_随机宝箱一数量6.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱一数量6.Value = new decimal(new int[] { 1, 0, 0, 0 });
         S_随机宝箱一数量6.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
         // 
-        // s_随机宝箱一数量5
+        // S_随机宝箱一数量5
         // 
         S_随机宝箱一数量5.Location = new Point(281, 185);
         S_随机宝箱一数量5.Margin = new Padding(4, 3, 4, 3);
         S_随机宝箱一数量5.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱一数量5.Name = "s_随机宝箱一数量5";
+        S_随机宝箱一数量5.Name = "S_随机宝箱一数量5";
         S_随机宝箱一数量5.Size = new Size(47, 23);
         S_随机宝箱一数量5.TabIndex = 125;
         S_随机宝箱一数量5.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱一数量5.Value = new decimal(new int[] { 1, 0, 0, 0 });
         S_随机宝箱一数量5.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
         // 
-        // s_随机宝箱一数量4
+        // S_随机宝箱一数量4
         // 
         S_随机宝箱一数量4.Location = new Point(281, 150);
         S_随机宝箱一数量4.Margin = new Padding(4, 3, 4, 3);
         S_随机宝箱一数量4.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱一数量4.Name = "s_随机宝箱一数量4";
+        S_随机宝箱一数量4.Name = "S_随机宝箱一数量4";
         S_随机宝箱一数量4.Size = new Size(47, 23);
         S_随机宝箱一数量4.TabIndex = 124;
         S_随机宝箱一数量4.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱一数量4.Value = new decimal(new int[] { 1, 0, 0, 0 });
         S_随机宝箱一数量4.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
         // 
-        // s_随机宝箱一数量3
+        // S_随机宝箱一数量3
         // 
         S_随机宝箱一数量3.Location = new Point(281, 117);
         S_随机宝箱一数量3.Margin = new Padding(4, 3, 4, 3);
         S_随机宝箱一数量3.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱一数量3.Name = "s_随机宝箱一数量3";
+        S_随机宝箱一数量3.Name = "S_随机宝箱一数量3";
         S_随机宝箱一数量3.Size = new Size(47, 23);
         S_随机宝箱一数量3.TabIndex = 123;
         S_随机宝箱一数量3.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱一数量3.Value = new decimal(new int[] { 1, 0, 0, 0 });
         S_随机宝箱一数量3.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
         // 
-        // s_随机宝箱一数量2
+        // S_随机宝箱一数量2
         // 
         S_随机宝箱一数量2.Location = new Point(281, 83);
         S_随机宝箱一数量2.Margin = new Padding(4, 3, 4, 3);
         S_随机宝箱一数量2.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱一数量2.Name = "s_随机宝箱一数量2";
+        S_随机宝箱一数量2.Name = "S_随机宝箱一数量2";
         S_随机宝箱一数量2.Size = new Size(47, 23);
         S_随机宝箱一数量2.TabIndex = 122;
         S_随机宝箱一数量2.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱一数量2.Value = new decimal(new int[] { 1, 0, 0, 0 });
         S_随机宝箱一数量2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
         // 
-        // s_随机宝箱一数量1
+        // S_随机宝箱一数量1
         // 
         S_随机宝箱一数量1.Location = new Point(281, 50);
         S_随机宝箱一数量1.Margin = new Padding(4, 3, 4, 3);
         S_随机宝箱一数量1.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱一数量1.Name = "s_随机宝箱一数量1";
+        S_随机宝箱一数量1.Name = "S_随机宝箱一数量1";
         S_随机宝箱一数量1.Size = new Size(47, 23);
         S_随机宝箱一数量1.TabIndex = 115;
         S_随机宝箱一数量1.TextAlign = HorizontalAlignment.Center;
@@ -32487,7 +32485,7 @@ public partial class SMain
         label8.TabIndex = 14;
         label8.Text = "本游戏端：适配1.0.3.40~1.0.3.74版本(仅适学习参考用途)";
         // 
-        // 设置页面
+        // SettingsPage
         // 
         SettingsPage.BackColor = Color.White;
         SettingsPage.BorderStyle = BorderStyle.Fixed3D;
@@ -32505,7 +32503,7 @@ public partial class SMain
         SettingsPage.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
         SettingsPage.Location = new Point(4, 34);
         SettingsPage.Margin = new Padding(4, 3, 4, 3);
-        SettingsPage.Name = "设置页面";
+        SettingsPage.Name = "SettingsPage";
         SettingsPage.Size = new Size(1595, 712);
         SettingsPage.TabIndex = 11;
         SettingsPage.Text = "Server Config";
@@ -33914,7 +33912,6 @@ public partial class SMain
         // 
         日志页面.BackColor = Color.Transparent;
         日志页面.BorderStyle = BorderStyle.Fixed3D;
-        日志页面.Controls.Add(groupBox1);
         日志页面.Controls.Add(StatObjectsStatistics);
         日志页面.Controls.Add(日志选项卡);
         日志页面.Controls.Add(StatLoggedInConnections);
@@ -33932,378 +33929,14 @@ public partial class SMain
         日志页面.TabIndex = 0;
         日志页面.Text = "Log";
         // 
-        // groupBox1
-        // 
-        groupBox1.BackColor = Color.Transparent;
-        groupBox1.Controls.Add(宝箱数据);
-        groupBox1.Controls.Add(VIP数据);
-        groupBox1.Controls.Add(合成数据);
-        groupBox1.Controls.Add(坐骑御兽);
-        groupBox1.Controls.Add(装备套装);
-        groupBox1.Controls.Add(技能陷阱);
-        groupBox1.Controls.Add(游戏Buff);
-        groupBox1.Controls.Add(游戏坐骑);
-        groupBox1.Controls.Add(装备属性);
-        groupBox1.Controls.Add(游戏商店);
-        groupBox1.Controls.Add(珍宝商品);
-        groupBox1.Controls.Add(游戏称号);
-        groupBox1.Controls.Add(铭文技能);
-        groupBox1.Controls.Add(游戏技能);
-        groupBox1.Controls.Add(随机属性);
-        groupBox1.Controls.Add(游戏物品);
-        groupBox1.Controls.Add(地图区域);
-        groupBox1.Controls.Add(传送法阵);
-        groupBox1.Controls.Add(怪物刷新);
-        groupBox1.Controls.Add(守卫刷新);
-        groupBox1.Controls.Add(对话数据);
-        groupBox1.Controls.Add(游戏地图);
-        groupBox1.Controls.Add(ButtonTerrain);
-        groupBox1.Controls.Add(ButtonGuard);
-        groupBox1.Controls.Add(ButtonMonsterInfo);
-        groupBox1.Font = new Font("Calibri", 12F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-        groupBox1.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
-        groupBox1.Location = new Point(849, 7);
-        groupBox1.Margin = new Padding(4, 3, 4, 3);
-        groupBox1.Name = "groupBox1";
-        groupBox1.Padding = new Padding(4, 3, 4, 3);
-        groupBox1.Size = new Size(346, 678);
-        groupBox1.TabIndex = 19;
-        groupBox1.TabStop = false;
-        groupBox1.Text = "Reload";
-        // 
-        // 宝箱数据
-        // 
-        宝箱数据.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
-        宝箱数据.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
-        宝箱数据.Location = new Point(33, 475);
-        宝箱数据.Margin = new Padding(4, 3, 4, 3);
-        宝箱数据.Name = "宝箱数据";
-        宝箱数据.Size = new Size(124, 29);
-        宝箱数据.TabIndex = 26;
-        宝箱数据.Text = "Chest Data";
-        宝箱数据.UseVisualStyleBackColor = true;
-        宝箱数据.Click += (this.宝箱数据_Click);
-        // 
-        // VIP数据
-        // 
-        VIP数据.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
-        VIP数据.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
-        VIP数据.Location = new Point(177, 440);
-        VIP数据.Margin = new Padding(4, 3, 4, 3);
-        VIP数据.Name = "VIP数据";
-        VIP数据.Size = new Size(136, 29);
-        VIP数据.TabIndex = 25;
-        VIP数据.Text = "VIP Data";
-        VIP数据.UseVisualStyleBackColor = true;
-        VIP数据.Click += (this.VIP数据_Click);
-        // 
-        // 合成数据
-        // 
-        合成数据.Font = new Font("Calibri", 9F, FontStyle.Bold);
-        合成数据.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
-        合成数据.Location = new Point(33, 440);
-        合成数据.Margin = new Padding(4, 3, 4, 3);
-        合成数据.Name = "合成数据";
-        合成数据.Size = new Size(124, 29);
-        合成数据.TabIndex = 24;
-        合成数据.Text = "Synthetic Data";
-        合成数据.UseVisualStyleBackColor = true;
-        合成数据.Click += (this.合成数据_Click);
-        // 
-        // 坐骑御兽
-        // 
-        坐骑御兽.Font = new Font("Calibri", 9F, FontStyle.Bold);
-        坐骑御兽.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
-        坐骑御兽.Location = new Point(177, 403);
-        坐骑御兽.Margin = new Padding(4, 3, 4, 3);
-        坐骑御兽.Name = "坐骑御兽";
-        坐骑御兽.Size = new Size(136, 29);
-        坐骑御兽.TabIndex = 23;
-        坐骑御兽.Text = "Mount Royal Beast";
-        坐骑御兽.UseVisualStyleBackColor = true;
-        坐骑御兽.Click += (this.坐骑御兽_Click);
-        // 
-        // 装备套装
-        // 
-        装备套装.Font = new Font("Calibri", 9F, FontStyle.Bold);
-        装备套装.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
-        装备套装.Location = new Point(33, 403);
-        装备套装.Margin = new Padding(4, 3, 4, 3);
-        装备套装.Name = "装备套装";
-        装备套装.Size = new Size(124, 29);
-        装备套装.TabIndex = 22;
-        装备套装.Text = "Equipment Set";
-        装备套装.UseVisualStyleBackColor = true;
-        装备套装.Click += (this.装备套装_Click);
-        // 
-        // 技能陷阱
-        // 
-        技能陷阱.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
-        技能陷阱.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
-        技能陷阱.Location = new Point(177, 294);
-        技能陷阱.Margin = new Padding(4, 3, 4, 3);
-        技能陷阱.Name = "技能陷阱";
-        技能陷阱.Size = new Size(136, 29);
-        技能陷阱.TabIndex = 21;
-        技能陷阱.Text = "Skill Trap";
-        技能陷阱.UseVisualStyleBackColor = true;
-        技能陷阱.Click += (this.技能陷阱_Click);
-        // 
-        // 游戏Buff
-        // 
-        游戏Buff.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
-        游戏Buff.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
-        游戏Buff.Location = new Point(177, 331);
-        游戏Buff.Margin = new Padding(4, 3, 4, 3);
-        游戏Buff.Name = "游戏Buff";
-        游戏Buff.Size = new Size(136, 29);
-        游戏Buff.TabIndex = 20;
-        游戏Buff.Text = "Game Buff";
-        游戏Buff.UseVisualStyleBackColor = true;
-        游戏Buff.Click += (this.游戏Buff_Click);
-        // 
-        // 游戏坐骑
-        // 
-        游戏坐骑.Font = new Font("Calibri", 9F, FontStyle.Bold);
-        游戏坐骑.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
-        游戏坐骑.Location = new Point(177, 367);
-        游戏坐骑.Margin = new Padding(4, 3, 4, 3);
-        游戏坐骑.Name = "游戏坐骑";
-        游戏坐骑.Size = new Size(136, 29);
-        游戏坐骑.TabIndex = 19;
-        游戏坐骑.Text = "Game Mount";
-        游戏坐骑.UseVisualStyleBackColor = true;
-        游戏坐骑.Click += (this.游戏坐骑_Click);
-        // 
-        // 装备属性
-        // 
-        装备属性.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
-        装备属性.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
-        装备属性.Location = new Point(177, 77);
-        装备属性.Margin = new Padding(4, 3, 4, 3);
-        装备属性.Name = "装备属性";
-        装备属性.Size = new Size(136, 29);
-        装备属性.TabIndex = 18;
-        装备属性.Text = "Item Attribute";
-        装备属性.UseVisualStyleBackColor = true;
-        装备属性.Click += (this.装备属性_Click);
-        // 
-        // 游戏商店
-        // 
-        游戏商店.Font = new Font("Calibri", 9F, FontStyle.Bold);
-        游戏商店.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
-        游戏商店.Location = new Point(177, 113);
-        游戏商店.Margin = new Padding(4, 3, 4, 3);
-        游戏商店.Name = "游戏商店";
-        游戏商店.Size = new Size(136, 29);
-        游戏商店.TabIndex = 17;
-        游戏商店.Text = "Game Shop";
-        游戏商店.UseVisualStyleBackColor = true;
-        游戏商店.Click += (this.游戏商店_Click);
-        // 
-        // 珍宝商品
-        // 
-        珍宝商品.Font = new Font("Calibri", 9F, FontStyle.Bold);
-        珍宝商品.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
-        珍宝商品.Location = new Point(177, 150);
-        珍宝商品.Margin = new Padding(4, 3, 4, 3);
-        珍宝商品.Name = "珍宝商品";
-        珍宝商品.Size = new Size(136, 29);
-        珍宝商品.TabIndex = 16;
-        珍宝商品.Text = "Treasures";
-        珍宝商品.UseVisualStyleBackColor = true;
-        珍宝商品.Click += (this.珍宝商品_Click);
-        // 
-        // 游戏称号
-        // 
-        游戏称号.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
-        游戏称号.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
-        游戏称号.Location = new Point(177, 186);
-        游戏称号.Margin = new Padding(4, 3, 4, 3);
-        游戏称号.Name = "游戏称号";
-        游戏称号.Size = new Size(136, 29);
-        游戏称号.TabIndex = 15;
-        游戏称号.Text = "Game Title";
-        游戏称号.UseVisualStyleBackColor = true;
-        游戏称号.Click += (this.游戏称号_Click);
-        // 
-        // 铭文技能
-        // 
-        铭文技能.Font = new Font("Calibri", 9F, FontStyle.Bold);
-        铭文技能.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
-        铭文技能.Location = new Point(177, 222);
-        铭文技能.Margin = new Padding(4, 3, 4, 3);
-        铭文技能.Name = "铭文技能";
-        铭文技能.Size = new Size(136, 29);
-        铭文技能.TabIndex = 14;
-        铭文技能.Text = "Inscription Skills";
-        铭文技能.UseVisualStyleBackColor = true;
-        铭文技能.Click += (this.铭文技能_Click);
-        // 
-        // 游戏技能
-        // 
-        游戏技能.Font = new Font("Calibri", 9F, FontStyle.Bold);
-        游戏技能.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
-        游戏技能.Location = new Point(177, 258);
-        游戏技能.Margin = new Padding(4, 3, 4, 3);
-        游戏技能.Name = "游戏技能";
-        游戏技能.Size = new Size(136, 29);
-        游戏技能.TabIndex = 13;
-        游戏技能.Text = "Game Skills";
-        游戏技能.UseVisualStyleBackColor = true;
-        游戏技能.Click += (this.游戏技能_Click);
-        // 
-        // 随机属性
-        // 
-        随机属性.Font = new Font("Calibri", 9.75F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-        随机属性.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
-        随机属性.Location = new Point(177, 40);
-        随机属性.Margin = new Padding(4, 3, 4, 3);
-        随机属性.Name = "随机属性";
-        随机属性.Size = new Size(136, 29);
-        随机属性.TabIndex = 12;
-        随机属性.Text = "Random Attribute";
-        随机属性.UseVisualStyleBackColor = true;
-        随机属性.Click += (this.随机属性_Click);
-        // 
-        // 游戏物品
-        // 
-        游戏物品.Font = new Font("Calibri", 9F, FontStyle.Bold);
-        游戏物品.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
-        游戏物品.Location = new Point(33, 367);
-        游戏物品.Margin = new Padding(4, 3, 4, 3);
-        游戏物品.Name = "游戏物品";
-        游戏物品.Size = new Size(124, 29);
-        游戏物品.TabIndex = 11;
-        游戏物品.Text = "Game Items";
-        游戏物品.UseVisualStyleBackColor = true;
-        游戏物品.Click += (this.游戏物品_Click);
-        // 
-        // 地图区域
-        // 
-        地图区域.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
-        地图区域.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
-        地图区域.Location = new Point(33, 222);
-        地图区域.Margin = new Padding(4, 3, 4, 3);
-        地图区域.Name = "地图区域";
-        地图区域.Size = new Size(124, 29);
-        地图区域.TabIndex = 10;
-        地图区域.Text = "Map Area";
-        地图区域.UseVisualStyleBackColor = true;
-        地图区域.Click += (this.地图区域_Click);
-        // 
-        // 传送法阵
-        // 
-        传送法阵.Font = new Font("Calibri", 9F, FontStyle.Bold);
-        传送法阵.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
-        传送法阵.Location = new Point(33, 258);
-        传送法阵.Margin = new Padding(4, 3, 4, 3);
-        传送法阵.Name = "传送法阵";
-        传送法阵.Size = new Size(124, 29);
-        传送法阵.TabIndex = 8;
-        传送法阵.Text = "Teleport Circle";
-        传送法阵.UseVisualStyleBackColor = true;
-        传送法阵.Click += (this.传送法阵_Click);
-        // 
-        // 怪物刷新
-        // 
-        怪物刷新.Font = new Font("Calibri", 9F, FontStyle.Bold);
-        怪物刷新.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
-        怪物刷新.Location = new Point(33, 294);
-        怪物刷新.Margin = new Padding(4, 3, 4, 3);
-        怪物刷新.Name = "怪物刷新";
-        怪物刷新.Size = new Size(124, 29);
-        怪物刷新.TabIndex = 7;
-        怪物刷新.Text = "Monster Refresh";
-        怪物刷新.UseVisualStyleBackColor = true;
-        怪物刷新.Click += (this.怪物刷新_Click);
-        // 
-        // 守卫刷新
-        // 
-        守卫刷新.Font = new Font("Calibri", 9F, FontStyle.Bold);
-        守卫刷新.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
-        守卫刷新.Location = new Point(33, 331);
-        守卫刷新.Margin = new Padding(4, 3, 4, 3);
-        守卫刷新.Name = "守卫刷新";
-        守卫刷新.Size = new Size(124, 29);
-        守卫刷新.TabIndex = 5;
-        守卫刷新.Text = "Guard Refresh";
-        守卫刷新.UseVisualStyleBackColor = true;
-        守卫刷新.Click += (this.守卫刷新_Click);
-        // 
-        // 对话数据
-        // 
-        对话数据.Font = new Font("Calibri", 9F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-        对话数据.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
-        对话数据.Location = new Point(33, 113);
-        对话数据.Margin = new Padding(4, 3, 4, 3);
-        对话数据.Name = "对话数据";
-        对话数据.Size = new Size(124, 29);
-        对话数据.TabIndex = 4;
-        对话数据.Text = "Dialog Data";
-        对话数据.UseVisualStyleBackColor = true;
-        对话数据.Click += (this.对话数据_Click);
-        // 
-        // 游戏地图
-        // 
-        游戏地图.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
-        游戏地图.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
-        游戏地图.Location = new Point(33, 150);
-        游戏地图.Margin = new Padding(4, 3, 4, 3);
-        游戏地图.Name = "游戏地图";
-        游戏地图.Size = new Size(124, 29);
-        游戏地图.TabIndex = 3;
-        游戏地图.Text = "Game Map";
-        游戏地图.UseVisualStyleBackColor = true;
-        游戏地图.Click += (this.游戏地图_Click);
-        // 
-        // ButtonTerrain
-        // 
-        ButtonTerrain.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
-        ButtonTerrain.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
-        ButtonTerrain.Location = new Point(33, 186);
-        ButtonTerrain.Margin = new Padding(4, 3, 4, 3);
-        ButtonTerrain.Name = "ButtonTerrain";
-        ButtonTerrain.Size = new Size(124, 29);
-        ButtonTerrain.TabIndex = 2;
-        ButtonTerrain.Text = "Terrain Data";
-        ButtonTerrain.UseVisualStyleBackColor = true;
-        ButtonTerrain.Click += (this.ButtonTerrain_Click);
-        // 
-        // ButtonGuard
-        // 
-        ButtonGuard.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
-        ButtonGuard.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
-        ButtonGuard.Location = new Point(33, 77);
-        ButtonGuard.Margin = new Padding(4, 3, 4, 3);
-        ButtonGuard.Name = "ButtonGuard";
-        ButtonGuard.Size = new Size(124, 29);
-        ButtonGuard.TabIndex = 1;
-        ButtonGuard.Text = "Map Guard";
-        ButtonGuard.UseVisualStyleBackColor = true;
-        ButtonGuard.Click += (this.ButtonGuard_Click);
-        // 
-        // ButtonMonsterInfo
-        // 
-        ButtonMonsterInfo.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
-        ButtonMonsterInfo.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
-        ButtonMonsterInfo.Location = new Point(33, 40);
-        ButtonMonsterInfo.Margin = new Padding(4, 3, 4, 3);
-        ButtonMonsterInfo.Name = "ButtonMonsterInfo";
-        ButtonMonsterInfo.Size = new Size(124, 29);
-        ButtonMonsterInfo.TabIndex = 0;
-        ButtonMonsterInfo.Text = "Game Monster";
-        ButtonMonsterInfo.UseVisualStyleBackColor = true;
-        ButtonMonsterInfo.Click += (this.ButtonMonsterInfo_Click);
-        // 
-        // 对象统计
+        // StatObjectsStatistics
         // 
         StatObjectsStatistics.AutoSize = true;
         StatObjectsStatistics.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
         StatObjectsStatistics.ForeColor = Color.Maroon;
-        StatObjectsStatistics.Location = new Point(1242, 583);
+        StatObjectsStatistics.Location = new Point(850, 128);
         StatObjectsStatistics.Margin = new Padding(4, 0, 4, 0);
-        StatObjectsStatistics.Name = "对象统计";
+        StatObjectsStatistics.Name = "StatObjectsStatistics";
         StatObjectsStatistics.Size = new Size(117, 17);
         StatObjectsStatistics.TabIndex = 17;
         StatObjectsStatistics.Text = "Objects Statistics:";
@@ -34405,7 +34038,7 @@ public partial class SMain
         StatLoggedInConnections.AutoSize = true;
         StatLoggedInConnections.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
         StatLoggedInConnections.ForeColor = Color.Purple;
-        StatLoggedInConnections.Location = new Point(1242, 498);
+        StatLoggedInConnections.Location = new Point(850, 43);
         StatLoggedInConnections.Margin = new Padding(4, 0, 4, 0);
         StatLoggedInConnections.Name = "StatLoggedInConnections";
         StatLoggedInConnections.Size = new Size(125, 17);
@@ -34417,7 +34050,7 @@ public partial class SMain
         StatLiveConnections.AutoSize = true;
         StatLiveConnections.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
         StatLiveConnections.ForeColor = Color.Purple;
-        StatLiveConnections.Location = new Point(1242, 515);
+        StatLiveConnections.Location = new Point(850, 60);
         StatLiveConnections.Margin = new Padding(4, 0, 4, 0);
         StatLiveConnections.Name = "StatLiveConnections";
         StatLiveConnections.Size = new Size(85, 17);
@@ -34429,7 +34062,7 @@ public partial class SMain
         StatTotalConnections.AutoSize = true;
         StatTotalConnections.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
         StatTotalConnections.ForeColor = Color.Purple;
-        StatTotalConnections.Location = new Point(1242, 481);
+        StatTotalConnections.Location = new Point(850, 26);
         StatTotalConnections.Margin = new Padding(4, 0, 4, 0);
         StatTotalConnections.Name = "StatTotalConnections";
         StatTotalConnections.Size = new Size(123, 17);
@@ -34441,7 +34074,7 @@ public partial class SMain
         StatSent.AutoSize = true;
         StatSent.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
         StatSent.ForeColor = Color.Teal;
-        StatSent.Location = new Point(1242, 566);
+        StatSent.Location = new Point(850, 111);
         StatSent.Margin = new Padding(4, 0, 4, 0);
         StatSent.Name = "StatSent";
         StatSent.Size = new Size(39, 17);
@@ -34453,7 +34086,7 @@ public partial class SMain
         StatReceived.AutoSize = true;
         StatReceived.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
         StatReceived.ForeColor = Color.Teal;
-        StatReceived.Location = new Point(1242, 549);
+        StatReceived.Location = new Point(850, 94);
         StatReceived.Margin = new Padding(4, 0, 4, 0);
         StatReceived.Name = "StatReceived";
         StatReceived.Size = new Size(66, 17);
@@ -34465,7 +34098,7 @@ public partial class SMain
         CycleCountLabel.AutoSize = true;
         CycleCountLabel.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
         CycleCountLabel.ForeColor = Color.Blue;
-        CycleCountLabel.Location = new Point(1242, 532);
+        CycleCountLabel.Location = new Point(850, 77);
         CycleCountLabel.Margin = new Padding(4, 0, 4, 0);
         CycleCountLabel.Name = "CycleCountLabel";
         CycleCountLabel.Size = new Size(85, 17);
@@ -35094,7 +34727,7 @@ public partial class SMain
         // 
         startServerToolStripMenuItem.ForeColor = Color.Green;
         startServerToolStripMenuItem.Name = "startServerToolStripMenuItem";
-        startServerToolStripMenuItem.Size = new Size(149, 22);
+        startServerToolStripMenuItem.Size = new Size(180, 22);
         startServerToolStripMenuItem.Text = "Start Server";
         startServerToolStripMenuItem.Click += (this.startServerToolStripMenuItem_Click);
         // 
@@ -35102,20 +34735,20 @@ public partial class SMain
         // 
         stopServerToolStripMenuItem.ForeColor = Color.Maroon;
         stopServerToolStripMenuItem.Name = "stopServerToolStripMenuItem";
-        stopServerToolStripMenuItem.Size = new Size(149, 22);
+        stopServerToolStripMenuItem.Size = new Size(180, 22);
         stopServerToolStripMenuItem.Text = "Stop Server";
         stopServerToolStripMenuItem.Click += (this.stopServerToolStripMenuItem_Click);
         // 
         // toolStripMenuItem1
         // 
         toolStripMenuItem1.Name = "toolStripMenuItem1";
-        toolStripMenuItem1.Size = new Size(146, 6);
+        toolStripMenuItem1.Size = new Size(177, 6);
         // 
         // logsToolStripMenuItem
         // 
         logsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { saveSystemLogsToolStripMenuItem, saveChatLogsToolStripMenuItem, toolStripMenuItem3, clearSystemLogsToolStripMenuItem, clearChatLogsToolStripMenuItem, clearCommandsLogToolStripMenuItem });
         logsToolStripMenuItem.Name = "logsToolStripMenuItem";
-        logsToolStripMenuItem.Size = new Size(149, 22);
+        logsToolStripMenuItem.Size = new Size(180, 22);
         logsToolStripMenuItem.Text = "Logs";
         // 
         // saveSystemLogsToolStripMenuItem
@@ -35161,38 +34794,213 @@ public partial class SMain
         // toolStripMenuItem2
         // 
         toolStripMenuItem2.Name = "toolStripMenuItem2";
-        toolStripMenuItem2.Size = new Size(146, 6);
+        toolStripMenuItem2.Size = new Size(177, 6);
         // 
         // reloadToolStripMenuItem
         // 
-        reloadToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { allToolStripMenuItem });
+        reloadToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { allToolStripMenuItem, gameMonsterToolStripMenuItem, mapGuardToolStripMenuItem, dialogDataToolStripMenuItem, gameMapToolStripMenuItem, terrainDataToolStripMenuItem, mapAreaToolStripMenuItem, teleportCircleToolStripMenuItem, monsterRefreshToolStripMenuItem, guardRefreshToolStripMenuItem, gameItemsToolStripMenuItem, equipmentSetToolStripMenuItem, syntheticDataToolStripMenuItem, chestDataToolStripMenuItem, randomAttributeToolStripMenuItem, itemAttributeToolStripMenuItem, gameShopToolStripMenuItem, treasuresToolStripMenuItem, gameTitleToolStripMenuItem, inscriptionSkillsToolStripMenuItem, gameSkillsToolStripMenuItem, skillTrapToolStripMenuItem, gameBuffToolStripMenuItem, gameMountToolStripMenuItem, mountRoyalBeastToolStripMenuItem, vIPDataToolStripMenuItem });
         reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
-        reloadToolStripMenuItem.Size = new Size(149, 22);
+        reloadToolStripMenuItem.Size = new Size(180, 22);
         reloadToolStripMenuItem.Text = "Reload";
         // 
         // allToolStripMenuItem
         // 
         allToolStripMenuItem.Name = "allToolStripMenuItem";
-        allToolStripMenuItem.Size = new Size(88, 22);
+        allToolStripMenuItem.Size = new Size(180, 22);
         allToolStripMenuItem.Text = "All";
         allToolStripMenuItem.Click += (this.allToolStripMenuItem_Click);
+        // 
+        // gameMonsterToolStripMenuItem
+        // 
+        gameMonsterToolStripMenuItem.Name = "gameMonsterToolStripMenuItem";
+        gameMonsterToolStripMenuItem.Size = new Size(180, 22);
+        gameMonsterToolStripMenuItem.Text = "Game Monster";
+        gameMonsterToolStripMenuItem.Click += (this.gameMonsterToolStripMenuItem_Click);
+        // 
+        // mapGuardToolStripMenuItem
+        // 
+        mapGuardToolStripMenuItem.Name = "mapGuardToolStripMenuItem";
+        mapGuardToolStripMenuItem.Size = new Size(180, 22);
+        mapGuardToolStripMenuItem.Text = "Map Guard";
+        mapGuardToolStripMenuItem.Click += (this.mapGuardToolStripMenuItem_Click);
+        // 
+        // dialogDataToolStripMenuItem
+        // 
+        dialogDataToolStripMenuItem.Name = "dialogDataToolStripMenuItem";
+        dialogDataToolStripMenuItem.Size = new Size(180, 22);
+        dialogDataToolStripMenuItem.Text = "Dialog Data";
+        dialogDataToolStripMenuItem.Click += (this.dialogDataToolStripMenuItem_Click);
+        // 
+        // gameMapToolStripMenuItem
+        // 
+        gameMapToolStripMenuItem.Name = "gameMapToolStripMenuItem";
+        gameMapToolStripMenuItem.Size = new Size(180, 22);
+        gameMapToolStripMenuItem.Text = "Game Map";
+        gameMapToolStripMenuItem.Click += (this.gameMapToolStripMenuItem_Click);
+        // 
+        // terrainDataToolStripMenuItem
+        // 
+        terrainDataToolStripMenuItem.Name = "terrainDataToolStripMenuItem";
+        terrainDataToolStripMenuItem.Size = new Size(180, 22);
+        terrainDataToolStripMenuItem.Text = "Terrain Data";
+        terrainDataToolStripMenuItem.Click += (this.terrainDataToolStripMenuItem_Click);
+        // 
+        // mapAreaToolStripMenuItem
+        // 
+        mapAreaToolStripMenuItem.Name = "mapAreaToolStripMenuItem";
+        mapAreaToolStripMenuItem.Size = new Size(180, 22);
+        mapAreaToolStripMenuItem.Text = "Map Area";
+        mapAreaToolStripMenuItem.Click += (this.mapAreaToolStripMenuItem_Click);
+        // 
+        // teleportCircleToolStripMenuItem
+        // 
+        teleportCircleToolStripMenuItem.Name = "teleportCircleToolStripMenuItem";
+        teleportCircleToolStripMenuItem.Size = new Size(180, 22);
+        teleportCircleToolStripMenuItem.Text = "Teleport Circle";
+        teleportCircleToolStripMenuItem.Click += (this.teleportCircleToolStripMenuItem_Click);
+        // 
+        // monsterRefreshToolStripMenuItem
+        // 
+        monsterRefreshToolStripMenuItem.Name = "monsterRefreshToolStripMenuItem";
+        monsterRefreshToolStripMenuItem.Size = new Size(180, 22);
+        monsterRefreshToolStripMenuItem.Text = "Monster Refresh";
+        monsterRefreshToolStripMenuItem.Click += (this.monsterRefreshToolStripMenuItem_Click);
+        // 
+        // guardRefreshToolStripMenuItem
+        // 
+        guardRefreshToolStripMenuItem.Name = "guardRefreshToolStripMenuItem";
+        guardRefreshToolStripMenuItem.Size = new Size(180, 22);
+        guardRefreshToolStripMenuItem.Text = "Guard Refresh";
+        guardRefreshToolStripMenuItem.Click += (this.guardRefreshToolStripMenuItem_Click);
+        // 
+        // gameItemsToolStripMenuItem
+        // 
+        gameItemsToolStripMenuItem.Name = "gameItemsToolStripMenuItem";
+        gameItemsToolStripMenuItem.Size = new Size(180, 22);
+        gameItemsToolStripMenuItem.Text = "Game Items";
+        gameItemsToolStripMenuItem.Click += (this.gameItemsToolStripMenuItem_Click);
+        // 
+        // equipmentSetToolStripMenuItem
+        // 
+        equipmentSetToolStripMenuItem.Name = "equipmentSetToolStripMenuItem";
+        equipmentSetToolStripMenuItem.Size = new Size(180, 22);
+        equipmentSetToolStripMenuItem.Text = "Equipment Set";
+        equipmentSetToolStripMenuItem.Click += (this.equipmentSetToolStripMenuItem_Click);
+        // 
+        // syntheticDataToolStripMenuItem
+        // 
+        syntheticDataToolStripMenuItem.Name = "syntheticDataToolStripMenuItem";
+        syntheticDataToolStripMenuItem.Size = new Size(180, 22);
+        syntheticDataToolStripMenuItem.Text = "Synthetic Data";
+        syntheticDataToolStripMenuItem.Click += (this.syntheticDataToolStripMenuItem_Click);
+        // 
+        // chestDataToolStripMenuItem
+        // 
+        chestDataToolStripMenuItem.Name = "chestDataToolStripMenuItem";
+        chestDataToolStripMenuItem.Size = new Size(180, 22);
+        chestDataToolStripMenuItem.Text = "Chest Data";
+        chestDataToolStripMenuItem.Click += (this.chestDataToolStripMenuItem_Click);
+        // 
+        // randomAttributeToolStripMenuItem
+        // 
+        randomAttributeToolStripMenuItem.Name = "randomAttributeToolStripMenuItem";
+        randomAttributeToolStripMenuItem.Size = new Size(180, 22);
+        randomAttributeToolStripMenuItem.Text = "Random Attribute";
+        randomAttributeToolStripMenuItem.Click += (this.randomAttributeToolStripMenuItem_Click);
+        // 
+        // itemAttributeToolStripMenuItem
+        // 
+        itemAttributeToolStripMenuItem.Name = "itemAttributeToolStripMenuItem";
+        itemAttributeToolStripMenuItem.Size = new Size(180, 22);
+        itemAttributeToolStripMenuItem.Text = "Item Attribute";
+        itemAttributeToolStripMenuItem.Click += (this.itemAttributeToolStripMenuItem_Click);
+        // 
+        // gameShopToolStripMenuItem
+        // 
+        gameShopToolStripMenuItem.Name = "gameShopToolStripMenuItem";
+        gameShopToolStripMenuItem.Size = new Size(180, 22);
+        gameShopToolStripMenuItem.Text = "Game Shop";
+        gameShopToolStripMenuItem.Click += (this.gameShopToolStripMenuItem_Click);
+        // 
+        // treasuresToolStripMenuItem
+        // 
+        treasuresToolStripMenuItem.Name = "treasuresToolStripMenuItem";
+        treasuresToolStripMenuItem.Size = new Size(180, 22);
+        treasuresToolStripMenuItem.Text = "Treasures";
+        treasuresToolStripMenuItem.Click += (this.treasuresToolStripMenuItem_Click);
+        // 
+        // gameTitleToolStripMenuItem
+        // 
+        gameTitleToolStripMenuItem.Name = "gameTitleToolStripMenuItem";
+        gameTitleToolStripMenuItem.Size = new Size(180, 22);
+        gameTitleToolStripMenuItem.Text = "Game Title";
+        gameTitleToolStripMenuItem.Click += (this.gameTitleToolStripMenuItem_Click);
+        // 
+        // inscriptionSkillsToolStripMenuItem
+        // 
+        inscriptionSkillsToolStripMenuItem.Name = "inscriptionSkillsToolStripMenuItem";
+        inscriptionSkillsToolStripMenuItem.Size = new Size(180, 22);
+        inscriptionSkillsToolStripMenuItem.Text = "Inscription Skills";
+        inscriptionSkillsToolStripMenuItem.Click += (this.inscriptionSkillsToolStripMenuItem_Click);
+        // 
+        // gameSkillsToolStripMenuItem
+        // 
+        gameSkillsToolStripMenuItem.Name = "gameSkillsToolStripMenuItem";
+        gameSkillsToolStripMenuItem.Size = new Size(180, 22);
+        gameSkillsToolStripMenuItem.Text = "Game Skills";
+        gameSkillsToolStripMenuItem.Click += (this.gameSkillsToolStripMenuItem_Click);
+        // 
+        // skillTrapToolStripMenuItem
+        // 
+        skillTrapToolStripMenuItem.Name = "skillTrapToolStripMenuItem";
+        skillTrapToolStripMenuItem.Size = new Size(180, 22);
+        skillTrapToolStripMenuItem.Text = "Skill Trap";
+        skillTrapToolStripMenuItem.Click += (this.skillTrapToolStripMenuItem_Click);
+        // 
+        // gameBuffToolStripMenuItem
+        // 
+        gameBuffToolStripMenuItem.Name = "gameBuffToolStripMenuItem";
+        gameBuffToolStripMenuItem.Size = new Size(180, 22);
+        gameBuffToolStripMenuItem.Text = "Game Buff";
+        gameBuffToolStripMenuItem.Click += (this.gameBuffToolStripMenuItem_Click);
+        // 
+        // gameMountToolStripMenuItem
+        // 
+        gameMountToolStripMenuItem.Name = "gameMountToolStripMenuItem";
+        gameMountToolStripMenuItem.Size = new Size(180, 22);
+        gameMountToolStripMenuItem.Text = "Game Mount";
+        gameMountToolStripMenuItem.Click += (this.gameMountToolStripMenuItem_Click);
+        // 
+        // mountRoyalBeastToolStripMenuItem
+        // 
+        mountRoyalBeastToolStripMenuItem.Name = "mountRoyalBeastToolStripMenuItem";
+        mountRoyalBeastToolStripMenuItem.Size = new Size(180, 22);
+        mountRoyalBeastToolStripMenuItem.Text = "Mount Royal Beast";
+        mountRoyalBeastToolStripMenuItem.Click += (this.mountRoyalBeastToolStripMenuItem_Click);
+        // 
+        // vIPDataToolStripMenuItem
+        // 
+        vIPDataToolStripMenuItem.Name = "vIPDataToolStripMenuItem";
+        vIPDataToolStripMenuItem.Size = new Size(180, 22);
+        vIPDataToolStripMenuItem.Text = "VIP Data";
+        vIPDataToolStripMenuItem.Click += (this.vIPDataToolStripMenuItem_Click);
         // 
         // savaDatabaseToolStripMenuItem
         // 
         savaDatabaseToolStripMenuItem.Name = "savaDatabaseToolStripMenuItem";
-        savaDatabaseToolStripMenuItem.Size = new Size(149, 22);
+        savaDatabaseToolStripMenuItem.Size = new Size(180, 22);
         savaDatabaseToolStripMenuItem.Text = "Sava Database";
         savaDatabaseToolStripMenuItem.Click += (this.savaDatabaseToolStripMenuItem_Click);
         // 
         // toolStripMenuItem4
         // 
         toolStripMenuItem4.Name = "toolStripMenuItem4";
-        toolStripMenuItem4.Size = new Size(146, 6);
+        toolStripMenuItem4.Size = new Size(177, 6);
         // 
         // exitToolStripMenuItem
         // 
         exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-        exitToolStripMenuItem.Size = new Size(149, 22);
+        exitToolStripMenuItem.Size = new Size(180, 22);
         exitToolStripMenuItem.Text = "E&xit";
         // 
         // statusStrip1
@@ -36747,7 +36555,6 @@ public partial class SMain
         主选项卡.ResumeLayout(false);
         日志页面.ResumeLayout(false);
         日志页面.PerformLayout();
-        groupBox1.ResumeLayout(false);
         日志选项卡.ResumeLayout(false);
         系统日志页面.ResumeLayout(false);
         聊天日志页面.ResumeLayout(false);
@@ -37930,18 +37737,6 @@ public partial class SMain
 
     public TabPage 日志页面;
 
-    private GroupBox groupBox1;
-
-    private Button 对话数据;
-
-    private Button 游戏地图;
-
-    private Button ButtonTerrain;
-
-    private Button ButtonGuard;
-
-    private Button ButtonMonsterInfo;
-
     private Label StatObjectsStatistics;
 
     public TabControl 日志选项卡;
@@ -37969,36 +37764,6 @@ public partial class SMain
     private Label StatReceived;
 
     private Label CycleCountLabel;
-
-    private Button 技能陷阱;
-
-    private Button 游戏Buff;
-
-    private Button 游戏坐骑;
-
-    private Button 装备属性;
-
-    private Button 游戏商店;
-
-    private Button 珍宝商品;
-
-    private Button 游戏称号;
-
-    private Button 铭文技能;
-
-    private Button 游戏技能;
-
-    private Button 随机属性;
-
-    private Button 游戏物品;
-
-    private Button 地图区域;
-
-    private Button 传送法阵;
-
-    private Button 怪物刷新;
-
-    private Button 守卫刷新;
 
     private Label label285;
 
@@ -40076,10 +39841,6 @@ public partial class SMain
 
     private NumericUpDown S_九层妖塔副本时间小;
 
-    private Button 坐骑御兽;
-
-    private Button 装备套装;
-
     private Label label734;
 
     private NumericUpDown S_九层妖塔数量9;
@@ -41380,12 +41141,6 @@ public partial class SMain
 
     private Label label440;
 
-    private Button 宝箱数据;
-
-    private Button VIP数据;
-
-    private Button 合成数据;
-
     private GroupBox groupBox132;
 
     private Label label442;
@@ -41666,4 +41421,29 @@ public partial class SMain
     private ToolStripMenuItem reloadToolStripMenuItem;
     private ToolStripMenuItem allToolStripMenuItem;
     public System.Windows.Forms.Timer 定时发送公告;
+    private ToolStripMenuItem gameMonsterToolStripMenuItem;
+    private ToolStripMenuItem mapGuardToolStripMenuItem;
+    private ToolStripMenuItem dialogDataToolStripMenuItem;
+    private ToolStripMenuItem gameMapToolStripMenuItem;
+    private ToolStripMenuItem terrainDataToolStripMenuItem;
+    private ToolStripMenuItem mapAreaToolStripMenuItem;
+    private ToolStripMenuItem teleportCircleToolStripMenuItem;
+    private ToolStripMenuItem monsterRefreshToolStripMenuItem;
+    private ToolStripMenuItem guardRefreshToolStripMenuItem;
+    private ToolStripMenuItem gameItemsToolStripMenuItem;
+    private ToolStripMenuItem equipmentSetToolStripMenuItem;
+    private ToolStripMenuItem syntheticDataToolStripMenuItem;
+    private ToolStripMenuItem chestDataToolStripMenuItem;
+    private ToolStripMenuItem randomAttributeToolStripMenuItem;
+    private ToolStripMenuItem itemAttributeToolStripMenuItem;
+    private ToolStripMenuItem gameShopToolStripMenuItem;
+    private ToolStripMenuItem treasuresToolStripMenuItem;
+    private ToolStripMenuItem gameTitleToolStripMenuItem;
+    private ToolStripMenuItem inscriptionSkillsToolStripMenuItem;
+    private ToolStripMenuItem gameSkillsToolStripMenuItem;
+    private ToolStripMenuItem skillTrapToolStripMenuItem;
+    private ToolStripMenuItem gameBuffToolStripMenuItem;
+    private ToolStripMenuItem gameMountToolStripMenuItem;
+    private ToolStripMenuItem mountRoyalBeastToolStripMenuItem;
+    private ToolStripMenuItem vIPDataToolStripMenuItem;
 }
