@@ -1292,69 +1292,6 @@ public sealed class PlayerObject : MapObject
         character.LoginDate.V = SEngine.CurrentTime;
         character.Connect(conn);
 
-        /*Enqueue(new 同步补充变量
-        {
-            变量类型 = 1,
-            变量索引 = 132,
-            ObjectID = ObjectID,
-            变量内容 = 1
-        });*/
-
-        /*Enqueue(new 同步悬赏剩余
-        {
-            刷新类别 = 1,
-            剩余可接取数量 = 3,
-            剩余可完成数量 = 10
-        });*/
-
-        //Enqueue(new 重置击杀任务 { QuestID = 13 });
-        //Enqueue(new 重置击杀任务 { QuestID = 17 });
-        //Enqueue(new 重置击杀任务 { QuestID = 18 });
-        //Enqueue(new 重置击杀任务 { QuestID = 24 });
-
-        /*Enqueue(new 同步补充变量
-        {
-            变量类型 = 1,
-            ObjectID = ObjectID,
-            变量索引 = 112,
-            变量内容 = Compute.TimeSeconds(character.补给日期.V)
-        });
-        Enqueue(new 同步补充变量
-        {
-            变量类型 = 1,
-            ObjectID = ObjectID,
-            变量索引 = 975,
-            变量内容 = Compute.TimeSeconds(character.战备日期.V)
-        });*/
-
-        /*Enqueue(new 同步悬赏剩余
-        {
-            刷新类别 = 0,
-            剩余可接取数量 = 6,
-            剩余可完成数量 = 6
-        });*/
-
-        /*Enqueue(new 同步悬赏剩余
-        {
-            刷新类别 = 1,
-            剩余可接取数量 = 3,
-            剩余可完成数量 = 10
-        });*/
-
-        //Enqueue(new 更新成就变量 { 序号 = 47, 序号2 = 0 });
-        
-        /*Enqueue(new UnknownS3
-        {
-            Data = GetPlayerAgreement()
-        });*/
-
-        //Enqueue(new 同步门的状态 { }); // -> conn.SendRaw(182, 10, new byte[8] { 255, 255, 255, 255, 255, 255, 255, 255 });
-
-        //conn.SendRaw(207, 0, new byte[1]);
-        //Enqueue(new 同步摆摊数据 { });
-        //Enqueue(new 同步精炼数据 { });
-
-        //Enqueue(new 更新成就变量 { 序号 = 47, 序号2 = 0 });
         Enqueue(new SyncCharacterInfoPacket
         {
             ObjectID = ObjectID,
@@ -1560,48 +1497,6 @@ public sealed class PlayerObject : MapObject
             ObjectID = ObjectID
         });
     }
-
-    /*private byte[] GetPlayerAgreement()
-    {
-        using var ms = new MemoryStream();
-        using var writer = new BinaryWriter(ms);
-        byte[] buffer = Character.Account.V.登录协议描述();
-        ms.Write(buffer, 0, 37);
-        ms.Seek(0L, SeekOrigin.Begin);
-        writer.Write(ObjectID);
-        ms.Seek(0, SeekOrigin.Begin);
-        writer.Write((byte)0);
-        ms.Seek(4, SeekOrigin.Begin);
-
-        writer.Write(0);
-        writer.Write(CurrentMap.RouteID);
-        writer.Write(CurrentMap.MapID);
-        writer.Write(ObjectID);
-        writer.Write(0);
-        writer.Write(-4600);
-        return ms.ToArray();
-    }
-
-    private void 发送封包2(ushort type, int length, byte[] data)
-    {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < data.Length; i++)
-        {
-            stringBuilder.AppendLine(data[i].ToString());
-        }
-        string text = stringBuilder.ToString();
-        byte[] array = new byte[2 + ((length == 0) ? 2 : 0) + data.Length];
-        using MemoryStream output = new MemoryStream(array);
-        using BinaryWriter binaryWriter = new BinaryWriter(output);
-        binaryWriter.Write(type);
-        if (length == 0)
-        {
-            binaryWriter.Write((ushort)array.Length);
-        }
-        binaryWriter.Write(data);
-        GamePacket.EncodeDecode(ref array);
-        Player.Connection?.Connection.Client.Send(array);
-    }*/
 
     public void Enqueue(GamePacket packet) => Character.Enqueue(packet);
 

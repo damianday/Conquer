@@ -838,12 +838,6 @@ public sealed class CharacterInfo : DBObject
             Equipment[1] = new EquipmentInfo(模板2, this, 0, 1);
         }
 
-        // TODO: Do we need this?
-        /*{
-            var skill = new SkillInfo(1048);
-            Skills.Add(skill.ID.V, skill);
-        }*/
-
         ushort n = job switch
         {
             GameObjectRace.Archer => 20400,
