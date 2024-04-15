@@ -1612,7 +1612,7 @@ public abstract class MapObject
         {
             MapObject 地图对象2 = ((skill.Caster is TrapObject 陷阱实例2) ? 陷阱实例2.Caster : skill.Caster);
             int num = ((参数.体力回复次数?.Length > skill.SkillLevel) ? 参数.体力回复次数[skill.SkillLevel] : 0);
-            int num2 = ((参数.PhysicalRecoveryBase?.Length > skill.SkillLevel) ? 参数.PhysicalRecoveryBase[skill.SkillLevel] : 0);
+            int num2 = ((参数.HealthRecoveryBase?.Length > skill.SkillLevel) ? 参数.HealthRecoveryBase[skill.SkillLevel] : 0);
             float num3 = ((参数.道术叠加次数?.Length > skill.SkillLevel) ? 参数.道术叠加次数[skill.SkillLevel] : 0f);
             float num4 = ((参数.道术叠加基数?.Length > skill.SkillLevel) ? 参数.道术叠加基数[skill.SkillLevel] : 0f);
             int num5 = ((参数.立即回复基数?.Length > skill.SkillLevel && 地图对象2 == this) ? 参数.立即回复基数[skill.SkillLevel] : 0);
@@ -1644,9 +1644,9 @@ public abstract class MapObject
 
     public void 被动回复时处理(BuffInfo buff)
     {
-        if (buff.Template.PhysicalRecoveryBase != null && buff.Template.PhysicalRecoveryBase.Length > buff.BuffLevel.V)
+        if (buff.Template.HealthRecoveryBase != null && buff.Template.HealthRecoveryBase.Length > buff.BuffLevel.V)
         {
-            byte b = buff.Template.PhysicalRecoveryBase[buff.BuffLevel.V];
+            byte b = buff.Template.HealthRecoveryBase[buff.BuffLevel.V];
             CurrentHP += b;
             SendPacket(new 触发状态效果
             {

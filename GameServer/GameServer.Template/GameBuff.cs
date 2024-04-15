@@ -64,7 +64,7 @@ public sealed class GameBuff
     public float[] DamageIncOrDecFactor;
     public string TriggerTrapSkills;
     public ObjectSize NumberTrapsTriggered;
-    public byte[] PhysicalRecoveryBase;
+    public byte[] HealthRecoveryBase;
     public int TemptationDurationIncreased;
     public float IncreasedTemptationChance;
     public byte TemptationLevelIncreased;

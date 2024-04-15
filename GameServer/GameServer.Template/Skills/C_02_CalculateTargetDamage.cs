@@ -27,7 +27,7 @@ public sealed class C_02_CalculateTargetDamage : SkillTask
     public bool 命中反馈回复;
     public SkillHitFeedback 命中反馈限定类型;
     public SpecifyTargetType 回复限定类型;
-    public int HealthRecoveryBase; // PhysicalRecoveryBase
+    public int HealthRecoveryBase;
     public bool 等级差减回复;
     public int 减回复等级差;
     public int 零回复等级差;
