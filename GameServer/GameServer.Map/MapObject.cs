@@ -1474,7 +1474,7 @@ public abstract class MapObject
                 {
                     if (item4.Neighbors.Contains(地图对象2) && !地图对象2.CheckStatus(GameObjectState.Invisible | GameObjectState.Stealth))
                     {
-                        item4.Target.Add(地图对象2, SEngine.CurrentTime.AddMilliseconds(item4.仇恨时长), 0);
+                        item4.Target.Add(地图对象2, SEngine.CurrentTime.AddMilliseconds(item4.HateDuration), 0);
                     }
                 }
             }
@@ -1509,7 +1509,7 @@ public abstract class MapObject
                 {
                     if (item5.Neighbors.Contains(地图对象2) && !地图对象2.CheckStatus(GameObjectState.Invisible | GameObjectState.Stealth))
                     {
-                        item5.Target.Add(地图对象2, SEngine.CurrentTime.AddMilliseconds(item5.仇恨时长), 0);
+                        item5.Target.Add(地图对象2, SEngine.CurrentTime.AddMilliseconds(item5.HateDuration), 0);
                     }
                 }
             }
@@ -1530,7 +1530,7 @@ public abstract class MapObject
                 {
                     if (item6.Neighbors.Contains(this))
                     {
-                        item6.Target.Add(this, SEngine.CurrentTime.AddMilliseconds(item6.仇恨时长), 参数.增加宠物仇恨 ? 详情.SkillDamage : 0);
+                        item6.Target.Add(this, SEngine.CurrentTime.AddMilliseconds(item6.HateDuration), 参数.增加宠物仇恨 ? 详情.SkillDamage : 0);
                     }
                 }
             }
