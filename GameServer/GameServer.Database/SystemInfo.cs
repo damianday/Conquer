@@ -51,7 +51,7 @@ public class SystemInfo : DBObject
     public readonly DictionaryMonitor<string, DateTime> IPBans;
     public readonly DictionaryMonitor<string, DateTime> NICBans;
 
-    public readonly DataMonitor<DateTime> 占领时间;
+    public readonly DataMonitor<DateTime> SabakOccupyTime;
 
     public readonly DataMonitor<GuildInfo> OccupyGuild;
 

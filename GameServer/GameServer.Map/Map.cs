@@ -397,7 +397,7 @@ public sealed class Map
 
     public bool 掉落装备(Point point, bool redName)
     {
-        if (MapManager.沙城节点 >= 2 && (MapID == 152 || MapID == 178) && Config.沙巴克爆装备开关 == 0)
+        if (MapManager.SandCityStage >= 2 && (MapID == 152 || MapID == 178) && Config.沙巴克爆装备开关 == 0)
             return false;
 
         if (ValidPoint(point))

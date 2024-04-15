@@ -40,9 +40,8 @@ public static class MapManager
     public static int ItemObjectID;
 
     public static DateTime CurrentTime;
-    public static DateTime 宕机计时器;
-    private static DateTime 沙城处理计时;
-    private static DateTime 沙城处理计时1;
+    private static DateTime SandCityTime;
+    private static DateTime SandCityTime1;
 
     public static Point 沙城城门坐标;
     public static Point 皇宫下门坐标;
@@ -110,7 +109,7 @@ public static class MapManager
     public static MapArea 传送区域沙右;
     public static MapArea 传送区域皇宫;
 
-    public static byte 沙城节点;
+    public static byte SandCityStage;
 
     public static DateTime 通知时间;
     public static DateTime 通知时间2;
@@ -120,7 +119,7 @@ public static class MapManager
     public static DateTime 通知时间6;
     public static DateTime 通知时间7;
 
-    public static HashSet<GuildInfo> 攻城行会;
+    public static HashSet<GuildInfo> SiegeGuilds;
 
     private static void ProcessSandCity()
     {
@@ -165,6 +164,37 @@ public static class MapManager
 
     private static void ProcessSabakWar()
     {
+        static GuildInfo FindGuild(Map map)
+        {
+            bool flag = true;
+            GuildInfo guild = null;
+            foreach (var point in 皇宫随机区域.RangeCoordinates)
+            {
+                foreach (var obj in map[point])
+                {
+                    if (!obj.Dead && obj is PlayerObject player)
+                    {
+                        if (player.Guild == null || !SiegeGuilds.Contains(player.Guild))
+                        {
+                            flag = false;
+                            break;
+                        }
+                        if (guild == null)
+                        {
+                            guild = player.Guild;
+                        }
+                        else if (guild != player.Guild)
+                        {
+                            flag = false;
+                            break;
+                        }
+                    }
+                }
+                if (!flag) break;
+            }
+            return guild;
+        }
+
         var map = GetMap(152);
 
         foreach (MapObject obj in map[皇宫下门坐标].ToList())
@@ -223,77 +253,55 @@ public static class MapManager
                 player.Teleport(map, AreaType.Unknown, 皇宫正门入口);
             }
         }
-        if (!(SEngine.CurrentTime > 沙城处理计时))
-        {
-            return;
-        }
+
+        if (SEngine.CurrentTime < SandCityTime) return;
+
         if (SEngine.CurrentTime.Hour + 1 < Config.沙巴克开启)
         {
-            沙城节点 = 0;
+            SandCityStage = 0;
         }
-        if (SEngine.CurrentTime.Hour + 1 == Config.沙巴克开启 && SEngine.CurrentTime.Minute == 50 && 沙城节点 == 0)
+
+        if (SEngine.CurrentTime.Hour + 1 == Config.沙巴克开启 && SEngine.CurrentTime.Minute == 50 && SandCityStage == 0)
         {
             NetworkManager.SendAnnouncement("The Siege of Sabak will begin in ten minutes, so be prepared", true);
-            沙城节点 = 1;
+            SandCityStage = 1;
         }
+
         if (Config.沙巴克停止开关 == 1)
         {
-            沙城节点 = 0;
+            SandCityStage = 0;
             Config.沙巴克停止开关 = 0;
-            bool flag = true;
-            GuildInfo 行会数据 = null;
-            foreach (Point item9 in 皇宫随机区域.RangeCoordinates)
+
+            GuildInfo guild = FindGuild(map);
+ 
+            if (SiegeGuilds.Contains(guild) && guild != null)
             {
-                foreach (MapObject item10 in map[item9])
+                SystemInfo.Info.OccupyGuild.V = guild;
+                SystemInfo.Info.SabakOccupyTime.V = SEngine.CurrentTime;
+                foreach (var member in guild.Members)
                 {
-                    if (!item10.Dead && item10 is PlayerObject 玩家实例10)
-                    {
-                        if (玩家实例10.Guild == null || !攻城行会.Contains(玩家实例10.Guild))
-                        {
-                            flag = false;
-                            break;
-                        }
-                        if (行会数据 == null)
-                        {
-                            行会数据 = 玩家实例10.Guild;
-                        }
-                        else if (行会数据 != 玩家实例10.Guild)
-                        {
-                            flag = false;
-                            break;
-                        }
-                    }
+                    member.Key.攻沙日期.V = SEngine.CurrentTime;
                 }
-                if (!flag)
+                NetworkManager.SendAnnouncement($"The siege of Sabak is over, [{guild}] Became the new Sabak Guild", true);
+                SandCityStage = 6;
+                NetworkManager.Broadcast(new 同步占领行会
                 {
-                    break;
-                }
-            }
-            if (攻城行会.Contains(行会数据))
-            {
-                SystemInfo.Info.OccupyGuild.V = 行会数据;
-                SystemInfo.Info.占领时间.V = SEngine.CurrentTime;
-                foreach (KeyValuePair<CharacterInfo, GuildRank> item11 in 行会数据.Members)
-                {
-                    item11.Key.攻沙日期.V = SEngine.CurrentTime;
-                }
-                NetworkManager.SendAnnouncement($"The siege of Sabak is over, [{行会数据}]Become the new Sabak Guild", true);
-                沙城节点 = 6;
-                同步占领行会 同步占领行会 = new 同步占领行会();
-                同步占领行会.NewGuildID = 行会数据.ID;
-                NetworkManager.Broadcast(同步占领行会);
+                    NewGuildID = guild.ID
+                });
             }
         }
+
         if (SEngine.CurrentTime.Hour == Config.沙巴克开启 && Config.沙巴克重置系统 == 1)
         {
             SystemInfo.Info.OccupyGuild.V = null;
             Config.沙巴克重置系统 = 0;
             NetworkManager.SendAnnouncement("Sabak reset, about to start the siege, please get ready", true);
-            沙城节点 = 1;
+            SandCityStage = 1;
         }
-        if (沙城节点 == 1)
+
+        if (SandCityStage == 1)
         {
-            沙城节点 = 2;
+            SandCityStage = 2;
             MonsterInfo.DataSheet.TryGetValue("沙巴克城门", out var value);
             MonsterObject 怪物实例2 = new MonsterObject(value, map, int.MaxValue, new Point[1] { 沙城城门坐标 }, true, true);
             怪物实例2.CurrentDirection = GameDirection.UpRight;
@@ -318,23 +326,24 @@ public static class MapManager
             下方宫门.AddBuff(value3.ID, 下方宫门);
             左方宫门.AddBuff(value3.ID, 左方宫门);
         }
-        if (SEngine.CurrentTime.Hour == Config.沙巴克开启 && 沙城节点 == 2)
+
+        if (SEngine.CurrentTime.Hour == Config.沙巴克开启 && SandCityStage == 2)
         {
             if (SystemInfo.Info.OccupyGuild.V != null)
             {
-                攻城行会.Add(SystemInfo.Info.OccupyGuild.V);
+                SiegeGuilds.Add(SystemInfo.Info.OccupyGuild.V);
                 NetworkManager.SendAnnouncement($"Gain the qualification guild to capture Sabak【{SystemInfo.Info.OccupyGuild.V}】", true);
             }
             foreach (KeyValuePair<DateTime, GuildInfo> item12 in SystemInfo.Info.申请行会.ToList())
             {
-                攻城行会.Add(SystemInfo.Info.OccupyGuild.V);
-                攻城行会.Add(item12.Value);
+                SiegeGuilds.Add(SystemInfo.Info.OccupyGuild.V);
+                SiegeGuilds.Add(item12.Value);
                 SystemInfo.Info.申请行会.Remove(item12.Key);
                 NetworkManager.SendAnnouncement($"Gain the qualification guild to capture Sabak【{item12.Value}】", true);
             }
-            if (攻城行会.Count == 1 && SystemInfo.Info.OccupyGuild.V != null)
+            if (SiegeGuilds.Count == 1 && SystemInfo.Info.OccupyGuild.V != null)
             {
-                沙城节点 = 0;
+                SandCityStage = 0;
                 沙城城门?.Despawn();
                 上方宫门?.Despawn();
                 下方宫门?.Despawn();
@@ -342,9 +351,9 @@ public static class MapManager
                 NetworkManager.SendAnnouncement($"Only the Sabak Guild is registered! The Sabak Siege is closed and the Guild is occupied【{SystemInfo.Info.OccupyGuild.V}】", true);
                 return;
             }
-            if (攻城行会.Count == 0)
+            if (SiegeGuilds.Count == 0)
             {
-                沙城节点 = 0;
+                SandCityStage = 0;
                 沙城城门?.Despawn();
                 上方宫门?.Despawn();
                 下方宫门?.Despawn();
@@ -352,122 +361,75 @@ public static class MapManager
                 NetworkManager.SendAnnouncement("There are no siege guilds today, and the Sabak siege is closed!", true);
                 return;
             }
-            沙城节点 = 3;
+            SandCityStage = 3;
         }
-        if (SEngine.CurrentTime.Hour == Config.沙巴克开启 && 沙城节点 == 3)
+
+        if (SEngine.CurrentTime.Hour == Config.沙巴克开启 && SandCityStage == 3)
         {
             沙城城门.移除Buff时处理(22300);
             下方宫门.移除Buff时处理(22300);
             上方宫门.移除Buff时处理(22300);
             左方宫门.移除Buff时处理(22300);
             NetworkManager.SendAnnouncement("The Siege of Sabak begins! Warriors fight for honor!", true);
-            沙城节点 = 4;
+            SandCityStage = 4;
         }
-        if (SEngine.CurrentTime.Hour == Config.沙巴克开启 && 沙城节点 == 4 && 沙城城门.Dead && 沙城城门.BirthMap != null)
+
+        if (SEngine.CurrentTime.Hour == Config.沙巴克开启 && SandCityStage == 4 && 沙城城门.Dead && 沙城城门.BirthMap != null)
         {
             NetworkManager.SendAnnouncement("The gates of Sabak have been breached", true);
             沙城城门.BirthMap = null;
-            沙城节点 = 5;
+            SandCityStage = 5;
         }
-        if (SEngine.CurrentTime.Hour == Config.沙巴克开启 && 沙城节点 == 5)
+
+        if (SEngine.CurrentTime.Hour == Config.沙巴克开启 && SandCityStage == 5)
         {
-            皇宫随机区域 = map.Areas.FirstOrDefault((MapArea O) => O.RegionName == "沙巴克-皇宫随机区域");
-            bool flag2 = true;
-            GuildInfo 行会数据2 = null;
-            foreach (Point item13 in 皇宫随机区域.RangeCoordinates)
+            皇宫随机区域 = map.Areas.FirstOrDefault(x => x.RegionName == "沙巴克-皇宫随机区域");
+
+            GuildInfo guild = FindGuild(map);
+
+            if (SiegeGuilds.Contains(guild) && SEngine.CurrentTime >= SandCityTime1 && guild != null)
             {
-                foreach (MapObject item14 in map[item13])
+                SystemInfo.Info.OccupyGuild.V = guild;
+                SystemInfo.Info.SabakOccupyTime.V = SEngine.CurrentTime;
+                NetworkManager.Broadcast(new 同步占领行会
                 {
-                    if (!item14.Dead && item14 is PlayerObject 玩家实例11)
-                    {
-                        if (玩家实例11.Guild == null || !攻城行会.Contains(玩家实例11.Guild))
-                        {
-                            flag2 = false;
-                            break;
-                        }
-                        if (行会数据2 == null)
-                        {
-                            行会数据2 = 玩家实例11.Guild;
-                        }
-                        else if (行会数据2 != 玩家实例11.Guild)
-                        {
-                            flag2 = false;
-                            break;
-                        }
-                    }
-                }
-                if (!flag2)
-                {
-                    break;
-                }
-            }
-            if (攻城行会.Contains(行会数据2) && SEngine.CurrentTime >= 沙城处理计时1 && 行会数据2 != null)
-            {
-                SystemInfo.Info.OccupyGuild.V = 行会数据2;
-                SystemInfo.Info.占领时间.V = SEngine.CurrentTime;
-                同步占领行会 同步占领行会 = new 同步占领行会();
-                同步占领行会.NewGuildID = 行会数据2.ID;
-                NetworkManager.Broadcast(同步占领行会);
-                沙城处理计时1 = SEngine.CurrentTime.AddSeconds(30.0);
+                    NewGuildID = guild.ID
+                });
+                SandCityTime1 = SEngine.CurrentTime.AddSeconds(30.0);
             }
         }
-        if (SEngine.CurrentTime.Hour == Config.沙巴克结束 && 沙城节点 == 5)
+
+        if (SEngine.CurrentTime.Hour == Config.沙巴克结束 && SandCityStage == 5)
         {
-            bool flag3 = true;
-            GuildInfo 行会数据3 = null;
-            foreach (Point item15 in 皇宫随机区域.RangeCoordinates)
+            GuildInfo guild = FindGuild(map);
+
+            if (SiegeGuilds.Contains(guild) && guild != null)
             {
-                foreach (MapObject item16 in map[item15])
-                {
-                    if (!item16.Dead && item16 is PlayerObject 玩家实例12)
-                    {
-                        if (玩家实例12.Guild == null || !攻城行会.Contains(玩家实例12.Guild))
-                        {
-                            flag3 = false;
-                            break;
-                        }
-                        if (行会数据3 == null)
-                        {
-                            行会数据3 = 玩家实例12.Guild;
-                        }
-                        else if (行会数据3 != 玩家实例12.Guild)
-                        {
-                            flag3 = false;
-                            break;
-                        }
-                    }
-                }
-                if (!flag3)
-                {
-                    break;
-                }
-            }
-            if (攻城行会.Contains(行会数据3))
-            {
-                SystemInfo.Info.OccupyGuild.V = 行会数据3;
-                SystemInfo.Info.占领时间.V = SEngine.CurrentTime;
-                foreach (var member in 行会数据3.Members)
+                SystemInfo.Info.OccupyGuild.V = guild;
+                SystemInfo.Info.SabakOccupyTime.V = SEngine.CurrentTime;
+                foreach (var member in guild.Members)
                 {
                     member.Key.攻沙日期.V = SEngine.CurrentTime;
                 }
-                NetworkManager.SendAnnouncement($"The siege of Sabak is over, [{行会数据3}]Become the new Sabak Guild", true);
-                沙城节点 = 6;
-                同步占领行会 同步占领行会 = new 同步占领行会();
-                同步占领行会.NewGuildID = 行会数据3.ID;
-                NetworkManager.Broadcast(同步占领行会);
+                NetworkManager.SendAnnouncement($"The siege of Sabak is over, [{guild}] Became the new Sabak Guild", true);
+                SandCityStage = 6;
+                NetworkManager.Broadcast(new 同步占领行会
+                {
+                    NewGuildID = guild.ID
+                });
             }
         }
-        沙城处理计时 = SEngine.CurrentTime.AddMilliseconds(1000.0);
+
+        SandCityTime = SEngine.CurrentTime.AddMilliseconds(1000.0);
     }
 
     public static void Process()
     {
         try
         {
-            foreach (KeyValuePair<int, MapObject> item in ActiveObjects)
-            {
-                item.Value?.Process();
-            }
+            foreach (var obj in ActiveObjects)
+                obj.Value?.Process();
+
             if (对象表计数 >= SecondaryObjects.Count)
             {
                 对象表计数 = 0;
@@ -505,7 +467,7 @@ public static class MapManager
             {
                 if (SEngine.CurrentTime.Hour + 1 == Config.武斗场时间一 || SEngine.CurrentTime.Hour + 1 == Config.武斗场时间二)
                 {
-                    NetworkManager.SendAnnouncement("经验武斗场将在五分钟后开启, 想要参加的勇士请做好准备", rolling: true);
+                    NetworkManager.SendAnnouncement("The Experience Arena will open in five minutes, so be prepared if you want to participate", rolling: true);
                 }
                 通知时间 = SEngine.CurrentTime;
             }
@@ -927,6 +889,6 @@ public static class MapManager
         八卦坛坐标右 = new Point(1054, 591);
         八卦坛坐标中 = new Point(1056, 588);
         八卦坛激活计时 = DateTime.MaxValue;
-        攻城行会 = new HashSet<GuildInfo>();
+        SiegeGuilds = new HashSet<GuildInfo>();
     }
 }

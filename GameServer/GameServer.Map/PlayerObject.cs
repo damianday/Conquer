@@ -1729,7 +1729,7 @@ public sealed class PlayerObject : MapObject
         {
             玩家实例2 = 玩家实例4;
         }
-        if (玩家实例2 != null && !CurrentMap.自由区内(CurrentPosition) && !GreyName && !RedName && (MapManager.沙城节点 < 2 || (CurrentMap.MapID != 152 && CurrentMap.MapID != 178)) && Config.杀人PK红名开关 == 0)
+        if (玩家实例2 != null && !CurrentMap.自由区内(CurrentPosition) && !GreyName && !RedName && (MapManager.SandCityStage < 2 || (CurrentMap.MapID != 152 && CurrentMap.MapID != 178)) && Config.杀人PK红名开关 == 0)
         {
             玩家实例2.PKPoint += 50;
             if (skillDeath && Config.PK死亡幸运开关 == 1)
@@ -7732,7 +7732,7 @@ public sealed class PlayerObject : MapObject
         CurrentMP = (int)((float)this[Stat.MaxMP] * 0.3f);
         Dead = false;
         Blocking = true;
-        if (CurrentMap == MapManager.沙城地图 && MapManager.沙城节点 >= 2)
+        if (CurrentMap == MapManager.沙城地图 && MapManager.SandCityStage >= 2)
         {
             if (Guild != null && Guild == SystemInfo.Info.OccupyGuild.V)
             {
@@ -14839,7 +14839,7 @@ public sealed class PlayerObject : MapObject
                     }
                     if (Guild != null && SystemInfo.Info.OccupyGuild.V == Guild)
                     {
-                        if (Character.攻沙日期.V != SystemInfo.Info.占领时间.V)
+                        if (Character.攻沙日期.V != SystemInfo.Info.SabakOccupyTime.V)
                         {
                             对话页面 = 627403000;
                             Enqueue(new 同步交互结果
@@ -29275,7 +29275,7 @@ public sealed class PlayerObject : MapObject
                 ErrorCode = 6740
             });
         }
-        else if (MapManager.攻城行会.Contains(Guild))
+        else if (MapManager.SiegeGuilds.Contains(Guild))
         {
             Enqueue(new SocialErrorPacket
             {
@@ -30316,16 +30316,16 @@ public sealed class PlayerObject : MapObject
                 ErrorCode = 6709
             });
         }
-        else if (Session.GuildInfoTable.DataSheet.TryGetValue(行会编号, out value) && value is GuildInfo 行会数据)
+        else if (Session.GuildInfoTable.DataSheet.TryGetValue(行会编号, out value) && value is GuildInfo guild)
         {
-            if (!Guild.HostileGuilds.ContainsKey(行会数据))
+            if (!Guild.HostileGuilds.ContainsKey(guild))
             {
                 Enqueue(new GameErrorMessagePacket
                 {
                     ErrorCode = 6826
                 });
             }
-            else if (!Guild.解除申请.ContainsKey(行会数据))
+            else if (!Guild.解除申请.ContainsKey(guild))
             {
                 Enqueue(new GameErrorMessagePacket
                 {
@@ -30334,7 +30334,7 @@ public sealed class PlayerObject : MapObject
             }
             else if (应答类型 == 2)
             {
-                if (MapManager.沙城节点 >= 2 && ((Guild == SystemInfo.Info.OccupyGuild.V && MapManager.攻城行会.Contains(行会数据)) || (行会数据 == SystemInfo.Info.OccupyGuild.V && MapManager.攻城行会.Contains(Guild))))
+                if (MapManager.SandCityStage >= 2 && ((Guild == SystemInfo.Info.OccupyGuild.V && MapManager.SiegeGuilds.Contains(guild)) || (guild == SystemInfo.Info.OccupyGuild.V && MapManager.SiegeGuilds.Contains(Guild))))
                 {
                     Enqueue(new GameErrorMessagePacket
                     {
@@ -30343,9 +30343,9 @@ public sealed class PlayerObject : MapObject
                 }
                 else
                 {
-                    Guild.解除敌对(行会数据);
-                    NetworkManager.SendAnnouncement($"[{Guild}]解除了和[{行会数据}]的行会敌对.");
-                    Guild.解除申请.Remove(行会数据);
+                    Guild.解除敌对(guild);
+                    NetworkManager.SendAnnouncement($"[{Guild}]解除了和[{guild}]的行会敌对.");
+                    Guild.解除申请.Remove(guild);
                 }
             }
             else
@@ -30353,9 +30353,9 @@ public sealed class PlayerObject : MapObject
                 Guild.Broadcast(new 解除敌对列表
                 {
                     申请类型 = 2,
-                    行会编号 = 行会数据.ID
+                    行会编号 = guild.ID
                 });
-                Guild.解除申请.Remove(行会数据);
+                Guild.解除申请.Remove(guild);
             }
         }
         else
