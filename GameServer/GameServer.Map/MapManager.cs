@@ -2720,7 +2720,7 @@ public static class MapManager
                     }
                     if (item.RegionType == AreaType.Teleportation)
                     {
-                        value6.传送区域 = item;
+                        value6.TeleportationArea = item;
                     }
                     if (item.RegionType == AreaType.攻沙快捷)
                     {

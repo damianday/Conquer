@@ -35,7 +35,7 @@ public sealed class Map
 
     public MapArea ResurrectionArea;
     public MapArea 红名区域;
-    public MapArea 传送区域;
+    public MapArea TeleportationArea;
     public MapArea 攻沙快捷;
     public MapArea 传送区域沙左;
     public MapArea 传送区域沙右;
@@ -282,7 +282,7 @@ public sealed class Map
             AreaType.传送区域沙右 => 传送区域沙右.RandomCoords,
             AreaType.传送区域皇宫 => 传送区域皇宫.RandomCoords,
             AreaType.红名区域 => 红名区域.RandomCoords,
-            AreaType.Teleportation => 传送区域.RandomCoords,
+            AreaType.Teleportation => TeleportationArea.RandomCoords,
             AreaType.传送妖塔一 => 传送妖塔一.RandomCoords,
             AreaType.传送妖塔二 => 传送妖塔二.RandomCoords,
             AreaType.传送妖塔三 => 传送妖塔三.RandomCoords,

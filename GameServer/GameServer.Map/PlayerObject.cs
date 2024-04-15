@@ -1272,7 +1272,7 @@ public sealed class PlayerObject : MapObject
             else
             {
                 CurrentMap = MapManager.GetMap(GameMap.DataSheet[(byte)character.CurrentMap.V].NoReconnectMapID);
-                CurrentPosition = CurrentMap.传送区域?.RandomCoords ?? CurrentMap.Areas.First().RandomCoords;
+                CurrentPosition = CurrentMap.TeleportationArea?.RandomCoords ?? CurrentMap.Areas.First().RandomCoords;
             }
         }
         else
@@ -10849,7 +10849,7 @@ public sealed class PlayerObject : MapObject
                                     地图实例6.Areas = value27.Areas;
                                     地图实例6.Spawns = value27.Spawns;
                                     地图实例6.Guards = value27.Guards;
-                                    地图实例6.传送区域 = value27.传送区域;
+                                    地图实例6.TeleportationArea = value27.TeleportationArea;
                                     地图实例6.Cells = new HashSet<MapObject>[value27.MapSize.X, value27.MapSize.Y];
                                     Map 地图实例7 = 地图实例6;
                                     MapManager.ReplicateMaps.Add(地图实例7);
@@ -10878,7 +10878,7 @@ public sealed class PlayerObject : MapObject
                                     地图实例8.Areas = value29.Areas;
                                     地图实例8.Spawns = value29.Spawns;
                                     地图实例8.Guards = value29.Guards;
-                                    地图实例8.传送区域 = value29.传送区域;
+                                    地图实例8.TeleportationArea = value29.TeleportationArea;
                                     地图实例8.Cells = new HashSet<MapObject>[value29.MapSize.X, value29.MapSize.Y];
                                     Map 地图实例9 = 地图实例8;
                                     MapManager.ReplicateMaps.Add(地图实例9);
@@ -10907,7 +10907,7 @@ public sealed class PlayerObject : MapObject
                                     地图实例4.Areas = value25.Areas;
                                     地图实例4.Spawns = value25.Spawns;
                                     地图实例4.Guards = value25.Guards;
-                                    地图实例4.传送区域 = value25.传送区域;
+                                    地图实例4.TeleportationArea = value25.TeleportationArea;
                                     地图实例4.Cells = new HashSet<MapObject>[value25.MapSize.X, value25.MapSize.Y];
                                     Map 地图实例5 = 地图实例4;
                                     MapManager.ReplicateMaps.Add(地图实例5);
@@ -10936,7 +10936,7 @@ public sealed class PlayerObject : MapObject
                                     地图实例2.Areas = value23.Areas;
                                     地图实例2.Spawns = value23.Spawns;
                                     地图实例2.Guards = value23.Guards;
-                                    地图实例2.传送区域 = value23.传送区域;
+                                    地图实例2.TeleportationArea = value23.TeleportationArea;
                                     地图实例2.Cells = new HashSet<MapObject>[value23.MapSize.X, value23.MapSize.Y];
                                     Map 地图实例3 = 地图实例2;
                                     MapManager.ReplicateMaps.Add(地图实例3);
@@ -11029,7 +11029,7 @@ public sealed class PlayerObject : MapObject
                                 地图实例10.Areas = value48.Areas;
                                 地图实例10.Spawns = value48.Spawns;
                                 地图实例10.Guards = value48.Guards;
-                                地图实例10.传送区域 = value48.传送区域;
+                                地图实例10.TeleportationArea = value48.TeleportationArea;
                                 地图实例10.Respawns = value48.Spawns.OrderBy((MonsterSpawn O) => O.Coordinates.X).ToList();
                                 地图实例10.Cells = new HashSet<MapObject>[value48.MapSize.X, value48.MapSize.Y];
                                 Map 地图实例11 = 地图实例10;
@@ -11090,7 +11090,7 @@ public sealed class PlayerObject : MapObject
                                 地图实例12.Areas = value50.Areas;
                                 地图实例12.Spawns = value50.Spawns;
                                 地图实例12.Guards = value50.Guards;
-                                地图实例12.传送区域 = value50.传送区域;
+                                地图实例12.TeleportationArea = value50.TeleportationArea;
                                 地图实例12.Respawns = value50.Spawns.OrderBy((MonsterSpawn O) => O.Coordinates.X).ToList();
                                 地图实例12.Cells = new HashSet<MapObject>[value50.MapSize.X, value50.MapSize.Y];
                                 Map 地图实例13 = 地图实例12;
@@ -11149,7 +11149,7 @@ public sealed class PlayerObject : MapObject
                             地图实例14.Areas = value52.Areas;
                             地图实例14.Spawns = value52.Spawns;
                             地图实例14.Guards = value52.Guards;
-                            地图实例14.传送区域 = value52.传送区域;
+                            地图实例14.TeleportationArea = value52.TeleportationArea;
                             地图实例14.Respawns = value52.Spawns.OrderBy((MonsterSpawn O) => O.Coordinates.X).ToList();
                             地图实例14.Cells = new HashSet<MapObject>[value52.MapSize.X, value52.MapSize.Y];
                             Map 地图实例15 = 地图实例14;
@@ -11720,7 +11720,7 @@ public sealed class PlayerObject : MapObject
                                 地图实例16.Areas = value58.Areas;
                                 地图实例16.Spawns = value58.Spawns;
                                 地图实例16.Guards = value58.Guards;
-                                地图实例16.传送区域 = value58.传送区域;
+                                地图实例16.TeleportationArea = value58.TeleportationArea;
                                 地图实例16.ProcessTime = SEngine.CurrentTime.AddSeconds(20.0);
                                 地图实例16.Respawns = value58.Spawns.OrderBy((MonsterSpawn O) => O.Coordinates.X).ToList();
                                 地图实例16.Cells = new HashSet<MapObject>[value58.MapSize.X, value58.MapSize.Y];
@@ -12005,7 +12005,7 @@ public sealed class PlayerObject : MapObject
                                 地图实例19.Areas = value77.Areas;
                                 地图实例19.Spawns = value77.Spawns;
                                 地图实例19.Guards = value77.Guards;
-                                地图实例19.传送区域 = value77.传送区域;
+                                地图实例19.TeleportationArea = value77.TeleportationArea;
                                 地图实例19.ProcessTime = SEngine.CurrentTime.AddSeconds(20.0);
                                 地图实例19.Respawns = value77.Spawns.OrderBy((MonsterSpawn O) => O.Coordinates.X).ToList();
                                 地图实例19.Cells = new HashSet<MapObject>[value77.MapSize.X, value77.MapSize.Y];
@@ -12292,7 +12292,7 @@ public sealed class PlayerObject : MapObject
                             地图实例21.Areas = value96.Areas;
                             地图实例21.Spawns = value96.Spawns;
                             地图实例21.Guards = value96.Guards;
-                            地图实例21.传送区域 = value96.传送区域;
+                            地图实例21.TeleportationArea = value96.TeleportationArea;
                             地图实例21.ProcessTime = SEngine.CurrentTime.AddSeconds(20.0);
                             地图实例21.Respawns = value96.Spawns.OrderBy((MonsterSpawn O) => O.Coordinates.X).ToList();
                             地图实例21.Cells = new HashSet<MapObject>[value96.MapSize.X, value96.MapSize.Y];
@@ -14869,7 +14869,7 @@ public sealed class PlayerObject : MapObject
                             地图实例23.Areas = value115.Areas;
                             地图实例23.Spawns = value115.Spawns;
                             地图实例23.Guards = value115.Guards;
-                            地图实例23.传送区域 = value115.传送区域;
+                            地图实例23.TeleportationArea = value115.TeleportationArea;
                             地图实例23.ProcessTime = SEngine.CurrentTime.AddSeconds(20.0);
                             地图实例23.Respawns = value115.Spawns.OrderBy((MonsterSpawn O) => O.Coordinates.X).ToList();
                             地图实例23.Cells = new HashSet<MapObject>[value115.MapSize.X, value115.MapSize.Y];
