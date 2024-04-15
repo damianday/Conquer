@@ -386,7 +386,7 @@ public sealed class MonsterObject : MapObject
                 if (GameItem.DataSheetByName.TryGetValue("强效金创药", out var value))
                 {
                     int num2 = ((Grade != MonsterGradeType.Normal) ? 1 : 15);
-                    int num3 = Math.Max(1, num2 - (int)Math.Round((decimal)num2 * Config.怪物额外爆率));
+                    int num3 = Math.Max(1, num2 - (int)Math.Round((decimal)num2 * Config.ItemDropRate));
                     if (SEngine.Random.Next(num3) == num3 / 2)
                     {
                         num++;
@@ -396,7 +396,7 @@ public sealed class MonsterObject : MapObject
                 if (GameItem.DataSheetByName.TryGetValue("强效魔法药", out var value2))
                 {
                     int num4 = ((Grade != MonsterGradeType.Normal) ? 1 : 20);
-                    int num5 = Math.Max(1, num4 - (int)Math.Round((decimal)num4 * Config.怪物额外爆率));
+                    int num5 = Math.Max(1, num4 - (int)Math.Round((decimal)num4 * Config.ItemDropRate));
                     if (SEngine.Random.Next(num5) == num5 / 2)
                     {
                         num++;
@@ -406,7 +406,7 @@ public sealed class MonsterObject : MapObject
                 if (GameItem.DataSheetByName.TryGetValue("疗伤药", out var value3))
                 {
                     int num6 = ((Grade != MonsterGradeType.Normal) ? 1 : 100);
-                    int num7 = Math.Max(1, num6 - (int)Math.Round((decimal)num6 * Config.怪物额外爆率));
+                    int num7 = Math.Max(1, num6 - (int)Math.Round((decimal)num6 * Config.ItemDropRate));
                     if (SEngine.Random.Next(num7) == num7 / 2)
                     {
                         num++;
@@ -416,7 +416,7 @@ public sealed class MonsterObject : MapObject
                 if (GameItem.DataSheetByName.TryGetValue("祝福油", out var value4))
                 {
                     int num8 = ((Grade == MonsterGradeType.Normal) ? 1000 : ((Grade == MonsterGradeType.Elite) ? 50 : 10));
-                    int num9 = Math.Max(1, num8 - (int)Math.Round((decimal)num8 * Config.怪物额外爆率));
+                    int num9 = Math.Max(1, num8 - (int)Math.Round((decimal)num8 * Config.ItemDropRate));
                     if (SEngine.Random.Next(num9) == num9 / 2)
                     {
                         num++;
@@ -609,7 +609,7 @@ public sealed class MonsterObject : MapObject
                     continue;
                 }
 
-                int num13 = Math.Max(1, drop.Probability - (int)Math.Round((decimal)drop.Probability * Config.怪物额外爆率));
+                int num13 = Math.Max(1, drop.Probability - (int)Math.Round((decimal)drop.Probability * Config.ItemDropRate));
                 if (SEngine.Random.Next(num13) != num13 / 2)
                     continue;
 
@@ -676,7 +676,7 @@ public sealed class MonsterObject : MapObject
                     continue;
                 }
 
-                int num36 = Math.Max(1, drop.Probability - (int)Math.Round((decimal)drop.Probability * Config.怪物额外爆率));
+                int num36 = Math.Max(1, drop.Probability - (int)Math.Round((decimal)drop.Probability * Config.ItemDropRate));
                 if (SEngine.Random.Next(num36) != num36 / 2)
                     continue;
 

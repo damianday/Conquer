@@ -26,7 +26,7 @@ public static class Config
 
     public static decimal SpecialRepairDiscount;
 
-    public static decimal 怪物额外爆率;
+    public static decimal ItemDropRate;
 
     public static decimal MonsterExperienceMultiplier;
 

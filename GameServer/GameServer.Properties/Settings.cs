@@ -6631,15 +6631,15 @@ internal sealed class Settings : ApplicationSettingsBase
     [UserScopedSetting]
     [DebuggerNonUserCode]
     [DefaultSettingValue("0")]
-    public decimal 怪物额外爆率
+    public decimal ItemDropRate
     {
         get
         {
-            return (decimal)this["怪物额外爆率"];
+            return (decimal)this["ItemDropRate"];
         }
         set
         {
-            this["怪物额外爆率"] = value;
+            this["ItemDropRate"] = value;
         }
     }
 

@@ -681,7 +681,7 @@ public partial class SMain : Form
         S_MaxUserLevel.Value = (Config.MaxUserLevel = Settings.Default.MaxUserLevel);
         S_NoobSupportLevel.Value = (Config.NoobSupportLevel = Settings.Default.NoobSupportLevel);
         S_SpecialRepairDiscount.Value = (Config.SpecialRepairDiscount = Settings.Default.SpecialRepairDiscount);
-        S_怪物额外爆率.Value = (Config.怪物额外爆率 = Settings.Default.怪物额外爆率);
+        S_ItemDropRate.Value = (Config.ItemDropRate = Settings.Default.ItemDropRate);
         S_MonsterExperienceMultiplier.Value = (Config.MonsterExperienceMultiplier = Settings.Default.MonsterExperienceMultiplier);
         S_减收益等级差.Value = (Config.减收益等级差 = Settings.Default.减收益等级差);
         S_收益减少比率.Value = (Config.收益减少比率 = Settings.Default.收益减少比率);
@@ -1873,9 +1873,9 @@ public partial class SMain : Form
                         Config.减收益等级差 = Settings.Default.减收益等级差 = (byte)control.Value;
                         break;
                     }
-                case nameof(S_怪物额外爆率):
+                case nameof(S_ItemDropRate):
                     {
-                        Config.怪物额外爆率 = Settings.Default.怪物额外爆率 = control.Value;
+                        Config.ItemDropRate = Settings.Default.ItemDropRate = control.Value;
                         break;
                     }
                 case nameof(S_物品归属时间):
@@ -7821,7 +7821,7 @@ public partial class SMain : Form
             return;
         }
         主选项卡.SelectedIndex = 0;
-        日志选项卡.SelectedIndex = 2;
+        LoggingTab.SelectedIndex = 2;
         AddCommandLog("=> " + GM命令文本.Text);
         GMCommand cmd;
         if (GM命令文本.Text[0] != '@')

@@ -2357,7 +2357,7 @@ public partial class SMain
         S_特修折扣标签 = new Label();
         S_SpecialRepairDiscount = new NumericUpDown();
         S_怪物爆率标签 = new Label();
-        S_怪物额外爆率 = new NumericUpDown();
+        S_ItemDropRate = new NumericUpDown();
         S_开放等级标签 = new Label();
         S_MaxUserLevel = new NumericUpDown();
         S_注意事项标签6 = new Label();
@@ -2419,7 +2419,7 @@ public partial class SMain
         主选项卡 = new TabControl();
         日志页面 = new TabPage();
         StatObjectsStatistics = new Label();
-        日志选项卡 = new TabControl();
+        LoggingTab = new TabControl();
         系统日志页面 = new TabPage();
         SystemLogsTextBox = new RichTextBox();
         聊天日志页面 = new TabPage();
@@ -3793,7 +3793,7 @@ public partial class SMain
         ((ISupportInitialize)S_减收益等级差).BeginInit();
         ((ISupportInitialize)S_MonsterExperienceMultiplier).BeginInit();
         ((ISupportInitialize)S_SpecialRepairDiscount).BeginInit();
-        ((ISupportInitialize)S_怪物额外爆率).BeginInit();
+        ((ISupportInitialize)S_ItemDropRate).BeginInit();
         ((ISupportInitialize)S_MaxUserLevel).BeginInit();
         S_网络设置分组.SuspendLayout();
         ((ISupportInitialize)S_自动保存日志).BeginInit();
@@ -3826,7 +3826,7 @@ public partial class SMain
         ((ISupportInitialize)角色浏览表).BeginInit();
         主选项卡.SuspendLayout();
         日志页面.SuspendLayout();
-        日志选项卡.SuspendLayout();
+        LoggingTab.SuspendLayout();
         系统日志页面.SuspendLayout();
         聊天日志页面.SuspendLayout();
         命令日志页面.SuspendLayout();
@@ -32621,7 +32621,7 @@ public partial class SMain
         S_游戏设置分组.Controls.Add(S_特修折扣标签);
         S_游戏设置分组.Controls.Add(S_SpecialRepairDiscount);
         S_游戏设置分组.Controls.Add(S_怪物爆率标签);
-        S_游戏设置分组.Controls.Add(S_怪物额外爆率);
+        S_游戏设置分组.Controls.Add(S_ItemDropRate);
         S_游戏设置分组.Controls.Add(S_开放等级标签);
         S_游戏设置分组.Controls.Add(S_MaxUserLevel);
         S_游戏设置分组.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
@@ -32828,20 +32828,20 @@ public partial class SMain
         S_怪物爆率标签.TabIndex = 5;
         S_怪物爆率标签.Text = "Extra Drop Rate";
         // 
-        // S_怪物额外爆率
+        // S_ItemDropRate
         // 
-        S_怪物额外爆率.DecimalPlaces = 2;
-        S_怪物额外爆率.Font = new Font("SimSun", 10.5F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        S_怪物额外爆率.Increment = new decimal(new int[] { 5, 0, 0, 131072 });
-        S_怪物额外爆率.Location = new Point(288, 142);
-        S_怪物额外爆率.Margin = new Padding(4, 3, 4, 3);
-        S_怪物额外爆率.Maximum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_怪物额外爆率.Name = "S_怪物额外爆率";
-        S_怪物额外爆率.Size = new Size(127, 23);
-        S_怪物额外爆率.TabIndex = 4;
-        S_怪物额外爆率.TextAlign = HorizontalAlignment.Center;
-        S_怪物额外爆率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_怪物额外爆率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_ItemDropRate.DecimalPlaces = 2;
+        S_ItemDropRate.Font = new Font("SimSun", 10.5F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
+        S_ItemDropRate.Increment = new decimal(new int[] { 5, 0, 0, 131072 });
+        S_ItemDropRate.Location = new Point(288, 142);
+        S_ItemDropRate.Margin = new Padding(4, 3, 4, 3);
+        S_ItemDropRate.Maximum = new decimal(new int[] { 1, 0, 0, 0 });
+        S_ItemDropRate.Name = "S_ItemDropRate";
+        S_ItemDropRate.Size = new Size(127, 23);
+        S_ItemDropRate.TabIndex = 4;
+        S_ItemDropRate.TextAlign = HorizontalAlignment.Center;
+        S_ItemDropRate.Value = new decimal(new int[] { 1, 0, 0, 0 });
+        S_ItemDropRate.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
         // 
         // S_开放等级标签
         // 
@@ -33873,7 +33873,7 @@ public partial class SMain
         日志页面.BackColor = Color.Transparent;
         日志页面.BorderStyle = BorderStyle.Fixed3D;
         日志页面.Controls.Add(StatObjectsStatistics);
-        日志页面.Controls.Add(日志选项卡);
+        日志页面.Controls.Add(LoggingTab);
         日志页面.Controls.Add(StatLoggedInConnections);
         日志页面.Controls.Add(StatLiveConnections);
         日志页面.Controls.Add(StatTotalConnections);
@@ -33901,20 +33901,20 @@ public partial class SMain
         StatObjectsStatistics.TabIndex = 17;
         StatObjectsStatistics.Text = "Objects Statistics:";
         // 
-        // 日志选项卡
+        // LoggingTab
         // 
-        日志选项卡.Controls.Add(系统日志页面);
-        日志选项卡.Controls.Add(聊天日志页面);
-        日志选项卡.Controls.Add(命令日志页面);
-        日志选项卡.Font = new Font("Calibri", 11.25F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-        日志选项卡.ItemSize = new Size(200, 20);
-        日志选项卡.Location = new Point(2, 2);
-        日志选项卡.Margin = new Padding(4, 3, 4, 3);
-        日志选项卡.Name = "日志选项卡";
-        日志选项卡.SelectedIndex = 0;
-        日志选项卡.Size = new Size(840, 688);
-        日志选项卡.SizeMode = TabSizeMode.Fixed;
-        日志选项卡.TabIndex = 16;
+        LoggingTab.Controls.Add(系统日志页面);
+        LoggingTab.Controls.Add(聊天日志页面);
+        LoggingTab.Controls.Add(命令日志页面);
+        LoggingTab.Font = new Font("Calibri", 11.25F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
+        LoggingTab.ItemSize = new Size(200, 20);
+        LoggingTab.Location = new Point(2, 2);
+        LoggingTab.Margin = new Padding(4, 3, 4, 3);
+        LoggingTab.Name = "LoggingTab";
+        LoggingTab.SelectedIndex = 0;
+        LoggingTab.Size = new Size(840, 688);
+        LoggingTab.SizeMode = TabSizeMode.Fixed;
+        LoggingTab.TabIndex = 16;
         // 
         // 系统日志页面
         // 
@@ -36479,7 +36479,7 @@ public partial class SMain
         ((ISupportInitialize)S_减收益等级差).EndInit();
         ((ISupportInitialize)S_MonsterExperienceMultiplier).EndInit();
         ((ISupportInitialize)S_SpecialRepairDiscount).EndInit();
-        ((ISupportInitialize)S_怪物额外爆率).EndInit();
+        ((ISupportInitialize)S_ItemDropRate).EndInit();
         ((ISupportInitialize)S_MaxUserLevel).EndInit();
         S_网络设置分组.ResumeLayout(false);
         S_网络设置分组.PerformLayout();
@@ -36514,7 +36514,7 @@ public partial class SMain
         主选项卡.ResumeLayout(false);
         日志页面.ResumeLayout(false);
         日志页面.PerformLayout();
-        日志选项卡.ResumeLayout(false);
+        LoggingTab.ResumeLayout(false);
         系统日志页面.ResumeLayout(false);
         聊天日志页面.ResumeLayout(false);
         命令日志页面.ResumeLayout(false);
@@ -36654,7 +36654,7 @@ public partial class SMain
 
     private Label S_怪物爆率标签;
 
-    public NumericUpDown S_怪物额外爆率;
+    public NumericUpDown S_ItemDropRate;
 
     private Label S_开放等级标签;
 
@@ -37694,7 +37694,7 @@ public partial class SMain
 
     private Label StatObjectsStatistics;
 
-    public TabControl 日志选项卡;
+    public TabControl LoggingTab;
 
     private TabPage 系统日志页面;
 
