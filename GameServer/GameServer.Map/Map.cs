@@ -34,21 +34,21 @@ public sealed class Map
     public Terrain Terrain;
 
     public MapArea ResurrectionArea;
-    public MapArea 红名区域;
+    public MapArea RedNameArea;
     public MapArea TeleportationArea;
     public MapArea 攻沙快捷;
     public MapArea 传送区域沙左;
     public MapArea 传送区域沙右;
     public MapArea 传送区域皇宫;
-    public MapArea 传送妖塔一;
-    public MapArea 传送妖塔二;
-    public MapArea 传送妖塔三;
-    public MapArea 传送妖塔四;
-    public MapArea 传送妖塔五;
-    public MapArea 传送妖塔六;
-    public MapArea 传送妖塔七;
-    public MapArea 传送妖塔八;
-    public MapArea 传送妖塔九;
+    public MapArea DemonTower1Area;
+    public MapArea DemonTower2Area;
+    public MapArea DemonTower3Area;
+    public MapArea DemonTower4Area;
+    public MapArea DemonTower5Area;
+    public MapArea DemonTower6Area;
+    public MapArea DemonTower7Area;
+    public MapArea DemonTower8Area;
+    public MapArea DemonTower9Area;
 
     public HashSet<MapArea> Areas;
     public HashSet<MonsterSpawn> Spawns;
@@ -281,17 +281,17 @@ public sealed class Map
             AreaType.传送区域沙左 => 传送区域沙左.RandomCoords,
             AreaType.传送区域沙右 => 传送区域沙右.RandomCoords,
             AreaType.传送区域皇宫 => 传送区域皇宫.RandomCoords,
-            AreaType.红名区域 => 红名区域.RandomCoords,
+            AreaType.RedName => RedNameArea.RandomCoords,
             AreaType.Teleportation => TeleportationArea.RandomCoords,
-            AreaType.传送妖塔一 => 传送妖塔一.RandomCoords,
-            AreaType.传送妖塔二 => 传送妖塔二.RandomCoords,
-            AreaType.传送妖塔三 => 传送妖塔三.RandomCoords,
-            AreaType.传送妖塔四 => 传送妖塔四.RandomCoords,
-            AreaType.传送妖塔五 => 传送妖塔五.RandomCoords,
-            AreaType.传送妖塔六 => 传送妖塔六.RandomCoords,
-            AreaType.传送妖塔七 => 传送妖塔七.RandomCoords,
-            AreaType.传送妖塔八 => 传送妖塔八.RandomCoords,
-            AreaType.传送妖塔九 => 传送妖塔九.RandomCoords,
+            AreaType.DemonTower1 => DemonTower1Area.RandomCoords,
+            AreaType.DemonTower2 => DemonTower2Area.RandomCoords,
+            AreaType.DemonTower3 => DemonTower3Area.RandomCoords,
+            AreaType.DemonTower4 => DemonTower4Area.RandomCoords,
+            AreaType.DemonTower5 => DemonTower5Area.RandomCoords,
+            AreaType.DemonTower6 => DemonTower6Area.RandomCoords,
+            AreaType.DemonTower7 => DemonTower7Area.RandomCoords,
+            AreaType.DemonTower8 => DemonTower8Area.RandomCoords,
+            AreaType.DemonTower9 => DemonTower9Area.RandomCoords,
             AreaType.Random => Areas.FirstOrDefault(x => x.RegionType == AreaType.Random)?.RandomCoords ?? default(Point),
             _ => default(Point),
         };

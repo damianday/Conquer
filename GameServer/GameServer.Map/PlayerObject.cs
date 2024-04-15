@@ -1258,7 +1258,7 @@ public sealed class PlayerObject : MapObject
         if (CurrentHP == 0)
         {
             CurrentMap = MapManager.GetMap(RespawnMapIndex);
-            CurrentPosition = (RedName ? CurrentMap.红名区域.RandomCoords : CurrentMap.ResurrectionArea.RandomCoords);
+            CurrentPosition = (RedName ? CurrentMap.RedNameArea.RandomCoords : CurrentMap.ResurrectionArea.RandomCoords);
             CurrentHP = (int)((float)this[Stat.MaxHP] * 0.3f);
             CurrentMP = (int)((float)this[Stat.MaxMP] * 0.3f);
         }
@@ -7854,7 +7854,7 @@ public sealed class PlayerObject : MapObject
         }
         else
         {
-            Teleport(ResurrectionMap, (!RedName) ? AreaType.Resurrection : AreaType.红名区域);
+            Teleport(ResurrectionMap, (!RedName) ? AreaType.Resurrection : AreaType.RedName);
         }
     }
 
@@ -12581,7 +12581,7 @@ public sealed class PlayerObject : MapObject
                             }
                             else if (MapManager.Maps.TryGetValue(3633, out value4))
                             {
-                                Teleport(value4, AreaType.传送妖塔一);
+                                Teleport(value4, AreaType.DemonTower1);
                                 NetworkManager.SendAnnouncement($"玩家：{Name}闯入{CurrentMap}二层副本历练", rolling: true);
                             }
                         }
@@ -12604,7 +12604,7 @@ public sealed class PlayerObject : MapObject
                             }
                             else if (MapManager.Maps.TryGetValue(3633, out value36))
                             {
-                                Teleport(value36, AreaType.传送妖塔二);
+                                Teleport(value36, AreaType.DemonTower2);
                                 NetworkManager.SendAnnouncement($"玩家：{Name}闯入{CurrentMap}三层副本历练");
                             }
                         }
@@ -12627,7 +12627,7 @@ public sealed class PlayerObject : MapObject
                             }
                             else if (MapManager.Maps.TryGetValue(3633, out value11))
                             {
-                                Teleport(value11, AreaType.传送妖塔三);
+                                Teleport(value11, AreaType.DemonTower3);
                                 NetworkManager.SendAnnouncement($"玩家：{Name}闯入{CurrentMap}四层副本历练");
                             }
                         }
@@ -12650,7 +12650,7 @@ public sealed class PlayerObject : MapObject
                             }
                             else if (MapManager.Maps.TryGetValue(3633, out value57))
                             {
-                                Teleport(value57, AreaType.传送妖塔四);
+                                Teleport(value57, AreaType.DemonTower4);
                                 NetworkManager.SendAnnouncement($"玩家：{Name}闯入{CurrentMap}五层副本历练");
                             }
                         }
@@ -12673,7 +12673,7 @@ public sealed class PlayerObject : MapObject
                             }
                             else if (MapManager.Maps.TryGetValue(3633, out value37))
                             {
-                                Teleport(value37, AreaType.传送妖塔五);
+                                Teleport(value37, AreaType.DemonTower5);
                                 NetworkManager.SendAnnouncement($"玩家：{Name}闯入{CurrentMap}六层副本历练");
                             }
                         }
@@ -12696,7 +12696,7 @@ public sealed class PlayerObject : MapObject
                             }
                             else if (MapManager.Maps.TryGetValue(3633, out value12))
                             {
-                                Teleport(value12, AreaType.传送妖塔六);
+                                Teleport(value12, AreaType.DemonTower6);
                                 NetworkManager.SendAnnouncement($"玩家：{Name}闯入{CurrentMap}七层副本历练");
                             }
                         }
@@ -12719,7 +12719,7 @@ public sealed class PlayerObject : MapObject
                             }
                             else if (MapManager.Maps.TryGetValue(3633, out value47))
                             {
-                                Teleport(value47, AreaType.传送妖塔七);
+                                Teleport(value47, AreaType.DemonTower7);
                                 NetworkManager.SendAnnouncement($"玩家：{Name}闯入{CurrentMap}八层副本历练");
                             }
                         }
@@ -12742,7 +12742,7 @@ public sealed class PlayerObject : MapObject
                             }
                             else if (MapManager.Maps.TryGetValue(3633, out value54))
                             {
-                                Teleport(value54, AreaType.传送妖塔八);
+                                Teleport(value54, AreaType.DemonTower8);
                                 NetworkManager.SendAnnouncement($"玩家：{Name}闯入{CurrentMap}九层副本历练");
                             }
                         }

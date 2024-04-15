@@ -2714,9 +2714,9 @@ public static class MapManager
                     {
                         value6.ResurrectionArea = item;
                     }
-                    if (item.RegionType == AreaType.红名区域)
+                    if (item.RegionType == AreaType.RedName)
                     {
-                        value6.红名区域 = item;
+                        value6.RedNameArea = item;
                     }
                     if (item.RegionType == AreaType.Teleportation)
                     {
@@ -2738,41 +2738,41 @@ public static class MapManager
                     {
                         value6.传送区域皇宫 = item;
                     }
-                    if (item.RegionType == AreaType.传送妖塔一)
+                    if (item.RegionType == AreaType.DemonTower1)
                     {
-                        value6.传送妖塔一 = item;
+                        value6.DemonTower1Area = item;
                     }
-                    if (item.RegionType == AreaType.传送妖塔二)
+                    if (item.RegionType == AreaType.DemonTower2)
                     {
-                        value6.传送妖塔二 = item;
+                        value6.DemonTower2Area = item;
                     }
-                    if (item.RegionType == AreaType.传送妖塔三)
+                    if (item.RegionType == AreaType.DemonTower3)
                     {
-                        value6.传送妖塔三 = item;
+                        value6.DemonTower3Area = item;
                     }
-                    if (item.RegionType == AreaType.传送妖塔四)
+                    if (item.RegionType == AreaType.DemonTower4)
                     {
-                        value6.传送妖塔四 = item;
+                        value6.DemonTower4Area = item;
                     }
-                    if (item.RegionType == AreaType.传送妖塔五)
+                    if (item.RegionType == AreaType.DemonTower5)
                     {
-                        value6.传送妖塔五 = item;
+                        value6.DemonTower5Area = item;
                     }
-                    if (item.RegionType == AreaType.传送妖塔六)
+                    if (item.RegionType == AreaType.DemonTower6)
                     {
-                        value6.传送妖塔六 = item;
+                        value6.DemonTower6Area = item;
                     }
-                    if (item.RegionType == AreaType.传送妖塔七)
+                    if (item.RegionType == AreaType.DemonTower7)
                     {
-                        value6.传送妖塔七 = item;
+                        value6.DemonTower7Area = item;
                     }
-                    if (item.RegionType == AreaType.传送妖塔八)
+                    if (item.RegionType == AreaType.DemonTower8)
                     {
-                        value6.传送妖塔八 = item;
+                        value6.DemonTower8Area = item;
                     }
-                    if (item.RegionType == AreaType.传送妖塔九)
+                    if (item.RegionType == AreaType.DemonTower9)
                     {
-                        value6.传送妖塔九 = item;
+                        value6.DemonTower9Area = item;
                     }
                     value6.Areas.Add(item);
                     break;
