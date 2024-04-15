@@ -503,4 +503,32 @@ public static class Session
             Environment.Exit(0);
         }));
     }
+
+    public static AccountInfo GetAccount(string accountName)
+    {
+        if (AccountInfoTable.SearchTable.TryGetValue(accountName, out var value) && value is AccountInfo account)
+            return account;
+        return null;
+    }
+
+    public static AccountInfo GetAccount(int id)
+    {
+        if (AccountInfoTable.DataSheet.TryGetValue(id, out var value) && value is AccountInfo account)
+            return account;
+        return null;
+    }
+
+    public static CharacterInfo GetCharacter(string uname)
+    {
+        if (CharacterInfoTable.SearchTable.TryGetValue(uname, out var value) && value is CharacterInfo character)
+            return character;
+        return null;
+    }
+
+    public static CharacterInfo GetCharacter(int id)
+    {
+        if (CharacterInfoTable.DataSheet.TryGetValue(id, out var value) && value is CharacterInfo character)
+            return character;
+        return null;
+    }
 }
