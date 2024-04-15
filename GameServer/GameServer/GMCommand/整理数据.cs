@@ -15,20 +15,18 @@ public sealed class 整理数据 : GMCommand
             return;
         }
         SMain.AddCommandLog("<= @" + GetType().Name + " 开始执行命令, 过程中请勿关闭窗口");
-        SMain.Main.BeginInvoke((MethodInvoker)delegate
+        SMain.Main.BeginInvoke(() =>
         {
-            Panel 下方控件页2 = SMain.Main.下方控件页;
             SMain.Main.SettingsPage.Enabled = false;
-            下方控件页2.Enabled = false;
+            SMain.Main.下方控件页.Enabled = false;
         });
         Task.Run(delegate
         {
             Session.Save(commit: true);
-            SMain.Main.BeginInvoke((MethodInvoker)delegate
+            SMain.Main.BeginInvoke(() =>
             {
-                Panel 下方控件页 = SMain.Main.下方控件页;
                 SMain.Main.SettingsPage.Enabled = true;
-                下方控件页.Enabled = true;
+                SMain.Main.下方控件页.Enabled = true;
             });
         });
     }
