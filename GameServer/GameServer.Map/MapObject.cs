@@ -320,7 +320,7 @@ public abstract class MapObject
                 return 玩家实例2.RedName;
 
             if (target is PetObject)
-                return guard.GuardNumber == 6734;
+                return guard.GuardID == 6734;
         }
         else if (this is PetObject)
         {

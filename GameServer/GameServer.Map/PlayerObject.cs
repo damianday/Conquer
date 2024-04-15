@@ -1790,7 +1790,7 @@ public sealed class PlayerObject : MapObject
             if (CurrentMap.MapID == 183 && SEngine.CurrentTime > 经验计时)
             {
                 经验计时 = SEngine.CurrentTime.AddSeconds(5.0);
-                GainExperience(null, (CurrentMap[CurrentPosition].FirstOrDefault((MapObject O) => O is GuardObject guard && guard.GuardNumber == 6121) == null) ? Config.武斗场经验小 : Config.武斗场经验大);
+                GainExperience(null, (CurrentMap[CurrentPosition].FirstOrDefault((MapObject O) => O is GuardObject guard && guard.GuardID == 6121) == null) ? Config.武斗场经验小 : Config.武斗场经验大);
             }
             Guild?.清理数据();
             秒触发内容结果(Character.UserName.V);
@@ -4045,7 +4045,7 @@ public sealed class PlayerObject : MapObject
             GuardObject guard = null;
             foreach (int key in MapManager.Guards.Keys)
             {
-                if (MapManager.Guards[key].GuardNumber == 6581)
+                if (MapManager.Guards[key].GuardID == 6581)
                     guard = MapManager.Guards[key];
             }
             if (guard != null)
@@ -8401,16 +8401,16 @@ public sealed class PlayerObject : MapObject
             {
                 Connection.Disconnect(new Exception("错误操作: 开始Npcc对话. 错误: 超长距离对话."));
             }
-            else if (NpcDialogs.DataSheet.ContainsKey(对话守卫.GuardNumber * 100000))
+            else if (NpcDialog.DataSheet.ContainsKey(对话守卫.GuardID * 100000))
             {
                 打开商店 = 对话守卫.StoreID;
                 打开界面 = 对话守卫.界面代码;
                 对话超时 = SEngine.CurrentTime.AddSeconds(30.0);
-                对话页面 = 对话守卫.GuardNumber * 100000;
+                对话页面 = 对话守卫.GuardID * 100000;
                 Enqueue(new 同步交互结果
                 {
                     对象编号 = 对话守卫.ObjectID,
-                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                 });
             }
         }
@@ -8421,16 +8421,16 @@ public sealed class PlayerObject : MapObject
         if (!Dead && StallState <= 0 && TradeState < 3)
         {
             对话守卫 = 对话守卫1;
-            if (NpcDialogs.DataSheet.ContainsKey(对话守卫1.GuardNumber * 100000))
+            if (NpcDialog.DataSheet.ContainsKey(对话守卫1.GuardID * 100000))
             {
                 打开商店 = 对话守卫1.StoreID;
                 打开界面 = 对话守卫1.界面代码;
                 对话超时 = SEngine.CurrentTime.AddSeconds(30.0);
-                对话页面 = 对话守卫1.GuardNumber * 100000;
+                对话页面 = 对话守卫1.GuardID * 100000;
                 Enqueue(new 同步交互结果
                 {
                     对象编号 = 对话守卫1.ObjectID,
-                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                 });
             }
         }
@@ -8669,7 +8669,7 @@ public sealed class PlayerObject : MapObject
                         对话页面 = 616200001;
                         Enqueue(new 同步交互结果
                         {
-                            交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                            交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                             对象编号 = 对话守卫.ObjectID
                         });
                     }
@@ -8678,7 +8678,7 @@ public sealed class PlayerObject : MapObject
                         对话页面 = 616200002;
                         Enqueue(new 同步交互结果
                         {
-                            交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                            交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                             对象编号 = 对话守卫.ObjectID
                         });
                     }
@@ -9040,7 +9040,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 692301000;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                 对象编号 = 对话守卫.ObjectID
                             });
                             break;
@@ -9050,7 +9050,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 692301000;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{沙巴克皇宫传送等级}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{沙巴克皇宫传送等级}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                             break;
@@ -9071,7 +9071,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 692302000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -9088,7 +9088,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 692302000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -9104,7 +9104,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 692302000;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -9159,7 +9159,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                             break;
@@ -9209,7 +9209,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                             break;
@@ -9259,7 +9259,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                             break;
@@ -9309,7 +9309,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                             break;
@@ -9404,7 +9404,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                             break;
@@ -9454,7 +9454,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                             break;
@@ -9504,7 +9504,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                             break;
@@ -9554,7 +9554,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                             break;
@@ -9581,7 +9581,7 @@ public sealed class PlayerObject : MapObject
                                     Enqueue(new 同步交互结果
                                     {
                                         对象编号 = 对话守卫.ObjectID,
-                                        交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                        交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                     });
                                 }
                                 break;
@@ -9604,7 +9604,7 @@ public sealed class PlayerObject : MapObject
                                     Enqueue(new 同步交互结果
                                     {
                                         对象编号 = 对话守卫.ObjectID,
-                                        交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                        交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                     });
                                 }
                                 break;
@@ -9627,7 +9627,7 @@ public sealed class PlayerObject : MapObject
                                     Enqueue(new 同步交互结果
                                     {
                                         对象编号 = 对话守卫.ObjectID,
-                                        交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                        交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                     });
                                 }
                                 break;
@@ -9650,7 +9650,7 @@ public sealed class PlayerObject : MapObject
                                     Enqueue(new 同步交互结果
                                     {
                                         对象编号 = 对话守卫.ObjectID,
-                                        交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                        交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                     });
                                 }
                                 break;
@@ -9673,7 +9673,7 @@ public sealed class PlayerObject : MapObject
                                     Enqueue(new 同步交互结果
                                     {
                                         对象编号 = 对话守卫.ObjectID,
-                                        交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                        交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                     });
                                 }
                                 break;
@@ -9943,7 +9943,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                             });
                             break;
                         }
@@ -10212,7 +10212,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                             });
                             break;
                         }
@@ -10481,7 +10481,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                             });
                             break;
                         }
@@ -10493,7 +10493,7 @@ public sealed class PlayerObject : MapObject
                         对话页面 = 710101000;
                         Enqueue(new 同步交互结果
                         {
-                            交互文本 = NpcDialogs.合并数据(对话页面, $"赞助人数：[{Config.沙城捐献赞助人数}] 赞助金额：[{Config.沙城捐献赞助金额}]<br>"),
+                            交互文本 = NpcDialog.合并数据(对话页面, $"赞助人数：[{Config.沙城捐献赞助人数}] 赞助金额：[{Config.沙城捐献赞助金额}]<br>"),
                             对象编号 = 对话守卫.ObjectID
                         });
                     }
@@ -10502,7 +10502,7 @@ public sealed class PlayerObject : MapObject
                         对话页面 = 710102000;
                         Enqueue(new 同步交互结果
                         {
-                            交互文本 = NpcDialogs.合并数据(对话页面, $"当前VIP积分：[{Character.VIPPoints}] VIP等级：[{Character.VIPLevel}]<br>"),
+                            交互文本 = NpcDialog.合并数据(对话页面, $"当前VIP积分：[{Character.VIPPoints}] VIP等级：[{Character.VIPLevel}]<br>"),
                             对象编号 = 对话守卫.ObjectID
                         });
                     }
@@ -10519,7 +10519,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 710102000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"当前VIP积分：[{Character.VIPPoints}] VIP等级：[{Character.VIPLevel}]<br>"),
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"当前VIP积分：[{Character.VIPPoints}] VIP等级：[{Character.VIPLevel}]<br>"),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -10538,7 +10538,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 710102000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"当前VIP积分：[{Character.VIPPoints}] VIP等级：[{Character.VIPLevel}]<br>"),
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"当前VIP积分：[{Character.VIPPoints}] VIP等级：[{Character.VIPLevel}]<br>"),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -10557,7 +10557,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 710102000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"当前VIP积分：[{Character.VIPPoints}] VIP等级：[{Character.VIPLevel}]<br>"),
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"当前VIP积分：[{Character.VIPPoints}] VIP等级：[{Character.VIPLevel}]<br>"),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -10576,7 +10576,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 710102000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"当前VIP积分：[{Character.VIPPoints}] VIP等级：[{Character.VIPLevel}]<br>"),
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"当前VIP积分：[{Character.VIPPoints}] VIP等级：[{Character.VIPLevel}]<br>"),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -10595,7 +10595,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 710102000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"当前VIP积分：[{Character.VIPPoints}] VIP等级：[{Character.VIPLevel}]<br>"),
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"当前VIP积分：[{Character.VIPPoints}] VIP等级：[{Character.VIPLevel}]<br>"),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -10614,7 +10614,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 710102000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"当前VIP积分：[{Character.VIPPoints}] VIP等级：[{Character.VIPLevel}]<br>"),
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"当前VIP积分：[{Character.VIPPoints}] VIP等级：[{Character.VIPLevel}]<br>"),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -10633,7 +10633,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 710102000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"当前VIP积分：[{Character.VIPPoints}] VIP等级：[{Character.VIPLevel}]<br>"),
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"当前VIP积分：[{Character.VIPPoints}] VIP等级：[{Character.VIPLevel}]<br>"),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -10652,7 +10652,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 710102000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"当前VIP积分：[{Character.VIPPoints}] VIP等级：[{Character.VIPLevel}]<br>"),
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"当前VIP积分：[{Character.VIPPoints}] VIP等级：[{Character.VIPLevel}]<br>"),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -10671,7 +10671,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 710102000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"当前VIP积分：[{Character.VIPPoints}] VIP等级：[{Character.VIPLevel}]<br>"),
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"当前VIP积分：[{Character.VIPPoints}] VIP等级：[{Character.VIPLevel}]<br>"),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -10690,7 +10690,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 710102000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"当前VIP积分：[{Character.VIPPoints}] VIP等级：[{Character.VIPLevel}]<br>"),
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"当前VIP积分：[{Character.VIPPoints}] VIP等级：[{Character.VIPLevel}]<br>"),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -10719,7 +10719,7 @@ public sealed class PlayerObject : MapObject
                         对话页面 = 710101000;
                         Enqueue(new 同步交互结果
                         {
-                            交互文本 = NpcDialogs.合并数据(对话页面, $"赞助人数：[{Config.沙城捐献赞助人数}] 赞助金额：[{Config.沙城捐献赞助金额}]<br>"),
+                            交互文本 = NpcDialog.合并数据(对话页面, $"赞助人数：[{Config.沙城捐献赞助人数}] 赞助金额：[{Config.沙城捐献赞助金额}]<br>"),
                             对象编号 = 对话守卫.ObjectID
                         });
                         NetworkManager.SendAnnouncement("勇士【" + Name + "】进行了一次沙捐(我司给与奖励)!", rolling: true);
@@ -10829,7 +10829,7 @@ public sealed class PlayerObject : MapObject
                         Enqueue(new 同步交互结果
                         {
                             对象编号 = 对话守卫.ObjectID,
-                            交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                            交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                         });
                     }
                     break;
@@ -10970,7 +10970,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 616701000;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                 对象编号 = 对话守卫.ObjectID
                             });
                             break;
@@ -10980,7 +10980,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 616704000;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{Config.魔虫窟副本次数}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{Config.魔虫窟副本次数}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                             break;
@@ -10990,7 +10990,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 616701000;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{魔虫窟副本等级}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{魔虫窟副本等级}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                             break;
@@ -11000,7 +11000,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 616705000;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                 对象编号 = 对话守卫.ObjectID
                             });
                             break;
@@ -11010,7 +11010,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 616705000;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                 对象编号 = 对话守卫.ObjectID
                             });
                             break;
@@ -11071,7 +11071,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 616702000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -11128,7 +11128,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 616702000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -11188,7 +11188,7 @@ public sealed class PlayerObject : MapObject
                         对话页面 = 616702000;
                         Enqueue(new 同步交互结果
                         {
-                            交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                            交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                             对象编号 = 对话守卫.ObjectID
                         });
                         break;
@@ -11201,7 +11201,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                             });
                             break;
                         case 2:
@@ -11209,7 +11209,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                             });
                             break;
                         case 3:
@@ -11217,7 +11217,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                             });
                             break;
                         case 4:
@@ -11225,7 +11225,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                             });
                             break;
                         case 5:
@@ -11233,7 +11233,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                             });
                             break;
                     }
@@ -11248,7 +11248,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 848201000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"沃玛分解：[{沃玛分解开关}] 祖玛分解：[{祖玛分解开关}] 赤月分解：[{赤月分解开关}]<br>" + $"魔龙分解：[{魔龙分解开关}] 苍月分解：[{苍月分解开关}] 星王分解：[{星王分解开关}]<br>" + $"神秘分解：[{神秘分解开关}] 其他分解：[{其他分解开关}] 城主分解：[{城主分解开关}]<br>"),
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"沃玛分解：[{沃玛分解开关}] 祖玛分解：[{祖玛分解开关}] 赤月分解：[{赤月分解开关}]<br>" + $"魔龙分解：[{魔龙分解开关}] 苍月分解：[{苍月分解开关}] 星王分解：[{星王分解开关}]<br>" + $"神秘分解：[{神秘分解开关}] 其他分解：[{其他分解开关}] 城主分解：[{城主分解开关}]<br>"),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -11258,7 +11258,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 848201000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"沃玛分解：[{沃玛分解开关}] 祖玛分解：[{祖玛分解开关}] 赤月分解：[{赤月分解开关}]<br>" + $"魔龙分解：[{魔龙分解开关}] 苍月分解：[{苍月分解开关}] 星王分解：[{星王分解开关}]<br>" + $"神秘分解：[{神秘分解开关}] 其他分解：[{其他分解开关}] 城主分解：[{城主分解开关}]<br>"),
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"沃玛分解：[{沃玛分解开关}] 祖玛分解：[{祖玛分解开关}] 赤月分解：[{赤月分解开关}]<br>" + $"魔龙分解：[{魔龙分解开关}] 苍月分解：[{苍月分解开关}] 星王分解：[{星王分解开关}]<br>" + $"神秘分解：[{神秘分解开关}] 其他分解：[{其他分解开关}] 城主分解：[{城主分解开关}]<br>"),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -11270,7 +11270,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 848201000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"沃玛分解：[{沃玛分解开关}] 祖玛分解：[{祖玛分解开关}] 赤月分解：[{赤月分解开关}]<br>" + $"魔龙分解：[{魔龙分解开关}] 苍月分解：[{苍月分解开关}] 星王分解：[{星王分解开关}]<br>" + $"神秘分解：[{神秘分解开关}] 其他分解：[{其他分解开关}] 城主分解：[{城主分解开关}]<br>"),
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"沃玛分解：[{沃玛分解开关}] 祖玛分解：[{祖玛分解开关}] 赤月分解：[{赤月分解开关}]<br>" + $"魔龙分解：[{魔龙分解开关}] 苍月分解：[{苍月分解开关}] 星王分解：[{星王分解开关}]<br>" + $"神秘分解：[{神秘分解开关}] 其他分解：[{其他分解开关}] 城主分解：[{城主分解开关}]<br>"),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -11280,7 +11280,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 848201000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"沃玛分解：[{沃玛分解开关}] 祖玛分解：[{祖玛分解开关}] 赤月分解：[{赤月分解开关}]<br>" + $"魔龙分解：[{魔龙分解开关}] 苍月分解：[{苍月分解开关}] 星王分解：[{星王分解开关}]<br>" + $"神秘分解：[{神秘分解开关}] 其他分解：[{其他分解开关}] 城主分解：[{城主分解开关}]<br>"),
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"沃玛分解：[{沃玛分解开关}] 祖玛分解：[{祖玛分解开关}] 赤月分解：[{赤月分解开关}]<br>" + $"魔龙分解：[{魔龙分解开关}] 苍月分解：[{苍月分解开关}] 星王分解：[{星王分解开关}]<br>" + $"神秘分解：[{神秘分解开关}] 其他分解：[{其他分解开关}] 城主分解：[{城主分解开关}]<br>"),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -11292,7 +11292,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 848201000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"沃玛分解：[{沃玛分解开关}] 祖玛分解：[{祖玛分解开关}] 赤月分解：[{赤月分解开关}]<br>" + $"魔龙分解：[{魔龙分解开关}] 苍月分解：[{苍月分解开关}] 星王分解：[{星王分解开关}]<br>" + $"神秘分解：[{神秘分解开关}] 其他分解：[{其他分解开关}] 城主分解：[{城主分解开关}]<br>"),
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"沃玛分解：[{沃玛分解开关}] 祖玛分解：[{祖玛分解开关}] 赤月分解：[{赤月分解开关}]<br>" + $"魔龙分解：[{魔龙分解开关}] 苍月分解：[{苍月分解开关}] 星王分解：[{星王分解开关}]<br>" + $"神秘分解：[{神秘分解开关}] 其他分解：[{其他分解开关}] 城主分解：[{城主分解开关}]<br>"),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -11302,7 +11302,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 848201000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"沃玛分解：[{沃玛分解开关}] 祖玛分解：[{祖玛分解开关}] 赤月分解：[{赤月分解开关}]<br>" + $"魔龙分解：[{魔龙分解开关}] 苍月分解：[{苍月分解开关}] 星王分解：[{星王分解开关}]<br>" + $"神秘分解：[{神秘分解开关}] 其他分解：[{其他分解开关}] 城主分解：[{城主分解开关}]<br>"),
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"沃玛分解：[{沃玛分解开关}] 祖玛分解：[{祖玛分解开关}] 赤月分解：[{赤月分解开关}]<br>" + $"魔龙分解：[{魔龙分解开关}] 苍月分解：[{苍月分解开关}] 星王分解：[{星王分解开关}]<br>" + $"神秘分解：[{神秘分解开关}] 其他分解：[{其他分解开关}] 城主分解：[{城主分解开关}]<br>"),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -11314,7 +11314,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 848201000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"沃玛分解：[{沃玛分解开关}] 祖玛分解：[{祖玛分解开关}] 赤月分解：[{赤月分解开关}]<br>" + $"魔龙分解：[{魔龙分解开关}] 苍月分解：[{苍月分解开关}] 星王分解：[{星王分解开关}]<br>" + $"神秘分解：[{神秘分解开关}] 其他分解：[{其他分解开关}] 城主分解：[{城主分解开关}]<br>"),
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"沃玛分解：[{沃玛分解开关}] 祖玛分解：[{祖玛分解开关}] 赤月分解：[{赤月分解开关}]<br>" + $"魔龙分解：[{魔龙分解开关}] 苍月分解：[{苍月分解开关}] 星王分解：[{星王分解开关}]<br>" + $"神秘分解：[{神秘分解开关}] 其他分解：[{其他分解开关}] 城主分解：[{城主分解开关}]<br>"),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -11324,7 +11324,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 848201000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"沃玛分解：[{沃玛分解开关}] 祖玛分解：[{祖玛分解开关}] 赤月分解：[{赤月分解开关}]<br>" + $"魔龙分解：[{魔龙分解开关}] 苍月分解：[{苍月分解开关}] 星王分解：[{星王分解开关}]<br>" + $"神秘分解：[{神秘分解开关}] 其他分解：[{其他分解开关}] 城主分解：[{城主分解开关}]<br>"),
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"沃玛分解：[{沃玛分解开关}] 祖玛分解：[{祖玛分解开关}] 赤月分解：[{赤月分解开关}]<br>" + $"魔龙分解：[{魔龙分解开关}] 苍月分解：[{苍月分解开关}] 星王分解：[{星王分解开关}]<br>" + $"神秘分解：[{神秘分解开关}] 其他分解：[{其他分解开关}] 城主分解：[{城主分解开关}]<br>"),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -11336,7 +11336,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 848201000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"沃玛分解：[{沃玛分解开关}] 祖玛分解：[{祖玛分解开关}] 赤月分解：[{赤月分解开关}]<br>" + $"魔龙分解：[{魔龙分解开关}] 苍月分解：[{苍月分解开关}] 星王分解：[{星王分解开关}]<br>" + $"神秘分解：[{神秘分解开关}] 其他分解：[{其他分解开关}] 城主分解：[{城主分解开关}]<br>"),
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"沃玛分解：[{沃玛分解开关}] 祖玛分解：[{祖玛分解开关}] 赤月分解：[{赤月分解开关}]<br>" + $"魔龙分解：[{魔龙分解开关}] 苍月分解：[{苍月分解开关}] 星王分解：[{星王分解开关}]<br>" + $"神秘分解：[{神秘分解开关}] 其他分解：[{其他分解开关}] 城主分解：[{城主分解开关}]<br>"),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -11346,7 +11346,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 848201000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"沃玛分解：[{沃玛分解开关}] 祖玛分解：[{祖玛分解开关}] 赤月分解：[{赤月分解开关}]<br>" + $"魔龙分解：[{魔龙分解开关}] 苍月分解：[{苍月分解开关}] 星王分解：[{星王分解开关}]<br>" + $"神秘分解：[{神秘分解开关}] 其他分解：[{其他分解开关}] 城主分解：[{城主分解开关}]<br>"),
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"沃玛分解：[{沃玛分解开关}] 祖玛分解：[{祖玛分解开关}] 赤月分解：[{赤月分解开关}]<br>" + $"魔龙分解：[{魔龙分解开关}] 苍月分解：[{苍月分解开关}] 星王分解：[{星王分解开关}]<br>" + $"神秘分解：[{神秘分解开关}] 其他分解：[{其他分解开关}] 城主分解：[{城主分解开关}]<br>"),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -11358,7 +11358,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 848201000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"沃玛分解：[{沃玛分解开关}] 祖玛分解：[{祖玛分解开关}] 赤月分解：[{赤月分解开关}]<br>" + $"魔龙分解：[{魔龙分解开关}] 苍月分解：[{苍月分解开关}] 星王分解：[{星王分解开关}]<br>" + $"神秘分解：[{神秘分解开关}] 其他分解：[{其他分解开关}] 城主分解：[{城主分解开关}]<br>"),
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"沃玛分解：[{沃玛分解开关}] 祖玛分解：[{祖玛分解开关}] 赤月分解：[{赤月分解开关}]<br>" + $"魔龙分解：[{魔龙分解开关}] 苍月分解：[{苍月分解开关}] 星王分解：[{星王分解开关}]<br>" + $"神秘分解：[{神秘分解开关}] 其他分解：[{其他分解开关}] 城主分解：[{城主分解开关}]<br>"),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -11368,7 +11368,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 848201000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"沃玛分解：[{沃玛分解开关}] 祖玛分解：[{祖玛分解开关}] 赤月分解：[{赤月分解开关}]<br>" + $"魔龙分解：[{魔龙分解开关}] 苍月分解：[{苍月分解开关}] 星王分解：[{星王分解开关}]<br>" + $"神秘分解：[{神秘分解开关}] 其他分解：[{其他分解开关}] 城主分解：[{城主分解开关}]<br>"),
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"沃玛分解：[{沃玛分解开关}] 祖玛分解：[{祖玛分解开关}] 赤月分解：[{赤月分解开关}]<br>" + $"魔龙分解：[{魔龙分解开关}] 苍月分解：[{苍月分解开关}] 星王分解：[{星王分解开关}]<br>" + $"神秘分解：[{神秘分解开关}] 其他分解：[{其他分解开关}] 城主分解：[{城主分解开关}]<br>"),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -11380,7 +11380,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 848201000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"沃玛分解：[{沃玛分解开关}] 祖玛分解：[{祖玛分解开关}] 赤月分解：[{赤月分解开关}]<br>" + $"魔龙分解：[{魔龙分解开关}] 苍月分解：[{苍月分解开关}] 星王分解：[{星王分解开关}]<br>" + $"神秘分解：[{神秘分解开关}] 其他分解：[{其他分解开关}] 城主分解：[{城主分解开关}]<br>"),
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"沃玛分解：[{沃玛分解开关}] 祖玛分解：[{祖玛分解开关}] 赤月分解：[{赤月分解开关}]<br>" + $"魔龙分解：[{魔龙分解开关}] 苍月分解：[{苍月分解开关}] 星王分解：[{星王分解开关}]<br>" + $"神秘分解：[{神秘分解开关}] 其他分解：[{其他分解开关}] 城主分解：[{城主分解开关}]<br>"),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -11390,7 +11390,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 848201000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"沃玛分解：[{沃玛分解开关}] 祖玛分解：[{祖玛分解开关}] 赤月分解：[{赤月分解开关}]<br>" + $"魔龙分解：[{魔龙分解开关}] 苍月分解：[{苍月分解开关}] 星王分解：[{星王分解开关}]<br>" + $"神秘分解：[{神秘分解开关}] 其他分解：[{其他分解开关}] 城主分解：[{城主分解开关}]<br>"),
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"沃玛分解：[{沃玛分解开关}] 祖玛分解：[{祖玛分解开关}] 赤月分解：[{赤月分解开关}]<br>" + $"魔龙分解：[{魔龙分解开关}] 苍月分解：[{苍月分解开关}] 星王分解：[{星王分解开关}]<br>" + $"神秘分解：[{神秘分解开关}] 其他分解：[{其他分解开关}] 城主分解：[{城主分解开关}]<br>"),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -11402,7 +11402,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 848201000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"沃玛分解：[{沃玛分解开关}] 祖玛分解：[{祖玛分解开关}] 赤月分解：[{赤月分解开关}]<br>" + $"魔龙分解：[{魔龙分解开关}] 苍月分解：[{苍月分解开关}] 星王分解：[{星王分解开关}]<br>" + $"神秘分解：[{神秘分解开关}] 其他分解：[{其他分解开关}] 城主分解：[{城主分解开关}]<br>"),
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"沃玛分解：[{沃玛分解开关}] 祖玛分解：[{祖玛分解开关}] 赤月分解：[{赤月分解开关}]<br>" + $"魔龙分解：[{魔龙分解开关}] 苍月分解：[{苍月分解开关}] 星王分解：[{星王分解开关}]<br>" + $"神秘分解：[{神秘分解开关}] 其他分解：[{其他分解开关}] 城主分解：[{城主分解开关}]<br>"),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -11412,7 +11412,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 848201000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"沃玛分解：[{沃玛分解开关}] 祖玛分解：[{祖玛分解开关}] 赤月分解：[{赤月分解开关}]<br>" + $"魔龙分解：[{魔龙分解开关}] 苍月分解：[{苍月分解开关}] 星王分解：[{星王分解开关}]<br>" + $"神秘分解：[{神秘分解开关}] 其他分解：[{其他分解开关}] 城主分解：[{城主分解开关}]<br>"),
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"沃玛分解：[{沃玛分解开关}] 祖玛分解：[{祖玛分解开关}] 赤月分解：[{赤月分解开关}]<br>" + $"魔龙分解：[{魔龙分解开关}] 苍月分解：[{苍月分解开关}] 星王分解：[{星王分解开关}]<br>" + $"神秘分解：[{神秘分解开关}] 其他分解：[{其他分解开关}] 城主分解：[{城主分解开关}]<br>"),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -11424,7 +11424,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 848201000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"沃玛分解：[{沃玛分解开关}] 祖玛分解：[{祖玛分解开关}] 赤月分解：[{赤月分解开关}]<br>" + $"魔龙分解：[{魔龙分解开关}] 苍月分解：[{苍月分解开关}] 星王分解：[{星王分解开关}]<br>" + $"神秘分解：[{神秘分解开关}] 其他分解：[{其他分解开关}] 城主分解：[{城主分解开关}]<br>"),
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"沃玛分解：[{沃玛分解开关}] 祖玛分解：[{祖玛分解开关}] 赤月分解：[{赤月分解开关}]<br>" + $"魔龙分解：[{魔龙分解开关}] 苍月分解：[{苍月分解开关}] 星王分解：[{星王分解开关}]<br>" + $"神秘分解：[{神秘分解开关}] 其他分解：[{其他分解开关}] 城主分解：[{城主分解开关}]<br>"),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -11434,7 +11434,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 848201000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"沃玛分解：[{沃玛分解开关}] 祖玛分解：[{祖玛分解开关}] 赤月分解：[{赤月分解开关}]<br>" + $"魔龙分解：[{魔龙分解开关}] 苍月分解：[{苍月分解开关}] 星王分解：[{星王分解开关}]<br>" + $"神秘分解：[{神秘分解开关}] 其他分解：[{其他分解开关}] 城主分解：[{城主分解开关}]<br>"),
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"沃玛分解：[{沃玛分解开关}] 祖玛分解：[{祖玛分解开关}] 赤月分解：[{赤月分解开关}]<br>" + $"魔龙分解：[{魔龙分解开关}] 苍月分解：[{苍月分解开关}] 星王分解：[{星王分解开关}]<br>" + $"神秘分解：[{神秘分解开关}] 其他分解：[{其他分解开关}] 城主分解：[{城主分解开关}]<br>"),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -11443,7 +11443,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 848200000;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                 对象编号 = 对话守卫.ObjectID
                             });
                             break;
@@ -11466,7 +11466,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                             });
                         }
                         else if (Config.狂暴货币格式 == 1)
@@ -11487,7 +11487,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                         }
@@ -11513,7 +11513,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                         }
@@ -11535,7 +11535,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                         }
@@ -11545,7 +11545,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                             });
                         }
                     }
@@ -11609,7 +11609,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 479400001;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -11630,7 +11630,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 479400001;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -11640,7 +11640,7 @@ public sealed class PlayerObject : MapObject
                         对话页面 = 479400001;
                         Enqueue(new 同步交互结果
                         {
-                            交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                            交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                             对象编号 = 对话守卫.ObjectID
                         });
                     }
@@ -11657,7 +11657,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 611203000;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                 对象编号 = 对话守卫.ObjectID
                             });
                             break;
@@ -11667,7 +11667,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 611204000;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{Config.九层妖塔副本次数}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{Config.九层妖塔副本次数}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                             break;
@@ -11677,7 +11677,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 611201000;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{九层妖塔副本等级}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{九层妖塔副本等级}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                             break;
@@ -11687,7 +11687,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 611205000;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                 对象编号 = 对话守卫.ObjectID
                             });
                             break;
@@ -11697,7 +11697,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 611205000;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                 对象编号 = 对话守卫.ObjectID
                             });
                             break;
@@ -11986,7 +11986,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 611202000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -12271,7 +12271,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 611202000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -12558,7 +12558,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 611202000;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -12575,7 +12575,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 612301000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -12598,7 +12598,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 612301000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -12621,7 +12621,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 612301000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -12644,7 +12644,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 612301000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -12667,7 +12667,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 612301000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -12690,7 +12690,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 612301000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -12713,7 +12713,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 612301000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -12736,7 +12736,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 612301000;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -12765,7 +12765,7 @@ public sealed class PlayerObject : MapObject
                         Enqueue(new 同步交互结果
                         {
                             对象编号 = 对话守卫.ObjectID,
-                            交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{Config.武斗场时间一}><#P1:{Config.武斗场时间二}>")
+                            交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{Config.武斗场时间一}><#P1:{Config.武斗场时间二}>")
                         });
                         break;
                     }
@@ -12775,7 +12775,7 @@ public sealed class PlayerObject : MapObject
                         Enqueue(new 同步交互结果
                         {
                             对象编号 = 对话守卫.ObjectID,
-                            交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                            交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                         });
                         break;
                     }
@@ -12784,7 +12784,7 @@ public sealed class PlayerObject : MapObject
                         对话页面 = 711900001;
                         Enqueue(new 同步交互结果
                         {
-                            交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{25}><#P1:0>"),
+                            交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{25}><#P1:0>"),
                             对象编号 = 对话守卫.ObjectID
                         });
                     }
@@ -12804,7 +12804,7 @@ public sealed class PlayerObject : MapObject
                         Enqueue(new 同步交互结果
                         {
                             对象编号 = 对话守卫.ObjectID,
-                            交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{50000}>")
+                            交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{50000}>")
                         });
                     }
                     break;
@@ -12849,7 +12849,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 612800001;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{num17}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{num17}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -12863,7 +12863,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 691900001;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{num16}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{num16}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -12885,7 +12885,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                             });
                         }
                         else if (Config.狂暴货币格式 == 1)
@@ -12911,7 +12911,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                         }
@@ -12946,7 +12946,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                         }
@@ -12974,7 +12974,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                         }
@@ -12984,7 +12984,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                             });
                         }
                         break;
@@ -13029,7 +13029,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                             });
                         }
                         break;
@@ -13063,7 +13063,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                             });
                             break;
                         }
@@ -13249,7 +13249,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                             });
                         }
                         break;
@@ -13265,7 +13265,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 611400001;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{幽冥海副本等级}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{幽冥海副本等级}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -13283,7 +13283,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 611400002;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{幽冥海副本价格}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{幽冥海副本价格}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -13301,7 +13301,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 711900001;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{num45}><#P1:0>"),
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{num45}><#P1:0>"),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -13319,7 +13319,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 711900002;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{num46}><#P1:0>"),
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{num46}><#P1:0>"),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -13333,7 +13333,7 @@ public sealed class PlayerObject : MapObject
                         Enqueue(new 同步交互结果
                         {
                             对象编号 = 对话守卫.ObjectID,
-                            交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                            交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                         });
                     }
                     break;
@@ -13344,7 +13344,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 677101000;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"目前保底次数[{Character.铭文洗练次数1}]"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"目前保底次数[{Character.铭文洗练次数1}]"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                             break;
@@ -13352,7 +13352,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 677102000;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"目前保底次数[{Character.铭文洗练次数2}]"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"目前保底次数[{Character.铭文洗练次数2}]"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                             break;
@@ -13360,7 +13360,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 677103000;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"目前保底次数[{Character.铭文洗练次数3}]"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"目前保底次数[{Character.铭文洗练次数3}]"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                             break;
@@ -13376,7 +13376,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                             else
@@ -13386,7 +13386,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{(装备穿戴部位)重铸部位}>")
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{(装备穿戴部位)重铸部位}>")
                                 });
                             }
                             break;
@@ -13395,7 +13395,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                             });
                             break;
                         case 3:
@@ -13403,7 +13403,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                             });
                             break;
                     }
@@ -13420,7 +13420,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                             });
                             break;
                         }
@@ -13433,7 +13433,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:[{num57}] 个 [{GameItem.DataSheet[重铸所需灵气].Name}]><#P1:{num56 / 10000}>")
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:[{num57}] 个 [{GameItem.DataSheet[重铸所需灵气].Name}]><#P1:{num56 / 10000}>")
                             });
                             break;
                         }
@@ -13443,7 +13443,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:[{num57}] 个 [{GameItem.DataSheet[重铸所需灵气].Name}]><#P1:{num56 / 10000}>")
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:[{num57}] 个 [{GameItem.DataSheet[重铸所需灵气].Name}]><#P1:{num56 / 10000}>")
                             });
                             break;
                         }
@@ -13473,7 +13473,7 @@ public sealed class PlayerObject : MapObject
                         Enqueue(new 同步交互结果
                         {
                             对象编号 = 对话守卫.ObjectID,
-                            交互文本 = NpcDialogs.合并数据(对话页面, "<#P1:" + v7.属性描述 + ">")
+                            交互文本 = NpcDialog.合并数据(对话页面, "<#P1:" + v7.属性描述 + ">")
                         });
                         if (重铸部位 == 8 && Config.CurrentVersion >= 1 && Config.幸运保底开关 == 1)
                         {
@@ -13491,7 +13491,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                             else
@@ -13501,7 +13501,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{(装备穿戴部位)重铸部位}>")
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{(装备穿戴部位)重铸部位}>")
                                 });
                             }
                             break;
@@ -13512,7 +13512,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                             else
@@ -13522,7 +13522,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{(装备穿戴部位)重铸部位}>")
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{(装备穿戴部位)重铸部位}>")
                                 });
                             }
                             break;
@@ -13533,7 +13533,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                             else
@@ -13543,7 +13543,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{(装备穿戴部位)重铸部位}>")
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{(装备穿戴部位)重铸部位}>")
                                 });
                             }
                             break;
@@ -13554,7 +13554,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                             else
@@ -13564,7 +13564,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{(装备穿戴部位)重铸部位}>")
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{(装备穿戴部位)重铸部位}>")
                                 });
                             }
                             break;
@@ -13575,7 +13575,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                             else
@@ -13585,7 +13585,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{(装备穿戴部位)重铸部位}>")
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{(装备穿戴部位)重铸部位}>")
                                 });
                             }
                             break;
@@ -13596,7 +13596,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                             else
@@ -13606,7 +13606,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{(装备穿戴部位)重铸部位}>")
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{(装备穿戴部位)重铸部位}>")
                                 });
                             }
                             break;
@@ -13617,7 +13617,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                             else
@@ -13627,7 +13627,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{(装备穿戴部位)重铸部位}>")
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{(装备穿戴部位)重铸部位}>")
                                 });
                             }
                             break;
@@ -13643,7 +13643,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                             else
@@ -13653,7 +13653,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{(装备穿戴部位)重铸部位}>")
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{(装备穿戴部位)重铸部位}>")
                                 });
                             }
                             break;
@@ -13664,7 +13664,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                             else
@@ -13674,7 +13674,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{(装备穿戴部位)重铸部位}>")
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{(装备穿戴部位)重铸部位}>")
                                 });
                             }
                             break;
@@ -13685,7 +13685,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                             else
@@ -13695,7 +13695,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{(装备穿戴部位)重铸部位}>")
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{(装备穿戴部位)重铸部位}>")
                                 });
                             }
                             break;
@@ -13706,7 +13706,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                             else
@@ -13716,7 +13716,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{(装备穿戴部位)重铸部位}>")
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{(装备穿戴部位)重铸部位}>")
                                 });
                             }
                             break;
@@ -13727,7 +13727,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                             else
@@ -13737,7 +13737,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{(装备穿戴部位)重铸部位}>")
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{(装备穿戴部位)重铸部位}>")
                                 });
                             }
                             break;
@@ -13748,7 +13748,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                             else
@@ -13758,7 +13758,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{(装备穿戴部位)重铸部位}>")
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{(装备穿戴部位)重铸部位}>")
                                 });
                             }
                             break;
@@ -13769,7 +13769,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                             else
@@ -13779,7 +13779,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{(装备穿戴部位)重铸部位}>")
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{(装备穿戴部位)重铸部位}>")
                                 });
                             }
                             break;
@@ -13800,7 +13800,7 @@ public sealed class PlayerObject : MapObject
                     Enqueue(new 同步交互结果
                     {
                         对象编号 = 对话守卫.ObjectID,
-                        交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                        交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                     });
                     break;
                 case 612606000:
@@ -13810,7 +13810,7 @@ public sealed class PlayerObject : MapObject
                         Enqueue(new 同步交互结果
                         {
                             对象编号 = 对话守卫.ObjectID,
-                            交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{(装备穿戴部位)重铸部位}>")
+                            交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{(装备穿戴部位)重铸部位}>")
                         });
                     }
                     break;
@@ -13863,7 +13863,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                             });
                             break;
                         }
@@ -13873,7 +13873,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                             });
                             break;
                         }
@@ -13883,7 +13883,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                             });
                             break;
                         }
@@ -13894,7 +13894,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 619202200;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{num38}><#P1:0><#P1:{num39 / 10000}>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{num38}><#P1:0><#P1:{num39 / 10000}>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                             break;
@@ -13904,7 +13904,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 619202200;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{num38}><#P1:0><#P1:{num39 / 10000}>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{num38}><#P1:0><#P1:{num39 / 10000}>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                             break;
@@ -13925,7 +13925,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 619202500;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{v6.孔洞颜色[0]}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{v6.孔洞颜色[0]}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -13934,7 +13934,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 619202600;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{v6.孔洞颜色[0]}><#P1:{v6.孔洞颜色[1]}>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{v6.孔洞颜色[0]}><#P1:{v6.孔洞颜色[1]}>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -13978,7 +13978,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                             });
                             break;
                         }
@@ -13988,7 +13988,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                             });
                             break;
                         }
@@ -13998,7 +13998,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                             });
                             break;
                         }
@@ -14008,7 +14008,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 619202500;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{v3.孔洞颜色[0]}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{v3.孔洞颜色[0]}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -14017,7 +14017,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 619202600;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{v3.孔洞颜色[0]}><#P1:{v3.孔洞颜色[1]}>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{v3.孔洞颜色[0]}><#P1:{v3.孔洞颜色[1]}>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -14061,7 +14061,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                             });
                             break;
                         }
@@ -14071,7 +14071,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                             });
                             break;
                         }
@@ -14081,7 +14081,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 619201200;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{num13}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{num13}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -14104,7 +14104,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                             });
                             break;
                         case 2:
@@ -14112,7 +14112,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                             });
                             break;
                         case 3:
@@ -14120,7 +14120,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                             });
                             break;
                         case 4:
@@ -14128,7 +14128,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                             });
                             break;
                         case 5:
@@ -14136,7 +14136,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                             });
                             break;
                         case 6:
@@ -14144,7 +14144,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                             });
                             break;
                         case 7:
@@ -14152,7 +14152,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                             });
                             break;
                         case 8:
@@ -14160,7 +14160,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                             });
                             break;
                     }
@@ -14214,7 +14214,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                             });
                             break;
                         }
@@ -14224,7 +14224,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                             });
                             break;
                         }
@@ -14234,7 +14234,7 @@ public sealed class PlayerObject : MapObject
                             Enqueue(new 同步交互结果
                             {
                                 对象编号 = 对话守卫.ObjectID,
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                             });
                             break;
                         }
@@ -14245,7 +14245,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 619202200;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{num20}><#P1:{num21 / 10000}>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{num20}><#P1:{num21 / 10000}>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                             break;
@@ -14255,7 +14255,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 619202200;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{num20}><#P1:{num21 / 10000}>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{num20}><#P1:{num21 / 10000}>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                             break;
@@ -14276,7 +14276,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 619202500;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{v2.孔洞颜色[0]}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{v2.孔洞颜色[0]}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -14285,7 +14285,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 619202600;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{v2.孔洞颜色[0]}><#P1:{v2.孔洞颜色[1]}>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{v2.孔洞颜色[0]}><#P1:{v2.孔洞颜色[1]}>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -14311,7 +14311,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 619400200;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                 对象编号 = 对话守卫.ObjectID
                             });
                             break;
@@ -14342,7 +14342,7 @@ public sealed class PlayerObject : MapObject
                         对话页面 = 619400100;
                         Enqueue(new 同步交互结果
                         {
-                            交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{num97}><#P1:0>"),
+                            交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{num97}><#P1:0>"),
                             对象编号 = 对话守卫.ObjectID
                         });
                         break;
@@ -14367,7 +14367,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 619400200;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                 对象编号 = 对话守卫.ObjectID
                             });
                             break;
@@ -14398,7 +14398,7 @@ public sealed class PlayerObject : MapObject
                         对话页面 = 619400100;
                         Enqueue(new 同步交互结果
                         {
-                            交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{num59}><#P1:0>"),
+                            交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{num59}><#P1:0>"),
                             对象编号 = 对话守卫.ObjectID
                         });
                         break;
@@ -14423,7 +14423,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 619400200;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                 对象编号 = 对话守卫.ObjectID
                             });
                             break;
@@ -14454,7 +14454,7 @@ public sealed class PlayerObject : MapObject
                         对话页面 = 619400100;
                         Enqueue(new 同步交互结果
                         {
-                            交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{num36}><#P1:0>"),
+                            交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{num36}><#P1:0>"),
                             对象编号 = 对话守卫.ObjectID
                         });
                         break;
@@ -14479,7 +14479,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 619400200;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                 对象编号 = 对话守卫.ObjectID
                             });
                             break;
@@ -14510,7 +14510,7 @@ public sealed class PlayerObject : MapObject
                         对话页面 = 619400100;
                         Enqueue(new 同步交互结果
                         {
-                            交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{num26}><#P1:0>"),
+                            交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{num26}><#P1:0>"),
                             对象编号 = 对话守卫.ObjectID
                         });
                         break;
@@ -14535,7 +14535,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 619400200;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                 对象编号 = 对话守卫.ObjectID
                             });
                             break;
@@ -14566,7 +14566,7 @@ public sealed class PlayerObject : MapObject
                         对话页面 = 619400100;
                         Enqueue(new 同步交互结果
                         {
-                            交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{num28}><#P1:0>"),
+                            交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{num28}><#P1:0>"),
                             对象编号 = 对话守卫.ObjectID
                         });
                         break;
@@ -14591,7 +14591,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 619400200;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                 对象编号 = 对话守卫.ObjectID
                             });
                             break;
@@ -14622,7 +14622,7 @@ public sealed class PlayerObject : MapObject
                         对话页面 = 619400100;
                         Enqueue(new 同步交互结果
                         {
-                            交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{num11}><#P1:0>"),
+                            交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{num11}><#P1:0>"),
                             对象编号 = 对话守卫.ObjectID
                         });
                         break;
@@ -14647,7 +14647,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 619400200;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                 对象编号 = 对话守卫.ObjectID
                             });
                             break;
@@ -14678,7 +14678,7 @@ public sealed class PlayerObject : MapObject
                         对话页面 = 619400100;
                         Enqueue(new 同步交互结果
                         {
-                            交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{num67}><#P1:0>"),
+                            交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{num67}><#P1:0>"),
                             对象编号 = 对话守卫.ObjectID
                         });
                         break;
@@ -14703,7 +14703,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 619400200;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                 对象编号 = 对话守卫.ObjectID
                             });
                             break;
@@ -14734,7 +14734,7 @@ public sealed class PlayerObject : MapObject
                         对话页面 = 619400100;
                         Enqueue(new 同步交互结果
                         {
-                            交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{num61}><#P1:0>"),
+                            交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{num61}><#P1:0>"),
                             对象编号 = 对话守卫.ObjectID
                         });
                         break;
@@ -14747,7 +14747,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 625200001;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{Character.屠魔令回收数量.V}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{Character.屠魔令回收数量.V}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -14762,7 +14762,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 625201000;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -14782,7 +14782,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 624201000;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -14791,7 +14791,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 624202000;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -14800,7 +14800,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 624207000;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{Config.屠魔组队人数}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{Config.屠魔组队人数}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -14809,7 +14809,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 624204000;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{扣除金币 / 10000}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{扣除金币 / 10000}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -14818,7 +14818,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 624203000;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -14827,7 +14827,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 624209000;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{Config.屠魔副本次数}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{Config.屠魔副本次数}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -14836,7 +14836,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 624205000;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -14845,7 +14845,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 624206000;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{需要等级}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{需要等级}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -14854,7 +14854,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 624208000;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -14912,7 +14912,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 711900001;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{num52}><#P1:0>"),
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{num52}><#P1:0>"),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -14930,7 +14930,7 @@ public sealed class PlayerObject : MapObject
                                 对话页面 = 711900002;
                                 Enqueue(new 同步交互结果
                                 {
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{num53}><#P1:0>"),
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{num53}><#P1:0>"),
                                     对象编号 = 对话守卫.ObjectID
                                 });
                             }
@@ -14949,7 +14949,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 627403000;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                 对象编号 = 对话守卫.ObjectID
                             });
                             break;
@@ -15005,7 +15005,7 @@ public sealed class PlayerObject : MapObject
                         对话页面 = 627402000;
                         Enqueue(new 同步交互结果
                         {
-                            交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                            交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                             对象编号 = 对话守卫.ObjectID
                         });
                     }
@@ -15014,7 +15014,7 @@ public sealed class PlayerObject : MapObject
                         对话页面 = 627401000;
                         Enqueue(new 同步交互结果
                         {
-                            交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                            交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                             对象编号 = 对话守卫.ObjectID
                         });
                     }
@@ -15089,7 +15089,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 636100001;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{未知暗点副本等级}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{未知暗点副本等级}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -15107,7 +15107,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 636100002;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{未知暗点副本价格}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{未知暗点副本价格}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -15124,7 +15124,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 635900001;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{未知暗点二层等级}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{未知暗点二层等级}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -15142,7 +15142,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 635900002;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{未知暗点二层价格}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{未知暗点二层价格}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -15155,7 +15155,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 674001000;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面),
+                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面),
                                 对象编号 = 对话守卫.ObjectID
                             });
                             break;
@@ -15183,7 +15183,7 @@ public sealed class PlayerObject : MapObject
                                     Enqueue(new 同步交互结果
                                     {
                                         对象编号 = 对话守卫.ObjectID,
-                                        交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                        交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                     });
                                     break;
                                 }
@@ -15194,7 +15194,7 @@ public sealed class PlayerObject : MapObject
                                     Enqueue(new 同步交互结果
                                     {
                                         对象编号 = 对话守卫.ObjectID,
-                                        交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                        交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                     });
                                     break;
                                 }
@@ -15217,7 +15217,7 @@ public sealed class PlayerObject : MapObject
                                             Enqueue(new 同步交互结果
                                             {
                                                 对象编号 = 对话守卫.ObjectID,
-                                                交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                                交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                             });
                                             return;
                                         }
@@ -15250,7 +15250,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                                 break;
                             }
@@ -15269,7 +15269,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                             else
@@ -15279,7 +15279,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                             break;
@@ -15290,7 +15290,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                             else if (SEngine.CurrentTime < Character.取回时间.V)
@@ -15299,7 +15299,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{(int)(Character.取回时间.V - SEngine.CurrentTime).TotalMinutes + Config.武器强化取回时间}><#P1:0>")
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{(int)(Character.取回时间.V - SEngine.CurrentTime).TotalMinutes + Config.武器强化取回时间}><#P1:0>")
                                 });
                             }
                             else if (RemainingInventorySpace <= 0)
@@ -15308,7 +15308,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                             else if (玩家取回装备(0))
@@ -15317,7 +15317,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                             else
@@ -15326,7 +15326,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{Character.升级装备.V.升级次数.V * 10 + 10}><#P1:{Character.升级装备.V.升级次数.V * 100 + 100}>")
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{Character.升级装备.V.升级次数.V * 10 + 10}><#P1:{Character.升级装备.V.升级次数.V * 100 + 100}>")
                                 });
                             }
                             break;
@@ -15337,7 +15337,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                             else if (Gold < Config.武器强化消耗货币值 && Config.武器强化消耗货币开关 == 0)
@@ -15346,7 +15346,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                             else if (Ingot < Config.武器强化消耗货币值 && Config.武器强化消耗货币开关 == 1)
@@ -15355,7 +15355,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                             else if (RemainingInventorySpace <= 0)
@@ -15364,7 +15364,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                             else if (玩家取回装备(Config.武器强化消耗货币值))
@@ -15373,7 +15373,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                                    交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                                 });
                             }
                             else
@@ -15383,7 +15383,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{Character.升级装备.V.升级次数.V * 10 + 10}><#P1:{Character.升级装备.V.升级次数.V * 100 + 100}>")
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{Character.升级装备.V.升级次数.V * 10 + 10}><#P1:{Character.升级装备.V.升级次数.V * 100 + 100}>")
                                 });
                             }
                             break;
@@ -15410,7 +15410,7 @@ public sealed class PlayerObject : MapObject
                     Enqueue(new 同步交互结果
                     {
                         对象编号 = 对话守卫.ObjectID,
-                        交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                        交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                     });
                     break;
                 case 691901000:
@@ -15427,7 +15427,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 711900001;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{沙城快捷等级一}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{沙城快捷等级一}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -15460,7 +15460,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 691900001;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{沙城快捷货币一}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{沙城快捷货币一}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -15480,7 +15480,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 711900001;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{沙城快捷等级二}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{沙城快捷等级二}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -15513,7 +15513,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 691900001;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{沙城快捷货币二}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{沙城快捷货币二}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -15533,7 +15533,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 711900001;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{沙城快捷等级三}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{沙城快捷等级三}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -15566,7 +15566,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 691900001;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{沙城快捷货币三}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{沙城快捷货币三}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -15586,7 +15586,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 711900001;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{沙城快捷等级四}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{沙城快捷等级四}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -15619,7 +15619,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 691900001;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{沙城快捷货币四}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{沙城快捷货币四}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -15652,7 +15652,7 @@ public sealed class PlayerObject : MapObject
                     Enqueue(new 同步交互结果
                     {
                         对象编号 = 对话守卫.ObjectID,
-                        交互文本 = NpcDialogs.GetBufferFromDialogID(对话页面)
+                        交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                     });
                     break;
                 case 711906000:
@@ -15666,7 +15666,7 @@ public sealed class PlayerObject : MapObject
                         Enqueue(new 同步交互结果
                         {
                             对象编号 = 对话守卫.ObjectID,
-                            交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{Config.秘宝广场元宝 / 10}>")
+                            交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{Config.秘宝广场元宝 / 10}>")
                         });
                     }
                     if (SEngine.CurrentTime.Hour == Config.世界BOSS时间 && Ingot >= Config.秘宝广场元宝)
@@ -15688,7 +15688,7 @@ public sealed class PlayerObject : MapObject
                         Enqueue(new 同步交互结果
                         {
                             对象编号 = 对话守卫.ObjectID,
-                            交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{Config.世界BOSS时间}>")
+                            交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{Config.世界BOSS时间}>")
                         });
                     }
                     break;
@@ -15737,7 +15737,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 711900001;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{num63}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{num63}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -15770,7 +15770,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 711900002;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{num64}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{num64}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -15816,7 +15816,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 711900001;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{num41}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{num41}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -15849,7 +15849,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 711900002;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{num42}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{num42}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -15900,7 +15900,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 711900001;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{num33}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{num33}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -15918,7 +15918,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 711900002;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{num34}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{num34}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -15954,7 +15954,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 711900001;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{num23}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{num23}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -15972,7 +15972,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 711900002;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{num24}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{num24}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -16028,7 +16028,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 711900001;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{num}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{num}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                             break;
@@ -16038,7 +16038,7 @@ public sealed class PlayerObject : MapObject
                             对话页面 = 711900002;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialogs.合并数据(对话页面, $"<#P0:{num2}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{num2}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                             break;
@@ -20131,7 +20131,7 @@ public sealed class PlayerObject : MapObject
                 GuardObject 守卫实例2 = null;
                 foreach (int key in MapManager.Guards.Keys)
                 {
-                    if (MapManager.Guards[key].GuardNumber == 8482)
+                    if (MapManager.Guards[key].GuardID == 8482)
                     {
                         守卫实例2 = MapManager.Guards[key];
                         break;
@@ -27743,7 +27743,7 @@ public sealed class PlayerObject : MapObject
                     GuardObject 守卫实例2 = null;
                     foreach (int key in MapManager.Guards.Keys)
                     {
-                        if (MapManager.Guards[key].GuardNumber == 8482)
+                        if (MapManager.Guards[key].GuardID == 8482)
                         {
                             守卫实例2 = MapManager.Guards[key];
                             break;

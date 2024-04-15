@@ -128,7 +128,7 @@ public sealed class GuardObject : MapObject
     }
 
     public int TargetRange => 10;
-    public ushort GuardNumber => Info.GuardID;
+    public ushort GuardID => Info.GuardID;
     public int RevivalInterval => Info.RevivalInterval;
     public int StoreID => Info.StoreID;
     public string 界面代码 => Info.InterfaceCode;
@@ -150,7 +150,7 @@ public sealed class GuardObject : MapObject
             GameSkill.DataSheet.TryGetValue(Info.BasicAttackSkills, out BasicAttackSkill);
         }
         MapManager.AddObject(this);
-        守卫复活处理();
+        Resurrect();
     }
 
     public override void Process()
@@ -175,19 +175,17 @@ public sealed class GuardObject : MapObject
             {
                 RemoveAllNeighbors();
                 UnbindGrid();
-                守卫复活处理();
+                Resurrect();
             }
         }
         else
         {
             foreach (KeyValuePair<ushort, BuffInfo> item in Buffs.ToList())
-            {
                 轮询Buff时处理(item.Value);
-            }
-            foreach (SkillObject item2 in ActiveSkills.ToList())
-            {
-                item2.Process();
-            }
+
+            foreach (var skill in ActiveSkills)
+                skill.Process();
+
             if (SEngine.CurrentTime > base.RecoveryTime)
             {
                 if (!CheckStatus(GameObjectState.Poisoned))
@@ -198,16 +196,16 @@ public sealed class GuardObject : MapObject
             }
             if (ActiveAttackTarget && SEngine.CurrentTime > BusyTime && SEngine.CurrentTime > HardStunTime)
             {
-                if (更新对象仇恨())
+                if (UpdateTargets())
                 {
-                    守卫智能攻击();
+                    ProcessAttack();
                 }
                 else if (Target.TargetList.Count == 0 && CanTurn())
                 {
                     CurrentDirection = BirthDirection;
                 }
             }
-            if (GuardNumber == 6121 && CurrentMap.MapID == 183 && SEngine.CurrentTime > 转移计时)
+            if (GuardID == 6121 && CurrentMap.MapID == 183 && SEngine.CurrentTime > 转移计时)
             {
                 RemoveAllNeighbors();
                 UnbindGrid();
@@ -220,12 +218,14 @@ public sealed class GuardObject : MapObject
         base.Process();
     }
 
-    public override void Die(MapObject 对象, bool 技能击杀)
+    public override void Die(MapObject attacker, bool skillDeath)
     {
-        base.Die(对象, 技能击杀);
+        base.Die(attacker, skillDeath);
+
         DisappearTime = SEngine.CurrentTime.AddMilliseconds(10000.0);
         ResurrectionTime = SEngine.CurrentTime.AddMilliseconds((CurrentMap.MapID == 80) ? int.MaxValue : 60000);
         Buffs.Clear();
+
         SecondaryObject = true;
         MapManager.AddSecondaryObject(this);
         if (Activated)
@@ -251,30 +251,30 @@ public sealed class GuardObject : MapObject
         {
             Activated = true;
             MapManager.AddActiveObject(this);
-            int num = (int)Math.Max(0.0, (SEngine.CurrentTime - base.RecoveryTime).TotalSeconds / 5.0);
+
+            int num = (int)Math.Max(0.0, (SEngine.CurrentTime - RecoveryTime).TotalSeconds / 5.0);
             base.CurrentHP = Math.Min(this[Stat.MaxHP], CurrentHP + num * this[Stat.HealthRecovery]);
-            base.RecoveryTime = base.RecoveryTime.AddSeconds(5.0);
+            RecoveryTime = RecoveryTime.AddSeconds(5.0);
         }
     }
 
-    public void 守卫智能攻击()
+    public void ProcessAttack()
     {
-        if (!CheckStatus(GameObjectState.Paralyzed | GameObjectState.Unconscious) && BasicAttackSkill != null)
+        if (!CheckStatus(GameObjectState.Paralyzed | GameObjectState.Unconscious)) return;
+        if (BasicAttackSkill == null) return;
+
+        if (GetDistance(Target.Target) > BasicAttackSkill.MaxDistance)
+            Target.Remove(Target.Target);
+        else
         {
-            if (GetDistance(Target.Target) > BasicAttackSkill.MaxDistance)
-            {
-                Target.Remove(Target.Target);
-            }
-            else
-            {
-                new SkillObject(this, BasicAttackSkill, null, base.ActionID++, CurrentMap, CurrentPosition, Target.Target, Target.Target.CurrentPosition, null);
-            }
+            new SkillObject(this, BasicAttackSkill, null, ActionID++, CurrentMap, CurrentPosition, Target.Target, Target.Target.CurrentPosition, null);
         }
     }
 
-    public void 守卫复活处理()
+    public void Resurrect()
     {
         RefreshStats();
+
         SecondaryObject = false;
         Dead = false;
         Blocking = !Info.Nothingness;
@@ -282,13 +282,14 @@ public sealed class GuardObject : MapObject
         CurrentDirection = BirthDirection;
         CurrentPosition = BirthPosition;
         CurrentHP = this[Stat.MaxHP];
-        base.RecoveryTime = SEngine.CurrentTime.AddMilliseconds(SEngine.Random.Next(5000));
+        RecoveryTime = SEngine.CurrentTime.AddMilliseconds(SEngine.Random.Next(5000));
         Target = new HateObject();
+
         BindGrid();
         UpdateAllNeighbours();
     }
 
-    public bool 更新对象仇恨()
+    public bool UpdateTargets()
     {
         if (Target.TargetList.Count == 0)
         {
@@ -316,12 +317,12 @@ public sealed class GuardObject : MapObject
         }
         if (Target.Target == null)
         {
-            return 更新对象仇恨();
+            return UpdateTargets();
         }
         return true;
     }
 
-    public void 清空守卫仇恨()
+    public void RemoveTargets()
     {
         Target.Target = null;
         Target.TargetList.Clear();
