@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GameServer.Template;
 
-public sealed class NpcDialogs
+public sealed class NpcDialog
 {
     public static Dictionary<int, string> DataSheet;
     public static Dictionary<int, byte[]> DataById;
@@ -50,7 +50,7 @@ public sealed class NpcDialogs
         if (!Directory.Exists(path))
             return;
 
-        var array = Serializer.Deserialize<NpcDialogs>(path);
+        var array = Serializer.Deserialize<NpcDialog>(path);
         foreach (var obj in array)
             DataSheet.Add(obj.ID, obj.Content);
     }
