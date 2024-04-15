@@ -1868,9 +1868,9 @@ public sealed class PlayerObject : MapObject
             RefreshStats();
             UpdateCombatPower();
             玩家实例2.Ingot += Config.狂暴杀死元宝数量;
-            玩家实例2.Enqueue(new 同步元宝数量
+            玩家实例2.Enqueue(new SyncIngotsPacket
             {
-                元宝数量 = 玩家实例2.Character.Ingot
+                Amount = 玩家实例2.Character.Ingot
             });
             if (Config.CurrentVersion >= 2)
             {
@@ -7525,10 +7525,10 @@ public sealed class PlayerObject : MapObject
         if (GameTitle.DataSheet.TryGetValue(称号编号, out var value))
         {
             Titles[称号编号] = SEngine.CurrentTime.AddMinutes(value.EffectiveTime);
-            Enqueue(new 玩家获得称号
+            Enqueue(new AddTitlePacket
             {
-                称号编号 = 称号编号,
-                剩余时间 = (int)(Titles[称号编号] - SEngine.CurrentTime).TotalMinutes
+                TitleID = 称号编号,
+                Duration = (int)(Titles[称号编号] - SEngine.CurrentTime).TotalMinutes
             });
         }
     }
@@ -7725,9 +7725,9 @@ public sealed class PlayerObject : MapObject
         {
             CurrentMP = CurrentMP
         });
-        Enqueue(new 同步元宝数量
+        Enqueue(new SyncIngotsPacket
         {
-            元宝数量 = Ingot
+            Amount = Ingot
         });
         Enqueue(new 同步冷却列表
         {
@@ -9568,9 +9568,9 @@ public sealed class PlayerObject : MapObject
                                 if (FindItem(Config.自定义元宝兑换01, out var 物品4) && SEngine.CurrentTime > NPC间隔)
                                 {
                                     Ingot += 100;
-                                    Enqueue(new 同步元宝数量
+                                    Enqueue(new SyncIngotsPacket
                                     {
-                                        元宝数量 = Ingot
+                                        Amount = Ingot
                                     });
                                     ConsumeItem(1, 物品4);
                                     NPC间隔 = SEngine.CurrentTime.AddSeconds(2.0);
@@ -9591,9 +9591,9 @@ public sealed class PlayerObject : MapObject
                                 if (FindItem(Config.自定义元宝兑换02, out var 物品6) && SEngine.CurrentTime > NPC间隔)
                                 {
                                     Ingot += 1000;
-                                    Enqueue(new 同步元宝数量
+                                    Enqueue(new SyncIngotsPacket
                                     {
-                                        元宝数量 = Ingot
+                                        Amount = Ingot
                                     });
                                     ConsumeItem(1, 物品6);
                                     NPC间隔 = SEngine.CurrentTime.AddSeconds(2.0);
@@ -9614,9 +9614,9 @@ public sealed class PlayerObject : MapObject
                                 if (FindItem(Config.自定义元宝兑换03, out var 物品7) && SEngine.CurrentTime > NPC间隔)
                                 {
                                     Ingot += 10000;
-                                    Enqueue(new 同步元宝数量
+                                    Enqueue(new SyncIngotsPacket
                                     {
-                                        元宝数量 = Ingot
+                                        Amount = Ingot
                                     });
                                     ConsumeItem(1, 物品7);
                                     NPC间隔 = SEngine.CurrentTime.AddSeconds(2.0);
@@ -9637,9 +9637,9 @@ public sealed class PlayerObject : MapObject
                                 if (FindItem(Config.自定义元宝兑换04, out var 物品5) && SEngine.CurrentTime > NPC间隔)
                                 {
                                     Ingot += 100000;
-                                    Enqueue(new 同步元宝数量
+                                    Enqueue(new SyncIngotsPacket
                                     {
-                                        元宝数量 = Ingot
+                                        Amount = Ingot
                                     });
                                     ConsumeItem(1, 物品5);
                                     NPC间隔 = SEngine.CurrentTime.AddSeconds(2.0);
@@ -9660,9 +9660,9 @@ public sealed class PlayerObject : MapObject
                                 if (FindItem(Config.自定义元宝兑换05, out var 物品3) && SEngine.CurrentTime > NPC间隔)
                                 {
                                     Ingot += 1000000;
-                                    Enqueue(new 同步元宝数量
+                                    Enqueue(new SyncIngotsPacket
                                     {
-                                        元宝数量 = Ingot
+                                        Amount = Ingot
                                     });
                                     ConsumeItem(1, 物品3);
                                     NPC间隔 = SEngine.CurrentTime.AddSeconds(2.0);
@@ -13236,10 +13236,10 @@ public sealed class PlayerObject : MapObject
                                 Character.Titles[b4] = SEngine.CurrentTime.AddMinutes(value32.EffectiveTime);
                                 SConnection 客户网络 = Connection;
                                 int 剩余时间 = 65920000;
-                                客户网络?.SendPacket(new 玩家获得称号
+                                客户网络?.SendPacket(new AddTitlePacket
                                 {
-                                    称号编号 = b4,
-                                    剩余时间 = 剩余时间
+                                    TitleID = b4,
+                                    Duration = 剩余时间
                                 });
                             }
                         }
@@ -16631,9 +16631,9 @@ public sealed class PlayerObject : MapObject
             return;
         }
         Ingot -= num2;
-        Enqueue(new 同步元宝数量
+        Enqueue(new SyncIngotsPacket
         {
-            元宝数量 = Ingot
+            Amount = Ingot
         });
         if (物品编号 <= 1501000 || 物品编号 >= 1501005)
         {
@@ -18133,65 +18133,65 @@ public sealed class PlayerObject : MapObject
                     if (装备数据.装备模板.EquipSet == GameItemSet.沃玛装备)
                     {
                         Ingot += Config.沃玛分解元宝;
-                        Enqueue(new 同步元宝数量
+                        Enqueue(new SyncIngotsPacket
                         {
-                            元宝数量 = Ingot
+                            Amount = Ingot
                         });
                     }
                     else if (装备数据.装备模板.EquipSet == GameItemSet.祖玛装备)
                     {
                         Ingot += Config.祖玛分解元宝;
-                        Enqueue(new 同步元宝数量
+                        Enqueue(new SyncIngotsPacket
                         {
-                            元宝数量 = Ingot
+                            Amount = Ingot
                         });
                     }
                     else if (装备数据.装备模板.EquipSet == GameItemSet.赤月装备)
                     {
                         Ingot += Config.赤月分解元宝;
-                        Enqueue(new 同步元宝数量
+                        Enqueue(new SyncIngotsPacket
                         {
-                            元宝数量 = Ingot
+                            Amount = Ingot
                         });
                     }
                     else if (装备数据.装备模板.EquipSet == GameItemSet.魔龙装备)
                     {
                         Ingot += Config.魔龙分解元宝;
-                        Enqueue(new 同步元宝数量
+                        Enqueue(new SyncIngotsPacket
                         {
-                            元宝数量 = Ingot
+                            Amount = Ingot
                         });
                     }
                     else if (装备数据.装备模板.EquipSet == GameItemSet.苍月装备)
                     {
                         Ingot += Config.苍月分解元宝;
-                        Enqueue(new 同步元宝数量
+                        Enqueue(new SyncIngotsPacket
                         {
-                            元宝数量 = Ingot
+                            Amount = Ingot
                         });
                     }
                     else if (装备数据.装备模板.EquipSet == GameItemSet.星王装备)
                     {
                         Ingot += Config.星王分解元宝;
-                        Enqueue(new 同步元宝数量
+                        Enqueue(new SyncIngotsPacket
                         {
-                            元宝数量 = Ingot
+                            Amount = Ingot
                         });
                     }
                     else if (装备数据.装备模板.EquipSet == GameItemSet.城主装备)
                     {
                         Ingot += Config.城主分解元宝;
-                        Enqueue(new 同步元宝数量
+                        Enqueue(new SyncIngotsPacket
                         {
-                            元宝数量 = Ingot
+                            Amount = Ingot
                         });
                     }
                     else if (装备数据.装备模板.EquipSet == GameItemSet.神秘装备)
                     {
                         Ingot += Config.神秘分解元宝;
-                        Enqueue(new 同步元宝数量
+                        Enqueue(new SyncIngotsPacket
                         {
-                            元宝数量 = Ingot
+                            Amount = Ingot
                         });
                     }
                     else if (装备数据.装备模板.EquipSet == GameItemSet.None)
@@ -18255,9 +18255,9 @@ public sealed class PlayerObject : MapObject
                                 });
                             }
                             Ingot += Config.祖玛分解元宝;
-                            Enqueue(new 同步元宝数量
+                            Enqueue(new SyncIngotsPacket
                             {
-                                元宝数量 = Ingot
+                                Amount = Ingot
                             });
                         }
                         else if (Config.祖玛分解开关 == 4)
@@ -18356,9 +18356,9 @@ public sealed class PlayerObject : MapObject
                         else if (Config.祖玛分解开关 == 2)
                         {
                             Ingot += Config.祖玛分解元宝;
-                            Enqueue(new 同步元宝数量
+                            Enqueue(new SyncIngotsPacket
                             {
-                                元宝数量 = Ingot
+                                Amount = Ingot
                             });
                         }
                         else if (Config.祖玛分解开关 == 1)
@@ -18416,9 +18416,9 @@ public sealed class PlayerObject : MapObject
                                 });
                             }
                             Ingot += Config.赤月分解元宝;
-                            Enqueue(new 同步元宝数量
+                            Enqueue(new SyncIngotsPacket
                             {
-                                元宝数量 = Ingot
+                                Amount = Ingot
                             });
                         }
                         else if (Config.赤月分解开关 == 4)
@@ -18517,9 +18517,9 @@ public sealed class PlayerObject : MapObject
                         else if (Config.赤月分解开关 == 2)
                         {
                             Ingot += Config.赤月分解元宝;
-                            Enqueue(new 同步元宝数量
+                            Enqueue(new SyncIngotsPacket
                             {
-                                元宝数量 = Ingot
+                                Amount = Ingot
                             });
                         }
                         else if (Config.赤月分解开关 == 1)
@@ -18577,9 +18577,9 @@ public sealed class PlayerObject : MapObject
                                 });
                             }
                             Ingot += Config.魔龙分解元宝;
-                            Enqueue(new 同步元宝数量
+                            Enqueue(new SyncIngotsPacket
                             {
-                                元宝数量 = Ingot
+                                Amount = Ingot
                             });
                         }
                         else if (Config.魔龙分解开关 == 4)
@@ -18678,9 +18678,9 @@ public sealed class PlayerObject : MapObject
                         else if (Config.魔龙分解开关 == 2)
                         {
                             Ingot += Config.魔龙分解元宝;
-                            Enqueue(new 同步元宝数量
+                            Enqueue(new SyncIngotsPacket
                             {
-                                元宝数量 = Ingot
+                                Amount = Ingot
                             });
                         }
                         else if (Config.魔龙分解开关 == 1)
@@ -18738,9 +18738,9 @@ public sealed class PlayerObject : MapObject
                                 });
                             }
                             Ingot += Config.苍月分解元宝;
-                            Enqueue(new 同步元宝数量
+                            Enqueue(new SyncIngotsPacket
                             {
-                                元宝数量 = Ingot
+                                Amount = Ingot
                             });
                         }
                         else if (Config.苍月分解开关 == 4)
@@ -18839,9 +18839,9 @@ public sealed class PlayerObject : MapObject
                         else if (Config.苍月分解开关 == 2)
                         {
                             Ingot += Config.苍月分解元宝;
-                            Enqueue(new 同步元宝数量
+                            Enqueue(new SyncIngotsPacket
                             {
-                                元宝数量 = Ingot
+                                Amount = Ingot
                             });
                         }
                         else if (Config.苍月分解开关 == 1)
@@ -18899,9 +18899,9 @@ public sealed class PlayerObject : MapObject
                                 });
                             }
                             Ingot += Config.星王分解元宝;
-                            Enqueue(new 同步元宝数量
+                            Enqueue(new SyncIngotsPacket
                             {
-                                元宝数量 = Ingot
+                                Amount = Ingot
                             });
                         }
                         else if (Config.星王分解开关 == 4)
@@ -19000,9 +19000,9 @@ public sealed class PlayerObject : MapObject
                         else if (Config.星王分解开关 == 2)
                         {
                             Ingot += Config.星王分解元宝;
-                            Enqueue(new 同步元宝数量
+                            Enqueue(new SyncIngotsPacket
                             {
-                                元宝数量 = Ingot
+                                Amount = Ingot
                             });
                         }
                         else if (Config.星王分解开关 == 1)
@@ -19060,9 +19060,9 @@ public sealed class PlayerObject : MapObject
                                 });
                             }
                             Ingot += Config.城主分解元宝;
-                            Enqueue(new 同步元宝数量
+                            Enqueue(new SyncIngotsPacket
                             {
-                                元宝数量 = Ingot
+                                Amount = Ingot
                             });
                         }
                         else if (Config.城主分解开关 == 4)
@@ -19161,9 +19161,9 @@ public sealed class PlayerObject : MapObject
                         else if (Config.城主分解开关 == 2)
                         {
                             Ingot += Config.城主分解元宝;
-                            Enqueue(new 同步元宝数量
+                            Enqueue(new SyncIngotsPacket
                             {
-                                元宝数量 = Ingot
+                                Amount = Ingot
                             });
                         }
                         else if (Config.城主分解开关 == 1)
@@ -19382,9 +19382,9 @@ public sealed class PlayerObject : MapObject
                                 });
                             }
                             Ingot += Config.沃玛分解元宝;
-                            Enqueue(new 同步元宝数量
+                            Enqueue(new SyncIngotsPacket
                             {
-                                元宝数量 = Ingot
+                                Amount = Ingot
                             });
                         }
                         else if (Config.沃玛分解开关 == 4)
@@ -19483,9 +19483,9 @@ public sealed class PlayerObject : MapObject
                         else if (Config.沃玛分解开关 == 2)
                         {
                             Ingot += Config.沃玛分解元宝;
-                            Enqueue(new 同步元宝数量
+                            Enqueue(new SyncIngotsPacket
                             {
-                                元宝数量 = Ingot
+                                Amount = Ingot
                             });
                         }
                         else if (Config.沃玛分解开关 == 1)
@@ -19500,9 +19500,9 @@ public sealed class PlayerObject : MapObject
                     else if (装备数据.装备模板.EquipSet == GameItemSet.神秘装备)
                     {
                         Ingot += Config.神秘分解元宝;
-                        Enqueue(new 同步元宝数量
+                        Enqueue(new SyncIngotsPacket
                         {
-                            元宝数量 = Ingot
+                            Amount = Ingot
                         });
                     }
                     else if (装备数据.装备模板.EquipSet == GameItemSet.None)
@@ -25710,9 +25710,9 @@ public sealed class PlayerObject : MapObject
                     if (ConsumeItem(1, v))
                     {
                         Ingot += Config.元宝袋新创数量1;
-                        Enqueue(new 同步元宝数量
+                        Enqueue(new SyncIngotsPacket
                         {
-                            元宝数量 = Ingot
+                            Amount = Ingot
                         });
                     }
                     break;
@@ -25720,9 +25720,9 @@ public sealed class PlayerObject : MapObject
                     if (ConsumeItem(1, v))
                     {
                         Ingot += Config.元宝袋新创数量2;
-                        Enqueue(new 同步元宝数量
+                        Enqueue(new SyncIngotsPacket
                         {
-                            元宝数量 = Ingot
+                            Amount = Ingot
                         });
                     }
                     break;
@@ -25730,9 +25730,9 @@ public sealed class PlayerObject : MapObject
                     if (ConsumeItem(1, v))
                     {
                         Ingot += Config.元宝袋新创数量3;
-                        Enqueue(new 同步元宝数量
+                        Enqueue(new SyncIngotsPacket
                         {
-                            元宝数量 = Ingot
+                            Amount = Ingot
                         });
                     }
                     break;
@@ -25740,9 +25740,9 @@ public sealed class PlayerObject : MapObject
                     if (ConsumeItem(1, v))
                     {
                         Ingot += Config.元宝袋新创数量4;
-                        Enqueue(new 同步元宝数量
+                        Enqueue(new SyncIngotsPacket
                         {
-                            元宝数量 = Ingot
+                            Amount = Ingot
                         });
                     }
                     break;
@@ -25750,9 +25750,9 @@ public sealed class PlayerObject : MapObject
                     if (ConsumeItem(1, v))
                     {
                         Ingot += Config.元宝袋新创数量5;
-                        Enqueue(new 同步元宝数量
+                        Enqueue(new SyncIngotsPacket
                         {
-                            元宝数量 = Ingot
+                            Amount = Ingot
                         });
                     }
                     break;
@@ -25760,9 +25760,9 @@ public sealed class PlayerObject : MapObject
                     if (ConsumeItem(1, v))
                     {
                         Ingot += 10000;
-                        Enqueue(new 同步元宝数量
+                        Enqueue(new SyncIngotsPacket
                         {
-                            元宝数量 = Ingot
+                            Amount = Ingot
                         });
                     }
                     break;
@@ -25770,9 +25770,9 @@ public sealed class PlayerObject : MapObject
                     if (ConsumeItem(1, v))
                     {
                         Ingot += 100000;
-                        Enqueue(new 同步元宝数量
+                        Enqueue(new SyncIngotsPacket
                         {
-                            元宝数量 = Ingot
+                            Amount = Ingot
                         });
                     }
                     break;
@@ -25780,9 +25780,9 @@ public sealed class PlayerObject : MapObject
                     if (ConsumeItem(1, v))
                     {
                         Ingot += 1000;
-                        Enqueue(new 同步元宝数量
+                        Enqueue(new SyncIngotsPacket
                         {
-                            元宝数量 = Ingot
+                            Amount = Ingot
                         });
                     }
                     break;
@@ -25790,9 +25790,9 @@ public sealed class PlayerObject : MapObject
                     if (ConsumeItem(1, v))
                     {
                         Ingot += 100;
-                        Enqueue(new 同步元宝数量
+                        Enqueue(new SyncIngotsPacket
                         {
-                            元宝数量 = Ingot
+                            Amount = Ingot
                         });
                     }
                     break;
@@ -31890,14 +31890,14 @@ public sealed class PlayerObject : MapObject
         }
         int num2 = value.CurrentStall.Prices[value2] * 购买数量;
         Ingot -= num2;
-        Enqueue(new 同步元宝数量
+        Enqueue(new SyncIngotsPacket
         {
-            元宝数量 = Ingot
+            Amount = Ingot
         });
         value.Ingot += (int)((float)num2 * 0.95f);
-        value.Character.Enqueue(new 同步元宝数量
+        value.Character.Enqueue(new SyncIngotsPacket
         {
-            元宝数量 = value.Character.Ingot
+            Amount = value.Character.Ingot
         });
         if ((value.CurrentStall.Quantities[value2] -= 购买数量) <= 0)
         {
