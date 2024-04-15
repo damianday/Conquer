@@ -1,11 +1,11 @@
 namespace GamePackets.Server;
 
 [PacketInfo(Source = PacketSource.Server, ID = 213, Length = 7, Description = "玩家获得称号")]
-public sealed class 玩家获得称号 : GamePacket
+public sealed class AddTitlePacket : GamePacket
 {
     [FieldAttribute(Position = 2, Length = 1)]
-    public byte 称号编号;
+    public byte TitleID;
 
     [FieldAttribute(Position = 3, Length = 4)]
-    public int 剩余时间;
+    public int Duration;
 }
