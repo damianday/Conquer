@@ -625,6 +625,8 @@ public sealed class CharacterInfo : DBObject
 
     public SConnection Connection { get; set; }
 
+    public bool Online => Connection != null;
+
     public void Enqueue(GamePacket packet)
     {
         if (Connection == null) return;
@@ -729,12 +731,6 @@ public sealed class CharacterInfo : DBObject
         {
             MessageCount = UnreadMail.Count
         });
-    }
-
-    public bool CheckOnline(out SConnection conn)
-    {
-        conn = Connection;
-        return conn != null;
     }
 
     public CharacterInfo()

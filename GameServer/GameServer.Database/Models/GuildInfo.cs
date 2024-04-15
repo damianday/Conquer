@@ -643,13 +643,13 @@ public sealed class GuildInfo : DBObject
         }
     }
 
-    public void 行会提醒(GuildRank 职位, byte 提醒类型)
+    public void 行会提醒(GuildRank rank, byte 提醒类型)
     {
-        foreach (KeyValuePair<CharacterInfo, GuildRank> item in Members)
+        foreach (var member in Members)
         {
-            if (item.Value <= 职位 && item.Key.CheckOnline(out var 网络))
+            if (member.Value <= rank && member.Key.Online)
             {
-                网络.SendPacket(new 发送行会通知
+                member.Key.Enqueue(new 发送行会通知
                 {
                     提醒类型 = 提醒类型
                 });
@@ -717,7 +717,7 @@ public sealed class GuildInfo : DBObject
             binaryWriter.Write(item.Key.CurrentLevel);
             binaryWriter.Write((byte)item.Key.Job.V);
             binaryWriter.Write(item.Key.CurrentMap.V);
-            binaryWriter.Write((!item.Key.CheckOnline(out var _)) ? Compute.TimeSeconds(item.Key.DisconnectDate.V) : 0);
+            binaryWriter.Write(!item.Key.Online ? Compute.TimeSeconds(item.Key.DisconnectDate.V) : 0);
             binaryWriter.Write(0);
             binaryWriter.Write(行会禁言.ContainsKey(item.Key));
         }
@@ -774,7 +774,7 @@ public sealed class GuildInfo : DBObject
             binaryWriter.Write(array);
             binaryWriter.Write(key.CurrentLevel);
             binaryWriter.Write(key.CurrentLevel);
-            binaryWriter.Write(key.CheckOnline(out var _) ? Compute.TimeSeconds(SEngine.CurrentTime) : Compute.TimeSeconds(key.DisconnectDate.V));
+            binaryWriter.Write(key.Online ? Compute.TimeSeconds(SEngine.CurrentTime) : Compute.TimeSeconds(key.DisconnectDate.V));
         }
         return memoryStream.ToArray();
     }
