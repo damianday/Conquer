@@ -241,7 +241,7 @@ public sealed class AccountInfo : DBObject
             }
             if (FrozenCharacters.Count >= 5)
             {
-                conn.Disconnect(new Exception("删除角色时找回列表已满, 断开连接."));
+                conn.Disconnect(new Exception("When deleting a role, the retrieval list is full, disconnected."));
                 return;
             }
 
