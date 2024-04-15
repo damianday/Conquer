@@ -209,7 +209,7 @@ public sealed class GuardObject : MapObject
             {
                 RemoveAllNeighbors();
                 UnbindGrid();
-                CurrentPosition = CurrentMap.传送区域.RandomCoords;
+                CurrentPosition = CurrentMap.TeleportationArea.RandomCoords;
                 BindGrid();
                 UpdateAllNeighbours();
                 转移计时 = SEngine.CurrentTime.AddMinutes(2.5);
