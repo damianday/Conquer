@@ -37,11 +37,6 @@ public partial class SMain
         MainTabControl = new TabControl();
         LogsTabPage = new TabPage();
         LogTextBox = new RichTextBox();
-        StartServiceButton = new Button();
-        StopServiceButton = new Button();
-        ExistingAccountsLabel = new Label();
-        NewAccountsLabel = new Label();
-        TicketsGeneratedLabel = new Label();
         BytesSentLabel = new Label();
         BytesReceivedLabel = new Label();
         LocalListeningPortEdit = new NumericUpDown();
@@ -52,29 +47,44 @@ public partial class SMain
         托盘右键菜单 = new ContextMenuStrip(components);
         打开ToolStripMenuItem = new ToolStripMenuItem();
         退出ToolStripMenuItem = new ToolStripMenuItem();
-        OpenConfigurationButton = new Button();
-        ViewAccountButton = new Button();
-        LoadConfigurationButton = new Button();
-        LoadAccountButton = new Button();
-        加载更新按钮 = new Button();
-        打开更新按钮 = new Button();
-        ViewPatchButton = new Button();
+        menuStrip1 = new MenuStrip();
+        serviceToolStripMenuItem = new ToolStripMenuItem();
+        startServiceToolStripMenuItem = new ToolStripMenuItem();
+        stopServiceToolStripMenuItem = new ToolStripMenuItem();
+        toolStripMenuItem1 = new ToolStripSeparator();
+        exitToolStripMenuItem = new ToolStripMenuItem();
+        optionsToolStripMenuItem = new ToolStripMenuItem();
+        openServerConfigurationToolStripMenuItem = new ToolStripMenuItem();
+        OpenUpdateConfigurationToolStripMenuItem = new ToolStripMenuItem();
+        openPatchDirectoryToolStripMenuItem = new ToolStripMenuItem();
+        openAccountDirectoryToolStripMenuItem = new ToolStripMenuItem();
+        groupBox1 = new GroupBox();
+        TicketsGeneratedLabel = new Label();
+        NewAccountsLabel = new Label();
+        ExistingAccountsLabel = new Label();
+        reloadToolStripMenuItem = new ToolStripMenuItem();
+        toolStripMenuItem2 = new ToolStripSeparator();
+        loadConfigurationToolStripMenuItem = new ToolStripMenuItem();
+        loadAccountsToolStripMenuItem = new ToolStripMenuItem();
+        LoadUpdateConfigurationToolStripMenuItem = new ToolStripMenuItem();
         MainTabControl.SuspendLayout();
         LogsTabPage.SuspendLayout();
         ((ISupportInitialize)LocalListeningPortEdit).BeginInit();
         ((ISupportInitialize)TicketSendingPortEdit).BeginInit();
         托盘右键菜单.SuspendLayout();
+        menuStrip1.SuspendLayout();
+        groupBox1.SuspendLayout();
         SuspendLayout();
         // 
         // MainTabControl
         // 
         MainTabControl.Controls.Add(LogsTabPage);
-        MainTabControl.ItemSize = new Size(535, 22);
-        MainTabControl.Location = new Point(0, 37);
+        MainTabControl.ItemSize = new Size(60, 22);
+        MainTabControl.Location = new Point(12, 172);
         MainTabControl.Margin = new Padding(4, 2, 4, 2);
         MainTabControl.Name = "MainTabControl";
         MainTabControl.SelectedIndex = 0;
-        MainTabControl.Size = new Size(630, 623);
+        MainTabControl.Size = new Size(519, 420);
         MainTabControl.SizeMode = TabSizeMode.Fixed;
         MainTabControl.TabIndex = 0;
         // 
@@ -87,81 +97,27 @@ public partial class SMain
         LogsTabPage.Margin = new Padding(4, 2, 4, 2);
         LogsTabPage.Name = "LogsTabPage";
         LogsTabPage.Padding = new Padding(4, 2, 4, 2);
-        LogsTabPage.Size = new Size(622, 593);
+        LogsTabPage.Size = new Size(511, 390);
         LogsTabPage.TabIndex = 0;
         LogsTabPage.Text = "Log";
         // 
         // LogTextBox
         // 
         LogTextBox.BackColor = Color.Gainsboro;
-        LogTextBox.Location = new Point(0, 0);
+        LogTextBox.Dock = DockStyle.Fill;
+        LogTextBox.Location = new Point(4, 2);
         LogTextBox.Margin = new Padding(4, 2, 4, 2);
         LogTextBox.Name = "LogTextBox";
         LogTextBox.ReadOnly = true;
-        LogTextBox.Size = new Size(618, 571);
+        LogTextBox.Size = new Size(499, 382);
         LogTextBox.TabIndex = 0;
         LogTextBox.Text = "";
-        // 
-        // StartServiceButton
-        // 
-        StartServiceButton.BackColor = Color.YellowGreen;
-        StartServiceButton.Font = new Font("Microsoft YaHei", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 134);
-        StartServiceButton.Location = new Point(631, 474);
-        StartServiceButton.Margin = new Padding(4, 2, 4, 2);
-        StartServiceButton.Name = "StartServiceButton";
-        StartServiceButton.Size = new Size(187, 91);
-        StartServiceButton.TabIndex = 1;
-        StartServiceButton.Text = "Start Service";
-        StartServiceButton.UseVisualStyleBackColor = false;
-        StartServiceButton.Click += StartServiceButton_Click;
-        // 
-        // StopServiceButton
-        // 
-        StopServiceButton.BackColor = Color.Crimson;
-        StopServiceButton.Font = new Font("Microsoft YaHei", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 134);
-        StopServiceButton.Location = new Point(630, 564);
-        StopServiceButton.Margin = new Padding(4, 2, 4, 2);
-        StopServiceButton.Name = "StopServiceButton";
-        StopServiceButton.Size = new Size(187, 91);
-        StopServiceButton.TabIndex = 2;
-        StopServiceButton.Text = "Stop Service";
-        StopServiceButton.UseVisualStyleBackColor = false;
-        StopServiceButton.Click += StopServiceButton_Click;
-        // 
-        // ExistingAccountsLabel
-        // 
-        ExistingAccountsLabel.AutoSize = true;
-        ExistingAccountsLabel.Location = new Point(638, 63);
-        ExistingAccountsLabel.Margin = new Padding(4, 0, 4, 0);
-        ExistingAccountsLabel.Name = "ExistingAccountsLabel";
-        ExistingAccountsLabel.Size = new Size(69, 15);
-        ExistingAccountsLabel.TabIndex = 3;
-        ExistingAccountsLabel.Text = "Accounts: 0";
-        // 
-        // NewAccountsLabel
-        // 
-        NewAccountsLabel.AutoSize = true;
-        NewAccountsLabel.Location = new Point(638, 78);
-        NewAccountsLabel.Margin = new Padding(4, 0, 4, 0);
-        NewAccountsLabel.Name = "NewAccountsLabel";
-        NewAccountsLabel.Size = new Size(96, 15);
-        NewAccountsLabel.TabIndex = 4;
-        NewAccountsLabel.Text = "New Accounts: 0";
-        // 
-        // TicketsGeneratedLabel
-        // 
-        TicketsGeneratedLabel.AutoSize = true;
-        TicketsGeneratedLabel.Location = new Point(638, 93);
-        TicketsGeneratedLabel.Margin = new Padding(4, 0, 4, 0);
-        TicketsGeneratedLabel.Name = "TicketsGeneratedLabel";
-        TicketsGeneratedLabel.Size = new Size(55, 15);
-        TicketsGeneratedLabel.TabIndex = 5;
-        TicketsGeneratedLabel.Text = "Tickets: 0";
         // 
         // BytesSentLabel
         // 
         BytesSentLabel.AutoSize = true;
-        BytesSentLabel.Location = new Point(638, 108);
+        BytesSentLabel.ForeColor = SystemColors.ControlText;
+        BytesSentLabel.Location = new Point(274, 19);
         BytesSentLabel.Margin = new Padding(4, 0, 4, 0);
         BytesSentLabel.Name = "BytesSentLabel";
         BytesSentLabel.Size = new Size(73, 15);
@@ -171,7 +127,8 @@ public partial class SMain
         // BytesReceivedLabel
         // 
         BytesReceivedLabel.AutoSize = true;
-        BytesReceivedLabel.Location = new Point(638, 123);
+        BytesReceivedLabel.ForeColor = SystemColors.ControlText;
+        BytesReceivedLabel.Location = new Point(250, 34);
         BytesReceivedLabel.Margin = new Padding(4, 0, 4, 0);
         BytesReceivedLabel.Name = "BytesReceivedLabel";
         BytesReceivedLabel.Size = new Size(97, 15);
@@ -180,7 +137,7 @@ public partial class SMain
         // 
         // LocalListeningPortEdit
         // 
-        LocalListeningPortEdit.Location = new Point(105, 5);
+        LocalListeningPortEdit.Location = new Point(105, 144);
         LocalListeningPortEdit.Margin = new Padding(4, 3, 4, 3);
         LocalListeningPortEdit.Maximum = new decimal(new int[] { 65535, 0, 0, 0 });
         LocalListeningPortEdit.Minimum = new decimal(new int[] { 100, 0, 0, 0 });
@@ -193,7 +150,7 @@ public partial class SMain
         // LocalListeningPortLabel
         // 
         LocalListeningPortLabel.AutoSize = true;
-        LocalListeningPortLabel.Location = new Point(30, 7);
+        LocalListeningPortLabel.Location = new Point(30, 146);
         LocalListeningPortLabel.Margin = new Padding(4, 0, 4, 0);
         LocalListeningPortLabel.Name = "LocalListeningPortLabel";
         LocalListeningPortLabel.Size = new Size(63, 15);
@@ -203,7 +160,7 @@ public partial class SMain
         // TicketSendingPortLabel
         // 
         TicketSendingPortLabel.AutoSize = true;
-        TicketSendingPortLabel.Location = new Point(247, 7);
+        TicketSendingPortLabel.Location = new Point(247, 146);
         TicketSendingPortLabel.Margin = new Padding(4, 0, 4, 0);
         TicketSendingPortLabel.Name = "TicketSendingPortLabel";
         TicketSendingPortLabel.Size = new Size(66, 15);
@@ -212,7 +169,7 @@ public partial class SMain
         // 
         // TicketSendingPortEdit
         // 
-        TicketSendingPortEdit.Location = new Point(327, 5);
+        TicketSendingPortEdit.Location = new Point(327, 144);
         TicketSendingPortEdit.Margin = new Padding(4, 3, 4, 3);
         TicketSendingPortEdit.Maximum = new decimal(new int[] { 65535, 0, 0, 0 });
         TicketSendingPortEdit.Minimum = new decimal(new int[] { 100, 0, 0, 0 });
@@ -249,125 +206,178 @@ public partial class SMain
         退出ToolStripMenuItem.Text = "退出";
         退出ToolStripMenuItem.Click += 结束进程_Click;
         // 
-        // OpenConfigurationButton
+        // menuStrip1
         // 
-        OpenConfigurationButton.BackColor = Color.FromArgb(192, 255, 192);
-        OpenConfigurationButton.Font = new Font("Microsoft YaHei", 10.5F, FontStyle.Bold, GraphicsUnit.Point, 134);
-        OpenConfigurationButton.Location = new Point(631, 197);
-        OpenConfigurationButton.Margin = new Padding(4, 2, 4, 2);
-        OpenConfigurationButton.Name = "OpenConfigurationButton";
-        OpenConfigurationButton.Size = new Size(187, 37);
-        OpenConfigurationButton.TabIndex = 12;
-        OpenConfigurationButton.Text = "Open Server Configuration";
-        OpenConfigurationButton.UseVisualStyleBackColor = false;
-        OpenConfigurationButton.Click += OpenConfigurationButton_Click;
+        menuStrip1.Items.AddRange(new ToolStripItem[] { serviceToolStripMenuItem, optionsToolStripMenuItem });
+        menuStrip1.Location = new Point(0, 0);
+        menuStrip1.Name = "menuStrip1";
+        menuStrip1.Size = new Size(543, 24);
+        menuStrip1.TabIndex = 19;
+        menuStrip1.Text = "menuStrip1";
         // 
-        // ViewAccountButton
+        // serviceToolStripMenuItem
         // 
-        ViewAccountButton.BackColor = Color.FromArgb(192, 255, 192);
-        ViewAccountButton.Font = new Font("Microsoft YaHei", 10.5F, FontStyle.Bold, GraphicsUnit.Point, 134);
-        ViewAccountButton.Location = new Point(631, 278);
-        ViewAccountButton.Margin = new Padding(4, 2, 4, 2);
-        ViewAccountButton.Name = "ViewAccountButton";
-        ViewAccountButton.Size = new Size(187, 37);
-        ViewAccountButton.TabIndex = 13;
-        ViewAccountButton.Text = "Open Account Directory";
-        ViewAccountButton.UseVisualStyleBackColor = false;
-        ViewAccountButton.Click += ViewAccountButton_Click;
+        serviceToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { startServiceToolStripMenuItem, stopServiceToolStripMenuItem, toolStripMenuItem2, reloadToolStripMenuItem, toolStripMenuItem1, exitToolStripMenuItem });
+        serviceToolStripMenuItem.Name = "serviceToolStripMenuItem";
+        serviceToolStripMenuItem.Size = new Size(56, 20);
+        serviceToolStripMenuItem.Text = "&Service";
         // 
-        // LoadConfigurationButton
+        // startServiceToolStripMenuItem
         // 
-        LoadConfigurationButton.BackColor = Color.FromArgb(192, 255, 192);
-        LoadConfigurationButton.Font = new Font("Microsoft YaHei", 10.5F, FontStyle.Bold, GraphicsUnit.Point, 134);
-        LoadConfigurationButton.Location = new Point(631, 238);
-        LoadConfigurationButton.Margin = new Padding(4, 2, 4, 2);
-        LoadConfigurationButton.Name = "LoadConfigurationButton";
-        LoadConfigurationButton.Size = new Size(187, 37);
-        LoadConfigurationButton.TabIndex = 14;
-        LoadConfigurationButton.Text = "Load Configuration";
-        LoadConfigurationButton.UseVisualStyleBackColor = false;
-        LoadConfigurationButton.Click += LoadConfigurationButton_Click;
+        startServiceToolStripMenuItem.Name = "startServiceToolStripMenuItem";
+        startServiceToolStripMenuItem.Size = new Size(138, 22);
+        startServiceToolStripMenuItem.Text = "Start Service";
+        startServiceToolStripMenuItem.Click += startServiceToolStripMenuItem_Click;
         // 
-        // LoadAccountButton
+        // stopServiceToolStripMenuItem
         // 
-        LoadAccountButton.BackColor = Color.FromArgb(192, 255, 192);
-        LoadAccountButton.Font = new Font("Microsoft YaHei", 10.5F, FontStyle.Bold, GraphicsUnit.Point, 134);
-        LoadAccountButton.Location = new Point(632, 317);
-        LoadAccountButton.Margin = new Padding(4, 2, 4, 2);
-        LoadAccountButton.Name = "LoadAccountButton";
-        LoadAccountButton.Size = new Size(187, 37);
-        LoadAccountButton.TabIndex = 15;
-        LoadAccountButton.Text = "Load Accounts";
-        LoadAccountButton.UseVisualStyleBackColor = false;
-        LoadAccountButton.Click += LoadAccountButton_Click;
+        stopServiceToolStripMenuItem.Name = "stopServiceToolStripMenuItem";
+        stopServiceToolStripMenuItem.Size = new Size(138, 22);
+        stopServiceToolStripMenuItem.Text = "Stop Service";
+        stopServiceToolStripMenuItem.Click += stopServiceToolStripMenuItem_Click;
         // 
-        // 加载更新按钮
+        // toolStripMenuItem1
         // 
-        加载更新按钮.BackColor = Color.FromArgb(192, 255, 192);
-        加载更新按钮.Font = new Font("Microsoft YaHei", 10.5F, FontStyle.Bold, GraphicsUnit.Point, 134);
-        加载更新按钮.Location = new Point(632, 440);
-        加载更新按钮.Margin = new Padding(4, 2, 4, 2);
-        加载更新按钮.Name = "加载更新按钮";
-        加载更新按钮.Size = new Size(187, 37);
-        加载更新按钮.TabIndex = 17;
-        加载更新按钮.Text = "加载更新配置";
-        加载更新按钮.UseVisualStyleBackColor = false;
-        加载更新按钮.Click += 加载更新按钮_Click;
+        toolStripMenuItem1.Name = "toolStripMenuItem1";
+        toolStripMenuItem1.Size = new Size(135, 6);
         // 
-        // 打开更新按钮
+        // exitToolStripMenuItem
         // 
-        打开更新按钮.BackColor = Color.FromArgb(192, 255, 192);
-        打开更新按钮.Font = new Font("Microsoft YaHei", 10.5F, FontStyle.Bold, GraphicsUnit.Point, 134);
-        打开更新按钮.Location = new Point(632, 358);
-        打开更新按钮.Margin = new Padding(4, 2, 4, 2);
-        打开更新按钮.Name = "打开更新按钮";
-        打开更新按钮.Size = new Size(187, 37);
-        打开更新按钮.TabIndex = 16;
-        打开更新按钮.Text = "打开更新配置";
-        打开更新按钮.UseVisualStyleBackColor = false;
-        打开更新按钮.Click += 打开更新按钮_Click;
+        exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+        exitToolStripMenuItem.Size = new Size(138, 22);
+        exitToolStripMenuItem.Text = "E&xit";
+        exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
         // 
-        // ViewPatchButton
+        // optionsToolStripMenuItem
         // 
-        ViewPatchButton.BackColor = Color.FromArgb(192, 255, 192);
-        ViewPatchButton.Font = new Font("Microsoft YaHei", 10.5F, FontStyle.Bold, GraphicsUnit.Point, 134);
-        ViewPatchButton.Location = new Point(632, 399);
-        ViewPatchButton.Margin = new Padding(4, 2, 4, 2);
-        ViewPatchButton.Name = "ViewPatchButton";
-        ViewPatchButton.Size = new Size(187, 37);
-        ViewPatchButton.TabIndex = 18;
-        ViewPatchButton.Text = "Open Patch Directory";
-        ViewPatchButton.UseVisualStyleBackColor = false;
-        ViewPatchButton.Click += ViewPatchButton_Click;
+        optionsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { openServerConfigurationToolStripMenuItem, OpenUpdateConfigurationToolStripMenuItem, openPatchDirectoryToolStripMenuItem, openAccountDirectoryToolStripMenuItem });
+        optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+        optionsToolStripMenuItem.Size = new Size(61, 20);
+        optionsToolStripMenuItem.Text = "Options";
         // 
-        // MainForm
+        // openServerConfigurationToolStripMenuItem
+        // 
+        openServerConfigurationToolStripMenuItem.Name = "openServerConfigurationToolStripMenuItem";
+        openServerConfigurationToolStripMenuItem.Size = new Size(221, 22);
+        openServerConfigurationToolStripMenuItem.Text = "Open Server Configuration";
+        openServerConfigurationToolStripMenuItem.Click += openServerConfigurationToolStripMenuItem_Click;
+        // 
+        // OpenUpdateConfigurationToolStripMenuItem
+        // 
+        OpenUpdateConfigurationToolStripMenuItem.Name = "OpenUpdateConfigurationToolStripMenuItem";
+        OpenUpdateConfigurationToolStripMenuItem.Size = new Size(221, 22);
+        OpenUpdateConfigurationToolStripMenuItem.Text = "Open Update Configuration";
+        OpenUpdateConfigurationToolStripMenuItem.Click += OpenUpdateConfigurationToolStripMenuItem_Click;
+        // 
+        // openPatchDirectoryToolStripMenuItem
+        // 
+        openPatchDirectoryToolStripMenuItem.Name = "openPatchDirectoryToolStripMenuItem";
+        openPatchDirectoryToolStripMenuItem.Size = new Size(221, 22);
+        openPatchDirectoryToolStripMenuItem.Text = "Open Patch Directory";
+        openPatchDirectoryToolStripMenuItem.Click += openPatchDirectoryToolStripMenuItem_Click;
+        // 
+        // openAccountDirectoryToolStripMenuItem
+        // 
+        openAccountDirectoryToolStripMenuItem.Name = "openAccountDirectoryToolStripMenuItem";
+        openAccountDirectoryToolStripMenuItem.Size = new Size(221, 22);
+        openAccountDirectoryToolStripMenuItem.Text = "Open Account Directory";
+        openAccountDirectoryToolStripMenuItem.Click += openAccountDirectoryToolStripMenuItem_Click;
+        // 
+        // groupBox1
+        // 
+        groupBox1.Controls.Add(TicketsGeneratedLabel);
+        groupBox1.Controls.Add(NewAccountsLabel);
+        groupBox1.Controls.Add(ExistingAccountsLabel);
+        groupBox1.Controls.Add(BytesSentLabel);
+        groupBox1.Controls.Add(BytesReceivedLabel);
+        groupBox1.ForeColor = Color.Firebrick;
+        groupBox1.Location = new Point(12, 27);
+        groupBox1.Name = "groupBox1";
+        groupBox1.Size = new Size(519, 82);
+        groupBox1.TabIndex = 20;
+        groupBox1.TabStop = false;
+        groupBox1.Text = "Statistics";
+        // 
+        // TicketsGeneratedLabel
+        // 
+        TicketsGeneratedLabel.AutoSize = true;
+        TicketsGeneratedLabel.ForeColor = SystemColors.ControlText;
+        TicketsGeneratedLabel.Location = new Point(48, 49);
+        TicketsGeneratedLabel.Margin = new Padding(4, 0, 4, 0);
+        TicketsGeneratedLabel.Name = "TicketsGeneratedLabel";
+        TicketsGeneratedLabel.Size = new Size(55, 15);
+        TicketsGeneratedLabel.TabIndex = 8;
+        TicketsGeneratedLabel.Text = "Tickets: 0";
+        // 
+        // NewAccountsLabel
+        // 
+        NewAccountsLabel.AutoSize = true;
+        NewAccountsLabel.ForeColor = SystemColors.ControlText;
+        NewAccountsLabel.Location = new Point(7, 34);
+        NewAccountsLabel.Margin = new Padding(4, 0, 4, 0);
+        NewAccountsLabel.Name = "NewAccountsLabel";
+        NewAccountsLabel.Size = new Size(96, 15);
+        NewAccountsLabel.TabIndex = 7;
+        NewAccountsLabel.Text = "New Accounts: 0";
+        // 
+        // ExistingAccountsLabel
+        // 
+        ExistingAccountsLabel.AutoSize = true;
+        ExistingAccountsLabel.ForeColor = SystemColors.ControlText;
+        ExistingAccountsLabel.Location = new Point(34, 19);
+        ExistingAccountsLabel.Margin = new Padding(4, 0, 4, 0);
+        ExistingAccountsLabel.Name = "ExistingAccountsLabel";
+        ExistingAccountsLabel.Size = new Size(69, 15);
+        ExistingAccountsLabel.TabIndex = 6;
+        ExistingAccountsLabel.Text = "Accounts: 0";
+        // 
+        // reloadToolStripMenuItem
+        // 
+        reloadToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { loadConfigurationToolStripMenuItem, loadAccountsToolStripMenuItem, LoadUpdateConfigurationToolStripMenuItem });
+        reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
+        reloadToolStripMenuItem.Size = new Size(138, 22);
+        reloadToolStripMenuItem.Text = "&Reload";
+        // 
+        // toolStripMenuItem2
+        // 
+        toolStripMenuItem2.Name = "toolStripMenuItem2";
+        toolStripMenuItem2.Size = new Size(135, 6);
+        // 
+        // loadConfigurationToolStripMenuItem
+        // 
+        loadConfigurationToolStripMenuItem.Name = "loadConfigurationToolStripMenuItem";
+        loadConfigurationToolStripMenuItem.Size = new Size(218, 22);
+        loadConfigurationToolStripMenuItem.Text = "Load Configuration";
+        // 
+        // loadAccountsToolStripMenuItem
+        // 
+        loadAccountsToolStripMenuItem.Name = "loadAccountsToolStripMenuItem";
+        loadAccountsToolStripMenuItem.Size = new Size(218, 22);
+        loadAccountsToolStripMenuItem.Text = "Load Accounts";
+        // 
+        // LoadUpdateConfigurationToolStripMenuItem
+        // 
+        LoadUpdateConfigurationToolStripMenuItem.Name = "LoadUpdateConfigurationToolStripMenuItem";
+        LoadUpdateConfigurationToolStripMenuItem.Size = new Size(218, 22);
+        LoadUpdateConfigurationToolStripMenuItem.Text = "Load Update Configuration";
+        // 
+        // SMain
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(833, 658);
-        Controls.Add(ViewPatchButton);
-        Controls.Add(加载更新按钮);
-        Controls.Add(打开更新按钮);
-        Controls.Add(LoadAccountButton);
-        Controls.Add(LoadConfigurationButton);
-        Controls.Add(ViewAccountButton);
-        Controls.Add(OpenConfigurationButton);
+        ClientSize = new Size(543, 598);
+        Controls.Add(groupBox1);
+        Controls.Add(menuStrip1);
         Controls.Add(TicketSendingPortLabel);
         Controls.Add(TicketSendingPortEdit);
         Controls.Add(LocalListeningPortLabel);
         Controls.Add(LocalListeningPortEdit);
-        Controls.Add(BytesReceivedLabel);
-        Controls.Add(BytesSentLabel);
-        Controls.Add(TicketsGeneratedLabel);
-        Controls.Add(NewAccountsLabel);
-        Controls.Add(ExistingAccountsLabel);
-        Controls.Add(StopServiceButton);
-        Controls.Add(StartServiceButton);
         Controls.Add(MainTabControl);
         FormBorderStyle = FormBorderStyle.FixedSingle;
+        MainMenuStrip = menuStrip1;
         Margin = new Padding(4, 2, 4, 2);
         MaximizeBox = false;
-        Name = "MainForm";
+        Name = "SMain";
         StartPosition = FormStartPosition.CenterScreen;
         Text = "AccountServer";
         FormClosing += FormClosing_Click;
@@ -376,6 +386,10 @@ public partial class SMain
         ((ISupportInitialize)LocalListeningPortEdit).EndInit();
         ((ISupportInitialize)TicketSendingPortEdit).EndInit();
         托盘右键菜单.ResumeLayout(false);
+        menuStrip1.ResumeLayout(false);
+        menuStrip1.PerformLayout();
+        groupBox1.ResumeLayout(false);
+        groupBox1.PerformLayout();
         ResumeLayout(false);
         PerformLayout();
     }
@@ -385,23 +399,34 @@ public partial class SMain
     private TabControl MainTabControl;
     private TabPage LogsTabPage;
     private RichTextBox LogTextBox;
-    private Label ExistingAccountsLabel;
-    private Label NewAccountsLabel;
-    private Label TicketsGeneratedLabel;
     private Label BytesSentLabel;
     private Label BytesReceivedLabel;
     private Label LocalListeningPortLabel;
     private Label TicketSendingPortLabel;
-    private Button StartServiceButton;
-    private Button StopServiceButton;
-    private Button OpenConfigurationButton;
-    private Button ViewAccountButton;
-    private Button LoadConfigurationButton;
-    private Button LoadAccountButton;
     private NumericUpDown LocalListeningPortEdit;
     private NumericUpDown TicketSendingPortEdit;
     private ContextMenuStrip 托盘右键菜单;
     private ToolStripMenuItem 打开ToolStripMenuItem;
     private ToolStripMenuItem 退出ToolStripMenuItem;
     private NotifyIcon TrayIcon;
+    private MenuStrip menuStrip1;
+    private ToolStripMenuItem serviceToolStripMenuItem;
+    private ToolStripMenuItem startServiceToolStripMenuItem;
+    private ToolStripMenuItem stopServiceToolStripMenuItem;
+    private ToolStripSeparator toolStripMenuItem1;
+    private ToolStripMenuItem exitToolStripMenuItem;
+    private ToolStripMenuItem optionsToolStripMenuItem;
+    private ToolStripMenuItem openServerConfigurationToolStripMenuItem;
+    private ToolStripMenuItem openAccountDirectoryToolStripMenuItem;
+    private ToolStripMenuItem OpenUpdateConfigurationToolStripMenuItem;
+    private ToolStripMenuItem openPatchDirectoryToolStripMenuItem;
+    private GroupBox groupBox1;
+    private Label TicketsGeneratedLabel;
+    private Label NewAccountsLabel;
+    private Label ExistingAccountsLabel;
+    private ToolStripSeparator toolStripMenuItem2;
+    private ToolStripMenuItem reloadToolStripMenuItem;
+    private ToolStripMenuItem loadConfigurationToolStripMenuItem;
+    private ToolStripMenuItem loadAccountsToolStripMenuItem;
+    private ToolStripMenuItem LoadUpdateConfigurationToolStripMenuItem;
 }

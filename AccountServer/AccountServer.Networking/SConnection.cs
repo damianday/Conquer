@@ -362,16 +362,16 @@ public sealed class SConnection
 		if (number == null || number.Length != 11 || !Regex.IsMatch(number, "^[1]+[3,4,5,7,8]+\\d{9}"))
 			return;
 
-		if (!SMain.验证码时间.ContainsKey(number))
-			SMain.验证码时间.Add(number, DateTime.Now.AddMinutes(1.0));
+		if (!SMain.PhoneCaptchaTime.ContainsKey(number))
+			SMain.PhoneCaptchaTime.Add(number, DateTime.Now.AddMinutes(1.0));
 
-		if (!(SMain.验证码时间[number] > DateTime.Now))
+		if (!(SMain.PhoneCaptchaTime[number] > DateTime.Now))
 		{
-			if (SMain.验证码值.ContainsKey(number))
-				SMain.验证码值.Remove(number);
+			if (SMain.PhoneCaptcha.ContainsKey(number))
+				SMain.PhoneCaptcha.Remove(number);
 
 			string code = SMain.CreateVerificationCode();
-			SMain.验证码值.Add(number, code);
+			SMain.PhoneCaptcha.Add(number, code);
 			AccountSendSMSVerificationCodePacket(number, code);
 		}
 	}
