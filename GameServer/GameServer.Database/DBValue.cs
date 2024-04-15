@@ -307,13 +307,13 @@ public sealed class DBValue
                 }
                 return monitor;
             },
-            [typeof(ListMonitor<装备孔洞颜色>)] = delegate (BinaryReader r, DBObject o, DBValue f)
+            [typeof(ListMonitor<EquipSlotColor>)] = delegate (BinaryReader r, DBObject o, DBValue f)
             {
-                ListMonitor<装备孔洞颜色> monitor = new ListMonitor<装备孔洞颜色>(o);
+                ListMonitor<EquipSlotColor> monitor = new ListMonitor<EquipSlotColor>(o);
                 int count = r.ReadInt32();
                 for (int i = 0; i < count; i++)
                 {
-                    monitor.QuietlyAdd((装备孔洞颜色)r.ReadInt32());
+                    monitor.QuietlyAdd((EquipSlotColor)r.ReadInt32());
                 }
                 return monitor;
             },
@@ -798,11 +798,11 @@ public sealed class DBValue
                     b.Write(item9.StatID);
                 }
             },
-            [typeof(ListMonitor<装备孔洞颜色>)] = delegate (BinaryWriter b, object o)
+            [typeof(ListMonitor<EquipSlotColor>)] = delegate (BinaryWriter b, object o)
             {
-                ListMonitor<装备孔洞颜色> 列表监视器2 = (ListMonitor<装备孔洞颜色>)o;
+                ListMonitor<EquipSlotColor> 列表监视器2 = (ListMonitor<EquipSlotColor>)o;
                 b.Write(列表监视器2?.Count ?? 0);
-                foreach (装备孔洞颜色 item10 in 列表监视器2)
+                foreach (EquipSlotColor item10 in 列表监视器2)
                 {
                     b.Write((int)item10);
                 }
