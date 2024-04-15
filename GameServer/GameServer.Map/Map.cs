@@ -18,7 +18,7 @@ public sealed class Map
     public readonly int RouteID;
     public readonly GameMap MapInfo;
 
-    public uint 固定怪物总数;
+    public uint TotalFixedMonsters;
     public uint TotalSurvivingMonsters;
     public uint TotalAmountMonsterResurrected;
     public long TotalAmountMonsterDrops;

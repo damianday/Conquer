@@ -242,8 +242,8 @@ public sealed class MonsterObject : MapObject
         MapManager.AddObject(this);
         if (!forbidResurrection)
         {
-            CurrentMap.固定怪物总数++;
-            SMain.更新地图数据(CurrentMap, "固定怪物总数", CurrentMap.固定怪物总数);
+            CurrentMap.TotalFixedMonsters++;
+            SMain.更新地图数据(CurrentMap, "固定怪物总数", CurrentMap.TotalFixedMonsters);
         }
         if (立即刷新)
         {

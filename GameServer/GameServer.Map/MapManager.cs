@@ -2840,7 +2840,7 @@ public static class MapManager
             }
             else
             {
-                value10.固定怪物总数 = (uint)value10.Spawns.Sum((MonsterSpawn O) => O.Spawns.Sum((MonsterSpawnInfo X) => X.SpawnCount));
+                value10.TotalFixedMonsters = (uint)value10.Spawns.Sum((MonsterSpawn O) => O.Spawns.Sum((MonsterSpawnInfo X) => X.SpawnCount));
             }
             SMain.添加地图数据(value10);
         }
