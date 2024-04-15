@@ -7,352 +7,344 @@ namespace GameServer.Database;
 
 public class EquipmentInfo : ItemInfo
 {
-    public readonly DataMonitor<byte> 升级次数;
-    public readonly DataMonitor<byte> 升级攻击;
-    public readonly DataMonitor<byte> 升级魔法;
-    public readonly DataMonitor<byte> 升级道术;
-    public readonly DataMonitor<byte> 升级刺术;
-    public readonly DataMonitor<byte> 升级弓术;
-    public readonly DataMonitor<bool> 灵魂绑定;
+    public readonly DataMonitor<byte> UpgradeCount;
+    public readonly DataMonitor<byte> DCPower;
+    public readonly DataMonitor<byte> MCPower;
+    public readonly DataMonitor<byte> SCPower;
+    public readonly DataMonitor<byte> NCPower;
+    public readonly DataMonitor<byte> BCPower;
+    public readonly DataMonitor<bool> SoulBinding;
     public readonly DataMonitor<byte> 祈祷次数;
     public readonly DataMonitor<sbyte> Luck;
     public readonly DataMonitor<int> 怪物伤害;
     public readonly DataMonitor<bool> 装备神佑;
-    public readonly DataMonitor<byte> 神圣伤害;
+    public readonly DataMonitor<byte> HolyDamage;
     public readonly DataMonitor<ushort> 圣石数量;
     public readonly DataMonitor<bool> 双铭文栏;
     public readonly DataMonitor<byte> 当前铭栏;
     public readonly DataMonitor<int> 洗练数一;
     public readonly DataMonitor<int> 洗练数二;
-    public readonly DataMonitor<byte> 物品状态;
+    public readonly DataMonitor<byte> Status;
 
-    public readonly ListMonitor<RandomStats> 随机属性;
-    public readonly ListMonitor<装备孔洞颜色> 孔洞颜色;
+    public readonly ListMonitor<RandomStats> RandomStats;
+    public readonly ListMonitor<EquipSlotColor> SlotColor;
 
-    public readonly DictionaryMonitor<byte, InscriptionSkill> 铭文技能;
+    public readonly DictionaryMonitor<byte, InscriptionSkill> InscriptionSkills;
     public readonly DictionaryMonitor<byte, GameItem> 镶嵌灵石;
 
-    public EquipmentItem 装备模板 => base.Info as EquipmentItem;
+    public EquipmentItem EquipInfo => base.Info as EquipmentItem;
 
-    public int 装备战力
+    public int CombatPower
     {
         get
         {
-            if (装备模板.Type == ItemType.Weapon)
+            if (EquipInfo.Type == ItemType.Weapon)
             {
-                int num = (int)((long)(装备模板.BasePower * (Luck.V + 20)) * 1717986919L >> 32 >> 3);
-                int num2 = 神圣伤害.V * 3 + 升级攻击.V * 5 + 升级魔法.V * 5 + 升级道术.V * 5 + 升级刺术.V * 5 + 升级弓术.V * 5;
-                int num3 = 随机属性.Sum((RandomStats x) => x.CombatBonus);
+                int num = (int)((long)(EquipInfo.BasePower * (Luck.V + 20)) * 1717986919L >> 32 >> 3);
+                int num2 = HolyDamage.V * 3 + DCPower.V * 5 + MCPower.V * 5 + SCPower.V * 5 + NCPower.V * 5 + BCPower.V * 5;
+                int num3 = RandomStats.Sum((RandomStats x) => x.CombatBonus);
                 return num + num2 + num3;
             }
             int num4 = 0;
-            switch (装备模板.EquipSet)
+            switch (EquipInfo.EquipSet)
             {
                 case GameItemSet.祖玛装备:
-                    switch (装备模板.Type)
+                    switch (EquipInfo.Type)
                     {
                         case ItemType.Belt:
                         case ItemType.Boots:
                         case ItemType.Helmet:
-                            num4 = 2 * 升级次数.V;
+                            num4 = 2 * UpgradeCount.V;
                             break;
                         case ItemType.Armour:
-                            num4 = 4 * 升级次数.V;
+                            num4 = 4 * UpgradeCount.V;
                             break;
                     }
                     break;
                 case GameItemSet.赤月装备:
-                    switch (装备模板.Type)
+                    switch (EquipInfo.Type)
                     {
                         case ItemType.Belt:
                         case ItemType.Boots:
                         case ItemType.Helmet:
-                            num4 = 4 * 升级次数.V;
+                            num4 = 4 * UpgradeCount.V;
                             break;
                         case ItemType.Armour:
-                            num4 = 6 * 升级次数.V;
+                            num4 = 6 * UpgradeCount.V;
                             break;
                     }
                     break;
                 case GameItemSet.魔龙装备:
-                    switch (装备模板.Type)
+                    switch (EquipInfo.Type)
                     {
                         case ItemType.Belt:
                         case ItemType.Boots:
                         case ItemType.Helmet:
-                            num4 = 5 * 升级次数.V;
+                            num4 = 5 * UpgradeCount.V;
                             break;
                         case ItemType.Armour:
-                            num4 = 8 * 升级次数.V;
+                            num4 = 8 * UpgradeCount.V;
                             break;
                     }
                     break;
                 case GameItemSet.苍月装备:
-                    switch (装备模板.Type)
+                    switch (EquipInfo.Type)
                     {
                         case ItemType.Belt:
                         case ItemType.Boots:
                         case ItemType.Helmet:
-                            num4 = 7 * 升级次数.V;
+                            num4 = 7 * UpgradeCount.V;
                             break;
                         case ItemType.Armour:
-                            num4 = 11 * 升级次数.V;
+                            num4 = 11 * UpgradeCount.V;
                             break;
                     }
                     break;
                 case GameItemSet.星王装备:
-                    if (装备模板.Type == ItemType.Armour)
+                    if (EquipInfo.Type == ItemType.Armour)
                     {
-                        num4 = 13 * 升级次数.V;
+                        num4 = 13 * UpgradeCount.V;
                     }
                     break;
                 case GameItemSet.神秘装备:
                 case GameItemSet.城主装备:
-                    switch (装备模板.Type)
+                    switch (EquipInfo.Type)
                     {
                         case ItemType.Belt:
                         case ItemType.Boots:
                         case ItemType.Helmet:
-                            num4 = 9 * 升级次数.V;
+                            num4 = 9 * UpgradeCount.V;
                             break;
                         case ItemType.Armour:
-                            num4 = 13 * 升级次数.V;
+                            num4 = 13 * UpgradeCount.V;
                             break;
                     }
                     break;
             }
-            int num5 = 孔洞颜色.Count * 10;
-            using (IEnumerator<GameItem> enumerator = 镶嵌灵石.Values.GetEnumerator())
+            int num5 = SlotColor.Count * 10;
+            foreach (var item in 镶嵌灵石.Values)
             {
-                while (enumerator.MoveNext())
+                switch (item.Name)
                 {
-                    switch (enumerator.Current.Name)
-                    {
-                        case "驭朱灵石8级":
-                        case "精绿灵石8级":
-                        case "韧紫灵石8级":
-                        case "抵御幻彩灵石8级":
-                        case "进击幻彩灵石8级":
-                        case "盈绿灵石8级":
-                        case "狂热幻彩灵石8级":
-                        case "透蓝灵石8级":
-                        case "守阳灵石8级":
-                        case "新阳灵石8级":
-                        case "命朱灵石8级":
-                        case "蔚蓝灵石8级":
-                        case "赤褐灵石8级":
-                        case "橙黄灵石8级":
-                        case "纯紫灵石8级":
-                        case "深灰灵石8级":
-                            num5 += 80;
-                            break;
-                        case "精绿灵石5级":
-                        case "新阳灵石5级":
-                        case "命朱灵石5级":
-                        case "蔚蓝灵石5级":
-                        case "橙黄灵石5级":
-                        case "进击幻彩灵石5级":
-                        case "深灰灵石5级":
-                        case "盈绿灵石5级":
-                        case "透蓝灵石5级":
-                        case "韧紫灵石5级":
-                        case "抵御幻彩灵石5级":
-                        case "驭朱灵石5级":
-                        case "赤褐灵石5级":
-                        case "守阳灵石5级":
-                        case "狂热幻彩灵石5级":
-                        case "纯紫灵石5级":
-                            num5 += 50;
-                            break;
-                        case "精绿灵石2级":
-                        case "蔚蓝灵石2级":
-                        case "驭朱灵石2级":
-                        case "橙黄灵石2级":
-                        case "守阳灵石2级":
-                        case "纯紫灵石2级":
-                        case "透蓝灵石2级":
-                        case "抵御幻彩灵石2级":
-                        case "命朱灵石2级":
-                        case "深灰灵石2级":
-                        case "赤褐灵石2级":
-                        case "新阳灵石2级":
-                        case "进击幻彩灵石2级":
-                        case "狂热幻彩灵石2级":
-                        case "盈绿灵石2级":
-                        case "韧紫灵石2级":
-                            num5 += 20;
-                            break;
-                        case "抵御幻彩灵石7级":
-                        case "命朱灵石7级":
-                        case "赤褐灵石7级":
-                        case "狂热幻彩灵石7级":
-                        case "精绿灵石7级":
-                        case "纯紫灵石7级":
-                        case "韧紫灵石7级":
-                        case "驭朱灵石7级":
-                        case "深灰灵石7级":
-                        case "盈绿灵石7级":
-                        case "新阳灵石7级":
-                        case "蔚蓝灵石7级":
-                        case "橙黄灵石7级":
-                        case "守阳灵石7级":
-                        case "进击幻彩灵石7级":
-                        case "透蓝灵石7级":
-                            num5 += 70;
-                            break;
-                        case "精绿灵石9级":
-                        case "驭朱灵石9级":
-                        case "蔚蓝灵石9级":
-                        case "橙黄灵石9级":
-                        case "抵御幻彩灵石9级":
-                        case "透蓝灵石9级":
-                        case "纯紫灵石9级":
-                        case "命朱灵石9级":
-                        case "赤褐灵石9级":
-                        case "深灰灵石9级":
-                        case "守阳灵石9级":
-                        case "新阳灵石9级":
-                        case "盈绿灵石9级":
-                        case "进击幻彩灵石9级":
-                        case "狂热幻彩灵石9级":
-                        case "韧紫灵石9级":
-                            num5 += 90;
-                            break;
-                        case "驭朱灵石4级":
-                        case "深灰灵石4级":
-                        case "新阳灵石4级":
-                        case "盈绿灵石4级":
-                        case "蔚蓝灵石4级":
-                        case "命朱灵石4级":
-                        case "橙黄灵石4级":
-                        case "进击幻彩灵石4级":
-                        case "抵御幻彩灵石4级":
-                        case "透蓝灵石4级":
-                        case "守阳灵石4级":
-                        case "精绿灵石4级":
-                        case "赤褐灵石4级":
-                        case "纯紫灵石4级":
-                        case "韧紫灵石4级":
-                        case "狂热幻彩灵石4级":
-                            num5 += 40;
-                            break;
-                        case "透蓝灵石6级":
-                        case "抵御幻彩灵石6级":
-                        case "命朱灵石6级":
-                        case "盈绿灵石6级":
-                        case "深灰灵石6级":
-                        case "蔚蓝灵石6级":
-                        case "进击幻彩灵石6级":
-                        case "橙黄灵石6级":
-                        case "赤褐灵石6级":
-                        case "驭朱灵石6级":
-                        case "精绿灵石6级":
-                        case "新阳灵石6级":
-                        case "韧紫灵石6级":
-                        case "守阳灵石6级":
-                        case "纯紫灵石6级":
-                        case "狂热幻彩灵石6级":
-                            num5 += 60;
-                            break;
-                        case "透蓝灵石1级":
-                        case "驭朱灵石1级":
-                        case "韧紫灵石1级":
-                        case "守阳灵石1级":
-                        case "赤褐灵石1级":
-                        case "纯紫灵石1级":
-                        case "狂热幻彩灵石1级":
-                        case "精绿灵石1级":
-                        case "新阳灵石1级":
-                        case "盈绿灵石1级":
-                        case "蔚蓝灵石1级":
-                        case "橙黄灵石1级":
-                        case "深灰灵石1级":
-                        case "命朱灵石1级":
-                        case "进击幻彩灵石1级":
-                        case "抵御幻彩灵石1级":
-                            num5 += 10;
-                            break;
-                        case "蔚蓝灵石10级":
-                        case "狂热幻彩灵石10级":
-                        case "精绿灵石10级":
-                        case "透蓝灵石10级":
-                        case "橙黄灵石10级":
-                        case "抵御幻彩灵石10级":
-                        case "进击幻彩灵石10级":
-                        case "命朱灵石10级":
-                        case "守阳灵石10级":
-                        case "赤褐灵石10级":
-                        case "盈绿灵石10级":
-                        case "深灰灵石10级":
-                        case "韧紫灵石10级":
-                        case "纯紫灵石10级":
-                        case "新阳灵石10级":
-                        case "驭朱灵石10级":
-                            num5 += 100;
-                            break;
-                        case "驭朱灵石3级":
-                        case "韧紫灵石3级":
-                        case "精绿灵石3级":
-                        case "新阳灵石3级":
-                        case "守阳灵石3级":
-                        case "盈绿灵石3级":
-                        case "蔚蓝灵石3级":
-                        case "命朱灵石3级":
-                        case "橙黄灵石3级":
-                        case "进击幻彩灵石3级":
-                        case "抵御幻彩灵石3级":
-                        case "透蓝灵石3级":
-                        case "赤褐灵石3级":
-                        case "深灰灵石3级":
-                        case "狂热幻彩灵石3级":
-                        case "纯紫灵石3级":
-                            num5 += 30;
-                            break;
-                    }
+                    case "驭朱灵石8级":
+                    case "精绿灵石8级":
+                    case "韧紫灵石8级":
+                    case "抵御幻彩灵石8级":
+                    case "进击幻彩灵石8级":
+                    case "盈绿灵石8级":
+                    case "狂热幻彩灵石8级":
+                    case "透蓝灵石8级":
+                    case "守阳灵石8级":
+                    case "新阳灵石8级":
+                    case "命朱灵石8级":
+                    case "蔚蓝灵石8级":
+                    case "赤褐灵石8级":
+                    case "橙黄灵石8级":
+                    case "纯紫灵石8级":
+                    case "深灰灵石8级":
+                        num5 += 80;
+                        break;
+                    case "精绿灵石5级":
+                    case "新阳灵石5级":
+                    case "命朱灵石5级":
+                    case "蔚蓝灵石5级":
+                    case "橙黄灵石5级":
+                    case "进击幻彩灵石5级":
+                    case "深灰灵石5级":
+                    case "盈绿灵石5级":
+                    case "透蓝灵石5级":
+                    case "韧紫灵石5级":
+                    case "抵御幻彩灵石5级":
+                    case "驭朱灵石5级":
+                    case "赤褐灵石5级":
+                    case "守阳灵石5级":
+                    case "狂热幻彩灵石5级":
+                    case "纯紫灵石5级":
+                        num5 += 50;
+                        break;
+                    case "精绿灵石2级":
+                    case "蔚蓝灵石2级":
+                    case "驭朱灵石2级":
+                    case "橙黄灵石2级":
+                    case "守阳灵石2级":
+                    case "纯紫灵石2级":
+                    case "透蓝灵石2级":
+                    case "抵御幻彩灵石2级":
+                    case "命朱灵石2级":
+                    case "深灰灵石2级":
+                    case "赤褐灵石2级":
+                    case "新阳灵石2级":
+                    case "进击幻彩灵石2级":
+                    case "狂热幻彩灵石2级":
+                    case "盈绿灵石2级":
+                    case "韧紫灵石2级":
+                        num5 += 20;
+                        break;
+                    case "抵御幻彩灵石7级":
+                    case "命朱灵石7级":
+                    case "赤褐灵石7级":
+                    case "狂热幻彩灵石7级":
+                    case "精绿灵石7级":
+                    case "纯紫灵石7级":
+                    case "韧紫灵石7级":
+                    case "驭朱灵石7级":
+                    case "深灰灵石7级":
+                    case "盈绿灵石7级":
+                    case "新阳灵石7级":
+                    case "蔚蓝灵石7级":
+                    case "橙黄灵石7级":
+                    case "守阳灵石7级":
+                    case "进击幻彩灵石7级":
+                    case "透蓝灵石7级":
+                        num5 += 70;
+                        break;
+                    case "精绿灵石9级":
+                    case "驭朱灵石9级":
+                    case "蔚蓝灵石9级":
+                    case "橙黄灵石9级":
+                    case "抵御幻彩灵石9级":
+                    case "透蓝灵石9级":
+                    case "纯紫灵石9级":
+                    case "命朱灵石9级":
+                    case "赤褐灵石9级":
+                    case "深灰灵石9级":
+                    case "守阳灵石9级":
+                    case "新阳灵石9级":
+                    case "盈绿灵石9级":
+                    case "进击幻彩灵石9级":
+                    case "狂热幻彩灵石9级":
+                    case "韧紫灵石9级":
+                        num5 += 90;
+                        break;
+                    case "驭朱灵石4级":
+                    case "深灰灵石4级":
+                    case "新阳灵石4级":
+                    case "盈绿灵石4级":
+                    case "蔚蓝灵石4级":
+                    case "命朱灵石4级":
+                    case "橙黄灵石4级":
+                    case "进击幻彩灵石4级":
+                    case "抵御幻彩灵石4级":
+                    case "透蓝灵石4级":
+                    case "守阳灵石4级":
+                    case "精绿灵石4级":
+                    case "赤褐灵石4级":
+                    case "纯紫灵石4级":
+                    case "韧紫灵石4级":
+                    case "狂热幻彩灵石4级":
+                        num5 += 40;
+                        break;
+                    case "透蓝灵石6级":
+                    case "抵御幻彩灵石6级":
+                    case "命朱灵石6级":
+                    case "盈绿灵石6级":
+                    case "深灰灵石6级":
+                    case "蔚蓝灵石6级":
+                    case "进击幻彩灵石6级":
+                    case "橙黄灵石6级":
+                    case "赤褐灵石6级":
+                    case "驭朱灵石6级":
+                    case "精绿灵石6级":
+                    case "新阳灵石6级":
+                    case "韧紫灵石6级":
+                    case "守阳灵石6级":
+                    case "纯紫灵石6级":
+                    case "狂热幻彩灵石6级":
+                        num5 += 60;
+                        break;
+                    case "透蓝灵石1级":
+                    case "驭朱灵石1级":
+                    case "韧紫灵石1级":
+                    case "守阳灵石1级":
+                    case "赤褐灵石1级":
+                    case "纯紫灵石1级":
+                    case "狂热幻彩灵石1级":
+                    case "精绿灵石1级":
+                    case "新阳灵石1级":
+                    case "盈绿灵石1级":
+                    case "蔚蓝灵石1级":
+                    case "橙黄灵石1级":
+                    case "深灰灵石1级":
+                    case "命朱灵石1级":
+                    case "进击幻彩灵石1级":
+                    case "抵御幻彩灵石1级":
+                        num5 += 10;
+                        break;
+                    case "蔚蓝灵石10级":
+                    case "狂热幻彩灵石10级":
+                    case "精绿灵石10级":
+                    case "透蓝灵石10级":
+                    case "橙黄灵石10级":
+                    case "抵御幻彩灵石10级":
+                    case "进击幻彩灵石10级":
+                    case "命朱灵石10级":
+                    case "守阳灵石10级":
+                    case "赤褐灵石10级":
+                    case "盈绿灵石10级":
+                    case "深灰灵石10级":
+                    case "韧紫灵石10级":
+                    case "纯紫灵石10级":
+                    case "新阳灵石10级":
+                    case "驭朱灵石10级":
+                        num5 += 100;
+                        break;
+                    case "驭朱灵石3级":
+                    case "韧紫灵石3级":
+                    case "精绿灵石3级":
+                    case "新阳灵石3级":
+                    case "守阳灵石3级":
+                    case "盈绿灵石3级":
+                    case "蔚蓝灵石3级":
+                    case "命朱灵石3级":
+                    case "橙黄灵石3级":
+                    case "进击幻彩灵石3级":
+                    case "抵御幻彩灵石3级":
+                    case "透蓝灵石3级":
+                    case "赤褐灵石3级":
+                    case "深灰灵石3级":
+                    case "狂热幻彩灵石3级":
+                    case "纯紫灵石3级":
+                        num5 += 30;
+                        break;
                 }
             }
-            int num6 = 随机属性.Sum((RandomStats x) => x.CombatBonus);
-            return 装备模板.BasePower + num4 + num6 + num5;
+            int num6 = RandomStats.Sum((RandomStats x) => x.CombatBonus);
+            return EquipInfo.BasePower + num4 + num6 + num5;
         }
     }
 
-    public int 修理费用
+    public int RepairCost
     {
         get
         {
-            int num = MaxDura.V - Dura.V;
-            decimal num2 = ((EquipmentItem)Item.V).RepairCost;
+            int dura = MaxDura.V - Dura.V;
+            decimal cost = ((EquipmentItem)Item.V).RepairCost;
             decimal num3 = (decimal)((EquipmentItem)Item.V).MaxDura * 1000m;
-            return (int)(num2 / num3 * (decimal)num);
+            return (int)(cost / num3 * (decimal)dura);
         }
     }
 
-    public int 特修费用
+    public int SpecialRepairCost
     {
         get
         {
-            decimal num = (decimal)MaxDura.V - (decimal)Dura.V;
-            decimal num2 = ((EquipmentItem)Item.V).SpecialRepairCost;
+            int dura = MaxDura.V - Dura.V;
+            decimal cost = ((EquipmentItem)Item.V).SpecialRepairCost;
             decimal num3 = (decimal)((EquipmentItem)Item.V).MaxDura * 1000m;
-            return (int)(num2 / num3 * num * Config.SpecialRepairDiscount * 1.15m);
+            return (int)(cost / num3 * dura * Config.SpecialRepairDiscount * 1.15m);
         }
     }
 
-    public int NeedAttack => ((EquipmentItem)base.Info).NeedAttack;
-
-    public int NeedMagic => ((EquipmentItem)base.Info).NeedMagic;
-
-    public int NeedTaoism => ((EquipmentItem)base.Info).NeedTaoism;
-
-    public int NeedPiercing => ((EquipmentItem)base.Info).NeedPiercing;
-
-    public int NeedArchery => ((EquipmentItem)base.Info).NeedArchery;
+    public int NeedAttack => EquipInfo.NeedAttack;
+    public int NeedMagic => EquipInfo.NeedMagic;
+    public int NeedTaoism => EquipInfo.NeedTaoism;
+    public int NeedPiercing => EquipInfo.NeedPiercing;
+    public int NeedArchery => EquipInfo.NeedArchery;
 
     public string Name => base.Info.Name;
 
-    public bool 禁止卸下 => ((EquipmentItem)Item.V).CanRemove;
-
-    public bool 能否修理 => base.PersistType == PersistentItemType.装备;
+    public bool CanRemove => ((EquipmentItem)Item.V).CanRemove;
+    public bool CanRepair => base.PersistType == PersistentItemType.装备;
 
     public int 传承材料
     {
@@ -415,13 +407,13 @@ public class EquipmentInfo : ItemInfo
         }
     }
 
-    public string 属性描述
+    public string StatDescription
     {
         get
         {
             string text = "";
             Stats stats = new Stats();
-            foreach (RandomStats item in 随机属性)
+            foreach (RandomStats item in RandomStats)
                 stats[item.Stat] = item.Value;
             
             if (stats.ContainsKey(Stat.MinDC) || stats.ContainsKey(Stat.MaxDC))
@@ -484,132 +476,132 @@ public class EquipmentInfo : ItemInfo
         }
     }
 
-    public InscriptionSkill 第一铭文
+    public InscriptionSkill FirstInscription
     {
         get
         {
             if (当前铭栏.V == 0)
             {
-                return 铭文技能[0];
+                return InscriptionSkills[0];
             }
-            return 铭文技能[2];
+            return InscriptionSkills[2];
         }
         set
         {
             if (当前铭栏.V == 0)
             {
-                铭文技能[0] = value;
+                InscriptionSkills[0] = value;
             }
             else
             {
-                铭文技能[2] = value;
+                InscriptionSkills[2] = value;
             }
         }
     }
 
-    public InscriptionSkill 第二铭文
+    public InscriptionSkill SecondInscription
     {
         get
         {
             if (当前铭栏.V == 0)
             {
-                return 铭文技能[1];
+                return InscriptionSkills[1];
             }
-            return 铭文技能[3];
+            return InscriptionSkills[3];
         }
         set
         {
             if (当前铭栏.V == 0)
             {
-                铭文技能[1] = value;
+                InscriptionSkills[1] = value;
             }
             else
             {
-                铭文技能[3] = value;
+                InscriptionSkills[3] = value;
             }
         }
     }
 
-    public InscriptionSkill 最优铭文
+    public InscriptionSkill BestInscription
     {
         get
         {
             if (当前铭栏.V == 0)
             {
-                if (铭文技能[0].Quality < 铭文技能[1].Quality)
+                if (InscriptionSkills[0].Quality < InscriptionSkills[1].Quality)
                 {
-                    return 铭文技能[1];
+                    return InscriptionSkills[1];
                 }
-                return 铭文技能[0];
+                return InscriptionSkills[0];
             }
-            if (铭文技能[2].Quality < 铭文技能[3].Quality)
+            if (InscriptionSkills[2].Quality < InscriptionSkills[3].Quality)
             {
-                return 铭文技能[3];
+                return InscriptionSkills[3];
             }
-            return 铭文技能[2];
+            return InscriptionSkills[2];
         }
         set
         {
             if (当前铭栏.V == 0)
             {
-                if (铭文技能[0].Quality >= 铭文技能[1].Quality)
+                if (InscriptionSkills[0].Quality >= InscriptionSkills[1].Quality)
                 {
-                    铭文技能[0] = value;
+                    InscriptionSkills[0] = value;
                 }
                 else
                 {
-                    铭文技能[1] = value;
+                    InscriptionSkills[1] = value;
                 }
             }
-            else if (铭文技能[2].Quality >= 铭文技能[3].Quality)
+            else if (InscriptionSkills[2].Quality >= InscriptionSkills[3].Quality)
             {
-                铭文技能[2] = value;
+                InscriptionSkills[2] = value;
             }
             else
             {
-                铭文技能[3] = value;
+                InscriptionSkills[3] = value;
             }
         }
     }
 
-    public InscriptionSkill 最差铭文
+    public InscriptionSkill WorstInscription
     {
         get
         {
             if (当前铭栏.V == 0)
             {
-                if (铭文技能[0].Quality >= 铭文技能[1].Quality)
+                if (InscriptionSkills[0].Quality >= InscriptionSkills[1].Quality)
                 {
-                    return 铭文技能[1];
+                    return InscriptionSkills[1];
                 }
-                return 铭文技能[0];
+                return InscriptionSkills[0];
             }
-            if (铭文技能[2].Quality >= 铭文技能[3].Quality)
+            if (InscriptionSkills[2].Quality >= InscriptionSkills[3].Quality)
             {
-                return 铭文技能[3];
+                return InscriptionSkills[3];
             }
-            return 铭文技能[2];
+            return InscriptionSkills[2];
         }
         set
         {
             if (当前铭栏.V == 0)
             {
-                if (铭文技能[0].Quality < 铭文技能[1].Quality)
+                if (InscriptionSkills[0].Quality < InscriptionSkills[1].Quality)
                 {
-                    铭文技能[0] = value;
+                    InscriptionSkills[0] = value;
                 }
                 else
                 {
-                    铭文技能[1] = value;
+                    InscriptionSkills[1] = value;
                 }
             }
-            else if (铭文技能[2].Quality < 铭文技能[3].Quality)
+            else if (InscriptionSkills[2].Quality < InscriptionSkills[3].Quality)
             {
-                铭文技能[2] = value;
+                InscriptionSkills[2] = value;
             }
             else
             {
-                铭文技能[3] = value;
+                InscriptionSkills[3] = value;
             }
         }
     }
@@ -637,134 +629,134 @@ public class EquipmentInfo : ItemInfo
         }
     }
 
-    public Stats 装备属性
+    public Stats Stats
     {
         get
         {
-            Stats dictionary = new Stats();
-            if (装备模板.MinDC != 0)
+            Stats stats = new Stats();
+            if (EquipInfo.MinDC != 0)
             {
-                dictionary[Stat.MinDC] = 装备模板.MinDC;
+                stats[Stat.MinDC] = EquipInfo.MinDC;
             }
-            if (装备模板.MaxDC != 0)
+            if (EquipInfo.MaxDC != 0)
             {
-                dictionary[Stat.MaxDC] = 装备模板.MaxDC;
+                stats[Stat.MaxDC] = EquipInfo.MaxDC;
             }
-            if (装备模板.MinMC != 0)
+            if (EquipInfo.MinMC != 0)
             {
-                dictionary[Stat.MinMC] = 装备模板.MinMC;
+                stats[Stat.MinMC] = EquipInfo.MinMC;
             }
-            if (装备模板.MaxMC != 0)
+            if (EquipInfo.MaxMC != 0)
             {
-                dictionary[Stat.MaxMC] = 装备模板.MaxMC;
+                stats[Stat.MaxMC] = EquipInfo.MaxMC;
             }
-            if (装备模板.MinSC != 0)
+            if (EquipInfo.MinSC != 0)
             {
-                dictionary[Stat.MinSC] = 装备模板.MinSC;
+                stats[Stat.MinSC] = EquipInfo.MinSC;
             }
-            if (装备模板.MaxSC != 0)
+            if (EquipInfo.MaxSC != 0)
             {
-                dictionary[Stat.MaxSC] = 装备模板.MaxSC;
+                stats[Stat.MaxSC] = EquipInfo.MaxSC;
             }
-            if (装备模板.MinNC != 0)
+            if (EquipInfo.MinNC != 0)
             {
-                dictionary[Stat.MinNC] = 装备模板.MinNC;
+                stats[Stat.MinNC] = EquipInfo.MinNC;
             }
-            if (装备模板.MaxNC != 0)
+            if (EquipInfo.MaxNC != 0)
             {
-                dictionary[Stat.MaxNC] = 装备模板.MaxNC;
+                stats[Stat.MaxNC] = EquipInfo.MaxNC;
             }
-            if (装备模板.MinBC != 0)
+            if (EquipInfo.MinBC != 0)
             {
-                dictionary[Stat.MinBC] = 装备模板.MinBC;
+                stats[Stat.MinBC] = EquipInfo.MinBC;
             }
-            if (装备模板.MaxBC != 0)
+            if (EquipInfo.MaxBC != 0)
             {
-                dictionary[Stat.MaxBC] = 装备模板.MaxBC;
+                stats[Stat.MaxBC] = EquipInfo.MaxBC;
             }
-            if (装备模板.MinDef != 0)
+            if (EquipInfo.MinDef != 0)
             {
-                dictionary[Stat.MinDef] = 装备模板.MinDef;
+                stats[Stat.MinDef] = EquipInfo.MinDef;
             }
-            if (装备模板.MaxDef != 0)
+            if (EquipInfo.MaxDef != 0)
             {
-                dictionary[Stat.MaxDef] = 装备模板.MaxDef;
+                stats[Stat.MaxDef] = EquipInfo.MaxDef;
             }
-            if (装备模板.MinMCDef != 0)
+            if (EquipInfo.MinMCDef != 0)
             {
-                dictionary[Stat.MinMCDef] = 装备模板.MinMCDef;
+                stats[Stat.MinMCDef] = EquipInfo.MinMCDef;
             }
-            if (装备模板.MaxMCDef != 0)
+            if (EquipInfo.MaxMCDef != 0)
             {
-                dictionary[Stat.MaxMCDef] = 装备模板.MaxMCDef;
+                stats[Stat.MaxMCDef] = EquipInfo.MaxMCDef;
             }
-            if (装备模板.MaxHP != 0)
+            if (EquipInfo.MaxHP != 0)
             {
-                dictionary[Stat.MaxHP] = 装备模板.MaxHP;
+                stats[Stat.MaxHP] = EquipInfo.MaxHP;
             }
-            if (装备模板.MaxMP != 0)
+            if (EquipInfo.MaxMP != 0)
             {
-                dictionary[Stat.MaxMP] = 装备模板.MaxMP;
+                stats[Stat.MaxMP] = EquipInfo.MaxMP;
             }
-            if (装备模板.AttackSpeed != 0)
+            if (EquipInfo.AttackSpeed != 0)
             {
-                dictionary[Stat.AttackSpeed] = 装备模板.AttackSpeed;
+                stats[Stat.AttackSpeed] = EquipInfo.AttackSpeed;
             }
-            if (装备模板.MagicEvade != 0)
+            if (EquipInfo.MagicEvade != 0)
             {
-                dictionary[Stat.MagicEvade] = 装备模板.MagicEvade;
+                stats[Stat.MagicEvade] = EquipInfo.MagicEvade;
             }
-            if (装备模板.PhysicalAccuracy != 0)
+            if (EquipInfo.PhysicalAccuracy != 0)
             {
-                dictionary[Stat.PhysicalAccuracy] = 装备模板.PhysicalAccuracy;
+                stats[Stat.PhysicalAccuracy] = EquipInfo.PhysicalAccuracy;
             }
-            if (装备模板.PhysicalAgility != 0)
+            if (EquipInfo.PhysicalAgility != 0)
             {
-                dictionary[Stat.PhysicalAgility] = 装备模板.PhysicalAgility;
+                stats[Stat.PhysicalAgility] = EquipInfo.PhysicalAgility;
             }
-            if (装备模板.MinHC != 0)
+            if (EquipInfo.MinHC != 0)
             {
-                dictionary[Stat.MinHC] = 装备模板.MinHC;
+                stats[Stat.MinHC] = EquipInfo.MinHC;
             }
-            if (装备模板.MaxHC != 0)
+            if (EquipInfo.MaxHC != 0)
             {
-                dictionary[Stat.MaxHC] = 装备模板.MaxHC;
+                stats[Stat.MaxHC] = EquipInfo.MaxHC;
             }
-            if (装备模板.Luck != 0)
+            if (EquipInfo.Luck != 0)
             {
-                dictionary[Stat.Luck] = 装备模板.Luck;
+                stats[Stat.Luck] = EquipInfo.Luck;
             }
-            if (装备模板.怪物伤害 != 0)
+            if (EquipInfo.怪物伤害 != 0)
             {
-                dictionary[Stat.怪物伤害] = 装备模板.怪物伤害;
+                stats[Stat.怪物伤害] = EquipInfo.怪物伤害;
             }
             if (Luck.V != 0)
             {
-                dictionary[Stat.Luck] = (dictionary.ContainsKey(Stat.Luck) ? (dictionary[Stat.Luck] + Luck.V) : Luck.V);
+                stats[Stat.Luck] = (stats.ContainsKey(Stat.Luck) ? (stats[Stat.Luck] + Luck.V) : Luck.V);
             }
-            if (升级攻击.V != 0)
+            if (DCPower.V != 0)
             {
-                dictionary[Stat.MaxDC] = (dictionary.ContainsKey(Stat.MaxDC) ? (dictionary[Stat.MaxDC] + 升级攻击.V) : 升级攻击.V);
+                stats[Stat.MaxDC] = (stats.ContainsKey(Stat.MaxDC) ? (stats[Stat.MaxDC] + DCPower.V) : DCPower.V);
             }
-            if (升级魔法.V != 0)
+            if (MCPower.V != 0)
             {
-                dictionary[Stat.MaxMC] = (dictionary.ContainsKey(Stat.MaxMC) ? (dictionary[Stat.MaxMC] + 升级魔法.V) : 升级魔法.V);
+                stats[Stat.MaxMC] = (stats.ContainsKey(Stat.MaxMC) ? (stats[Stat.MaxMC] + MCPower.V) : MCPower.V);
             }
-            if (升级道术.V != 0)
+            if (SCPower.V != 0)
             {
-                dictionary[Stat.MaxSC] = (dictionary.ContainsKey(Stat.MaxSC) ? (dictionary[Stat.MaxSC] + 升级道术.V) : 升级道术.V);
+                stats[Stat.MaxSC] = (stats.ContainsKey(Stat.MaxSC) ? (stats[Stat.MaxSC] + SCPower.V) : SCPower.V);
             }
-            if (升级刺术.V != 0)
+            if (NCPower.V != 0)
             {
-                dictionary[Stat.MaxNC] = (dictionary.ContainsKey(Stat.MaxNC) ? (dictionary[Stat.MaxNC] + 升级刺术.V) : 升级刺术.V);
+                stats[Stat.MaxNC] = (stats.ContainsKey(Stat.MaxNC) ? (stats[Stat.MaxNC] + NCPower.V) : NCPower.V);
             }
-            if (升级弓术.V != 0)
+            if (BCPower.V != 0)
             {
-                dictionary[Stat.MaxBC] = (dictionary.ContainsKey(Stat.MaxBC) ? (dictionary[Stat.MaxBC] + 升级弓术.V) : 升级弓术.V);
+                stats[Stat.MaxBC] = (stats.ContainsKey(Stat.MaxBC) ? (stats[Stat.MaxBC] + BCPower.V) : BCPower.V);
             }
-            foreach (RandomStats item in 随机属性.ToList())
+            foreach (RandomStats item in RandomStats.ToList())
             {
-                dictionary[item.Stat] = (dictionary.ContainsKey(item.Stat) ? (dictionary[item.Stat] + item.Value) : item.Value);
+                stats[item.Stat] = (stats.ContainsKey(item.Stat) ? (stats[item.Stat] + item.Value) : item.Value);
             }
             using IEnumerator<GameItem> enumerator2 = 镶嵌灵石.Values.GetEnumerator();
             while (enumerator2.MoveNext())
@@ -772,128 +764,128 @@ public class EquipmentInfo : ItemInfo
                 switch (enumerator2.Current.ID)
                 {
                     case 10320:
-                        dictionary[Stat.MaxMC] = ((!dictionary.ContainsKey(Stat.MaxMC)) ? 1 : (dictionary[Stat.MaxMC] + 1));
+                        stats[Stat.MaxMC] = ((!stats.ContainsKey(Stat.MaxMC)) ? 1 : (stats[Stat.MaxMC] + 1));
                         break;
                     case 10321:
-                        dictionary[Stat.MaxMC] = (dictionary.ContainsKey(Stat.MaxMC) ? (dictionary[Stat.MaxMC] + 2) : 2);
+                        stats[Stat.MaxMC] = (stats.ContainsKey(Stat.MaxMC) ? (stats[Stat.MaxMC] + 2) : 2);
                         break;
                     case 10322:
-                        dictionary[Stat.MaxMC] = (dictionary.ContainsKey(Stat.MaxMC) ? (dictionary[Stat.MaxMC] + 3) : 3);
+                        stats[Stat.MaxMC] = (stats.ContainsKey(Stat.MaxMC) ? (stats[Stat.MaxMC] + 3) : 3);
                         break;
                     case 10323:
-                        dictionary[Stat.MaxMC] = (dictionary.ContainsKey(Stat.MaxMC) ? (dictionary[Stat.MaxMC] + 4) : 4);
+                        stats[Stat.MaxMC] = (stats.ContainsKey(Stat.MaxMC) ? (stats[Stat.MaxMC] + 4) : 4);
                         break;
                     case 10324:
-                        dictionary[Stat.MaxMC] = (dictionary.ContainsKey(Stat.MaxMC) ? (dictionary[Stat.MaxMC] + 5) : 5);
+                        stats[Stat.MaxMC] = (stats.ContainsKey(Stat.MaxMC) ? (stats[Stat.MaxMC] + 5) : 5);
                         break;
                     case 10220:
-                        dictionary[Stat.MaxDef] = ((!dictionary.ContainsKey(Stat.MaxDef)) ? 1 : (dictionary[Stat.MaxDef] + 1));
+                        stats[Stat.MaxDef] = ((!stats.ContainsKey(Stat.MaxDef)) ? 1 : (stats[Stat.MaxDef] + 1));
                         break;
                     case 10221:
-                        dictionary[Stat.MaxDef] = (dictionary.ContainsKey(Stat.MaxDef) ? (dictionary[Stat.MaxDef] + 2) : 2);
+                        stats[Stat.MaxDef] = (stats.ContainsKey(Stat.MaxDef) ? (stats[Stat.MaxDef] + 2) : 2);
                         break;
                     case 10222:
-                        dictionary[Stat.MaxDef] = (dictionary.ContainsKey(Stat.MaxDef) ? (dictionary[Stat.MaxDef] + 3) : 3);
+                        stats[Stat.MaxDef] = (stats.ContainsKey(Stat.MaxDef) ? (stats[Stat.MaxDef] + 3) : 3);
                         break;
                     case 10223:
-                        dictionary[Stat.MaxDef] = (dictionary.ContainsKey(Stat.MaxDef) ? (dictionary[Stat.MaxDef] + 4) : 4);
+                        stats[Stat.MaxDef] = (stats.ContainsKey(Stat.MaxDef) ? (stats[Stat.MaxDef] + 4) : 4);
                         break;
                     case 10224:
-                        dictionary[Stat.MaxDef] = (dictionary.ContainsKey(Stat.MaxDef) ? (dictionary[Stat.MaxDef] + 5) : 5);
+                        stats[Stat.MaxDef] = (stats.ContainsKey(Stat.MaxDef) ? (stats[Stat.MaxDef] + 5) : 5);
                         break;
                     case 10110:
-                        dictionary[Stat.MaxSC] = ((!dictionary.ContainsKey(Stat.MaxSC)) ? 1 : (dictionary[Stat.MaxSC] + 1));
+                        stats[Stat.MaxSC] = ((!stats.ContainsKey(Stat.MaxSC)) ? 1 : (stats[Stat.MaxSC] + 1));
                         break;
                     case 10111:
-                        dictionary[Stat.MaxSC] = (dictionary.ContainsKey(Stat.MaxSC) ? (dictionary[Stat.MaxSC] + 2) : 2);
+                        stats[Stat.MaxSC] = (stats.ContainsKey(Stat.MaxSC) ? (stats[Stat.MaxSC] + 2) : 2);
                         break;
                     case 10112:
-                        dictionary[Stat.MaxSC] = (dictionary.ContainsKey(Stat.MaxSC) ? (dictionary[Stat.MaxSC] + 3) : 3);
+                        stats[Stat.MaxSC] = (stats.ContainsKey(Stat.MaxSC) ? (stats[Stat.MaxSC] + 3) : 3);
                         break;
                     case 10113:
-                        dictionary[Stat.MaxSC] = (dictionary.ContainsKey(Stat.MaxSC) ? (dictionary[Stat.MaxSC] + 4) : 4);
+                        stats[Stat.MaxSC] = (stats.ContainsKey(Stat.MaxSC) ? (stats[Stat.MaxSC] + 4) : 4);
                         break;
                     case 10114:
-                        dictionary[Stat.MaxSC] = (dictionary.ContainsKey(Stat.MaxSC) ? (dictionary[Stat.MaxSC] + 5) : 5);
+                        stats[Stat.MaxSC] = (stats.ContainsKey(Stat.MaxSC) ? (stats[Stat.MaxSC] + 5) : 5);
                         break;
                     case 10120:
-                        dictionary[Stat.MaxHP] = (dictionary.ContainsKey(Stat.MaxHP) ? (dictionary[Stat.MaxHP] + 5) : 5);
+                        stats[Stat.MaxHP] = (stats.ContainsKey(Stat.MaxHP) ? (stats[Stat.MaxHP] + 5) : 5);
                         break;
                     case 10121:
-                        dictionary[Stat.MaxHP] = (dictionary.ContainsKey(Stat.MaxHP) ? (dictionary[Stat.MaxHP] + 10) : 10);
+                        stats[Stat.MaxHP] = (stats.ContainsKey(Stat.MaxHP) ? (stats[Stat.MaxHP] + 10) : 10);
                         break;
                     case 10122:
-                        dictionary[Stat.MaxHP] = (dictionary.ContainsKey(Stat.MaxHP) ? (dictionary[Stat.MaxHP] + 15) : 15);
+                        stats[Stat.MaxHP] = (stats.ContainsKey(Stat.MaxHP) ? (stats[Stat.MaxHP] + 15) : 15);
                         break;
                     case 10123:
-                        dictionary[Stat.MaxHP] = (dictionary.ContainsKey(Stat.MaxHP) ? (dictionary[Stat.MaxHP] + 20) : 20);
+                        stats[Stat.MaxHP] = (stats.ContainsKey(Stat.MaxHP) ? (stats[Stat.MaxHP] + 20) : 20);
                         break;
                     case 10124:
-                        dictionary[Stat.MaxHP] = (dictionary.ContainsKey(Stat.MaxHP) ? (dictionary[Stat.MaxHP] + 25) : 25);
+                        stats[Stat.MaxHP] = (stats.ContainsKey(Stat.MaxHP) ? (stats[Stat.MaxHP] + 25) : 25);
                         break;
                     case 10520:
-                        dictionary[Stat.MaxMCDef] = ((!dictionary.ContainsKey(Stat.MaxMCDef)) ? 1 : (dictionary[Stat.MaxMCDef] + 1));
+                        stats[Stat.MaxMCDef] = ((!stats.ContainsKey(Stat.MaxMCDef)) ? 1 : (stats[Stat.MaxMCDef] + 1));
                         break;
                     case 10521:
-                        dictionary[Stat.MaxMCDef] = (dictionary.ContainsKey(Stat.MaxMCDef) ? (dictionary[Stat.MaxMCDef] + 2) : 2);
+                        stats[Stat.MaxMCDef] = (stats.ContainsKey(Stat.MaxMCDef) ? (stats[Stat.MaxMCDef] + 2) : 2);
                         break;
                     case 10522:
-                        dictionary[Stat.MaxMCDef] = (dictionary.ContainsKey(Stat.MaxMCDef) ? (dictionary[Stat.MaxMCDef] + 3) : 3);
+                        stats[Stat.MaxMCDef] = (stats.ContainsKey(Stat.MaxMCDef) ? (stats[Stat.MaxMCDef] + 3) : 3);
                         break;
                     case 10523:
-                        dictionary[Stat.MaxMCDef] = (dictionary.ContainsKey(Stat.MaxMCDef) ? (dictionary[Stat.MaxMCDef] + 4) : 4);
+                        stats[Stat.MaxMCDef] = (stats.ContainsKey(Stat.MaxMCDef) ? (stats[Stat.MaxMCDef] + 4) : 4);
                         break;
                     case 10524:
-                        dictionary[Stat.MaxMCDef] = (dictionary.ContainsKey(Stat.MaxMCDef) ? (dictionary[Stat.MaxMCDef] + 5) : 5);
+                        stats[Stat.MaxMCDef] = (stats.ContainsKey(Stat.MaxMCDef) ? (stats[Stat.MaxMCDef] + 5) : 5);
                         break;
                     case 10420:
-                        dictionary[Stat.MaxDC] = ((!dictionary.ContainsKey(Stat.MaxDC)) ? 1 : (dictionary[Stat.MaxDC] + 1));
+                        stats[Stat.MaxDC] = ((!stats.ContainsKey(Stat.MaxDC)) ? 1 : (stats[Stat.MaxDC] + 1));
                         break;
                     case 10421:
-                        dictionary[Stat.MaxDC] = (dictionary.ContainsKey(Stat.MaxDC) ? (dictionary[Stat.MaxDC] + 2) : 2);
+                        stats[Stat.MaxDC] = (stats.ContainsKey(Stat.MaxDC) ? (stats[Stat.MaxDC] + 2) : 2);
                         break;
                     case 10422:
-                        dictionary[Stat.MaxDC] = (dictionary.ContainsKey(Stat.MaxDC) ? (dictionary[Stat.MaxDC] + 3) : 3);
+                        stats[Stat.MaxDC] = (stats.ContainsKey(Stat.MaxDC) ? (stats[Stat.MaxDC] + 3) : 3);
                         break;
                     case 10423:
-                        dictionary[Stat.MaxDC] = (dictionary.ContainsKey(Stat.MaxDC) ? (dictionary[Stat.MaxDC] + 4) : 4);
+                        stats[Stat.MaxDC] = (stats.ContainsKey(Stat.MaxDC) ? (stats[Stat.MaxDC] + 4) : 4);
                         break;
                     case 10424:
-                        dictionary[Stat.MaxDC] = (dictionary.ContainsKey(Stat.MaxDC) ? (dictionary[Stat.MaxDC] + 5) : 5);
+                        stats[Stat.MaxDC] = (stats.ContainsKey(Stat.MaxDC) ? (stats[Stat.MaxDC] + 5) : 5);
                         break;
                     case 10720:
-                        dictionary[Stat.MaxBC] = ((!dictionary.ContainsKey(Stat.MaxBC)) ? 1 : (dictionary[Stat.MaxBC] + 1));
+                        stats[Stat.MaxBC] = ((!stats.ContainsKey(Stat.MaxBC)) ? 1 : (stats[Stat.MaxBC] + 1));
                         break;
                     case 10721:
-                        dictionary[Stat.MaxBC] = (dictionary.ContainsKey(Stat.MaxBC) ? (dictionary[Stat.MaxBC] + 2) : 2);
+                        stats[Stat.MaxBC] = (stats.ContainsKey(Stat.MaxBC) ? (stats[Stat.MaxBC] + 2) : 2);
                         break;
                     case 10722:
-                        dictionary[Stat.MaxBC] = (dictionary.ContainsKey(Stat.MaxBC) ? (dictionary[Stat.MaxBC] + 3) : 3);
+                        stats[Stat.MaxBC] = (stats.ContainsKey(Stat.MaxBC) ? (stats[Stat.MaxBC] + 3) : 3);
                         break;
                     case 10723:
-                        dictionary[Stat.MaxBC] = (dictionary.ContainsKey(Stat.MaxBC) ? (dictionary[Stat.MaxBC] + 4) : 4);
+                        stats[Stat.MaxBC] = (stats.ContainsKey(Stat.MaxBC) ? (stats[Stat.MaxBC] + 4) : 4);
                         break;
                     case 10724:
-                        dictionary[Stat.MaxBC] = (dictionary.ContainsKey(Stat.MaxBC) ? (dictionary[Stat.MaxBC] + 5) : 5);
+                        stats[Stat.MaxBC] = (stats.ContainsKey(Stat.MaxBC) ? (stats[Stat.MaxBC] + 5) : 5);
                         break;
                     case 10620:
-                        dictionary[Stat.MaxNC] = ((!dictionary.ContainsKey(Stat.MaxNC)) ? 1 : (dictionary[Stat.MaxNC] + 1));
+                        stats[Stat.MaxNC] = ((!stats.ContainsKey(Stat.MaxNC)) ? 1 : (stats[Stat.MaxNC] + 1));
                         break;
                     case 10621:
-                        dictionary[Stat.MaxNC] = (dictionary.ContainsKey(Stat.MaxNC) ? (dictionary[Stat.MaxNC] + 2) : 2);
+                        stats[Stat.MaxNC] = (stats.ContainsKey(Stat.MaxNC) ? (stats[Stat.MaxNC] + 2) : 2);
                         break;
                     case 10622:
-                        dictionary[Stat.MaxNC] = (dictionary.ContainsKey(Stat.MaxNC) ? (dictionary[Stat.MaxNC] + 3) : 3);
+                        stats[Stat.MaxNC] = (stats.ContainsKey(Stat.MaxNC) ? (stats[Stat.MaxNC] + 3) : 3);
                         break;
                     case 10623:
-                        dictionary[Stat.MaxNC] = (dictionary.ContainsKey(Stat.MaxNC) ? (dictionary[Stat.MaxNC] + 4) : 4);
+                        stats[Stat.MaxNC] = (stats.ContainsKey(Stat.MaxNC) ? (stats[Stat.MaxNC] + 4) : 4);
                         break;
                     case 10624:
-                        dictionary[Stat.MaxNC] = (dictionary.ContainsKey(Stat.MaxNC) ? (dictionary[Stat.MaxNC] + 5) : 5);
+                        stats[Stat.MaxNC] = (stats.ContainsKey(Stat.MaxNC) ? (stats[Stat.MaxNC] + 5) : 5);
                         break;
                 }
             }
-            return dictionary;
+            return stats;
         }
     }
 
@@ -936,12 +928,12 @@ public class EquipmentInfo : ItemInfo
         Grid.V = grid;
         Location.V = location;
         CreatedDate.V = SEngine.CurrentTime;
-        物品状态.V = 1;
+        Status.V = 1;
         MaxDura.V = ((item.PersistType == PersistentItemType.装备) ? (item.MaxDura * 1000) : item.MaxDura);
         Dura.V = ((!random || item.PersistType != PersistentItemType.装备) ? MaxDura.V : SEngine.Random.Next(0, MaxDura.V));
         if (random && item.PersistType == PersistentItemType.装备)
         {
-            随机属性.SetValue(GameServer.Template.EquipmentStats.生成属性(base.Type));
+            RandomStats.SetValue(GameServer.Template.EquipmentStats.生成属性(base.Type));
         }
         Session.EquipmentInfoTable.Add(this, true);
     }
@@ -967,31 +959,31 @@ public class EquipmentInfo : ItemInfo
         }
         writer.Write((short)num);
         int num2 = 0;
-        if (物品状态.V != 1)
+        if (Status.V != 1)
         {
             num2 |= 1;
         }
-        else if (随机属性.Count != 0)
+        else if (RandomStats.Count != 0)
         {
             num2 |= 1;
         }
-        else if (神圣伤害.V != 0)
+        else if (HolyDamage.V != 0)
         {
             num2 |= 1;
         }
-        if (随机属性.Count >= 1)
+        if (RandomStats.Count >= 1)
         {
             num2 |= 2;
         }
-        if (随机属性.Count >= 2)
+        if (RandomStats.Count >= 2)
         {
             num2 |= 4;
         }
-        if (随机属性.Count >= 3)
+        if (RandomStats.Count >= 3)
         {
             num2 |= 8;
         }
-        if (随机属性.Count >= 4)
+        if (RandomStats.Count >= 4)
         {
             num2 |= 0x10;
         }
@@ -999,11 +991,11 @@ public class EquipmentInfo : ItemInfo
         {
             num2 |= 0x800;
         }
-        if (升级次数.V != 0)
+        if (UpgradeCount.V != 0)
         {
             num2 |= 0x1000;
         }
-        if (孔洞颜色.Count != 0)
+        if (SlotColor.Count != 0)
         {
             num2 |= 0x2000;
         }
@@ -1023,7 +1015,7 @@ public class EquipmentInfo : ItemInfo
         {
             num2 |= 0x20000;
         }
-        if (神圣伤害.V != 0)
+        if (HolyDamage.V != 0)
         {
             num2 |= 0x400000;
         }
@@ -1042,32 +1034,32 @@ public class EquipmentInfo : ItemInfo
         writer.Write(num2);
         if (((uint)num2 & (true ? 1u : 0u)) != 0)
         {
-            writer.Write(物品状态.V);
+            writer.Write(Status.V);
         }
         if (((uint)num2 & 2u) != 0)
         {
-            writer.Write((ushort)随机属性[0].StatID);
+            writer.Write((ushort)RandomStats[0].StatID);
         }
         if (((uint)num2 & 4u) != 0)
         {
-            writer.Write((ushort)随机属性[1].StatID);
+            writer.Write((ushort)RandomStats[1].StatID);
         }
         if (((uint)num2 & 8u) != 0)
         {
-            writer.Write((ushort)随机属性[2].StatID);
+            writer.Write((ushort)RandomStats[2].StatID);
         }
         if (((uint)num2 & 0x10u) != 0)
         {
-            writer.Write((ushort)随机属性[3].StatID);
+            writer.Write((ushort)RandomStats[3].StatID);
         }
         if (((uint)num & 0x100u) != 0)
         {
             int num3 = 0;
-            if (铭文技能[0] != null)
+            if (InscriptionSkills[0] != null)
             {
                 num3 |= 1;
             }
-            if (铭文技能[1] != null)
+            if (InscriptionSkills[1] != null)
             {
                 num3 |= 2;
             }
@@ -1075,21 +1067,21 @@ public class EquipmentInfo : ItemInfo
             writer.Write(洗练数一.V * 10000);
             if (((uint)num3 & (true ? 1u : 0u)) != 0)
             {
-                writer.Write(铭文技能[0].Index);
+                writer.Write(InscriptionSkills[0].Index);
             }
             if (((uint)num3 & 2u) != 0)
             {
-                writer.Write(铭文技能[1].Index);
+                writer.Write(InscriptionSkills[1].Index);
             }
         }
         if (((uint)num & 0x200u) != 0)
         {
             int num4 = 0;
-            if (铭文技能[2] != null)
+            if (InscriptionSkills[2] != null)
             {
                 num4 |= 1;
             }
-            if (铭文技能[3] != null)
+            if (InscriptionSkills[3] != null)
             {
                 num4 |= 2;
             }
@@ -1097,11 +1089,11 @@ public class EquipmentInfo : ItemInfo
             writer.Write(洗练数二.V * 10000);
             if (((uint)num4 & (true ? 1u : 0u)) != 0)
             {
-                writer.Write(铭文技能[2].Index);
+                writer.Write(InscriptionSkills[2].Index);
             }
             if (((uint)num4 & 2u) != 0)
             {
-                writer.Write(铭文技能[3].Index);
+                writer.Write(InscriptionSkills[3].Index);
             }
         }
         if (((uint)num2 & 0x800u) != 0)
@@ -1110,24 +1102,24 @@ public class EquipmentInfo : ItemInfo
         }
         if (((uint)num2 & 0x1000u) != 0)
         {
-            writer.Write(升级次数.V);
+            writer.Write(UpgradeCount.V);
             writer.Write((byte)0);
-            writer.Write(升级攻击.V);
-            writer.Write(升级魔法.V);
-            writer.Write(升级道术.V);
-            writer.Write(升级刺术.V);
-            writer.Write(升级弓术.V);
+            writer.Write(DCPower.V);
+            writer.Write(MCPower.V);
+            writer.Write(SCPower.V);
+            writer.Write(NCPower.V);
+            writer.Write(BCPower.V);
             writer.Write(new byte[3]);
-            writer.Write(灵魂绑定.V);
+            writer.Write(SoulBinding.V);
         }
         if (((uint)num2 & 0x2000u) != 0)
         {
             writer.Write(new byte[4]
             {
-                (byte)孔洞颜色[0],
-                (byte)孔洞颜色[1],
-                (byte)孔洞颜色[2],
-                (byte)孔洞颜色[3]
+                (byte)SlotColor[0],
+                (byte)SlotColor[1],
+                (byte)SlotColor[2],
+                (byte)SlotColor[3]
             });
         }
         if (((uint)num2 & 0x4000u) != 0)
@@ -1160,7 +1152,7 @@ public class EquipmentInfo : ItemInfo
         }
         if (((uint)num2 & 0x400000u) != 0)
         {
-            writer.Write(神圣伤害.V);
+            writer.Write(HolyDamage.V);
             writer.Write(圣石数量.V);
         }
         if (((uint)num2 & 0x800000u) != 0)

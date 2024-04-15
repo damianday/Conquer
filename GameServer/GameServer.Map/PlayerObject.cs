@@ -1062,7 +1062,7 @@ public sealed class PlayerObject : MapObject
 
         foreach (EquipmentInfo value80 in Equipment.Values)
         {
-            CombatPowerBonus[value80] = value80.装备战力;
+            CombatPowerBonus[value80] = value80.CombatPower;
             if (value80.Name == "麻痹戒指")
             {
                 ParalysisRing = true;
@@ -1078,15 +1078,15 @@ public sealed class PlayerObject : MapObject
             }
             if (value80.Dura.V > 0)
             {
-                BonusStats[value80] = value80.装备属性;
+                BonusStats[value80] = value80.Stats;
             }
-            if (value80.第一铭文 != null && Skills.TryGetValue(value80.第一铭文.SkillID, out var v))
+            if (value80.FirstInscription != null && Skills.TryGetValue(value80.FirstInscription.SkillID, out var v))
             {
-                v.InscriptionID = value80.第一铭文.ID;
+                v.InscriptionID = value80.FirstInscription.ID;
             }
-            if (value80.第二铭文 != null && Skills.TryGetValue(value80.第二铭文.SkillID, out var v2))
+            if (value80.SecondInscription != null && Skills.TryGetValue(value80.SecondInscription.SkillID, out var v2))
             {
-                v2.InscriptionID = value80.第二铭文.ID;
+                v2.InscriptionID = value80.SecondInscription.ID;
             }
         }
         foreach (SkillInfo value81 in Skills.Values)
@@ -4287,22 +4287,22 @@ public sealed class PlayerObject : MapObject
         }
         if (Equipment.TryGetValue(0, out var v))
         {
-            if (v.第一铭文?.SkillID == skillID)
+            if (v.FirstInscription?.SkillID == skillID)
             {
-                Skills[skillID].InscriptionID = v.第一铭文.ID;
+                Skills[skillID].InscriptionID = v.FirstInscription.ID;
                 Enqueue(new 角色装配铭文
                 {
                     SkillID = skillID,
-                    InscriptionID = v.第一铭文.ID
+                    InscriptionID = v.FirstInscription.ID
                 });
             }
-            if (v.第二铭文?.SkillID == skillID)
+            if (v.SecondInscription?.SkillID == skillID)
             {
-                Skills[skillID].InscriptionID = v.第二铭文.ID;
+                Skills[skillID].InscriptionID = v.SecondInscription.ID;
                 Enqueue(new 角色装配铭文
                 {
                     SkillID = skillID,
-                    InscriptionID = v.第二铭文.ID
+                    InscriptionID = v.SecondInscription.ID
                 });
             }
         }
@@ -4404,7 +4404,7 @@ public sealed class PlayerObject : MapObject
                 对象编号 = ObjectID,
                 装备部位 = (byte)装备部位,
                 装备编号 = (现有装备?.ID ?? 0),
-                升级次数 = (现有装备?.升级次数.V ?? 0)
+                升级次数 = (现有装备?.UpgradeCount.V ?? 0)
             });
         }
         if (原有装备 != null)
@@ -4575,13 +4575,13 @@ public sealed class PlayerObject : MapObject
                     Character.通用套装6件头盔数.V = 0;
                 }
             }
-            if (原有装备.第一铭文 != null)
+            if (原有装备.FirstInscription != null)
             {
-                玩家装卸铭文(原有装备.第一铭文.SkillID, 0);
+                玩家装卸铭文(原有装备.FirstInscription.SkillID, 0);
             }
-            if (原有装备.第二铭文 != null)
+            if (原有装备.SecondInscription != null)
             {
-                玩家装卸铭文(原有装备.第二铭文.SkillID, 0);
+                玩家装卸铭文(原有装备.SecondInscription.SkillID, 0);
             }
             if (Buffs.TryGetValue(原有装备.BuffID, out var v2))
             {
@@ -4589,7 +4589,7 @@ public sealed class PlayerObject : MapObject
             }
             CombatPowerBonus.Remove(原有装备);
             BonusStats.Remove(原有装备);
-            if (Config.装备技能开关 == 1 && !string.IsNullOrEmpty(原有装备.装备模板.装备特技) && GameSkill.DataSheet.TryGetValue(原有装备.装备模板.装备特技, out var value2))
+            if (Config.装备技能开关 == 1 && !string.IsNullOrEmpty(原有装备.EquipInfo.装备特技) && GameSkill.DataSheet.TryGetValue(原有装备.EquipInfo.装备特技, out var value2))
             {
                 RemoveSkill(value2.OwnSkillID);
             }
@@ -4613,24 +4613,24 @@ public sealed class PlayerObject : MapObject
             {
                 HasResurrectionRing = true;
             }
-            if (现有装备.第一铭文 != null)
+            if (现有装备.FirstInscription != null)
             {
-                玩家装卸铭文(现有装备.第一铭文.SkillID, 现有装备.第一铭文.ID);
+                玩家装卸铭文(现有装备.FirstInscription.SkillID, 现有装备.FirstInscription.ID);
             }
-            if (现有装备.第二铭文 != null)
+            if (现有装备.SecondInscription != null)
             {
-                玩家装卸铭文(现有装备.第二铭文.SkillID, 现有装备.第二铭文.ID);
+                玩家装卸铭文(现有装备.SecondInscription.SkillID, 现有装备.SecondInscription.ID);
             }
-            CombatPowerBonus[现有装备] = 现有装备.装备战力;
+            CombatPowerBonus[现有装备] = 现有装备.CombatPower;
             if (现有装备.Dura.V > 0)
             {
-                BonusStats.Add(现有装备, 现有装备.装备属性);
+                BonusStats.Add(现有装备, 现有装备.Stats);
             }
             if (现有装备.Info.BuffID > 0)
             {
                 AddBuff(现有装备.BuffID, this);
             }
-            if (Config.装备技能开关 == 1 && !string.IsNullOrEmpty(现有装备.装备模板.装备特技) && GameSkill.DataSheet.TryGetValue(现有装备.装备模板.装备特技, out var value3))
+            if (Config.装备技能开关 == 1 && !string.IsNullOrEmpty(现有装备.EquipInfo.装备特技) && GameSkill.DataSheet.TryGetValue(现有装备.EquipInfo.装备特技, out var value3))
             {
                 AddSkill(value3.OwnSkillID);
             }
@@ -7268,7 +7268,7 @@ public sealed class PlayerObject : MapObject
 
     public void 武器损失持久()
     {
-        if (Equipment.TryGetValue(0, out var v) && v.Dura.V > 0 && v.Dura.V > 0 && (本期特权 != 5 || !v.能否修理) && (本期特权 != 4 || !Compute.CalculateProbability(0.5f)))
+        if (Equipment.TryGetValue(0, out var v) && v.Dura.V > 0 && v.Dura.V > 0 && (本期特权 != 5 || !v.CanRepair) && (本期特权 != 4 || !Compute.CalculateProbability(0.5f)))
         {
             int num2 = (v.Dura.V = Math.Max(0, v.Dura.V - SEngine.Random.Next(1, 6)));
             if (num2 <= 0 && BonusStats.Remove(v))
@@ -7328,7 +7328,7 @@ public sealed class PlayerObject : MapObject
         dmg = Math.Min(10, dmg);
         foreach (EquipmentInfo value in Equipment.Values)
         {
-            if (value.Dura.V > 0 && (本期特权 != 5 || !value.能否修理) && 
+            if (value.Dura.V > 0 && (本期特权 != 5 || !value.CanRepair) && 
                 (本期特权 != 4 || !Compute.CalculateProbability(0.5f)) && 
                 value.PersistType == PersistentItemType.装备 && 
                 Compute.CalculateProbability((value.Type == ItemType.Armour) ? 1f : 0.1f))
@@ -12985,92 +12985,92 @@ public sealed class PlayerObject : MapObject
                         });
                         ConsumeItem(1, 物品8);
                         对话页面 = 700101000;
-                        if (v5.第一铭文 != null)
+                        if (v5.FirstInscription != null)
                         {
-                            玩家装卸铭文(v5.第一铭文.SkillID, 0);
+                            玩家装卸铭文(v5.FirstInscription.SkillID, 0);
                         }
                         if (Job == GameObjectRace.Warrior)
                         {
-                            v5.第一铭文 = InscriptionSkill.RandomRefinement(Job);
-                            玩家装卸铭文(v5.第一铭文.SkillID, v5.第一铭文.ID);
-                            NetworkManager.SendAnnouncement($"[{this}]成功洗出来【{v5}】[{v5.第一铭文.SkillName.Split('-').Last()}]");
+                            v5.FirstInscription = InscriptionSkill.RandomRefinement(Job);
+                            玩家装卸铭文(v5.FirstInscription.SkillID, v5.FirstInscription.ID);
+                            NetworkManager.SendAnnouncement($"[{this}]成功洗出来【{v5}】[{v5.FirstInscription.SkillName.Split('-').Last()}]");
                             Enqueue(new SyncItemPacket
                             {
                                 Description = v5.ToArray()
                             });
                             Enqueue(new 玩家普通洗练
                             {
-                                铭文位一 = (v5.第一铭文?.Index ?? 0)
+                                铭文位一 = (v5.FirstInscription?.Index ?? 0)
                             });
                         }
                         if (Job == GameObjectRace.Wizard)
                         {
-                            v5.第一铭文 = InscriptionSkill.RandomRefinement(Job);
-                            玩家装卸铭文(v5.第一铭文.SkillID, v5.第一铭文.ID);
-                            NetworkManager.SendAnnouncement($"[{this}]成功洗出来【{v5}】[{v5.第一铭文.SkillName.Split('-').Last()}]");
+                            v5.FirstInscription = InscriptionSkill.RandomRefinement(Job);
+                            玩家装卸铭文(v5.FirstInscription.SkillID, v5.FirstInscription.ID);
+                            NetworkManager.SendAnnouncement($"[{this}]成功洗出来【{v5}】[{v5.FirstInscription.SkillName.Split('-').Last()}]");
                             Enqueue(new SyncItemPacket
                             {
                                 Description = v5.ToArray()
                             });
                             Enqueue(new 玩家普通洗练
                             {
-                                铭文位一 = (v5.第一铭文?.Index ?? 0)
+                                铭文位一 = (v5.FirstInscription?.Index ?? 0)
                             });
                         }
                         if (Job == GameObjectRace.Assassin)
                         {
-                            v5.第一铭文 = InscriptionSkill.RandomRefinement(Job);
-                            玩家装卸铭文(v5.第一铭文.SkillID, v5.第一铭文.ID);
-                            NetworkManager.SendAnnouncement($"[{this}]成功洗出来【{v5}】[{v5.第一铭文.SkillName.Split('-').Last()}]");
+                            v5.FirstInscription = InscriptionSkill.RandomRefinement(Job);
+                            玩家装卸铭文(v5.FirstInscription.SkillID, v5.FirstInscription.ID);
+                            NetworkManager.SendAnnouncement($"[{this}]成功洗出来【{v5}】[{v5.FirstInscription.SkillName.Split('-').Last()}]");
                             Enqueue(new SyncItemPacket
                             {
                                 Description = v5.ToArray()
                             });
                             Enqueue(new 玩家普通洗练
                             {
-                                铭文位一 = (v5.第一铭文?.Index ?? 0)
+                                铭文位一 = (v5.FirstInscription?.Index ?? 0)
                             });
                         }
                         if (Job == GameObjectRace.Archer)
                         {
-                            v5.第一铭文 = InscriptionSkill.RandomRefinement(Job);
-                            玩家装卸铭文(v5.第一铭文.SkillID, v5.第一铭文.ID);
-                            NetworkManager.SendAnnouncement($"[{this}]成功洗出来【{v5}】[{v5.第一铭文.SkillName.Split('-').Last()}]");
+                            v5.FirstInscription = InscriptionSkill.RandomRefinement(Job);
+                            玩家装卸铭文(v5.FirstInscription.SkillID, v5.FirstInscription.ID);
+                            NetworkManager.SendAnnouncement($"[{this}]成功洗出来【{v5}】[{v5.FirstInscription.SkillName.Split('-').Last()}]");
                             Enqueue(new SyncItemPacket
                             {
                                 Description = v5.ToArray()
                             });
                             Enqueue(new 玩家普通洗练
                             {
-                                铭文位一 = (v5.第一铭文?.Index ?? 0)
+                                铭文位一 = (v5.FirstInscription?.Index ?? 0)
                             });
                         }
                         if (Job == GameObjectRace.Taoist)
                         {
-                            v5.第一铭文 = InscriptionSkill.RandomRefinement(Job);
-                            玩家装卸铭文(v5.第一铭文.SkillID, v5.第一铭文.ID);
-                            NetworkManager.SendAnnouncement($"[{this}]成功洗出来【{v5}】[{v5.第一铭文.SkillName.Split('-').Last()}]");
+                            v5.FirstInscription = InscriptionSkill.RandomRefinement(Job);
+                            玩家装卸铭文(v5.FirstInscription.SkillID, v5.FirstInscription.ID);
+                            NetworkManager.SendAnnouncement($"[{this}]成功洗出来【{v5}】[{v5.FirstInscription.SkillName.Split('-').Last()}]");
                             Enqueue(new SyncItemPacket
                             {
                                 Description = v5.ToArray()
                             });
                             Enqueue(new 玩家普通洗练
                             {
-                                铭文位一 = (v5.第一铭文?.Index ?? 0)
+                                铭文位一 = (v5.FirstInscription?.Index ?? 0)
                             });
                         }
                         if (Job == GameObjectRace.DragonLance)
                         {
-                            v5.第一铭文 = InscriptionSkill.RandomRefinement(Job);
-                            玩家装卸铭文(v5.第一铭文.SkillID, v5.第一铭文.ID);
-                            NetworkManager.SendAnnouncement($"[{this}]成功洗出来【{v5}】[{v5.第一铭文.SkillName.Split('-').Last()}]");
+                            v5.FirstInscription = InscriptionSkill.RandomRefinement(Job);
+                            玩家装卸铭文(v5.FirstInscription.SkillID, v5.FirstInscription.ID);
+                            NetworkManager.SendAnnouncement($"[{this}]成功洗出来【{v5}】[{v5.FirstInscription.SkillName.Split('-').Last()}]");
                             Enqueue(new SyncItemPacket
                             {
                                 Description = v5.ToArray()
                             });
                             Enqueue(new 玩家普通洗练
                             {
-                                铭文位一 = (v5.第一铭文?.Index ?? 0)
+                                铭文位一 = (v5.FirstInscription?.Index ?? 0)
                             });
                         }
                         break;
@@ -13352,23 +13352,23 @@ public sealed class PlayerObject : MapObject
                         {
                             Description = 全部货币描述()
                         });
-                        v7.随机属性.SetValue(EquipmentStats.生成属性(v7.Type, 重铸装备: true));
+                        v7.RandomStats.SetValue(EquipmentStats.生成属性(v7.Type, 重铸装备: true));
                         if (Character.幸运项链保底.V >= Config.幸运洗练次数保底 && 重铸部位 == 8 && Config.CurrentVersion >= 1 && Config.幸运保底开关 == 1)
                         {
                             Character.幸运项链保底.V = 0;
-                            v7.随机属性.SetValue(EquipmentStats.生成属性1(v7.Type, 重铸装备: true));
+                            v7.RandomStats.SetValue(EquipmentStats.生成属性1(v7.Type, 重铸装备: true));
                         }
                         Enqueue(new SyncItemPacket
                         {
                             Description = v7.ToArray()
                         });
-                        BonusStats[v7] = v7.装备属性;
+                        BonusStats[v7] = v7.Stats;
                         RefreshStats();
                         对话页面 = 612606000;
                         Enqueue(new 同步交互结果
                         {
                             对象编号 = 对话守卫.ObjectID,
-                            交互文本 = NpcDialog.合并数据(对话页面, "<#P1:" + v7.属性描述 + ">")
+                            交互文本 = NpcDialog.合并数据(对话页面, "<#P1:" + v7.StatDescription + ">")
                         });
                         if (重铸部位 == 8 && Config.CurrentVersion >= 1 && Config.幸运保底开关 == 1)
                         {
@@ -13762,7 +13762,7 @@ public sealed class PlayerObject : MapObject
                             });
                             break;
                         }
-                        if (v6.孔洞颜色.Count == 0)
+                        if (v6.SlotColor.Count == 0)
                         {
                             对话页面 = 619202400;
                             Enqueue(new 同步交互结果
@@ -13810,26 +13810,26 @@ public sealed class PlayerObject : MapObject
                             Description = 全部货币描述()
                         });
                         ConsumeItem(num38, 物品列表18);
-                        v6.孔洞颜色[SEngine.Random.Next(v6.孔洞颜色.Count)] = (装备孔洞颜色)SEngine.Random.Next(1, 8);
+                        v6.SlotColor[SEngine.Random.Next(v6.SlotColor.Count)] = (EquipSlotColor)SEngine.Random.Next(1, 8);
                         Enqueue(new SyncItemPacket
                         {
                             Description = v6.ToArray()
                         });
-                        if (v6.孔洞颜色.Count == 1)
+                        if (v6.SlotColor.Count == 1)
                         {
                             对话页面 = 619202500;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{v6.孔洞颜色[0]}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{v6.SlotColor[0]}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
-                        else if (v6.孔洞颜色.Count == 2)
+                        else if (v6.SlotColor.Count == 2)
                         {
                             对话页面 = 619202600;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{v6.孔洞颜色[0]}><#P1:{v6.孔洞颜色[1]}>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{v6.SlotColor[0]}><#P1:{v6.SlotColor[1]}>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -13877,7 +13877,7 @@ public sealed class PlayerObject : MapObject
                             });
                             break;
                         }
-                        if (v3.孔洞颜色.Count == 0)
+                        if (v3.SlotColor.Count == 0)
                         {
                             对话页面 = 619202400;
                             Enqueue(new 同步交互结果
@@ -13898,21 +13898,21 @@ public sealed class PlayerObject : MapObject
                             break;
                         }
                         雕色部位 = (byte)选项编号;
-                        if (v3.孔洞颜色.Count == 1)
+                        if (v3.SlotColor.Count == 1)
                         {
                             对话页面 = 619202500;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{v3.孔洞颜色[0]}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{v3.SlotColor[0]}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
-                        else if (v3.孔洞颜色.Count == 2)
+                        else if (v3.SlotColor.Count == 2)
                         {
                             对话页面 = 619202600;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{v3.孔洞颜色[0]}><#P1:{v3.孔洞颜色[1]}>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{v3.SlotColor[0]}><#P1:{v3.SlotColor[1]}>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -13960,7 +13960,7 @@ public sealed class PlayerObject : MapObject
                             });
                             break;
                         }
-                        if (v.孔洞颜色.Count >= 2)
+                        if (v.SlotColor.Count >= 2)
                         {
                             对话页面 = 619201300;
                             Enqueue(new 同步交互结果
@@ -13970,7 +13970,7 @@ public sealed class PlayerObject : MapObject
                             });
                             break;
                         }
-                        int num13 = ((v.孔洞颜色.Count == 0) ? 5 : 50);
+                        int num13 = ((v.SlotColor.Count == 0) ? 5 : 50);
                         if (!FindItem(num13, 91115, out var 物品列表10))
                         {
                             对话页面 = 619201200;
@@ -13983,7 +13983,7 @@ public sealed class PlayerObject : MapObject
                         else
                         {
                             ConsumeItem(num13, 物品列表10);
-                            v.孔洞颜色.Add(装备孔洞颜色.黄色);
+                            v.SlotColor.Add(EquipSlotColor.Yellow);
                             Enqueue(new SyncItemPacket
                             {
                                 Description = v.ToArray()
@@ -14113,7 +14113,7 @@ public sealed class PlayerObject : MapObject
                             });
                             break;
                         }
-                        if (v2.孔洞颜色.Count == 0)
+                        if (v2.SlotColor.Count == 0)
                         {
                             对话页面 = 619202400;
                             Enqueue(new 同步交互结果
@@ -14161,26 +14161,26 @@ public sealed class PlayerObject : MapObject
                             Description = 全部货币描述()
                         });
                         ConsumeItem(num20, 物品列表13);
-                        v2.孔洞颜色[SEngine.Random.Next(v2.孔洞颜色.Count)] = (装备孔洞颜色)SEngine.Random.Next(1, 8);
+                        v2.SlotColor[SEngine.Random.Next(v2.SlotColor.Count)] = (EquipSlotColor)SEngine.Random.Next(1, 8);
                         Enqueue(new SyncItemPacket
                         {
                             Description = v2.ToArray()
                         });
-                        if (v2.孔洞颜色.Count == 1)
+                        if (v2.SlotColor.Count == 1)
                         {
                             对话页面 = 619202500;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{v2.孔洞颜色[0]}><#P1:0>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{v2.SlotColor[0]}><#P1:0>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
-                        else if (v2.孔洞颜色.Count == 2)
+                        else if (v2.SlotColor.Count == 2)
                         {
                             对话页面 = 619202600;
                             Enqueue(new 同步交互结果
                             {
-                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{v2.孔洞颜色[0]}><#P1:{v2.孔洞颜色[1]}>"),
+                                交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{v2.SlotColor[0]}><#P1:{v2.SlotColor[1]}>"),
                                 对象编号 = 对话守卫.ObjectID
                             });
                         }
@@ -15082,7 +15082,7 @@ public sealed class PlayerObject : MapObject
                                     });
                                     break;
                                 }
-                                int num49 = (Character.升级装备.V.升级次数.V + 1) * 100 * 10000;
+                                int num49 = (Character.升级装备.V.UpgradeCount.V + 1) * 100 * 10000;
                                 if (Gold < num49)
                                 {
                                     对话页面 = 670510000;
@@ -15093,7 +15093,7 @@ public sealed class PlayerObject : MapObject
                                     });
                                     break;
                                 }
-                                int num50 = (Character.升级装备.V.升级次数.V + 1) * 10;
+                                int num50 = (Character.升级装备.V.UpgradeCount.V + 1) * 10;
                                 if (FindItem(num50, 110012, out var 物品列表23))
                                 {
                                     byte b32 = byte.MaxValue;
@@ -15221,7 +15221,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{Character.升级装备.V.升级次数.V * 10 + 10}><#P1:{Character.升级装备.V.升级次数.V * 100 + 100}>")
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{Character.升级装备.V.UpgradeCount.V * 10 + 10}><#P1:{Character.升级装备.V.UpgradeCount.V * 100 + 100}>")
                                 });
                             }
                             break;
@@ -15278,7 +15278,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     对象编号 = 对话守卫.ObjectID,
-                                    交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{Character.升级装备.V.升级次数.V * 10 + 10}><#P1:{Character.升级装备.V.升级次数.V * 100 + 100}>")
+                                    交互文本 = NpcDialog.合并数据(对话页面, $"<#P0:{Character.升级装备.V.UpgradeCount.V * 10 + 10}><#P1:{Character.升级装备.V.UpgradeCount.V * 100 + 100}>")
                                 });
                             }
                             break;
@@ -16153,7 +16153,7 @@ public sealed class PlayerObject : MapObject
                             });
                             break;
                         }
-                        if (!装备数据.能否修理)
+                        if (!装备数据.CanRepair)
                         {
                             Enqueue(new GameErrorMessagePacket
                             {
@@ -16161,7 +16161,7 @@ public sealed class PlayerObject : MapObject
                             });
                             break;
                         }
-                        if (Gold < 装备数据.修理费用)
+                        if (Gold < 装备数据.RepairCost)
                         {
                             Enqueue(new GameErrorMessagePacket
                             {
@@ -16169,7 +16169,7 @@ public sealed class PlayerObject : MapObject
                             });
                             break;
                         }
-                        Gold -= 装备数据.修理费用;
+                        Gold -= 装备数据.RepairCost;
                         Enqueue(new 同步货币数量
                         {
                             Description = 全部货币描述()
@@ -16192,7 +16192,7 @@ public sealed class PlayerObject : MapObject
                             });
                             break;
                         }
-                        if (!v.能否修理)
+                        if (!v.CanRepair)
                         {
                             Enqueue(new GameErrorMessagePacket
                             {
@@ -16200,7 +16200,7 @@ public sealed class PlayerObject : MapObject
                             });
                             break;
                         }
-                        if (Gold < v.修理费用)
+                        if (Gold < v.RepairCost)
                         {
                             Enqueue(new GameErrorMessagePacket
                             {
@@ -16208,7 +16208,7 @@ public sealed class PlayerObject : MapObject
                             });
                             break;
                         }
-                        Gold -= v.修理费用;
+                        Gold -= v.RepairCost;
                         Enqueue(new 同步货币数量
                         {
                             Description = 全部货币描述()
@@ -16216,7 +16216,7 @@ public sealed class PlayerObject : MapObject
                         v.MaxDura.V = Math.Max(1000, v.MaxDura.V - (int)((float)(v.MaxDura.V - v.Dura.V) * 0.035f));
                         if (v.Dura.V <= 0)
                         {
-                            BonusStats[v] = v.装备属性;
+                            BonusStats[v] = v.Stats;
                             RefreshStats();
                         }
                         v.Dura.V = v.MaxDura.V;
@@ -16251,7 +16251,7 @@ public sealed class PlayerObject : MapObject
         }
         else if (CurrentMap == 对话守卫.CurrentMap && GetDistance(对话守卫) <= 12)
         {
-            if (Gold < Equipment.Values.Sum((EquipmentInfo O) => O.能否修理 ? O.修理费用 : 0))
+            if (Gold < Equipment.Values.Sum((EquipmentInfo O) => O.CanRepair ? O.RepairCost : 0))
             {
                 Enqueue(new GameErrorMessagePacket
                 {
@@ -16261,9 +16261,9 @@ public sealed class PlayerObject : MapObject
             }
             foreach (EquipmentInfo value in Equipment.Values)
             {
-                if (value.能否修理)
+                if (value.CanRepair)
                 {
-                    Gold -= value.修理费用;
+                    Gold -= value.RepairCost;
                     Enqueue(new 同步货币数量
                     {
                         Description = 全部货币描述()
@@ -16271,7 +16271,7 @@ public sealed class PlayerObject : MapObject
                     value.MaxDura.V = Math.Max(1000, value.MaxDura.V - (int)((float)(value.MaxDura.V - value.Dura.V) * 0.035f));
                     if (value.Dura.V <= 0)
                     {
-                        BonusStats[value] = value.装备属性;
+                        BonusStats[value] = value.Stats;
                         RefreshStats();
                     }
                     value.Dura.V = value.MaxDura.V;
@@ -16320,7 +16320,7 @@ public sealed class PlayerObject : MapObject
                         });
                         break;
                     }
-                    if (!装备数据.能否修理)
+                    if (!装备数据.CanRepair)
                     {
                         Enqueue(new GameErrorMessagePacket
                         {
@@ -16328,7 +16328,7 @@ public sealed class PlayerObject : MapObject
                         });
                         break;
                     }
-                    if (Gold < 装备数据.特修费用)
+                    if (Gold < 装备数据.SpecialRepairCost)
                     {
                         Enqueue(new GameErrorMessagePacket
                         {
@@ -16336,14 +16336,14 @@ public sealed class PlayerObject : MapObject
                         });
                         break;
                     }
-                    Gold -= 装备数据.特修费用;
+                    Gold -= 装备数据.SpecialRepairCost;
                     Enqueue(new 同步货币数量
                     {
                         Description = 全部货币描述()
                     });
                     if (装备数据.Dura.V <= 0)
                     {
-                        BonusStats[装备数据] = 装备数据.装备属性;
+                        BonusStats[装备数据] = 装备数据.Stats;
                         RefreshStats();
                     }
                     装备数据.Dura.V = 装备数据.MaxDura.V;
@@ -16364,7 +16364,7 @@ public sealed class PlayerObject : MapObject
                         });
                         break;
                     }
-                    if (!v.能否修理)
+                    if (!v.CanRepair)
                     {
                         Enqueue(new GameErrorMessagePacket
                         {
@@ -16372,7 +16372,7 @@ public sealed class PlayerObject : MapObject
                         });
                         break;
                     }
-                    if (Gold < v.特修费用)
+                    if (Gold < v.SpecialRepairCost)
                     {
                         Enqueue(new GameErrorMessagePacket
                         {
@@ -16380,7 +16380,7 @@ public sealed class PlayerObject : MapObject
                         });
                         break;
                     }
-                    Gold -= v.特修费用;
+                    Gold -= v.SpecialRepairCost;
                     Enqueue(new 同步货币数量
                     {
                         Description = 全部货币描述()
@@ -16401,7 +16401,7 @@ public sealed class PlayerObject : MapObject
         {
             return;
         }
-        if (Gold < Equipment.Values.Sum((EquipmentInfo O) => O.能否修理 ? O.特修费用 : 0))
+        if (Gold < Equipment.Values.Sum((EquipmentInfo O) => O.CanRepair ? O.SpecialRepairCost : 0))
         {
             Enqueue(new GameErrorMessagePacket
             {
@@ -16411,16 +16411,16 @@ public sealed class PlayerObject : MapObject
         }
         foreach (EquipmentInfo value in Equipment.Values)
         {
-            if (value.能否修理)
+            if (value.CanRepair)
             {
-                Gold -= value.特修费用;
+                Gold -= value.SpecialRepairCost;
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
                 });
                 if (value.Dura.V <= 0)
                 {
-                    BonusStats[value] = value.装备属性;
+                    BonusStats[value] = value.Stats;
                     RefreshStats();
                 }
                 value.Dura.V = value.MaxDura.V;
@@ -18025,7 +18025,7 @@ public sealed class PlayerObject : MapObject
                 int 出售价格 = 装备数据.SalePrice;
                 if (Config.元宝金币回收设定 == 1)
                 {
-                    if (装备数据.装备模板.EquipSet == GameItemSet.沃玛装备)
+                    if (装备数据.EquipInfo.EquipSet == GameItemSet.沃玛装备)
                     {
                         Ingot += Config.沃玛分解元宝;
                         Enqueue(new SyncIngotsPacket
@@ -18033,7 +18033,7 @@ public sealed class PlayerObject : MapObject
                             Amount = Ingot
                         });
                     }
-                    else if (装备数据.装备模板.EquipSet == GameItemSet.祖玛装备)
+                    else if (装备数据.EquipInfo.EquipSet == GameItemSet.祖玛装备)
                     {
                         Ingot += Config.祖玛分解元宝;
                         Enqueue(new SyncIngotsPacket
@@ -18041,7 +18041,7 @@ public sealed class PlayerObject : MapObject
                             Amount = Ingot
                         });
                     }
-                    else if (装备数据.装备模板.EquipSet == GameItemSet.赤月装备)
+                    else if (装备数据.EquipInfo.EquipSet == GameItemSet.赤月装备)
                     {
                         Ingot += Config.赤月分解元宝;
                         Enqueue(new SyncIngotsPacket
@@ -18049,7 +18049,7 @@ public sealed class PlayerObject : MapObject
                             Amount = Ingot
                         });
                     }
-                    else if (装备数据.装备模板.EquipSet == GameItemSet.魔龙装备)
+                    else if (装备数据.EquipInfo.EquipSet == GameItemSet.魔龙装备)
                     {
                         Ingot += Config.魔龙分解元宝;
                         Enqueue(new SyncIngotsPacket
@@ -18057,7 +18057,7 @@ public sealed class PlayerObject : MapObject
                             Amount = Ingot
                         });
                     }
-                    else if (装备数据.装备模板.EquipSet == GameItemSet.苍月装备)
+                    else if (装备数据.EquipInfo.EquipSet == GameItemSet.苍月装备)
                     {
                         Ingot += Config.苍月分解元宝;
                         Enqueue(new SyncIngotsPacket
@@ -18065,7 +18065,7 @@ public sealed class PlayerObject : MapObject
                             Amount = Ingot
                         });
                     }
-                    else if (装备数据.装备模板.EquipSet == GameItemSet.星王装备)
+                    else if (装备数据.EquipInfo.EquipSet == GameItemSet.星王装备)
                     {
                         Ingot += Config.星王分解元宝;
                         Enqueue(new SyncIngotsPacket
@@ -18073,7 +18073,7 @@ public sealed class PlayerObject : MapObject
                             Amount = Ingot
                         });
                     }
-                    else if (装备数据.装备模板.EquipSet == GameItemSet.城主装备)
+                    else if (装备数据.EquipInfo.EquipSet == GameItemSet.城主装备)
                     {
                         Ingot += Config.城主分解元宝;
                         Enqueue(new SyncIngotsPacket
@@ -18081,7 +18081,7 @@ public sealed class PlayerObject : MapObject
                             Amount = Ingot
                         });
                     }
-                    else if (装备数据.装备模板.EquipSet == GameItemSet.神秘装备)
+                    else if (装备数据.EquipInfo.EquipSet == GameItemSet.神秘装备)
                     {
                         Ingot += Config.神秘分解元宝;
                         Enqueue(new SyncIngotsPacket
@@ -18089,7 +18089,7 @@ public sealed class PlayerObject : MapObject
                             Amount = Ingot
                         });
                     }
-                    else if (装备数据.装备模板.EquipSet == GameItemSet.None)
+                    else if (装备数据.EquipInfo.EquipSet == GameItemSet.None)
                     {
                         Gold += Math.Max(1, 装备数据.SalePrice);
                         Enqueue(new 同步货币数量
@@ -18104,7 +18104,7 @@ public sealed class PlayerObject : MapObject
                     {
                         return;
                     }
-                    if (装备数据.装备模板.EquipSet == GameItemSet.祖玛装备)
+                    if (装备数据.EquipInfo.EquipSet == GameItemSet.祖玛装备)
                     {
                         if (Config.祖玛分解开关 == 5)
                         {
@@ -18265,7 +18265,7 @@ public sealed class PlayerObject : MapObject
                             });
                         }
                     }
-                    else if (装备数据.装备模板.EquipSet == GameItemSet.赤月装备)
+                    else if (装备数据.EquipInfo.EquipSet == GameItemSet.赤月装备)
                     {
                         if (Config.赤月分解开关 == 5)
                         {
@@ -18426,7 +18426,7 @@ public sealed class PlayerObject : MapObject
                             });
                         }
                     }
-                    else if (装备数据.装备模板.EquipSet == GameItemSet.魔龙装备)
+                    else if (装备数据.EquipInfo.EquipSet == GameItemSet.魔龙装备)
                     {
                         if (Config.魔龙分解开关 == 5)
                         {
@@ -18587,7 +18587,7 @@ public sealed class PlayerObject : MapObject
                             });
                         }
                     }
-                    else if (装备数据.装备模板.EquipSet == GameItemSet.苍月装备)
+                    else if (装备数据.EquipInfo.EquipSet == GameItemSet.苍月装备)
                     {
                         if (Config.苍月分解开关 == 5)
                         {
@@ -18748,7 +18748,7 @@ public sealed class PlayerObject : MapObject
                             });
                         }
                     }
-                    else if (装备数据.装备模板.EquipSet == GameItemSet.星王装备)
+                    else if (装备数据.EquipInfo.EquipSet == GameItemSet.星王装备)
                     {
                         if (Config.星王分解开关 == 5)
                         {
@@ -18909,7 +18909,7 @@ public sealed class PlayerObject : MapObject
                             });
                         }
                     }
-                    else if (装备数据.装备模板.EquipSet == GameItemSet.城主装备)
+                    else if (装备数据.EquipInfo.EquipSet == GameItemSet.城主装备)
                     {
                         if (Config.城主分解开关 == 5)
                         {
@@ -19070,7 +19070,7 @@ public sealed class PlayerObject : MapObject
                             });
                         }
                     }
-                    else if (装备数据.装备模板.EquipSet == GameItemSet.其他装备)
+                    else if (装备数据.EquipInfo.EquipSet == GameItemSet.其他装备)
                     {
                         if (Config.其他分解开关 == 5)
                         {
@@ -19231,7 +19231,7 @@ public sealed class PlayerObject : MapObject
                             });
                         }
                     }
-                    else if (装备数据.装备模板.EquipSet == GameItemSet.沃玛装备)
+                    else if (装备数据.EquipInfo.EquipSet == GameItemSet.沃玛装备)
                     {
                         if (Config.沃玛分解开关 == 5)
                         {
@@ -19392,7 +19392,7 @@ public sealed class PlayerObject : MapObject
                             });
                         }
                     }
-                    else if (装备数据.装备模板.EquipSet == GameItemSet.神秘装备)
+                    else if (装备数据.EquipInfo.EquipSet == GameItemSet.神秘装备)
                     {
                         Ingot += Config.神秘分解元宝;
                         Enqueue(new SyncIngotsPacket
@@ -19400,7 +19400,7 @@ public sealed class PlayerObject : MapObject
                             Amount = Ingot
                         });
                     }
-                    else if (装备数据.装备模板.EquipSet == GameItemSet.None)
+                    else if (装备数据.EquipInfo.EquipSet == GameItemSet.None)
                     {
                         Gold += Math.Max(1, 装备数据.SalePrice);
                         Enqueue(new 同步货币数量
@@ -19472,7 +19472,7 @@ public sealed class PlayerObject : MapObject
         {
             物品数据2 = (角色资源背包.TryGetValue(目标位置, out var v8) ? v8 : null);
         }
-        if (物品数据.背包锁定 || (物品数据 == null && 物品数据2 == null) || (当前背包 == 0 && 目标背包 == 0) || (当前背包 == 0 && 目标背包 == 2) || (当前背包 == 2 && 目标背包 == 0) || (物品数据 != null && 当前背包 == 0 && (物品数据 as EquipmentInfo).禁止卸下) || (物品数据2 != null && 目标背包 == 0 && (物品数据2 as EquipmentInfo).禁止卸下) || (物品数据 != null && 目标背包 == 0 && (!(物品数据 is EquipmentInfo 装备数据) || 装备数据.NeedLevel > CurrentLevel || (装备数据.NeedGender != 0 && 装备数据.NeedGender != Gender) || (装备数据.NeedRace != GameObjectRace.通用 && 装备数据.NeedRace != Job) || 装备数据.NeedAttack > this[Stat.MaxDC] || 装备数据.NeedMagic > this[Stat.MaxMC] || 装备数据.NeedTaoism > this[Stat.MaxSC] || 装备数据.NeedPiercing > this[Stat.MaxNC] || 装备数据.NeedArchery > this[Stat.MaxBC] || (目标位置 == 0 && 装备数据.Weight > 最大腕力) || (目标位置 != 0 && 装备数据.Weight - 物品数据2?.Weight > 最大穿戴 - EquipmentWeight) || (目标位置 == 0 && 装备数据.Type != ItemType.Weapon) || (目标位置 == 1 && 装备数据.Type != ItemType.Armour) || (目标位置 == 2 && 装备数据.Type != ItemType.Cloak) || (目标位置 == 3 && 装备数据.Type != ItemType.Helmet) || (目标位置 == 4 && 装备数据.Type != ItemType.ShoulderPad) || (目标位置 == 5 && 装备数据.Type != ItemType.护腕) || (目标位置 == 6 && 装备数据.Type != ItemType.Belt) || (目标位置 == 7 && 装备数据.Type != ItemType.Boots) || (目标位置 == 8 && 装备数据.Type != ItemType.Necklace) || (目标位置 == 13 && 装备数据.Type != ItemType.Medal) || (目标位置 == 14 && 装备数据.Type != ItemType.玉佩) || (目标位置 == 15 && 装备数据.Type != ItemType.战具) || (目标位置 == 9 && 装备数据.Type != ItemType.Ring) || (目标位置 == 10 && 装备数据.Type != ItemType.Ring) || (目标位置 == 11 && 装备数据.Type != ItemType.Bracelet) || (目标位置 == 12 && 装备数据.Type != ItemType.Bracelet))) || (物品数据2 != null && 当前背包 == 0 && (!(物品数据2 is EquipmentInfo 装备数据2) || 装备数据2.NeedLevel > CurrentLevel || (装备数据2.NeedGender != 0 && 装备数据2.NeedGender != Gender) || (装备数据2.NeedRace != GameObjectRace.通用 && 装备数据2.NeedRace != Job) || 装备数据2.NeedAttack > this[Stat.MaxDC] || 装备数据2.NeedMagic > this[Stat.MaxMC] || 装备数据2.NeedTaoism > this[Stat.MaxSC] || 装备数据2.NeedPiercing > this[Stat.MaxNC] || 装备数据2.NeedArchery > this[Stat.MaxBC] || (当前位置 == 0 && 装备数据2.Weight > 最大腕力) || (当前位置 != 0 && 装备数据2.Weight - 物品数据?.Weight > 最大穿戴 - EquipmentWeight) || (当前位置 == 0 && 装备数据2.Type != ItemType.Weapon) || (当前位置 == 1 && 装备数据2.Type != ItemType.Armour) || (当前位置 == 2 && 装备数据2.Type != ItemType.Cloak) || (当前位置 == 3 && 装备数据2.Type != ItemType.Helmet) || (当前位置 == 4 && 装备数据2.Type != ItemType.ShoulderPad) || (当前位置 == 5 && 装备数据2.Type != ItemType.护腕) || (当前位置 == 6 && 装备数据2.Type != ItemType.Belt) || (当前位置 == 7 && 装备数据2.Type != ItemType.Boots) || (当前位置 == 8 && 装备数据2.Type != ItemType.Necklace) || (当前位置 == 13 && 装备数据2.Type != ItemType.Medal) || (当前位置 == 14 && 装备数据2.Type != ItemType.玉佩) || (当前位置 == 15 && 装备数据2.Type != ItemType.战具) || (当前位置 == 9 && 装备数据2.Type != ItemType.Ring) || (当前位置 == 10 && 装备数据2.Type != ItemType.Ring) || (当前位置 == 11 && 装备数据2.Type != ItemType.Bracelet) || (当前位置 == 12 && 装备数据2.Type != ItemType.Bracelet))))
+        if (物品数据.背包锁定 || (物品数据 == null && 物品数据2 == null) || (当前背包 == 0 && 目标背包 == 0) || (当前背包 == 0 && 目标背包 == 2) || (当前背包 == 2 && 目标背包 == 0) || (物品数据 != null && 当前背包 == 0 && (物品数据 as EquipmentInfo).CanRemove) || (物品数据2 != null && 目标背包 == 0 && (物品数据2 as EquipmentInfo).CanRemove) || (物品数据 != null && 目标背包 == 0 && (!(物品数据 is EquipmentInfo 装备数据) || 装备数据.NeedLevel > CurrentLevel || (装备数据.NeedGender != 0 && 装备数据.NeedGender != Gender) || (装备数据.NeedRace != GameObjectRace.通用 && 装备数据.NeedRace != Job) || 装备数据.NeedAttack > this[Stat.MaxDC] || 装备数据.NeedMagic > this[Stat.MaxMC] || 装备数据.NeedTaoism > this[Stat.MaxSC] || 装备数据.NeedPiercing > this[Stat.MaxNC] || 装备数据.NeedArchery > this[Stat.MaxBC] || (目标位置 == 0 && 装备数据.Weight > 最大腕力) || (目标位置 != 0 && 装备数据.Weight - 物品数据2?.Weight > 最大穿戴 - EquipmentWeight) || (目标位置 == 0 && 装备数据.Type != ItemType.Weapon) || (目标位置 == 1 && 装备数据.Type != ItemType.Armour) || (目标位置 == 2 && 装备数据.Type != ItemType.Cloak) || (目标位置 == 3 && 装备数据.Type != ItemType.Helmet) || (目标位置 == 4 && 装备数据.Type != ItemType.ShoulderPad) || (目标位置 == 5 && 装备数据.Type != ItemType.护腕) || (目标位置 == 6 && 装备数据.Type != ItemType.Belt) || (目标位置 == 7 && 装备数据.Type != ItemType.Boots) || (目标位置 == 8 && 装备数据.Type != ItemType.Necklace) || (目标位置 == 13 && 装备数据.Type != ItemType.Medal) || (目标位置 == 14 && 装备数据.Type != ItemType.玉佩) || (目标位置 == 15 && 装备数据.Type != ItemType.战具) || (目标位置 == 9 && 装备数据.Type != ItemType.Ring) || (目标位置 == 10 && 装备数据.Type != ItemType.Ring) || (目标位置 == 11 && 装备数据.Type != ItemType.Bracelet) || (目标位置 == 12 && 装备数据.Type != ItemType.Bracelet))) || (物品数据2 != null && 当前背包 == 0 && (!(物品数据2 is EquipmentInfo 装备数据2) || 装备数据2.NeedLevel > CurrentLevel || (装备数据2.NeedGender != 0 && 装备数据2.NeedGender != Gender) || (装备数据2.NeedRace != GameObjectRace.通用 && 装备数据2.NeedRace != Job) || 装备数据2.NeedAttack > this[Stat.MaxDC] || 装备数据2.NeedMagic > this[Stat.MaxMC] || 装备数据2.NeedTaoism > this[Stat.MaxSC] || 装备数据2.NeedPiercing > this[Stat.MaxNC] || 装备数据2.NeedArchery > this[Stat.MaxBC] || (当前位置 == 0 && 装备数据2.Weight > 最大腕力) || (当前位置 != 0 && 装备数据2.Weight - 物品数据?.Weight > 最大穿戴 - EquipmentWeight) || (当前位置 == 0 && 装备数据2.Type != ItemType.Weapon) || (当前位置 == 1 && 装备数据2.Type != ItemType.Armour) || (当前位置 == 2 && 装备数据2.Type != ItemType.Cloak) || (当前位置 == 3 && 装备数据2.Type != ItemType.Helmet) || (当前位置 == 4 && 装备数据2.Type != ItemType.ShoulderPad) || (当前位置 == 5 && 装备数据2.Type != ItemType.护腕) || (当前位置 == 6 && 装备数据2.Type != ItemType.Belt) || (当前位置 == 7 && 装备数据2.Type != ItemType.Boots) || (当前位置 == 8 && 装备数据2.Type != ItemType.Necklace) || (当前位置 == 13 && 装备数据2.Type != ItemType.Medal) || (当前位置 == 14 && 装备数据2.Type != ItemType.玉佩) || (当前位置 == 15 && 装备数据2.Type != ItemType.战具) || (当前位置 == 9 && 装备数据2.Type != ItemType.Ring) || (当前位置 == 10 && 装备数据2.Type != ItemType.Ring) || (当前位置 == 11 && 装备数据2.Type != ItemType.Bracelet) || (当前位置 == 12 && 装备数据2.Type != ItemType.Bracelet))))
         {
             return;
         }
@@ -24685,7 +24685,7 @@ public sealed class PlayerObject : MapObject
                             {
                                 幸运变化 = 1
                             });
-                            BonusStats[v7] = v7.装备属性;
+                            BonusStats[v7] = v7.Stats;
                             RefreshStats();
                             if (v7.Luck.V >= 5)
                             {
@@ -24703,7 +24703,7 @@ public sealed class PlayerObject : MapObject
                             {
                                 幸运变化 = -1
                             });
-                            BonusStats[v7] = v7.装备属性;
+                            BonusStats[v7] = v7.Stats;
                             RefreshStats();
                         }
                         else
@@ -24766,7 +24766,7 @@ public sealed class PlayerObject : MapObject
                             {
                                 幸运变化 = 1
                             });
-                            BonusStats[v5] = v5.装备属性;
+                            BonusStats[v5] = v5.Stats;
                             RefreshStats();
                             if (v5.Luck.V >= 5)
                             {
@@ -24784,7 +24784,7 @@ public sealed class PlayerObject : MapObject
                             {
                                 幸运变化 = -1
                             });
-                            BonusStats[v5] = v5.装备属性;
+                            BonusStats[v5] = v5.Stats;
                             RefreshStats();
                         }
                         else
@@ -24814,22 +24814,22 @@ public sealed class PlayerObject : MapObject
                             });
                             break;
                         }
-                        if (v4.第一铭文 != null)
+                        if (v4.FirstInscription != null)
                         {
-                            玩家装卸铭文(v4.第一铭文.SkillID, 0);
+                            玩家装卸铭文(v4.FirstInscription.SkillID, 0);
                         }
-                        if (v4.第二铭文 != null)
+                        if (v4.SecondInscription != null)
                         {
-                            玩家装卸铭文(v4.第二铭文.SkillID, 0);
+                            玩家装卸铭文(v4.SecondInscription.SkillID, 0);
                         }
                         v4.当前铭栏.V = (byte)((v4.当前铭栏.V == 0) ? 1u : 0u);
-                        if (v4.第一铭文 != null)
+                        if (v4.FirstInscription != null)
                         {
-                            玩家装卸铭文(v4.第一铭文.SkillID, v4.第一铭文.ID);
+                            玩家装卸铭文(v4.FirstInscription.SkillID, v4.FirstInscription.ID);
                         }
-                        if (v4.第二铭文 != null)
+                        if (v4.SecondInscription != null)
                         {
-                            玩家装卸铭文(v4.第二铭文.SkillID, v4.第二铭文.ID);
+                            玩家装卸铭文(v4.SecondInscription.SkillID, v4.SecondInscription.ID);
                         }
                         Enqueue(new SyncItemPacket
                         {
@@ -24838,8 +24838,8 @@ public sealed class PlayerObject : MapObject
                         Enqueue(new 双铭文位切换
                         {
                             当前栏位 = v4.当前铭栏.V,
-                            第一铭文 = (v4.第一铭文?.Index ?? 0),
-                            第二铭文 = (v4.第二铭文?.Index ?? 0)
+                            第一铭文 = (v4.FirstInscription?.Index ?? 0),
+                            第二铭文 = (v4.SecondInscription?.Index ?? 0)
                         });
                         Cooldowns[v.ID | 0x2000000] = SEngine.CurrentTime.AddMilliseconds(v.Cooldown);
                         Enqueue(new 添加技能冷却
@@ -24851,8 +24851,8 @@ public sealed class PlayerObject : MapObject
                         Enqueue(new 双铭文位切换
                         {
                             当前栏位 = v4.当前铭栏.V,
-                            第一铭文 = (v4.第一铭文?.Index ?? 0),
-                            第二铭文 = (v4.第二铭文?.Index ?? 0)
+                            第一铭文 = (v4.FirstInscription?.Index ?? 0),
+                            第二铭文 = (v4.SecondInscription?.Index ?? 0)
                         });
                         break;
                     }
@@ -25723,7 +25723,7 @@ public sealed class PlayerObject : MapObject
                 });
                 return;
             }
-            if (!装备数据.能否修理)
+            if (!装备数据.CanRepair)
             {
                 Enqueue(new GameErrorMessagePacket
                 {
@@ -26091,7 +26091,7 @@ public sealed class PlayerObject : MapObject
                     Connection.Disconnect(new Exception("错误操作: 玩家镶嵌灵石.  错误: 没有找到灵石"));
                     return;
                 }
-                if (装备数据.孔洞颜色.Count <= 装备孔位)
+                if (装备数据.SlotColor.Count <= 装备孔位)
                 {
                     Connection.Disconnect(new Exception("错误操作: 玩家镶嵌灵石.  错误: 装备孔位错误"));
                     return;
@@ -26101,7 +26101,7 @@ public sealed class PlayerObject : MapObject
                     Connection.Disconnect(new Exception("错误操作: 玩家镶嵌灵石.  错误: 已有镶嵌灵石"));
                     return;
                 }
-                if ((装备数据.孔洞颜色[装备孔位] == 装备孔洞颜色.绿色 && v2.Name.IndexOf("精绿灵石") == -1) || (装备数据.孔洞颜色[装备孔位] == 装备孔洞颜色.黄色 && v2.Name.IndexOf("守阳灵石") == -1) || (装备数据.孔洞颜色[装备孔位] == 装备孔洞颜色.蓝色 && v2.Name.IndexOf("蔚蓝灵石") == -1) || (装备数据.孔洞颜色[装备孔位] == 装备孔洞颜色.紫色 && v2.Name.IndexOf("纯紫灵石") == -1) || (装备数据.孔洞颜色[装备孔位] == 装备孔洞颜色.灰色 && v2.Name.IndexOf("深灰灵石") == -1) || (装备数据.孔洞颜色[装备孔位] == 装备孔洞颜色.橙色 && v2.Name.IndexOf("橙黄灵石") == -1) || (装备数据.孔洞颜色[装备孔位] == 装备孔洞颜色.红色 && v2.Name.IndexOf("驭朱灵石") == -1 && v2.Name.IndexOf("命朱灵石") == -1))
+                if ((装备数据.SlotColor[装备孔位] == EquipSlotColor.Green && v2.Name.IndexOf("精绿灵石") == -1) || (装备数据.SlotColor[装备孔位] == EquipSlotColor.Yellow && v2.Name.IndexOf("守阳灵石") == -1) || (装备数据.SlotColor[装备孔位] == EquipSlotColor.Blue && v2.Name.IndexOf("蔚蓝灵石") == -1) || (装备数据.SlotColor[装备孔位] == EquipSlotColor.Purple && v2.Name.IndexOf("纯紫灵石") == -1) || (装备数据.SlotColor[装备孔位] == EquipSlotColor.Grey && v2.Name.IndexOf("深灰灵石") == -1) || (装备数据.SlotColor[装备孔位] == EquipSlotColor.Orange && v2.Name.IndexOf("橙黄灵石") == -1) || (装备数据.SlotColor[装备孔位] == EquipSlotColor.Red && v2.Name.IndexOf("驭朱灵石") == -1 && v2.Name.IndexOf("命朱灵石") == -1))
                 {
                     Connection.Disconnect(new Exception("错误操作: 玩家镶嵌灵石.  错误: 指定灵石错误"));
                     return;
@@ -26337,20 +26337,20 @@ public sealed class PlayerObject : MapObject
                     洗练职业 = GameObjectRace.DragonLance;
                     break;
             }
-            if (装备数据.第一铭文 == null)
+            if (装备数据.FirstInscription == null)
             {
-                装备数据.第一铭文 = InscriptionSkill.RandomRefinement(洗练职业);
+                装备数据.FirstInscription = InscriptionSkill.RandomRefinement(洗练职业);
             }
-            else if (装备数据.传承材料 != 0 && (装备数据.双铭文点 += SEngine.Random.Next(1, 6)) >= 1200 && 装备数据.第二铭文 == null)
+            else if (装备数据.传承材料 != 0 && (装备数据.双铭文点 += SEngine.Random.Next(1, 6)) >= 1200 && 装备数据.SecondInscription == null)
             {
                 InscriptionSkill 铭文技能4;
                 do
                 {
-                    InscriptionSkill 铭文技能2 = (装备数据.第二铭文 = InscriptionSkill.RandomRefinement(洗练职业));
+                    InscriptionSkill 铭文技能2 = (装备数据.SecondInscription = InscriptionSkill.RandomRefinement(洗练职业));
                     InscriptionSkill 铭文技能3 = 铭文技能2;
                     铭文技能4 = 铭文技能3;
                 }
-                while (铭文技能4.SkillID == 装备数据.第一铭文?.SkillID);
+                while (铭文技能4.SkillID == 装备数据.FirstInscription?.SkillID);
                 if (Config.CurrentVersion >= 1)
                 {
                     int num = SEngine.Random.Next(100);
@@ -26359,20 +26359,20 @@ public sealed class PlayerObject : MapObject
                         if (Character.铭文洗练次数2.V == Config.铭文法师2挡1次数 && num <= Config.铭文法师2挡1概率)
                         {
                             Character.铭文洗练次数2.V = 0;
-                            装备数据.第一铭文.SkillID = (ushort)Config.铭文法师2挡技能编号;
-                            装备数据.第一铭文.ID = (byte)Config.铭文法师2挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文法师2挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Config.铭文法师2挡技能铭文;
                         }
                         if (Character.铭文洗练次数2.V == Config.铭文法师2挡2次数 && num <= Config.铭文法师2挡2概率)
                         {
                             Character.铭文洗练次数2.V = 0;
-                            装备数据.第一铭文.SkillID = (ushort)Config.铭文法师2挡技能编号;
-                            装备数据.第一铭文.ID = (byte)Config.铭文法师2挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文法师2挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Config.铭文法师2挡技能铭文;
                         }
                         if (Character.铭文洗练次数2.V >= Config.铭文法师2挡3次数 && 100 == Config.铭文法师2挡3概率)
                         {
                             Character.铭文洗练次数2.V = 0;
-                            装备数据.第一铭文.SkillID = (ushort)Config.铭文法师2挡技能编号;
-                            装备数据.第一铭文.ID = (byte)Config.铭文法师2挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文法师2挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Config.铭文法师2挡技能铭文;
                         }
                     }
                     if (Job == GameObjectRace.Warrior && Config.铭文战士保底开关 == 1)
@@ -26380,20 +26380,20 @@ public sealed class PlayerObject : MapObject
                         if (Character.铭文洗练次数2.V == Config.铭文战士2挡1次数 && num <= Config.铭文战士2挡1概率)
                         {
                             Character.铭文洗练次数2.V = 0;
-                            装备数据.第一铭文.SkillID = (ushort)Config.铭文战士2挡技能编号;
-                            装备数据.第一铭文.ID = (byte)Config.铭文战士2挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文战士2挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Config.铭文战士2挡技能铭文;
                         }
                         if (Character.铭文洗练次数2.V == Config.铭文战士2挡2次数 && num <= Config.铭文战士2挡2概率)
                         {
                             Character.铭文洗练次数2.V = 0;
-                            装备数据.第一铭文.SkillID = (ushort)Config.铭文战士2挡技能编号;
-                            装备数据.第一铭文.ID = (byte)Config.铭文战士2挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文战士2挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Config.铭文战士2挡技能铭文;
                         }
                         if (Character.铭文洗练次数2.V >= Config.铭文战士2挡3次数 && 100 == Config.铭文战士2挡3概率)
                         {
                             Character.铭文洗练次数2.V = 0;
-                            装备数据.第一铭文.SkillID = (ushort)Config.铭文战士2挡技能编号;
-                            装备数据.第一铭文.ID = (byte)Config.铭文战士2挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文战士2挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Config.铭文战士2挡技能铭文;
                         }
                     }
                     if (Job == GameObjectRace.Taoist && Config.铭文道士保底开关 == 1)
@@ -26401,20 +26401,20 @@ public sealed class PlayerObject : MapObject
                         if (Character.铭文洗练次数2.V == Config.铭文道士2挡1次数 && num <= Config.铭文道士2挡1概率)
                         {
                             Character.铭文洗练次数2.V = 0;
-                            装备数据.第一铭文.SkillID = (ushort)Config.铭文道士2挡技能编号;
-                            装备数据.第一铭文.ID = (byte)Config.铭文道士2挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文道士2挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Config.铭文道士2挡技能铭文;
                         }
                         if (Character.铭文洗练次数2.V == Config.铭文道士2挡2次数 && num <= Config.铭文道士2挡2概率)
                         {
                             Character.铭文洗练次数2.V = 0;
-                            装备数据.第一铭文.SkillID = (ushort)Config.铭文道士2挡技能编号;
-                            装备数据.第一铭文.ID = (byte)Config.铭文道士2挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文道士2挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Config.铭文道士2挡技能铭文;
                         }
                         if (Character.铭文洗练次数2.V >= Config.铭文道士2挡3次数 && 100 == Config.铭文道士2挡3概率)
                         {
                             Character.铭文洗练次数2.V = 0;
-                            装备数据.第一铭文.SkillID = (ushort)Config.铭文道士2挡技能编号;
-                            装备数据.第一铭文.ID = (byte)Config.铭文道士2挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文道士2挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Config.铭文道士2挡技能铭文;
                         }
                     }
                     if (Job == GameObjectRace.Assassin && Config.铭文刺客保底开关 == 1)
@@ -26422,20 +26422,20 @@ public sealed class PlayerObject : MapObject
                         if (Character.铭文洗练次数2.V == Config.铭文刺客2挡1次数 && num <= Config.铭文刺客2挡1概率)
                         {
                             Character.铭文洗练次数2.V = 0;
-                            装备数据.第一铭文.SkillID = (ushort)Config.铭文刺客2挡技能编号;
-                            装备数据.第一铭文.ID = (byte)Config.铭文刺客2挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文刺客2挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Config.铭文刺客2挡技能铭文;
                         }
                         if (Character.铭文洗练次数2.V == Config.铭文刺客2挡2次数 && num <= Config.铭文刺客2挡2概率)
                         {
                             Character.铭文洗练次数2.V = 0;
-                            装备数据.第一铭文.SkillID = (ushort)Config.铭文刺客2挡技能编号;
-                            装备数据.第一铭文.ID = (byte)Config.铭文刺客2挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文刺客2挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Config.铭文刺客2挡技能铭文;
                         }
                         if (Character.铭文洗练次数2.V >= Config.铭文刺客2挡3次数 && 100 == Config.铭文刺客2挡3概率)
                         {
                             Character.铭文洗练次数2.V = 0;
-                            装备数据.第一铭文.SkillID = (ushort)Config.铭文刺客2挡技能编号;
-                            装备数据.第一铭文.ID = (byte)Config.铭文刺客2挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文刺客2挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Config.铭文刺客2挡技能铭文;
                         }
                     }
                     if (Job == GameObjectRace.Archer && Config.铭文弓手保底开关 == 1)
@@ -26443,20 +26443,20 @@ public sealed class PlayerObject : MapObject
                         if (Character.铭文洗练次数2.V == Config.铭文弓手2挡1次数 && num <= Config.铭文弓手2挡1概率)
                         {
                             Character.铭文洗练次数2.V = 0;
-                            装备数据.第一铭文.SkillID = (ushort)Config.铭文弓手2挡技能编号;
-                            装备数据.第一铭文.ID = (byte)Config.铭文弓手2挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文弓手2挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Config.铭文弓手2挡技能铭文;
                         }
                         if (Character.铭文洗练次数2.V == Config.铭文弓手2挡2次数 && num <= Config.铭文弓手2挡2概率)
                         {
                             Character.铭文洗练次数2.V = 0;
-                            装备数据.第一铭文.SkillID = (ushort)Config.铭文弓手2挡技能编号;
-                            装备数据.第一铭文.ID = (byte)Config.铭文弓手2挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文弓手2挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Config.铭文弓手2挡技能铭文;
                         }
                         if (Character.铭文洗练次数2.V >= Config.铭文弓手2挡3次数 && 100 == Config.铭文弓手2挡3概率)
                         {
                             Character.铭文洗练次数2.V = 0;
-                            装备数据.第一铭文.SkillID = (ushort)Config.铭文弓手2挡技能编号;
-                            装备数据.第一铭文.ID = (byte)Config.铭文弓手2挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文弓手2挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Config.铭文弓手2挡技能铭文;
                         }
                     }
                     if (Job == GameObjectRace.DragonLance && Config.铭文龙枪保底开关 == 1)
@@ -26464,40 +26464,40 @@ public sealed class PlayerObject : MapObject
                         if (Character.铭文洗练次数2.V == Config.铭文龙枪2挡1次数 && num <= Config.铭文龙枪2挡1概率)
                         {
                             Character.铭文洗练次数2.V = 0;
-                            装备数据.第一铭文.SkillID = (ushort)Config.铭文龙枪2挡技能编号;
-                            装备数据.第一铭文.ID = (byte)Config.铭文龙枪2挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文龙枪2挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Config.铭文龙枪2挡技能铭文;
                         }
                         if (Character.铭文洗练次数2.V == Config.铭文龙枪2挡2次数 && num <= Config.铭文龙枪2挡2概率)
                         {
                             Character.铭文洗练次数2.V = 0;
-                            装备数据.第一铭文.SkillID = (ushort)Config.铭文龙枪2挡技能编号;
-                            装备数据.第一铭文.ID = (byte)Config.铭文龙枪2挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文龙枪2挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Config.铭文龙枪2挡技能铭文;
                         }
                         if (Character.铭文洗练次数2.V >= Config.铭文龙枪2挡3次数 && 100 == Config.铭文龙枪2挡3概率)
                         {
                             Character.铭文洗练次数2.V = 0;
-                            装备数据.第一铭文.SkillID = (ushort)Config.铭文龙枪2挡技能编号;
-                            装备数据.第一铭文.ID = (byte)Config.铭文龙枪2挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文龙枪2挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Config.铭文龙枪2挡技能铭文;
                         }
                     }
                 }
-                玩家装卸铭文(装备数据.第二铭文.SkillID, 装备数据.第二铭文.ID);
+                玩家装卸铭文(装备数据.SecondInscription.SkillID, 装备数据.SecondInscription.ID);
                 Character.铭文洗练次数2.V++;
             }
             else
             {
                 if (装备类型 == 0)
                 {
-                    玩家装卸铭文(装备数据.第一铭文.SkillID, 0);
+                    玩家装卸铭文(装备数据.FirstInscription.SkillID, 0);
                 }
                 InscriptionSkill 铭文技能7;
                 do
                 {
-                    InscriptionSkill 铭文技能2 = (装备数据.第一铭文 = InscriptionSkill.RandomRefinement(洗练职业));
+                    InscriptionSkill 铭文技能2 = (装备数据.FirstInscription = InscriptionSkill.RandomRefinement(洗练职业));
                     InscriptionSkill 铭文技能6 = 铭文技能2;
                     铭文技能7 = 铭文技能6;
                 }
-                while (铭文技能7.SkillID == 装备数据.第二铭文?.SkillID);
+                while (铭文技能7.SkillID == 装备数据.SecondInscription?.SkillID);
                 if (Config.CurrentVersion >= 1)
                 {
                     int num2 = SEngine.Random.Next(10000);
@@ -26506,20 +26506,20 @@ public sealed class PlayerObject : MapObject
                         if (Character.铭文洗练次数1.V == Config.铭文法师1挡1次数 && num2 <= Config.铭文法师1挡1概率)
                         {
                             Character.铭文洗练次数1.V = 0;
-                            装备数据.第一铭文.SkillID = (ushort)Config.铭文法师1挡技能编号;
-                            装备数据.第一铭文.ID = (byte)Config.铭文法师1挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文法师1挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Config.铭文法师1挡技能铭文;
                         }
                         if (Character.铭文洗练次数1.V == Config.铭文法师1挡2次数 && num2 <= Config.铭文法师1挡2概率)
                         {
                             Character.铭文洗练次数1.V = 0;
-                            装备数据.第一铭文.SkillID = (ushort)Config.铭文法师1挡技能编号;
-                            装备数据.第一铭文.ID = (byte)Config.铭文法师1挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文法师1挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Config.铭文法师1挡技能铭文;
                         }
                         if (Character.铭文洗练次数1.V >= Config.铭文法师1挡3次数 && 100 == Config.铭文法师1挡3概率)
                         {
                             Character.铭文洗练次数1.V = 0;
-                            装备数据.第一铭文.SkillID = (ushort)Config.铭文法师1挡技能编号;
-                            装备数据.第一铭文.ID = (byte)Config.铭文法师1挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文法师1挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Config.铭文法师1挡技能铭文;
                         }
                     }
                     if (Job == GameObjectRace.Warrior && Config.铭文战士保底开关 == 1)
@@ -26527,20 +26527,20 @@ public sealed class PlayerObject : MapObject
                         if (Character.铭文洗练次数1.V == Config.铭文战士1挡1次数 && num2 <= Config.铭文战士1挡1概率)
                         {
                             Character.铭文洗练次数1.V = 0;
-                            装备数据.第一铭文.SkillID = (ushort)Config.铭文战士1挡技能编号;
-                            装备数据.第一铭文.ID = (byte)Config.铭文战士1挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文战士1挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Config.铭文战士1挡技能铭文;
                         }
                         if (Character.铭文洗练次数1.V == Config.铭文战士1挡2次数 && num2 <= Config.铭文战士1挡2概率)
                         {
                             Character.铭文洗练次数1.V = 0;
-                            装备数据.第一铭文.SkillID = (ushort)Config.铭文战士1挡技能编号;
-                            装备数据.第一铭文.ID = (byte)Config.铭文战士1挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文战士1挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Config.铭文战士1挡技能铭文;
                         }
                         if (Character.铭文洗练次数1.V >= Config.铭文战士1挡3次数 && 100 == Config.铭文战士1挡3概率)
                         {
                             Character.铭文洗练次数1.V = 0;
-                            装备数据.第一铭文.SkillID = (ushort)Config.铭文战士1挡技能编号;
-                            装备数据.第一铭文.ID = (byte)Config.铭文战士1挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文战士1挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Config.铭文战士1挡技能铭文;
                         }
                     }
                     if (Job == GameObjectRace.Taoist && Config.铭文道士保底开关 == 1)
@@ -26548,20 +26548,20 @@ public sealed class PlayerObject : MapObject
                         if (Character.铭文洗练次数1.V == Config.铭文道士1挡1次数 && num2 <= Config.铭文道士1挡1概率)
                         {
                             Character.铭文洗练次数1.V = 0;
-                            装备数据.第一铭文.SkillID = (ushort)Config.铭文道士1挡技能编号;
-                            装备数据.第一铭文.ID = (byte)Config.铭文道士1挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文道士1挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Config.铭文道士1挡技能铭文;
                         }
                         if (Character.铭文洗练次数1.V == Config.铭文道士1挡2次数 && num2 <= Config.铭文道士1挡2概率)
                         {
                             Character.铭文洗练次数1.V = 0;
-                            装备数据.第一铭文.SkillID = (ushort)Config.铭文道士1挡技能编号;
-                            装备数据.第一铭文.ID = (byte)Config.铭文道士1挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文道士1挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Config.铭文道士1挡技能铭文;
                         }
                         if (Character.铭文洗练次数1.V >= Config.铭文道士1挡3次数 && 100 == Config.铭文道士1挡3概率)
                         {
                             Character.铭文洗练次数1.V = 0;
-                            装备数据.第一铭文.SkillID = (ushort)Config.铭文道士1挡技能编号;
-                            装备数据.第一铭文.ID = (byte)Config.铭文道士1挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文道士1挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Config.铭文道士1挡技能铭文;
                         }
                     }
                     if (Job == GameObjectRace.Assassin && Config.铭文刺客保底开关 == 1)
@@ -26569,20 +26569,20 @@ public sealed class PlayerObject : MapObject
                         if (Character.铭文洗练次数1.V == Config.铭文刺客1挡1次数 && num2 <= Config.铭文刺客1挡1概率)
                         {
                             Character.铭文洗练次数1.V = 0;
-                            装备数据.第一铭文.SkillID = (ushort)Config.铭文刺客1挡技能编号;
-                            装备数据.第一铭文.ID = (byte)Config.铭文刺客1挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文刺客1挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Config.铭文刺客1挡技能铭文;
                         }
                         if (Character.铭文洗练次数1.V == Config.铭文刺客1挡2次数 && num2 <= Config.铭文刺客1挡2概率)
                         {
                             Character.铭文洗练次数1.V = 0;
-                            装备数据.第一铭文.SkillID = (ushort)Config.铭文刺客1挡技能编号;
-                            装备数据.第一铭文.ID = (byte)Config.铭文刺客1挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文刺客1挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Config.铭文刺客1挡技能铭文;
                         }
                         if (Character.铭文洗练次数1.V >= Config.铭文刺客1挡3次数 && 100 == Config.铭文刺客1挡3概率)
                         {
                             Character.铭文洗练次数1.V = 0;
-                            装备数据.第一铭文.SkillID = (ushort)Config.铭文刺客1挡技能编号;
-                            装备数据.第一铭文.ID = (byte)Config.铭文刺客1挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文刺客1挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Config.铭文刺客1挡技能铭文;
                         }
                     }
                     if (Job == GameObjectRace.Archer && Config.铭文弓手保底开关 == 1)
@@ -26590,20 +26590,20 @@ public sealed class PlayerObject : MapObject
                         if (Character.铭文洗练次数1.V == Config.铭文弓手1挡1次数 && num2 <= Config.铭文弓手1挡1概率)
                         {
                             Character.铭文洗练次数1.V = 0;
-                            装备数据.第一铭文.SkillID = (ushort)Config.铭文弓手1挡技能编号;
-                            装备数据.第一铭文.ID = (byte)Config.铭文弓手1挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文弓手1挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Config.铭文弓手1挡技能铭文;
                         }
                         if (Character.铭文洗练次数1.V == Config.铭文弓手1挡2次数 && num2 <= Config.铭文弓手1挡2概率)
                         {
                             Character.铭文洗练次数1.V = 0;
-                            装备数据.第一铭文.SkillID = (ushort)Config.铭文弓手1挡技能编号;
-                            装备数据.第一铭文.ID = (byte)Config.铭文弓手1挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文弓手1挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Config.铭文弓手1挡技能铭文;
                         }
                         if (Character.铭文洗练次数1.V >= Config.铭文弓手1挡3次数 && 100 == Config.铭文弓手1挡3概率)
                         {
                             Character.铭文洗练次数1.V = 0;
-                            装备数据.第一铭文.SkillID = (ushort)Config.铭文弓手1挡技能编号;
-                            装备数据.第一铭文.ID = (byte)Config.铭文弓手1挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文弓手1挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Config.铭文弓手1挡技能铭文;
                         }
                     }
                     if (Job == GameObjectRace.DragonLance && Config.铭文龙枪保底开关 == 1)
@@ -26611,26 +26611,26 @@ public sealed class PlayerObject : MapObject
                         if (Character.铭文洗练次数1.V == Config.铭文龙枪1挡1次数 && num2 <= Config.铭文龙枪1挡1概率)
                         {
                             Character.铭文洗练次数1.V = 0;
-                            装备数据.第一铭文.SkillID = (ushort)Config.铭文龙枪1挡技能编号;
-                            装备数据.第一铭文.ID = (byte)Config.铭文龙枪1挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文龙枪1挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Config.铭文龙枪1挡技能铭文;
                         }
                         if (Character.铭文洗练次数1.V == Config.铭文龙枪1挡2次数 && num2 <= Config.铭文龙枪1挡2概率)
                         {
                             Character.铭文洗练次数1.V = 0;
-                            装备数据.第一铭文.SkillID = (ushort)Config.铭文龙枪1挡技能编号;
-                            装备数据.第一铭文.ID = (byte)Config.铭文龙枪1挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文龙枪1挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Config.铭文龙枪1挡技能铭文;
                         }
                         if (Character.铭文洗练次数1.V >= Config.铭文龙枪1挡3次数 && 100 == Config.铭文龙枪1挡3概率)
                         {
                             Character.铭文洗练次数1.V = 0;
-                            装备数据.第一铭文.SkillID = (ushort)Config.铭文龙枪1挡技能编号;
-                            装备数据.第一铭文.ID = (byte)Config.铭文龙枪1挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文龙枪1挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Config.铭文龙枪1挡技能铭文;
                         }
                     }
                 }
                 if (装备类型 == 0)
                 {
-                    玩家装卸铭文(装备数据.第一铭文.SkillID, 装备数据.第一铭文.ID);
+                    玩家装卸铭文(装备数据.FirstInscription.SkillID, 装备数据.FirstInscription.ID);
                     Character.铭文洗练次数1.V++;
                 }
             }
@@ -26640,8 +26640,8 @@ public sealed class PlayerObject : MapObject
             });
             Enqueue(new 玩家普通洗练
             {
-                铭文位一 = (装备数据.第一铭文?.Index ?? 0),
-                铭文位二 = (装备数据.第二铭文?.Index ?? 0)
+                铭文位一 = (装备数据.FirstInscription?.Index ?? 0),
+                铭文位二 = (装备数据.SecondInscription?.Index ?? 0)
             });
         }
     }
@@ -26688,7 +26688,7 @@ public sealed class PlayerObject : MapObject
                 Connection.Disconnect(new Exception("错误操作: 普通铭文洗练.  错误: 物品类型错误."));
                 return;
             }
-            if (装备数据.第二铭文 == null)
+            if (装备数据.SecondInscription == null)
             {
                 Connection.Disconnect(new Exception("错误操作: 普通铭文洗练.  错误: 第二铭文为空."));
                 return;
@@ -26739,16 +26739,16 @@ public sealed class PlayerObject : MapObject
                     race = GameObjectRace.DragonLance;
                     break;
             }
-            while ((洗练铭文 = InscriptionSkill.RandomRefinement(race)).SkillID == 装备数据.最优铭文.SkillID)
+            while ((洗练铭文 = InscriptionSkill.RandomRefinement(race)).SkillID == 装备数据.BestInscription.SkillID)
             {
             }
             Character.铭文洗练次数3.V++;
-            if (装备数据.最优铭文 == 装备数据.第一铭文)
+            if (装备数据.BestInscription == 装备数据.FirstInscription)
             {
                 Enqueue(new 玩家高级洗练
                 {
                     洗练结果 = 1,
-                    铭文位一 = 装备数据.最优铭文.Index,
+                    铭文位一 = 装备数据.BestInscription.Index,
                     铭文位二 = 洗练铭文.Index
                 });
             }
@@ -26758,7 +26758,7 @@ public sealed class PlayerObject : MapObject
                 {
                     洗练结果 = 1,
                     铭文位一 = 洗练铭文.Index,
-                    铭文位二 = 装备数据.最优铭文.Index
+                    铭文位二 = 装备数据.BestInscription.Index
                 });
             }
         }
@@ -26807,7 +26807,7 @@ public sealed class PlayerObject : MapObject
                 Connection.Disconnect(new Exception("错误操作: 普通铭文洗练.  错误: 物品类型错误."));
                 return;
             }
-            if (装备数据.第二铭文 == null)
+            if (装备数据.SecondInscription == null)
             {
                 Connection.Disconnect(new Exception("错误操作: 普通铭文洗练.  错误: 第二铭文为空."));
                 return;
@@ -26858,13 +26858,13 @@ public sealed class PlayerObject : MapObject
                     洗练职业 = GameObjectRace.DragonLance;
                     break;
             }
-            while ((洗练铭文 = InscriptionSkill.RandomRefinement(洗练职业)).SkillID == 装备数据.最差铭文.SkillID)
+            while ((洗练铭文 = InscriptionSkill.RandomRefinement(洗练职业)).SkillID == 装备数据.WorstInscription.SkillID)
             {
             }
             Enqueue(new 玩家高级洗练
             {
                 洗练结果 = 1,
-                铭文位一 = 装备数据.最差铭文.Index,
+                铭文位一 = 装备数据.WorstInscription.Index,
                 铭文位二 = 洗练铭文.Index
             });
         }
@@ -26904,16 +26904,16 @@ public sealed class PlayerObject : MapObject
             Connection.Disconnect(new Exception("错误操作: 普通铭文洗练.  错误: 物品类型错误."));
             return;
         }
-        if (装备数据.第二铭文 == null)
+        if (装备数据.SecondInscription == null)
         {
             Connection.Disconnect(new Exception("错误操作: 普通铭文洗练.  错误: 第二铭文为空."));
             return;
         }
         if (装备类型 == 0)
         {
-            玩家装卸铭文(装备数据.最差铭文.SkillID, 0);
+            玩家装卸铭文(装备数据.WorstInscription.SkillID, 0);
         }
-        装备数据.最差铭文 = 洗练铭文;
+        装备数据.WorstInscription = 洗练铭文;
         if (装备类型 == 0)
         {
             玩家装卸铭文(洗练铭文.SkillID, 洗练铭文.ID);
@@ -26962,16 +26962,16 @@ public sealed class PlayerObject : MapObject
             Connection.Disconnect(new Exception("错误操作: 普通铭文洗练.  错误: 物品类型错误."));
             return;
         }
-        if (装备数据.第二铭文 == null)
+        if (装备数据.SecondInscription == null)
         {
             Connection.Disconnect(new Exception("错误操作: 普通铭文洗练.  错误: 第二铭文为空."));
             return;
         }
         if (装备类型 == 0)
         {
-            玩家装卸铭文(装备数据.最优铭文.SkillID, 0);
+            玩家装卸铭文(装备数据.BestInscription.SkillID, 0);
         }
-        装备数据.最优铭文 = 洗练铭文;
+        装备数据.BestInscription = 洗练铭文;
         if (装备类型 == 0)
         {
             玩家装卸铭文(洗练铭文.SkillID, 洗练铭文.ID);
@@ -27051,8 +27051,8 @@ public sealed class PlayerObject : MapObject
                 Enqueue(new 双铭文位切换
                 {
                     当前栏位 = 装备数据.当前铭栏.V,
-                    第一铭文 = (装备数据.第一铭文?.Index ?? 0),
-                    第二铭文 = (装备数据.第二铭文?.Index ?? 0)
+                    第一铭文 = (装备数据.FirstInscription?.Index ?? 0),
+                    第二铭文 = (装备数据.SecondInscription?.Index ?? 0)
                 });
             }
         }
@@ -27108,8 +27108,8 @@ public sealed class PlayerObject : MapObject
             Enqueue(new 双铭文位切换
             {
                 当前栏位 = 装备数据.当前铭栏.V,
-                第一铭文 = (装备数据.第一铭文?.Index ?? 0),
-                第二铭文 = (装备数据.第二铭文?.Index ?? 0)
+                第一铭文 = (装备数据.FirstInscription?.Index ?? 0),
+                第二铭文 = (装备数据.SecondInscription?.Index ?? 0)
             });
         }
         else
@@ -27138,7 +27138,7 @@ public sealed class PlayerObject : MapObject
                 {
                     if (装备数据.传承材料 != 0 && 装备数据2.传承材料 != 0 && 装备数据.传承材料 == 装备数据2.传承材料)
                     {
-                        if (装备数据.第二铭文 != null && 装备数据2.第二铭文 != null)
+                        if (装备数据.SecondInscription != null && 装备数据2.SecondInscription != null)
                         {
                             if (Gold < num)
                             {
@@ -27162,10 +27162,10 @@ public sealed class PlayerObject : MapObject
                                 Description = 全部货币描述()
                             });
                             ConsumeItem(num2, 物品列表);
-                            装备数据2.第一铭文 = 装备数据.第一铭文;
-                            装备数据2.第二铭文 = 装备数据.第二铭文;
-                            装备数据.铭文技能.Remove((byte)(装备数据.当前铭栏.V * 2));
-                            装备数据.铭文技能.Remove((byte)(装备数据.当前铭栏.V * 2 + 1));
+                            装备数据2.FirstInscription = 装备数据.FirstInscription;
+                            装备数据2.SecondInscription = 装备数据.SecondInscription;
+                            装备数据.InscriptionSkills.Remove((byte)(装备数据.当前铭栏.V * 2));
+                            装备数据.InscriptionSkills.Remove((byte)(装备数据.当前铭栏.V * 2 + 1));
                             Enqueue(new SyncItemPacket
                             {
                                 Description = 装备数据.ToArray()
@@ -27241,7 +27241,7 @@ public sealed class PlayerObject : MapObject
         }
         else if (v.MaxDura.V > 3000 && (float)v.MaxDura.V > (float)v.默认持久 * 0.5f)
         {
-            if (v.升级次数.V >= 9)
+            if (v.UpgradeCount.V >= 9)
             {
                 Enqueue(new GameErrorMessagePacket
                 {
@@ -27375,7 +27375,7 @@ public sealed class PlayerObject : MapObject
                     };
                     foreach (EquipmentInfo value in dictionary.Values)
                     {
-                        Stats 装备属性 = value.装备属性;
+                        Stats 装备属性 = value.Stats;
                         int num2 = 0;
                         if ((num2 = (装备属性.ContainsKey(Stat.MinDC) ? 装备属性[Stat.MinDC] : 0) + (装备属性.ContainsKey(Stat.MaxDC) ? 装备属性[Stat.MaxDC] : 0)) > 0)
                         {
@@ -27413,29 +27413,29 @@ public sealed class PlayerObject : MapObject
                     float num3 = Math.Min(10f, (float)((list2.Count < 1) ? 1 : list2[0].Value) + (float)((list2.Count >= 2) ? list2[1].Value : 0) / 3f);
                     int num4 = dictionary2.Values.Sum((ItemInfo x) => x.Dura.V);
                     float num5 = Math.Max(0f, num4 - 146);
-                    int num6 = 90 - v.升级次数.V * 10;
+                    int num6 = 90 - v.UpgradeCount.V * 10;
                     float 概率 = (num3 * (float)num6 * 0.001f + num5 * 0.01f) * (float)Config.锻造成功倍数;
                     Character.升级装备.V = v;
                     Character.取回时间.V = SEngine.CurrentTime.AddHours(2.0);
                     if (Character.升级成功.V = Compute.CalculateProbability(概率))
                     {
-                        v.升级次数.V++;
+                        v.UpgradeCount.V++;
                         switch (key)
                         {
                             case 0:
-                                v.升级攻击.V++;
+                                v.DCPower.V++;
                                 break;
                             case 1:
-                                v.升级魔法.V++;
+                                v.MCPower.V++;
                                 break;
                             case 2:
-                                v.升级道术.V++;
+                                v.SCPower.V++;
                                 break;
                             case 3:
-                                v.升级刺术.V++;
+                                v.NCPower.V++;
                                 break;
                             case 4:
-                                v.升级弓术.V++;
+                                v.BCPower.V++;
                                 break;
                         }
                     }
@@ -27511,9 +27511,9 @@ public sealed class PlayerObject : MapObject
                 });
                 Enqueue(new 取回升级武器());
                 Enqueue(new 武器升级结果());
-                if (Character.升级装备.V.升级次数.V >= 5)
+                if (Character.升级装备.V.UpgradeCount.V >= 5)
                 {
-                    NetworkManager.SendAnnouncement($"[{Name}] 成功将 [{Character.升级装备.V.Name}] 升级到 {Character.升级装备.V.升级次数.V} 级.");
+                    NetworkManager.SendAnnouncement($"[{Name}] 成功将 [{Character.升级装备.V.Name}] 升级到 {Character.升级装备.V.UpgradeCount.V} 级.");
                 }
                 Character.升级装备.V = null;
                 return Character.升级成功.V;
@@ -27540,9 +27540,9 @@ public sealed class PlayerObject : MapObject
                 });
                 Enqueue(new 取回升级武器());
                 Enqueue(new 武器升级结果());
-                if (Character.升级装备.V.升级次数.V >= 5)
+                if (Character.升级装备.V.UpgradeCount.V >= 5)
                 {
-                    NetworkManager.SendAnnouncement($"[{Name}] 成功将 [{Character.升级装备.V.Name}] 升级到 {Character.升级装备.V.升级次数.V} 级.");
+                    NetworkManager.SendAnnouncement($"[{Name}] 成功将 [{Character.升级装备.V.Name}] 升级到 {Character.升级装备.V.UpgradeCount.V} 级.");
                 }
                 Character.升级装备.V = null;
                 return Character.升级成功.V;
@@ -28185,7 +28185,7 @@ public sealed class PlayerObject : MapObject
                 摆摊状态 = player.StallState,
                 摊位名字 = player.摊位名字,
                 称号编号 = player.CurrentTitle,
-                武器等级 = (byte)(player.Equipment.TryGetValue(0, out var v) ? (v?.升级次数.V ?? 0) : 0),
+                武器等级 = (byte)(player.Equipment.TryGetValue(0, out var v) ? (v?.UpgradeCount.V ?? 0) : 0),
                 身上武器 = (v?.Item.V.ID ?? 0),
                 身上衣服 = (player.Equipment.TryGetValue(1, out var v2) ? (v2?.Item?.V?.ID).GetValueOrDefault() : 0),
                 身上披风 = (player.Equipment.TryGetValue(2, out var v3) ? (v3?.Item?.V?.ID).GetValueOrDefault() : 0),

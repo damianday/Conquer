@@ -55,9 +55,9 @@ public class ItemInfo : DBObject
                         int num2 = 游戏装备.MaxDura * 1000;
                         int num3 = 游戏装备.SalePrice;
                         int num4 = Math.Max((sbyte)0, 装备数据2.Luck.V);
-                        int num5 = 装备数据2.升级攻击.V * 100 + 装备数据2.升级魔法.V * 100 + 装备数据2.升级道术.V * 100 + 装备数据2.升级刺术.V * 100 + 装备数据2.升级弓术.V * 100;
+                        int num5 = 装备数据2.DCPower.V * 100 + 装备数据2.MCPower.V * 100 + 装备数据2.SCPower.V * 100 + 装备数据2.NCPower.V * 100 + 装备数据2.BCPower.V * 100;
                         int num6 = 0;
-                        foreach (InscriptionSkill value in 装备数据2.铭文技能.Values)
+                        foreach (InscriptionSkill value in 装备数据2.InscriptionSkills.Values)
                         {
                             if (value != null)
                             {
@@ -65,7 +65,7 @@ public class ItemInfo : DBObject
                             }
                         }
                         int num7 = 0;
-                        foreach (RandomStats item in 装备数据2.随机属性)
+                        foreach (RandomStats item in 装备数据2.RandomStats)
                         {
                             num7 += item.CombatBonus * 100;
                         }

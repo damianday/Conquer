@@ -1100,7 +1100,7 @@ public sealed class CharacterInfo : DBObject
         writer.Write((byte)0);
         writer.Write(CurrentLevel);
         writer.Write(CurrentMap.V);
-        writer.Write(Equipment[0]?.升级次数.V ?? 0);
+        writer.Write(Equipment[0]?.UpgradeCount.V ?? 0);
         writer.Write((Equipment[0]?.Item.V?.ID).GetValueOrDefault());
         writer.Write((Equipment[1]?.Item.V?.ID).GetValueOrDefault());
         writer.Write((Equipment[2]?.Item.V?.ID).GetValueOrDefault());
