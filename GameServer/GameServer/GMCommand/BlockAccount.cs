@@ -3,7 +3,7 @@ using GameServer.Database;
 
 namespace GameServer;
 
-public sealed class BanAccount : GMCommand
+public sealed class BlockAccount : GMCommand
 {
     [FieldDescription(0, Index = 0)]
     public string AccountName;

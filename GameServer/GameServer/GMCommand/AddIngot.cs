@@ -1,16 +1,17 @@
 using GameServer.Database;
+using GameServer.Networking;
 
 using GamePackets.Server;
 
 namespace GameServer;
 
-public sealed class 调整等级 : GMCommand
+public sealed class AddIngot : GMCommand
 {
     [FieldDescription(0, Index = 0)]
     public string UserName;
 
     [FieldDescription(0, Index = 1)]
-    public int Level;
+    public int Amount;
 
     public override ExecutionPriority Priority => ExecutionPriority.ImmediateBackground;
 
@@ -18,17 +19,16 @@ public sealed class 调整等级 : GMCommand
     {
         if (Session.CharacterInfoTable.SearchTable.TryGetValue(UserName, out var value) && value is CharacterInfo character)
         {
-            character.CurrentLevel = (byte)Level;
-            character.Enqueue(new ObjectLevelUpPacket
+            character.Ingot += Amount;
+            character.Enqueue(new SyncIngotsPacket
             {
-                ObjectID = character.Connection.Player.ObjectID,
-                CurrentLevel = character.CurrentLevel
+                Amount = character.Ingot
             });
-            SMain.AddCommandLog($"<= @{GetType().Name} 命令已经执行, 当前角色等级: {character.CurrentLevel}");
+            SMain.AddCommandLog($"<= @{GetType().Name} The command has been executed, the current number of ingots: {character.Ingot}");
         }
         else
         {
-            SMain.AddCommandLog("<= @" + GetType().Name + " 命令执行失败, 角色不存在");
+            SMain.AddCommandLog("<= @" + GetType().Name + " The command execution failed and the role does not exist");
         }
     }
 }

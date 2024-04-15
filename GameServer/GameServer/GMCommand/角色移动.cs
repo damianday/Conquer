@@ -41,7 +41,7 @@ public sealed class 角色移动 : GMCommand
             return;
         }
         Map.Map 地图实例 = MapManager.GetMap(value2.MapID);
-        MapArea 地图区域 = 地图实例.传送区域 ?? 地图实例.Areas.FirstOrDefault();
+        MapArea 地图区域 = 地图实例.TeleportationArea ?? 地图实例.Areas.FirstOrDefault();
         Point 坐标 = ((地图X != 0 && 地图Y != 0) ? new Point(地图X, 地图Y) : (地图区域?.RandomCoords ?? Point.Empty));
         if (坐标.IsEmpty)
         {

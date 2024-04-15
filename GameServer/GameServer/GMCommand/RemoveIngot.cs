@@ -1,3 +1,4 @@
+using System;
 using GameServer.Database;
 using GameServer.Networking;
 
@@ -5,13 +6,13 @@ using GamePackets.Server;
 
 namespace GameServer;
 
-public sealed class 添加元宝 : GMCommand
+public sealed class RemoveIngot : GMCommand
 {
     [FieldDescription(0, Index = 0)]
     public string UserName;
 
     [FieldDescription(0, Index = 1)]
-    public int 元宝数量;
+    public int Amount;
 
     public override ExecutionPriority Priority => ExecutionPriority.ImmediateBackground;
 
@@ -19,16 +20,16 @@ public sealed class 添加元宝 : GMCommand
     {
         if (Session.CharacterInfoTable.SearchTable.TryGetValue(UserName, out var value) && value is CharacterInfo character)
         {
-            character.Ingot += 元宝数量;
-            character.Enqueue(new 同步元宝数量
+            character.Ingot = Math.Max(0, character.Ingot - Amount);
+            character.Enqueue(new SyncIngotsPacket
             {
-                元宝数量 = character.Ingot
+                Amount = character.Ingot
             });
-            SMain.AddCommandLog($"<= @{GetType().Name} 命令已经执行, 当前元宝数量: {character.Ingot}");
+            SMain.AddCommandLog($"<= @{GetType().Name} The command has been executed, the current number of ingots: {character.Ingot}");
         }
         else
         {
-            SMain.AddCommandLog("<= @" + GetType().Name + " 命令执行失败, 角色不存在");
+            SMain.AddCommandLog("<= @" + GetType().Name + " The command execution failed and the character does not exist");
         }
     }
 }

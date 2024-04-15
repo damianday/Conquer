@@ -1,3 +1,4 @@
+using System;
 using GameServer.Database;
 using GameServer.Networking;
 
@@ -5,13 +6,13 @@ using GamePackets.Server;
 
 namespace GameServer;
 
-public sealed class AddGoldCommand : GMCommand
+public sealed class RemoveGold : GMCommand
 {
     [FieldDescription(0, Index = 0)]
     public string UserName;
 
     [FieldDescription(0, Index = 1)]
-    public int Gold;
+    public int Amount;
 
     public override ExecutionPriority Priority => ExecutionPriority.ImmediateBackground;
 
@@ -19,17 +20,17 @@ public sealed class AddGoldCommand : GMCommand
     {
         if (Session.CharacterInfoTable.SearchTable.TryGetValue(UserName, out var value) && value is CharacterInfo character)
         {
-            character.Gold += Gold;
+            character.Gold = Math.Max(0, character.Gold - Amount);
             character.Enqueue(new SyncCurrencyPacket
             {
                 Currency = 1,
                 Amount = character.Gold
             });
-            SMain.AddCommandLog($"<= @{GetType().Name} 命令已经执行, 当前金币数量: {character.Gold}");
+            SMain.AddCommandLog($"<= @{GetType().Name} The command has been executed, the current amount of gold: {character.Gold}");
         }
         else
         {
-            SMain.AddCommandLog("<= @" + GetType().Name + " 命令执行失败, 角色不存在");
+            SMain.AddCommandLog("<= @" + GetType().Name + " The command execution failed, character does not exist");
         }
     }
 }
