@@ -61,7 +61,7 @@ public static class SEngine
         {
             ExternalCommands = new ConcurrentQueue<GMCommand>();
             SMain.AddSystemLog("Generating map elements...");
-            MapManager.开启地图();
+            MapManager.Initialize();
             SMain.AddSystemLog("The network service is being started...");
             NetworkManager.StartService();
             SMain.AddSystemLog("Server successfully started.");
