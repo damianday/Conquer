@@ -174,7 +174,7 @@ public sealed class PetObject : MapObject
     }
 
     public int HateRange => 4;
-    public int 仇恨时长 => 15_000;
+    public int HateDuration => 15_000;
     public int 切换间隔 => 5000;
     public ushort PetID => MInfo.ID;
 
@@ -635,7 +635,7 @@ public sealed class PetObject : MapObject
         }
         else if (GetDistance(Target.Target) <= HateRange)
         {
-            Target.TargetList[Target.Target].HateTime = SEngine.CurrentTime.AddMilliseconds(仇恨时长);
+            Target.TargetList[Target.Target].HateTime = SEngine.CurrentTime.AddMilliseconds(HateDuration);
         }
         if (Target.切换时间 < SEngine.CurrentTime && Target.切换仇恨(this))
         {
