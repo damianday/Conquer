@@ -540,7 +540,7 @@ public partial class SMain : Form
                 dataRow["地图名字"] = 地图.MapInfo;
                 dataRow["限制等级"] = 地图.MinLevel;
                 dataRow["玩家数量"] = 地图.Players.Count;
-                dataRow["固定怪物总数"] = 地图.固定怪物总数;
+                dataRow["固定怪物总数"] = 地图.TotalFixedMonsters;
                 dataRow["存活怪物总数"] = 地图.TotalSurvivingMonsters;
                 dataRow["怪物复活次数"] = 地图.TotalAmountMonsterResurrected;
                 dataRow["怪物掉落次数"] = 地图.TotalAmountMonsterDrops;
@@ -682,7 +682,7 @@ public partial class SMain : Form
         S_NoobSupportLevel.Value = (Config.NoobSupportLevel = Settings.Default.NoobSupportLevel);
         S_SpecialRepairDiscount.Value = (Config.SpecialRepairDiscount = Settings.Default.SpecialRepairDiscount);
         S_怪物额外爆率.Value = (Config.怪物额外爆率 = Settings.Default.怪物额外爆率);
-        S_怪物经验倍率.Value = (Config.MonsterExperienceMultiplier = Settings.Default.MonsterExperienceMultiplier);
+        S_MonsterExperienceMultiplier.Value = (Config.MonsterExperienceMultiplier = Settings.Default.MonsterExperienceMultiplier);
         S_减收益等级差.Value = (Config.减收益等级差 = Settings.Default.减收益等级差);
         S_收益减少比率.Value = (Config.收益减少比率 = Settings.Default.收益减少比率);
         S_怪物诱惑时长.Value = (Config.怪物诱惑时长 = Settings.Default.怪物诱惑时长);
@@ -1853,7 +1853,7 @@ public partial class SMain : Form
                         Config.怪物诱惑时长 = Settings.Default.怪物诱惑时长 = (ushort)control.Value;
                         break;
                     }
-                case nameof(S_怪物经验倍率):
+                case nameof(S_MonsterExperienceMultiplier):
                     {
                         Config.MonsterExperienceMultiplier = Settings.Default.MonsterExperienceMultiplier = control.Value;
                         break;

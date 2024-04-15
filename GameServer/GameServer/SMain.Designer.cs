@@ -2326,9 +2326,6 @@ public partial class SMain
         label619 = new Label();
         坐骑骑乘切换 = new NumericUpDown();
         label445 = new Label();
-        groupBox5 = new GroupBox();
-        webBrowser2 = new WebBrowser();
-        button8 = new Button();
         label8 = new Label();
         SettingsPage = new TabPage();
         S_注意事项标签8 = new Label();
@@ -2356,7 +2353,7 @@ public partial class SMain
         S_收益等级标签 = new Label();
         S_减收益等级差 = new NumericUpDown();
         S_经验倍率标签 = new Label();
-        S_怪物经验倍率 = new NumericUpDown();
+        S_MonsterExperienceMultiplier = new NumericUpDown();
         S_特修折扣标签 = new Label();
         S_SpecialRepairDiscount = new NumericUpDown();
         S_怪物爆率标签 = new Label();
@@ -3785,7 +3782,6 @@ public partial class SMain
         groupBox133.SuspendLayout();
         ((ISupportInitialize)坐骑属性切换).BeginInit();
         ((ISupportInitialize)坐骑骑乘切换).BeginInit();
-        groupBox5.SuspendLayout();
         SettingsPage.SuspendLayout();
         S_游戏数据分组.SuspendLayout();
         S_游戏设置分组.SuspendLayout();
@@ -3795,7 +3791,7 @@ public partial class SMain
         ((ISupportInitialize)S_怪物诱惑时长).BeginInit();
         ((ISupportInitialize)S_收益减少比率).BeginInit();
         ((ISupportInitialize)S_减收益等级差).BeginInit();
-        ((ISupportInitialize)S_怪物经验倍率).BeginInit();
+        ((ISupportInitialize)S_MonsterExperienceMultiplier).BeginInit();
         ((ISupportInitialize)S_SpecialRepairDiscount).BeginInit();
         ((ISupportInitialize)S_怪物额外爆率).BeginInit();
         ((ISupportInitialize)S_MaxUserLevel).BeginInit();
@@ -3964,8 +3960,6 @@ public partial class SMain
         // 功能模块1
         // 
         功能模块1.Controls.Add(tabControl2);
-        功能模块1.Controls.Add(groupBox5);
-        功能模块1.Controls.Add(button8);
         功能模块1.Controls.Add(label8);
         功能模块1.Location = new Point(4, 34);
         功能模块1.Margin = new Padding(4, 3, 4, 3);
@@ -32439,40 +32433,6 @@ public partial class SMain
         label445.TabIndex = 1;
         label445.Text = "Horseback Mount";
         // 
-        // groupBox5
-        // 
-        groupBox5.Controls.Add(webBrowser2);
-        groupBox5.Location = new Point(1344, 24);
-        groupBox5.Margin = new Padding(4, 3, 4, 3);
-        groupBox5.Name = "groupBox5";
-        groupBox5.Padding = new Padding(4, 3, 4, 3);
-        groupBox5.Size = new Size(240, 494);
-        groupBox5.TabIndex = 29;
-        groupBox5.TabStop = false;
-        groupBox5.Text = "Advertising Area";
-        // 
-        // webBrowser2
-        // 
-        webBrowser2.Location = new Point(7, 22);
-        webBrowser2.Margin = new Padding(4, 3, 4, 3);
-        webBrowser2.MinimumSize = new Size(23, 25);
-        webBrowser2.Name = "webBrowser2";
-        webBrowser2.Size = new Size(226, 451);
-        webBrowser2.TabIndex = 2;
-        webBrowser2.Url = new Uri("about:blank", UriKind.Absolute);
-        // 
-        // button8
-        // 
-        button8.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
-        button8.Location = new Point(1339, 531);
-        button8.Margin = new Padding(4, 3, 4, 3);
-        button8.Name = "button8";
-        button8.Size = new Size(247, 159);
-        button8.TabIndex = 16;
-        button8.Text = " - Free Share QQ group -\r\n\r\n(拿锤子的小笨牛) \r\n\r\n(little stupid cow with a hammer)";
-        button8.UseVisualStyleBackColor = true;
-        button8.Click += (this.button8_Click);
-        // 
         // label8
         // 
         label8.AutoSize = true;
@@ -32657,7 +32617,7 @@ public partial class SMain
         S_游戏设置分组.Controls.Add(S_收益等级标签);
         S_游戏设置分组.Controls.Add(S_减收益等级差);
         S_游戏设置分组.Controls.Add(S_经验倍率标签);
-        S_游戏设置分组.Controls.Add(S_怪物经验倍率);
+        S_游戏设置分组.Controls.Add(S_MonsterExperienceMultiplier);
         S_游戏设置分组.Controls.Add(S_特修折扣标签);
         S_游戏设置分组.Controls.Add(S_SpecialRepairDiscount);
         S_游戏设置分组.Controls.Add(S_怪物爆率标签);
@@ -32818,20 +32778,20 @@ public partial class SMain
         S_经验倍率标签.TabIndex = 9;
         S_经验倍率标签.Text = "Experience Rate";
         // 
-        // S_怪物经验倍率
+        // S_MonsterExperienceMultiplier
         // 
-        S_怪物经验倍率.DecimalPlaces = 2;
-        S_怪物经验倍率.Font = new Font("SimSun", 10.5F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        S_怪物经验倍率.Increment = new decimal(new int[] { 5, 0, 0, 65536 });
-        S_怪物经验倍率.Location = new Point(288, 180);
-        S_怪物经验倍率.Margin = new Padding(4, 3, 4, 3);
-        S_怪物经验倍率.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
-        S_怪物经验倍率.Name = "S_怪物经验倍率";
-        S_怪物经验倍率.Size = new Size(127, 23);
-        S_怪物经验倍率.TabIndex = 8;
-        S_怪物经验倍率.TextAlign = HorizontalAlignment.Center;
-        S_怪物经验倍率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_怪物经验倍率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_MonsterExperienceMultiplier.DecimalPlaces = 2;
+        S_MonsterExperienceMultiplier.Font = new Font("SimSun", 10.5F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
+        S_MonsterExperienceMultiplier.Increment = new decimal(new int[] { 5, 0, 0, 65536 });
+        S_MonsterExperienceMultiplier.Location = new Point(288, 180);
+        S_MonsterExperienceMultiplier.Margin = new Padding(4, 3, 4, 3);
+        S_MonsterExperienceMultiplier.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
+        S_MonsterExperienceMultiplier.Name = "S_MonsterExperienceMultiplier";
+        S_MonsterExperienceMultiplier.Size = new Size(127, 23);
+        S_MonsterExperienceMultiplier.TabIndex = 8;
+        S_MonsterExperienceMultiplier.TextAlign = HorizontalAlignment.Center;
+        S_MonsterExperienceMultiplier.Value = new decimal(new int[] { 1, 0, 0, 0 });
+        S_MonsterExperienceMultiplier.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
         // 
         // S_特修折扣标签
         // 
@@ -34727,7 +34687,7 @@ public partial class SMain
         // 
         startServerToolStripMenuItem.ForeColor = Color.Green;
         startServerToolStripMenuItem.Name = "startServerToolStripMenuItem";
-        startServerToolStripMenuItem.Size = new Size(180, 22);
+        startServerToolStripMenuItem.Size = new Size(149, 22);
         startServerToolStripMenuItem.Text = "Start Server";
         startServerToolStripMenuItem.Click += (this.startServerToolStripMenuItem_Click);
         // 
@@ -34735,20 +34695,20 @@ public partial class SMain
         // 
         stopServerToolStripMenuItem.ForeColor = Color.Maroon;
         stopServerToolStripMenuItem.Name = "stopServerToolStripMenuItem";
-        stopServerToolStripMenuItem.Size = new Size(180, 22);
+        stopServerToolStripMenuItem.Size = new Size(149, 22);
         stopServerToolStripMenuItem.Text = "Stop Server";
         stopServerToolStripMenuItem.Click += (this.stopServerToolStripMenuItem_Click);
         // 
         // toolStripMenuItem1
         // 
         toolStripMenuItem1.Name = "toolStripMenuItem1";
-        toolStripMenuItem1.Size = new Size(177, 6);
+        toolStripMenuItem1.Size = new Size(146, 6);
         // 
         // logsToolStripMenuItem
         // 
         logsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { saveSystemLogsToolStripMenuItem, saveChatLogsToolStripMenuItem, toolStripMenuItem3, clearSystemLogsToolStripMenuItem, clearChatLogsToolStripMenuItem, clearCommandsLogToolStripMenuItem });
         logsToolStripMenuItem.Name = "logsToolStripMenuItem";
-        logsToolStripMenuItem.Size = new Size(180, 22);
+        logsToolStripMenuItem.Size = new Size(149, 22);
         logsToolStripMenuItem.Text = "Logs";
         // 
         // saveSystemLogsToolStripMenuItem
@@ -34794,213 +34754,213 @@ public partial class SMain
         // toolStripMenuItem2
         // 
         toolStripMenuItem2.Name = "toolStripMenuItem2";
-        toolStripMenuItem2.Size = new Size(177, 6);
+        toolStripMenuItem2.Size = new Size(146, 6);
         // 
         // reloadToolStripMenuItem
         // 
         reloadToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { allToolStripMenuItem, gameMonsterToolStripMenuItem, mapGuardToolStripMenuItem, dialogDataToolStripMenuItem, gameMapToolStripMenuItem, terrainDataToolStripMenuItem, mapAreaToolStripMenuItem, teleportCircleToolStripMenuItem, monsterRefreshToolStripMenuItem, guardRefreshToolStripMenuItem, gameItemsToolStripMenuItem, equipmentSetToolStripMenuItem, syntheticDataToolStripMenuItem, chestDataToolStripMenuItem, randomAttributeToolStripMenuItem, itemAttributeToolStripMenuItem, gameShopToolStripMenuItem, treasuresToolStripMenuItem, gameTitleToolStripMenuItem, inscriptionSkillsToolStripMenuItem, gameSkillsToolStripMenuItem, skillTrapToolStripMenuItem, gameBuffToolStripMenuItem, gameMountToolStripMenuItem, mountRoyalBeastToolStripMenuItem, vIPDataToolStripMenuItem });
         reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
-        reloadToolStripMenuItem.Size = new Size(180, 22);
+        reloadToolStripMenuItem.Size = new Size(149, 22);
         reloadToolStripMenuItem.Text = "Reload";
         // 
         // allToolStripMenuItem
         // 
         allToolStripMenuItem.Name = "allToolStripMenuItem";
-        allToolStripMenuItem.Size = new Size(180, 22);
+        allToolStripMenuItem.Size = new Size(173, 22);
         allToolStripMenuItem.Text = "All";
         allToolStripMenuItem.Click += (this.allToolStripMenuItem_Click);
         // 
         // gameMonsterToolStripMenuItem
         // 
         gameMonsterToolStripMenuItem.Name = "gameMonsterToolStripMenuItem";
-        gameMonsterToolStripMenuItem.Size = new Size(180, 22);
+        gameMonsterToolStripMenuItem.Size = new Size(173, 22);
         gameMonsterToolStripMenuItem.Text = "Game Monster";
         gameMonsterToolStripMenuItem.Click += (this.gameMonsterToolStripMenuItem_Click);
         // 
         // mapGuardToolStripMenuItem
         // 
         mapGuardToolStripMenuItem.Name = "mapGuardToolStripMenuItem";
-        mapGuardToolStripMenuItem.Size = new Size(180, 22);
+        mapGuardToolStripMenuItem.Size = new Size(173, 22);
         mapGuardToolStripMenuItem.Text = "Map Guard";
         mapGuardToolStripMenuItem.Click += (this.mapGuardToolStripMenuItem_Click);
         // 
         // dialogDataToolStripMenuItem
         // 
         dialogDataToolStripMenuItem.Name = "dialogDataToolStripMenuItem";
-        dialogDataToolStripMenuItem.Size = new Size(180, 22);
+        dialogDataToolStripMenuItem.Size = new Size(173, 22);
         dialogDataToolStripMenuItem.Text = "Dialog Data";
         dialogDataToolStripMenuItem.Click += (this.dialogDataToolStripMenuItem_Click);
         // 
         // gameMapToolStripMenuItem
         // 
         gameMapToolStripMenuItem.Name = "gameMapToolStripMenuItem";
-        gameMapToolStripMenuItem.Size = new Size(180, 22);
+        gameMapToolStripMenuItem.Size = new Size(173, 22);
         gameMapToolStripMenuItem.Text = "Game Map";
         gameMapToolStripMenuItem.Click += (this.gameMapToolStripMenuItem_Click);
         // 
         // terrainDataToolStripMenuItem
         // 
         terrainDataToolStripMenuItem.Name = "terrainDataToolStripMenuItem";
-        terrainDataToolStripMenuItem.Size = new Size(180, 22);
+        terrainDataToolStripMenuItem.Size = new Size(173, 22);
         terrainDataToolStripMenuItem.Text = "Terrain Data";
         terrainDataToolStripMenuItem.Click += (this.terrainDataToolStripMenuItem_Click);
         // 
         // mapAreaToolStripMenuItem
         // 
         mapAreaToolStripMenuItem.Name = "mapAreaToolStripMenuItem";
-        mapAreaToolStripMenuItem.Size = new Size(180, 22);
+        mapAreaToolStripMenuItem.Size = new Size(173, 22);
         mapAreaToolStripMenuItem.Text = "Map Area";
         mapAreaToolStripMenuItem.Click += (this.mapAreaToolStripMenuItem_Click);
         // 
         // teleportCircleToolStripMenuItem
         // 
         teleportCircleToolStripMenuItem.Name = "teleportCircleToolStripMenuItem";
-        teleportCircleToolStripMenuItem.Size = new Size(180, 22);
+        teleportCircleToolStripMenuItem.Size = new Size(173, 22);
         teleportCircleToolStripMenuItem.Text = "Teleport Circle";
         teleportCircleToolStripMenuItem.Click += (this.teleportCircleToolStripMenuItem_Click);
         // 
         // monsterRefreshToolStripMenuItem
         // 
         monsterRefreshToolStripMenuItem.Name = "monsterRefreshToolStripMenuItem";
-        monsterRefreshToolStripMenuItem.Size = new Size(180, 22);
+        monsterRefreshToolStripMenuItem.Size = new Size(173, 22);
         monsterRefreshToolStripMenuItem.Text = "Monster Refresh";
         monsterRefreshToolStripMenuItem.Click += (this.monsterRefreshToolStripMenuItem_Click);
         // 
         // guardRefreshToolStripMenuItem
         // 
         guardRefreshToolStripMenuItem.Name = "guardRefreshToolStripMenuItem";
-        guardRefreshToolStripMenuItem.Size = new Size(180, 22);
+        guardRefreshToolStripMenuItem.Size = new Size(173, 22);
         guardRefreshToolStripMenuItem.Text = "Guard Refresh";
         guardRefreshToolStripMenuItem.Click += (this.guardRefreshToolStripMenuItem_Click);
         // 
         // gameItemsToolStripMenuItem
         // 
         gameItemsToolStripMenuItem.Name = "gameItemsToolStripMenuItem";
-        gameItemsToolStripMenuItem.Size = new Size(180, 22);
+        gameItemsToolStripMenuItem.Size = new Size(173, 22);
         gameItemsToolStripMenuItem.Text = "Game Items";
         gameItemsToolStripMenuItem.Click += (this.gameItemsToolStripMenuItem_Click);
         // 
         // equipmentSetToolStripMenuItem
         // 
         equipmentSetToolStripMenuItem.Name = "equipmentSetToolStripMenuItem";
-        equipmentSetToolStripMenuItem.Size = new Size(180, 22);
+        equipmentSetToolStripMenuItem.Size = new Size(173, 22);
         equipmentSetToolStripMenuItem.Text = "Equipment Set";
         equipmentSetToolStripMenuItem.Click += (this.equipmentSetToolStripMenuItem_Click);
         // 
         // syntheticDataToolStripMenuItem
         // 
         syntheticDataToolStripMenuItem.Name = "syntheticDataToolStripMenuItem";
-        syntheticDataToolStripMenuItem.Size = new Size(180, 22);
+        syntheticDataToolStripMenuItem.Size = new Size(173, 22);
         syntheticDataToolStripMenuItem.Text = "Synthetic Data";
         syntheticDataToolStripMenuItem.Click += (this.syntheticDataToolStripMenuItem_Click);
         // 
         // chestDataToolStripMenuItem
         // 
         chestDataToolStripMenuItem.Name = "chestDataToolStripMenuItem";
-        chestDataToolStripMenuItem.Size = new Size(180, 22);
+        chestDataToolStripMenuItem.Size = new Size(173, 22);
         chestDataToolStripMenuItem.Text = "Chest Data";
         chestDataToolStripMenuItem.Click += (this.chestDataToolStripMenuItem_Click);
         // 
         // randomAttributeToolStripMenuItem
         // 
         randomAttributeToolStripMenuItem.Name = "randomAttributeToolStripMenuItem";
-        randomAttributeToolStripMenuItem.Size = new Size(180, 22);
+        randomAttributeToolStripMenuItem.Size = new Size(173, 22);
         randomAttributeToolStripMenuItem.Text = "Random Attribute";
         randomAttributeToolStripMenuItem.Click += (this.randomAttributeToolStripMenuItem_Click);
         // 
         // itemAttributeToolStripMenuItem
         // 
         itemAttributeToolStripMenuItem.Name = "itemAttributeToolStripMenuItem";
-        itemAttributeToolStripMenuItem.Size = new Size(180, 22);
+        itemAttributeToolStripMenuItem.Size = new Size(173, 22);
         itemAttributeToolStripMenuItem.Text = "Item Attribute";
         itemAttributeToolStripMenuItem.Click += (this.itemAttributeToolStripMenuItem_Click);
         // 
         // gameShopToolStripMenuItem
         // 
         gameShopToolStripMenuItem.Name = "gameShopToolStripMenuItem";
-        gameShopToolStripMenuItem.Size = new Size(180, 22);
+        gameShopToolStripMenuItem.Size = new Size(173, 22);
         gameShopToolStripMenuItem.Text = "Game Shop";
         gameShopToolStripMenuItem.Click += (this.gameShopToolStripMenuItem_Click);
         // 
         // treasuresToolStripMenuItem
         // 
         treasuresToolStripMenuItem.Name = "treasuresToolStripMenuItem";
-        treasuresToolStripMenuItem.Size = new Size(180, 22);
+        treasuresToolStripMenuItem.Size = new Size(173, 22);
         treasuresToolStripMenuItem.Text = "Treasures";
         treasuresToolStripMenuItem.Click += (this.treasuresToolStripMenuItem_Click);
         // 
         // gameTitleToolStripMenuItem
         // 
         gameTitleToolStripMenuItem.Name = "gameTitleToolStripMenuItem";
-        gameTitleToolStripMenuItem.Size = new Size(180, 22);
+        gameTitleToolStripMenuItem.Size = new Size(173, 22);
         gameTitleToolStripMenuItem.Text = "Game Title";
         gameTitleToolStripMenuItem.Click += (this.gameTitleToolStripMenuItem_Click);
         // 
         // inscriptionSkillsToolStripMenuItem
         // 
         inscriptionSkillsToolStripMenuItem.Name = "inscriptionSkillsToolStripMenuItem";
-        inscriptionSkillsToolStripMenuItem.Size = new Size(180, 22);
+        inscriptionSkillsToolStripMenuItem.Size = new Size(173, 22);
         inscriptionSkillsToolStripMenuItem.Text = "Inscription Skills";
         inscriptionSkillsToolStripMenuItem.Click += (this.inscriptionSkillsToolStripMenuItem_Click);
         // 
         // gameSkillsToolStripMenuItem
         // 
         gameSkillsToolStripMenuItem.Name = "gameSkillsToolStripMenuItem";
-        gameSkillsToolStripMenuItem.Size = new Size(180, 22);
+        gameSkillsToolStripMenuItem.Size = new Size(173, 22);
         gameSkillsToolStripMenuItem.Text = "Game Skills";
         gameSkillsToolStripMenuItem.Click += (this.gameSkillsToolStripMenuItem_Click);
         // 
         // skillTrapToolStripMenuItem
         // 
         skillTrapToolStripMenuItem.Name = "skillTrapToolStripMenuItem";
-        skillTrapToolStripMenuItem.Size = new Size(180, 22);
+        skillTrapToolStripMenuItem.Size = new Size(173, 22);
         skillTrapToolStripMenuItem.Text = "Skill Trap";
         skillTrapToolStripMenuItem.Click += (this.skillTrapToolStripMenuItem_Click);
         // 
         // gameBuffToolStripMenuItem
         // 
         gameBuffToolStripMenuItem.Name = "gameBuffToolStripMenuItem";
-        gameBuffToolStripMenuItem.Size = new Size(180, 22);
+        gameBuffToolStripMenuItem.Size = new Size(173, 22);
         gameBuffToolStripMenuItem.Text = "Game Buff";
         gameBuffToolStripMenuItem.Click += (this.gameBuffToolStripMenuItem_Click);
         // 
         // gameMountToolStripMenuItem
         // 
         gameMountToolStripMenuItem.Name = "gameMountToolStripMenuItem";
-        gameMountToolStripMenuItem.Size = new Size(180, 22);
+        gameMountToolStripMenuItem.Size = new Size(173, 22);
         gameMountToolStripMenuItem.Text = "Game Mount";
         gameMountToolStripMenuItem.Click += (this.gameMountToolStripMenuItem_Click);
         // 
         // mountRoyalBeastToolStripMenuItem
         // 
         mountRoyalBeastToolStripMenuItem.Name = "mountRoyalBeastToolStripMenuItem";
-        mountRoyalBeastToolStripMenuItem.Size = new Size(180, 22);
+        mountRoyalBeastToolStripMenuItem.Size = new Size(173, 22);
         mountRoyalBeastToolStripMenuItem.Text = "Mount Royal Beast";
         mountRoyalBeastToolStripMenuItem.Click += (this.mountRoyalBeastToolStripMenuItem_Click);
         // 
         // vIPDataToolStripMenuItem
         // 
         vIPDataToolStripMenuItem.Name = "vIPDataToolStripMenuItem";
-        vIPDataToolStripMenuItem.Size = new Size(180, 22);
+        vIPDataToolStripMenuItem.Size = new Size(173, 22);
         vIPDataToolStripMenuItem.Text = "VIP Data";
         vIPDataToolStripMenuItem.Click += (this.vIPDataToolStripMenuItem_Click);
         // 
         // savaDatabaseToolStripMenuItem
         // 
         savaDatabaseToolStripMenuItem.Name = "savaDatabaseToolStripMenuItem";
-        savaDatabaseToolStripMenuItem.Size = new Size(180, 22);
+        savaDatabaseToolStripMenuItem.Size = new Size(149, 22);
         savaDatabaseToolStripMenuItem.Text = "Sava Database";
         savaDatabaseToolStripMenuItem.Click += (this.savaDatabaseToolStripMenuItem_Click);
         // 
         // toolStripMenuItem4
         // 
         toolStripMenuItem4.Name = "toolStripMenuItem4";
-        toolStripMenuItem4.Size = new Size(177, 6);
+        toolStripMenuItem4.Size = new Size(146, 6);
         // 
         // exitToolStripMenuItem
         // 
         exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-        exitToolStripMenuItem.Size = new Size(180, 22);
+        exitToolStripMenuItem.Size = new Size(149, 22);
         exitToolStripMenuItem.Text = "E&xit";
         // 
         // statusStrip1
@@ -36505,7 +36465,6 @@ public partial class SMain
         groupBox133.PerformLayout();
         ((ISupportInitialize)坐骑属性切换).EndInit();
         ((ISupportInitialize)坐骑骑乘切换).EndInit();
-        groupBox5.ResumeLayout(false);
         SettingsPage.ResumeLayout(false);
         SettingsPage.PerformLayout();
         S_游戏数据分组.ResumeLayout(false);
@@ -36518,7 +36477,7 @@ public partial class SMain
         ((ISupportInitialize)S_怪物诱惑时长).EndInit();
         ((ISupportInitialize)S_收益减少比率).EndInit();
         ((ISupportInitialize)S_减收益等级差).EndInit();
-        ((ISupportInitialize)S_怪物经验倍率).EndInit();
+        ((ISupportInitialize)S_MonsterExperienceMultiplier).EndInit();
         ((ISupportInitialize)S_SpecialRepairDiscount).EndInit();
         ((ISupportInitialize)S_怪物额外爆率).EndInit();
         ((ISupportInitialize)S_MaxUserLevel).EndInit();
@@ -36623,8 +36582,6 @@ public partial class SMain
 
     private TabPage 功能模块1;
 
-    private Button button8;
-
     private Label label8;
 
     public TabPage SettingsPage;
@@ -36689,7 +36646,7 @@ public partial class SMain
 
     private Label S_经验倍率标签;
 
-    public NumericUpDown S_怪物经验倍率;
+    public NumericUpDown S_MonsterExperienceMultiplier;
 
     private Label S_特修折扣标签;
 
@@ -36778,8 +36735,6 @@ public partial class SMain
     public DataGridView 角色浏览表;
 
     public TabControl 主选项卡;
-
-    private GroupBox groupBox5;
 
     private GroupBox groupBox4;
 
@@ -40724,8 +40679,6 @@ public partial class SMain
     private NumericUpDown S_充值模块格式;
 
     private Label label827;
-
-    private WebBrowser webBrowser2;
 
     public TabControl tabControl19;
 
