@@ -189,7 +189,7 @@ public static class Session
 
     public static void Save(bool commit)
     {
-        int num = 0;
+        int count = 0;
         foreach (KeyValuePair<Type, DBCollection> item in Tables)
         {
             int num2 = 0;
@@ -268,25 +268,27 @@ public static class Session
                 num3++;
             }
             item.Value.Index = list.Count + num2;
-            num += num3;
+            count += num3;
             item.Value.DataSheet = item.Value.DataSheet.ToDictionary((KeyValuePair<int, DBObject> x) => x.Value.Index.V, (KeyValuePair<int, DBObject> x) => x.Value);
             SMain.AddCommandLog($"{item.Key.Name}已经整理完毕, 整理数量:{num3}");
         }
-        SMain.AddCommandLog($"客户数据已经整理完毕, 整理总数:{num}");
-        if (num > 0 && commit)
+
+        SMain.AddCommandLog($"User data has been collated, total collated:{count}");
+
+        if (count > 0 && commit)
         {
-            SMain.AddCommandLog("正在重新保存整理后的客户数据, 可能花费较长时间, 请稍后...");
+            SMain.AddCommandLog("Please wait for a while as we are re-saving the organized user data.");
             SaveSystem();
             SaveUsers();
-            SMain.AddCommandLog("数据已经保存到磁盘");
-            MessageBox.Show("客户数据已经整理完毕, 应用程序需要重启");
+            SMain.AddCommandLog("Data has been saved to disk");
+            MessageBox.Show("User data has been collated, the application needs to be restarted.");
             Environment.Exit(0);
         }
     }
 
     public static void 清理角色(int 限制等级, int 限制天数)
     {
-        SMain.AddCommandLog("开始清理角色数据...");
+        SMain.AddCommandLog("Starting to clean up character data...");
         DateTime dateTime = DateTime.Now.AddDays(-限制天数);
 
         int count = 0;
@@ -315,32 +317,33 @@ public static class Session
                 SMain.移除角色数据(character);
             }
         }
+
         SMain.AddCommandLog($"角色数据已经清理完成, 清理总数:{count}");
+
         if (count > 0)
         {
-            SMain.AddCommandLog("正在重新保存清理后的客户数据, 可能花费较长时间, 请稍后...");
+            SMain.AddCommandLog("The cleaned user data is being re-saved, it may take a long time, please wait...");
             Save();
             SaveUsers();
             Load();
-            SMain.AddCommandLog("数据已经保存到磁盘");
+            SMain.AddCommandLog("Data has been saved to disk");
         }
     }
 
-    public static void 合并数据(string fileName)
+    public static void Merge(string fileName)
     {
-        byte[] 历史映射数据 = null;
+        byte[] data = null;
         DBCollection 存表实例 = null;
         SMain.Main?.BeginInvoke(new Action(() =>
         {
-            TabPage 设置页面 = SMain.Main.SettingsPage;
             SMain.Main.下方控件页.Enabled = false;
-            设置页面.Enabled = false;
+            SMain.Main.SettingsPage.Enabled = false;
             SMain.Main.主选项卡.SelectedIndex = 0;
-            SMain.Main.日志选项卡.SelectedIndex = 2;
-            SMain.AddCommandLog("开始整理当前客户数据...");
+            SMain.Main.LoggingTab.SelectedIndex = 2;
+            SMain.AddCommandLog("Start to merging current user data...");
             Save(commit: false);
             Dictionary<Type, DBCollection> dictionary = Tables;
-            SMain.AddCommandLog("开始加载指定客户数据...");
+            SMain.AddCommandLog("Start to load the specified user data...");
 
             Tables = new Dictionary<Type, DBCollection>();
             Type[] types = Assembly.GetExecutingAssembly().GetTypes();
@@ -351,34 +354,36 @@ public static class Session
                     Tables[type] = (DBCollection)Activator.CreateInstance(typeof(DBBindingList<>).MakeGenericType(type));
                 }
             }
-            using (MemoryStream memoryStream = new MemoryStream())
+
+            using (var ms = new MemoryStream())
             {
-                using BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
-                binaryWriter.Write(Tables.Count);
-                foreach (KeyValuePair<Type, DBCollection> item in Tables)
+                using var writer = new BinaryWriter(ms);
+                writer.Write(Tables.Count);
+                foreach (var item in Tables)
                 {
-                    item.Value.Mapping.Save(binaryWriter);
+                    item.Value.Mapping.Save(writer);
                 }
-                m_Header = memoryStream.ToArray();
+                m_Header = ms.ToArray();
             }
+
             if (File.Exists(fileName))
             {
                 using var reader = new BinaryReader(File.OpenRead(fileName));
-                List<DBMapping> list = new List<DBMapping>();
-                int num = reader.ReadInt32();
-                for (int j = 0; j < num; j++)
+                List<DBMapping> mappings = new List<DBMapping>();
+                int count = reader.ReadInt32();
+                for (int j = 0; j < count; j++)
                 {
-                    list.Add(new DBMapping(reader));
+                    mappings.Add(new DBMapping(reader));
                 }
                 List<Task> list2 = new List<Task>();
-                foreach (DBMapping 当前历史映射 in list)
+                foreach (var mapping in mappings)
                 {
-                    历史映射数据 = reader.ReadBytes(reader.ReadInt32());
-                    if (!(当前历史映射.Type == null) && Tables.TryGetValue(当前历史映射.Type, out 存表实例))
+                    data = reader.ReadBytes(reader.ReadInt32());
+                    if (!(mapping.Type == null) && Tables.TryGetValue(mapping.Type, out 存表实例))
                     {
                         list2.Add(Task.Run(delegate
                         {
-                            存表实例.Load(历史映射数据, 当前历史映射);
+                            存表实例.Load(data, mapping);
                         }));
                     }
                 }
@@ -387,6 +392,7 @@ public static class Session
                     Task.WaitAll(list2.ToArray());
                 }
             }
+
             SMain.AddCommandLog("开始整理指定客户数据...");
             DataLinkTable.ProcessTasks();
             Save(commit: false);
@@ -400,30 +406,30 @@ public static class Session
                         DBBindingList<AccountInfo> 数据表实例2 = dictionary[item2.Key] as DBBindingList<AccountInfo>;
                         foreach (KeyValuePair<int, DBObject> item3 in (dictionary2[item2.Key] as DBBindingList<AccountInfo>).DataSheet)
                         {
-                            AccountInfo 账号数据2 = item3.Value as AccountInfo;
-                            if (数据表实例2.SearchTable.TryGetValue(账号数据2.AccountName.V, out var value) && value is AccountInfo 账号数据3)
+                            AccountInfo account = item3.Value as AccountInfo;
+                            if (数据表实例2.SearchTable.TryGetValue(account.AccountName.V, out var value) && value is AccountInfo 账号数据3)
                             {
-                                foreach (CharacterInfo item4 in 账号数据2.Characters)
+                                foreach (var character in account.Characters)
                                 {
-                                    账号数据3.Characters.Add(item4);
-                                    item4.Account.V = 账号数据3;
+                                    账号数据3.Characters.Add(character);
+                                    character.Account.V = 账号数据3;
                                 }
-                                foreach (CharacterInfo item5 in 账号数据2.FrozenCharacters)
+                                foreach (var character in account.FrozenCharacters)
                                 {
-                                    账号数据3.FrozenCharacters.Add(item5);
-                                    item5.Account.V = 账号数据3;
+                                    账号数据3.FrozenCharacters.Add(character);
+                                    character.Account.V = 账号数据3;
                                 }
-                                foreach (CharacterInfo item6 in 账号数据2.DeletedCharacters)
+                                foreach (var character in account.DeletedCharacters)
                                 {
-                                    账号数据3.DeletedCharacters.Add(item6);
-                                    item6.Account.V = 账号数据3;
+                                    账号数据3.DeletedCharacters.Add(character);
+                                    character.Account.V = 账号数据3;
                                 }
-                                账号数据3.BlockDate.V = ((账号数据3.BlockDate.V <= 账号数据2.BlockDate.V) ? 账号数据3.BlockDate.V : 账号数据2.BlockDate.V);
+                                账号数据3.BlockDate.V = ((账号数据3.BlockDate.V <= account.BlockDate.V) ? 账号数据3.BlockDate.V : account.BlockDate.V);
                                 账号数据3.DeletetionDate.V = default(DateTime);
                             }
                             else
                             {
-                                item2.Value.Add(账号数据2, index: true);
+                                item2.Value.Add(account, index: true);
                             }
                         }
                     }
@@ -492,8 +498,8 @@ public static class Session
             Tables = dictionary;
             SaveSystem();
             SaveUsers();
-            SMain.AddCommandLog("客户数据已经合并完成");
-            MessageBox.Show("客户数据已经合并完毕, 应用程序需要重启");
+            SMain.AddCommandLog("Consolidation of user data has been completed");
+            MessageBox.Show("User data has been merged, the application needs to be restarted.");
             Environment.Exit(0);
         }));
     }
