@@ -4,11 +4,11 @@ namespace GamePackets.Client;
 public sealed class 角色购买物品 : GamePacket
 {
     [FieldAttribute(Position = 2, Length = 4)]
-    public int 商店编号;
+    public int StoreID;
 
     [FieldAttribute(Position = 6, Length = 6)]
-    public int 物品位置;
+    public int Location;
 
     [FieldAttribute(Position = 10, Length = 2)]
-    public ushort 购入数量;
+    public ushort Quantity;
 }
