@@ -219,16 +219,16 @@ public static class Session
                         {
                             switch (item3.事记类型)
                             {
-                                case 事记类型.创建公会:
-                                case 事记类型.加入公会:
-                                case 事记类型.离开公会:
+                                case 事记类型.CreateGuild:
+                                case 事记类型.JoinGuild:
+                                case 事记类型.LeaveGuild:
                                     if (item3.第一参数 == data.Index.V)
                                     {
                                         item3.第一参数 = num4;
                                     }
                                     break;
                                 case 事记类型.逐出公会:
-                                case 事记类型.变更职位:
+                                case 事记类型.ChangeRank:
                                 case 事记类型.会长传位:
                                     if (item3.第一参数 == data.Index.V)
                                     {

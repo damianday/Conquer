@@ -20,7 +20,6 @@ namespace GameServer.Map;
 public sealed class PlayerObject : MapObject
 {
     public CharacterInfo Character;
-    public MapObject 地图对象;
 
     public InscriptionSkill 洗练铭文;
 
@@ -58,7 +57,7 @@ public sealed class PlayerObject : MapObject
     public static MonsterObject 九层妖塔BOSS8;
     public static MonsterObject 九层妖塔BOSS9;
 
-    public int 打开商店;
+    public int CurrentStoreID;
 
     public string 打开界面;
 
@@ -85,7 +84,7 @@ public sealed class PlayerObject : MapObject
     public DateTime 自动刷新背包时间;
     public DateTime VIP奖励时间;
 
-    public List<ItemInfo> 回购清单;
+    public List<ItemInfo> SoldItems;
 
     public List<PetObject> Pets;
 
@@ -241,10 +240,10 @@ public sealed class PlayerObject : MapObject
             if (CurrentTrade == null)
                 return 0;
 
-            if (CurrentTrade.交易申请方 == this)
-                return CurrentTrade.申请方状态;
+            if (CurrentTrade.Requester == this)
+                return CurrentTrade.RequesterState;
 
-            return CurrentTrade.接收方状态;
+            return CurrentTrade.RecipientState;
         }
     }
 
@@ -1459,21 +1458,21 @@ public sealed class PlayerObject : MapObject
                 对象信息 = CurrentMap.MapID,
                 CurrentLevel = CurrentLevel
             });
-            if (Guild.Members[this.Character] <= GuildRank.理事 && Guild.申请列表.Count > 0)
+            if (Guild.Members[this.Character] <= GuildRank.理事 && Guild.Applications.Count > 0)
             {
                 Enqueue(new 发送行会通知
                 {
                     提醒类型 = 1
                 });
             }
-            if (Guild.Members[this.Character] <= GuildRank.副长 && Guild.结盟申请.Count > 0)
+            if (Guild.Members[this.Character] <= GuildRank.副长 && Guild.AllianceApplications.Count > 0)
             {
                 Enqueue(new 发送行会通知
                 {
                     提醒类型 = 2
                 });
             }
-            if (Guild.Members[this.Character] <= GuildRank.副长 && Guild.解除申请.Count > 0)
+            if (Guild.Members[this.Character] <= GuildRank.副长 && Guild.HostileReleaseApplications.Count > 0)
             {
                 Enqueue(new 行会外交公告
                 {
@@ -1687,7 +1686,7 @@ public sealed class PlayerObject : MapObject
                 经验计时 = SEngine.CurrentTime.AddSeconds(5.0);
                 GainExperience(null, (CurrentMap[CurrentPosition].FirstOrDefault((MapObject O) => O is GuardObject guard && guard.GuardID == 6121) == null) ? Config.武斗场经验小 : Config.武斗场经验大);
             }
-            Guild?.清理数据();
+            Guild?.Process();
             秒触发内容结果(Character.UserName.V);
         }
         base.Process();
@@ -7328,9 +7327,9 @@ public sealed class PlayerObject : MapObject
         dmg = Math.Min(10, dmg);
         foreach (EquipmentInfo value in Equipment.Values)
         {
-            if (value.Dura.V > 0 && (本期特权 != 5 || !value.CanRepair) && 
-                (本期特权 != 4 || !Compute.CalculateProbability(0.5f)) && 
-                value.PersistType == PersistentItemType.装备 && 
+            if (value.Dura.V > 0 && (本期特权 != 5 || !value.CanRepair) &&
+                (本期特权 != 4 || !Compute.CalculateProbability(0.5f)) &&
+                value.PersistType == PersistentItemType.装备 &&
                 Compute.CalculateProbability((value.Type == ItemType.Armour) ? 1f : 0.1f))
             {
                 int dura = (value.Dura.V = Math.Max(0, value.Dura.V - dmg));
@@ -7629,7 +7628,7 @@ public sealed class PlayerObject : MapObject
             Description = 全部冷却描述()
         });
         Enqueue(new 同步节点数据 { });
-        
+
         Enqueue(new 同步状态列表
         {
             Description = 全部Buff描述()
@@ -8109,7 +8108,7 @@ public sealed class PlayerObject : MapObject
 
             if ((gskill.CheckPassiveTags && this[Stat.SkillSign] != 1) || (gskill.CheckSkillCount && skill.RemainingCount.V <= 0))
                 break;
- 
+
             if (gskill.CheckBusyGreen && SEngine.CurrentTime < BusyTime)
             {
                 Enqueue(new 添加技能冷却
@@ -8150,17 +8149,17 @@ public sealed class PlayerObject : MapObject
                     float rand = 0f;
                     if (gskill.StatBoostProbability != Stat.Unknown)
                         rand = Math.Max(0f, (float)this[gskill.StatBoostProbability] * gskill.StatBoostFactor);
-                    
+
                     if (!Compute.CalculateProbability(gskill.CalculateTriggerProbability + rand))
                         continue;
                 }
             }
-            if ((gskill.ValidateLearnedSkills != 0 && (!Skills.TryGetValue(gskill.ValidateLearnedSkills, out var v5) || 
-                (gskill.VerficationSkillInscription != 0 && gskill.VerficationSkillInscription != v5.InscriptionID))) || 
-                (gskill.VerifyPlayerBuff != 0 && (!Buffs.TryGetValue(gskill.VerifyPlayerBuff, out var v6) || v6.当前层数.V < gskill.PlayerBuffStackCount)) || 
-                (gskill.VerifyTargetBuff != 0 && (target == null || !target.Buffs.TryGetValue(gskill.VerifyTargetBuff, out var v7) || v7.当前层数.V < gskill.TargetBuffStackCount)) || 
-                (gskill.VerifyTargetType != 0 && (target == null || !target.IsValidTarget(this, gskill.VerifyTargetType))) || 
-                (Skills.TryGetValue(gskill.BindingLevelID, out var v8) && 
+            if ((gskill.ValidateLearnedSkills != 0 && (!Skills.TryGetValue(gskill.ValidateLearnedSkills, out var v5) ||
+                (gskill.VerficationSkillInscription != 0 && gskill.VerficationSkillInscription != v5.InscriptionID))) ||
+                (gskill.VerifyPlayerBuff != 0 && (!Buffs.TryGetValue(gskill.VerifyPlayerBuff, out var v6) || v6.当前层数.V < gskill.PlayerBuffStackCount)) ||
+                (gskill.VerifyTargetBuff != 0 && (target == null || !target.Buffs.TryGetValue(gskill.VerifyTargetBuff, out var v7) || v7.当前层数.V < gskill.TargetBuffStackCount)) ||
+                (gskill.VerifyTargetType != 0 && (target == null || !target.IsValidTarget(this, gskill.VerifyTargetType))) ||
+                (Skills.TryGetValue(gskill.BindingLevelID, out var v8) &&
                 gskill.NeedConsumeMagic?.Length > v8.Level.V && CurrentMP < (num = gskill.NeedConsumeMagic[v8.Level.V])))
             {
                 continue;
@@ -8298,7 +8297,7 @@ public sealed class PlayerObject : MapObject
             }
             else if (NpcDialog.DataSheet.ContainsKey(对话守卫.GuardID * 100000))
             {
-                打开商店 = 对话守卫.StoreID;
+                CurrentStoreID = 对话守卫.StoreID;
                 打开界面 = 对话守卫.界面代码;
                 对话超时 = SEngine.CurrentTime.AddSeconds(30.0);
                 对话页面 = 对话守卫.GuardID * 100000;
@@ -8318,7 +8317,7 @@ public sealed class PlayerObject : MapObject
             对话守卫 = 对话守卫1;
             if (NpcDialog.DataSheet.ContainsKey(对话守卫1.GuardID * 100000))
             {
-                打开商店 = 对话守卫1.StoreID;
+                CurrentStoreID = 对话守卫1.StoreID;
                 打开界面 = 对话守卫1.界面代码;
                 对话超时 = SEngine.CurrentTime.AddSeconds(30.0);
                 对话页面 = 对话守卫1.GuardID * 100000;
@@ -13129,9 +13128,8 @@ public sealed class PlayerObject : MapObject
                             if (GameTitle.DataSheet.TryGetValue(b4, out var value32))
                             {
                                 Character.Titles[b4] = SEngine.CurrentTime.AddMinutes(value32.EffectiveTime);
-                                SConnection 客户网络 = Connection;
                                 int 剩余时间 = 65920000;
-                                客户网络?.SendPacket(new AddTitlePacket
+                                Enqueue(new AddTitlePacket
                                 {
                                     TitleID = b4,
                                     Duration = 剩余时间
@@ -16127,7 +16125,7 @@ public sealed class PlayerObject : MapObject
         {
             Connection.Disconnect(new Exception("错误操作: 商店修理单件.  错误: 没有选中Npc."));
         }
-        else if (打开商店 == 0)
+        else if (CurrentStoreID == 0)
         {
             Connection.Disconnect(new Exception("错误操作: 商店修理单件.  错误: 没有打开商店."));
         }
@@ -16245,7 +16243,7 @@ public sealed class PlayerObject : MapObject
         {
             Connection.Disconnect(new Exception("错误操作: 商店修理单件.  错误: 没有选中Npc."));
         }
-        else if (打开商店 == 0)
+        else if (CurrentStoreID == 0)
         {
             Connection.Disconnect(new Exception("错误操作: 商店修理单件.  错误: 没有打开商店."));
         }
@@ -17617,7 +17615,7 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 玩家卸下称号()
+    public void RemoveCurrentTitle()
     {
         if (Config.称号叠加开关 == 0)
         {
@@ -17631,14 +17629,10 @@ public sealed class PlayerObject : MapObject
                 {
                     RefreshStats();
                 }
-                CurrentTitle = 0;
-                SendPacket(new SyncCurrentTitlePacket
-                {
-                    ObjectID = ObjectID
-                });
             }
         }
-        else if (CurrentTitle != 0)
+        
+        if (CurrentTitle != 0)
         {
             CurrentTitle = 0;
             SendPacket(new SyncCurrentTitlePacket
@@ -17648,13 +17642,13 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 玩家整理背包(byte 背包类型)
+    public void 玩家整理背包(byte grid)
     {
         if (Dead || StallState > 0 || TradeState >= 3)
         {
             return;
         }
-        if (背包类型 == 1)
+        if (grid == 1)
         {
             List<ItemInfo> list = Inventory.Values.ToList();
             list.Sort((ItemInfo a, ItemInfo b) => b.ID.CompareTo(a.ID));
@@ -17693,7 +17687,7 @@ public sealed class PlayerObject : MapObject
                 物品描述 = 背包物品描述()
             });
         }
-        if (背包类型 != 2)
+        if (grid != 2)
         {
             return;
         }
@@ -17735,9 +17729,9 @@ public sealed class PlayerObject : MapObject
         });
     }
 
-    public void 自动整理背包(byte 背包类型)
+    public void 自动整理背包(byte grid)
     {
-        if (Dead || StallState > 0 || TradeState >= 3 || 背包类型 != 1)
+        if (Dead || StallState > 0 || TradeState >= 3 || grid != 1)
         {
             return;
         }
@@ -17893,46 +17887,46 @@ public sealed class PlayerObject : MapObject
         {
             if (item.Info.装备套装提示 == GameItemSet.沃玛装备 && 沃玛分解开关)
             {
-                玩家分解物品(1, b, 1);
+                UserDisassembleItem(1, b, 1);
             }
             else if (item.Info.装备套装提示 == GameItemSet.祖玛装备 && 祖玛分解开关)
             {
-                玩家分解物品(1, b, 1);
+                UserDisassembleItem(1, b, 1);
             }
             else if (item.Info.装备套装提示 == GameItemSet.赤月装备 && 赤月分解开关)
             {
-                玩家分解物品(1, b, 1);
+                UserDisassembleItem(1, b, 1);
             }
             else if (item.Info.装备套装提示 == GameItemSet.魔龙装备 && 魔龙分解开关)
             {
-                玩家分解物品(1, b, 1);
+                UserDisassembleItem(1, b, 1);
             }
             else if (item.Info.装备套装提示 == GameItemSet.苍月装备 && 苍月分解开关)
             {
-                玩家分解物品(1, b, 1);
+                UserDisassembleItem(1, b, 1);
             }
             else if (item.Info.装备套装提示 == GameItemSet.星王装备 && 星王分解开关)
             {
-                玩家分解物品(1, b, 1);
+                UserDisassembleItem(1, b, 1);
             }
             else if (item.Info.装备套装提示 == GameItemSet.神秘装备 && 神秘分解开关)
             {
-                玩家分解物品(1, b, 1);
+                UserDisassembleItem(1, b, 1);
             }
             else if (item.Info.装备套装提示 == GameItemSet.城主装备 && 城主分解开关)
             {
-                玩家分解物品(1, b, 1);
+                UserDisassembleItem(1, b, 1);
             }
             else if (item.Info.装备套装提示 == GameItemSet.其他装备 && 其他分解开关)
             {
-                玩家分解物品(1, b, 1);
+                UserDisassembleItem(1, b, 1);
             }
         }
     }
 
-    public void 玩家丢弃物品(byte 背包类型, byte 物品位置, ushort 丢弃数量)
+    public void DropItem(byte grid, byte location, ushort quantity)
     {
-        if (!Dead && StallState <= 0 && TradeState < 3 && CurrentLevel > 7 && 背包类型 == 1 && Inventory.TryGetValue(物品位置, out var v))
+        if (!Dead && StallState <= 0 && TradeState < 3 && CurrentLevel > 7 && grid == 1 && Inventory.TryGetValue(location, out var v))
         {
             if (v.IsBound)
             {
@@ -17945,39 +17939,39 @@ public sealed class PlayerObject : MapObject
             Inventory.Remove(v.Location.V);
             Enqueue(new DeleteItemPacket
             {
-                Grid = 背包类型,
-                Position = 物品位置
+                Grid = grid,
+                Position = location
             });
         }
     }
 
-    public void 玩家拆分物品(byte 当前背包, byte 物品位置, ushort 拆分数量, byte 目标背包, byte 目标位置)
+    public void UserSplitItem(byte grid, byte location, ushort quantity, byte targetGrid, byte targetLocation)
     {
-        if (拆分数量 > 0 && !Dead && StallState <= 0 && TradeState < 3 && 当前背包 == 1 && Inventory.TryGetValue(物品位置, out var v) && 目标背包 == 1 && 目标位置 < InventorySize && v != null && v.PersistType == PersistentItemType.Stack && v.Dura.V > 拆分数量 && !Inventory.TryGetValue(目标位置, out var _))
+        if (quantity > 0 && !Dead && StallState <= 0 && TradeState < 3 && grid == 1 && Inventory.TryGetValue(location, out var v) && targetGrid == 1 && targetLocation < InventorySize && v != null && v.PersistType == PersistentItemType.Stack && v.Dura.V > quantity && !Inventory.TryGetValue(targetLocation, out var _))
         {
-            v.Dura.V -= 拆分数量;
+            v.Dura.V -= quantity;
             Enqueue(new SyncItemPacket
             {
                 Description = v.ToArray()
             });
-            Inventory[目标位置] = new ItemInfo(v.Info, Character, 目标背包, 目标位置, 拆分数量);
+            Inventory[targetLocation] = new ItemInfo(v.Info, Character, targetGrid, targetLocation, quantity);
             Enqueue(new SyncItemPacket
             {
-                Description = Inventory[目标位置].ToArray()
+                Description = Inventory[targetLocation].ToArray()
             });
         }
     }
 
-    public void 玩家分解物品(byte 背包类型, byte 物品位置, byte 分解数量)
+    public void UserDisassembleItem(byte grid, byte location, byte quantity)
     {
         if (!Dead && StallState <= 0 && TradeState < 3)
         {
             ItemInfo v;
-            if (背包类型 != 1)
+            if (grid != 1)
             {
                 Connection.Disconnect(new Exception("错误操作: 玩家分解物品.  错误: 背包类型错误."));
             }
-            else if (!Inventory.TryGetValue(物品位置, out v))
+            else if (!Inventory.TryGetValue(location, out v))
             {
                 Enqueue(new GameErrorMessagePacket
                 {
@@ -17986,7 +17980,7 @@ public sealed class PlayerObject : MapObject
             }
             else
             {
-                if (!(v is EquipmentInfo 装备数据) || !装备数据.CanSell)
+                if (!(v is EquipmentInfo equip) || !equip.CanSell)
                 {
                     return;
                 }
@@ -17995,12 +17989,12 @@ public sealed class PlayerObject : MapObject
                     Character.分解日期.V = SEngine.CurrentTime;
                     Character.分解经验.V = 0;
                 }
-                Inventory.Remove(装备数据.Position);
-                装备数据.Remove();
+                Inventory.Remove(equip.Position);
+                equip.Remove();
                 Enqueue(new DeleteItemPacket
                 {
-                    Grid = 背包类型,
-                    Position = 物品位置
+                    Grid = grid,
+                    Position = location
                 });
                 byte b = byte.MaxValue;
                 byte b2 = 0;
@@ -18022,10 +18016,10 @@ public sealed class PlayerObject : MapObject
                     });
                 }
                 GameItem value = null;
-                int 出售价格 = 装备数据.SalePrice;
+                int 出售价格 = equip.SalePrice;
                 if (Config.元宝金币回收设定 == 1)
                 {
-                    if (装备数据.EquipInfo.EquipSet == GameItemSet.沃玛装备)
+                    if (equip.EquipInfo.EquipSet == GameItemSet.沃玛装备)
                     {
                         Ingot += Config.沃玛分解元宝;
                         Enqueue(new SyncIngotsPacket
@@ -18033,7 +18027,7 @@ public sealed class PlayerObject : MapObject
                             Amount = Ingot
                         });
                     }
-                    else if (装备数据.EquipInfo.EquipSet == GameItemSet.祖玛装备)
+                    else if (equip.EquipInfo.EquipSet == GameItemSet.祖玛装备)
                     {
                         Ingot += Config.祖玛分解元宝;
                         Enqueue(new SyncIngotsPacket
@@ -18041,7 +18035,7 @@ public sealed class PlayerObject : MapObject
                             Amount = Ingot
                         });
                     }
-                    else if (装备数据.EquipInfo.EquipSet == GameItemSet.赤月装备)
+                    else if (equip.EquipInfo.EquipSet == GameItemSet.赤月装备)
                     {
                         Ingot += Config.赤月分解元宝;
                         Enqueue(new SyncIngotsPacket
@@ -18049,7 +18043,7 @@ public sealed class PlayerObject : MapObject
                             Amount = Ingot
                         });
                     }
-                    else if (装备数据.EquipInfo.EquipSet == GameItemSet.魔龙装备)
+                    else if (equip.EquipInfo.EquipSet == GameItemSet.魔龙装备)
                     {
                         Ingot += Config.魔龙分解元宝;
                         Enqueue(new SyncIngotsPacket
@@ -18057,7 +18051,7 @@ public sealed class PlayerObject : MapObject
                             Amount = Ingot
                         });
                     }
-                    else if (装备数据.EquipInfo.EquipSet == GameItemSet.苍月装备)
+                    else if (equip.EquipInfo.EquipSet == GameItemSet.苍月装备)
                     {
                         Ingot += Config.苍月分解元宝;
                         Enqueue(new SyncIngotsPacket
@@ -18065,7 +18059,7 @@ public sealed class PlayerObject : MapObject
                             Amount = Ingot
                         });
                     }
-                    else if (装备数据.EquipInfo.EquipSet == GameItemSet.星王装备)
+                    else if (equip.EquipInfo.EquipSet == GameItemSet.星王装备)
                     {
                         Ingot += Config.星王分解元宝;
                         Enqueue(new SyncIngotsPacket
@@ -18073,7 +18067,7 @@ public sealed class PlayerObject : MapObject
                             Amount = Ingot
                         });
                     }
-                    else if (装备数据.EquipInfo.EquipSet == GameItemSet.城主装备)
+                    else if (equip.EquipInfo.EquipSet == GameItemSet.城主装备)
                     {
                         Ingot += Config.城主分解元宝;
                         Enqueue(new SyncIngotsPacket
@@ -18081,7 +18075,7 @@ public sealed class PlayerObject : MapObject
                             Amount = Ingot
                         });
                     }
-                    else if (装备数据.EquipInfo.EquipSet == GameItemSet.神秘装备)
+                    else if (equip.EquipInfo.EquipSet == GameItemSet.神秘装备)
                     {
                         Ingot += Config.神秘分解元宝;
                         Enqueue(new SyncIngotsPacket
@@ -18089,9 +18083,9 @@ public sealed class PlayerObject : MapObject
                             Amount = Ingot
                         });
                     }
-                    else if (装备数据.EquipInfo.EquipSet == GameItemSet.None)
+                    else if (equip.EquipInfo.EquipSet == GameItemSet.None)
                     {
-                        Gold += Math.Max(1, 装备数据.SalePrice);
+                        Gold += Math.Max(1, equip.SalePrice);
                         Enqueue(new 同步货币数量
                         {
                             Description = 全部货币描述()
@@ -18104,7 +18098,7 @@ public sealed class PlayerObject : MapObject
                     {
                         return;
                     }
-                    if (装备数据.EquipInfo.EquipSet == GameItemSet.祖玛装备)
+                    if (equip.EquipInfo.EquipSet == GameItemSet.祖玛装备)
                     {
                         if (Config.祖玛分解开关 == 5)
                         {
@@ -18112,7 +18106,7 @@ public sealed class PlayerObject : MapObject
                             if (num < Config.祖玛分解几率一)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.祖玛分解物品一, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.祖玛分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18122,7 +18116,7 @@ public sealed class PlayerObject : MapObject
                             else if (num < Config.祖玛分解几率二)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.祖玛分解物品二, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.祖玛分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18132,7 +18126,7 @@ public sealed class PlayerObject : MapObject
                             else if (num < Config.祖玛分解几率三)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.祖玛分解物品三, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.祖玛分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18142,7 +18136,7 @@ public sealed class PlayerObject : MapObject
                             else
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.祖玛分解物品四, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.祖玛分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18161,7 +18155,7 @@ public sealed class PlayerObject : MapObject
                             if (num2 < Config.祖玛分解几率一)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.祖玛分解物品一, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.祖玛分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18171,7 +18165,7 @@ public sealed class PlayerObject : MapObject
                             else if (num2 < Config.祖玛分解几率二)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.祖玛分解物品二, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.祖玛分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18181,7 +18175,7 @@ public sealed class PlayerObject : MapObject
                             else if (num2 < Config.祖玛分解几率三)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.祖玛分解物品三, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.祖玛分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18191,14 +18185,14 @@ public sealed class PlayerObject : MapObject
                             else
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.祖玛分解物品四, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.祖玛分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            Gold += Math.Max(1, 装备数据.SalePrice);
+                            Gold += Math.Max(1, equip.SalePrice);
                             Enqueue(new 同步货币数量
                             {
                                 Description = 全部货币描述()
@@ -18210,7 +18204,7 @@ public sealed class PlayerObject : MapObject
                             if (num3 < Config.祖玛分解几率一)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.祖玛分解物品一, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.祖玛分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18220,7 +18214,7 @@ public sealed class PlayerObject : MapObject
                             else if (num3 < Config.祖玛分解几率二)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.祖玛分解物品二, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.祖玛分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18230,7 +18224,7 @@ public sealed class PlayerObject : MapObject
                             else if (num3 < Config.祖玛分解几率三)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.祖玛分解物品三, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.祖玛分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18240,7 +18234,7 @@ public sealed class PlayerObject : MapObject
                             else
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.祖玛分解物品四, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.祖玛分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18258,14 +18252,14 @@ public sealed class PlayerObject : MapObject
                         }
                         else if (Config.祖玛分解开关 == 1)
                         {
-                            Gold += Math.Max(1, 装备数据.SalePrice);
+                            Gold += Math.Max(1, equip.SalePrice);
                             Enqueue(new 同步货币数量
                             {
                                 Description = 全部货币描述()
                             });
                         }
                     }
-                    else if (装备数据.EquipInfo.EquipSet == GameItemSet.赤月装备)
+                    else if (equip.EquipInfo.EquipSet == GameItemSet.赤月装备)
                     {
                         if (Config.赤月分解开关 == 5)
                         {
@@ -18273,7 +18267,7 @@ public sealed class PlayerObject : MapObject
                             if (num4 < Config.赤月分解几率一)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.赤月分解物品一, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.赤月分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18283,7 +18277,7 @@ public sealed class PlayerObject : MapObject
                             else if (num4 < Config.赤月分解几率二)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.赤月分解物品二, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.赤月分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18293,7 +18287,7 @@ public sealed class PlayerObject : MapObject
                             else if (num4 < Config.赤月分解几率三)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.赤月分解物品三, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.赤月分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18303,7 +18297,7 @@ public sealed class PlayerObject : MapObject
                             else
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.赤月分解物品四, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.赤月分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18322,7 +18316,7 @@ public sealed class PlayerObject : MapObject
                             if (num5 < Config.赤月分解几率一)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.赤月分解物品一, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.赤月分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18332,7 +18326,7 @@ public sealed class PlayerObject : MapObject
                             else if (num5 < Config.赤月分解几率二)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.赤月分解物品二, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.赤月分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18342,7 +18336,7 @@ public sealed class PlayerObject : MapObject
                             else if (num5 < Config.赤月分解几率三)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.赤月分解物品三, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.赤月分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18352,14 +18346,14 @@ public sealed class PlayerObject : MapObject
                             else
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.赤月分解物品四, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.赤月分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            Gold += Math.Max(1, 装备数据.SalePrice);
+                            Gold += Math.Max(1, equip.SalePrice);
                             Enqueue(new 同步货币数量
                             {
                                 Description = 全部货币描述()
@@ -18371,7 +18365,7 @@ public sealed class PlayerObject : MapObject
                             if (num6 < Config.赤月分解几率一)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.赤月分解物品一, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.赤月分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18381,7 +18375,7 @@ public sealed class PlayerObject : MapObject
                             else if (num6 < Config.赤月分解几率二)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.赤月分解物品二, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.赤月分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18391,7 +18385,7 @@ public sealed class PlayerObject : MapObject
                             else if (num6 < Config.赤月分解几率三)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.赤月分解物品三, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.赤月分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18401,7 +18395,7 @@ public sealed class PlayerObject : MapObject
                             else
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.赤月分解物品四, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.赤月分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18419,14 +18413,14 @@ public sealed class PlayerObject : MapObject
                         }
                         else if (Config.赤月分解开关 == 1)
                         {
-                            Gold += Math.Max(1, 装备数据.SalePrice);
+                            Gold += Math.Max(1, equip.SalePrice);
                             Enqueue(new 同步货币数量
                             {
                                 Description = 全部货币描述()
                             });
                         }
                     }
-                    else if (装备数据.EquipInfo.EquipSet == GameItemSet.魔龙装备)
+                    else if (equip.EquipInfo.EquipSet == GameItemSet.魔龙装备)
                     {
                         if (Config.魔龙分解开关 == 5)
                         {
@@ -18434,7 +18428,7 @@ public sealed class PlayerObject : MapObject
                             if (num7 < Config.魔龙分解几率一)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.魔龙分解物品一, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.魔龙分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18444,7 +18438,7 @@ public sealed class PlayerObject : MapObject
                             else if (num7 < Config.魔龙分解几率二)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.魔龙分解物品二, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.魔龙分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18454,7 +18448,7 @@ public sealed class PlayerObject : MapObject
                             else if (num7 < Config.魔龙分解几率三)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.魔龙分解物品三, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.魔龙分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18464,7 +18458,7 @@ public sealed class PlayerObject : MapObject
                             else
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.魔龙分解物品四, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.魔龙分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18483,7 +18477,7 @@ public sealed class PlayerObject : MapObject
                             if (num8 < Config.魔龙分解几率一)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.魔龙分解物品一, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.魔龙分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18493,7 +18487,7 @@ public sealed class PlayerObject : MapObject
                             else if (num8 < Config.魔龙分解几率二)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.魔龙分解物品二, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.魔龙分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18503,7 +18497,7 @@ public sealed class PlayerObject : MapObject
                             else if (num8 < Config.魔龙分解几率三)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.魔龙分解物品三, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.魔龙分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18513,14 +18507,14 @@ public sealed class PlayerObject : MapObject
                             else
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.魔龙分解物品四, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.魔龙分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            Gold += Math.Max(1, 装备数据.SalePrice);
+                            Gold += Math.Max(1, equip.SalePrice);
                             Enqueue(new 同步货币数量
                             {
                                 Description = 全部货币描述()
@@ -18532,7 +18526,7 @@ public sealed class PlayerObject : MapObject
                             if (num9 < Config.魔龙分解几率一)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.魔龙分解物品一, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.魔龙分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18542,7 +18536,7 @@ public sealed class PlayerObject : MapObject
                             else if (num9 < Config.魔龙分解几率二)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.魔龙分解物品二, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.魔龙分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18552,7 +18546,7 @@ public sealed class PlayerObject : MapObject
                             else if (num9 < Config.魔龙分解几率三)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.魔龙分解物品三, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.魔龙分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18562,7 +18556,7 @@ public sealed class PlayerObject : MapObject
                             else
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.魔龙分解物品四, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.魔龙分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18580,14 +18574,14 @@ public sealed class PlayerObject : MapObject
                         }
                         else if (Config.魔龙分解开关 == 1)
                         {
-                            Gold += Math.Max(1, 装备数据.SalePrice);
+                            Gold += Math.Max(1, equip.SalePrice);
                             Enqueue(new 同步货币数量
                             {
                                 Description = 全部货币描述()
                             });
                         }
                     }
-                    else if (装备数据.EquipInfo.EquipSet == GameItemSet.苍月装备)
+                    else if (equip.EquipInfo.EquipSet == GameItemSet.苍月装备)
                     {
                         if (Config.苍月分解开关 == 5)
                         {
@@ -18595,7 +18589,7 @@ public sealed class PlayerObject : MapObject
                             if (num10 < Config.苍月分解几率一)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.苍月分解物品一, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.苍月分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18605,7 +18599,7 @@ public sealed class PlayerObject : MapObject
                             else if (num10 < Config.苍月分解几率二)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.苍月分解物品二, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.苍月分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18615,7 +18609,7 @@ public sealed class PlayerObject : MapObject
                             else if (num10 < Config.苍月分解几率三)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.苍月分解物品三, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.苍月分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18625,7 +18619,7 @@ public sealed class PlayerObject : MapObject
                             else
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.苍月分解物品四, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.苍月分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18644,7 +18638,7 @@ public sealed class PlayerObject : MapObject
                             if (num11 < Config.苍月分解几率一)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.苍月分解物品一, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.苍月分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18654,7 +18648,7 @@ public sealed class PlayerObject : MapObject
                             else if (num11 < Config.苍月分解几率二)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.苍月分解物品二, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.苍月分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18664,7 +18658,7 @@ public sealed class PlayerObject : MapObject
                             else if (num11 < Config.苍月分解几率三)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.苍月分解物品三, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.苍月分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18674,14 +18668,14 @@ public sealed class PlayerObject : MapObject
                             else
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.苍月分解物品四, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.苍月分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            Gold += Math.Max(1, 装备数据.SalePrice);
+                            Gold += Math.Max(1, equip.SalePrice);
                             Enqueue(new 同步货币数量
                             {
                                 Description = 全部货币描述()
@@ -18693,7 +18687,7 @@ public sealed class PlayerObject : MapObject
                             if (num12 < Config.苍月分解几率一)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.苍月分解物品一, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.苍月分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18703,7 +18697,7 @@ public sealed class PlayerObject : MapObject
                             else if (num12 < Config.苍月分解几率二)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.苍月分解物品二, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.苍月分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18713,7 +18707,7 @@ public sealed class PlayerObject : MapObject
                             else if (num12 < Config.苍月分解几率三)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.苍月分解物品三, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.苍月分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18723,7 +18717,7 @@ public sealed class PlayerObject : MapObject
                             else
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.苍月分解物品四, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.苍月分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18741,14 +18735,14 @@ public sealed class PlayerObject : MapObject
                         }
                         else if (Config.苍月分解开关 == 1)
                         {
-                            Gold += Math.Max(1, 装备数据.SalePrice);
+                            Gold += Math.Max(1, equip.SalePrice);
                             Enqueue(new 同步货币数量
                             {
                                 Description = 全部货币描述()
                             });
                         }
                     }
-                    else if (装备数据.EquipInfo.EquipSet == GameItemSet.星王装备)
+                    else if (equip.EquipInfo.EquipSet == GameItemSet.星王装备)
                     {
                         if (Config.星王分解开关 == 5)
                         {
@@ -18756,7 +18750,7 @@ public sealed class PlayerObject : MapObject
                             if (num13 < Config.星王分解几率一)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.星王分解物品一, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.星王分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18766,7 +18760,7 @@ public sealed class PlayerObject : MapObject
                             else if (num13 < Config.星王分解几率二)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.星王分解物品二, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.星王分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18776,7 +18770,7 @@ public sealed class PlayerObject : MapObject
                             else if (num13 < Config.星王分解几率三)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.星王分解物品三, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.星王分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18786,7 +18780,7 @@ public sealed class PlayerObject : MapObject
                             else
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.星王分解物品四, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.星王分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18805,7 +18799,7 @@ public sealed class PlayerObject : MapObject
                             if (num14 < Config.星王分解几率一)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.星王分解物品一, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.星王分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18815,7 +18809,7 @@ public sealed class PlayerObject : MapObject
                             else if (num14 < Config.星王分解几率二)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.星王分解物品二, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.星王分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18825,7 +18819,7 @@ public sealed class PlayerObject : MapObject
                             else if (num14 < Config.星王分解几率三)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.星王分解物品三, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.星王分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18835,14 +18829,14 @@ public sealed class PlayerObject : MapObject
                             else
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.星王分解物品四, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.星王分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            Gold += Math.Max(1, 装备数据.SalePrice);
+                            Gold += Math.Max(1, equip.SalePrice);
                             Enqueue(new 同步货币数量
                             {
                                 Description = 全部货币描述()
@@ -18854,7 +18848,7 @@ public sealed class PlayerObject : MapObject
                             if (num15 < Config.星王分解几率一)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.星王分解物品一, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.星王分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18864,7 +18858,7 @@ public sealed class PlayerObject : MapObject
                             else if (num15 < Config.星王分解几率二)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.星王分解物品二, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.星王分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18874,7 +18868,7 @@ public sealed class PlayerObject : MapObject
                             else if (num15 < Config.星王分解几率三)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.星王分解物品三, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.星王分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18884,7 +18878,7 @@ public sealed class PlayerObject : MapObject
                             else
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.星王分解物品四, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.星王分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18902,14 +18896,14 @@ public sealed class PlayerObject : MapObject
                         }
                         else if (Config.星王分解开关 == 1)
                         {
-                            Gold += Math.Max(1, 装备数据.SalePrice);
+                            Gold += Math.Max(1, equip.SalePrice);
                             Enqueue(new 同步货币数量
                             {
                                 Description = 全部货币描述()
                             });
                         }
                     }
-                    else if (装备数据.EquipInfo.EquipSet == GameItemSet.城主装备)
+                    else if (equip.EquipInfo.EquipSet == GameItemSet.城主装备)
                     {
                         if (Config.城主分解开关 == 5)
                         {
@@ -18917,7 +18911,7 @@ public sealed class PlayerObject : MapObject
                             if (num16 < Config.城主分解几率一)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.城主分解物品一, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.城主分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18927,7 +18921,7 @@ public sealed class PlayerObject : MapObject
                             else if (num16 < Config.城主分解几率二)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.城主分解物品二, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.城主分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18937,7 +18931,7 @@ public sealed class PlayerObject : MapObject
                             else if (num16 < Config.城主分解几率三)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.城主分解物品三, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.城主分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18947,7 +18941,7 @@ public sealed class PlayerObject : MapObject
                             else
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.城主分解物品四, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.城主分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18966,7 +18960,7 @@ public sealed class PlayerObject : MapObject
                             if (num17 < Config.城主分解几率一)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.城主分解物品一, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.城主分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18976,7 +18970,7 @@ public sealed class PlayerObject : MapObject
                             else if (num17 < Config.城主分解几率二)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.城主分解物品二, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.城主分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18986,7 +18980,7 @@ public sealed class PlayerObject : MapObject
                             else if (num17 < Config.城主分解几率三)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.城主分解物品三, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.城主分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -18996,14 +18990,14 @@ public sealed class PlayerObject : MapObject
                             else
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.城主分解物品四, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.城主分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            Gold += Math.Max(1, 装备数据.SalePrice);
+                            Gold += Math.Max(1, equip.SalePrice);
                             Enqueue(new 同步货币数量
                             {
                                 Description = 全部货币描述()
@@ -19015,7 +19009,7 @@ public sealed class PlayerObject : MapObject
                             if (num18 < Config.城主分解几率一)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.城主分解物品一, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.城主分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -19025,7 +19019,7 @@ public sealed class PlayerObject : MapObject
                             else if (num18 < Config.城主分解几率二)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.城主分解物品二, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.城主分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -19035,7 +19029,7 @@ public sealed class PlayerObject : MapObject
                             else if (num18 < Config.城主分解几率三)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.城主分解物品三, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.城主分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -19045,7 +19039,7 @@ public sealed class PlayerObject : MapObject
                             else
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.城主分解物品四, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.城主分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -19063,14 +19057,14 @@ public sealed class PlayerObject : MapObject
                         }
                         else if (Config.城主分解开关 == 1)
                         {
-                            Gold += Math.Max(1, 装备数据.SalePrice);
+                            Gold += Math.Max(1, equip.SalePrice);
                             Enqueue(new 同步货币数量
                             {
                                 Description = 全部货币描述()
                             });
                         }
                     }
-                    else if (装备数据.EquipInfo.EquipSet == GameItemSet.其他装备)
+                    else if (equip.EquipInfo.EquipSet == GameItemSet.其他装备)
                     {
                         if (Config.其他分解开关 == 5)
                         {
@@ -19078,7 +19072,7 @@ public sealed class PlayerObject : MapObject
                             if (num19 < Config.其他分解几率一)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.其他分解物品一, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.其他分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -19088,7 +19082,7 @@ public sealed class PlayerObject : MapObject
                             else if (num19 < Config.其他分解几率二)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.其他分解物品二, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.其他分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -19098,7 +19092,7 @@ public sealed class PlayerObject : MapObject
                             else if (num19 < Config.其他分解几率三)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.其他分解物品三, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.其他分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -19108,14 +19102,14 @@ public sealed class PlayerObject : MapObject
                             else
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.其他分解物品四, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.其他分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            Gold += Math.Max(1, 装备数据.SalePrice);
+                            Gold += Math.Max(1, equip.SalePrice);
                             Enqueue(new 同步货币数量
                             {
                                 Description = 全部货币描述()
@@ -19127,7 +19121,7 @@ public sealed class PlayerObject : MapObject
                             if (num20 < Config.其他分解几率一)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.其他分解物品一, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.其他分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -19137,7 +19131,7 @@ public sealed class PlayerObject : MapObject
                             else if (num20 < Config.其他分解几率二)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.其他分解物品二, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.其他分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -19147,7 +19141,7 @@ public sealed class PlayerObject : MapObject
                             else if (num20 < Config.其他分解几率三)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.其他分解物品三, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.其他分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -19157,14 +19151,14 @@ public sealed class PlayerObject : MapObject
                             else
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.其他分解物品四, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.其他分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            Gold += Math.Max(1, 装备数据.SalePrice);
+                            Gold += Math.Max(1, equip.SalePrice);
                             Enqueue(new 同步货币数量
                             {
                                 Description = 全部货币描述()
@@ -19176,7 +19170,7 @@ public sealed class PlayerObject : MapObject
                             if (num21 < Config.其他分解几率一)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.其他分解物品一, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.其他分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -19186,7 +19180,7 @@ public sealed class PlayerObject : MapObject
                             else if (num21 < Config.其他分解几率二)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.其他分解物品二, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.其他分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -19196,7 +19190,7 @@ public sealed class PlayerObject : MapObject
                             else if (num21 < Config.其他分解几率三)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.其他分解物品三, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.其他分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -19206,7 +19200,7 @@ public sealed class PlayerObject : MapObject
                             else
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.其他分解物品四, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.其他分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -19216,7 +19210,7 @@ public sealed class PlayerObject : MapObject
                         }
                         else if (Config.其他分解开关 == 2)
                         {
-                            Gold += Math.Max(1, 装备数据.SalePrice);
+                            Gold += Math.Max(1, equip.SalePrice);
                             Enqueue(new 同步货币数量
                             {
                                 Description = 全部货币描述()
@@ -19224,14 +19218,14 @@ public sealed class PlayerObject : MapObject
                         }
                         else if (Config.其他分解开关 == 1)
                         {
-                            Gold += Math.Max(1, 装备数据.SalePrice);
+                            Gold += Math.Max(1, equip.SalePrice);
                             Enqueue(new 同步货币数量
                             {
                                 Description = 全部货币描述()
                             });
                         }
                     }
-                    else if (装备数据.EquipInfo.EquipSet == GameItemSet.沃玛装备)
+                    else if (equip.EquipInfo.EquipSet == GameItemSet.沃玛装备)
                     {
                         if (Config.沃玛分解开关 == 5)
                         {
@@ -19239,7 +19233,7 @@ public sealed class PlayerObject : MapObject
                             if (num22 < Config.沃玛分解几率一)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.沃玛分解物品一, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.沃玛分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -19249,7 +19243,7 @@ public sealed class PlayerObject : MapObject
                             else if (num22 < Config.沃玛分解几率二)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.沃玛分解物品二, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.沃玛分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -19259,7 +19253,7 @@ public sealed class PlayerObject : MapObject
                             else if (num22 < Config.沃玛分解几率三)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.沃玛分解物品三, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.沃玛分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -19269,7 +19263,7 @@ public sealed class PlayerObject : MapObject
                             else
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.沃玛分解物品四, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.沃玛分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -19288,7 +19282,7 @@ public sealed class PlayerObject : MapObject
                             if (num23 < Config.沃玛分解几率一)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.沃玛分解物品一, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.沃玛分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -19298,7 +19292,7 @@ public sealed class PlayerObject : MapObject
                             else if (num23 < Config.沃玛分解几率二)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.沃玛分解物品二, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.沃玛分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -19308,7 +19302,7 @@ public sealed class PlayerObject : MapObject
                             else if (num23 < Config.沃玛分解几率三)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.沃玛分解物品三, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.沃玛分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -19318,14 +19312,14 @@ public sealed class PlayerObject : MapObject
                             else
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.沃玛分解物品四, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.沃玛分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            Gold += Math.Max(1, 装备数据.SalePrice);
+                            Gold += Math.Max(1, equip.SalePrice);
                             Enqueue(new 同步货币数量
                             {
                                 Description = 全部货币描述()
@@ -19337,7 +19331,7 @@ public sealed class PlayerObject : MapObject
                             if (num24 < Config.沃玛分解几率一)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.沃玛分解物品一, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.沃玛分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -19347,7 +19341,7 @@ public sealed class PlayerObject : MapObject
                             else if (num24 < Config.沃玛分解几率二)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.沃玛分解物品二, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.沃玛分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -19357,7 +19351,7 @@ public sealed class PlayerObject : MapObject
                             else if (num24 < Config.沃玛分解几率三)
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.沃玛分解物品三, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.沃玛分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -19367,7 +19361,7 @@ public sealed class PlayerObject : MapObject
                             else
                             {
                                 GameItem.DataSheetByName.TryGetValue(Config.沃玛分解物品四, out value);
-                                Inventory[b] = new ItemInfo(value, Character, 背包类型, b, 1);
+                                Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
                                 Inventory[b].Dura.V = Config.沃玛分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
@@ -19385,14 +19379,14 @@ public sealed class PlayerObject : MapObject
                         }
                         else if (Config.沃玛分解开关 == 1)
                         {
-                            Gold += Math.Max(1, 装备数据.SalePrice);
+                            Gold += Math.Max(1, equip.SalePrice);
                             Enqueue(new 同步货币数量
                             {
                                 Description = 全部货币描述()
                             });
                         }
                     }
-                    else if (装备数据.EquipInfo.EquipSet == GameItemSet.神秘装备)
+                    else if (equip.EquipInfo.EquipSet == GameItemSet.神秘装备)
                     {
                         Ingot += Config.神秘分解元宝;
                         Enqueue(new SyncIngotsPacket
@@ -19400,9 +19394,9 @@ public sealed class PlayerObject : MapObject
                             Amount = Ingot
                         });
                     }
-                    else if (装备数据.EquipInfo.EquipSet == GameItemSet.None)
+                    else if (equip.EquipInfo.EquipSet == GameItemSet.None)
                     {
-                        Gold += Math.Max(1, 装备数据.SalePrice);
+                        Gold += Math.Max(1, equip.SalePrice);
                         Enqueue(new 同步货币数量
                         {
                             Description = 全部货币描述()
@@ -19411,7 +19405,7 @@ public sealed class PlayerObject : MapObject
                 }
                 else if (Config.元宝金币回收设定 == 0)
                 {
-                    Gold += Math.Max(1, 装备数据.SalePrice);
+                    Gold += Math.Max(1, equip.SalePrice);
                     Enqueue(new 同步货币数量
                     {
                         Description = 全部货币描述()
@@ -19428,54 +19422,56 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 玩家转移物品(byte 当前背包, byte 当前位置, byte 目标背包, byte 目标位置)
+    public void UserMoveItem(byte grid, byte location, byte targetGrid, byte targetLocation)
     {
-        if (Dead || StallState > 0 || TradeState >= 3 || (当前背包 == 0 && 当前位置 >= 16) || (当前背包 == 1 && 当前位置 >= InventorySize) || (当前背包 == 2 && 当前位置 >= WarehouseSize) || (目标背包 == 0 && 目标位置 >= 16) || (目标背包 == 1 && 目标位置 >= InventorySize) || (目标背包 == 2 && 目标位置 >= WarehouseSize))
+        if (Dead || StallState > 0 || TradeState >= 3 || (grid == 0 && location >= 16) || (grid == 1 && location >= InventorySize) || (grid == 2 && location >= WarehouseSize) || (targetGrid == 0 && targetLocation >= 16) || (targetGrid == 1 && targetLocation >= InventorySize) || (targetGrid == 2 && targetLocation >= WarehouseSize))
         {
             return;
         }
         ItemInfo 物品数据 = null;
-        if (当前背包 == 0)
+        if (grid == 0)
         {
-            物品数据 = (Equipment.TryGetValue(当前位置, out var v) ? v : null);
+            物品数据 = (Equipment.TryGetValue(location, out var v) ? v : null);
         }
-        if (当前背包 == 1)
+        if (grid == 1)
         {
-            物品数据 = (Inventory.TryGetValue(当前位置, out var v2) ? v2 : null);
+            物品数据 = (Inventory.TryGetValue(location, out var v2) ? v2 : null);
         }
-        if (当前背包 == 2)
+        if (grid == 2)
         {
-            物品数据 = (Storage.TryGetValue(当前位置, out var v3) ? v3 : null);
+            物品数据 = (Storage.TryGetValue(location, out var v3) ? v3 : null);
         }
-        if (当前背包 == 7 && Config.资源包开关 == 1)
+        if (grid == 7 && Config.资源包开关 == 1)
         {
-            物品数据 = (角色资源背包.TryGetValue(当前位置, out var v4) ? v4 : null);
+            物品数据 = (角色资源背包.TryGetValue(location, out var v4) ? v4 : null);
         }
         if (物品数据.背包锁定)
         {
             return;
         }
+
         ItemInfo 物品数据2 = null;
-        if (目标背包 == 0)
+        if (targetGrid == 0)
         {
-            物品数据2 = (Equipment.TryGetValue(目标位置, out var v5) ? v5 : null);
+            物品数据2 = (Equipment.TryGetValue(targetLocation, out var v5) ? v5 : null);
         }
-        if (目标背包 == 1)
+        if (targetGrid == 1)
         {
-            物品数据2 = (Inventory.TryGetValue(目标位置, out var v6) ? v6 : null);
+            物品数据2 = (Inventory.TryGetValue(targetLocation, out var v6) ? v6 : null);
         }
-        if (目标背包 == 2)
+        if (targetGrid == 2)
         {
-            物品数据2 = (Storage.TryGetValue(目标位置, out var v7) ? v7 : null);
+            物品数据2 = (Storage.TryGetValue(targetLocation, out var v7) ? v7 : null);
         }
-        if (目标背包 == 7 && Config.资源包开关 == 1)
+        if (targetGrid == 7 && Config.资源包开关 == 1)
         {
-            物品数据2 = (角色资源背包.TryGetValue(目标位置, out var v8) ? v8 : null);
+            物品数据2 = (角色资源背包.TryGetValue(targetLocation, out var v8) ? v8 : null);
         }
-        if (物品数据.背包锁定 || (物品数据 == null && 物品数据2 == null) || (当前背包 == 0 && 目标背包 == 0) || (当前背包 == 0 && 目标背包 == 2) || (当前背包 == 2 && 目标背包 == 0) || (物品数据 != null && 当前背包 == 0 && (物品数据 as EquipmentInfo).CanRemove) || (物品数据2 != null && 目标背包 == 0 && (物品数据2 as EquipmentInfo).CanRemove) || (物品数据 != null && 目标背包 == 0 && (!(物品数据 is EquipmentInfo 装备数据) || 装备数据.NeedLevel > CurrentLevel || (装备数据.NeedGender != 0 && 装备数据.NeedGender != Gender) || (装备数据.NeedRace != GameObjectRace.通用 && 装备数据.NeedRace != Job) || 装备数据.NeedAttack > this[Stat.MaxDC] || 装备数据.NeedMagic > this[Stat.MaxMC] || 装备数据.NeedTaoism > this[Stat.MaxSC] || 装备数据.NeedPiercing > this[Stat.MaxNC] || 装备数据.NeedArchery > this[Stat.MaxBC] || (目标位置 == 0 && 装备数据.Weight > 最大腕力) || (目标位置 != 0 && 装备数据.Weight - 物品数据2?.Weight > 最大穿戴 - EquipmentWeight) || (目标位置 == 0 && 装备数据.Type != ItemType.Weapon) || (目标位置 == 1 && 装备数据.Type != ItemType.Armour) || (目标位置 == 2 && 装备数据.Type != ItemType.Cloak) || (目标位置 == 3 && 装备数据.Type != ItemType.Helmet) || (目标位置 == 4 && 装备数据.Type != ItemType.ShoulderPad) || (目标位置 == 5 && 装备数据.Type != ItemType.护腕) || (目标位置 == 6 && 装备数据.Type != ItemType.Belt) || (目标位置 == 7 && 装备数据.Type != ItemType.Boots) || (目标位置 == 8 && 装备数据.Type != ItemType.Necklace) || (目标位置 == 13 && 装备数据.Type != ItemType.Medal) || (目标位置 == 14 && 装备数据.Type != ItemType.玉佩) || (目标位置 == 15 && 装备数据.Type != ItemType.战具) || (目标位置 == 9 && 装备数据.Type != ItemType.Ring) || (目标位置 == 10 && 装备数据.Type != ItemType.Ring) || (目标位置 == 11 && 装备数据.Type != ItemType.Bracelet) || (目标位置 == 12 && 装备数据.Type != ItemType.Bracelet))) || (物品数据2 != null && 当前背包 == 0 && (!(物品数据2 is EquipmentInfo 装备数据2) || 装备数据2.NeedLevel > CurrentLevel || (装备数据2.NeedGender != 0 && 装备数据2.NeedGender != Gender) || (装备数据2.NeedRace != GameObjectRace.通用 && 装备数据2.NeedRace != Job) || 装备数据2.NeedAttack > this[Stat.MaxDC] || 装备数据2.NeedMagic > this[Stat.MaxMC] || 装备数据2.NeedTaoism > this[Stat.MaxSC] || 装备数据2.NeedPiercing > this[Stat.MaxNC] || 装备数据2.NeedArchery > this[Stat.MaxBC] || (当前位置 == 0 && 装备数据2.Weight > 最大腕力) || (当前位置 != 0 && 装备数据2.Weight - 物品数据?.Weight > 最大穿戴 - EquipmentWeight) || (当前位置 == 0 && 装备数据2.Type != ItemType.Weapon) || (当前位置 == 1 && 装备数据2.Type != ItemType.Armour) || (当前位置 == 2 && 装备数据2.Type != ItemType.Cloak) || (当前位置 == 3 && 装备数据2.Type != ItemType.Helmet) || (当前位置 == 4 && 装备数据2.Type != ItemType.ShoulderPad) || (当前位置 == 5 && 装备数据2.Type != ItemType.护腕) || (当前位置 == 6 && 装备数据2.Type != ItemType.Belt) || (当前位置 == 7 && 装备数据2.Type != ItemType.Boots) || (当前位置 == 8 && 装备数据2.Type != ItemType.Necklace) || (当前位置 == 13 && 装备数据2.Type != ItemType.Medal) || (当前位置 == 14 && 装备数据2.Type != ItemType.玉佩) || (当前位置 == 15 && 装备数据2.Type != ItemType.战具) || (当前位置 == 9 && 装备数据2.Type != ItemType.Ring) || (当前位置 == 10 && 装备数据2.Type != ItemType.Ring) || (当前位置 == 11 && 装备数据2.Type != ItemType.Bracelet) || (当前位置 == 12 && 装备数据2.Type != ItemType.Bracelet))))
+        if (物品数据.背包锁定 || (物品数据 == null && 物品数据2 == null) || (grid == 0 && targetGrid == 0) || (grid == 0 && targetGrid == 2) || (grid == 2 && targetGrid == 0) || (物品数据 != null && grid == 0 && (物品数据 as EquipmentInfo).CanRemove) || (物品数据2 != null && targetGrid == 0 && (物品数据2 as EquipmentInfo).CanRemove) || (物品数据 != null && targetGrid == 0 && (!(物品数据 is EquipmentInfo 装备数据) || 装备数据.NeedLevel > CurrentLevel || (装备数据.NeedGender != 0 && 装备数据.NeedGender != Gender) || (装备数据.NeedRace != GameObjectRace.通用 && 装备数据.NeedRace != Job) || 装备数据.NeedAttack > this[Stat.MaxDC] || 装备数据.NeedMagic > this[Stat.MaxMC] || 装备数据.NeedTaoism > this[Stat.MaxSC] || 装备数据.NeedPiercing > this[Stat.MaxNC] || 装备数据.NeedArchery > this[Stat.MaxBC] || (targetLocation == 0 && 装备数据.Weight > 最大腕力) || (targetLocation != 0 && 装备数据.Weight - 物品数据2?.Weight > 最大穿戴 - EquipmentWeight) || (targetLocation == 0 && 装备数据.Type != ItemType.Weapon) || (targetLocation == 1 && 装备数据.Type != ItemType.Armour) || (targetLocation == 2 && 装备数据.Type != ItemType.Cloak) || (targetLocation == 3 && 装备数据.Type != ItemType.Helmet) || (targetLocation == 4 && 装备数据.Type != ItemType.ShoulderPad) || (targetLocation == 5 && 装备数据.Type != ItemType.护腕) || (targetLocation == 6 && 装备数据.Type != ItemType.Belt) || (targetLocation == 7 && 装备数据.Type != ItemType.Boots) || (targetLocation == 8 && 装备数据.Type != ItemType.Necklace) || (targetLocation == 13 && 装备数据.Type != ItemType.Medal) || (targetLocation == 14 && 装备数据.Type != ItemType.玉佩) || (targetLocation == 15 && 装备数据.Type != ItemType.战具) || (targetLocation == 9 && 装备数据.Type != ItemType.Ring) || (targetLocation == 10 && 装备数据.Type != ItemType.Ring) || (targetLocation == 11 && 装备数据.Type != ItemType.Bracelet) || (targetLocation == 12 && 装备数据.Type != ItemType.Bracelet))) || (物品数据2 != null && grid == 0 && (!(物品数据2 is EquipmentInfo 装备数据2) || 装备数据2.NeedLevel > CurrentLevel || (装备数据2.NeedGender != 0 && 装备数据2.NeedGender != Gender) || (装备数据2.NeedRace != GameObjectRace.通用 && 装备数据2.NeedRace != Job) || 装备数据2.NeedAttack > this[Stat.MaxDC] || 装备数据2.NeedMagic > this[Stat.MaxMC] || 装备数据2.NeedTaoism > this[Stat.MaxSC] || 装备数据2.NeedPiercing > this[Stat.MaxNC] || 装备数据2.NeedArchery > this[Stat.MaxBC] || (location == 0 && 装备数据2.Weight > 最大腕力) || (location != 0 && 装备数据2.Weight - 物品数据?.Weight > 最大穿戴 - EquipmentWeight) || (location == 0 && 装备数据2.Type != ItemType.Weapon) || (location == 1 && 装备数据2.Type != ItemType.Armour) || (location == 2 && 装备数据2.Type != ItemType.Cloak) || (location == 3 && 装备数据2.Type != ItemType.Helmet) || (location == 4 && 装备数据2.Type != ItemType.ShoulderPad) || (location == 5 && 装备数据2.Type != ItemType.护腕) || (location == 6 && 装备数据2.Type != ItemType.Belt) || (location == 7 && 装备数据2.Type != ItemType.Boots) || (location == 8 && 装备数据2.Type != ItemType.Necklace) || (location == 13 && 装备数据2.Type != ItemType.Medal) || (location == 14 && 装备数据2.Type != ItemType.玉佩) || (location == 15 && 装备数据2.Type != ItemType.战具) || (location == 9 && 装备数据2.Type != ItemType.Ring) || (location == 10 && 装备数据2.Type != ItemType.Ring) || (location == 11 && 装备数据2.Type != ItemType.Bracelet) || (location == 12 && 装备数据2.Type != ItemType.Bracelet))))
         {
             return;
         }
+
         if (物品数据 != null && 物品数据2 != null && 物品数据.CanStack && 物品数据2.ID == 物品数据.ID && 物品数据.StackSize > 物品数据.Dura.V && 物品数据2.StackSize > 物品数据2.Dura.V)
         {
             int num = Math.Min(物品数据.Dura.V, 物品数据2.StackSize - 物品数据2.Dura.V);
@@ -19488,22 +19484,22 @@ public sealed class PlayerObject : MapObject
             if (物品数据.Dura.V <= 0)
             {
                 物品数据.Remove();
-                switch (当前背包)
+                switch (grid)
                 {
                     case 7:
-                        角色资源背包.Remove(当前位置);
+                        角色资源背包.Remove(location);
                         break;
                     case 2:
-                        Storage.Remove(当前位置);
+                        Storage.Remove(location);
                         break;
                     case 1:
-                        Inventory.Remove(当前位置);
+                        Inventory.Remove(location);
                         break;
                 }
                 Enqueue(new DeleteItemPacket
                 {
-                    Grid = 当前背包,
-                    Position = 当前位置
+                    Grid = grid,
+                    Position = location
                 });
             }
             else
@@ -19517,104 +19513,103 @@ public sealed class PlayerObject : MapObject
         }
         if (物品数据 != null)
         {
-            switch (当前背包)
+            switch (grid)
             {
                 case 0:
-                    Equipment.Remove(当前位置);
+                    Equipment.Remove(location);
                     break;
                 case 1:
-                    Inventory.Remove(当前位置);
+                    Inventory.Remove(location);
                     break;
                 case 2:
-                    Storage.Remove(当前位置);
+                    Storage.Remove(location);
                     break;
                 case 7:
-                    角色资源背包.Remove(当前位置);
+                    角色资源背包.Remove(location);
                     break;
             }
-            物品数据.Grid.V = 目标背包;
-            物品数据.Location.V = 目标位置;
+            物品数据.Grid.V = targetGrid;
+            物品数据.Location.V = targetLocation;
         }
         if (物品数据2 != null)
         {
-            switch (目标背包)
+            switch (targetGrid)
             {
                 case 0:
-                    Equipment.Remove(目标位置);
+                    Equipment.Remove(targetLocation);
                     break;
                 case 1:
-                    Inventory.Remove(目标位置);
+                    Inventory.Remove(targetLocation);
                     break;
                 case 2:
-                    Storage.Remove(目标位置);
+                    Storage.Remove(targetLocation);
                     break;
                 case 7:
-                    角色资源背包.Remove(当前位置);
+                    角色资源背包.Remove(location);
                     break;
             }
-            物品数据2.Grid.V = 当前背包;
-            物品数据2.Location.V = 当前位置;
+            物品数据2.Grid.V = grid;
+            物品数据2.Location.V = location;
         }
         if (物品数据 != null)
         {
-            switch (目标背包)
+            switch (targetGrid)
             {
                 case 0:
-                    Equipment[目标位置] = 物品数据 as EquipmentInfo;
+                    Equipment[targetLocation] = 物品数据 as EquipmentInfo;
                     break;
                 case 1:
-                    Inventory[目标位置] = 物品数据;
+                    Inventory[targetLocation] = 物品数据;
                     break;
                 case 2:
-                    Storage[目标位置] = 物品数据;
+                    Storage[targetLocation] = 物品数据;
                     break;
                 case 7:
-                    角色资源背包[目标位置] = 物品数据;
+                    角色资源背包[targetLocation] = 物品数据;
                     break;
             }
         }
         if (物品数据2 != null)
         {
-            switch (当前背包)
+            switch (grid)
             {
                 case 0:
-                    Equipment[当前位置] = 物品数据2 as EquipmentInfo;
+                    Equipment[location] = 物品数据2 as EquipmentInfo;
                     break;
                 case 1:
-                    Inventory[当前位置] = 物品数据2;
+                    Inventory[location] = 物品数据2;
                     break;
                 case 2:
-                    Storage[当前位置] = 物品数据2;
+                    Storage[location] = 物品数据2;
                     break;
                 case 7:
-                    角色资源背包[当前位置] = 物品数据2;
+                    角色资源背包[location] = 物品数据2;
                     break;
             }
         }
         Enqueue(new 玩家转移物品
         {
-            原有容器 = 当前背包,
-            目标容器 = 目标背包,
-            原有位置 = 当前位置,
-            目标位置 = 目标位置
+            原有容器 = grid,
+            目标容器 = targetGrid,
+            原有位置 = location,
+            目标位置 = targetLocation
         });
-        if (目标背包 == 0)
+        if (targetGrid == 0)
         {
-            玩家穿卸装备((装备穿戴部位)目标位置, (EquipmentInfo)物品数据2, (EquipmentInfo)物品数据);
+            玩家穿卸装备((装备穿戴部位)targetLocation, (EquipmentInfo)物品数据2, (EquipmentInfo)物品数据);
         }
-        else if (当前背包 == 0)
+        else if (grid == 0)
         {
-            玩家穿卸装备((装备穿戴部位)当前位置, (EquipmentInfo)物品数据, (EquipmentInfo)物品数据2);
+            玩家穿卸装备((装备穿戴部位)location, (EquipmentInfo)物品数据, (EquipmentInfo)物品数据2);
         }
     }
 
-    public bool 获取坐骑(byte 坐骑编号)
+    public bool AddMount(byte id)
     {
-        if (Character.Mounts.Contains(坐骑编号))
-        {
+        if (Character.Mounts.Contains(id))
             return false;
-        }
-        Character.Mounts.Add(坐骑编号);
+        Character.Mounts.Add(id);
+
         Enqueue(new 同步坐骑数据
         {
             Description = Character.坐骑列表描述()
@@ -19622,16 +19617,16 @@ public sealed class PlayerObject : MapObject
         return true;
     }
 
-    public void 玩家使用物品(byte 背包类型, byte 物品位置)
+    public void UserUseItem(byte grid, byte location)
     {
         if (!Dead && StallState <= 0 && TradeState < 3)
         {
-            if (背包类型 != 1)
+            if (grid != 1)
             {
                 Connection.Disconnect(new Exception("错误操作: 玩家使用物品.  错误: 背包类型错误."));
                 return;
             }
-            if (!Inventory.TryGetValue(物品位置, out var v))
+            if (!Inventory.TryGetValue(location, out var v))
             {
                 Enqueue(new GameErrorMessagePacket
                 {
@@ -19795,7 +19790,7 @@ public sealed class PlayerObject : MapObject
             {
                 if (ConsumeItem(1, v))
                 {
-                    获取坐骑(v.MountID);
+                    AddMount(v.MountID);
                 }
                 return;
             }
@@ -19874,7 +19869,7 @@ public sealed class PlayerObject : MapObject
                         });
                         return;
                     }
-                    Inventory[b3] = new ItemInfo(value3, Character, 背包类型, b3, value2.Item1Quantity);
+                    Inventory[b3] = new ItemInfo(value3, Character, grid, b3, value2.Item1Quantity);
                     Character.Enqueue(new SyncItemPacket
                     {
                         Description = Character.Inventory[b3].ToArray()
@@ -19902,7 +19897,7 @@ public sealed class PlayerObject : MapObject
                         });
                         return;
                     }
-                    Inventory[b5] = new ItemInfo(value4, Character, 背包类型, b5, value2.Item2Quantity);
+                    Inventory[b5] = new ItemInfo(value4, Character, grid, b5, value2.Item2Quantity);
                     Character.Enqueue(new SyncItemPacket
                     {
                         Description = Character.Inventory[b5].ToArray()
@@ -19930,7 +19925,7 @@ public sealed class PlayerObject : MapObject
                         });
                         return;
                     }
-                    Inventory[b7] = new ItemInfo(value5, Character, 背包类型, b7, value2.Item3Quantity);
+                    Inventory[b7] = new ItemInfo(value5, Character, grid, b7, value2.Item3Quantity);
                     Character.Enqueue(new SyncItemPacket
                     {
                         Description = Character.Inventory[b7].ToArray()
@@ -19958,7 +19953,7 @@ public sealed class PlayerObject : MapObject
                         });
                         return;
                     }
-                    Inventory[b9] = new ItemInfo(value6, Character, 背包类型, b9, value2.Item4Quantity);
+                    Inventory[b9] = new ItemInfo(value6, Character, grid, b9, value2.Item4Quantity);
                     Character.Enqueue(new SyncItemPacket
                     {
                         Description = Character.Inventory[b9].ToArray()
@@ -19986,7 +19981,7 @@ public sealed class PlayerObject : MapObject
                         });
                         return;
                     }
-                    Inventory[b11] = new ItemInfo(value7, Character, 背包类型, b11, value2.Item5Quantity);
+                    Inventory[b11] = new ItemInfo(value7, Character, grid, b11, value2.Item5Quantity);
                     Character.Enqueue(new SyncItemPacket
                     {
                         Description = Character.Inventory[b11].ToArray()
@@ -20014,7 +20009,7 @@ public sealed class PlayerObject : MapObject
                         });
                         return;
                     }
-                    Inventory[b13] = new ItemInfo(value8, Character, 背包类型, b13, value2.Item6Quantity);
+                    Inventory[b13] = new ItemInfo(value8, Character, grid, b13, value2.Item6Quantity);
                     Character.Enqueue(new SyncItemPacket
                     {
                         Description = Character.Inventory[b13].ToArray()
@@ -20132,7 +20127,7 @@ public sealed class PlayerObject : MapObject
                         }
                         if (value75 != null && value75 is EquipmentItem 模板11)
                         {
-                            Inventory[b105] = new EquipmentInfo(模板11, Character, 背包类型, b105);
+                            Inventory[b105] = new EquipmentInfo(模板11, Character, grid, b105);
                             Enqueue(new SyncItemPacket
                             {
                                 Description = Inventory[b105].ToArray()
@@ -20208,7 +20203,7 @@ public sealed class PlayerObject : MapObject
                         }
                         if (value52 != null && value52 is EquipmentItem 模板9)
                         {
-                            Inventory[b79] = new EquipmentInfo(模板9, Character, 背包类型, b79);
+                            Inventory[b79] = new EquipmentInfo(模板9, Character, grid, b79);
                             Enqueue(new SyncItemPacket
                             {
                                 Description = Inventory[b79].ToArray()
@@ -20266,7 +20261,7 @@ public sealed class PlayerObject : MapObject
                         if (value50 != null)
                         {
                             ConsumeItem(1, v);
-                            Inventory[b75] = new ItemInfo(value50, Character, 背包类型, b75, 100);
+                            Inventory[b75] = new ItemInfo(value50, Character, grid, b75, 100);
                             Enqueue(new SyncItemPacket
                             {
                                 Description = Inventory[b75].ToArray()
@@ -20324,7 +20319,7 @@ public sealed class PlayerObject : MapObject
                         if (value115 != null)
                         {
                             ConsumeItem(1, v);
-                            Inventory[b155] = new ItemInfo(value115, Character, 背包类型, b155, 50);
+                            Inventory[b155] = new ItemInfo(value115, Character, grid, b155, 50);
                             Enqueue(new SyncItemPacket
                             {
                                 Description = Inventory[b155].ToArray()
@@ -20382,7 +20377,7 @@ public sealed class PlayerObject : MapObject
                         if (value108 != null)
                         {
                             ConsumeItem(1, v);
-                            Inventory[b143] = new ItemInfo(value108, Character, 背包类型, b143, 10);
+                            Inventory[b143] = new ItemInfo(value108, Character, grid, b143, 10);
                             Enqueue(new SyncItemPacket
                             {
                                 Description = Inventory[b143].ToArray()
@@ -20440,7 +20435,7 @@ public sealed class PlayerObject : MapObject
                         if (value80 != null)
                         {
                             ConsumeItem(1, v);
-                            Inventory[b113] = new ItemInfo(value80, Character, 背包类型, b113, 1);
+                            Inventory[b113] = new ItemInfo(value80, Character, grid, b113, 1);
                             Enqueue(new SyncItemPacket
                             {
                                 Description = Inventory[b113].ToArray()
@@ -20534,7 +20529,7 @@ public sealed class PlayerObject : MapObject
                         }
                         if (value105 != null && value105 is EquipmentItem 模板13)
                         {
-                            Inventory[b139] = new EquipmentInfo(模板13, Character, 背包类型, b139);
+                            Inventory[b139] = new EquipmentInfo(模板13, Character, grid, b139);
                             Enqueue(new SyncItemPacket
                             {
                                 Description = Inventory[b139].ToArray()
@@ -20592,7 +20587,7 @@ public sealed class PlayerObject : MapObject
                         if (value77 != null)
                         {
                             ConsumeItem(1, v);
-                            Inventory[b109] = new ItemInfo(value77, Character, 背包类型, b109, 1);
+                            Inventory[b109] = new ItemInfo(value77, Character, grid, b109, 1);
                             Enqueue(new SyncItemPacket
                             {
                                 Description = Inventory[b109].ToArray()
@@ -20650,7 +20645,7 @@ public sealed class PlayerObject : MapObject
                         if (value33 != null)
                         {
                             ConsumeItem(1, v);
-                            Inventory[b59] = new ItemInfo(value33, Character, 背包类型, b59, 1);
+                            Inventory[b59] = new ItemInfo(value33, Character, grid, b59, 1);
                             Enqueue(new SyncItemPacket
                             {
                                 Description = Inventory[b59].ToArray()
@@ -20714,7 +20709,7 @@ public sealed class PlayerObject : MapObject
                         }
                         if (value119 != null)
                         {
-                            Inventory[b161] = new ItemInfo(value119, Character, 背包类型, b161, 2);
+                            Inventory[b161] = new ItemInfo(value119, Character, grid, b161, 2);
                             Enqueue(new SyncItemPacket
                             {
                                 Description = Inventory[b161].ToArray()
@@ -20811,7 +20806,7 @@ public sealed class PlayerObject : MapObject
                         }
                         if (value11 != null && value11 is EquipmentItem 模板3)
                         {
-                            Inventory[b19] = new EquipmentInfo(模板3, Character, 背包类型, b19);
+                            Inventory[b19] = new EquipmentInfo(模板3, Character, grid, b19);
                             Enqueue(new SyncItemPacket
                             {
                                 Description = Inventory[b19].ToArray()
@@ -20905,7 +20900,7 @@ public sealed class PlayerObject : MapObject
                         }
                         if (value110 != null && value110 is EquipmentItem 模板14)
                         {
-                            Inventory[b147] = new EquipmentInfo(模板14, Character, 背包类型, b147);
+                            Inventory[b147] = new EquipmentInfo(模板14, Character, grid, b147);
                             Enqueue(new SyncItemPacket
                             {
                                 Description = Inventory[b147].ToArray()
@@ -20951,7 +20946,7 @@ public sealed class PlayerObject : MapObject
                         }
                         if (value34 != null && value34 is EquipmentItem 模板7)
                         {
-                            Inventory[b61] = new EquipmentInfo(模板7, Character, 背包类型, b61);
+                            Inventory[b61] = new EquipmentInfo(模板7, Character, grid, b61);
                             Enqueue(new SyncItemPacket
                             {
                                 Description = Inventory[b61].ToArray()
@@ -21009,7 +21004,7 @@ public sealed class PlayerObject : MapObject
                         }
                         if (value14 != null && value14 is EquipmentItem 模板4)
                         {
-                            Inventory[b25] = new EquipmentInfo(模板4, Character, 背包类型, b25);
+                            Inventory[b25] = new EquipmentInfo(模板4, Character, grid, b25);
                             Enqueue(new SyncItemPacket
                             {
                                 Description = Inventory[b25].ToArray()
@@ -21067,7 +21062,7 @@ public sealed class PlayerObject : MapObject
                         }
                         if (value47 != null && value47 is EquipmentItem 模板8)
                         {
-                            Inventory[b71] = new EquipmentInfo(模板8, Character, 背包类型, b71);
+                            Inventory[b71] = new EquipmentInfo(模板8, Character, grid, b71);
                             Enqueue(new SyncItemPacket
                             {
                                 Description = Inventory[b71].ToArray()
@@ -21161,7 +21156,7 @@ public sealed class PlayerObject : MapObject
                         }
                         if (value113 != null && value113 is EquipmentItem 模板16)
                         {
-                            Inventory[b153] = new EquipmentInfo(模板16, Character, 背包类型, b153);
+                            Inventory[b153] = new EquipmentInfo(模板16, Character, grid, b153);
                             Enqueue(new SyncItemPacket
                             {
                                 Description = Inventory[b153].ToArray()
@@ -21237,7 +21232,7 @@ public sealed class PlayerObject : MapObject
                         }
                         if (value29 != null && value29 is EquipmentItem 模板6)
                         {
-                            Inventory[b53] = new EquipmentInfo(模板6, Character, 背包类型, b53);
+                            Inventory[b53] = new EquipmentInfo(模板6, Character, grid, b53);
                             Enqueue(new SyncItemPacket
                             {
                                 Description = Inventory[b53].ToArray()
@@ -21331,7 +21326,7 @@ public sealed class PlayerObject : MapObject
                         }
                         if (value85 != null && value85 is EquipmentItem 模板12)
                         {
-                            Inventory[b117] = new EquipmentInfo(模板12, Character, 背包类型, b117);
+                            Inventory[b117] = new EquipmentInfo(模板12, Character, grid, b117);
                             Enqueue(new SyncItemPacket
                             {
                                 Description = Inventory[b117].ToArray()
@@ -21389,7 +21384,7 @@ public sealed class PlayerObject : MapObject
                         }
                         if (value9 != null && value9 is EquipmentItem 模板)
                         {
-                            Inventory[b15] = new EquipmentInfo(模板, Character, 背包类型, b15);
+                            Inventory[b15] = new EquipmentInfo(模板, Character, grid, b15);
                             Enqueue(new SyncItemPacket
                             {
                                 Description = Inventory[b15].ToArray()
@@ -21465,7 +21460,7 @@ public sealed class PlayerObject : MapObject
                         }
                         if (value53 != null && value53 is EquipmentItem 模板10)
                         {
-                            Inventory[b81] = new EquipmentInfo(模板10, Character, 背包类型, b81);
+                            Inventory[b81] = new EquipmentInfo(模板10, Character, grid, b81);
                             Enqueue(new SyncItemPacket
                             {
                                 Description = Inventory[b81].ToArray()
@@ -21523,7 +21518,7 @@ public sealed class PlayerObject : MapObject
                         }
                         if (value16 != null && value16 is EquipmentItem 模板5)
                         {
-                            Inventory[b29] = new EquipmentInfo(模板5, Character, 背包类型, b29);
+                            Inventory[b29] = new EquipmentInfo(模板5, Character, grid, b29);
                             Enqueue(new SyncItemPacket
                             {
                                 Description = Inventory[b29].ToArray()
@@ -21581,7 +21576,7 @@ public sealed class PlayerObject : MapObject
                         if (value112 != null && value112 is EquipmentItem 模板15)
                         {
                             ConsumeItem(1, v);
-                            Inventory[b151] = new EquipmentInfo(模板15, Character, 背包类型, b151);
+                            Inventory[b151] = new EquipmentInfo(模板15, Character, grid, b151);
                             Enqueue(new SyncItemPacket
                             {
                                 Description = Inventory[b151].ToArray()
@@ -24906,7 +24901,7 @@ public sealed class PlayerObject : MapObject
                         if (value10 != null && value10 is EquipmentItem 模板2)
                         {
                             ConsumeItem(1, v);
-                            Inventory[b17] = new EquipmentInfo(模板2, Character, 背包类型, b17);
+                            Inventory[b17] = new EquipmentInfo(模板2, Character, grid, b17);
                             Enqueue(new SyncItemPacket
                             {
                                 Description = Inventory[b17].ToArray()
@@ -24917,121 +24912,121 @@ public sealed class PlayerObject : MapObject
                 case "白泽·幼":
                     if (ConsumeItem(1, v))
                     {
-                        获取坐骑(1);
+                        AddMount(1);
                     }
                     break;
                 case "追风":
                     if (ConsumeItem(1, v))
                     {
-                        获取坐骑(2);
+                        AddMount(2);
                     }
                     break;
                 case "玛法之魂":
                     if (ConsumeItem(1, v))
                     {
-                        获取坐骑(3);
+                        AddMount(3);
                     }
                     break;
                 case "驯鹿":
                     if (ConsumeItem(1, v))
                     {
-                        获取坐骑(4);
+                        AddMount(4);
                     }
                     break;
                 case "琉璃鹿":
                     if (ConsumeItem(1, v))
                     {
-                        获取坐骑(5);
+                        AddMount(5);
                     }
                     break;
                 case "剑齿虎":
                     if (ConsumeItem(1, v))
                     {
-                        获取坐骑(6);
+                        AddMount(6);
                     }
                     break;
                 case "奔雷兽":
                     if (ConsumeItem(1, v))
                     {
-                        获取坐骑(7);
+                        AddMount(7);
                     }
                     break;
                 case "白泽":
                     if (ConsumeItem(1, v))
                     {
-                        获取坐骑(8);
+                        AddMount(8);
                     }
                     break;
                 case "踏风隼":
                     if (ConsumeItem(1, v))
                     {
-                        获取坐骑(9);
+                        AddMount(9);
                     }
                     break;
                 case "覆甲獠牙":
                     if (ConsumeItem(1, v))
                     {
-                        获取坐骑(10);
+                        AddMount(10);
                     }
                     break;
                 case "龙髯":
                     if (ConsumeItem(1, v))
                     {
-                        获取坐骑(11);
+                        AddMount(11);
                     }
                     break;
                 case "血牙":
                     if (ConsumeItem(1, v))
                     {
-                        获取坐骑(12);
+                        AddMount(12);
                     }
                     break;
                 case "长牙":
                     if (ConsumeItem(1, v))
                     {
-                        获取坐骑(13);
+                        AddMount(13);
                     }
                     break;
                 case "偃甲灵鼠":
                     if (ConsumeItem(1, v))
                     {
-                        获取坐骑(14);
+                        AddMount(14);
                     }
                     break;
                 case "机关木鼠":
                     if (ConsumeItem(1, v))
                     {
-                        获取坐骑(15);
+                        AddMount(15);
                     }
                     break;
                 case "熔火龙蜥":
                     if (ConsumeItem(1, v))
                     {
-                        获取坐骑(16);
+                        AddMount(16);
                     }
                     break;
                 case "牛魔":
                     if (ConsumeItem(1, v))
                     {
-                        获取坐骑(18);
+                        AddMount(18);
                     }
                     break;
                 case "三尾":
                     if (ConsumeItem(1, v))
                     {
-                        获取坐骑(19);
+                        AddMount(19);
                     }
                     break;
                 case "玄虎":
                     if (ConsumeItem(1, v))
                     {
-                        获取坐骑(20);
+                        AddMount(20);
                     }
                     break;
                 case "踏云":
                     if (ConsumeItem(1, v))
                     {
-                        获取坐骑(21);
+                        AddMount(21);
                     }
                     break;
                 case "初级红名符":
@@ -25085,7 +25080,7 @@ public sealed class PlayerObject : MapObject
                             if (GameItem.DataSheet.TryGetValue(Config.随机宝箱一物品1, out var value86))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b119] = new ItemInfo(value86, Character, 背包类型, b119, Config.随机宝箱一数量1);
+                                Inventory[b119] = new ItemInfo(value86, Character, grid, b119, Config.随机宝箱一数量1);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b119].ToArray()
@@ -25097,7 +25092,7 @@ public sealed class PlayerObject : MapObject
                             if (GameItem.DataSheet.TryGetValue(Config.随机宝箱一物品2, out var value87))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b119] = new ItemInfo(value87, Character, 背包类型, b119, Config.随机宝箱一数量2);
+                                Inventory[b119] = new ItemInfo(value87, Character, grid, b119, Config.随机宝箱一数量2);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b119].ToArray()
@@ -25109,7 +25104,7 @@ public sealed class PlayerObject : MapObject
                             if (GameItem.DataSheet.TryGetValue(Config.随机宝箱一物品3, out var value88))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b119] = new ItemInfo(value88, Character, 背包类型, b119, Config.随机宝箱一数量3);
+                                Inventory[b119] = new ItemInfo(value88, Character, grid, b119, Config.随机宝箱一数量3);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b119].ToArray()
@@ -25121,7 +25116,7 @@ public sealed class PlayerObject : MapObject
                             if (GameItem.DataSheet.TryGetValue(Config.随机宝箱一物品4, out var value89))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b119] = new ItemInfo(value89, Character, 背包类型, b119, Config.随机宝箱一数量4);
+                                Inventory[b119] = new ItemInfo(value89, Character, grid, b119, Config.随机宝箱一数量4);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b119].ToArray()
@@ -25133,7 +25128,7 @@ public sealed class PlayerObject : MapObject
                             if (GameItem.DataSheet.TryGetValue(Config.随机宝箱一物品5, out var value90))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b119] = new ItemInfo(value90, Character, 背包类型, b119, Config.随机宝箱一数量5);
+                                Inventory[b119] = new ItemInfo(value90, Character, grid, b119, Config.随机宝箱一数量5);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b119].ToArray()
@@ -25145,7 +25140,7 @@ public sealed class PlayerObject : MapObject
                             if (GameItem.DataSheet.TryGetValue(Config.随机宝箱一物品6, out var value91))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b119] = new ItemInfo(value91, Character, 背包类型, b119, Config.随机宝箱一数量6);
+                                Inventory[b119] = new ItemInfo(value91, Character, grid, b119, Config.随机宝箱一数量6);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b119].ToArray()
@@ -25157,7 +25152,7 @@ public sealed class PlayerObject : MapObject
                             if (GameItem.DataSheet.TryGetValue(Config.随机宝箱一物品7, out var value92))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b119] = new ItemInfo(value92, Character, 背包类型, b119, Config.随机宝箱一数量7);
+                                Inventory[b119] = new ItemInfo(value92, Character, grid, b119, Config.随机宝箱一数量7);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b119].ToArray()
@@ -25167,7 +25162,7 @@ public sealed class PlayerObject : MapObject
                         else if (num8 < Config.随机宝箱一几率8 && GameItem.DataSheet.TryGetValue(Config.随机宝箱一物品8, out value93))
                         {
                             ConsumeItem(1, v);
-                            Inventory[b119] = new ItemInfo(value93, Character, 背包类型, b119, Config.随机宝箱一数量8);
+                            Inventory[b119] = new ItemInfo(value93, Character, grid, b119, Config.随机宝箱一数量8);
                             Enqueue(new SyncItemPacket
                             {
                                 Description = Inventory[b119].ToArray()
@@ -25208,7 +25203,7 @@ public sealed class PlayerObject : MapObject
                             if (GameItem.DataSheet.TryGetValue(Config.随机宝箱二物品1, out var value56))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b85] = new ItemInfo(value56, Character, 背包类型, b85, Config.随机宝箱二数量1);
+                                Inventory[b85] = new ItemInfo(value56, Character, grid, b85, Config.随机宝箱二数量1);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b85].ToArray()
@@ -25220,7 +25215,7 @@ public sealed class PlayerObject : MapObject
                             if (GameItem.DataSheet.TryGetValue(Config.随机宝箱二物品2, out var value57))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b85] = new ItemInfo(value57, Character, 背包类型, b85, Config.随机宝箱二数量2);
+                                Inventory[b85] = new ItemInfo(value57, Character, grid, b85, Config.随机宝箱二数量2);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b85].ToArray()
@@ -25232,7 +25227,7 @@ public sealed class PlayerObject : MapObject
                             if (GameItem.DataSheet.TryGetValue(Config.随机宝箱二物品3, out var value58))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b85] = new ItemInfo(value58, Character, 背包类型, b85, Config.随机宝箱二数量3);
+                                Inventory[b85] = new ItemInfo(value58, Character, grid, b85, Config.随机宝箱二数量3);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b85].ToArray()
@@ -25244,7 +25239,7 @@ public sealed class PlayerObject : MapObject
                             if (GameItem.DataSheet.TryGetValue(Config.随机宝箱二物品4, out var value59))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b85] = new ItemInfo(value59, Character, 背包类型, b85, Config.随机宝箱二数量4);
+                                Inventory[b85] = new ItemInfo(value59, Character, grid, b85, Config.随机宝箱二数量4);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b85].ToArray()
@@ -25256,7 +25251,7 @@ public sealed class PlayerObject : MapObject
                             if (GameItem.DataSheet.TryGetValue(Config.随机宝箱二物品5, out var value60))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b85] = new ItemInfo(value60, Character, 背包类型, b85, Config.随机宝箱二数量5);
+                                Inventory[b85] = new ItemInfo(value60, Character, grid, b85, Config.随机宝箱二数量5);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b85].ToArray()
@@ -25268,7 +25263,7 @@ public sealed class PlayerObject : MapObject
                             if (GameItem.DataSheet.TryGetValue(Config.随机宝箱二物品6, out var value61))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b85] = new ItemInfo(value61, Character, 背包类型, b85, Config.随机宝箱二数量6);
+                                Inventory[b85] = new ItemInfo(value61, Character, grid, b85, Config.随机宝箱二数量6);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b85].ToArray()
@@ -25280,7 +25275,7 @@ public sealed class PlayerObject : MapObject
                             if (GameItem.DataSheet.TryGetValue(Config.随机宝箱二物品7, out var value62))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b85] = new ItemInfo(value62, Character, 背包类型, b85, Config.随机宝箱二数量7);
+                                Inventory[b85] = new ItemInfo(value62, Character, grid, b85, Config.随机宝箱二数量7);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b85].ToArray()
@@ -25290,7 +25285,7 @@ public sealed class PlayerObject : MapObject
                         else if (num7 < Config.随机宝箱二几率8 && GameItem.DataSheet.TryGetValue(Config.随机宝箱二物品8, out value63))
                         {
                             ConsumeItem(1, v);
-                            Inventory[b85] = new ItemInfo(value63, Character, 背包类型, b85, Config.随机宝箱二数量8);
+                            Inventory[b85] = new ItemInfo(value63, Character, grid, b85, Config.随机宝箱二数量8);
                             Enqueue(new SyncItemPacket
                             {
                                 Description = Inventory[b85].ToArray()
@@ -25331,7 +25326,7 @@ public sealed class PlayerObject : MapObject
                             if (GameItem.DataSheet.TryGetValue(Config.随机宝箱三物品1, out var value36))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b65] = new ItemInfo(value36, Character, 背包类型, b65, Config.随机宝箱三数量1);
+                                Inventory[b65] = new ItemInfo(value36, Character, grid, b65, Config.随机宝箱三数量1);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b65].ToArray()
@@ -25343,7 +25338,7 @@ public sealed class PlayerObject : MapObject
                             if (GameItem.DataSheet.TryGetValue(Config.随机宝箱三物品2, out var value37))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b65] = new ItemInfo(value37, Character, 背包类型, b65, Config.随机宝箱三数量2);
+                                Inventory[b65] = new ItemInfo(value37, Character, grid, b65, Config.随机宝箱三数量2);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b65].ToArray()
@@ -25355,7 +25350,7 @@ public sealed class PlayerObject : MapObject
                             if (GameItem.DataSheet.TryGetValue(Config.随机宝箱三物品3, out var value38))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b65] = new ItemInfo(value38, Character, 背包类型, b65, Config.随机宝箱三数量3);
+                                Inventory[b65] = new ItemInfo(value38, Character, grid, b65, Config.随机宝箱三数量3);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b65].ToArray()
@@ -25367,7 +25362,7 @@ public sealed class PlayerObject : MapObject
                             if (GameItem.DataSheet.TryGetValue(Config.随机宝箱三物品4, out var value39))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b65] = new ItemInfo(value39, Character, 背包类型, b65, Config.随机宝箱三数量4);
+                                Inventory[b65] = new ItemInfo(value39, Character, grid, b65, Config.随机宝箱三数量4);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b65].ToArray()
@@ -25379,7 +25374,7 @@ public sealed class PlayerObject : MapObject
                             if (GameItem.DataSheet.TryGetValue(Config.随机宝箱三物品5, out var value40))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b65] = new ItemInfo(value40, Character, 背包类型, b65, Config.随机宝箱三数量5);
+                                Inventory[b65] = new ItemInfo(value40, Character, grid, b65, Config.随机宝箱三数量5);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b65].ToArray()
@@ -25391,7 +25386,7 @@ public sealed class PlayerObject : MapObject
                             if (GameItem.DataSheet.TryGetValue(Config.随机宝箱三物品6, out var value41))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b65] = new ItemInfo(value41, Character, 背包类型, b65, Config.随机宝箱三数量6);
+                                Inventory[b65] = new ItemInfo(value41, Character, grid, b65, Config.随机宝箱三数量6);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b65].ToArray()
@@ -25403,7 +25398,7 @@ public sealed class PlayerObject : MapObject
                             if (GameItem.DataSheet.TryGetValue(Config.随机宝箱三物品7, out var value42))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b65] = new ItemInfo(value42, Character, 背包类型, b65, Config.随机宝箱三数量7);
+                                Inventory[b65] = new ItemInfo(value42, Character, grid, b65, Config.随机宝箱三数量7);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b65].ToArray()
@@ -25413,7 +25408,7 @@ public sealed class PlayerObject : MapObject
                         else if (num < Config.随机宝箱三几率8 && GameItem.DataSheet.TryGetValue(Config.随机宝箱三物品8, out value43))
                         {
                             ConsumeItem(1, v);
-                            Inventory[b65] = new ItemInfo(value43, Character, 背包类型, b65, Config.随机宝箱三数量8);
+                            Inventory[b65] = new ItemInfo(value43, Character, grid, b65, Config.随机宝箱三数量8);
                             Enqueue(new SyncItemPacket
                             {
                                 Description = Inventory[b65].ToArray()
@@ -25471,7 +25466,7 @@ public sealed class PlayerObject : MapObject
                         if (value30 != null)
                         {
                             ConsumeItem(1, v);
-                            Inventory[b55] = new ItemInfo(value30, Character, 背包类型, b55, 5);
+                            Inventory[b55] = new ItemInfo(value30, Character, grid, b55, 5);
                             Enqueue(new SyncItemPacket
                             {
                                 Description = Inventory[b55].ToArray()
@@ -25535,7 +25530,7 @@ public sealed class PlayerObject : MapObject
                         }
                         if (value26 != null)
                         {
-                            Inventory[b49] = new ItemInfo(value26, Character, 背包类型, b49, 1);
+                            Inventory[b49] = new ItemInfo(value26, Character, grid, b49, 1);
                             Enqueue(new SyncItemPacket
                             {
                                 Description = Inventory[b49].ToArray()
@@ -25593,7 +25588,7 @@ public sealed class PlayerObject : MapObject
                         if (value12 != null)
                         {
                             ConsumeItem(1, v);
-                            Inventory[b21] = new ItemInfo(value12, Character, 背包类型, b21, 10);
+                            Inventory[b21] = new ItemInfo(value12, Character, grid, b21, 10);
                             Enqueue(new SyncItemPacket
                             {
                                 Description = Inventory[b21].ToArray()
@@ -25702,16 +25697,16 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 玩家喝修复油(byte 背包类型, byte 物品位置)
+    public void UserEatItem(byte grid, byte location)
     {
         if (!Dead && StallState <= 0 && TradeState < 3)
         {
             EquipmentInfo 装备数据 = null;
-            if (背包类型 == 0 && Equipment.TryGetValue(物品位置, out var v))
+            if (grid == 0 && Equipment.TryGetValue(location, out var v))
             {
                 装备数据 = v;
             }
-            if (背包类型 == 1 && Inventory.TryGetValue(物品位置, out var v2) && v2 is EquipmentInfo 装备数据2)
+            if (grid == 1 && Inventory.TryGetValue(location, out var v2) && v2 is EquipmentInfo 装备数据2)
             {
                 装备数据 = 装备数据2;
             }
@@ -25777,14 +25772,14 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 玩家合成物品(int 物品名称)
+    public void UserCraftItem(int id)
     {
         ItemCrafting value;
         if (Dead || StallState > 0 || TradeState >= 3)
         {
-            NetworkManager.SendMessage(this, "你当前的状态无法合成");
+            NetworkManager.SendMessage(this, "You can't craft in your current state.");
         }
-        else if (ItemCrafting.DataSheet.TryGetValue(物品名称, out value) && Config.CurrentVersion >= 2)
+        else if (ItemCrafting.DataSheet.TryGetValue(id, out value) && Config.CurrentVersion >= 2)
         {
             if (!(Config.合成模块控件 == "CXZQWEZZADDRX") && Config.CurrentVersion < 3)
             {
@@ -25821,7 +25816,7 @@ public sealed class PlayerObject : MapObject
                 {
                     Description = 全部货币描述()
                 });
-                通过ID获得物品(value.MakeItemID);
+                AddItemByID(value.MakeItemID);
                 if (value.Broadcast > 0 && GameItem.DataSheet.TryGetValue(value.MakeItemID, out var value2))
                 {
                     NetworkManager.SendAnnouncement("<font color='#33FF00'>[" + Name + "]</font> 通过努力终于合成了 <font color='#33FFFF'>[" + value2.Name + "]</font>");
@@ -25838,19 +25833,18 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    private void 通过ID获得物品(int 解包物品, int 物品数量 = 1)
+    private void AddItemByID(int id, int quantity = 1)
     {
         byte b = 0;
         byte b2 = 0;
-        if (!GameItem.DataSheet.TryGetValue(解包物品, out var value))
-        {
+        if (!GameItem.DataSheet.TryGetValue(id, out var item))
             return;
-        }
-        while (b < InventorySize && b2 < 物品数量)
+
+        while (b < InventorySize && b2 < quantity)
         {
             if (!Inventory.ContainsKey(b))
             {
-                Inventory[b] = new ItemInfo(value, Character, 1, b, 1);
+                Inventory[b] = new ItemInfo(item, Character, 1, b, 1);
                 Enqueue(new SyncItemPacket
                 {
                     Description = Inventory[b].ToArray()
@@ -25861,24 +25855,24 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 玩家出售物品(byte 背包类型, byte 物品位置, ushort 出售数量)
+    public void UserSellItem(byte grid, byte location, ushort quantity)
     {
-        if (!Dead && StallState <= 0 && TradeState < 3 && 对话守卫 != null && CurrentMap == 对话守卫.CurrentMap && GetDistance(对话守卫) <= 12 && 打开商店 != 0 && 出售数量 > 0 && GameStore.DataSheet.TryGetValue(打开商店, out var value))
+        if (!Dead && StallState <= 0 && TradeState < 3 && 对话守卫 != null && CurrentMap == 对话守卫.CurrentMap && GetDistance(对话守卫) <= 12 && CurrentStoreID != 0 && quantity > 0 && GameStore.DataSheet.TryGetValue(CurrentStoreID, out var value))
         {
             ItemInfo v = null;
-            if (背包类型 == 1)
+            if (grid == 1)
             {
-                Inventory.TryGetValue(物品位置, out v);
+                Inventory.TryGetValue(location, out v);
             }
             if (v != null && !v.IsBound && v.StoreType != 0 && value.StoreType == v.StoreType)
             {
-                Inventory.Remove(物品位置);
+                Inventory.Remove(location);
                 value.SellItem(v);
                 Gold += v.SalePrice;
                 Enqueue(new DeleteItemPacket
                 {
-                    Grid = 背包类型,
-                    Position = 物品位置
+                    Grid = grid,
+                    Position = location
                 });
                 Enqueue(new 同步货币数量
                 {
@@ -25888,19 +25882,19 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 玩家购买物品(int 商店编号, int 物品位置, ushort 购入数量)
+    public void UserBuyItem(int storeId, int location, ushort quantity)
     {
-        if (Dead || StallState > 0 || TradeState >= 3 || 对话守卫 == null || CurrentMap != 对话守卫.CurrentMap || GetDistance(对话守卫) > 12 || 打开商店 == 0 || 购入数量 <= 0 || 打开商店 != 商店编号 || !GameStore.DataSheet.TryGetValue(打开商店, out var value) || value.Products.Count <= 物品位置 || !GameItem.DataSheet.TryGetValue(value.Products[物品位置].ItemID, out var value2))
+        if (Dead || StallState > 0 || TradeState >= 3 || 对话守卫 == null || CurrentMap != 对话守卫.CurrentMap || GetDistance(对话守卫) > 12 || CurrentStoreID == 0 || quantity <= 0 || CurrentStoreID != storeId || !GameStore.DataSheet.TryGetValue(CurrentStoreID, out var value) || value.Products.Count <= location || !GameItem.DataSheet.TryGetValue(value.Products[location].ItemID, out var value2))
         {
             return;
         }
-        int num = ((购入数量 == 1 || value2.PersistType != PersistentItemType.Stack) ? 1 : Math.Min(购入数量, value2.MaxDura));
-        GameStoreItem 游戏商品 = value.Products[物品位置];
+        int num = ((quantity == 1 || value2.PersistType != PersistentItemType.Stack) ? 1 : Math.Min(quantity, value2.MaxDura));
+        GameStoreItem 游戏商品 = value.Products[location];
         int num2 = -1;
         byte b = 0;
         while (b < InventorySize)
         {
-            if (Inventory.TryGetValue(b, out var v) && (value2.PersistType != PersistentItemType.Stack || value2.ID != v.ID || v.Dura.V + 购入数量 > value2.MaxDura))
+            if (Inventory.TryGetValue(b, out var v) && (value2.PersistType != PersistentItemType.Stack || value2.ID != v.ID || v.Dura.V + quantity > value2.MaxDura))
             {
                 b = (byte)(b + 1);
                 continue;
@@ -25982,13 +25976,13 @@ public sealed class PlayerObject : MapObject
         });
     }
 
-    public void 玩家回购物品(byte 物品位置)
+    public void UserRepurchaseItem(byte location)
     {
-        if (Dead || StallState > 0 || TradeState >= 3 || 对话守卫 == null || CurrentMap != 对话守卫.CurrentMap || GetDistance(对话守卫) > 12 || 打开商店 == 0 || !GameStore.DataSheet.TryGetValue(打开商店, out var value) || 回购清单.Count <= 物品位置)
+        if (Dead || StallState > 0 || TradeState >= 3 || 对话守卫 == null || CurrentMap != 对话守卫.CurrentMap || GetDistance(对话守卫) > 12 || CurrentStoreID == 0 || !GameStore.DataSheet.TryGetValue(CurrentStoreID, out var value) || SoldItems.Count <= location)
         {
             return;
         }
-        ItemInfo 物品数据 = 回购清单[物品位置];
+        ItemInfo 物品数据 = SoldItems[location];
         int num = -1;
         byte b = 0;
         while (b < InventorySize)
@@ -26052,23 +26046,23 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 请求回购清单()
+    public void UserViewRepurchaseItemList()
     {
-        if (Dead || StallState > 0 || TradeState >= 3 || 对话守卫 == null || CurrentMap != 对话守卫.CurrentMap || GetDistance(对话守卫) > 12 || 打开商店 == 0 || !GameStore.DataSheet.TryGetValue(打开商店, out var value))
+        if (Dead || StallState > 0 || TradeState >= 3 || 对话守卫 == null || CurrentMap != 对话守卫.CurrentMap || GetDistance(对话守卫) > 12 || CurrentStoreID == 0 || !GameStore.DataSheet.TryGetValue(CurrentStoreID, out var value))
         {
             return;
         }
-        回购清单 = value.AvailableItems.ToList();
-        using MemoryStream memoryStream = new MemoryStream();
-        using BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
-        binaryWriter.Write((byte)回购清单.Count);
-        foreach (ItemInfo item in 回购清单)
-        {
-            binaryWriter.Write(item.ToArray());
-        }
+
+        SoldItems = value.AvailableItems.ToList();
+        using var ms = new MemoryStream();
+        using var writer = new BinaryWriter(ms);
+        writer.Write((byte)SoldItems.Count);
+        foreach (var item in SoldItems)
+            writer.Write(item.ToArray());
+  
         Enqueue(new 同步回购列表
         {
-            Description = memoryStream.ToArray()
+            Description = ms.ToArray()
         });
     }
 
@@ -27754,7 +27748,7 @@ public sealed class PlayerObject : MapObject
                         Enqueue(new SocialErrorPacket { ErrorCode = 6668 });
                         break;
                     }
-                    if (Guild.行会禁言.ContainsKey(this.Character))
+                    if (Guild.BannedMembers.ContainsKey(this.Character))
                     {
                         Enqueue(new SocialErrorPacket { ErrorCode = 4870 });
                         break;
@@ -28453,8 +28447,10 @@ public sealed class PlayerObject : MapObject
         });
     }
 
-    public void 查询附近队伍()
+    #region Team
+    public void RequestTeamSearch()
     {
+        // TODO:
     }
 
     public void RequestTeamInformation(int id)
@@ -28465,506 +28461,395 @@ public sealed class PlayerObject : MapObject
             return;
         }
 
-        if (Session.CharacterInfoTable.DataSheet.TryGetValue(id, out var value) && value is CharacterInfo character)
+        var character = Session.GetCharacter(id);
+        if (character == null)
         {
-            Enqueue(new 查询队伍应答
-            {
-                队伍编号 = (character.CurrentTeam?.TeamID ?? 0),
-                队长编号 = (character.CurrentTeam?.CaptainObjectID ?? 0),
-                队伍名字 = (character.CurrentTeam?.CaptainName ?? string.Empty)
-            });
+            Enqueue(new SocialErrorPacket { ErrorCode = 6732 });
             return;
         }
-        Enqueue(new SocialErrorPacket { ErrorCode = 6732 });
+
+        Enqueue(new 查询队伍应答
+        {
+            队伍编号 = (character.CurrentTeam?.TeamID ?? 0),
+            队长编号 = (character.CurrentTeam?.CaptainObjectID ?? 0),
+            队伍名字 = (character.CurrentTeam?.CaptainName ?? string.Empty)
+        });
     }
 
-    public void 申请创建队伍(int 对象编号, byte 分配方式)
+    public void RequestCreateTeam(int id, byte 分配方式)
     {
-        DBObject value;
         if (Team != null)
         {
-            Enqueue(new SocialErrorPacket
-            {
-                ErrorCode = 3847
-            });
+            Enqueue(new SocialErrorPacket { ErrorCode = 3847 });
+            return;
         }
-        else if (ObjectID == 对象编号)
+
+        if (ObjectID == id)
         {
             Team = new TeamInfo(this.Character, 1);
             Enqueue(new 玩家加入队伍
             {
                 Description = Team.队伍描述()
             });
-        }
-        else
-        {
-            var character = Session.GetCharacter(对象编号);
-            if (character != null)
-            {
-                if (character.CurrentTeam != null)
-                {
-                    Enqueue(new SocialErrorPacket
-                    {
-                        ErrorCode = 3847
-                    });
-                }
-                else if (character.Online)
-                {
-                    Team = new TeamInfo(this.Character, 1);
-                    Enqueue(new 玩家加入队伍
-                    {
-                        Description = Team.队伍描述()
-                    });
-                    Team.Invitations[character] = SEngine.CurrentTime.AddMinutes(5.0);
-                    Enqueue(new SocialErrorPacket
-                    {
-                        ErrorCode = 3842
-                    });
-                    character.Enqueue(new 发送组队申请
-                    {
-                        组队方式 = 0,
-                        对象编号 = ObjectID,
-                        对象职业 = (byte)Job,
-                        对象名字 = Name
-                    });
-                }
-                else
-                {
-                    Enqueue(new SocialErrorPacket
-                    {
-                        ErrorCode = 3844
-                    });
-                }
-            }
-            else
-            {
-                Enqueue(new SocialErrorPacket
-                {
-                    ErrorCode = 6732
-                });
-            }
-        }
-    }
-
-    public void 发送组队请求(int 对象编号)
-    {
-        DBObject value;
-        if (对象编号 == ObjectID)
-        {
-            Enqueue(new SocialErrorPacket
-            {
-                ErrorCode = 3852
-            });
             return;
         }
 
-        var character = Session.GetCharacter(对象编号);
-        if (character != null)
+        var character = Session.GetCharacter(id);
+        if (character == null)
         {
-            if (Team == null)
+            Enqueue(new SocialErrorPacket { ErrorCode = 6732 });
+            return;
+        }
+
+        if (character.CurrentTeam != null)
+        {
+            Enqueue(new SocialErrorPacket { ErrorCode = 3847 });
+        }
+        else if (character.Online)
+        {
+            Team = new TeamInfo(this.Character, 1);
+            Enqueue(new 玩家加入队伍
             {
-                if (character.CurrentTeam == null)
-                {
-                    Enqueue(new SocialErrorPacket
-                    {
-                        ErrorCode = 3860
-                    });
-                }
-                else if (character.CurrentTeam.MemberCount >= 11)
-                {
-                    Enqueue(new SocialErrorPacket
-                    {
-                        ErrorCode = 3848
-                    });
-                }
-                else if (character.CurrentTeam.Captain.Online)
-                {
-                    character.CurrentTeam.Applications[this.Character] = SEngine.CurrentTime.AddMinutes(5.0);
-                    character.CurrentTeam.Captain.Enqueue(new 发送组队申请
-                    {
-                        组队方式 = 1,
-                        对象编号 = ObjectID,
-                        对象职业 = (byte)Job,
-                        对象名字 = Name
-                    });
-                    Enqueue(new SocialErrorPacket
-                    {
-                        ErrorCode = 3842
-                    });
-                }
-                else
-                {
-                    Enqueue(new SocialErrorPacket
-                    {
-                        ErrorCode = 3844
-                    });
-                }
+                Description = Team.队伍描述()
+            });
+            Team.Invitations[character] = SEngine.CurrentTime.AddMinutes(5.0);
+
+            Enqueue(new SocialErrorPacket { ErrorCode = 3842 });
+
+            character.Enqueue(new 发送组队申请
+            {
+                组队方式 = 0,
+                对象编号 = ObjectID,
+                对象职业 = (byte)Job,
+                对象名字 = Name
+            });
+        }
+        else
+        {
+            Enqueue(new SocialErrorPacket { ErrorCode = 3844 });
+        }
+    }
+
+    public void SendTeamInvitationRequest(int id)
+    {
+        if (id == ObjectID)
+        {
+            Enqueue(new SocialErrorPacket { ErrorCode = 3852 });
+            return;
+        }
+
+        var character = Session.GetCharacter(id);
+        if (character == null)
+        {
+            Enqueue(new SocialErrorPacket { ErrorCode = 6732 });
+            return;
+        }
+
+        if (Team == null)
+        {
+            if (character.CurrentTeam == null)
+            {
+                Enqueue(new SocialErrorPacket { ErrorCode = 3860 });
             }
-            else if (ObjectID != Team.CaptainObjectID)
+            else if (character.CurrentTeam.MemberCount >= 11)
             {
-                Enqueue(new SocialErrorPacket
-                {
-                    ErrorCode = 3850
-                });
+                Enqueue(new SocialErrorPacket { ErrorCode = 3848 });
             }
-            else if (character.CurrentTeam != null)
+            else if (character.CurrentTeam.Captain.Online)
             {
-                Enqueue(new SocialErrorPacket
+                character.CurrentTeam.Applications[this.Character] = SEngine.CurrentTime.AddMinutes(5.0);
+                character.CurrentTeam.Captain.Enqueue(new 发送组队申请
                 {
-                    ErrorCode = 3847
-                });
-            }
-            else if (Team.MemberCount >= 11)
-            {
-                Enqueue(new SocialErrorPacket
-                {
-                    ErrorCode = 3848
-                });
-            }
-            else if (character.Online)
-            {
-                Team.Invitations[character] = SEngine.CurrentTime.AddMinutes(5.0);
-                Enqueue(new SocialErrorPacket
-                {
-                    ErrorCode = 3842
-                });
-                character.Enqueue(new 发送组队申请
-                {
-                    组队方式 = 0,
+                    组队方式 = 1,
                     对象编号 = ObjectID,
                     对象职业 = (byte)Job,
                     对象名字 = Name
                 });
+                Enqueue(new SocialErrorPacket { ErrorCode = 3842 });
             }
             else
             {
-                Enqueue(new SocialErrorPacket
+                Enqueue(new SocialErrorPacket { ErrorCode = 3844 });
+            }
+        }
+        else if (ObjectID != Team.CaptainObjectID)
+        {
+            Enqueue(new SocialErrorPacket { ErrorCode = 3850 });
+        }
+        else if (character.CurrentTeam != null)
+        {
+            Enqueue(new SocialErrorPacket { ErrorCode = 3847 });
+        }
+        else if (Team.MemberCount >= 11)
+        {
+            Enqueue(new SocialErrorPacket { ErrorCode = 3848 });
+        }
+        else if (character.Online)
+        {
+            Team.Invitations[character] = SEngine.CurrentTime.AddMinutes(5.0);
+
+            Enqueue(new SocialErrorPacket { ErrorCode = 3842 });
+
+            character.Enqueue(new 发送组队申请
+            {
+                组队方式 = 0,
+                对象编号 = ObjectID,
+                对象职业 = (byte)Job,
+                对象名字 = Name
+            });
+        }
+        else
+        {
+            Enqueue(new SocialErrorPacket { ErrorCode = 3844 });
+        }
+    }
+
+    public void SendTeamInvitationResponse(int id, byte 组队方式, byte 回应方式)
+    {
+        if (ObjectID == id)
+        {
+            Enqueue(new SocialErrorPacket { ErrorCode = 3852 });
+            return;
+        }
+
+        var character = Session.GetCharacter(id);
+        if (character == null)
+        {
+            Enqueue(new SocialErrorPacket { ErrorCode = 6732 });
+            return;
+        }
+
+        if (组队方式 == 0)
+        {
+            if (回应方式 == 0)
+            {
+                if (character.CurrentTeam == null)
                 {
-                    ErrorCode = 3844
+                    Enqueue(new SocialErrorPacket { ErrorCode = 3860 });
+                    return;
+                }
+                if (Team != null)
+                {
+                    Enqueue(new SocialErrorPacket { ErrorCode = 3847 });
+                    return;
+                }
+                if (character.CurrentTeam.MemberCount >= 11)
+                {
+                    Enqueue(new SocialErrorPacket { ErrorCode = 3848 });
+                    return;
+                }
+                if (!character.CurrentTeam.Invitations.ContainsKey(this.Character))
+                {
+                    Enqueue(new SocialErrorPacket { ErrorCode = 3860 });
+                    return;
+                }
+                if (character.CurrentTeam.Invitations[this.Character] < SEngine.CurrentTime)
+                {
+                    Enqueue(new SocialErrorPacket { ErrorCode = 3860 });
+                    return;
+                }
+                character.CurrentTeam.Broadcast(new 队伍增加成员
+                {
+                    TeamID = character.CurrentTeam.TeamID,
+                    对象编号 = ObjectID,
+                    对象名字 = Name,
+                    对象性别 = (byte)Gender,
+                    对象职业 = (byte)Job,
+                    在线离线 = 0
+                });
+                Team = character.CurrentTeam;
+                character.CurrentTeam.Members.Add(this.Character);
+                Enqueue(new 玩家加入队伍
+                {
+                    Description = Team.队伍描述()
+                });
+            }
+            else
+            {
+                if (character.CurrentTeam != null && character.CurrentTeam.Invitations.Remove(this.Character) && character.Online)
+                {
+                    character.Enqueue(new SocialErrorPacket { ErrorCode = 3856 });
+                }
+
+                Enqueue(new SocialErrorPacket { ErrorCode = 3855 });
+            }
+        }
+        else if (回应方式 == 0)
+        {
+            if (Team == null)
+            {
+                Enqueue(new SocialErrorPacket { ErrorCode = 3860 });
+            }
+            else if (Team.MemberCount >= 11)
+            {
+                Enqueue(new SocialErrorPacket { ErrorCode = 3848 });
+            }
+            else if (ObjectID != Team.CaptainObjectID)
+            {
+                Enqueue(new SocialErrorPacket { ErrorCode = 3850 });
+            }
+            else if (!Team.Applications.ContainsKey(character))
+            {
+                Enqueue(new SocialErrorPacket { ErrorCode = 3860 });
+            }
+            else if (Team.Applications[character] < SEngine.CurrentTime)
+            {
+                Enqueue(new SocialErrorPacket { ErrorCode = 3860 });
+            }
+            else if (character.CurrentTeam != null)
+            {
+                Enqueue(new SocialErrorPacket { ErrorCode = 3847 });
+            }
+            else if (character.Online)
+            {
+                Team.Broadcast(new 队伍增加成员
+                {
+                    TeamID = Team.TeamID,
+                    对象编号 = character.ID,
+                    对象名字 = character.UserName.V,
+                    对象性别 = (byte)character.Gender.V,
+                    对象职业 = (byte)character.Job.V,
+                    在线离线 = 0
+                });
+                character.CurrentTeam = Team;
+                Team.Members.Add(character);
+                character.Enqueue(new 玩家加入队伍
+                {
+                    Description = Team.队伍描述()
                 });
             }
         }
         else
         {
-            Enqueue(new SocialErrorPacket
+            if (Team != null && Team.Applications.Remove(character) && character.Online)
             {
-                ErrorCode = 6732
-            });
+                character.Enqueue(new SocialErrorPacket { ErrorCode = 3858 });
+            }
+
+            Enqueue(new SocialErrorPacket { ErrorCode = 3857 });
         }
     }
 
-    public void 回应组队请求(int 对象编号, byte 组队方式, byte 回应方式)
+    public void RequestRemoveTeamMember(int id)
     {
-        DBObject value;
-        if (ObjectID == 对象编号)
+        if (Team == null)
         {
-            Enqueue(new SocialErrorPacket
-            {
-                ErrorCode = 3852
-            });
+            Enqueue(new SocialErrorPacket { ErrorCode = 3854 });
+            return;
         }
-        else if (Session.CharacterInfoTable.DataSheet.TryGetValue(对象编号, out value) && value is CharacterInfo character)
+
+        var character = Session.GetCharacter(id);
+        if (character == null)
         {
-            if (组队方式 == 0)
+            Enqueue(new SocialErrorPacket { ErrorCode = 6732 });
+            return;
+        }
+
+        if (Character == character)
+        {
+            Team.Members.Remove(this.Character);
+            Team.Broadcast(new 队伍成员离开
             {
-                if (回应方式 == 0)
+                对象编号 = ObjectID,
+                队伍编号 = Team.Index.V
+            });
+            Enqueue(new 玩家离开队伍
+            {
+                队伍编号 = Team.Index.V
+            });
+
+            if (Character == Team.Captain)
+            {
+                CharacterInfo member = Team.Members.FirstOrDefault(x => x.Online);
+                if (member != null)
                 {
-                    if (character.CurrentTeam == null)
+                    Team.Captain = member;
+                    Team.Broadcast(new 队伍状态改变
                     {
-                        Enqueue(new SocialErrorPacket
-                        {
-                            ErrorCode = 3860
-                        });
-                        return;
-                    }
-                    if (Team != null)
-                    {
-                        Enqueue(new SocialErrorPacket
-                        {
-                            ErrorCode = 3847
-                        });
-                        return;
-                    }
-                    if (character.CurrentTeam.MemberCount >= 11)
-                    {
-                        Enqueue(new SocialErrorPacket
-                        {
-                            ErrorCode = 3848
-                        });
-                        return;
-                    }
-                    if (!character.CurrentTeam.Invitations.ContainsKey(this.Character))
-                    {
-                        Enqueue(new SocialErrorPacket
-                        {
-                            ErrorCode = 3860
-                        });
-                        return;
-                    }
-                    if (character.CurrentTeam.Invitations[this.Character] < SEngine.CurrentTime)
-                    {
-                        Enqueue(new SocialErrorPacket
-                        {
-                            ErrorCode = 3860
-                        });
-                        return;
-                    }
-                    character.CurrentTeam.Broadcast(new 队伍增加成员
-                    {
-                        TeamID = character.CurrentTeam.TeamID,
-                        对象编号 = ObjectID,
-                        对象名字 = Name,
-                        对象性别 = (byte)Gender,
-                        对象职业 = (byte)Job,
-                        在线离线 = 0
-                    });
-                    Team = character.CurrentTeam;
-                    character.CurrentTeam.Members.Add(this.Character);
-                    Enqueue(new 玩家加入队伍
-                    {
-                        Description = Team.队伍描述()
+                        成员上限 = 11,
+                        队伍编号 = Team.TeamID,
+                        队伍名字 = Team.CaptainName,
+                        分配方式 = Team.PickUpMethod,
+                        队长编号 = Team.CaptainObjectID
                     });
                 }
                 else
                 {
-                    if (character.CurrentTeam != null && character.CurrentTeam.Invitations.Remove(this.Character) && character.Online)
-                    {
-                        character.Enqueue(new SocialErrorPacket
-                        {
-                            ErrorCode = 3856
-                        });
-                    }
-                    Enqueue(new SocialErrorPacket
-                    {
-                        ErrorCode = 3855
-                    });
+                    Team.Remove();
                 }
             }
-            else if (回应方式 == 0)
-            {
-                if (Team == null)
-                {
-                    Enqueue(new SocialErrorPacket
-                    {
-                        ErrorCode = 3860
-                    });
-                }
-                else if (Team.MemberCount >= 11)
-                {
-                    Enqueue(new SocialErrorPacket
-                    {
-                        ErrorCode = 3848
-                    });
-                }
-                else if (ObjectID != Team.CaptainObjectID)
-                {
-                    Enqueue(new SocialErrorPacket
-                    {
-                        ErrorCode = 3850
-                    });
-                }
-                else if (!Team.Applications.ContainsKey(character))
-                {
-                    Enqueue(new SocialErrorPacket
-                    {
-                        ErrorCode = 3860
-                    });
-                }
-                else if (Team.Applications[character] < SEngine.CurrentTime)
-                {
-                    Enqueue(new SocialErrorPacket
-                    {
-                        ErrorCode = 3860
-                    });
-                }
-                else if (character.CurrentTeam != null)
-                {
-                    Enqueue(new SocialErrorPacket
-                    {
-                        ErrorCode = 3847
-                    });
-                }
-                else if (character.Online)
-                {
-                    Team.Broadcast(new 队伍增加成员
-                    {
-                        TeamID = Team.TeamID,
-                        对象编号 = character.ID,
-                        对象名字 = character.UserName.V,
-                        对象性别 = (byte)character.Gender.V,
-                        对象职业 = (byte)character.Job.V,
-                        在线离线 = 0
-                    });
-                    character.CurrentTeam = Team;
-                    Team.Members.Add(character);
-                    character.Enqueue(new 玩家加入队伍
-                    {
-                        Description = Team.队伍描述()
-                    });
-                }
-            }
-            else
-            {
-                if (Team != null && Team.Applications.Remove(character) && character.Online)
-                {
-                    character.Enqueue(new SocialErrorPacket
-                    {
-                        ErrorCode = 3858
-                    });
-                }
-                Enqueue(new SocialErrorPacket
-                {
-                    ErrorCode = 3857
-                });
-            }
+            Character.CurrentTeam = null;
+        }
+        else if (!Team.Members.Contains(character))
+        {
+            Enqueue(new SocialErrorPacket { ErrorCode = 6732 });
+        }
+        else if (Character != Team.Captain)
+        {
+            Enqueue(new SocialErrorPacket { ErrorCode = 3850 });
         }
         else
         {
-            Enqueue(new SocialErrorPacket
+            Team.Members.Remove(character);
+            character.CurrentTeam = null;
+            Team.Broadcast(new 队伍成员离开
             {
-                ErrorCode = 6732
+                队伍编号 = Team.Index.V,
+                对象编号 = character.ID
+            });
+            character.Enqueue(new 玩家离开队伍
+            {
+                队伍编号 = Team.Index.V
             });
         }
     }
 
-    public void 申请队员离队(int 对象编号)
+    public void RequestChangeTeamCaptain(int id)
     {
-        DBObject value;
         if (Team == null)
         {
-            Enqueue(new SocialErrorPacket
-            {
-                ErrorCode = 3854
-            });
+            Enqueue(new SocialErrorPacket { ErrorCode = 3854 });
+            return;
         }
-        else if (Session.CharacterInfoTable.DataSheet.TryGetValue(对象编号, out value) && value is CharacterInfo 角色数据)
-        {
-            if (this.Character == 角色数据)
-            {
-                Team.Members.Remove(this.Character);
-                Team.Broadcast(new 队伍成员离开
-                {
-                    对象编号 = ObjectID,
-                    队伍编号 = Team.Index.V
-                });
-                Enqueue(new 玩家离开队伍
-                {
-                    队伍编号 = Team.Index.V
-                });
-                if (this.Character == Team.Captain)
-                {
-                    CharacterInfo 角色数据2 = Team.Members.FirstOrDefault((CharacterInfo O) => O.Connection != null);
-                    if (角色数据2 != null)
-                    {
-                        Team.Captain = 角色数据2;
-                        Team.Broadcast(new 队伍状态改变
-                        {
-                            成员上限 = 11,
-                            队伍编号 = Team.TeamID,
-                            队伍名字 = Team.CaptainName,
-                            分配方式 = Team.PickUpMethod,
-                            队长编号 = Team.CaptainObjectID
-                        });
-                    }
-                    else
-                    {
-                        Team.Remove();
-                    }
-                }
-                this.Character.CurrentTeam = null;
-            }
-            else if (!Team.Members.Contains(角色数据))
-            {
-                Enqueue(new SocialErrorPacket
-                {
-                    ErrorCode = 6732
-                });
-            }
-            else if (this.Character != Team.Captain)
-            {
-                Enqueue(new SocialErrorPacket
-                {
-                    ErrorCode = 3850
-                });
-            }
-            else
-            {
-                Team.Members.Remove(角色数据);
-                角色数据.CurrentTeam = null;
-                Team.Broadcast(new 队伍成员离开
-                {
-                    队伍编号 = Team.Index.V,
-                    对象编号 = 角色数据.ID
-                });
-                角色数据.Enqueue(new 玩家离开队伍
-                {
-                    队伍编号 = Team.Index.V
-                });
-            }
-        }
-        else
-        {
-            Enqueue(new SocialErrorPacket
-            {
-                ErrorCode = 6732
-            });
-        }
-    }
 
-    public void 申请移交队长(int 对象编号)
-    {
-        DBObject value;
-        if (Team == null)
+        if (Character != Team.Captain)
         {
-            Enqueue(new SocialErrorPacket
-            {
-                ErrorCode = 3854
-            });
+            Enqueue(new SocialErrorPacket { ErrorCode = 3850 });
+            return;
         }
-        else if (this.Character != Team.Captain)
-        {
-            Enqueue(new SocialErrorPacket
-            {
-                ErrorCode = 3850
-            });
-        }
-        else if (Session.CharacterInfoTable.DataSheet.TryGetValue(对象编号, out value) && value is CharacterInfo 角色数据)
-        {
-            if (角色数据 == this.Character)
-            {
-                Enqueue(new SocialErrorPacket
-                {
-                    ErrorCode = 3852
-                });
-                return;
-            }
-            if (!Team.Members.Contains(角色数据))
-            {
-                Enqueue(new SocialErrorPacket
-                {
-                    ErrorCode = 6732
-                });
-                return;
-            }
-            Team.Captain = 角色数据;
-            Team.Broadcast(new 队伍状态改变
-            {
-                成员上限 = 11,
-                队伍编号 = Team.TeamID,
-                队伍名字 = Team.CaptainName,
-                分配方式 = Team.PickUpMethod,
-                队长编号 = Team.CaptainObjectID
-            });
-        }
-        else
-        {
-            Enqueue(new SocialErrorPacket
-            {
-                ErrorCode = 6732
-            });
-        }
-    }
 
+        var character = Session.GetCharacter(id);
+        if (character == null)
+        {
+            Enqueue(new SocialErrorPacket { ErrorCode = 6732 });
+            return;
+        }
+
+        if (character == Character)
+        {
+            Enqueue(new SocialErrorPacket { ErrorCode = 3852 });
+            return;
+        }
+
+        if (!Team.Members.Contains(character))
+        {
+            Enqueue(new SocialErrorPacket { ErrorCode = 6732 });
+            return;
+        }
+
+        Team.Captain = character;
+        Team.Broadcast(new 队伍状态改变
+        {
+            成员上限 = 11,
+            队伍编号 = Team.TeamID,
+            队伍名字 = Team.CaptainName,
+            分配方式 = Team.PickUpMethod,
+            队长编号 = Team.CaptainObjectID
+        });
+    }
+    #endregion
+
+    #region Mail
     public void 查询邮箱内容()
     {
         Enqueue(new 同步邮箱内容
@@ -29161,20 +29046,22 @@ public sealed class PlayerObject : MapObject
                 ErrorCode = 6148
             });
         }
-    }
+    } 
+    #endregion
 
-    public void 查询行会信息(int 行会编号)
+    #region Guild
+    public void RequestGuildInformation(int id)
     {
-        if (Session.GuildInfoTable.DataSheet.TryGetValue(行会编号, out var value) && value is GuildInfo 行会数据)
+        if (Session.GuildInfoTable.DataSheet.TryGetValue(id, out var value) && value is GuildInfo guild)
         {
             Enqueue(new 行会名字应答
             {
-                行会编号 = 行会数据.Index.V,
-                行会名字 = 行会数据.GuildName.V,
-                创建时间 = 行会数据.CreatedDate.V,
-                会长编号 = 行会数据.President.V.Index.V,
-                行会人数 = (byte)行会数据.Members.Count,
-                行会等级 = 行会数据.行会等级.V
+                行会编号 = guild.Index.V,
+                行会名字 = guild.GuildName.V,
+                创建时间 = guild.CreatedDate.V,
+                会长编号 = guild.President.V.Index.V,
+                行会人数 = (byte)guild.Members.Count,
+                行会等级 = guild.行会等级.V
             });
         }
         else
@@ -29194,10 +29081,10 @@ public sealed class PlayerObject : MapObject
     {
     }
 
-    public void 查看行会列表(int 行会编号, byte 查看方式)
+    public void 查看行会列表(int id, byte 查看方式)
     {
         DBObject value;
-        int val = ((Session.GuildInfoTable.DataSheet.TryGetValue(行会编号, out value) && value is GuildInfo 行会数据) ? (行会数据.行会排名.V - 1) : 0);
+        int val = ((Session.GuildInfoTable.DataSheet.TryGetValue(id, out value) && value is GuildInfo guild) ? (guild.行会排名.V - 1) : 0);
         int num = Math.Max(0, val);
         int num2 = ((查看方式 == 2) ? Math.Max(0, num) : Math.Max(0, num - 11));
         int num3 = Math.Min(12, SystemInfo.Info.行会人数排名.Count - num2);
@@ -29228,13 +29115,13 @@ public sealed class PlayerObject : MapObject
         });
     }
 
-    public void 查找对应行会(int 行会编号, string 行会名字)
+    public void 查找对应行会(int id, string name)
     {
-        if ((Session.GuildInfoTable.DataSheet.TryGetValue(行会编号, out var value) || Session.GuildInfoTable.SearchTable.TryGetValue(行会名字, out value)) && value is GuildInfo 行会数据)
+        if ((Session.GuildInfoTable.DataSheet.TryGetValue(id, out var value) || Session.GuildInfoTable.SearchTable.TryGetValue(name, out value)) && value is GuildInfo guild)
         {
             Enqueue(new 查找行会应答
             {
-                字节数据 = 行会数据.行会检索描述()
+                字节数据 = guild.行会检索描述()
             });
         }
         else
@@ -29246,7 +29133,7 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 申请解散行会()
+    public void RequestDeleteGuild()
     {
         if (Guild == null)
         {
@@ -29292,11 +29179,11 @@ public sealed class PlayerObject : MapObject
         }
         else
         {
-            Guild.解散行会();
+            Guild.BreakGuild();
         }
     }
 
-    public void 申请创建行会(byte[] 数据)
+    public void RequestCreateGuild(byte[] data)
     {
         ItemInfo 物品;
         if (打开界面 != "Guild")
@@ -29331,10 +29218,10 @@ public sealed class PlayerObject : MapObject
                 ErrorCode = 6664
             });
         }
-        else if (数据.Length > 25 && 数据.Length < 128)
+        else if (data.Length > 25 && data.Length < 128)
         {
-            string[] array = Encoding.UTF8.GetString(数据.Take(25).ToArray()).Split(new char[1], StringSplitOptions.RemoveEmptyEntries);
-            string[] array2 = Encoding.UTF8.GetString(数据.Skip(25).ToArray()).Split(new char[1], StringSplitOptions.RemoveEmptyEntries);
+            string[] array = Encoding.UTF8.GetString(data.Take(25).ToArray()).Split(new char[1], StringSplitOptions.RemoveEmptyEntries);
+            string[] array2 = Encoding.UTF8.GetString(data.Skip(25).ToArray()).Split(new char[1], StringSplitOptions.RemoveEmptyEntries);
             if (array.Length != 0 && array2.Length != 0 && Encoding.UTF8.GetBytes(array[0]).Length < 25 && Encoding.UTF8.GetBytes(array2[0]).Length < 101)
             {
                 if (Session.GuildInfoTable.SearchTable.ContainsKey(array[0]))
@@ -29378,7 +29265,7 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 更改行会公告(byte[] 数据)
+    public void ChangeGuildNotice(byte[] data)
     {
         if (Guild == null)
         {
@@ -29394,15 +29281,15 @@ public sealed class PlayerObject : MapObject
                 ErrorCode = 6709
             });
         }
-        else if (数据.Length != 0 && 数据.Length < 255)
+        else if (data.Length != 0 && data.Length < 255)
         {
-            if (数据[0] == 0)
+            if (data[0] == 0)
             {
-                Guild.更改公告("");
+                Guild.UpdateNotice(string.Empty);
             }
             else
             {
-                Guild.更改公告(Encoding.UTF8.GetString(数据).Split(default(char))[0]);
+                Guild.UpdateNotice(Encoding.UTF8.GetString(data).Split(default(char))[0]);
             }
         }
         else
@@ -29411,7 +29298,7 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 更改行会宣言(byte[] 数据)
+    public void ChangeGuildDeclaration(byte[] data)
     {
         if (Guild == null)
         {
@@ -29427,15 +29314,15 @@ public sealed class PlayerObject : MapObject
                 ErrorCode = 6709
             });
         }
-        else if (数据.Length != 0 && 数据.Length < 101)
+        else if (data.Length != 0 && data.Length < 101)
         {
-            if (数据[0] == 0)
+            if (data[0] == 0)
             {
-                Guild.更改宣言(Character, "");
+                Guild.UpdateDeclaration(Character, string.Empty);
             }
             else
             {
-                Guild.更改宣言(Character, Encoding.UTF8.GetString(数据).Split(default(char))[0]);
+                Guild.UpdateDeclaration(Character, Encoding.UTF8.GetString(data).Split(default(char))[0]);
             }
         }
         else
@@ -29444,64 +29331,52 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 处理入会邀请(int 对象编号, byte 处理类型)
+    public void 处理入会邀请(int id, byte 处理类型)
     {
-        if (Session.CharacterInfoTable.DataSheet.TryGetValue(对象编号, out var value) && value is CharacterInfo 角色数据)
+        var character = Session.GetCharacter(id);
+        if (character == null)
         {
-            if (角色数据.CurrentGuild != null && 角色数据.CurrentGuild.邀请列表.Remove(this.Character))
+            Enqueue(new SocialErrorPacket { ErrorCode = 6732 });
+            return;
+        }
+
+        if (character.CurrentGuild != null && character.CurrentGuild.Invitations.Remove(Character))
+        {
+            if (处理类型 == 2)
             {
-                if (处理类型 == 2)
+                if (Guild != null)
                 {
-                    if (Guild != null)
-                    {
-                        Enqueue(new GameErrorMessagePacket
-                        {
-                            ErrorCode = 6707
-                        });
-                        return;
-                    }
-                    if (角色数据.Guild.V.Members.Count >= 100)
-                    {
-                        Enqueue(new SocialErrorPacket
-                        {
-                            ErrorCode = 6709
-                        });
-                        return;
-                    }
-                    角色数据.Enqueue(new 行会邀请应答
-                    {
-                        对象名字 = Name,
-                        应答类型 = 1
-                    });
-                    角色数据.CurrentGuild.添加成员(this.Character);
+                    Enqueue(new GameErrorMessagePacket { ErrorCode = 6707 });
+                    return;
                 }
-                else
+                if (character.Guild.V.Members.Count >= 100)
                 {
-                    角色数据.Enqueue(new 行会邀请应答
-                    {
-                        对象名字 = Name,
-                        应答类型 = 2
-                    });
+                    Enqueue(new SocialErrorPacket { ErrorCode = 6709 });
+                    return;
                 }
+                character.Enqueue(new 行会邀请应答
+                {
+                    对象名字 = Name,
+                    应答类型 = 1
+                });
+                character.CurrentGuild.AddMember(Character);
             }
             else
             {
-                Enqueue(new SocialErrorPacket
+                character.Enqueue(new 行会邀请应答
                 {
-                    ErrorCode = 6731
+                    对象名字 = Name,
+                    应答类型 = 2
                 });
             }
         }
         else
         {
-            Enqueue(new SocialErrorPacket
-            {
-                ErrorCode = 6732
-            });
+            Enqueue(new SocialErrorPacket { ErrorCode = 6731 });
         }
     }
 
-    public void 处理入会申请(int 对象编号, byte 处理类型)
+    public void 处理入会申请(int id, byte 处理类型)
     {
         DBObject value;
         if (Guild == null)
@@ -29518,9 +29393,9 @@ public sealed class PlayerObject : MapObject
                 ErrorCode = 6709
             });
         }
-        else if (Session.CharacterInfoTable.DataSheet.TryGetValue(对象编号, out value) && value is CharacterInfo 角色数据)
+        else if (Session.CharacterInfoTable.DataSheet.TryGetValue(id, out value) && value is CharacterInfo character)
         {
-            if (!Guild.申请列表.Remove(角色数据))
+            if (!Guild.Applications.Remove(character))
             {
                 Enqueue(new SocialErrorPacket
                 {
@@ -29529,7 +29404,7 @@ public sealed class PlayerObject : MapObject
             }
             else if (处理类型 == 2)
             {
-                if (角色数据.CurrentGuild != null)
+                if (character.CurrentGuild != null)
                 {
                     Enqueue(new GameErrorMessagePacket
                     {
@@ -29538,10 +29413,10 @@ public sealed class PlayerObject : MapObject
                 }
                 else
                 {
-                    Guild.添加成员(角色数据);
+                    Guild.AddMember(character);
                     Enqueue(new 入会申请应答
                     {
-                        对象编号 = 角色数据.ID
+                        对象编号 = character.ID
                     });
                 }
             }
@@ -29549,9 +29424,9 @@ public sealed class PlayerObject : MapObject
             {
                 Enqueue(new 入会申请应答
                 {
-                    对象编号 = 角色数据.ID
+                    对象编号 = character.ID
                 });
-                角色数据.SendMail(new MailInfo(null, "入会申请被拒绝", "行会[" + Guild.GuildName.V + "]拒绝了你的入会申请.", null));
+                character.SendMail(new MailInfo(null, "入会申请被拒绝", "行会[" + Guild.GuildName.V + "]拒绝了你的入会申请.", null));
             }
         }
         else
@@ -29563,9 +29438,9 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 申请加入行会(int 行会编号, string 行会名字)
+    public void RequestJoinGuild(int id, string name)
     {
-        if ((Session.GuildInfoTable.DataSheet.TryGetValue(行会编号, out var value) || Session.GuildInfoTable.SearchTable.TryGetValue(行会名字, out value)) && value is GuildInfo 行会数据)
+        if ((Session.GuildInfoTable.DataSheet.TryGetValue(id, out var value) || Session.GuildInfoTable.SearchTable.TryGetValue(name, out value)) && value is GuildInfo guild)
         {
             if (Guild != null)
             {
@@ -29583,7 +29458,7 @@ public sealed class PlayerObject : MapObject
                 });
                 return;
             }
-            if (行会数据.Members.Count >= Config.行会申请人数限制)
+            if (guild.Members.Count >= Config.行会申请人数限制)
             {
                 Enqueue(new GameErrorMessagePacket
                 {
@@ -29591,7 +29466,7 @@ public sealed class PlayerObject : MapObject
                 });
                 return;
             }
-            if (行会数据.申请列表.Count > 20)
+            if (guild.Applications.Count > 20)
             {
                 Enqueue(new GameErrorMessagePacket
                 {
@@ -29599,11 +29474,11 @@ public sealed class PlayerObject : MapObject
                 });
                 return;
             }
-            行会数据.申请列表[Character] = SEngine.CurrentTime.AddHours(1.0);
-            行会数据.行会提醒(GuildRank.执事, 1);
+            guild.Applications[Character] = SEngine.CurrentTime.AddHours(1.0);
+            guild.GuildAlert(GuildRank.执事, 1);
             Enqueue(new 加入行会应答
             {
-                行会编号 = 行会数据.ID
+                行会编号 = guild.ID
             });
         }
         else
@@ -29619,11 +29494,11 @@ public sealed class PlayerObject : MapObject
     {
         if (Guild != null)
         {
-            foreach (KeyValuePair<CharacterInfo, DateTime> item in Guild.邀请列表.ToList())
+            foreach (KeyValuePair<CharacterInfo, DateTime> item in Guild.Invitations.ToList())
             {
                 if (SEngine.CurrentTime > item.Value)
                 {
-                    Guild.邀请列表.Remove(item.Key);
+                    Guild.Invitations.Remove(item.Key);
                 }
             }
         }
@@ -29635,7 +29510,7 @@ public sealed class PlayerObject : MapObject
                 ErrorCode = 6668
             });
         }
-        else if (Guild.Members[this.Character] == GuildRank.会员)
+        else if (Guild.Members[this.Character] == GuildRank.Member)
         {
             Enqueue(new SocialErrorPacket
             {
@@ -29675,7 +29550,7 @@ public sealed class PlayerObject : MapObject
                 });
                 return;
             }
-            Guild.邀请列表[character] = SEngine.CurrentTime.AddHours(1.0);
+            Guild.Invitations[character] = SEngine.CurrentTime.AddHours(1.0);
             character.Enqueue(new 受邀加入行会
             {
                 对象编号 = ObjectID,
@@ -29696,7 +29571,7 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 查看申请列表()
+    public void RequestViewGuildApplications()
     {
         if (Guild == null)
         {
@@ -29714,7 +29589,7 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 申请离开行会()
+    public void RequestLeaveGuild()
     {
         if (Guild == null)
         {
@@ -29732,7 +29607,7 @@ public sealed class PlayerObject : MapObject
         }
         else
         {
-            Guild.退出行会(Character);
+            Guild.RemoveMember(Character);
         }
     }
 
@@ -29740,7 +29615,7 @@ public sealed class PlayerObject : MapObject
     {
     }
 
-    public void 逐出行会成员(int 对象编号)
+    public void RequestRemoveGuildMember(int id)
     {
         DBObject value;
         if (Guild == null)
@@ -29750,19 +29625,19 @@ public sealed class PlayerObject : MapObject
                 ErrorCode = 6668
             });
         }
-        else if (ObjectID == 对象编号)
+        else if (ObjectID == id)
         {
             Enqueue(new SocialErrorPacket
             {
                 ErrorCode = 6709
             });
         }
-        else if (Session.CharacterInfoTable.DataSheet.TryGetValue(对象编号, out value) && value is CharacterInfo 角色数据 && Guild == 角色数据.CurrentGuild)
+        else if (Session.CharacterInfoTable.DataSheet.TryGetValue(id, out value) && value is CharacterInfo character && Guild == character.CurrentGuild)
         {
-            if (Guild.Members[this.Character] < GuildRank.长老 && Guild.Members[this.Character] < Guild.Members[角色数据])
+            if (Guild.Members[Character] < GuildRank.长老 && Guild.Members[Character] < Guild.Members[character])
             {
-                Guild.逐出成员(this.Character, 角色数据);
-                角色数据.SendMail(new MailInfo(null, "你被逐出行会", "你被[" + Guild.GuildName.V + "]的官员[" + Name + "]逐出了行会.", null));
+                Guild.KickMember(Character, character);
+                character.SendMail(new MailInfo(null, "你被逐出行会", "你被[" + Guild.GuildName.V + "]的官员[" + Name + "]逐出了行会.", null));
             }
             else
             {
@@ -29781,7 +29656,7 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 转移会长职位(int 对象编号)
+    public void RequestChangeGuildLeader(int id)
     {
         DBObject value;
         if (Guild == null)
@@ -29791,23 +29666,23 @@ public sealed class PlayerObject : MapObject
                 ErrorCode = 6668
             });
         }
-        else if (Guild.Members[this.Character] != GuildRank.President)
+        else if (Guild.Members[Character] != GuildRank.President)
         {
             Enqueue(new SocialErrorPacket
             {
                 ErrorCode = 6719
             });
         }
-        else if (ObjectID == 对象编号)
+        else if (ObjectID == id)
         {
             Enqueue(new SocialErrorPacket
             {
                 ErrorCode = 6681
             });
         }
-        else if (Session.CharacterInfoTable.DataSheet.TryGetValue(对象编号, out value) && value is CharacterInfo 角色数据 && 角色数据.CurrentGuild == Guild)
+        else if (Session.CharacterInfoTable.DataSheet.TryGetValue(id, out value) && value is CharacterInfo character && character.CurrentGuild == Guild)
         {
-            Guild.转移会长(this.Character, 角色数据);
+            Guild.ChangeLeader(Character, character);
         }
         else
         {
@@ -29818,11 +29693,12 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 捐献行会资金(int 金币数量)
+    public void DonateGuildFunds(int 金币数量)
     {
+        // TODO:
     }
 
-    public void 设置行会禁言(int 对象编号, byte 禁言状态)
+    public void BanGuildMember(int id, byte state)
     {
         DBObject value;
         if (Guild == null)
@@ -29832,18 +29708,18 @@ public sealed class PlayerObject : MapObject
                 ErrorCode = 6668
             });
         }
-        else if (ObjectID == 对象编号)
+        else if (ObjectID == id)
         {
             Enqueue(new SocialErrorPacket
             {
                 ErrorCode = 6709
             });
         }
-        else if (Session.CharacterInfoTable.DataSheet.TryGetValue(对象编号, out value) && value is CharacterInfo 角色数据 && 角色数据.CurrentGuild == Guild)
+        else if (Session.CharacterInfoTable.DataSheet.TryGetValue(id, out value) && value is CharacterInfo player && player.CurrentGuild == Guild)
         {
-            if (Guild.Members[this.Character] < GuildRank.理事 && Guild.Members[this.Character] < Guild.Members[角色数据])
+            if (Guild.Members[Character] < GuildRank.理事 && Guild.Members[Character] < Guild.Members[player])
             {
-                Guild.成员禁言(this.Character, 角色数据, 禁言状态);
+                Guild.BanMember(Character, player, state);
                 return;
             }
             Enqueue(new SocialErrorPacket
@@ -29860,7 +29736,7 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 变更会员职位(int 对象编号, byte 对象职位)
+    public void ChangeGuildMemberRank(int id, byte rank)
     {
         DBObject value;
         if (Guild == null)
@@ -29870,48 +29746,48 @@ public sealed class PlayerObject : MapObject
                 ErrorCode = 6668
             });
         }
-        else if (ObjectID == 对象编号)
+        else if (ObjectID == id)
         {
             Enqueue(new SocialErrorPacket
             {
                 ErrorCode = 6681
             });
         }
-        else if (Session.CharacterInfoTable.DataSheet.TryGetValue(对象编号, out value) && value is CharacterInfo 角色数据 && 角色数据.CurrentGuild == Guild)
+        else if (Session.CharacterInfoTable.DataSheet.TryGetValue(id, out value) && value is CharacterInfo character && character.CurrentGuild == Guild)
         {
-            if (Guild.Members[this.Character] < GuildRank.理事 && Guild.Members[this.Character] < Guild.Members[角色数据])
+            if (Guild.Members[this.Character] < GuildRank.理事 && Guild.Members[this.Character] < Guild.Members[character])
             {
-                if (对象职位 > 1 && 对象职位 < 8 && 对象职位 != (byte)Guild.Members[角色数据])
+                if (rank > 1 && rank < 8 && rank != (byte)Guild.Members[character])
                 {
-                    if (对象职位 == 2 && Guild.Members.Values.Where((GuildRank O) => O == GuildRank.副长).Count() >= 2)
+                    if (rank == 2 && Guild.Members.Values.Where(x => x == GuildRank.副长).Count() >= 2)
                     {
                         Enqueue(new SocialErrorPacket
                         {
                             ErrorCode = 6717
                         });
                     }
-                    else if (对象职位 == 3 && Guild.Members.Values.Where((GuildRank O) => O == GuildRank.长老).Count() >= 4)
+                    else if (rank == 3 && Guild.Members.Values.Where(x => x == GuildRank.长老).Count() >= 4)
                     {
                         Enqueue(new SocialErrorPacket
                         {
                             ErrorCode = 6717
                         });
                     }
-                    else if (对象职位 == 4 && Guild.Members.Values.Where((GuildRank O) => O == GuildRank.监事).Count() >= 4)
+                    else if (rank == 4 && Guild.Members.Values.Where(x => x == GuildRank.监事).Count() >= 4)
                     {
                         Enqueue(new SocialErrorPacket
                         {
                             ErrorCode = 6717
                         });
                     }
-                    else if (对象职位 == 5 && Guild.Members.Values.Where((GuildRank O) => O == GuildRank.理事).Count() >= 4)
+                    else if (rank == 5 && Guild.Members.Values.Where(x => x == GuildRank.理事).Count() >= 4)
                     {
                         Enqueue(new SocialErrorPacket
                         {
                             ErrorCode = 6717
                         });
                     }
-                    else if (对象职位 == 6 && Guild.Members.Values.Where((GuildRank O) => O == GuildRank.执事).Count() >= 4)
+                    else if (rank == 6 && Guild.Members.Values.Where(x => x == GuildRank.执事).Count() >= 4)
                     {
                         Enqueue(new SocialErrorPacket
                         {
@@ -29920,7 +29796,7 @@ public sealed class PlayerObject : MapObject
                     }
                     else
                     {
-                        Guild.更改职位(this.Character, 角色数据, (GuildRank)对象职位);
+                        Guild.ChangeRank(this.Character, character, (GuildRank)rank);
                     }
                 }
                 else
@@ -29948,7 +29824,7 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 申请行会外交(byte 外交类型, byte 外交时间, string 行会名字)
+    public void RequestGuildAlliance(byte 外交类型, byte 外交时间, string guildName)
     {
         DBObject value;
         if (Guild == null)
@@ -29958,7 +29834,7 @@ public sealed class PlayerObject : MapObject
                 ErrorCode = 6668
             });
         }
-        else if (Guild.GuildName.V == 行会名字)
+        else if (Guild.GuildName.V == guildName)
         {
             Enqueue(new SocialErrorPacket
             {
@@ -29972,16 +29848,16 @@ public sealed class PlayerObject : MapObject
                 ErrorCode = 6709
             });
         }
-        else if (Session.GuildInfoTable.SearchTable.TryGetValue(行会名字, out value) && value is GuildInfo 行会数据)
+        else if (Session.GuildInfoTable.SearchTable.TryGetValue(guildName, out value) && value is GuildInfo guild)
         {
-            if (Guild.AllianceGuilds.ContainsKey(行会数据))
+            if (Guild.AllianceGuilds.ContainsKey(guild))
             {
                 Enqueue(new SocialErrorPacket
                 {
                     ErrorCode = 6727
                 });
             }
-            else if (Guild.HostileGuilds.ContainsKey(行会数据))
+            else if (Guild.HostileGuilds.ContainsKey(guild))
             {
                 Enqueue(new SocialErrorPacket
                 {
@@ -30000,7 +29876,7 @@ public sealed class PlayerObject : MapObject
                                 ErrorCode = 6668
                             });
                         }
-                        else if (行会数据.AllianceGuilds.Count >= 10)
+                        else if (guild.AllianceGuilds.Count >= 10)
                         {
                             Enqueue(new SocialErrorPacket
                             {
@@ -30009,12 +29885,12 @@ public sealed class PlayerObject : MapObject
                         }
                         else
                         {
-                            Guild.申请结盟(Character, 行会数据, 外交时间);
+                            Guild.AddAllianceRequest(Character, guild, 外交时间);
                         }
                         break;
                     case 2:
-                        Guild.行会敌对(行会数据, 外交时间);
-                        NetworkManager.SendAnnouncement($"[{Guild}]和[{行会数据}]成为敌对行会.");
+                        Guild.AddHostileGuild(guild, 外交时间);
+                        NetworkManager.SendAnnouncement($"[{Guild}]和[{guild}]成为敌对行会.");
                         break;
                     default:
                         Connection.Disconnect(new Exception("错误操作: 申请行会外交.  错误: 类型参数错误"));
@@ -30035,7 +29911,7 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 申请行会敌对(byte 敌对时间, string 行会名字)
+    public void RequestGuildHostile(byte 敌对时间, string guildName)
     {
         DBObject value;
         if (Guild == null)
@@ -30045,7 +29921,7 @@ public sealed class PlayerObject : MapObject
                 ErrorCode = 6668
             });
         }
-        else if (Guild.GuildName.V == 行会名字)
+        else if (Guild.GuildName.V == guildName)
         {
             Enqueue(new SocialErrorPacket
             {
@@ -30059,16 +29935,16 @@ public sealed class PlayerObject : MapObject
                 ErrorCode = 6709
             });
         }
-        else if (Session.GuildInfoTable.SearchTable.TryGetValue(行会名字, out value) && value is GuildInfo 行会数据)
+        else if (Session.GuildInfoTable.SearchTable.TryGetValue(guildName, out value) && value is GuildInfo guild)
         {
-            if (Guild.AllianceGuilds.ContainsKey(行会数据))
+            if (Guild.AllianceGuilds.ContainsKey(guild))
             {
                 Enqueue(new SocialErrorPacket
                 {
                     ErrorCode = 6727
                 });
             }
-            else if (Guild.HostileGuilds.ContainsKey(行会数据))
+            else if (Guild.HostileGuilds.ContainsKey(guild))
             {
                 Enqueue(new SocialErrorPacket
                 {
@@ -30077,8 +29953,8 @@ public sealed class PlayerObject : MapObject
             }
             else if (敌对时间 >= 1 && 敌对时间 <= 3)
             {
-                Guild.行会敌对(行会数据, 敌对时间);
-                NetworkManager.SendAnnouncement($"[{Guild}]和[{行会数据}]成为敌对行会.");
+                Guild.AddHostileGuild(guild, 敌对时间);
+                NetworkManager.SendAnnouncement($"[{Guild}]和[{guild}]成为敌对行会.");
             }
             else
             {
@@ -30094,7 +29970,7 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 查看结盟申请()
+    public void RequestViewAllianceApplications()
     {
         if (Guild == null)
         {
@@ -30154,7 +30030,7 @@ public sealed class PlayerObject : MapObject
                 });
                 return;
             }
-            if (!Guild.结盟申请.ContainsKey(行会数据))
+            if (!Guild.AllianceApplications.ContainsKey(行会数据))
             {
                 Enqueue(new SocialErrorPacket
                 {
@@ -30170,12 +30046,12 @@ public sealed class PlayerObject : MapObject
                         行会编号 = 行会数据.ID
                     });
                     行会数据.发送邮件(GuildRank.副长, "结盟申请被拒绝", "行会[" + Guild.GuildName.V + "]拒绝了你所在行会的结盟申请.");
-                    Guild.结盟申请.Remove(行会数据);
+                    Guild.AllianceApplications.Remove(行会数据);
                     break;
                 case 2:
-                    Guild.行会结盟(行会数据);
+                    Guild.AddAllianceGuild(行会数据);
                     NetworkManager.SendAnnouncement($"[{Guild}]和[{行会数据}]成为结盟行会.");
-                    Guild.结盟申请.Remove(行会数据);
+                    Guild.AllianceApplications.Remove(行会数据);
                     break;
                 default:
                     Connection.Disconnect(new Exception("错误操作: 处理结盟申请.  错误: 处理类型错误."));
@@ -30191,7 +30067,7 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 申请解除结盟(int 行会编号)
+    public void RequestReleaseAllianceGuild(int id)
     {
         DBObject value;
         if (Guild == null)
@@ -30201,7 +30077,7 @@ public sealed class PlayerObject : MapObject
                 ErrorCode = 6668
             });
         }
-        else if (Guild.ID == 行会编号)
+        else if (Guild.ID == id)
         {
             Enqueue(new SocialErrorPacket
             {
@@ -30215,9 +30091,9 @@ public sealed class PlayerObject : MapObject
                 ErrorCode = 6709
             });
         }
-        else if (Session.GuildInfoTable.DataSheet.TryGetValue(行会编号, out value) && value is GuildInfo 行会数据)
+        else if (Session.GuildInfoTable.DataSheet.TryGetValue(id, out value) && value is GuildInfo guild)
         {
-            if (!Guild.AllianceGuilds.ContainsKey(行会数据))
+            if (!Guild.AllianceGuilds.ContainsKey(guild))
             {
                 Enqueue(new GameErrorMessagePacket
                 {
@@ -30226,8 +30102,8 @@ public sealed class PlayerObject : MapObject
             }
             else
             {
-                Guild.解除结盟(Character, 行会数据);
-                NetworkManager.SendAnnouncement($"[{Guild}]解除了和[{行会数据}]的行会结盟.");
+                Guild.RemoveAllyGuild(Character, guild);
+                NetworkManager.SendAnnouncement($"[{Guild}]解除了和[{guild}]的行会结盟.");
             }
         }
         else
@@ -30239,7 +30115,7 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 申请解除敌对(int 行会编号)
+    public void RequestReleaseHostileGuild(int id)
     {
         DBObject value;
         if (Guild == null)
@@ -30249,7 +30125,7 @@ public sealed class PlayerObject : MapObject
                 ErrorCode = 6668
             });
         }
-        else if (Guild.ID == 行会编号)
+        else if (Guild.ID == id)
         {
             Enqueue(new SocialErrorPacket
             {
@@ -30263,61 +30139,7 @@ public sealed class PlayerObject : MapObject
                 ErrorCode = 6709
             });
         }
-        else if (Session.GuildInfoTable.DataSheet.TryGetValue(行会编号, out value) && value is GuildInfo 行会数据)
-        {
-            if (!Guild.HostileGuilds.ContainsKey(行会数据))
-            {
-                Enqueue(new GameErrorMessagePacket
-                {
-                    ErrorCode = 6826
-                });
-            }
-            else if (行会数据.解除申请.ContainsKey(Guild))
-            {
-                Enqueue(new GameErrorMessagePacket
-                {
-                    ErrorCode = 6708
-                });
-            }
-            else
-            {
-                Guild.申请解敌(Character, 行会数据);
-            }
-        }
-        else
-        {
-            Enqueue(new GameErrorMessagePacket
-            {
-                ErrorCode = 6669
-            });
-        }
-    }
-
-    public void 处理解除申请(int 行会编号, byte 应答类型)
-    {
-        DBObject value;
-        if (Guild == null)
-        {
-            Enqueue(new SocialErrorPacket
-            {
-                ErrorCode = 6668
-            });
-        }
-        else if (Guild.ID == 行会编号)
-        {
-            Enqueue(new SocialErrorPacket
-            {
-                ErrorCode = 6694
-            });
-        }
-        else if (Guild.Members[Character] >= GuildRank.长老)
-        {
-            Enqueue(new SocialErrorPacket
-            {
-                ErrorCode = 6709
-            });
-        }
-        else if (Session.GuildInfoTable.DataSheet.TryGetValue(行会编号, out value) && value is GuildInfo guild)
+        else if (Session.GuildInfoTable.DataSheet.TryGetValue(id, out value) && value is GuildInfo guild)
         {
             if (!Guild.HostileGuilds.ContainsKey(guild))
             {
@@ -30326,7 +30148,61 @@ public sealed class PlayerObject : MapObject
                     ErrorCode = 6826
                 });
             }
-            else if (!Guild.解除申请.ContainsKey(guild))
+            else if (guild.HostileReleaseApplications.ContainsKey(Guild))
+            {
+                Enqueue(new GameErrorMessagePacket
+                {
+                    ErrorCode = 6708
+                });
+            }
+            else
+            {
+                Guild.RequestReleaseHostileGuild(Character, guild);
+            }
+        }
+        else
+        {
+            Enqueue(new GameErrorMessagePacket
+            {
+                ErrorCode = 6669
+            });
+        }
+    }
+
+    public void 处理解除申请(int id, byte 应答类型)
+    {
+        DBObject value;
+        if (Guild == null)
+        {
+            Enqueue(new SocialErrorPacket
+            {
+                ErrorCode = 6668
+            });
+        }
+        else if (Guild.ID == id)
+        {
+            Enqueue(new SocialErrorPacket
+            {
+                ErrorCode = 6694
+            });
+        }
+        else if (Guild.Members[Character] >= GuildRank.长老)
+        {
+            Enqueue(new SocialErrorPacket
+            {
+                ErrorCode = 6709
+            });
+        }
+        else if (Session.GuildInfoTable.DataSheet.TryGetValue(id, out value) && value is GuildInfo guild)
+        {
+            if (!Guild.HostileGuilds.ContainsKey(guild))
+            {
+                Enqueue(new GameErrorMessagePacket
+                {
+                    ErrorCode = 6826
+                });
+            }
+            else if (!Guild.HostileReleaseApplications.ContainsKey(guild))
             {
                 Enqueue(new GameErrorMessagePacket
                 {
@@ -30344,9 +30220,9 @@ public sealed class PlayerObject : MapObject
                 }
                 else
                 {
-                    Guild.解除敌对(guild);
+                    Guild.RemoveHostileGuild(guild);
                     NetworkManager.SendAnnouncement($"[{Guild}]解除了和[{guild}]的行会敌对.");
-                    Guild.解除申请.Remove(guild);
+                    Guild.HostileReleaseApplications.Remove(guild);
                 }
             }
             else
@@ -30356,7 +30232,7 @@ public sealed class PlayerObject : MapObject
                     申请类型 = 2,
                     行会编号 = guild.ID
                 });
-                Guild.解除申请.Remove(guild);
+                Guild.HostileReleaseApplications.Remove(guild);
             }
         }
         else
@@ -30367,6 +30243,7 @@ public sealed class PlayerObject : MapObject
             });
         }
     }
+    #endregion
 
     public void 查询师门成员()
     {
@@ -30404,38 +30281,23 @@ public sealed class PlayerObject : MapObject
         {
             if (Mentor != null)
             {
-                Enqueue(new SocialErrorPacket
-                {
-                    ErrorCode = 5895
-                });
+                Enqueue(new SocialErrorPacket { ErrorCode = 5895 });
             }
             else if (CurrentLevel >= 0)
             {
-                Enqueue(new SocialErrorPacket
-                {
-                    ErrorCode = 5915
-                });
+                Enqueue(new SocialErrorPacket { ErrorCode = 5915 });
             }
             else if (character.CurrentLevel < 1)
             {
-                Enqueue(new SocialErrorPacket
-                {
-                    ErrorCode = 5894
-                });
+                Enqueue(new SocialErrorPacket { ErrorCode = 5894 });
             }
             else if (character.CurrentMentor != null && character.ID != character.CurrentMentor.MasterID)
             {
-                Enqueue(new SocialErrorPacket
-                {
-                    ErrorCode = 5890
-                });
+                Enqueue(new SocialErrorPacket { ErrorCode = 5890 });
             }
             else if (character.CurrentMentor != null && character.CurrentMentor.StudentCount >= 3)
             {
-                Enqueue(new SocialErrorPacket
-                {
-                    ErrorCode = 5891
-                });
+                Enqueue(new SocialErrorPacket { ErrorCode = 5891 });
             }
             else if (character.Online)
             {
@@ -30455,18 +30317,12 @@ public sealed class PlayerObject : MapObject
             }
             else
             {
-                Enqueue(new SocialErrorPacket
-                {
-                    ErrorCode = 5892
-                });
+                Enqueue(new SocialErrorPacket { ErrorCode = 5892 });
             }
         }
         else
         {
-            Enqueue(new SocialErrorPacket
-            {
-                ErrorCode = 5913
-            });
+            Enqueue(new SocialErrorPacket { ErrorCode = 5913 });
         }
     }
 
@@ -30488,10 +30344,7 @@ public sealed class PlayerObject : MapObject
             }
             else if (character.CurrentMentor != null)
             {
-                Enqueue(new SocialErrorPacket
-                {
-                    ErrorCode = 5895
-                });
+                Enqueue(new SocialErrorPacket { ErrorCode = 5895 });
             }
             else if (Mentor == null)
             {
@@ -30503,17 +30356,11 @@ public sealed class PlayerObject : MapObject
             }
             else if (!Mentor.ApplicationsList.ContainsKey(character.ID))
             {
-                Enqueue(new SocialErrorPacket
-                {
-                    ErrorCode = 5898
-                });
+                Enqueue(new SocialErrorPacket { ErrorCode = 5898 });
             }
             else if (Mentor.StudentCount >= 3)
             {
-                Enqueue(new SocialErrorPacket
-                {
-                    ErrorCode = 5891
-                });
+                Enqueue(new SocialErrorPacket { ErrorCode = 5891 });
             }
             else if (character.Online)
             {
@@ -30545,18 +30392,12 @@ public sealed class PlayerObject : MapObject
             }
             else
             {
-                Enqueue(new SocialErrorPacket
-                {
-                    ErrorCode = 5893
-                });
+                Enqueue(new SocialErrorPacket { ErrorCode = 5893 });
             }
         }
         else
         {
-            Enqueue(new SocialErrorPacket
-            {
-                ErrorCode = 5913
-            });
+            Enqueue(new SocialErrorPacket { ErrorCode = 5913 });
         }
     }
 
@@ -30577,10 +30418,7 @@ public sealed class PlayerObject : MapObject
             }
             if (!Mentor.ApplicationsList.ContainsKey(character.ID))
             {
-                Enqueue(new SocialErrorPacket
-                {
-                    ErrorCode = 5898
-                });
+                Enqueue(new SocialErrorPacket { ErrorCode = 5898 });
                 return;
             }
             Enqueue(new 拜师申请拒绝
@@ -30597,10 +30435,7 @@ public sealed class PlayerObject : MapObject
         }
         else
         {
-            Enqueue(new SocialErrorPacket
-            {
-                ErrorCode = 5913
-            });
+            Enqueue(new SocialErrorPacket { ErrorCode = 5913 });
         }
     }
 
@@ -30615,17 +30450,11 @@ public sealed class PlayerObject : MapObject
             }
             else if (character.CurrentLevel >= 30)
             {
-                Enqueue(new SocialErrorPacket
-                {
-                    ErrorCode = 5894
-                });
+                Enqueue(new SocialErrorPacket { ErrorCode = 5894 });
             }
             else if (character.CurrentMentor != null)
             {
-                Enqueue(new SocialErrorPacket
-                {
-                    ErrorCode = 5895
-                });
+                Enqueue(new SocialErrorPacket { ErrorCode = 5895 });
             }
             else if (Mentor != null && Mentor.MasterID != ObjectID)
             {
@@ -30633,10 +30462,7 @@ public sealed class PlayerObject : MapObject
             }
             else if (Mentor != null && Mentor.StudentCount >= 3)
             {
-                Enqueue(new SocialErrorPacket
-                {
-                    ErrorCode = 5891
-                });
+                Enqueue(new SocialErrorPacket { ErrorCode = 5891 });
             }
             else if (character.Online)
             {
@@ -30658,18 +30484,12 @@ public sealed class PlayerObject : MapObject
             }
             else
             {
-                Enqueue(new SocialErrorPacket
-                {
-                    ErrorCode = 5893
-                });
+                Enqueue(new SocialErrorPacket { ErrorCode = 5893 });
             }
         }
         else
         {
-            Enqueue(new SocialErrorPacket
-            {
-                ErrorCode = 5913
-            });
+            Enqueue(new SocialErrorPacket { ErrorCode = 5913 });
         }
     }
 
@@ -30680,17 +30500,11 @@ public sealed class PlayerObject : MapObject
         {
             if (CurrentLevel > 99)
             {
-                Enqueue(new SocialErrorPacket
-                {
-                    ErrorCode = 5915
-                });
+                Enqueue(new SocialErrorPacket { ErrorCode = 5915 });
             }
             else if (Mentor != null)
             {
-                Enqueue(new SocialErrorPacket
-                {
-                    ErrorCode = 5895
-                });
+                Enqueue(new SocialErrorPacket { ErrorCode = 5895 });
             }
             else if (character.CurrentLevel < 30)
             {
@@ -30706,17 +30520,11 @@ public sealed class PlayerObject : MapObject
             }
             else if (!character.CurrentMentor.InvitationList.ContainsKey(ObjectID))
             {
-                Enqueue(new SocialErrorPacket
-                {
-                    ErrorCode = 5899
-                });
+                Enqueue(new SocialErrorPacket { ErrorCode = 5899 });
             }
             else if (character.CurrentMentor.StudentCount >= 3)
             {
-                Enqueue(new SocialErrorPacket
-                {
-                    ErrorCode = 5891
-                });
+                Enqueue(new SocialErrorPacket { ErrorCode = 5891 });
             }
             else if (character.Online)
             {
@@ -30748,18 +30556,12 @@ public sealed class PlayerObject : MapObject
             }
             else
             {
-                Enqueue(new SocialErrorPacket
-                {
-                    ErrorCode = 5892
-                });
+                Enqueue(new SocialErrorPacket { ErrorCode = 5892 });
             }
         }
         else
         {
-            Enqueue(new SocialErrorPacket
-            {
-                ErrorCode = 5913
-            });
+            Enqueue(new SocialErrorPacket { ErrorCode = 5913 });
         }
     }
 
@@ -30825,35 +30627,35 @@ public sealed class PlayerObject : MapObject
         {
             Connection.Disconnect(new Exception("错误操作: 逐出师门申请, 错误: 自己不是师父."));
         }
-        else if (Session.CharacterInfoTable.DataSheet.TryGetValue(对象编号, out value) && value is CharacterInfo 角色数据 && Mentor.StudentsInfo.Contains(角色数据))
+        else if (Session.CharacterInfoTable.DataSheet.TryGetValue(对象编号, out value) && value is CharacterInfo character && Mentor.StudentsInfo.Contains(character))
         {
             Enqueue(new 逐出师门应答
             {
-                对象编号 = 角色数据.ID
+                对象编号 = character.ID
             });
             Mentor.Broadcast(new 逐出师门提示
             {
-                对象编号 = 角色数据.ID
+                对象编号 = character.ID
             });
-            int num = Mentor.徒弟出师金币(角色数据);
-            int num2 = Mentor.徒弟出师经验(角色数据);
-            if (MapManager.Players.TryGetValue(角色数据.ID, out var value2))
+            int num = Mentor.徒弟出师金币(character);
+            int num2 = Mentor.徒弟出师经验(character);
+            if (MapManager.Players.TryGetValue(character.ID, out var value2))
             {
                 value2.Gold += num;
                 value2.GainExperience(null, num2);
             }
             else
             {
-                角色数据.GainExperience(num2);
-                角色数据.Gold += num;
+                character.GainExperience(num2);
+                character.Gold += num;
             }
-            Mentor.移除徒弟(角色数据);
-            角色数据.CurrentMentor = null;
-            角色数据.Enqueue(new 同步师门信息
+            Mentor.移除徒弟(character);
+            character.CurrentMentor = null;
+            character.Enqueue(new 同步师门信息
             {
-                师门参数 = (byte)((角色数据.CurrentLevel >= 30) ? 2u : 0u)
+                师门参数 = (byte)((character.CurrentLevel >= 30) ? 2u : 0u)
             });
-            角色数据.SendMail(new MailInfo(null, "你被逐出了师门", "你被[" + Name + "]逐出了师门.", null));
+            character.SendMail(new MailInfo(null, "你被逐出了师门", "你被[" + Name + "]逐出了师门.", null));
         }
         else
         {
@@ -31091,9 +30893,9 @@ public sealed class PlayerObject : MapObject
             }
             else if (!value.Dead && value.StallState == 0 && value.TradeState == 1)
             {
-                if (value == CurrentTrade.交易申请方 && this == value.CurrentTrade.交易接收方)
+                if (value == CurrentTrade.Requester && this == value.CurrentTrade.Recipient)
                 {
-                    CurrentTrade.更改状态(3);
+                    CurrentTrade.UpdateState(3);
                     return;
                 }
                 CurrentTrade?.BreakTrade();
@@ -31136,7 +30938,7 @@ public sealed class PlayerObject : MapObject
                 ErrorCode = 5634
             });
         }
-        else if (CurrentMap != CurrentTrade.对方玩家(this).CurrentMap)
+        else if (CurrentMap != CurrentTrade.Opponent(this).CurrentMap)
         {
             CurrentTrade?.BreakTrade();
             Enqueue(new GameErrorMessagePacket
@@ -31144,7 +30946,7 @@ public sealed class PlayerObject : MapObject
                 ErrorCode = 5636
             });
         }
-        else if (GetDistance(CurrentTrade.对方玩家(this)) > 12)
+        else if (GetDistance(CurrentTrade.Opponent(this)) > 12)
         {
             CurrentTrade?.BreakTrade();
             Enqueue(new GameErrorMessagePacket
@@ -31161,7 +30963,7 @@ public sealed class PlayerObject : MapObject
             }
             else
             {
-                CurrentTrade.放入金币(this, 金币数量);
+                CurrentTrade.AddGold(this, 金币数量);
             }
         }
         else
@@ -31182,7 +30984,7 @@ public sealed class PlayerObject : MapObject
                 ErrorCode = 5634
             });
         }
-        else if (CurrentMap != CurrentTrade.对方玩家(this).CurrentMap)
+        else if (CurrentMap != CurrentTrade.Opponent(this).CurrentMap)
         {
             CurrentTrade?.BreakTrade();
             Enqueue(new GameErrorMessagePacket
@@ -31190,7 +30992,7 @@ public sealed class PlayerObject : MapObject
                 ErrorCode = 5636
             });
         }
-        else if (GetDistance(CurrentTrade.对方玩家(this)) > 12)
+        else if (GetDistance(CurrentTrade.Opponent(this)) > 12)
         {
             CurrentTrade?.BreakTrade();
             Enqueue(new GameErrorMessagePacket
@@ -31235,7 +31037,7 @@ public sealed class PlayerObject : MapObject
         }
         else
         {
-            CurrentTrade.放入物品(this, v, 放入位置);
+            CurrentTrade.AddItem(this, v, 放入位置);
         }
     }
 
@@ -31249,7 +31051,7 @@ public sealed class PlayerObject : MapObject
                 ErrorCode = 5634
             });
         }
-        else if (CurrentMap != CurrentTrade.对方玩家(this).CurrentMap)
+        else if (CurrentMap != CurrentTrade.Opponent(this).CurrentMap)
         {
             CurrentTrade?.BreakTrade();
             Enqueue(new GameErrorMessagePacket
@@ -31257,7 +31059,7 @@ public sealed class PlayerObject : MapObject
                 ErrorCode = 5636
             });
         }
-        else if (GetDistance(CurrentTrade.对方玩家(this)) > 12)
+        else if (GetDistance(CurrentTrade.Opponent(this)) > 12)
         {
             CurrentTrade?.BreakTrade();
             Enqueue(new GameErrorMessagePacket
@@ -31267,7 +31069,7 @@ public sealed class PlayerObject : MapObject
         }
         else
         {
-            CurrentTrade.更改状态(4, this);
+            CurrentTrade.UpdateState(4, this);
         }
     }
 
@@ -31281,7 +31083,7 @@ public sealed class PlayerObject : MapObject
                 ErrorCode = 5634
             });
         }
-        else if (CurrentMap != CurrentTrade.对方玩家(this).CurrentMap)
+        else if (CurrentMap != CurrentTrade.Opponent(this).CurrentMap)
         {
             CurrentTrade?.BreakTrade();
             Enqueue(new GameErrorMessagePacket
@@ -31289,7 +31091,7 @@ public sealed class PlayerObject : MapObject
                 ErrorCode = 5636
             });
         }
-        else if (GetDistance(CurrentTrade.对方玩家(this)) > 12)
+        else if (GetDistance(CurrentTrade.Opponent(this)) > 12)
         {
             CurrentTrade?.BreakTrade();
             Enqueue(new GameErrorMessagePacket
@@ -31299,7 +31101,7 @@ public sealed class PlayerObject : MapObject
         }
         else
         {
-            CurrentTrade.更改状态(3);
+            CurrentTrade.UpdateState(3);
         }
     }
 
@@ -31314,7 +31116,7 @@ public sealed class PlayerObject : MapObject
                 ErrorCode = 5634
             });
         }
-        else if (CurrentMap != CurrentTrade.对方玩家(this).CurrentMap)
+        else if (CurrentMap != CurrentTrade.Opponent(this).CurrentMap)
         {
             CurrentTrade?.BreakTrade();
             Enqueue(new GameErrorMessagePacket
@@ -31322,7 +31124,7 @@ public sealed class PlayerObject : MapObject
                 ErrorCode = 5636
             });
         }
-        else if (GetDistance(CurrentTrade.对方玩家(this)) > 12)
+        else if (GetDistance(CurrentTrade.Opponent(this)) > 12)
         {
             CurrentTrade?.BreakTrade();
             Enqueue(new GameErrorMessagePacket
@@ -31330,14 +31132,14 @@ public sealed class PlayerObject : MapObject
                 ErrorCode = 5636
             });
         }
-        else if (CurrentTrade.对方状态(this) != 5)
+        else if (CurrentTrade.OpponentState(this) != 5)
         {
-            CurrentTrade.更改状态(5, this);
+            CurrentTrade.UpdateState(5, this);
         }
         else if (CurrentTrade.背包已满(out 玩家))
         {
             CurrentTrade?.BreakTrade();
-            CurrentTrade.发送封包(new GameErrorMessagePacket
+            CurrentTrade.Enqueue(new GameErrorMessagePacket
             {
                 ErrorCode = 5639,
                 Param1 = 玩家.ObjectID
@@ -31345,8 +31147,8 @@ public sealed class PlayerObject : MapObject
         }
         else
         {
-            CurrentTrade.更改状态(5, this);
-            CurrentTrade.交换物品();
+            CurrentTrade.UpdateState(5, this);
+            CurrentTrade.ExchangeItems();
         }
     }
 
@@ -31696,7 +31498,7 @@ public sealed class PlayerObject : MapObject
             }
             int num = value.CurrentStall.Prices[value2] * 购买数量;
             Gold -= num;
-            Character.转出金币.V += num;
+            Character.TradeGold.V += num;
             value.Gold += (int)((float)num * 0.95f);
             if ((value.CurrentStall.Quantities[value2] -= 购买数量) <= 0)
             {
@@ -32193,7 +31995,7 @@ public sealed class PlayerObject : MapObject
                             {
                                 挂机参数.Remove(挂机特殊分类.待攻击怪物);
                             }
-                            玩家使用物品(1, item.Value.Position);
+                            UserUseItem(1, item.Value.Position);
                             CurrentAutoState = AutoSystem.SearchMonster;
                         }
                     }
@@ -32229,7 +32031,7 @@ public sealed class PlayerObject : MapObject
                             {
                                 挂机参数.Remove(挂机特殊分类.待攻击怪物);
                             }
-                            玩家使用物品(1, item2.Value.Position);
+                            UserUseItem(1, item2.Value.Position);
                             CurrentAutoState = AutoSystem.SearchMonster;
                         }
                     }
@@ -32555,7 +32357,7 @@ public sealed class PlayerObject : MapObject
                     {
                         挂机参数.Remove(挂机特殊分类.待攻击怪物);
                     }
-                    玩家使用物品(1, item.Value.Position);
+                    UserUseItem(1, item.Value.Position);
                     CurrentAutoState = AutoSystem.SearchMonster;
                 }
             }

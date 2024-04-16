@@ -8,5 +8,5 @@ public enum GuildRank
     监事,
     理事,
     执事,
-    会员
+    Member              // 会员
 }

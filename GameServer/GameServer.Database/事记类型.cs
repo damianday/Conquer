@@ -2,11 +2,11 @@ namespace GameServer.Database;
 
 public enum 事记类型
 {
-    创建公会 = 1,
-    加入公会 = 2,
-    离开公会 = 3,
+    CreateGuild = 1,        // 创建公会
+    JoinGuild = 2,          // 加入公会
+    LeaveGuild = 3,         // 离开公会
     逐出公会 = 4,
-    变更职位 = 5,
+    ChangeRank = 5,         // 变更职位
     建筑升级 = 6,
     会长传位 = 8,
     行会结盟 = 9,

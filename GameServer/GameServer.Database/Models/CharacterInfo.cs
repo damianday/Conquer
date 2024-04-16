@@ -73,7 +73,7 @@ public sealed class CharacterInfo : DBObject
 
     public readonly DataMonitor<long> 消耗元宝;
 
-    public readonly DataMonitor<long> 转出金币;
+    public readonly DataMonitor<long> TradeGold;
 
     public readonly ListMonitor<uint> PlayerSettings;
 
@@ -920,7 +920,7 @@ public sealed class CharacterInfo : DBObject
         {
             SMain.UpdateCharacter(this, "消耗元宝", O);
         };
-        转出金币.Changed += delegate (long O)
+        TradeGold.Changed += delegate (long O)
         {
             SMain.UpdateCharacter(this, "转出金币", O);
         };
@@ -1063,7 +1063,7 @@ public sealed class CharacterInfo : DBObject
         if (Guild.V != null)
         {
             Guild.V.Members.Remove(this);
-            Guild.V.行会禁言.Remove(this);
+            Guild.V.BannedMembers.Remove(this);
         }
         foreach (CharacterInfo item8 in FriendList)
         {

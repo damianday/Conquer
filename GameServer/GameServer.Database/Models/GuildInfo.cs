@@ -18,9 +18,9 @@ public sealed class GuildInfo : DBObject
     public readonly DataMonitor<CharacterInfo> President;
     public readonly DataMonitor<DateTime> CreatedDate;
     public readonly DataMonitor<string> GuildName;
-    public readonly DataMonitor<string> 创建人名;
-    public readonly DataMonitor<string> 行会宣言;
-    public readonly DataMonitor<string> 行会公告;
+    public readonly DataMonitor<string> CreatorName;
+    public readonly DataMonitor<string> GuildDeclaration;
+    public readonly DataMonitor<string> GuildNotice;
     public readonly DataMonitor<byte> 行会等级;
     public readonly DataMonitor<int> 行会资金;
     public readonly DataMonitor<int> 粮食数量;
@@ -30,14 +30,14 @@ public sealed class GuildInfo : DBObject
     public readonly DataMonitor<int> 行会排名;
     public readonly ListMonitor<行会事记> 行会事记;
     public readonly DictionaryMonitor<CharacterInfo, GuildRank> Members;
-    public readonly DictionaryMonitor<CharacterInfo, DateTime> 行会禁言;
+    public readonly DictionaryMonitor<CharacterInfo, DateTime> BannedMembers;
     public readonly DictionaryMonitor<GuildInfo, DateTime> AllianceGuilds;
     public readonly DictionaryMonitor<GuildInfo, DateTime> HostileGuilds;
 
-    public Dictionary<CharacterInfo, DateTime> 申请列表;
-    public Dictionary<CharacterInfo, DateTime> 邀请列表;
-    public Dictionary<GuildInfo, 外交申请> 结盟申请;
-    public Dictionary<GuildInfo, DateTime> 解除申请;
+    public Dictionary<CharacterInfo, DateTime> Applications;
+    public Dictionary<CharacterInfo, DateTime> Invitations;
+    public Dictionary<GuildInfo, 外交申请> AllianceApplications;
+    public Dictionary<GuildInfo, DateTime> HostileReleaseApplications;
     public int ID => Index.V;
     public int 创建时间 => Compute.TimeSeconds(CreatedDate.V);
     public string PresidentName => President.V.UserName.V;
@@ -52,7 +52,7 @@ public sealed class GuildInfo : DBObject
         }
     }
 
-    public DateTime 清理时间 { get; set; }
+    public DateTime ProcessTime { get; set; }
 
     public override string ToString()
     {
@@ -61,34 +61,34 @@ public sealed class GuildInfo : DBObject
 
     public GuildInfo()
     {
-        申请列表 = new Dictionary<CharacterInfo, DateTime>();
-        邀请列表 = new Dictionary<CharacterInfo, DateTime>();
-        结盟申请 = new Dictionary<GuildInfo, 外交申请>();
-        解除申请 = new Dictionary<GuildInfo, DateTime>();
+        Applications = new Dictionary<CharacterInfo, DateTime>();
+        Invitations = new Dictionary<CharacterInfo, DateTime>();
+        AllianceApplications = new Dictionary<GuildInfo, 外交申请>();
+        HostileReleaseApplications = new Dictionary<GuildInfo, DateTime>();
     }
 
-    public GuildInfo(PlayerObject 创建玩家, string 行会名字, string 行会宣言)
+    public GuildInfo(PlayerObject player, string guildName, string declaration)
     {
-        申请列表 = new Dictionary<CharacterInfo, DateTime>();
-        邀请列表 = new Dictionary<CharacterInfo, DateTime>();
-        结盟申请 = new Dictionary<GuildInfo, 外交申请>();
-        解除申请 = new Dictionary<GuildInfo, DateTime>();
-        this.GuildName.V = 行会名字;
-        this.行会宣言.V = 行会宣言;
-        行会公告.V = "祝大家游戏愉快.";
-        President.V = 创建玩家.Character;
-        创建人名.V = 创建玩家.Name;
-        Members.Add(创建玩家.Character, GuildRank.President);
+        Applications = new Dictionary<CharacterInfo, DateTime>();
+        Invitations = new Dictionary<CharacterInfo, DateTime>();
+        AllianceApplications = new Dictionary<GuildInfo, 外交申请>();
+        HostileReleaseApplications = new Dictionary<GuildInfo, DateTime>();
+        this.GuildName.V = guildName;
+        this.GuildDeclaration.V = declaration;
+        GuildNotice.V = "Have a great game.";
+        President.V = player.Character;
+        CreatorName.V = player.Name;
+        Members.Add(player.Character, GuildRank.President);
         添加事记(new 行会事记
         {
-            事记类型 = 事记类型.创建公会,
-            第一参数 = 创建玩家.ObjectID,
+            事记类型 = 事记类型.CreateGuild,
+            第一参数 = player.ObjectID,
             事记时间 = Compute.TimeSeconds(SEngine.CurrentTime)
         });
         添加事记(new 行会事记
         {
-            事记类型 = 事记类型.加入公会,
-            第一参数 = 创建玩家.ObjectID,
+            事记类型 = 事记类型.JoinGuild,
+            第一参数 = player.ObjectID,
             事记时间 = Compute.TimeSeconds(SEngine.CurrentTime)
         });
         行会等级.V = 1;
@@ -102,12 +102,10 @@ public sealed class GuildInfo : DBObject
         SystemInfo.Info.更新行会(this);
     }
 
-    public void 清理数据()
+    public void Process()
     {
-        if (!(SEngine.CurrentTime > 清理时间))
-        {
-            return;
-        }
+        if (SEngine.CurrentTime <= ProcessTime) return;
+        
         foreach (KeyValuePair<GuildInfo, DateTime> item in AllianceGuilds.ToList())
         {
             if (SEngine.CurrentTime > item.Value)
@@ -146,38 +144,38 @@ public sealed class GuildInfo : DBObject
                 NetworkManager.SendAnnouncement($"[{this}]和[{item2.Key}]的行会敌对已经到期自动解除");
             }
         }
-        foreach (KeyValuePair<CharacterInfo, DateTime> item3 in 申请列表.ToList())
+        foreach (KeyValuePair<CharacterInfo, DateTime> item3 in Applications.ToList())
         {
             if (SEngine.CurrentTime > item3.Value)
             {
-                申请列表.Remove(item3.Key);
+                Applications.Remove(item3.Key);
             }
         }
-        foreach (KeyValuePair<CharacterInfo, DateTime> item4 in 邀请列表.ToList())
+        foreach (KeyValuePair<CharacterInfo, DateTime> item4 in Invitations.ToList())
         {
             if (SEngine.CurrentTime > item4.Value)
             {
-                邀请列表.Remove(item4.Key);
+                Invitations.Remove(item4.Key);
             }
         }
-        foreach (KeyValuePair<GuildInfo, DateTime> item5 in 解除申请.ToList())
+        foreach (KeyValuePair<GuildInfo, DateTime> item5 in HostileReleaseApplications.ToList())
         {
             if (SEngine.CurrentTime > item5.Value)
             {
-                解除申请.Remove(item5.Key);
+                HostileReleaseApplications.Remove(item5.Key);
             }
         }
-        foreach (KeyValuePair<GuildInfo, 外交申请> item6 in 结盟申请.ToList())
+        foreach (KeyValuePair<GuildInfo, 外交申请> item6 in AllianceApplications.ToList())
         {
             if (SEngine.CurrentTime > item6.Value.申请时间)
             {
-                结盟申请.Remove(item6.Key);
+                AllianceApplications.Remove(item6.Key);
             }
         }
-        清理时间 = SEngine.CurrentTime.AddSeconds(1.0);
+        ProcessTime = SEngine.CurrentTime.AddSeconds(1.0);
     }
 
-    public void 解散行会()
+    public void BreakGuild()
     {
         foreach (KeyValuePair<DateTime, GuildInfo> item in SystemInfo.Info.申请行会.ToList())
         {
@@ -188,7 +186,7 @@ public sealed class GuildInfo : DBObject
         }
         Broadcast(new 脱离行会应答
         {
-            脱离方式 = 2
+            WithdrawMode = 2
         });
         foreach (CharacterInfo key in Members.Keys)
         {
@@ -207,7 +205,7 @@ public sealed class GuildInfo : DBObject
             }
         }
         Members.Clear();
-        行会禁言.Clear();
+        BannedMembers.Clear();
         Remove();
     }
 
@@ -219,322 +217,317 @@ public sealed class GuildInfo : DBObject
         }
     }
 
-    public void 添加成员(CharacterInfo 成员, GuildRank 职位 = GuildRank.会员)
+    public void AddMember(CharacterInfo member, GuildRank rank = GuildRank.Member)
     {
-        Members.Add(成员, 职位);
-        成员.CurrentGuild = this;
+        Members.Add(member, rank);
+        member.CurrentGuild = this;
         Broadcast(new 行会加入成员
         {
-            对象编号 = 成员.ID,
-            对象名字 = 成员.UserName.V,
+            对象编号 = member.ID,
+            对象名字 = member.UserName.V,
             对象职位 = 7,
-            对象等级 = 成员.CurrentLevel,
-            对象职业 = (byte)成员.Job.V,
-            当前地图 = (byte)成员.CurrentMap.V
+            对象等级 = member.CurrentLevel,
+            对象职业 = (byte)member.Job.V,
+            当前地图 = (byte)member.CurrentMap.V
         });
-        if (成员.Connection == null)
+        if (member.Connection == null)
         {
             Broadcast(new SyncMemberInfoPacket
             {
-                ObjectID = 成员.ID,
-                对象信息 = Compute.TimeSeconds(成员.DisconnectDate.V)
+                ObjectID = member.ID,
+                对象信息 = Compute.TimeSeconds(member.DisconnectDate.V)
             });
         }
-        成员.Enqueue(new 行会信息公告
+        member.Enqueue(new 行会信息公告
         {
             Description = 行会信息描述()
         });
         添加事记(new 行会事记
         {
-            事记类型 = 事记类型.加入公会,
-            第一参数 = 成员.ID,
+            事记类型 = 事记类型.JoinGuild,
+            第一参数 = member.ID,
             事记时间 = Compute.TimeSeconds(SEngine.CurrentTime)
         });
-        if (MapManager.Players.TryGetValue(成员.ID, out var value))
+        if (MapManager.Players.TryGetValue(member.ID, out var value))
         {
             value.SendPacket(new 同步对象行会
             {
-                对象编号 = 成员.ID,
+                对象编号 = member.ID,
                 行会编号 = ID
             });
         }
         SystemInfo.Info.更新行会(this);
     }
 
-    public void 退出行会(CharacterInfo 成员)
+    public void RemoveMember(CharacterInfo member)
     {
-        Members.Remove(成员);
-        行会禁言.Remove(成员);
-        成员.CurrentGuild = null;
-        成员.Enqueue(new 脱离行会应答
+        Members.Remove(member);
+        BannedMembers.Remove(member);
+        member.CurrentGuild = null;
+        member.Enqueue(new 脱离行会应答
         {
-            脱离方式 = 1
+            WithdrawMode = 1
         });
         Broadcast(new 脱离行会公告
         {
-            对象编号 = 成员.ID
+            对象编号 = member.ID
         });
         添加事记(new 行会事记
         {
-            事记类型 = 事记类型.离开公会,
-            第一参数 = 成员.ID,
+            事记类型 = 事记类型.LeaveGuild,
+            第一参数 = member.ID,
             事记时间 = Compute.TimeSeconds(SEngine.CurrentTime)
         });
-        if (MapManager.Players.TryGetValue(成员.ID, out var value))
+        if (MapManager.Players.TryGetValue(member.ID, out var player))
         {
-            value.SendPacket(new 同步对象行会
+            player.SendPacket(new 同步对象行会
             {
-                对象编号 = 成员.ID
+                对象编号 = member.ID
             });
         }
         SystemInfo.Info.更新行会(this);
     }
 
-    public void 逐出成员(CharacterInfo 主事, CharacterInfo 成员)
+    public void KickMember(CharacterInfo principal, CharacterInfo member)
     {
-        if (Members.Remove(成员))
+        if (Members.Remove(member))
         {
-            行会禁言.Remove(成员);
-            成员.CurrentGuild = null;
-            成员.Enqueue(new 脱离行会应答
+            BannedMembers.Remove(member);
+            member.CurrentGuild = null;
+            member.Enqueue(new 脱离行会应答
             {
-                脱离方式 = 2
+                WithdrawMode = 2
             });
             Broadcast(new 脱离行会公告
             {
-                对象编号 = 成员.ID
+                对象编号 = member.ID
             });
             添加事记(new 行会事记
             {
                 事记类型 = 事记类型.逐出公会,
-                第一参数 = 成员.ID,
-                第二参数 = 主事.ID,
+                第一参数 = member.ID,
+                第二参数 = principal.ID,
                 事记时间 = Compute.TimeSeconds(SEngine.CurrentTime)
             });
-            if (MapManager.Players.TryGetValue(成员.ID, out var value))
+            if (MapManager.Players.TryGetValue(member.ID, out var player))
             {
-                value.SendPacket(new 同步对象行会
+                player.SendPacket(new 同步对象行会
                 {
-                    对象编号 = 成员.ID
+                    对象编号 = member.ID
                 });
             }
             SystemInfo.Info.更新行会(this);
         }
     }
 
-    public void 更改职位(CharacterInfo 主事, CharacterInfo 成员, GuildRank 职位)
+    public void ChangeRank(CharacterInfo principal, CharacterInfo member, GuildRank rank)
     {
-        GuildRank 行会职位3 = (Members[成员] = 职位);
-        GuildRank 行会职位4 = 行会职位3;
-        GuildRank 行会职位5 = 行会职位4;
-        GuildRank 行会职位6 = 行会职位5;
-        Members[成员] = 职位;
+        GuildRank 行会职位3 = (Members[member] = rank);
+ 
+        Members[member] = rank;
         Broadcast(new 变更职位公告
         {
-            对象编号 = 成员.ID,
-            对象职位 = (byte)职位
+            对象编号 = member.ID,
+            对象职位 = (byte)rank
         });
         添加事记(new 行会事记
         {
-            事记类型 = 事记类型.变更职位,
-            第一参数 = 主事.ID,
-            第二参数 = 成员.ID,
-            第三参数 = (byte)行会职位6,
-            第四参数 = (byte)职位,
+            事记类型 = 事记类型.ChangeRank,
+            第一参数 = principal.ID,
+            第二参数 = member.ID,
+            第三参数 = (byte)行会职位3,
+            第四参数 = (byte)rank,
             事记时间 = Compute.TimeSeconds(SEngine.CurrentTime)
         });
     }
 
-    public void 更改宣言(CharacterInfo 主事, string 宣言)
+    public void UpdateDeclaration(CharacterInfo principal, string declaration)
     {
-        行会宣言.V = 宣言;
-        主事.Enqueue(new SocialErrorPacket
+        GuildDeclaration.V = declaration;
+        principal.Enqueue(new SocialErrorPacket
         {
             ErrorCode = 6747
         });
     }
 
-    public void 更改公告(string 公告)
+    public void UpdateNotice(string notice)
     {
-        行会公告.V = 公告;
+        GuildNotice.V = notice;
         Broadcast(new 变更行会公告
         {
-            字节数据 = Encoding.UTF8.GetBytes(公告 + "\0")
+            字节数据 = Encoding.UTF8.GetBytes(notice + "\0")
         });
     }
 
-    public void 转移会长(CharacterInfo 会长, CharacterInfo 成员)
+    public void ChangeLeader(CharacterInfo leader, CharacterInfo member)
     {
-        President.V = 成员;
-        Members[会长] = GuildRank.会员;
-        Members[成员] = GuildRank.President;
+        President.V = member;
+        Members[leader] = GuildRank.Member;
+        Members[member] = GuildRank.President;
+
         Broadcast(new 会长传位公告
         {
-            当前编号 = 会长.ID,
-            传位编号 = 成员.ID
+            当前编号 = leader.ID,
+            传位编号 = member.ID
         });
         添加事记(new 行会事记
         {
             事记类型 = 事记类型.会长传位,
-            第一参数 = 会长.ID,
-            第二参数 = 成员.ID,
+            第一参数 = leader.ID,
+            第二参数 = member.ID,
             事记时间 = Compute.TimeSeconds(SEngine.CurrentTime)
         });
     }
 
-    public void 成员禁言(CharacterInfo 主事, CharacterInfo 成员, byte 禁言状态)
+    public void BanMember(CharacterInfo principal, CharacterInfo member, byte state)
     {
-        if (禁言状态 == 2 && 行会禁言.Remove(成员))
+        if (state == 2 && BannedMembers.Remove(member))
         {
             Broadcast(new 行会禁言公告
             {
-                对象编号 = 成员.ID,
+                对象编号 = member.ID,
                 禁言状态 = 2
             });
         }
-        else if (禁言状态 == 1)
+        else if (state == 1)
         {
-            行会禁言[成员] = SEngine.CurrentTime;
+            BannedMembers[member] = SEngine.CurrentTime;
             Broadcast(new 行会禁言公告
             {
-                对象编号 = 成员.ID,
+                对象编号 = member.ID,
                 禁言状态 = 1
             });
         }
         else
         {
-            主事.Enqueue(new SocialErrorPacket
+            principal.Enqueue(new SocialErrorPacket
             {
                 ErrorCode = 6680
             });
         }
     }
 
-    public void 申请结盟(CharacterInfo 主事, GuildInfo 行会, byte 时间参数)
+    public void AddAllianceRequest(CharacterInfo principal, GuildInfo guild, byte 时间参数)
     {
-        主事.Enqueue(new 申请结盟应答
+        principal.Enqueue(new 申请结盟应答
         {
-            行会编号 = 行会.ID
+            行会编号 = guild.ID
         });
-        if (!行会.结盟申请.ContainsKey(this))
+        if (!guild.AllianceApplications.ContainsKey(this))
         {
-            行会.行会提醒(GuildRank.副长, 2);
+            guild.GuildAlert(GuildRank.副长, 2);
         }
-        行会.结盟申请[this] = new 外交申请
+        guild.AllianceApplications[this] = new 外交申请
         {
             外交时间 = 时间参数,
             申请时间 = SEngine.CurrentTime.AddHours(10.0)
         };
     }
 
-    public void 行会敌对(GuildInfo 行会, byte 时间参数)
+    public void AddHostileGuild(GuildInfo guild, byte duration)
     {
-        DictionaryMonitor<GuildInfo, DateTime> 字典监视器2 = HostileGuilds;
-        DictionaryMonitor<GuildInfo, DateTime> 字典监视器3 = 行会.HostileGuilds;
-        DictionaryMonitor<GuildInfo, DateTime> 字典监视器4 = 字典监视器3;
-        if (1 == 0)
-        {
-        }
-        int num = 时间参数 switch
+        var days = duration switch
         {
             2 => 3,
             1 => 1,
             _ => 7,
         };
-        if (1 == 0)
-        {
-        }
-        DateTime dateTime2 = (字典监视器4[this] = SEngine.CurrentTime.AddDays(num));
-        DateTime dateTime3 = dateTime2;
-        DateTime dateTime5 = (字典监视器2[行会] = dateTime3);
-        DateTime dateTime6 = dateTime5;
-        DateTime dateTime7 = dateTime6;
+
+        var date = SEngine.CurrentTime.AddDays(days);
+        guild.HostileGuilds[this] = date;
+        HostileGuilds[guild] = date;
+
         Broadcast(new 添加外交公告
         {
             外交类型 = 2,
-            行会编号 = 行会.ID,
-            行会名字 = 行会.GuildName.V,
-            行会等级 = 行会.行会等级.V,
-            行会人数 = (byte)行会.Members.Count,
-            外交时间 = (int)(HostileGuilds[行会] - SEngine.CurrentTime).TotalSeconds
+            行会编号 = guild.ID,
+            行会名字 = guild.GuildName.V,
+            行会等级 = guild.行会等级.V,
+            行会人数 = (byte)guild.Members.Count,
+            外交时间 = (int)(HostileGuilds[guild] - SEngine.CurrentTime).TotalSeconds
         });
-        行会.Broadcast(new 添加外交公告
+        guild.Broadcast(new 添加外交公告
         {
             外交类型 = 2,
             行会编号 = ID,
             行会名字 = GuildName.V,
             行会等级 = 行会等级.V,
             行会人数 = (byte)Members.Count,
-            外交时间 = (int)(行会.HostileGuilds[this] - SEngine.CurrentTime).TotalSeconds
+            外交时间 = (int)(guild.HostileGuilds[this] - SEngine.CurrentTime).TotalSeconds
         });
         添加事记(new 行会事记
         {
             事记类型 = 事记类型.行会敌对,
             第一参数 = ID,
-            第二参数 = 行会.ID,
+            第二参数 = guild.ID,
             事记时间 = Compute.TimeSeconds(SEngine.CurrentTime)
         });
-        行会.添加事记(new 行会事记
+        guild.添加事记(new 行会事记
         {
             事记类型 = 事记类型.行会敌对,
-            第一参数 = 行会.ID,
+            第一参数 = guild.ID,
             第二参数 = ID,
             事记时间 = Compute.TimeSeconds(SEngine.CurrentTime)
         });
     }
 
-    public void 行会结盟(GuildInfo 行会)
+    public void AddAllianceGuild(GuildInfo guild)
     {
-        DictionaryMonitor<GuildInfo, DateTime> 字典监视器2 = AllianceGuilds;
-        DateTime dateTime2 = (行会.AllianceGuilds[this] = SEngine.CurrentTime.AddDays((结盟申请[行会].外交时间 == 1) ? 1 : ((结盟申请[行会].外交时间 == 2) ? 3 : 7)));
-        DateTime dateTime3 = dateTime2;
-        dateTime2 = (字典监视器2[行会] = dateTime3);
-        DateTime dateTime5 = dateTime2;
-        DateTime dateTime6 = dateTime5;
+        var days = AllianceApplications[guild].外交时间 switch
+        {
+            2 => 3,
+            1 => 1,
+            _ => 7,
+        };
+
+        var date = SEngine.CurrentTime.AddDays(days);
+        guild.AllianceGuilds[this] = date;
+        AllianceGuilds[guild] = date;
+
         Broadcast(new 添加外交公告
         {
             外交类型 = 1,
-            行会名字 = 行会.GuildName.V,
-            行会编号 = 行会.ID,
-            行会等级 = 行会.行会等级.V,
-            行会人数 = (byte)行会.Members.Count,
-            外交时间 = (int)(AllianceGuilds[行会] - SEngine.CurrentTime).TotalSeconds
+            行会名字 = guild.GuildName.V,
+            行会编号 = guild.ID,
+            行会等级 = guild.行会等级.V,
+            行会人数 = (byte)guild.Members.Count,
+            外交时间 = (int)(AllianceGuilds[guild] - SEngine.CurrentTime).TotalSeconds
         });
-        行会.Broadcast(new 添加外交公告
+        guild.Broadcast(new 添加外交公告
         {
             外交类型 = 1,
             行会名字 = GuildName.V,
             行会编号 = ID,
             行会等级 = 行会等级.V,
             行会人数 = (byte)Members.Count,
-            外交时间 = (int)(行会.AllianceGuilds[this] - SEngine.CurrentTime).TotalSeconds
+            外交时间 = (int)(guild.AllianceGuilds[this] - SEngine.CurrentTime).TotalSeconds
         });
         添加事记(new 行会事记
         {
             事记类型 = 事记类型.行会结盟,
             第一参数 = ID,
-            第二参数 = 行会.ID,
+            第二参数 = guild.ID,
             事记时间 = Compute.TimeSeconds(SEngine.CurrentTime)
         });
-        行会.添加事记(new 行会事记
+        guild.添加事记(new 行会事记
         {
             事记类型 = 事记类型.行会结盟,
-            第一参数 = 行会.ID,
+            第一参数 = guild.ID,
             第二参数 = ID,
             事记时间 = Compute.TimeSeconds(SEngine.CurrentTime)
         });
     }
 
-    public void 解除结盟(CharacterInfo 主事, GuildInfo 行会)
+    public void RemoveAllyGuild(CharacterInfo principal, GuildInfo guild)
     {
-        AllianceGuilds.Remove(行会);
-        行会.AllianceGuilds.Remove(this);
+        AllianceGuilds.Remove(guild);
+        guild.AllianceGuilds.Remove(this);
         Broadcast(new 删除外交公告
         {
             外交类型 = 1,
-            行会编号 = 行会.ID
+            行会编号 = guild.ID
         });
-        行会.Broadcast(new 删除外交公告
+        guild.Broadcast(new 删除外交公告
         {
             外交类型 = 1,
             行会编号 = ID
@@ -543,57 +536,56 @@ public sealed class GuildInfo : DBObject
         {
             事记类型 = 事记类型.取消结盟,
             第一参数 = ID,
-            第二参数 = 行会.ID,
+            第二参数 = guild.ID,
             事记时间 = Compute.TimeSeconds(SEngine.CurrentTime)
         });
-        行会.添加事记(new 行会事记
+        guild.添加事记(new 行会事记
         {
             事记类型 = 事记类型.取消结盟,
-            第一参数 = 行会.ID,
+            第一参数 = guild.ID,
             第二参数 = ID,
             事记时间 = Compute.TimeSeconds(SEngine.CurrentTime)
         });
-        主事.Enqueue(new SocialErrorPacket
+        principal.Enqueue(new SocialErrorPacket
         {
             ErrorCode = 6812
         });
     }
 
-    public void 申请解敌(CharacterInfo 主事, GuildInfo 敌对行会)
+    public void RequestReleaseHostileGuild(CharacterInfo principal, GuildInfo guild)
     {
-        主事.Enqueue(new SocialErrorPacket
+        principal.Enqueue(new SocialErrorPacket { ErrorCode = 6829 });
+
+        foreach (var member in guild.Members)
         {
-            ErrorCode = 6829
-        });
-        foreach (KeyValuePair<CharacterInfo, GuildRank> item in 敌对行会.Members)
-        {
-            if (item.Value <= GuildRank.副长)
+            if (member.Value <= GuildRank.副长)
             {
-                item.Key.Enqueue(new 解除敌对列表
+                member.Key.Enqueue(new 解除敌对列表
                 {
                     申请类型 = 1,
                     行会编号 = ID
                 });
             }
         }
-        敌对行会.解除申请[this] = SEngine.CurrentTime.AddHours(10.0);
+        guild.HostileReleaseApplications[this] = SEngine.CurrentTime.AddHours(10.0);
     }
 
-    public void 解除敌对(GuildInfo 行会)
+    public void RemoveHostileGuild(GuildInfo guild)
     {
-        HostileGuilds.Remove(行会);
-        行会.HostileGuilds.Remove(this);
+        HostileGuilds.Remove(guild);
+        guild.HostileGuilds.Remove(this);
+
         Broadcast(new 解除敌对列表
         {
             申请类型 = 2,
-            行会编号 = 行会.ID
+            行会编号 = guild.ID
         });
         Broadcast(new 删除外交公告
         {
             外交类型 = 2,
-            行会编号 = 行会.ID
+            行会编号 = guild.ID
         });
-        行会.Broadcast(new 删除外交公告
+        guild.Broadcast(new 删除外交公告
         {
             外交类型 = 2,
             行会编号 = ID
@@ -602,13 +594,13 @@ public sealed class GuildInfo : DBObject
         {
             事记类型 = 事记类型.取消敌对,
             第一参数 = ID,
-            第二参数 = 行会.ID,
+            第二参数 = guild.ID,
             事记时间 = Compute.TimeSeconds(SEngine.CurrentTime)
         });
-        行会.添加事记(new 行会事记
+        guild.添加事记(new 行会事记
         {
             事记类型 = 事记类型.取消敌对,
-            第一参数 = 行会.ID,
+            第一参数 = guild.ID,
             第二参数 = ID,
             事记时间 = Compute.TimeSeconds(SEngine.CurrentTime)
         });
@@ -643,7 +635,7 @@ public sealed class GuildInfo : DBObject
         }
     }
 
-    public void 行会提醒(GuildRank rank, byte 提醒类型)
+    public void GuildAlert(GuildRank rank, byte reminder)
     {
         foreach (var member in Members)
         {
@@ -651,7 +643,7 @@ public sealed class GuildInfo : DBObject
             {
                 member.Key.Enqueue(new 发送行会通知
                 {
-                    提醒类型 = 提醒类型
+                    提醒类型 = reminder
                 });
             }
         }
@@ -672,11 +664,11 @@ public sealed class GuildInfo : DBObject
         Encoding.UTF8.GetBytes(PresidentName).CopyTo(array, 0);
         binaryWriter.Write(array);
         array = new byte[32];
-        Encoding.UTF8.GetBytes(创建人名.V).CopyTo(array, 0);
+        Encoding.UTF8.GetBytes(CreatorName.V).CopyTo(array, 0);
         binaryWriter.Write(array);
         binaryWriter.Write(创建时间);
         array = new byte[101];
-        Encoding.UTF8.GetBytes(行会宣言.V).CopyTo(array, 0);
+        Encoding.UTF8.GetBytes(GuildDeclaration.V).CopyTo(array, 0);
         binaryWriter.Write(array);
         binaryWriter.Write(new byte[17]);
         binaryWriter.Write(new byte[8]);
@@ -697,9 +689,9 @@ public sealed class GuildInfo : DBObject
         binaryWriter.Seek(43, SeekOrigin.Begin);
         binaryWriter.Write(Encoding.UTF8.GetBytes(PresidentName));
         binaryWriter.Seek(75, SeekOrigin.Begin);
-        binaryWriter.Write(Encoding.UTF8.GetBytes(创建人名.V));
+        binaryWriter.Write(Encoding.UTF8.GetBytes(CreatorName.V));
         binaryWriter.Seek(107, SeekOrigin.Begin);
-        binaryWriter.Write(Encoding.UTF8.GetBytes(行会公告.V));
+        binaryWriter.Write(Encoding.UTF8.GetBytes(GuildNotice.V));
         binaryWriter.Seek(4258, SeekOrigin.Begin);
         binaryWriter.Write(粮食数量.V);
         binaryWriter.Write(木材数量.V);
@@ -719,7 +711,7 @@ public sealed class GuildInfo : DBObject
             binaryWriter.Write(item.Key.CurrentMap.V);
             binaryWriter.Write(!item.Key.Online ? Compute.TimeSeconds(item.Key.DisconnectDate.V) : 0);
             binaryWriter.Write(0);
-            binaryWriter.Write(行会禁言.ContainsKey(item.Key));
+            binaryWriter.Write(BannedMembers.ContainsKey(item.Key));
         }
         binaryWriter.Seek(330, SeekOrigin.Begin);
         binaryWriter.Write((byte)Math.Min(10, 行会事记.Count));
@@ -765,8 +757,8 @@ public sealed class GuildInfo : DBObject
     {
         using MemoryStream memoryStream = new MemoryStream();
         using BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
-        binaryWriter.Write((ushort)申请列表.Count);
-        foreach (CharacterInfo key in 申请列表.Keys)
+        binaryWriter.Write((ushort)Applications.Count);
+        foreach (CharacterInfo key in Applications.Keys)
         {
             binaryWriter.Write(key.ID);
             byte[] array = new byte[32];
@@ -783,8 +775,8 @@ public sealed class GuildInfo : DBObject
     {
         using MemoryStream memoryStream = new MemoryStream();
         using BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
-        binaryWriter.Write((byte)结盟申请.Count);
-        foreach (KeyValuePair<GuildInfo, 外交申请> item in 结盟申请)
+        binaryWriter.Write((byte)AllianceApplications.Count);
+        foreach (KeyValuePair<GuildInfo, 外交申请> item in AllianceApplications)
         {
             binaryWriter.Write(item.Key.ID);
             byte[] array = new byte[25];
@@ -804,7 +796,7 @@ public sealed class GuildInfo : DBObject
     {
         using MemoryStream memoryStream = new MemoryStream(new byte[256]);
         using BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
-        foreach (KeyValuePair<GuildInfo, DateTime> item in 解除申请)
+        foreach (KeyValuePair<GuildInfo, DateTime> item in HostileReleaseApplications)
         {
             binaryWriter.Write(item.Key.ID);
         }

@@ -679,7 +679,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.玩家丢弃物品(P.背包类型, P.物品位置, P.丢弃数量);
+            Player.DropItem(P.Grid, P.Location, P.Quantity);
         }
     }
 
@@ -688,7 +688,7 @@ public sealed class SConnection
         if (Config.法阵卡BUG清理 == 1 && Stage != GameStage.Game)
         {
             Config.法阵卡BUG清理 = 0;
-            Player.玩家转移物品(1, 1, 1, 1);
+            Player.UserMoveItem(1, 1, 1, 1);
             Player.EnterScene();
             Stage = GameStage.Game;
         }
@@ -698,7 +698,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.玩家转移物品(P.当前背包, P.原有位置, P.目标背包, P.目标位置);
+            Player.UserMoveItem(P.当前背包, P.原有位置, P.目标背包, P.目标位置);
         }
     }
 
@@ -710,7 +710,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.玩家使用物品(P.背包类型, P.物品位置);
+            Player.UserUseItem(P.背包类型, P.物品位置);
         }
     }
 
@@ -722,7 +722,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.玩家喝修复油(P.背包类型, P.物品位置);
+            Player.UserEatItem(P.背包类型, P.物品位置);
         }
     }
 
@@ -758,7 +758,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.玩家购买物品(P.商店编号, P.物品位置, P.购入数量);
+            Player.UserBuyItem(P.StoreID, P.Location, P.Quantity);
         }
     }
 
@@ -770,7 +770,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.玩家出售物品(P.背包类型, P.物品位置, P.卖出数量);
+            Player.UserSellItem(P.背包类型, P.物品位置, P.卖出数量);
         }
     }
 
@@ -782,7 +782,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.请求回购清单();
+            Player.UserViewRepurchaseItemList();
         }
     }
 
@@ -794,7 +794,7 @@ public sealed class SConnection
         }
         else if (P.物品位置 < 100)
         {
-            Player.玩家回购物品(P.物品位置);
+            Player.UserRepurchaseItem(P.物品位置);
         }
         else
         {
@@ -882,7 +882,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.玩家拆分物品(P.当前背包, P.物品位置, P.拆分数量, P.目标背包, P.目标位置);
+            Player.UserSplitItem(P.当前背包, P.物品位置, P.拆分数量, P.目标背包, P.目标位置);
         }
     }
 
@@ -895,7 +895,7 @@ public sealed class SConnection
         }
         else if (Enum.TryParse<物品背包分类>(P.背包类型.ToString(), out result) && Enum.IsDefined(typeof(物品背包分类), result))
         {
-            Player.玩家分解物品(P.背包类型, P.物品位置, P.分解数量);
+            Player.UserDisassembleItem(P.背包类型, P.物品位置, P.分解数量);
         }
         else
         {
@@ -911,7 +911,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.玩家合成物品(P.物品编号);
+            Player.UserCraftItem(P.物品编号);
         }
     }
 
@@ -1551,7 +1551,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.查询附近队伍();
+            Player.RequestTeamSearch();
         }
     }
 
@@ -1575,7 +1575,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.申请创建队伍(P.对象编号, P.分配方式);
+            Player.RequestCreateTeam(P.对象编号, P.分配方式);
         }
     }
 
@@ -1587,7 +1587,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.发送组队请求(P.对象编号);
+            Player.SendTeamInvitationRequest(P.对象编号);
         }
     }
 
@@ -1599,7 +1599,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.申请队员离队(P.对象编号);
+            Player.RequestRemoveTeamMember(P.对象编号);
         }
     }
 
@@ -1611,7 +1611,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.申请移交队长(P.队长编号);
+            Player.RequestChangeTeamCaptain(P.队长编号);
         }
     }
 
@@ -1623,7 +1623,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.回应组队请求(P.对象编号, P.组队方式, P.回应方式);
+            Player.SendTeamInvitationResponse(P.对象编号, P.组队方式, P.回应方式);
         }
     }
 
@@ -1647,7 +1647,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.玩家卸下称号();
+            Player.RemoveCurrentTitle();
         }
     }
 
@@ -1719,7 +1719,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.查询行会信息(P.行会编号);
+            Player.RequestGuildInformation(P.行会编号);
         }
     }
 
@@ -1767,7 +1767,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.申请加入行会(P.行会编号, P.行会名字);
+            Player.RequestJoinGuild(P.行会编号, P.行会名字);
         }
     }
 
@@ -1779,7 +1779,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.查看申请列表();
+            Player.RequestViewGuildApplications();
         }
     }
 
@@ -1890,7 +1890,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.申请创建行会(P.字节数据);
+            Player.RequestCreateGuild(P.字节数据);
         }
     }
 
@@ -1902,7 +1902,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.申请解散行会();
+            Player.RequestDeleteGuild();
         }
     }
 
@@ -1914,7 +1914,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.捐献行会资金(P.金币数量);
+            Player.DonateGuildFunds(P.金币数量);
         }
     }
 
@@ -1938,7 +1938,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.申请离开行会();
+            Player.RequestLeaveGuild();
         }
     }
 
@@ -1950,7 +1950,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.更改行会公告(P.行会公告);
+            Player.ChangeGuildNotice(P.行会公告);
         }
     }
 
@@ -1962,7 +1962,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.更改行会宣言(P.行会宣言);
+            Player.ChangeGuildDeclaration(P.行会宣言);
         }
     }
 
@@ -1974,7 +1974,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.设置行会禁言(P.对象编号, P.禁言状态);
+            Player.BanGuildMember(P.对象编号, P.禁言状态);
         }
     }
 
@@ -1986,7 +1986,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.变更会员职位(P.对象编号, P.对象职位);
+            Player.ChangeGuildMemberRank(P.对象编号, P.对象职位);
         }
     }
 
@@ -1998,7 +1998,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.逐出行会成员(P.对象编号);
+            Player.RequestRemoveGuildMember(P.对象编号);
         }
     }
 
@@ -2010,7 +2010,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.转移会长职位(P.对象编号);
+            Player.RequestChangeGuildLeader(P.对象编号);
         }
     }
 
@@ -2022,7 +2022,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.申请行会外交(P.外交类型, P.外交时间, P.行会名字);
+            Player.RequestGuildAlliance(P.外交类型, P.外交时间, P.行会名字);
         }
     }
 
@@ -2034,7 +2034,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.申请行会敌对(P.敌对时间, P.行会名字);
+            Player.RequestGuildHostile(P.敌对时间, P.行会名字);
         }
     }
 
@@ -2058,7 +2058,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.申请解除结盟(P.行会编号);
+            Player.RequestReleaseAllianceGuild(P.行会编号);
         }
     }
 
@@ -2070,7 +2070,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.申请解除敌对(P.行会编号);
+            Player.RequestReleaseHostileGuild(P.行会编号);
         }
     }
 
@@ -2102,7 +2102,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.查看结盟申请();
+            Player.RequestViewAllianceApplications();
         }
     }
 

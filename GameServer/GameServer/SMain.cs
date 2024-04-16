@@ -368,7 +368,7 @@ public partial class SMain : Form
                 dataRow["元宝数量"] = 角色.Ingot;
                 dataRow["消耗元宝"] = 角色.消耗元宝;
                 dataRow["金币数量"] = 角色.Gold;
-                dataRow["转出金币"] = 角色.转出金币;
+                dataRow["转出金币"] = 角色.TradeGold;
                 dataRow["背包大小"] = 角色.InventorySize;
                 dataRow["仓库大小"] = 角色.WarehouseSize;
                 dataRow["师门声望"] = 角色.师门声望;
