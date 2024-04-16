@@ -4,5 +4,5 @@ namespace GamePackets.Server;
 public sealed class 脱离行会应答 : GamePacket
 {
     [FieldAttribute(Position = 2, Length = 4)]
-    public byte 脱离方式;
+    public byte WithdrawMode;
 }
