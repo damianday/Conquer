@@ -3953,7 +3953,7 @@ public sealed class PlayerObject : MapObject
             Character.MonsterKillCount.V++;
     }
 
-    public void LevelGained()
+    public void LevelChanged()
     {
         SendPacket(new ObjectLevelUpPacket
         {
@@ -4099,7 +4099,7 @@ public sealed class PlayerObject : MapObject
                     CurrentExperience -= MaxExperience;
                     CurrentLevel++;
                 }
-                LevelGained();
+                LevelChanged();
             }
             Enqueue(new CharacterExperienceChangePacket
             {
