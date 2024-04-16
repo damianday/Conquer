@@ -1,7 +1,5 @@
 using GameServer.Database;
 
-using GamePackets.Server;
-
 namespace GameServer;
 
 public sealed class ChangeLevel : GMCommand
@@ -16,19 +14,17 @@ public sealed class ChangeLevel : GMCommand
 
     public override void ExecuteCommand()
     {
-        if (Session.CharacterInfoTable.SearchTable.TryGetValue(UserName, out var value) && value is CharacterInfo character)
+        var character = Session.GetCharacter(UserName);
+        if (character == null)
         {
-            character.CurrentLevel = (byte)Level;
-            character.Enqueue(new ObjectLevelUpPacket
-            {
-                ObjectID = character.Connection.Player.ObjectID,
-                CurrentLevel = character.CurrentLevel
-            });
-            SMain.AddCommandLog($"<= @{GetType().Name} The command has been executed, the current role level: {character.CurrentLevel}");
+            SMain.AddCommandLog("<= @" + GetType().Name + " The command execution failed, character does not exist");
+            return;
         }
-        else
-        {
-            SMain.AddCommandLog("<= @" + GetType().Name + " The command execution failed and the role does not exist");
-        }
+
+        character.CurrentLevel = (byte)Level;
+        character.CurrentExperience = 0;
+        character.Connection?.Player?.LevelChanged();
+
+        SMain.AddCommandLog($"<= @{GetType().Name} The command has been executed, the current character level: {character.CurrentLevel}");
     }
 }
