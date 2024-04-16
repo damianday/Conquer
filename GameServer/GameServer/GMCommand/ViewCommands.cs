@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace GameServer;
 
-public sealed class ReviewCommands : GMCommand
+public sealed class ViewCommands : GMCommand
 {
     public override ExecutionPriority Priority => ExecutionPriority.Immediate;
 
