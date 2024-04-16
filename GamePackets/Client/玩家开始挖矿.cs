@@ -7,5 +7,5 @@ namespace GamePackets.Client;
 public sealed class 玩家开始挖矿 : GamePacket
 {
 	[FieldAttribute(Position = 2, Length = 4)]
-	public Point 挖掘坐标;
+	public Point Position;
 }
