@@ -12,185 +12,193 @@ namespace GameServer.Map;
 
 public sealed class TradingObject
 {
-    public PlayerObject 交易申请方;
-    public PlayerObject 交易接收方;
+    public PlayerObject Requester;
+    public PlayerObject Recipient;
 
-    public byte 申请方状态;
-    public byte 接收方状态;
+    public byte RequesterState;
+    public byte RecipientState;
 
-    public int 申请方金币;
-    public int 接收方金币;
+    public int RequesterGold;
+    public int RecipientGold;
 
-    public Dictionary<byte, ItemInfo> 申请方物品;
-    public Dictionary<byte, ItemInfo> 接收方物品;
+    public Dictionary<byte, ItemInfo> RequesterItems;
+    public Dictionary<byte, ItemInfo> RecipientItems;
 
-    public TradingObject(PlayerObject 申请方, PlayerObject 接收方)
+    public TradingObject(PlayerObject requester, PlayerObject recipient)
     {
-        申请方物品 = new Dictionary<byte, ItemInfo>();
-        接收方物品 = new Dictionary<byte, ItemInfo>();
-        交易申请方 = 申请方;
-        交易接收方 = 接收方;
-        申请方状态 = 1;
-        接收方状态 = 2;
-        发送封包(new 交易状态改变
+        RequesterItems = new Dictionary<byte, ItemInfo>();
+        RecipientItems = new Dictionary<byte, ItemInfo>();
+        Requester = requester;
+        Recipient = recipient;
+        RequesterState = 1;
+        RecipientState = 2;
+        Enqueue(new 交易状态改变
         {
-            对象编号 = 交易申请方.ObjectID,
-            交易状态 = 申请方状态,
-            对象等级 = 交易申请方.CurrentLevel
+            对象编号 = Requester.ObjectID,
+            交易状态 = RequesterState,
+            对象等级 = Requester.CurrentLevel
         });
-        发送封包(new 交易状态改变
+        Enqueue(new 交易状态改变
         {
-            对象编号 = 交易接收方.ObjectID,
-            交易状态 = 接收方状态,
-            对象等级 = 交易接收方.CurrentLevel
+            对象编号 = Recipient.ObjectID,
+            交易状态 = RecipientState,
+            对象等级 = Recipient.CurrentLevel
         });
     }
 
     public void BreakTrade()
     {
-        交易申请方.Enqueue(new 交易状态改变
+        Requester.Enqueue(new 交易状态改变
         {
-            对象编号 = 交易申请方.ObjectID,
+            对象编号 = Requester.ObjectID,
             交易状态 = 0,
-            对象等级 = 交易申请方.CurrentLevel
+            对象等级 = Requester.CurrentLevel
         });
-        交易接收方.Enqueue(new 交易状态改变
+        Recipient.Enqueue(new 交易状态改变
         {
-            对象编号 = 交易接收方.ObjectID,
+            对象编号 = Recipient.ObjectID,
             交易状态 = 0,
-            对象等级 = 交易接收方.CurrentLevel
+            对象等级 = Recipient.CurrentLevel
         });
-        交易申请方.CurrentTrade = (交易接收方.CurrentTrade = null);
+        Requester.CurrentTrade = (Recipient.CurrentTrade = null);
     }
 
-    public void 交换物品()
+    public void ExchangeItems()
     {
-        if (接收方金币 > 0)
+        if (RecipientGold > 0)
         {
-            交易接收方.Gold -= (int)Math.Ceiling((float)接收方金币 * 1.04f);
-            交易接收方.Character.转出金币.V += 接收方金币;
+            Recipient.Gold -= (int)Math.Ceiling((float)RecipientGold * 1.04f);
+            Recipient.Character.TradeGold.V += RecipientGold;
         }
-        if (申请方金币 > 0)
+
+        if (RequesterGold > 0)
         {
-            交易申请方.Gold -= (int)Math.Ceiling((float)申请方金币 * 1.04f);
-            交易申请方.Character.转出金币.V += 申请方金币;
+            Requester.Gold -= (int)Math.Ceiling((float)RequesterGold * 1.04f);
+            Requester.Character.TradeGold.V += RequesterGold;
         }
-        foreach (ItemInfo value in 接收方物品.Values)
+
+        foreach (var item in RecipientItems.Values)
         {
-            if (value.ID == 80207)
+            if (item.ID == 80207)
             {
-                交易接收方.Character.转出金币.V += 1000000L;
+                Recipient.Character.TradeGold.V += 1_000_000L;
             }
-            else if (value.ID == 80209)
+            else if (item.ID == 80209)
             {
-                交易接收方.Character.转出金币.V += 5000000L;
+                Recipient.Character.TradeGold.V += 5_000_000L;
             }
-            交易接收方.Inventory.Remove(value.Location.V);
-            交易接收方.Enqueue(new DeleteItemPacket
+            Recipient.Inventory.Remove(item.Location.V);
+            Recipient.Enqueue(new DeleteItemPacket
             {
                 Grid = 1,
-                Position = value.Location.V
+                Position = item.Location.V
             });
         }
-        foreach (ItemInfo value2 in 申请方物品.Values)
+
+        foreach (var item in RequesterItems.Values)
         {
-            if (value2.ID == 80207)
+            if (item.ID == 80207)
             {
-                交易申请方.Character.转出金币.V += 1000000L;
+                Requester.Character.TradeGold.V += 1_000_000L;
             }
-            else if (value2.ID == 80209)
+            else if (item.ID == 80209)
             {
-                交易申请方.Character.转出金币.V += 5000000L;
+                Requester.Character.TradeGold.V += 5_000_000L;
             }
-            交易申请方.Inventory.Remove(value2.Location.V);
-            交易申请方.Enqueue(new DeleteItemPacket
+            Requester.Inventory.Remove(item.Location.V);
+            Requester.Enqueue(new DeleteItemPacket
             {
                 Grid = 1,
-                Position = value2.Location.V
+                Position = item.Location.V
             });
         }
-        foreach (ItemInfo value3 in 申请方物品.Values)
+
+        foreach (var item in RequesterItems.Values)
         {
-            for (byte b = 0; b < 交易接收方.InventorySize; b = (byte)(b + 1))
+            for (byte b = 0; b < Recipient.InventorySize; b = (byte)(b + 1))
             {
-                if (!交易接收方.Inventory.ContainsKey(b))
+                if (!Recipient.Inventory.ContainsKey(b))
                 {
-                    交易接收方.Inventory.Add(b, value3);
-                    value3.Grid.V = 1;
-                    value3.Location.V = b;
-                    交易接收方.Enqueue(new SyncItemPacket
+                    Recipient.Inventory.Add(b, item);
+                    item.Grid.V = 1;
+                    item.Location.V = b;
+                    Recipient.Enqueue(new SyncItemPacket
                     {
-                        Description = value3.ToArray()
+                        Description = item.ToArray()
                     });
                     break;
                 }
             }
         }
-        foreach (ItemInfo value4 in 接收方物品.Values)
+
+        foreach (var item in RecipientItems.Values)
         {
-            for (byte b2 = 0; b2 < 交易申请方.InventorySize; b2 = (byte)(b2 + 1))
+            for (byte b2 = 0; b2 < Requester.InventorySize; b2 = (byte)(b2 + 1))
             {
-                if (!交易申请方.Inventory.ContainsKey(b2))
+                if (!Requester.Inventory.ContainsKey(b2))
                 {
-                    交易申请方.Inventory.Add(b2, value4);
-                    value4.Grid.V = 1;
-                    value4.Location.V = b2;
-                    交易申请方.Enqueue(new SyncItemPacket
+                    Requester.Inventory.Add(b2, item);
+                    item.Grid.V = 1;
+                    item.Location.V = b2;
+                    Requester.Enqueue(new SyncItemPacket
                     {
-                        Description = value4.ToArray()
+                        Description = item.ToArray()
                     });
                     break;
                 }
             }
         }
-        if (申请方金币 > 0)
+
+        if (RequesterGold > 0)
         {
-            交易接收方.Gold += 申请方金币;
+            Recipient.Gold += RequesterGold;
         }
-        if (接收方金币 > 0)
+
+        if (RecipientGold > 0)
         {
-            交易申请方.Gold += 接收方金币;
+            Requester.Gold += RecipientGold;
         }
-        更改状态(6);
+
+        UpdateState(6);
         BreakTrade();
     }
 
-    public void 更改状态(byte 状态, PlayerObject 玩家 = null)
+    public void UpdateState(byte state, PlayerObject player = null)
     {
-        if (玩家 == null)
+        if (player == null)
         {
-            申请方状态 = (接收方状态 = 状态);
-            发送封包(new 交易状态改变
+            RequesterState = (RecipientState = state);
+            Enqueue(new 交易状态改变
             {
-                对象编号 = 交易申请方.ObjectID,
-                交易状态 = 申请方状态,
-                对象等级 = 交易申请方.CurrentLevel
+                对象编号 = Requester.ObjectID,
+                交易状态 = RequesterState,
+                对象等级 = Requester.CurrentLevel
             });
-            发送封包(new 交易状态改变
+            Enqueue(new 交易状态改变
             {
-                对象编号 = 交易接收方.ObjectID,
-                交易状态 = 接收方状态,
-                对象等级 = 交易接收方.CurrentLevel
-            });
-        }
-        else if (玩家 == 交易申请方)
-        {
-            申请方状态 = 状态;
-            发送封包(new 交易状态改变
-            {
-                对象编号 = 玩家.ObjectID,
-                交易状态 = 玩家.TradeState,
-                对象等级 = 玩家.CurrentLevel
+                对象编号 = Recipient.ObjectID,
+                交易状态 = RecipientState,
+                对象等级 = Recipient.CurrentLevel
             });
         }
-        else if (玩家 == 交易接收方)
+        else if (player == Requester)
         {
-            接收方状态 = 状态;
-            发送封包(new 交易状态改变
+            RequesterState = state;
+            Enqueue(new 交易状态改变
             {
-                对象编号 = 玩家.ObjectID,
-                交易状态 = 玩家.TradeState,
-                对象等级 = 玩家.CurrentLevel
+                对象编号 = player.ObjectID,
+                交易状态 = player.TradeState,
+                对象等级 = player.CurrentLevel
+            });
+        }
+        else if (player == Recipient)
+        {
+            RecipientState = state;
+            Enqueue(new 交易状态改变
+            {
+                对象编号 = player.ObjectID,
+                交易状态 = player.TradeState,
+                对象等级 = player.CurrentLevel
             });
         }
         else
@@ -199,24 +207,24 @@ public sealed class TradingObject
         }
     }
 
-    public void 放入金币(PlayerObject 玩家, int 数量)
+    public void AddGold(PlayerObject player, int quantity)
     {
-        if (玩家 == 交易申请方)
+        if (player == Requester)
         {
-            申请方金币 = 数量;
-            发送封包(new 放入交易金币
+            RequesterGold = quantity;
+            Enqueue(new TradeAddGoldPacket
             {
-                对象编号 = 玩家.ObjectID,
-                金币数量 = 数量
+                对象编号 = player.ObjectID,
+                金币数量 = quantity
             });
         }
-        else if (玩家 == 交易接收方)
+        else if (player == Recipient)
         {
-            接收方金币 = 数量;
-            发送封包(new 放入交易金币
+            RecipientGold = quantity;
+            Enqueue(new TradeAddGoldPacket
             {
-                对象编号 = 玩家.ObjectID,
-                金币数量 = 数量
+                对象编号 = player.ObjectID,
+                金币数量 = quantity
             });
         }
         else
@@ -225,28 +233,28 @@ public sealed class TradingObject
         }
     }
 
-    public void 放入物品(PlayerObject 玩家, ItemInfo 物品, byte 位置)
+    public void AddItem(PlayerObject player, ItemInfo item, byte location)
     {
-        if (玩家 == 交易申请方)
+        if (player == Requester)
         {
-            申请方物品.Add(位置, 物品);
-            发送封包(new 放入交易物品
+            RequesterItems.Add(location, item);
+            Enqueue(new TradeAddItemPacket
             {
-                对象编号 = 玩家.ObjectID,
-                放入位置 = 位置,
+                ObjectID = player.ObjectID,
+                Location = location,
                 放入物品 = 1,
-                物品描述 = 物品.ToArray()
+                Description = item.ToArray()
             });
         }
-        else if (玩家 == 交易接收方)
+        else if (player == Recipient)
         {
-            接收方物品.Add(位置, 物品);
-            发送封包(new 放入交易物品
+            RecipientItems.Add(location, item);
+            Enqueue(new TradeAddItemPacket
             {
-                对象编号 = 玩家.ObjectID,
-                放入位置 = 位置,
+                ObjectID = player.ObjectID,
+                Location = location,
                 放入物品 = 1,
-                物品描述 = 物品.ToArray()
+                Description = item.ToArray()
             });
         }
         else
@@ -255,99 +263,85 @@ public sealed class TradingObject
         }
     }
 
-    public bool 背包已满(out PlayerObject 玩家)
+    public bool 背包已满(out PlayerObject player)
     {
-        玩家 = null;
-        if (交易申请方.RemainingInventorySpace < 接收方物品.Count)
+        player = null;
+        if (Requester.RemainingInventorySpace < RecipientItems.Count)
         {
-            玩家 = 交易申请方;
+            player = Requester;
             return true;
         }
-        if (交易接收方.RemainingInventorySpace < 申请方物品.Count)
+        if (Recipient.RemainingInventorySpace < RequesterItems.Count)
         {
-            玩家 = 交易接收方;
+            player = Recipient;
             return true;
         }
         return false;
     }
 
-    public bool 金币重复(PlayerObject 玩家)
+    public bool 金币重复(PlayerObject player)
     {
-        if (玩家 == 交易申请方)
+        if (player == Requester)
+            return RequesterGold != 0;
+        if (player == Recipient)
+            return RecipientGold != 0;
+        return true;
+    }
+
+    public bool 物品重复(PlayerObject player, ItemInfo item)
+    {
+        if (player == Requester)
         {
-            return 申请方金币 != 0;
+            return RequesterItems.Values.FirstOrDefault((ItemInfo O) => O == item) != null;
         }
-        if (玩家 == 交易接收方)
+        if (player == Recipient)
         {
-            return 接收方金币 != 0;
+            return RecipientItems.Values.FirstOrDefault((ItemInfo O) => O == item) != null;
         }
         return true;
     }
 
-    public bool 物品重复(PlayerObject 玩家, ItemInfo 物品)
+    public bool 物品重复(PlayerObject player, byte location)
     {
-        if (玩家 == 交易申请方)
+        if (player == Requester)
         {
-            return 申请方物品.Values.FirstOrDefault((ItemInfo O) => O == 物品) != null;
+            return RequesterItems.ContainsKey(location);
         }
-        if (玩家 == 交易接收方)
+        if (player == Recipient)
         {
-            return 接收方物品.Values.FirstOrDefault((ItemInfo O) => O == 物品) != null;
+            return RecipientItems.ContainsKey(location);
         }
         return true;
     }
 
-    public bool 物品重复(PlayerObject 玩家, byte 位置)
+    public byte OpponentState(PlayerObject player)
     {
-        if (玩家 == 交易申请方)
-        {
-            return 申请方物品.ContainsKey(位置);
-        }
-        if (玩家 == 交易接收方)
-        {
-            return 接收方物品.ContainsKey(位置);
-        }
-        return true;
-    }
-
-    public byte 对方状态(PlayerObject 玩家)
-    {
-        if (玩家 == 交易接收方)
-        {
-            return 申请方状态;
-        }
-        if (玩家 == 交易申请方)
-        {
-            return 接收方状态;
-        }
+        if (player == Recipient)
+            return RequesterState;
+        if (player == Requester)
+            return RecipientState;
         return 0;
     }
 
-    public void 发送封包(GamePacket 封包)
+    public void Enqueue(GamePacket packet)
     {
-        交易接收方.Enqueue(封包);
-        交易申请方.Enqueue(封包);
+        Recipient.Enqueue(packet);
+        Requester.Enqueue(packet);
     }
 
-    public PlayerObject 对方玩家(PlayerObject 玩家)
+    public PlayerObject Opponent(PlayerObject player)
     {
-        if (玩家 == 交易接收方)
-        {
-            return 交易申请方;
-        }
-        return 交易接收方;
+        if (player == Recipient)
+            return Requester;
+        return Recipient;
     }
 
-    public Dictionary<byte, ItemInfo> 对方物品(PlayerObject 玩家)
+    public Dictionary<byte, ItemInfo> OpponentItems(PlayerObject player)
     {
-        if (玩家 == 交易接收方)
-        {
-            return 申请方物品;
-        }
-        if (玩家 == 交易申请方)
-        {
-            return 接收方物品;
-        }
+        if (player == Recipient)
+            return RequesterItems;
+        if (player == Requester)
+            return RecipientItems;
         return null;
     }
 }
