@@ -1415,11 +1415,11 @@ public sealed class SConnection
         }
         else if (P.Description.Length < 7)
         {
-            Disconnect(new Exception($"数据太短,断开连接.  Process: {P.GetType()},  数据长度:{P.Description.Length}"));
+            Disconnect(new Exception($"Data too short. disconnecting.  Process: {P.GetType()}, data length:{P.Description.Length}"));
         }
         else if (P.Description.Last() != 0)
         {
-            Disconnect(new Exception($"数据错误,断开连接.  Process: {P.GetType()},  无结束符."));
+            Disconnect(new Exception($"Data error, disconnecting.  Process: {P.GetType()}, no terminator."));
         }
         else
         {
@@ -1491,15 +1491,15 @@ public sealed class SConnection
         }
         else if (P.Description.Length < 7)
         {
-            Disconnect(new Exception($"数据太短,断开连接.  Process: {P.GetType()},  数据长度:{P.Description.Length}"));
+            Disconnect(new Exception($"Data too short. disconnecting.  Process: {P.GetType()},  data length:{P.Description.Length}"));
         }
         else if (P.Description.Last() != 0)
         {
-            Disconnect(new Exception($"数据错误,断开连接.  Process: {P.GetType()},  无结束符."));
+            Disconnect(new Exception($"Data error, disconnecting.  Process: {P.GetType()},  no terminator."));
         }
         else
         {
-            Player.玩家发送广播(P.Description);
+            Player.UserSendBroadcastMessage(P.ChannelID, P.MsgType, P.Description);
         }
     }
 
@@ -1511,15 +1511,15 @@ public sealed class SConnection
         }
         else if (P.Description.Length < 6)
         {
-            Disconnect(new Exception($"数据太短,断开连接.  Process: {P.GetType()},  数据长度:{P.Description.Length}"));
+            Disconnect(new Exception($"Data too short. disconnecting.  Process: {P.GetType()},  data length:{P.Description.Length}"));
         }
         else if (P.Description.Last() != 0)
         {
-            Disconnect(new Exception($"数据错误,断开连接.  Process: {P.GetType()},  无结束符."));
+            Disconnect(new Exception($"Data error, disconnecting.  Process: {P.GetType()},  no terminator."));
         }
         else
         {
-            Player.SendMessage(P.Description);
+            Player.UserSendMessage(P.Description);
         }
     }
 
