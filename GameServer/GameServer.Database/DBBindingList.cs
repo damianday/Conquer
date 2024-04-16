@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -9,9 +10,11 @@ public sealed class DBBindingList<T> : DBCollection where T : DBObject, new()
 {
     public DBBindingList()
     {
+        var comparer = StringComparer.OrdinalIgnoreCase;
+
         Mapping = new DBMapping(Type = typeof(T));
         DataSheet = new Dictionary<int, DBObject>();
-        SearchTable = new Dictionary<string, DBObject>();
+        SearchTable = new Dictionary<string, DBObject>(comparer);
 
         SearchAttribute attr = Type.GetCustomAttribute<SearchAttribute>();
         if (attr != null)
