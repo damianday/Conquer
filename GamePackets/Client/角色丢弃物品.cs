@@ -4,11 +4,11 @@ namespace GamePackets.Client;
 public sealed class 角色丢弃物品 : GamePacket
 {
     [FieldAttribute(Position = 2, Length = 1)]
-    public byte 背包类型;
+    public byte Grid;
 
     [FieldAttribute(Position = 3, Length = 1)]
-    public byte 物品位置;
+    public byte Location;
 
     [FieldAttribute(Position = 4, Length = 2)]
-    public ushort 丢弃数量;
+    public ushort Quantity;
 }
