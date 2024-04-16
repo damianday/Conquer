@@ -12,7 +12,7 @@ public sealed class 清理角色 : GMCommand
     [FieldDescription(0, Index = 1)]
     public int 限制天数;
 
-    public override ExecutionPriority Priority => ExecutionPriority.Idle;
+    public override ExecutionPriority Priority => ExecutionPriority.Inactive;
 
     public override void ExecuteCommand()
     {

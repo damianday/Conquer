@@ -26,6 +26,14 @@ public static class SEngine
 
     public static Random Random;
 
+
+    static SEngine()
+    {
+        CurrentTime = DateTime.Now;
+        OneSecondTime = DateTime.Now.AddSeconds(1.0);
+        Random = new Random();
+    }
+
     public static void StartService()
     {
         if (!Running)
@@ -55,12 +63,62 @@ public static class SEngine
         SMain.AddChatLog(tag, message);
     }
 
+    public static bool AddGMCommand(string cmdText)
+    {
+        if (string.IsNullOrEmpty(cmdText))
+            return false;
+
+        if (!cmdText.StartsWith('@'))
+        {
+            SMain.AddCommandLog("<= Command parsing error, GM commands must start with '@'. Type '@ViewCommands' to get all supported command formats.");
+            return false;
+        }
+
+        if (cmdText.Trim('@', ' ').Length == 0)
+        {
+            SMain.AddCommandLog("<= Command parsing error, GM command cannot be null. Type '@ViewCommands' to get all supported command formats.");
+            return false;
+        }
+
+        if (GMCommand.ParseCommand(cmdText, out var cmd))
+        {
+            if (cmd.Priority == ExecutionPriority.Immediate)
+            {
+                cmd.ExecuteCommand();
+            }
+            else if (cmd.Priority == ExecutionPriority.ImmediateBackground)
+            {
+                if (Running)
+                    ExternalCommands.Enqueue(cmd);
+                else
+                    cmd.ExecuteCommand();
+            }
+            else if (cmd.Priority == ExecutionPriority.Background)
+            {
+                if (Running)
+                    ExternalCommands.Enqueue(cmd);
+                else
+                    SMain.AddCommandLog("<= Command execution failed, the current command can only be executed when the server is running, please start the server first.");
+            }
+            else if (cmd.Priority == ExecutionPriority.Inactive)
+            {
+                if (!Running && (MainThread == null || !MainThread.IsAlive))
+                    cmd.ExecuteCommand();
+                else
+                    SMain.AddCommandLog("<= Command execution failed, the current command can only be executed when the server is not running, please shut down the server first.");
+            }
+            return true;
+        }
+
+        return false;
+    }
+
     private static void ServiceThreadLoop()
     {
         try
         {
             ExternalCommands = new ConcurrentQueue<GMCommand>();
-            SMain.AddSystemLog("Generating map elements...");
+            SMain.AddSystemLog("Loading maps...");
             MapManager.Initialize();
             SMain.AddSystemLog("The network service is being started...");
             NetworkManager.StartService();
@@ -121,13 +179,6 @@ public static class SEngine
                 DowntimeTime = CurrentTime.AddSeconds(60.0);
             }
         }
-    }
-
-    static SEngine()
-    {
-        CurrentTime = DateTime.Now;
-        OneSecondTime = DateTime.Now.AddSeconds(1.0);
-        Random = new Random();
     }
 
     private static void ProcessSaveData()

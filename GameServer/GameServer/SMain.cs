@@ -7814,66 +7814,21 @@ public partial class SMain : Form
     }
 
 
-    private void 执行GM命令行_Press(object sender, KeyPressEventArgs e)
+    private void GMCommandTextBox_Press(object sender, KeyPressEventArgs e)
     {
-        if (e.KeyChar != Convert.ToChar(13) || GM命令文本.Text.Length <= 0)
-        {
+        var str = GMCommandTextBox.Text;
+
+        if (e.KeyChar != Convert.ToChar(13) || string.IsNullOrEmpty(str))
             return;
-        }
+
         主选项卡.SelectedIndex = 0;
         LoggingTab.SelectedIndex = 2;
-        AddCommandLog("=> " + GM命令文本.Text);
-        GMCommand cmd;
-        if (GM命令文本.Text[0] != '@')
-        {
-            AddCommandLog("<= 命令解析错误, GM命令必须以 '@' 开头. 输入 '@查看命令' 获取所有受支持的命令格式");
-        }
-        else if (GM命令文本.Text.Trim('@', ' ').Length == 0)
-        {
-            AddCommandLog("<= 命令解析错误, GM命令不能为空. 输入 '@查看命令' 获取所有受支持的命令格式");
-        }
-        else if (GMCommand.ParseCommand(GM命令文本.Text, out cmd))
-        {
-            if (cmd.Priority == ExecutionPriority.Immediate)
-            {
-                cmd.ExecuteCommand();
-            }
-            else if (cmd.Priority == ExecutionPriority.ImmediateBackground)
-            {
-                if (SEngine.Running)
-                {
-                    SEngine.ExternalCommands.Enqueue(cmd);
-                }
-                else
-                {
-                    cmd.ExecuteCommand();
-                }
-            }
-            else if (cmd.Priority == ExecutionPriority.Background)
-            {
-                if (SEngine.Running)
-                {
-                    SEngine.ExternalCommands.Enqueue(cmd);
-                }
-                else
-                {
-                    AddCommandLog("<= 命令执行失败, 当前命令只能在服务器运行时执行, 请先启动服务器");
-                }
-            }
-            else if (cmd.Priority == ExecutionPriority.Idle)
-            {
-                if (!SEngine.Running && (SEngine.MainThread == null || !SEngine.MainThread.IsAlive))
-                {
-                    cmd.ExecuteCommand();
-                }
-                else
-                {
-                    AddCommandLog("<= 命令执行失败, 当前命令只能在服务器未运行时执行, 请先关闭服务器");
-                }
-            }
+
+        AddCommandLog("=> " + str);
+
+        if (SEngine.AddGMCommand(str))
             e.Handled = true;
-        }
-        GM命令文本.Clear();
+        GMCommandTextBox.Clear();
     }
 
     private void 角色右键菜单_Click(object sender, EventArgs e)

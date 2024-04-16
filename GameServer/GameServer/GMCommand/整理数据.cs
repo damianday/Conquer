@@ -6,7 +6,7 @@ namespace GameServer;
 
 public sealed class 整理数据 : GMCommand
 {
-    public override ExecutionPriority Priority => ExecutionPriority.Idle;
+    public override ExecutionPriority Priority => ExecutionPriority.Inactive;
 
     public override void ExecuteCommand()
     {

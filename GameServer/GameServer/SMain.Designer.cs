@@ -75,7 +75,7 @@ public partial class SMain
         读取本地运行程序ToolStripMenuItem = new ToolStripMenuItem();
         UIUpdateTimer = new Timer(components);
         下方控件页 = new Panel();
-        GM命令文本 = new TextBox();
+        GMCommandTextBox = new TextBox();
         GM命令标签 = new Label();
         保存数据提醒 = new Timer(components);
         定时发送公告 = new Timer(components);
@@ -3916,7 +3916,7 @@ public partial class SMain
         // 下方控件页
         // 
         下方控件页.BackColor = Color.Transparent;
-        下方控件页.Controls.Add(GM命令文本);
+        下方控件页.Controls.Add(GMCommandTextBox);
         下方控件页.Controls.Add(GM命令标签);
         下方控件页.Location = new Point(7, 782);
         下方控件页.Margin = new Padding(4, 3, 4, 3);
@@ -3924,15 +3924,15 @@ public partial class SMain
         下方控件页.Size = new Size(1598, 75);
         下方控件页.TabIndex = 6;
         // 
-        // GM命令文本
+        // GMCommandTextBox
         // 
-        GM命令文本.BackColor = SystemColors.InactiveCaption;
-        GM命令文本.Location = new Point(96, 20);
-        GM命令文本.Margin = new Padding(4, 3, 4, 3);
-        GM命令文本.Name = "GM命令文本";
-        GM命令文本.Size = new Size(820, 23);
-        GM命令文本.TabIndex = 16;
-        GM命令文本.KeyPress += (this.执行GM命令行_Press);
+        GMCommandTextBox.BackColor = SystemColors.InactiveCaption;
+        GMCommandTextBox.Location = new Point(96, 20);
+        GMCommandTextBox.Margin = new Padding(4, 3, 4, 3);
+        GMCommandTextBox.Name = "GMCommandTextBox";
+        GMCommandTextBox.Size = new Size(820, 23);
+        GMCommandTextBox.TabIndex = 16;
+        GMCommandTextBox.KeyPress += (this.GMCommandTextBox_Press);
         // 
         // GM命令标签
         // 
@@ -36562,7 +36562,7 @@ public partial class SMain
 
     private System.Windows.Forms.Timer UIUpdateTimer;
 
-    private TextBox GM命令文本;
+    private TextBox GMCommandTextBox;
 
     private Label GM命令标签;
 
