@@ -83,7 +83,7 @@ public static class MapManager
 
     public static MonsterObject BOSS名字一;
     public static Map BOSS一地图编号;
-    public static Map 沙城地图;
+    public static Map SandCityMap;
 
     public static MonsterObject 沙城城门;
     public static MonsterObject 下方宫门;

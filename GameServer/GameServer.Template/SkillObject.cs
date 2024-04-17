@@ -1015,7 +1015,7 @@ public class SkillObject
         }
         if (task.扣除武器持久 && HitList.Count != 0)
         {
-            (Caster as PlayerObject).武器损失持久();
+            (Caster as PlayerObject).DamageWeapon();
         }
     }
 

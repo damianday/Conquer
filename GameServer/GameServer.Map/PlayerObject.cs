@@ -1628,7 +1628,7 @@ public sealed class PlayerObject : MapObject
                             {
                                 CurrentHP += num;
                                 CurrentMP += num;
-                                DamageWeapon(num);
+                                DamageCombatEquipment(num);
                             }
                             战具计时 = SEngine.CurrentTime.AddMilliseconds(1000.0);
                         }
@@ -1639,7 +1639,7 @@ public sealed class PlayerObject : MapObject
                         if (num2 > 0)
                         {
                             CurrentMP += num2;
-                            DamageWeapon(num2);
+                            DamageCombatEquipment(num2);
                         }
                         战具计时 = SEngine.CurrentTime.AddMilliseconds(1000.0);
                     }
@@ -1650,7 +1650,7 @@ public sealed class PlayerObject : MapObject
                     if (num3 > 0)
                     {
                         CurrentHP += num3;
-                        DamageWeapon(num3);
+                        DamageCombatEquipment(num3);
                     }
                     战具计时 = SEngine.CurrentTime.AddMilliseconds(1000.0);
                 }
@@ -4050,6 +4050,9 @@ public sealed class PlayerObject : MapObject
             RouteID = CurrentMap.RouteID,
             RouteStatus = CurrentMap.MapStatus
         });
+
+        //OnLocationChanged(CurrentPosition);
+
         BindGrid();
         UpdateAllNeighbours();
     }
@@ -7267,12 +7270,13 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 武器损失持久()
+    public void DamageWeapon()
     {
+        var dmg = SEngine.Random.Next(1, 6);
         if (Equipment.TryGetValue(0, out var v) && v.Dura.V > 0 && v.Dura.V > 0 && (本期特权 != 5 || !v.CanRepair) && (本期特权 != 4 || !Compute.CalculateProbability(0.5f)))
         {
-            int num2 = (v.Dura.V = Math.Max(0, v.Dura.V - SEngine.Random.Next(1, 6)));
-            if (num2 <= 0 && BonusStats.Remove(v))
+            v.Dura.V = Math.Max(0, v.Dura.V - dmg);
+            if (v.Dura.V <= 0 && BonusStats.Remove(v))
             {
                 RefreshStats();
             }
@@ -7297,11 +7301,12 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void DamageWeapon(int dmg)
+    public void DamageCombatEquipment(int dmg)
     {
         if (Equipment.TryGetValue(15, out var v))
         {
-            if ((v.Dura.V -= dmg) <= 0)
+            v.Dura.V = Math.Max(0, v.Dura.V - dmg);
+            if (v.Dura.V <= 0)
             {
                 Enqueue(new DeleteItemPacket
                 {
@@ -7694,17 +7699,20 @@ public sealed class PlayerObject : MapObject
     {
         if (!Dead) return;
 
+        Enqueue(new ObjectRevivePacket
+        {
+            ObjectID = ObjectID,
+            ResurrectionMode = 3
+        });
+
+        Dead = false;
+        Blocking = true;
+
         if (Config.CurrentVersion >= 1 && HasResurrectionRing && !复活戒指冷却测试 && 复活戒指持久 > 0)
         {
-            Enqueue(new ObjectRevivePacket
-            {
-                ObjectID = ObjectID,
-                ResurrectionMode = 3
-            });
-            CurrentHP = (int)(float)this[Stat.MaxHP];
-            CurrentMP = (int)(float)this[Stat.MaxMP];
-            Dead = false;
-            Blocking = true;
+            CurrentHP = (int)this[Stat.MaxHP];
+            CurrentMP = (int)this[Stat.MaxMP];
+
             RemoveAllNeighbors();
             UnbindGrid();
             BindGrid();
@@ -7724,16 +7732,11 @@ public sealed class PlayerObject : MapObject
             }
             return;
         }
-        Enqueue(new ObjectRevivePacket
-        {
-            ObjectID = ObjectID,
-            ResurrectionMode = 3
-        });
+
         CurrentHP = (int)((float)this[Stat.MaxHP] * 0.3f);
         CurrentMP = (int)((float)this[Stat.MaxMP] * 0.3f);
-        Dead = false;
-        Blocking = true;
-        if (CurrentMap == MapManager.沙城地图 && MapManager.SandCityStage >= 2)
+
+        if (CurrentMap == MapManager.SandCityMap && MapManager.SandCityStage >= 2)
         {
             if (Guild != null && Guild == SystemInfo.Info.OccupyGuild.V)
             {
@@ -8188,7 +8191,7 @@ public sealed class PlayerObject : MapObject
             }
             if (item != null && item.Count == 1 && item[0].Type == ItemType.战具)
             {
-                DamageWeapon(amount);
+                DamageCombatEquipment(amount);
             }
             else if (item != null)
             {
