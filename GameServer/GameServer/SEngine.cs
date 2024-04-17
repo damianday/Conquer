@@ -82,25 +82,25 @@ public static class SEngine
 
         if (GMCommand.ParseCommand(cmdText, out var cmd))
         {
-            if (cmd.Priority == ExecutionPriority.Immediate)
+            if (cmd.Priority == ExecuteCondition.Immediate)
             {
                 cmd.ExecuteCommand();
             }
-            else if (cmd.Priority == ExecutionPriority.ImmediateBackground)
+            else if (cmd.Priority == ExecuteCondition.Normal)
             {
                 if (Running)
                     ExternalCommands.Enqueue(cmd);
                 else
                     cmd.ExecuteCommand();
             }
-            else if (cmd.Priority == ExecutionPriority.Background)
+            else if (cmd.Priority == ExecuteCondition.Background)
             {
                 if (Running)
                     ExternalCommands.Enqueue(cmd);
                 else
                     SMain.AddCommandLog("<= Command execution failed, the current command can only be executed when the server is running, please start the server first.");
             }
-            else if (cmd.Priority == ExecutionPriority.Inactive)
+            else if (cmd.Priority == ExecuteCondition.Inactive)
             {
                 if (!Running && (MainThread == null || !MainThread.IsAlive))
                     cmd.ExecuteCommand();

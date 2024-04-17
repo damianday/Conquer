@@ -17,7 +17,7 @@ public sealed class AddTitle : GMCommand
     [FieldDescription(0, Index = 2)]
     public int Duration;
 
-    public override ExecutionPriority Priority => ExecutionPriority.ImmediateBackground;
+    public override ExecuteCondition Priority => ExecuteCondition.Normal;
 
     public override void ExecuteCommand()
     {

@@ -8,7 +8,7 @@ public sealed class ChangeMonsterExperienceRate : GMCommand
     [FieldDescription(0, Index = 0)]
     public decimal ExperienceRate;
 
-    public override ExecutionPriority Priority => ExecutionPriority.Background;
+    public override ExecuteCondition Priority => ExecuteCondition.Background;
 
     public override void ExecuteCommand()
     {

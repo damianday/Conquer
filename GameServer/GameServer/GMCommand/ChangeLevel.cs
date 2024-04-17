@@ -10,7 +10,7 @@ public sealed class ChangeLevel : GMCommand
     [FieldDescription(0, Index = 1)]
     public int Level;
 
-    public override ExecutionPriority Priority => ExecutionPriority.ImmediateBackground;
+    public override ExecuteCondition Priority => ExecuteCondition.Normal;
 
     public override void ExecuteCommand()
     {

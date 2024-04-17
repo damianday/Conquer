@@ -8,7 +8,7 @@ public sealed class ChangeNoobSupportLevel : GMCommand
     [FieldDescription(0, Index = 0)]
     public byte Level;
 
-    public override ExecutionPriority Priority => ExecutionPriority.Background;
+    public override ExecuteCondition Priority => ExecuteCondition.Background;
 
     public override void ExecuteCommand()
     {

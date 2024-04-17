@@ -7,7 +7,7 @@ public sealed class UnblockAddress : GMCommand
     [FieldDescription(0, Index = 0)]
     public string Address;
 
-    public override ExecutionPriority Priority => ExecutionPriority.ImmediateBackground;
+    public override ExecuteCondition Priority => ExecuteCondition.Normal;
 
     public override void ExecuteCommand()
     {

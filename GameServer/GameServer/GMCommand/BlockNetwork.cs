@@ -12,7 +12,7 @@ public sealed class BlockNetwork : GMCommand
     [FieldDescription(0, Index = 1)]
     public float Days;
 
-    public override ExecutionPriority Priority => ExecutionPriority.ImmediateBackground;
+    public override ExecuteCondition Priority => ExecuteCondition.Normal;
 
     public override void ExecuteCommand()
     {

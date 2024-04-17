@@ -13,7 +13,7 @@ public sealed class AddGold : GMCommand
     [FieldDescription(0, Index = 1)]
     public int Amount;
 
-    public override ExecutionPriority Priority => ExecutionPriority.ImmediateBackground;
+    public override ExecuteCondition Priority => ExecuteCondition.Normal;
 
     public override void ExecuteCommand()
     {

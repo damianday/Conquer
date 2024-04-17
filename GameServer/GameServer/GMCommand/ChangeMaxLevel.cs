@@ -8,7 +8,7 @@ public sealed class ChangeMaxLevel : GMCommand
     [FieldDescription(0, Index = 0)]
     public byte MaxLevel;
 
-    public override ExecutionPriority Priority => ExecutionPriority.Background;
+    public override ExecuteCondition Priority => ExecuteCondition.Background;
 
     public override void ExecuteCommand()
     {

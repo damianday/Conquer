@@ -6,7 +6,7 @@ namespace GameServer;
 
 public sealed class ReviewDatabase : GMCommand
 {
-    public override ExecutionPriority Priority => ExecutionPriority.ImmediateBackground;
+    public override ExecuteCondition Priority => ExecuteCondition.Normal;
 
     public override void ExecuteCommand()
     {

@@ -20,7 +20,7 @@ public sealed class CharacterTeleport : GMCommand
     [FieldDescription(3)]
     public int MapY;
 
-    public override ExecutionPriority Priority => ExecutionPriority.ImmediateBackground;
+    public override ExecuteCondition Priority => ExecuteCondition.Normal;
 
     public override void ExecuteCommand()
     {

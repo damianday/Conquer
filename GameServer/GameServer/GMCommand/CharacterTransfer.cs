@@ -11,7 +11,7 @@ public sealed class CharacterTransfer : GMCommand
     [FieldDescription(0, Index = 1)]
     public string NewAccountName;
 
-    public override ExecutionPriority Priority => ExecutionPriority.ImmediateBackground;
+    public override ExecuteCondition Priority => ExecuteCondition.Normal;
 
     public override void ExecuteCommand()
     {

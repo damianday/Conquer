@@ -4,7 +4,7 @@ namespace GameServer;
 
 public sealed class ViewCommands : GMCommand
 {
-    public override ExecutionPriority Priority => ExecutionPriority.Immediate;
+    public override ExecuteCondition Priority => ExecuteCondition.Immediate;
 
     public override void ExecuteCommand()
     {
