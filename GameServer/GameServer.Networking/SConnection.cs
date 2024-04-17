@@ -308,31 +308,6 @@ public sealed class SConnection
         Stage = GameStage.Game;
     }
 
-    public void Process(传奇之力激活 P)
-    {
-    }
-
-    public void Process(UnknownC644 P)
-    {
-    }
-
-    public void Process(UnknownC155 P)
-    {
-        Player.Enqueue(new 成就完成通知
-        {
-            U1 = P.U1,
-            U2 = 19225
-        });
-    }
-
-    public void Process(UnknownC266 P)
-    {
-    }
-
-    public void Process(UnknownC272 P)
-    {
-    }
-
     public void Process(坐骑御兽拖动 P)
     {
         if (Stage != GameStage.Game)
@@ -354,18 +329,6 @@ public sealed class SConnection
         }
         Player.移除Buff时处理(2555);
         Player.玩家选中坐骑(P.编号);
-    }
-
-    public void Process(预留封包零一 P)
-    {
-    }
-
-    public void Process(预留封包零二 P)
-    {
-    }
-
-    public void Process(请求七天详情 P)
-    {
     }
 
     public void Process(上传游戏设置 P)
@@ -2449,10 +2412,7 @@ public sealed class SConnection
             Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
             return;
         }
-        SendPacket(new SocialErrorPacket
-        {
-            ErrorCode = 12804
-        });
+        SendPacket(new SocialErrorPacket { ErrorCode = 12804 });
     }
 
     public void Process(查询平台商品 P)
@@ -2462,10 +2422,7 @@ public sealed class SConnection
             Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
             return;
         }
-        SendPacket(new SocialErrorPacket
-        {
-            ErrorCode = 12804
-        });
+        SendPacket(new SocialErrorPacket { ErrorCode = 12804 });
     }
 
     public void Process(查询指定商品 P)
@@ -2475,10 +2432,7 @@ public sealed class SConnection
             Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
             return;
         }
-        SendPacket(new SocialErrorPacket
-        {
-            ErrorCode = 12804
-        });
+        SendPacket(new SocialErrorPacket { ErrorCode = 12804 });
     }
 
     public void Process(上架平台商品 P)
@@ -2488,10 +2442,7 @@ public sealed class SConnection
             Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
             return;
         }
-        SendPacket(new SocialErrorPacket
-        {
-            ErrorCode = 12804
-        });
+        SendPacket(new SocialErrorPacket { ErrorCode = 12804 });
     }
 
     public void Process(请求珍宝数据 P)
@@ -2710,7 +2661,39 @@ public sealed class SConnection
         }
     }
 
-    public void Process(内挂物品过滤 P)
+
+    #region Missing Functions
+    public void Process(传奇之力激活 P) { }
+
+    public void Process(UnknownC644 P) { }
+
+    public void Process(UnknownC155 P)
     {
+        Player.Enqueue(new 成就完成通知
+        {
+            U1 = P.U1,
+            U2 = 19225
+        });
     }
+
+    public void Process(UnknownC266 P) { }
+
+    public void Process(UnknownC272 P) { }
+
+    public void Process(内挂物品过滤 P) { }
+
+    public void Process(玩家开始挖矿 P)
+    {
+        // TODO:
+        // Start Mining..
+    }
+
+    public void Process(请求悬赏剩余 P) { }
+
+    public void Process(预留封包零一 P) { }
+
+    public void Process(预留封包零二 P) { }
+
+    public void Process(请求七天详情 P) { }
+    #endregion
 }
