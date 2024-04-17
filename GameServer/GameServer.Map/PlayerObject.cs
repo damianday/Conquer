@@ -4008,12 +4008,14 @@ public sealed class PlayerObject : MapObject
     {
         RemoveAllNeighbors();
         UnbindGrid();
+
         Enqueue(new ObjectLeaveScenePacket());
 
-        CurrentPosition = (area == AreaType.Unknown) ? location : map.RandomPosition(area);
         if (CurrentMap.MapID != map.MapID)
         {
             CurrentMap = map;
+            CurrentPosition = (area == AreaType.Unknown) ? location : map.RandomPosition(area);
+
             Enqueue(new MapChangedPacket
             {
                 MapID = CurrentMap.MapID,
@@ -4026,14 +4028,14 @@ public sealed class PlayerObject : MapObject
             if (!CurrentMap.QuestMap)
                 return;
 
-            {
-                foreach (PetObject pet in Pets)
-                {
-                    pet.PetRecall();
-                }
-                return;
-            }
+            foreach (var pet in Pets)
+                pet.PetRecall();
+
+            return;
         }
+
+        CurrentPosition = (area == AreaType.Unknown) ? location : map.RandomPosition(area);
+
         Enqueue(new ObjectStopPacket
         {
             ObjectID = ObjectID,
