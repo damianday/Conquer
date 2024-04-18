@@ -89,10 +89,13 @@ public sealed class Map
             if (!ValidPoint(point))
                 return new HashSet<MapObject>();
 
-            if (Cells[point.X - StartPoint.X, point.Y - StartPoint.Y] == null)
-                return Cells[point.X - StartPoint.X, point.Y - StartPoint.Y] = new HashSet<MapObject>();
+            var x = point.X - StartPoint.X;
+            var y = point.Y - StartPoint.Y;
 
-            return Cells[point.X - StartPoint.X, point.Y - StartPoint.Y];
+            if (Cells[x, y] == null)
+                return Cells[x, y] = new HashSet<MapObject>();
+
+            return Cells[x, y];
         }
     }
 
