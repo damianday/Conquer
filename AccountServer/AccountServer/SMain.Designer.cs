@@ -137,7 +137,7 @@ public partial class SMain
         // 
         // LocalListeningPortEdit
         // 
-        LocalListeningPortEdit.Location = new Point(105, 144);
+        LocalListeningPortEdit.Location = new Point(429, 115);
         LocalListeningPortEdit.Margin = new Padding(4, 3, 4, 3);
         LocalListeningPortEdit.Maximum = new decimal(new int[] { 65535, 0, 0, 0 });
         LocalListeningPortEdit.Minimum = new decimal(new int[] { 100, 0, 0, 0 });
@@ -150,7 +150,7 @@ public partial class SMain
         // LocalListeningPortLabel
         // 
         LocalListeningPortLabel.AutoSize = true;
-        LocalListeningPortLabel.Location = new Point(30, 146);
+        LocalListeningPortLabel.Location = new Point(358, 117);
         LocalListeningPortLabel.Margin = new Padding(4, 0, 4, 0);
         LocalListeningPortLabel.Name = "LocalListeningPortLabel";
         LocalListeningPortLabel.Size = new Size(63, 15);
@@ -160,7 +160,7 @@ public partial class SMain
         // TicketSendingPortLabel
         // 
         TicketSendingPortLabel.AutoSize = true;
-        TicketSendingPortLabel.Location = new Point(247, 146);
+        TicketSendingPortLabel.Location = new Point(355, 146);
         TicketSendingPortLabel.Margin = new Padding(4, 0, 4, 0);
         TicketSendingPortLabel.Name = "TicketSendingPortLabel";
         TicketSendingPortLabel.Size = new Size(66, 15);
@@ -169,7 +169,7 @@ public partial class SMain
         // 
         // TicketSendingPortEdit
         // 
-        TicketSendingPortEdit.Location = new Point(327, 144);
+        TicketSendingPortEdit.Location = new Point(429, 144);
         TicketSendingPortEdit.Margin = new Padding(4, 3, 4, 3);
         TicketSendingPortEdit.Maximum = new decimal(new int[] { 65535, 0, 0, 0 });
         TicketSendingPortEdit.Minimum = new decimal(new int[] { 100, 0, 0, 0 });
