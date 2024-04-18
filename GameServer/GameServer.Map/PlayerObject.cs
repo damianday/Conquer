@@ -72,7 +72,7 @@ public sealed class PlayerObject : MapObject
     public DateTime HealthRegenTime;
     public DateTime ManaRegenTime;
     public DateTime TitleTime;
-    public DateTime 特权时间;
+    public DateTime PrivilegeTime;
     public DateTime PickUpTime;
     public DateTime NPC间隔;
     public DateTime TeamTime;
@@ -112,39 +112,34 @@ public sealed class PlayerObject : MapObject
 
     public Dictionary<挂机特殊分类, MapObject> 挂机参数 = new Dictionary<挂机特殊分类, MapObject>();
 
-    public bool 护身戒指状态 { get; set; }
+    public bool ProtectionRing { get; set; }
 
-    public bool 护身戒指
+    public bool HasProtectionRing
     {
-        get
-        {
-            return 护身戒指状态;
-        }
+        get { return ProtectionRing; }
         set
         {
             if (value)
             {
-                护身戒指状态 = value;
+                ProtectionRing = value;
                 AddBuff(47340, this);
             }
             else
             {
-                护身戒指状态 = false;
+                ProtectionRing = false;
                 移除Buff时处理(47340);
             }
         }
     }
 
-    public byte 护身戒指位置
+    public byte ProtectionRingLocation
     {
         get
         {
-            foreach (EquipmentInfo value in Equipment.Values)
+            foreach (var item in Equipment.Values)
             {
-                if (value.Name == "护身戒指")
-                {
-                    return value.Position;
-                }
+                if (string.Equals(item.Name, "ProtectionRing", StringComparison.OrdinalIgnoreCase))
+                    return item.Position;
             }
             return 0;
         }
@@ -172,43 +167,27 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    private bool 复活戒指冷却 { get; set; }
+    private bool ResurrectionRingReady { get; set; }
 
-    public bool 复活戒指冷却测试
-    {
-        get { return 复活戒指冷却; }
-        set
-        {
-            if (value)
-                复活戒指冷却 = true;
-            else
-                复活戒指冷却 = false;
-        }
-    }
-
-    public byte 复活戒指位置
+    public byte ResurrectionRingLocation
     {
         get
         {
-            foreach (EquipmentInfo value in Equipment.Values)
+            foreach (var item in Equipment.Values)
             {
-                if (value.Name == "复活戒指")
-                {
-                    return value.Position;
-                }
+                if (string.Equals(item.Name, "ResurrectionRing", StringComparison.OrdinalIgnoreCase))
+                    return item.Position;
             }
             return 0;
         }
     }
 
-    public int 复活戒指持久
+    public int ResurrectionRingDura
     {
         get
         {
-            if (HasResurrectionRing && Equipment.TryGetValue(复活戒指位置, out var v))
-            {
+            if (HasResurrectionRing && Equipment.TryGetValue(ResurrectionRingLocation, out var v))
                 return v.Dura.V;
-            }
             return -1;
         }
     }
@@ -251,12 +230,7 @@ public sealed class PlayerObject : MapObject
 
     public byte StallState
     {
-        get
-        {
-            if (CurrentStall != null)
-                return CurrentStall.Status;
-            return 0;
-        }
+        get { return (CurrentStall != null) ? CurrentStall.Status : (byte)0; }
         set
         {
             if (CurrentStall != null)
@@ -264,17 +238,7 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public string 摊位名字
-    {
-        get
-        {
-            if (CurrentStall != null)
-            {
-                return CurrentStall.Name;
-            }
-            return "";
-        }
-    }
+    public string StallName => (CurrentStall != null) ? CurrentStall.Name : string.Empty;
 
     public static bool Unk2 { get; set; }
 
@@ -297,8 +261,6 @@ public sealed class PlayerObject : MapObject
     public static int 道具ID { get; set; }
 
     public bool 特定技能 { get; set; }
-
-    public static byte Unk1 { get; set; }
 
     public static int 技能ID { get; set; }
 
@@ -1059,23 +1021,23 @@ public sealed class PlayerObject : MapObject
         TitleTime = DateTime.MaxValue;
         PickUpTime = SEngine.CurrentTime.AddSeconds(1.0);
         RecoveryTime = SEngine.CurrentTime.AddSeconds(5.0);
-        特权时间 = ((CurrentDegree > 0) ? 本期日期.AddDays(30.0) : DateTime.MaxValue);
+        PrivilegeTime = ((CurrentDegree > 0) ? 本期日期.AddDays(30.0) : DateTime.MaxValue);
 
         foreach (EquipmentInfo value80 in Equipment.Values)
         {
             CombatPowerBonus[value80] = value80.CombatPower;
-            if (value80.Name == "麻痹戒指")
+            if (string.Equals(value80.Name, "ParalysisRing", StringComparison.OrdinalIgnoreCase))
             {
                 ParalysisRing = true;
             }
-            if (value80.Name == "复活戒指")
+            if (string.Equals(value80.Name, "ResurrectionRing", StringComparison.OrdinalIgnoreCase))
             {
                 HasResurrectionRing = true;
-                复活戒指冷却测试 = false;
+                ResurrectionRingReady = true;
             }
-            if (value80.Name == "护身戒指")
+            if (string.Equals(value80.Name, "ProtectionRing", StringComparison.OrdinalIgnoreCase))
             {
-                护身戒指状态 = true;
+                ProtectionRing = true;
             }
             if (value80.Dura.V > 0)
             {
@@ -1103,7 +1065,7 @@ public sealed class PlayerObject : MapObject
         {
             if ((value82.Buff效果 & BuffEffectType.StatIncOrDec) != 0)
             {
-                BonusStats.Add(value82, value82.属性加成);
+                BonusStats.Add(value82, value82.BonusStats);
             }
         }
         foreach (KeyValuePair<byte, DateTime> item2 in Titles.ToList())
@@ -1131,85 +1093,33 @@ public sealed class PlayerObject : MapObject
         }
         if (Config.CurrentVersion >= 1 && Config.称号叠加开关 == 1)
         {
-            if (character.Titles.ContainsKey(Config.称号叠加模块一) && GameTitle.DataSheet.TryGetValue(Config.称号叠加模块一, out var value3))
+            byte[] titles =
+            { 
+                Config.称号叠加模块一,
+                Config.称号叠加模块二,
+                Config.称号叠加模块三,
+                Config.称号叠加模块四,
+                Config.称号叠加模块五,
+                Config.称号叠加模块六,
+                Config.称号叠加模块七,
+                Config.称号叠加模块八,
+                Config.称号叠加模块9,
+                Config.称号叠加模块10,
+                Config.称号叠加模块11,
+                Config.称号叠加模块12,
+                Config.称号叠加模块13,
+                Config.称号叠加模块14,
+                Config.称号叠加模块15,
+                Config.称号叠加模块16
+            };
+
+            foreach (var id in titles)
             {
-                CombatPowerBonus.Add(value3, value3.CombatPower);
-                BonusStats.Add(value3, value3.Stats);
-            }
-            if (character.Titles.ContainsKey(Config.称号叠加模块二) && GameTitle.DataSheet.TryGetValue(Config.称号叠加模块二, out var value4))
-            {
-                CombatPowerBonus.Add(value4, value4.CombatPower);
-                BonusStats.Add(value4, value4.Stats);
-            }
-            if (character.Titles.ContainsKey(Config.称号叠加模块三) && GameTitle.DataSheet.TryGetValue(Config.称号叠加模块三, out var value5))
-            {
-                CombatPowerBonus.Add(value5, value5.CombatPower);
-                BonusStats.Add(value5, value5.Stats);
-            }
-            if (character.Titles.ContainsKey(Config.称号叠加模块四) && GameTitle.DataSheet.TryGetValue(Config.称号叠加模块四, out var value6))
-            {
-                CombatPowerBonus.Add(value6, value6.CombatPower);
-                BonusStats.Add(value6, value6.Stats);
-            }
-            if (character.Titles.ContainsKey(Config.称号叠加模块五) && GameTitle.DataSheet.TryGetValue(Config.称号叠加模块五, out var value7))
-            {
-                CombatPowerBonus.Add(value7, value7.CombatPower);
-                BonusStats.Add(value7, value7.Stats);
-            }
-            if (character.Titles.ContainsKey(Config.称号叠加模块六) && GameTitle.DataSheet.TryGetValue(Config.称号叠加模块六, out var value8))
-            {
-                CombatPowerBonus.Add(value8, value8.CombatPower);
-                BonusStats.Add(value8, value8.Stats);
-            }
-            if (character.Titles.ContainsKey(Config.称号叠加模块七) && GameTitle.DataSheet.TryGetValue(Config.称号叠加模块七, out var value9))
-            {
-                CombatPowerBonus.Add(value9, value9.CombatPower);
-                BonusStats.Add(value9, value9.Stats);
-            }
-            if (character.Titles.ContainsKey(Config.称号叠加模块八) && GameTitle.DataSheet.TryGetValue(Config.称号叠加模块八, out var value10))
-            {
-                CombatPowerBonus.Add(value10, value10.CombatPower);
-                BonusStats.Add(value10, value10.Stats);
-            }
-            if (character.Titles.ContainsKey(Config.称号叠加模块9) && GameTitle.DataSheet.TryGetValue(Config.称号叠加模块9, out var value11))
-            {
-                CombatPowerBonus.Add(value11, value11.CombatPower);
-                BonusStats.Add(value11, value11.Stats);
-            }
-            if (character.Titles.ContainsKey(Config.称号叠加模块10) && GameTitle.DataSheet.TryGetValue(Config.称号叠加模块10, out var value12))
-            {
-                CombatPowerBonus.Add(value12, value12.CombatPower);
-                BonusStats.Add(value12, value12.Stats);
-            }
-            if (character.Titles.ContainsKey(Config.称号叠加模块11) && GameTitle.DataSheet.TryGetValue(Config.称号叠加模块11, out var value13))
-            {
-                CombatPowerBonus.Add(value13, value13.CombatPower);
-                BonusStats.Add(value13, value13.Stats);
-            }
-            if (character.Titles.ContainsKey(Config.称号叠加模块12) && GameTitle.DataSheet.TryGetValue(Config.称号叠加模块12, out var value14))
-            {
-                CombatPowerBonus.Add(value14, value14.CombatPower);
-                BonusStats.Add(value14, value14.Stats);
-            }
-            if (character.Titles.ContainsKey(Config.称号叠加模块13) && GameTitle.DataSheet.TryGetValue(Config.称号叠加模块13, out var value15))
-            {
-                CombatPowerBonus.Add(value15, value15.CombatPower);
-                BonusStats.Add(value15, value15.Stats);
-            }
-            if (character.Titles.ContainsKey(Config.称号叠加模块14) && GameTitle.DataSheet.TryGetValue(Config.称号叠加模块14, out var value16))
-            {
-                CombatPowerBonus.Add(value16, value16.CombatPower);
-                BonusStats.Add(value16, value16.Stats);
-            }
-            if (character.Titles.ContainsKey(Config.称号叠加模块15) && GameTitle.DataSheet.TryGetValue(Config.称号叠加模块15, out var value17))
-            {
-                CombatPowerBonus.Add(value17, value17.CombatPower);
-                BonusStats.Add(value17, value17.Stats);
-            }
-            if (character.Titles.ContainsKey(Config.称号叠加模块16) && GameTitle.DataSheet.TryGetValue(Config.称号叠加模块16, out var value18))
-            {
-                CombatPowerBonus.Add(value18, value18.CombatPower);
-                BonusStats.Add(value18, value18.Stats);
+                if (character.Titles.ContainsKey(id) && GameTitle.DataSheet.TryGetValue(id, out var title))
+                {
+                    CombatPowerBonus.Add(title, title.CombatPower);
+                    BonusStats.Add(title, title.Stats);
+                }
             }
         }
         if (Config.CurrentVersion >= 1)
@@ -1245,6 +1155,7 @@ public sealed class PlayerObject : MapObject
                 }
             }
         }
+
         if (Config.CurrentVersion >= 2)
         {
             if (SystemInfo.Info.OccupyGuild.V != Guild && character.Titles.ContainsKey(Config.沙巴克成员称号))
@@ -1256,6 +1167,7 @@ public sealed class PlayerObject : MapObject
                 玩家称号到期(Config.沙巴克城主称号);
             }
         }
+
         if (CurrentHP == 0)
         {
             CurrentMap = MapManager.GetMap(RespawnMapIndex);
@@ -1539,7 +1451,7 @@ public sealed class PlayerObject : MapObject
             }
             foreach (KeyValuePair<ushort, BuffInfo> item3 in Buffs.ToList())
             {
-                轮询Buff时处理(item3.Value);
+                ProcessBuffs(item3.Value);
             }
             if (SEngine.CurrentTime >= TitleTime)
             {
@@ -1557,7 +1469,7 @@ public sealed class PlayerObject : MapObject
                 }
                 TitleTime = dateTime;
             }
-            if (SEngine.CurrentTime >= 特权时间)
+            if (SEngine.CurrentTime >= PrivilegeTime)
             {
                 玩家特权到期();
                 if (剩余特权.TryGetValue(预定特权, out var v) && v >= 30)
@@ -2061,7 +1973,7 @@ public sealed class PlayerObject : MapObject
         }
         foreach (EquipmentInfo item3 in Equipment.Values.ToList())
         {
-            if (item3.CanDrop && Compute.CalculateProbability(Config.死亡掉落身上几率) && !HasResurrectionRing && !复活戒指冷却测试)
+            if (item3.CanDrop && Compute.CalculateProbability(Config.死亡掉落身上几率) && !HasResurrectionRing && ResurrectionRingReady)
             {
                 new ItemObject(item3.Info, item3, CurrentMap, CurrentPosition, new HashSet<CharacterInfo>());
                 Equipment.Remove(item3.Position);
@@ -2079,7 +1991,7 @@ public sealed class PlayerObject : MapObject
         }
         foreach (ItemInfo item4 in Inventory.Values.ToList())
         {
-            if (item4.CanDrop && Compute.CalculateProbability(Config.死亡掉落背包几率) && !HasResurrectionRing && !复活戒指冷却测试)
+            if (item4.CanDrop && Compute.CalculateProbability(Config.死亡掉落背包几率) && !HasResurrectionRing && ResurrectionRingReady)
             {
                 if (item4.PersistType == PersistentItemType.Stack && item4.Dura.V > 1)
                 {
@@ -2118,9 +2030,9 @@ public sealed class PlayerObject : MapObject
 
     public void 秒触发内容结果(string 玩家姓名)
     {
-        if (复活戒指冷却测试 && HasResurrectionRing && SEngine.CurrentTime > ReviveTime)
+        if (!ResurrectionRingReady && HasResurrectionRing && SEngine.CurrentTime > ReviveTime)
         {
-            复活戒指冷却测试 = false;
+            ResurrectionRingReady = true;
             移除Buff时处理(47391);
         }
         if (CurrentMap.MapID == 183 && SEngine.CurrentTime.Hour != Config.武斗场时间一 && SEngine.CurrentTime.Hour != Config.武斗场时间二)
@@ -3951,7 +3863,7 @@ public sealed class PlayerObject : MapObject
             {
                 guard = new GuardObject(GuardInfo.DataSheet[6581], CurrentMap, GameDirection.Down, new Point(CurrentPosition.X, CurrentPosition.Y + 1));
                 guard.AutoDisappear = true;
-                guard.存在时间 = SEngine.CurrentTime.AddSeconds(Config.暗之门时间);
+                guard.ExistenceTime = SEngine.CurrentTime.AddSeconds(Config.暗之门时间);
             }
         }
         if (Character.MonsterKillCount.V < 200_000_000 && Config.暗之门开关 == 1)
@@ -4420,16 +4332,16 @@ public sealed class PlayerObject : MapObject
         {
             string 物品名字 = 原有装备.Name;
             string text = 物品名字;
-            if (!(text == "护身戒指"))
+            if (string.Equals(text, "ProtectionRing", StringComparison.OrdinalIgnoreCase) == false)
             {
-                if (text == "复活戒指")
+                if (string.Equals(text, "ResurrectionRing", StringComparison.OrdinalIgnoreCase))
                 {
                     HasResurrectionRing = false;
                 }
             }
             else
             {
-                护身戒指状态 = false;
+                ProtectionRing = false;
             }
             if (原有装备.Type == ItemType.Weapon)
             {
@@ -4443,12 +4355,10 @@ public sealed class PlayerObject : MapObject
             }
             if (原有装备.Type == ItemType.Weapon)
             {
-                foreach (PetObject item2 in Pets.ToList())
+                foreach (PetObject pet in Pets)
                 {
-                    if (item2.BoundWeapon)
-                    {
-                        item2.Die(null, skillDeath: false);
-                    }
+                    if (pet.BoundWeapon)
+                        pet.Die(null, skillDeath: false);
                 }
             }
             if (Config.CurrentVersion >= 2)
@@ -4611,11 +4521,11 @@ public sealed class PlayerObject : MapObject
         {
             string 物品名字2 = 现有装备.Name;
             string text2 = 物品名字2;
-            if (!(text2 == "复活戒指"))
+            if (string.Equals(text2, "ResurrectionRing", StringComparison.OrdinalIgnoreCase) == false)
             {
-                if (text2 == "护身戒指")
+                if (string.Equals(text2, "ProtectionRing", StringComparison.OrdinalIgnoreCase))
                 {
-                    护身戒指状态 = true;
+                    ProtectionRing = true;
                 }
             }
             else
@@ -7269,7 +7179,7 @@ public sealed class PlayerObject : MapObject
                     Buff索引 = item.ID.V,
                     当前层数 = item.当前层数.V,
                     剩余时间 = (int)item.剩余时间.V.TotalMilliseconds,
-                    持续时间 = (int)item.持续时间.V.TotalMilliseconds
+                    持续时间 = (int)item.Duration.V.TotalMilliseconds
                 });
             }
         }
@@ -7374,7 +7284,7 @@ public sealed class PlayerObject : MapObject
         CurrentDegree = 0;
         本期记录 = 0u;
         本期日期 = default(DateTime);
-        特权时间 = DateTime.MaxValue;
+        PrivilegeTime = DateTime.MaxValue;
     }
 
     public void 玩家激活特权(byte 特权类型)
@@ -7396,7 +7306,7 @@ public sealed class PlayerObject : MapObject
         CurrentDegree = 特权类型;
         本期记录 = uint.MaxValue;
         本期日期 = SEngine.CurrentTime;
-        特权时间 = 本期日期.AddDays(30.0);
+        PrivilegeTime = 本期日期.AddDays(30.0);
     }
 
     public void 玩家称号到期(byte id)
@@ -7435,14 +7345,14 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 玩家获得仇恨(MapObject 对象)
+    public void AddTarget(MapObject target)
     {
-        foreach (PetObject item in Pets.ToList())
+        foreach (var pet in Pets)
         {
-            if (item.Neighbors.Contains(对象) && !对象.CheckStatus(GameObjectState.Invisible | GameObjectState.Stealth))
-            {
-                item.Target.Add(对象, default(DateTime), 0);
-            }
+            if (!pet.Neighbors.Contains(target)) continue;
+            if (target.CheckStatus(GameObjectState.Invisible | GameObjectState.Stealth)) continue;
+            
+            pet.Target.Add(target, default(DateTime), 0);
         }
     }
 
@@ -7709,7 +7619,7 @@ public sealed class PlayerObject : MapObject
         Dead = false;
         Blocking = true;
 
-        if (Config.CurrentVersion >= 1 && HasResurrectionRing && !复活戒指冷却测试 && 复活戒指持久 > 0)
+        if (Config.CurrentVersion >= 1 && HasResurrectionRing && ResurrectionRingReady && ResurrectionRingDura > 0)
         {
             CurrentHP = (int)this[Stat.MaxHP];
             CurrentMP = (int)this[Stat.MaxMP];
@@ -7718,10 +7628,10 @@ public sealed class PlayerObject : MapObject
             UnbindGrid();
             BindGrid();
             UpdateAllNeighbours();
-            复活戒指冷却测试 = true;
+            ResurrectionRingReady = false;
             AddBuff(47391, this);
             ReviveTime = SEngine.CurrentTime.AddSeconds(Config.ReviveInterval);
-            if (Equipment.TryGetValue(复活戒指位置, out var v))
+            if (Equipment.TryGetValue(ResurrectionRingLocation, out var v))
             {
                 v.Dura.V -= 1000;
                 Enqueue(new DurabilityChangedPacket
@@ -7794,9 +7704,8 @@ public sealed class PlayerObject : MapObject
     public void WalkTo(Point location)
     {
         if (Dead || StallState > 0 || TradeState >= 3)
-        {
             return;
-        }
+
         if (CurrentPosition == location)
         {
             Enqueue(new ObjectStopPacket
@@ -19472,7 +19381,7 @@ public sealed class PlayerObject : MapObject
         {
             物品数据2 = (角色资源背包.TryGetValue(targetLocation, out var v8) ? v8 : null);
         }
-        if (物品数据.背包锁定 || (物品数据 == null && 物品数据2 == null) || (grid == 0 && targetGrid == 0) || (grid == 0 && targetGrid == 2) || (grid == 2 && targetGrid == 0) || (物品数据 != null && grid == 0 && (物品数据 as EquipmentInfo).CanRemove) || (物品数据2 != null && targetGrid == 0 && (物品数据2 as EquipmentInfo).CanRemove) || (物品数据 != null && targetGrid == 0 && (!(物品数据 is EquipmentInfo 装备数据) || 装备数据.NeedLevel > CurrentLevel || (装备数据.NeedGender != 0 && 装备数据.NeedGender != Gender) || (装备数据.NeedRace != GameObjectRace.通用 && 装备数据.NeedRace != Job) || 装备数据.NeedAttack > this[Stat.MaxDC] || 装备数据.NeedMagic > this[Stat.MaxMC] || 装备数据.NeedTaoism > this[Stat.MaxSC] || 装备数据.NeedPiercing > this[Stat.MaxNC] || 装备数据.NeedArchery > this[Stat.MaxBC] || (targetLocation == 0 && 装备数据.Weight > 最大腕力) || (targetLocation != 0 && 装备数据.Weight - 物品数据2?.Weight > 最大穿戴 - EquipmentWeight) || (targetLocation == 0 && 装备数据.Type != ItemType.Weapon) || (targetLocation == 1 && 装备数据.Type != ItemType.Armour) || (targetLocation == 2 && 装备数据.Type != ItemType.Cloak) || (targetLocation == 3 && 装备数据.Type != ItemType.Helmet) || (targetLocation == 4 && 装备数据.Type != ItemType.ShoulderPad) || (targetLocation == 5 && 装备数据.Type != ItemType.护腕) || (targetLocation == 6 && 装备数据.Type != ItemType.Belt) || (targetLocation == 7 && 装备数据.Type != ItemType.Boots) || (targetLocation == 8 && 装备数据.Type != ItemType.Necklace) || (targetLocation == 13 && 装备数据.Type != ItemType.Medal) || (targetLocation == 14 && 装备数据.Type != ItemType.玉佩) || (targetLocation == 15 && 装备数据.Type != ItemType.战具) || (targetLocation == 9 && 装备数据.Type != ItemType.Ring) || (targetLocation == 10 && 装备数据.Type != ItemType.Ring) || (targetLocation == 11 && 装备数据.Type != ItemType.Bracelet) || (targetLocation == 12 && 装备数据.Type != ItemType.Bracelet))) || (物品数据2 != null && grid == 0 && (!(物品数据2 is EquipmentInfo 装备数据2) || 装备数据2.NeedLevel > CurrentLevel || (装备数据2.NeedGender != 0 && 装备数据2.NeedGender != Gender) || (装备数据2.NeedRace != GameObjectRace.通用 && 装备数据2.NeedRace != Job) || 装备数据2.NeedAttack > this[Stat.MaxDC] || 装备数据2.NeedMagic > this[Stat.MaxMC] || 装备数据2.NeedTaoism > this[Stat.MaxSC] || 装备数据2.NeedPiercing > this[Stat.MaxNC] || 装备数据2.NeedArchery > this[Stat.MaxBC] || (location == 0 && 装备数据2.Weight > 最大腕力) || (location != 0 && 装备数据2.Weight - 物品数据?.Weight > 最大穿戴 - EquipmentWeight) || (location == 0 && 装备数据2.Type != ItemType.Weapon) || (location == 1 && 装备数据2.Type != ItemType.Armour) || (location == 2 && 装备数据2.Type != ItemType.Cloak) || (location == 3 && 装备数据2.Type != ItemType.Helmet) || (location == 4 && 装备数据2.Type != ItemType.ShoulderPad) || (location == 5 && 装备数据2.Type != ItemType.护腕) || (location == 6 && 装备数据2.Type != ItemType.Belt) || (location == 7 && 装备数据2.Type != ItemType.Boots) || (location == 8 && 装备数据2.Type != ItemType.Necklace) || (location == 13 && 装备数据2.Type != ItemType.Medal) || (location == 14 && 装备数据2.Type != ItemType.玉佩) || (location == 15 && 装备数据2.Type != ItemType.战具) || (location == 9 && 装备数据2.Type != ItemType.Ring) || (location == 10 && 装备数据2.Type != ItemType.Ring) || (location == 11 && 装备数据2.Type != ItemType.Bracelet) || (location == 12 && 装备数据2.Type != ItemType.Bracelet))))
+        if (物品数据.背包锁定 || (物品数据 == null && 物品数据2 == null) || (grid == 0 && targetGrid == 0) || (grid == 0 && targetGrid == 2) || (grid == 2 && targetGrid == 0) || (物品数据 != null && grid == 0 && (物品数据 as EquipmentInfo).CanRemove) || (物品数据2 != null && targetGrid == 0 && (物品数据2 as EquipmentInfo).CanRemove) || (物品数据 != null && targetGrid == 0 && (!(物品数据 is EquipmentInfo 装备数据) || 装备数据.NeedLevel > CurrentLevel || (装备数据.NeedGender != 0 && 装备数据.NeedGender != Gender) || (装备数据.NeedRace != GameObjectRace.Any && 装备数据.NeedRace != Job) || 装备数据.NeedAttack > this[Stat.MaxDC] || 装备数据.NeedMagic > this[Stat.MaxMC] || 装备数据.NeedTaoism > this[Stat.MaxSC] || 装备数据.NeedPiercing > this[Stat.MaxNC] || 装备数据.NeedArchery > this[Stat.MaxBC] || (targetLocation == 0 && 装备数据.Weight > 最大腕力) || (targetLocation != 0 && 装备数据.Weight - 物品数据2?.Weight > 最大穿戴 - EquipmentWeight) || (targetLocation == 0 && 装备数据.Type != ItemType.Weapon) || (targetLocation == 1 && 装备数据.Type != ItemType.Armour) || (targetLocation == 2 && 装备数据.Type != ItemType.Cloak) || (targetLocation == 3 && 装备数据.Type != ItemType.Helmet) || (targetLocation == 4 && 装备数据.Type != ItemType.ShoulderPad) || (targetLocation == 5 && 装备数据.Type != ItemType.护腕) || (targetLocation == 6 && 装备数据.Type != ItemType.Belt) || (targetLocation == 7 && 装备数据.Type != ItemType.Boots) || (targetLocation == 8 && 装备数据.Type != ItemType.Necklace) || (targetLocation == 13 && 装备数据.Type != ItemType.Medal) || (targetLocation == 14 && 装备数据.Type != ItemType.玉佩) || (targetLocation == 15 && 装备数据.Type != ItemType.战具) || (targetLocation == 9 && 装备数据.Type != ItemType.Ring) || (targetLocation == 10 && 装备数据.Type != ItemType.Ring) || (targetLocation == 11 && 装备数据.Type != ItemType.Bracelet) || (targetLocation == 12 && 装备数据.Type != ItemType.Bracelet))) || (物品数据2 != null && grid == 0 && (!(物品数据2 is EquipmentInfo 装备数据2) || 装备数据2.NeedLevel > CurrentLevel || (装备数据2.NeedGender != 0 && 装备数据2.NeedGender != Gender) || (装备数据2.NeedRace != GameObjectRace.Any && 装备数据2.NeedRace != Job) || 装备数据2.NeedAttack > this[Stat.MaxDC] || 装备数据2.NeedMagic > this[Stat.MaxMC] || 装备数据2.NeedTaoism > this[Stat.MaxSC] || 装备数据2.NeedPiercing > this[Stat.MaxNC] || 装备数据2.NeedArchery > this[Stat.MaxBC] || (location == 0 && 装备数据2.Weight > 最大腕力) || (location != 0 && 装备数据2.Weight - 物品数据?.Weight > 最大穿戴 - EquipmentWeight) || (location == 0 && 装备数据2.Type != ItemType.Weapon) || (location == 1 && 装备数据2.Type != ItemType.Armour) || (location == 2 && 装备数据2.Type != ItemType.Cloak) || (location == 3 && 装备数据2.Type != ItemType.Helmet) || (location == 4 && 装备数据2.Type != ItemType.ShoulderPad) || (location == 5 && 装备数据2.Type != ItemType.护腕) || (location == 6 && 装备数据2.Type != ItemType.Belt) || (location == 7 && 装备数据2.Type != ItemType.Boots) || (location == 8 && 装备数据2.Type != ItemType.Necklace) || (location == 13 && 装备数据2.Type != ItemType.Medal) || (location == 14 && 装备数据2.Type != ItemType.玉佩) || (location == 15 && 装备数据2.Type != ItemType.战具) || (location == 9 && 装备数据2.Type != ItemType.Ring) || (location == 10 && 装备数据2.Type != ItemType.Ring) || (location == 11 && 装备数据2.Type != ItemType.Bracelet) || (location == 12 && 装备数据2.Type != ItemType.Bracelet))))
         {
             return;
         }
@@ -19644,7 +19553,7 @@ public sealed class PlayerObject : MapObject
                 Connection.Disconnect(new Exception("错误操作: 玩家使用物品.  错误: 等级无法使用."));
                 return;
             }
-            if (v.NeedRace != GameObjectRace.通用 && Job != v.NeedRace)
+            if (v.NeedRace != GameObjectRace.Any && Job != v.NeedRace)
             {
                 Connection.Disconnect(new Exception("错误操作: 玩家使用物品.  错误: 职业无法使用."));
                 return;
@@ -20036,7 +19945,7 @@ public sealed class PlayerObject : MapObject
                 {
                     守卫实例2 = new GuardObject(GuardInfo.DataSheet[8482], CurrentMap, GameDirection.Down, new Point(CurrentPosition.X, CurrentPosition.Y + 1));
                     守卫实例2.AutoDisappear = true;
-                    守卫实例2.存在时间 = SEngine.CurrentTime.AddSeconds(15.0);
+                    守卫实例2.ExistenceTime = SEngine.CurrentTime.AddSeconds(15.0);
                 }
                 if (守卫实例2 == null)
                 {
@@ -27647,7 +27556,7 @@ public sealed class PlayerObject : MapObject
                                         {
                                             guard = new GuardObject(GuardInfo.DataSheet[8482], CurrentMap, GameDirection.Down, new Point(CurrentPosition.X, CurrentPosition.Y + 1));
                                             guard.AutoDisappear = true;
-                                            guard.存在时间 = SEngine.CurrentTime.AddSeconds(15.0);
+                                            guard.ExistenceTime = SEngine.CurrentTime.AddSeconds(15.0);
                                         }
                                         if (guard != null)
                                         {
@@ -28212,7 +28121,7 @@ public sealed class PlayerObject : MapObject
                 HairColor = (byte)player.HairColor,
                 FaceStyle = (byte)player.FaceStyle,
                 摆摊状态 = player.StallState,
-                摊位名字 = player.摊位名字,
+                摊位名字 = player.StallName,
                 称号编号 = player.CurrentTitle,
                 武器等级 = (byte)(player.Equipment.TryGetValue(0, out var v) ? (v?.UpgradeCount.V ?? 0) : 0),
                 身上武器 = (v?.Item.V.ID ?? 0),
@@ -32490,7 +32399,7 @@ public sealed class PlayerObject : MapObject
             binaryWriter.Write((int)value.ID.V);
             binaryWriter.Write(value.当前层数.V);
             binaryWriter.Write((int)value.剩余时间.V.TotalMilliseconds);
-            binaryWriter.Write((int)value.持续时间.V.TotalMilliseconds);
+            binaryWriter.Write((int)value.Duration.V.TotalMilliseconds);
         }
         return memoryStream.ToArray();
     }
