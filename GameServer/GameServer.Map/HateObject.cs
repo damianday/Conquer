@@ -7,18 +7,18 @@ public sealed class HateObject
 {
     public sealed class HateInfo
     {
-        public int 仇恨数值;
+        public int Priority;
         public DateTime HateTime;
 
-        public HateInfo(DateTime 仇恨时间, int 仇恨数值)
+        public HateInfo(DateTime duration, int priority)
         {
-            this.仇恨数值 = 仇恨数值;
-            this.HateTime = 仇恨时间;
+            Priority = priority;
+            HateTime = duration;
         }
     }
 
     public MapObject Target;
-    public DateTime 切换时间;
+    public DateTime SearchTime;
     public readonly Dictionary<MapObject, HateInfo> TargetList;
 
     public HateObject()
@@ -33,39 +33,37 @@ public sealed class HateObject
         return TargetList.Remove(target);
     }
 
-    public void Add(MapObject target, DateTime 时间, int 仇恨数值)
+    public void Add(MapObject target, DateTime duration, int priority)
     {
         if (!target.Dead)
         {
             if (TargetList.TryGetValue(target, out var value))
             {
-                value.HateTime = ((value.HateTime < 时间) ? 时间 : value.HateTime);
-                value.仇恨数值 += 仇恨数值;
+                value.HateTime = ((value.HateTime < duration) ? duration : value.HateTime);
+                value.Priority += priority;
             }
             else
             {
-                TargetList[target] = new HateInfo(时间, 仇恨数值);
+                TargetList[target] = new HateInfo(duration, priority);
             }
         }
     }
 
-    public bool 切换仇恨(MapObject master)
+    public bool SelectTarget(MapObject master)
     {
-        int num = int.MinValue;
+        var priority = int.MinValue;
         var targets = new List<MapObject>();
         foreach (var kvp in TargetList)
         {
-            if (kvp.Value.仇恨数值 > num)
+            if (kvp.Value.Priority > priority)
             {
-                num = kvp.Value.仇恨数值;
+                priority = kvp.Value.Priority;
                 targets = new List<MapObject> { kvp.Key };
             }
-            else if (kvp.Value.仇恨数值 == num)
-            {
+            else if (kvp.Value.Priority == priority)
                 targets.Add(kvp.Key);
-            }
         }
-        if (num == 0 && Target != null)
+        if (priority == 0 && Target != null)
             return true;
 
         int dist = int.MaxValue;
@@ -79,38 +77,37 @@ public sealed class HateObject
                 nearest = obj;
             }
         }
-        (nearest as PlayerObject)?.玩家获得仇恨(master);
+        (nearest as PlayerObject)?.AddTarget(master);
         return (Target = nearest) != null;
     }
 
-    public bool 最近仇恨(MapObject master)
+    public bool SelectBestTarget(MapObject master)
     {
-        int num = int.MaxValue;
+        int dist = int.MaxValue;
         List<KeyValuePair<MapObject, HateInfo>> list = new List<KeyValuePair<MapObject, HateInfo>>();
-        foreach (KeyValuePair<MapObject, HateInfo> item in TargetList)
+        foreach (var kvp in TargetList)
         {
-            int num2 = master.GetDistance(item.Key);
-            if (num2 < num)
+            int d = master.GetDistance(kvp.Key);
+            if (d < dist)
             {
-                num = num2;
-                list = new List<KeyValuePair<MapObject, HateInfo>> { item };
+                dist = d;
+                list = new List<KeyValuePair<MapObject, HateInfo>> { kvp };
             }
-            else if (num2 == num)
+            else if (d == dist)
+                list.Add(kvp);
+        }
+
+        int priority = int.MinValue;
+        MapObject best = null;
+        foreach (var kvp in list)
+        {
+            if (kvp.Value.Priority > priority)
             {
-                list.Add(item);
+                priority = kvp.Value.Priority;
+                best = kvp.Key;
             }
         }
-        int num3 = int.MinValue;
-        MapObject 地图对象2 = null;
-        foreach (KeyValuePair<MapObject, HateInfo> item2 in list)
-        {
-            if (item2.Value.仇恨数值 > num3)
-            {
-                num3 = item2.Value.仇恨数值;
-                地图对象2 = item2.Key;
-            }
-        }
-        (地图对象2 as PlayerObject)?.玩家获得仇恨(master);
-        return (Target = 地图对象2) != null;
+        (best as PlayerObject)?.AddTarget(master);
+        return (Target = best) != null;
     }
 }
