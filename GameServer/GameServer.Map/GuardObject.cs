@@ -260,7 +260,7 @@ public sealed class GuardObject : MapObject
 
     public void ProcessAttack()
     {
-        if (!CheckStatus(GameObjectState.Paralyzed | GameObjectState.Unconscious)) return;
+        if (CheckStatus(GameObjectState.Paralyzed | GameObjectState.Unconscious)) return;
         if (BasicAttackSkill == null) return;
 
         if (GetDistance(Target.Target) > BasicAttackSkill.MaxDistance)
