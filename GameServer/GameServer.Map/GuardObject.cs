@@ -18,9 +18,7 @@ public sealed class GuardObject : MapObject
     public HateObject Target;
 
     public Point BirthPosition;
-
     public GameDirection BirthDirection;
-
     public Map BirthMap;
 
     public GameSkill BasicAttackSkill;
@@ -32,8 +30,7 @@ public sealed class GuardObject : MapObject
     public DateTime 转移计时 { get; set; }
 
     public bool AutoDisappear { get; set; }
-
-    public DateTime 存在时间 { get; set; }
+    public DateTime ExistenceTime { get; set; }
 
     public override int ProcessInterval => 10;
 
@@ -144,21 +141,20 @@ public sealed class GuardObject : MapObject
         BirthPosition = location;
         ObjectID = ++MapManager.ObjectID;
         BonusStats[this] = new Stats { [Stat.MaxHP] = 9999 };
-        string text = Info.BasicAttackSkills;
-        if (text != null && text.Length > 0)
-        {
+
+        if (!string.IsNullOrEmpty(Info.BasicAttackSkills))
             GameSkill.DataSheet.TryGetValue(Info.BasicAttackSkills, out BasicAttackSkill);
-        }
+
         MapManager.AddObject(this);
         Resurrect();
     }
 
     public override void Process()
     {
-        if (SEngine.CurrentTime < base.ProcessTime)
+        if (SEngine.CurrentTime < ProcessTime)
             return;
 
-        if (AutoDisappear && SEngine.CurrentTime > 存在时间)
+        if (AutoDisappear && SEngine.CurrentTime > ExistenceTime)
         {
             Despawn();
             return;
@@ -171,6 +167,7 @@ public sealed class GuardObject : MapObject
                 UnbindGrid();
                 Disappeared = true;
             }
+
             if (SEngine.CurrentTime >= ResurrectionTime)
             {
                 RemoveAllNeighbors();
@@ -180,19 +177,18 @@ public sealed class GuardObject : MapObject
         }
         else
         {
-            foreach (KeyValuePair<ushort, BuffInfo> item in Buffs.ToList())
-                轮询Buff时处理(item.Value);
+            foreach (var buff in Buffs)
+                ProcessBuffs(buff.Value);
 
             foreach (var skill in ActiveSkills)
                 skill.Process();
 
-            if (SEngine.CurrentTime > base.RecoveryTime)
+            if (SEngine.CurrentTime > RecoveryTime)
             {
                 if (!CheckStatus(GameObjectState.Poisoned))
-                {
                     CurrentHP += 5;
-                }
-                base.RecoveryTime = SEngine.CurrentTime.AddSeconds(5.0);
+
+                RecoveryTime = SEngine.CurrentTime.AddSeconds(5.0);
             }
             if (ActiveAttackTarget && SEngine.CurrentTime > BusyTime && SEngine.CurrentTime > HardStunTime)
             {
@@ -215,6 +211,7 @@ public sealed class GuardObject : MapObject
                 转移计时 = SEngine.CurrentTime.AddMinutes(2.5);
             }
         }
+
         base.Process();
     }
 
@@ -222,8 +219,8 @@ public sealed class GuardObject : MapObject
     {
         base.Die(attacker, skillDeath);
 
-        DisappearTime = SEngine.CurrentTime.AddMilliseconds(10000.0);
-        ResurrectionTime = SEngine.CurrentTime.AddMilliseconds((CurrentMap.MapID == 80) ? int.MaxValue : 60000);
+        DisappearTime = SEngine.CurrentTime.AddSeconds(10.0);
+        ResurrectionTime = SEngine.CurrentTime.AddMilliseconds((CurrentMap.MapID == 80) ? int.MaxValue : 60_000);
         Buffs.Clear();
 
         SecondaryObject = true;
@@ -282,7 +279,7 @@ public sealed class GuardObject : MapObject
         CurrentDirection = BirthDirection;
         CurrentPosition = BirthPosition;
         CurrentHP = this[Stat.MaxHP];
-        RecoveryTime = SEngine.CurrentTime.AddMilliseconds(SEngine.Random.Next(5000));
+        RecoveryTime = SEngine.CurrentTime.AddMilliseconds(SEngine.Random.Next(5_000));
         Target = new HateObject();
 
         BindGrid();
@@ -297,7 +294,7 @@ public sealed class GuardObject : MapObject
         }
         if (Target.Target == null)
         {
-            return Target.切换仇恨(this);
+            return Target.SelectTarget(this);
         }
         if (Target.Target.Dead)
         {
