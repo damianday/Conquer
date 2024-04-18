@@ -141,7 +141,7 @@ public sealed class MonsterObject : MapObject
     }
 
     public int MoveInterval => Info.MoveInterval;
-    public int 切换间隔 => 5000;
+    public int TargetSearchInterval => 5000;
     public int RoamInterval => Info.RoamInterval;
     public int HateTime => Info.HateTime;
     public int CorpsePreservationDuration => Info.CorpsePreservationDuration;
@@ -291,7 +291,7 @@ public sealed class MonsterObject : MapObject
         else
         {
             foreach (KeyValuePair<ushort, BuffInfo> item in Buffs.ToList())
-                轮询Buff时处理(item.Value);
+                ProcessBuffs(item.Value);
 
             foreach (var skill in ActiveSkills)
                 skill.Process();
@@ -1693,7 +1693,7 @@ public sealed class MonsterObject : MapObject
         }
         if (Target.Target == null)
         {
-            Target.切换时间 = default(DateTime);
+            Target.SearchTime = default(DateTime);
         }
         else if (Target.Target.Dead)
         {
@@ -1715,9 +1715,9 @@ public sealed class MonsterObject : MapObject
         {
             Target.TargetList[Target.Target].HateTime = SEngine.CurrentTime.AddMilliseconds(HateTime);
         }
-        if (Target.切换时间 < SEngine.CurrentTime && Target.切换仇恨(this))
+        if (Target.SearchTime < SEngine.CurrentTime && Target.SelectTarget(this))
         {
-            Target.切换时间 = SEngine.CurrentTime.AddMilliseconds(切换间隔);
+            Target.SearchTime = SEngine.CurrentTime.AddMilliseconds(TargetSearchInterval);
         }
         if (Target.Target == null)
         {
@@ -1734,7 +1734,7 @@ public sealed class MonsterObject : MapObject
         }
         if (Target.Target == null)
         {
-            Target.切换时间 = default(DateTime);
+            Target.SearchTime = default(DateTime);
         }
         else if (Target.Target.Dead)
         {
@@ -1756,9 +1756,9 @@ public sealed class MonsterObject : MapObject
         {
             Target.TargetList[Target.Target].HateTime = SEngine.CurrentTime.AddMilliseconds(HateTime);
         }
-        if (Target.切换时间 < SEngine.CurrentTime && Target.最近仇恨(this))
+        if (Target.SearchTime < SEngine.CurrentTime && Target.SelectBestTarget(this))
         {
-            Target.切换时间 = SEngine.CurrentTime.AddMilliseconds(切换间隔);
+            Target.SearchTime = SEngine.CurrentTime.AddMilliseconds(TargetSearchInterval);
         }
         if (Target.Target == null)
         {
@@ -1779,9 +1779,9 @@ public sealed class MonsterObject : MapObject
         {
             if (kvp.Key is PetObject pet)
             {
-                if (kvp.Value.仇恨数值 > 0)
+                if (kvp.Value.Priority > 0)
                 {
-                    Target.Add(pet.Master, kvp.Value.HateTime, kvp.Value.仇恨数值);
+                    Target.Add(pet.Master, kvp.Value.HateTime, kvp.Value.Priority);
                 }
                 Target.Remove(kvp.Key);
             }
@@ -1791,7 +1791,7 @@ public sealed class MonsterObject : MapObject
             }
         }
         MapObject target = (from x in Target.TargetList.Keys.ToList()
-                      orderby Target.TargetList[x].仇恨数值 descending
+                      orderby Target.TargetList[x].Priority descending
                       select x).FirstOrDefault();
         hitter = (target is PlayerObject player) ? player : null;
         return hitter != null;
