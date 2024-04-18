@@ -370,7 +370,7 @@ public sealed class PetObject : MapObject
         {
             foreach (KeyValuePair<ushort, BuffInfo> item in Buffs.ToList())
             {
-                轮询Buff时处理(item.Value);
+                ProcessBuffs(item.Value);
             }
 
             foreach (var skill in ActiveSkills)
@@ -611,7 +611,7 @@ public sealed class PetObject : MapObject
         }
         if (Target.Target == null)
         {
-            Target.切换时间 = default(DateTime);
+            Target.SearchTime = default(DateTime);
         }
         else if (Target.Target.Dead)
         {
@@ -637,9 +637,9 @@ public sealed class PetObject : MapObject
         {
             Target.TargetList[Target.Target].HateTime = SEngine.CurrentTime.AddMilliseconds(HateDuration);
         }
-        if (Target.切换时间 < SEngine.CurrentTime && Target.切换仇恨(this))
+        if (Target.SearchTime < SEngine.CurrentTime && Target.SelectTarget(this))
         {
-            Target.切换时间 = SEngine.CurrentTime.AddMilliseconds(切换间隔);
+            Target.SearchTime = SEngine.CurrentTime.AddMilliseconds(切换间隔);
         }
         if (Target.Target == null)
         {
