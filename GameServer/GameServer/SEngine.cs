@@ -29,8 +29,9 @@ public static class SEngine
 
     static SEngine()
     {
-        CurrentTime = DateTime.Now;
-        OneSecondTime = DateTime.Now.AddSeconds(1.0);
+        CurrentTime = DateTime.UtcNow;
+        OneSecondTime = CurrentTime.AddSeconds(1.0);
+        NextSaveDataTime = CurrentTime.AddMinutes(Config.AutoSaveInterval);
         Random = new Random();
     }
 
@@ -129,7 +130,7 @@ public static class SEngine
             {
                 Thread.Sleep(1);
 
-                CurrentTime = DateTime.Now;
+                CurrentTime = DateTime.UtcNow;
                 if (CurrentTime > OneSecondTime)
                 {
                     ProcessSaveData();
