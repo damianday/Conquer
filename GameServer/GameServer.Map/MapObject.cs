@@ -847,7 +847,7 @@ public abstract class MapObject
                             AddBuff(value.BuffCraftingID, target);
                             break;
                         }
-                        v2.剩余时间.V = v2.持续时间.V;
+                        v2.剩余时间.V = v2.Duration.V;
                         if (v2.Buff同步)
                         {
                             SendPacket(new 对象状态变动
@@ -857,7 +857,7 @@ public abstract class MapObject
                                 Buff索引 = v2.ID.V,
                                 当前层数 = v2.当前层数.V,
                                 剩余时间 = (int)v2.剩余时间.V.TotalMilliseconds,
-                                持续时间 = (int)v2.持续时间.V.TotalMilliseconds
+                                持续时间 = (int)v2.Duration.V.TotalMilliseconds
                             });
                         }
                     }
@@ -871,7 +871,7 @@ public abstract class MapObject
                 {
                     if (Buffs.TryGetValue(id, out var v))
                     {
-                        v.剩余时间.V += v.持续时间.V;
+                        v.剩余时间.V += v.Duration.V;
                         if (v.Buff同步)
                         {
                             SendPacket(new 对象状态变动
@@ -881,7 +881,7 @@ public abstract class MapObject
                                 Buff索引 = v.ID.V,
                                 当前层数 = v.当前层数.V,
                                 剩余时间 = (int)v.剩余时间.V.TotalMilliseconds,
-                                持续时间 = (int)v.持续时间.V.TotalMilliseconds
+                                持续时间 = (int)v.Duration.V.TotalMilliseconds
                             });
                         }
                     }
@@ -905,12 +905,12 @@ public abstract class MapObject
                 Buff编号 = buff数据.ID.V,
                 Buff索引 = buff数据.ID.V,
                 Buff层数 = buff数据.当前层数.V,
-                持续时间 = (int)buff数据.持续时间.V.TotalMilliseconds
+                持续时间 = (int)buff数据.Duration.V.TotalMilliseconds
             });
         }
         if ((value.Effect & BuffEffectType.StatIncOrDec) != 0)
         {
-            BonusStats.Add(buff数据, buff数据.属性加成);
+            BonusStats.Add(buff数据, buff数据.BonusStats);
             RefreshStats();
         }
         if ((value.Effect & BuffEffectType.StatusFlag) != 0)
@@ -1082,22 +1082,22 @@ public abstract class MapObject
         }
     }
 
-    public void 轮询Buff时处理(BuffInfo 数据)
+    public void ProcessBuffs(BuffInfo buff)
     {
-        if (数据.到期消失 && (数据.剩余时间.V -= SEngine.CurrentTime - CurrentTime) < TimeSpan.Zero)
+        if (buff.到期消失 && (buff.剩余时间.V -= SEngine.CurrentTime - CurrentTime) < TimeSpan.Zero)
         {
-            移除Buff时处理(数据.ID.V);
+            移除Buff时处理(buff.ID.V);
         }
-        else if ((数据.处理计时.V -= SEngine.CurrentTime - CurrentTime) < TimeSpan.Zero)
+        else if ((buff.ProcessTime.V -= SEngine.CurrentTime - CurrentTime) < TimeSpan.Zero)
         {
-            数据.处理计时.V += TimeSpan.FromMilliseconds(数据.处理间隔);
-            if ((数据.Buff效果 & BuffEffectType.DealDamage) != 0)
+            buff.ProcessTime.V += TimeSpan.FromMilliseconds(buff.ProcessInterval);
+            if ((buff.Buff效果 & BuffEffectType.DealDamage) != 0)
             {
-                被动受伤时处理(数据);
+                被动受伤时处理(buff);
             }
-            if ((数据.Buff效果 & BuffEffectType.HealthRecovery) != 0)
+            if ((buff.Buff效果 & BuffEffectType.HealthRecovery) != 0)
             {
-                被动回复时处理(数据);
+                被动回复时处理(buff);
             }
         }
     }
@@ -1230,23 +1230,23 @@ public abstract class MapObject
                 switch (参数.技能伤害类型)
                 {
                     case SkillDamageType.Attack:
-                        num8 = Compute.计算防御(this[Stat.MinDef], this[Stat.MaxDef]);
+                        num8 = Compute.CalculateDefence(this[Stat.MinDef], this[Stat.MaxDef]);
                         num7 = Compute.CalculateAttack(地图对象2[Stat.MinDC], 地图对象2[Stat.MaxDC], 地图对象2[Stat.Luck]);
                         break;
                     case SkillDamageType.Magic:
-                        num8 = Compute.计算防御(this[Stat.MinMCDef], this[Stat.MaxMCDef]);
+                        num8 = Compute.CalculateDefence(this[Stat.MinMCDef], this[Stat.MaxMCDef]);
                         num7 = Compute.CalculateAttack(地图对象2[Stat.MinMC], 地图对象2[Stat.MaxMC], 地图对象2[Stat.Luck]);
                         break;
                     case SkillDamageType.Taoism:
-                        num8 = Compute.计算防御(this[Stat.MinMCDef], this[Stat.MaxMCDef]);
+                        num8 = Compute.CalculateDefence(this[Stat.MinMCDef], this[Stat.MaxMCDef]);
                         num7 = Compute.CalculateAttack(地图对象2[Stat.MinSC], 地图对象2[Stat.MaxSC], 地图对象2[Stat.Luck]);
                         break;
                     case SkillDamageType.Piercing:
-                        num8 = Compute.计算防御(this[Stat.MinDef], this[Stat.MaxDef]);
+                        num8 = Compute.CalculateDefence(this[Stat.MinDef], this[Stat.MaxDef]);
                         num7 = Compute.CalculateAttack(地图对象2[Stat.MinNC], 地图对象2[Stat.MaxNC], 地图对象2[Stat.Luck]);
                         break;
                     case SkillDamageType.Archery:
-                        num8 = Compute.计算防御(this[Stat.MinDef], this[Stat.MaxDef]);
+                        num8 = Compute.CalculateDefence(this[Stat.MinDef], this[Stat.MaxDef]);
                         num7 = Compute.CalculateAttack(地图对象2[Stat.MinBC], 地图对象2[Stat.MaxBC], 地图对象2[Stat.Luck]);
                         break;
                     case SkillDamageType.Toxicity:
@@ -1535,7 +1535,7 @@ public abstract class MapObject
                 玩家实例6.战具计时 = SEngine.CurrentTime.AddMilliseconds(1000.0);
             }
         }
-        if (this is PlayerObject 玩家实例7 && 玩家实例7.护身戒指)
+        if (this is PlayerObject 玩家实例7 && 玩家实例7.HasProtectionRing)
         {
             if (Config.CurrentVersion >= 1)
             {
@@ -1570,33 +1570,33 @@ public abstract class MapObject
         }
     }
 
-    public void 被动受伤时处理(BuffInfo 数据)
+    public void 被动受伤时处理(BuffInfo buff)
     {
         int num = 0;
-        switch (数据.伤害类型)
+        switch (buff.伤害类型)
         {
             case SkillDamageType.Magic:
             case SkillDamageType.Taoism:
-                num = Compute.计算防御(this[Stat.MinMCDef], this[Stat.MaxMCDef]);
+                num = Compute.CalculateDefence(this[Stat.MinMCDef], this[Stat.MaxMCDef]);
                 break;
             case SkillDamageType.Attack:
             case SkillDamageType.Piercing:
             case SkillDamageType.Archery:
-                num = Compute.计算防御(this[Stat.MinDef], this[Stat.MaxDef]);
+                num = Compute.CalculateDefence(this[Stat.MinDef], this[Stat.MaxDef]);
                 break;
         }
-        int num2 = Math.Max(0, 数据.伤害基数.V * 数据.当前层数.V - num);
+        int num2 = Math.Max(0, buff.DamageBase.V * buff.当前层数.V - num);
         CurrentHP = Math.Max(0, CurrentHP - num2);
         SendPacket(new 触发状态效果
         {
-            BuffID = 数据.ID.V,
-            CasterID = (数据.Caster?.ObjectID ?? 0),
+            BuffID = buff.ID.V,
+            CasterID = (buff.Caster?.ObjectID ?? 0),
             TargetID = ObjectID,
             HealthAmount = -num2
         });
         if (CurrentHP == 0)
         {
-            Die(数据.Caster, skillDeath: false);
+            Die(buff.Caster, skillDeath: false);
         }
     }
 
@@ -2305,7 +2305,7 @@ public abstract class MapObject
             writer.Write((int)kvp.Value.ID.V);
             writer.Write(kvp.Value.当前层数.V);
             writer.Write((int)kvp.Value.剩余时间.V.TotalMilliseconds);
-            writer.Write((int)kvp.Value.持续时间.V.TotalMilliseconds);
+            writer.Write((int)kvp.Value.Duration.V.TotalMilliseconds);
         }
         return ms.ToArray();
     }
