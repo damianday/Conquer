@@ -19710,7 +19710,7 @@ public sealed class PlayerObject : MapObject
                 }
                 return;
             }
-            if (v.StoreType == SaleType.Pharmacy && v.DrugModel == 2 && v.使用次数 > 0 && v.ManaAmount > 0)
+            if (v.StoreType == SaleType.Pharmacy && v.DrugModel == 2 && v.MaxUseCount > 0 && v.ManaAmount > 0)
             {
                 if (ConsumeItem(1, v))
                 {
@@ -19738,7 +19738,7 @@ public sealed class PlayerObject : MapObject
                 }
                 return;
             }
-            if (v.StoreType == SaleType.Pharmacy && v.DrugModel == 3 && v.使用次数 > 0 && v.HealthAmount > 0)
+            if (v.StoreType == SaleType.Pharmacy && v.DrugModel == 3 && v.MaxUseCount > 0 && v.HealthAmount > 0)
             {
                 if (ConsumeItem(1, v))
                 {
@@ -19766,7 +19766,7 @@ public sealed class PlayerObject : MapObject
                 }
                 return;
             }
-            if (v.StoreType == SaleType.Pharmacy && v.DrugModel == 4 && v.使用次数 > 0)
+            if (v.StoreType == SaleType.Pharmacy && v.DrugModel == 4 && v.MaxUseCount > 0)
             {
                 if (ConsumeItem(1, v))
                 {

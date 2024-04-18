@@ -325,7 +325,7 @@ public class ItemInfo : DBObject
     public int Experience => Info.Experience;
     public int DrugModel => Info.DrugModel;
     public int DrugIntervalTime => Info.DrugIntervalTime;
-    public int 使用次数 => Info.使用次数;
+    public int MaxUseCount => Info.使用次数;
     public byte GroupID => Info.GroupID;
     public int GroupCooling => Info.GroupCooling;
     public int BuffDrugID => Info.BuffDrugID;
