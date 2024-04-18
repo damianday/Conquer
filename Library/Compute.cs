@@ -315,7 +315,7 @@ public static class Compute
         return Random.Shared.Next(Math.Min(min, max), Math.Max(min, max) + 1);
     }
 
-    public static int 计算防御(int 下限, int 上限)
+    public static int CalculateDefence(int 下限, int 上限)
     {
         if (上限 >= 下限)
         {
