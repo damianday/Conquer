@@ -10,12 +10,12 @@ public sealed class BuffInfo : DBObject
     public MapObject Caster;
 
     public readonly DataMonitor<ushort> ID;
-    public readonly DataMonitor<TimeSpan> 持续时间;
+    public readonly DataMonitor<TimeSpan> Duration;
     public readonly DataMonitor<TimeSpan> 剩余时间;
-    public readonly DataMonitor<TimeSpan> 处理计时;
+    public readonly DataMonitor<TimeSpan> ProcessTime;
     public readonly DataMonitor<byte> 当前层数;
     public readonly DataMonitor<byte> BuffLevel;
-    public readonly DataMonitor<int> 伤害基数;
+    public readonly DataMonitor<int> DamageBase;
 
     public BuffEffectType Buff效果 => Template.Effect;
     public SkillDamageType 伤害类型 => Template.DamageType;
@@ -41,7 +41,7 @@ public sealed class BuffInfo : DBObject
     public ushort 绑定技能 => Template.BindingSkillLevel;
     public ushort 冷却时间 => Template.SkillCooldown;
     public int 处理延迟 => Template.ProcessDelay;
-    public int 处理间隔 => Template.ProcessInterval;
+    public int ProcessInterval => Template.ProcessInterval;
     public byte 最大层数 => Template.MaxBuffCount;
 
     public ushort Buff分组
@@ -56,7 +56,7 @@ public sealed class BuffInfo : DBObject
 
     public ushort[] 依存列表 => Template.RequireBuff;
 
-    public Stats 属性加成
+    public Stats BonusStats
     {
         get
         {
@@ -72,57 +72,57 @@ public sealed class BuffInfo : DBObject
     {
     }
 
-    public BuffInfo(MapObject 来源, MapObject 目标, ushort id)
+    public BuffInfo(MapObject caster, MapObject target, ushort id)
     {
-        Caster = 来源;
+        Caster = caster;
         ID.V = id;
         当前层数.V = Template.InitialBuffStacks;
-        持续时间.V = TimeSpan.FromMilliseconds(Template.Duration);
-        处理计时.V = TimeSpan.FromMilliseconds(Template.ProcessDelay);
-        if (来源 is PlayerObject 玩家实例)
+        Duration.V = TimeSpan.FromMilliseconds(Template.Duration);
+        ProcessTime.V = TimeSpan.FromMilliseconds(Template.ProcessDelay);
+        if (caster is PlayerObject player)
         {
-            if (Template.BindingSkillLevel != 0 && 玩家实例.Skills.TryGetValue(Template.BindingSkillLevel, out var v))
+            if (Template.BindingSkillLevel != 0 && player.Skills.TryGetValue(Template.BindingSkillLevel, out var v))
             {
                 BuffLevel.V = v.Level.V;
             }
             if (Template.ExtendedDuration && Template.SkillLevelDelay)
             {
-                持续时间.V += TimeSpan.FromMilliseconds(BuffLevel.V * Template.ExtendedTimePerLevel);
+                Duration.V += TimeSpan.FromMilliseconds(BuffLevel.V * Template.ExtendedTimePerLevel);
             }
             if (Template.ExtendedDuration && Template.PlayerStatDelay)
             {
-                持续时间.V += TimeSpan.FromMilliseconds((float)玩家实例[Template.BoundPlayerStat] * Template.StatDelayFactor);
+                Duration.V += TimeSpan.FromMilliseconds((float)player[Template.BoundPlayerStat] * Template.StatDelayFactor);
             }
-            if (Template.ExtendedDuration && Template.HasSpecificInscriptionDelay && 玩家实例.Skills.TryGetValue((ushort)(Template.SpecificInscriptionSkills / 10), out var v2) && v2.InscriptionID == Template.SpecificInscriptionSkills % 10)
+            if (Template.ExtendedDuration && Template.HasSpecificInscriptionDelay && player.Skills.TryGetValue((ushort)(Template.SpecificInscriptionSkills / 10), out var v2) && v2.InscriptionID == Template.SpecificInscriptionSkills % 10)
             {
-                持续时间.V += TimeSpan.FromMilliseconds(Template.InscriptionExtendedTime);
+                Duration.V += TimeSpan.FromMilliseconds(Template.InscriptionExtendedTime);
             }
         }
-        else if (来源 is PetObject 宠物实例)
+        else if (caster is PetObject pet)
         {
-            if (Template.BindingSkillLevel != 0 && 宠物实例.Master.Skills.TryGetValue(Template.BindingSkillLevel, out var v3))
+            if (Template.BindingSkillLevel != 0 && pet.Master.Skills.TryGetValue(Template.BindingSkillLevel, out var v3))
             {
                 BuffLevel.V = v3.Level.V;
             }
             if (Template.ExtendedDuration && Template.SkillLevelDelay)
             {
-                持续时间.V += TimeSpan.FromMilliseconds(BuffLevel.V * Template.ExtendedTimePerLevel);
+                Duration.V += TimeSpan.FromMilliseconds(BuffLevel.V * Template.ExtendedTimePerLevel);
             }
             if (Template.ExtendedDuration && Template.PlayerStatDelay)
             {
-                持续时间.V += TimeSpan.FromMilliseconds((float)宠物实例.Master[Template.BoundPlayerStat] * Template.StatDelayFactor);
+                Duration.V += TimeSpan.FromMilliseconds((float)pet.Master[Template.BoundPlayerStat] * Template.StatDelayFactor);
             }
-            if (Template.ExtendedDuration && Template.HasSpecificInscriptionDelay && 宠物实例.Master.Skills.TryGetValue((ushort)(Template.SpecificInscriptionSkills / 10), out var v4) && v4.InscriptionID == Template.SpecificInscriptionSkills % 10)
+            if (Template.ExtendedDuration && Template.HasSpecificInscriptionDelay && pet.Master.Skills.TryGetValue((ushort)(Template.SpecificInscriptionSkills / 10), out var v4) && v4.InscriptionID == Template.SpecificInscriptionSkills % 10)
             {
-                持续时间.V += TimeSpan.FromMilliseconds(Template.InscriptionExtendedTime);
+                Duration.V += TimeSpan.FromMilliseconds(Template.InscriptionExtendedTime);
             }
         }
-        剩余时间.V = 持续时间.V;
+        剩余时间.V = Duration.V;
         if ((Buff效果 & BuffEffectType.DealDamage) != 0)
         {
             int num = ((Template.DamageBase?.Length > BuffLevel.V) ? Template.DamageBase[BuffLevel.V] : 0);
             float num2 = ((Template.DamageFactor?.Length > BuffLevel.V) ? Template.DamageFactor[BuffLevel.V] : 0f);
-            if (来源 is PlayerObject 玩家实例2 && Template.StrengthenInscriptionID != 0 && 玩家实例2.Skills.TryGetValue((ushort)(Template.StrengthenInscriptionID / 10), out var v5) && v5.InscriptionID == Template.StrengthenInscriptionID % 10)
+            if (caster is PlayerObject 玩家实例2 && Template.StrengthenInscriptionID != 0 && 玩家实例2.Skills.TryGetValue((ushort)(Template.StrengthenInscriptionID / 10), out var v5) && v5.InscriptionID == Template.StrengthenInscriptionID % 10)
             {
                 num += Template.StrengthenInscriptionBase;
                 num2 += Template.InscriptionEnhancementFactor;
@@ -131,37 +131,34 @@ public sealed class BuffInfo : DBObject
             switch (伤害类型)
             {
                 case SkillDamageType.Attack:
-                    num3 = Compute.CalculateAttack(来源[Stat.MinDC], 来源[Stat.MaxDC], 来源[Stat.Luck]);
+                    num3 = Compute.CalculateAttack(caster[Stat.MinDC], caster[Stat.MaxDC], caster[Stat.Luck]);
                     break;
                 case SkillDamageType.Magic:
-                    num3 = Compute.CalculateAttack(来源[Stat.MinMC], 来源[Stat.MaxMC], 来源[Stat.Luck]);
+                    num3 = Compute.CalculateAttack(caster[Stat.MinMC], caster[Stat.MaxMC], caster[Stat.Luck]);
                     break;
                 case SkillDamageType.Taoism:
-                    num3 = Compute.CalculateAttack(来源[Stat.MinSC], 来源[Stat.MaxSC], 来源[Stat.Luck]);
+                    num3 = Compute.CalculateAttack(caster[Stat.MinSC], caster[Stat.MaxSC], caster[Stat.Luck]);
                     break;
                 case SkillDamageType.Piercing:
-                    num3 = Compute.CalculateAttack(来源[Stat.MinNC], 来源[Stat.MaxNC], 来源[Stat.Luck]);
+                    num3 = Compute.CalculateAttack(caster[Stat.MinNC], caster[Stat.MaxNC], caster[Stat.Luck]);
                     break;
                 case SkillDamageType.Archery:
-                    num3 = Compute.CalculateAttack(来源[Stat.MinBC], 来源[Stat.MaxBC], 来源[Stat.Luck]);
+                    num3 = Compute.CalculateAttack(caster[Stat.MinBC], caster[Stat.MaxBC], caster[Stat.Luck]);
                     break;
                 case SkillDamageType.Toxicity:
-                    num3 = 来源[Stat.MaxSC];
+                    num3 = caster[Stat.MaxSC];
                     break;
                 case SkillDamageType.Sacred:
-                    num3 = Compute.CalculateAttack(来源[Stat.MinHC], 来源[Stat.MaxHC], 0);
+                    num3 = Compute.CalculateAttack(caster[Stat.MinHC], caster[Stat.MaxHC], 0);
                     break;
             }
-            伤害基数.V = num + (int)((float)num3 * num2);
+            DamageBase.V = num + (int)((float)num3 * num2);
         }
-        if (目标 is PlayerObject)
+        if (target is PlayerObject)
         {
-            Session.BuffInfoTable.Add(this, indexed: true);
+            Session.BuffInfoTable.Add(this, true);
         }
     }
 
-    public override string ToString()
-    {
-        return Template?.Name;
-    }
+    public override string ToString() => Template?.Name;
 }
