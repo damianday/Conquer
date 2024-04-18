@@ -134,7 +134,7 @@ public static class DataLinkTable
     {
         int num = 0;
         Dictionary<Type, Dictionary<string, int>> dictionary = new Dictionary<Type, Dictionary<string, int>>();
-        SMain.AddSystemLog("开始处理数据关联任务...");
+        SMain.AddSystemLog("Start working on data correlation tasks...");
         while (!数据任务表.IsEmpty)
         {
             if (!数据任务表.TryDequeue(out var result) || result.Index == 0)
@@ -281,13 +281,13 @@ public static class DataLinkTable
                 num++;
             }
         }
-        SMain.AddSystemLog($"数据关联任务处理完成, 任务总数:{num}");
+        SMain.AddSystemLog($"Data correlation task processing completed, total number of tasks:{num}");
         dictionary.Sum((KeyValuePair<Type, Dictionary<string, int>> x) => x.Value.Sum((KeyValuePair<string, int> o) => o.Value));
         foreach (KeyValuePair<Type, Dictionary<string, int>> item4 in dictionary)
         {
             foreach (KeyValuePair<string, int> item5 in item4.Value)
             {
-                SMain.AddSystemLog($"数据类型:[{item4.Key.Name}], 内部字段:[{item5.Key}], 共[{item5.Value}]条数据关联失败");
+                SMain.AddSystemLog($"Data Type:[{item4.Key.Name}], Internal Fields:[{item5.Key}], Total[{item5.Value}]Failed to correlate data");
             }
         }
     }
