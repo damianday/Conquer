@@ -61,16 +61,16 @@ public sealed class PlayerObject : MapObject
 
     public string 打开界面;
 
-    public int 回血次数;
+    public int HealthRestoreCount;
 
-    public int 回魔次数;
+    public int ManaRestoreCount;
 
     public int HealthRegenAmount;
     public int ManaRegenAmount;
 
     public DateTime 邮件时间;
-    public DateTime 药品回血;
-    public DateTime 药品回魔;
+    public DateTime HealthRegenTime;
+    public DateTime ManaRegenTime;
     public DateTime TitleTime;
     public DateTime 特权时间;
     public DateTime PickUpTime;
@@ -1667,18 +1667,20 @@ public sealed class PlayerObject : MapObject
             {
                 base.治疗次数--;
                 CurrentHP += base.治疗基数;
-                base.HealTime = SEngine.CurrentTime.AddMilliseconds(500.0);
+                HealTime = SEngine.CurrentTime.AddMilliseconds(500.0);
             }
-            if (回血次数 > 0 && SEngine.CurrentTime > 药品回血)
+
+            if (HealthRestoreCount > 0 && SEngine.CurrentTime > HealthRegenTime)
             {
-                回血次数--;
-                药品回血 = SEngine.CurrentTime.AddMilliseconds(1000.0);
+                HealthRestoreCount--;
+                HealthRegenTime = SEngine.CurrentTime.AddMilliseconds(1000.0);
                 CurrentHP += (int)Math.Max(0f, (float)HealthRegenAmount * (1f + (float)this[Stat.HPRatePercent] / 10000f));
             }
-            if (回魔次数 > 0 && SEngine.CurrentTime > 药品回魔)
+
+            if (ManaRestoreCount > 0 && SEngine.CurrentTime > ManaRegenTime)
             {
-                回魔次数--;
-                药品回魔 = SEngine.CurrentTime.AddMilliseconds(1000.0);
+                ManaRestoreCount--;
+                ManaRegenTime = SEngine.CurrentTime.AddMilliseconds(1000.0);
                 CurrentMP += (int)Math.Max(0f, (float)ManaRegenAmount * (1f + (float)this[Stat.MPRatePercent] / 10000f));
             }
             if (CurrentMap.MapID == 183 && SEngine.CurrentTime > 经验计时)
@@ -1702,8 +1704,8 @@ public sealed class PlayerObject : MapObject
                 RemoveBuff(item.ID.V);
             }
         }
-        回魔次数 = 0;
-        回血次数 = 0;
+        ManaRestoreCount = 0;
+        HealthRestoreCount = 0;
         base.治疗次数 = 0;
         CurrentTrade?.BreakTrade();
         foreach (PetObject item2 in Pets)
@@ -19730,9 +19732,9 @@ public sealed class PlayerObject : MapObject
                             冷却时间 = v.Cooldown
                         });
                     }
-                    药品回魔 = SEngine.CurrentTime.AddSeconds(v.DrugIntervalTime);
+                    ManaRegenTime = SEngine.CurrentTime.AddSeconds(v.DrugIntervalTime);
                     ManaRegenAmount = v.ManaAmount;
-                    回魔次数 = v.使用次数;
+                    ManaRestoreCount = v.MaxUseCount;
                 }
                 return;
             }
@@ -19758,9 +19760,9 @@ public sealed class PlayerObject : MapObject
                             冷却时间 = v.Cooldown
                         });
                     }
-                    药品回血 = SEngine.CurrentTime.AddSeconds(v.DrugIntervalTime);
+                    HealthRegenTime = SEngine.CurrentTime.AddSeconds(v.DrugIntervalTime);
                     HealthRegenAmount = v.HealthAmount;
-                    回血次数 = v.使用次数;
+                    HealthRestoreCount = v.MaxUseCount;
                 }
                 return;
             }
@@ -23420,9 +23422,9 @@ public sealed class PlayerObject : MapObject
                         });
                     }
                     ConsumeItem(1, v);
-                    药品回血 = SEngine.CurrentTime.AddSeconds(1.0);
+                    HealthRegenTime = SEngine.CurrentTime.AddSeconds(1.0);
                     HealthRegenAmount = 15;
-                    回血次数 = 6;
+                    HealthRestoreCount = 6;
                     break;
                 case "万年雪霜":
                     if (v.GroupID > 0 && v.GroupCooling > 0)
@@ -23490,9 +23492,9 @@ public sealed class PlayerObject : MapObject
                         });
                     }
                     ConsumeItem(1, v);
-                    药品回血 = SEngine.CurrentTime.AddSeconds(1.0);
+                    HealthRegenTime = SEngine.CurrentTime.AddSeconds(1.0);
                     HealthRegenAmount = 10;
-                    回血次数 = 5;
+                    HealthRestoreCount = 5;
                     break;
                 case "金创药(小量)":
                     if (v.GroupID > 0 && v.GroupCooling > 0)
@@ -23514,9 +23516,9 @@ public sealed class PlayerObject : MapObject
                         });
                     }
                     ConsumeItem(1, v);
-                    药品回血 = SEngine.CurrentTime.AddSeconds(1.0);
+                    HealthRegenTime = SEngine.CurrentTime.AddSeconds(1.0);
                     HealthRegenAmount = 5;
-                    回血次数 = 4;
+                    HealthRestoreCount = 4;
                     break;
                 case "万年雪霜包":
                     if (InventorySize - Inventory.Count < 5)
@@ -23784,9 +23786,9 @@ public sealed class PlayerObject : MapObject
                         });
                     }
                     ConsumeItem(1, v);
-                    药品回魔 = SEngine.CurrentTime.AddSeconds(1.0);
+                    ManaRegenTime = SEngine.CurrentTime.AddSeconds(1.0);
                     ManaRegenAmount = 10;
-                    回魔次数 = 3;
+                    ManaRestoreCount = 3;
                     break;
                 case "强效太阳水包":
                     if (InventorySize - Inventory.Count < 5)
@@ -23908,9 +23910,9 @@ public sealed class PlayerObject : MapObject
                         });
                     }
                     ConsumeItem(1, v);
-                    药品回魔 = SEngine.CurrentTime.AddSeconds(1.0);
+                    ManaRegenTime = SEngine.CurrentTime.AddSeconds(1.0);
                     ManaRegenAmount = 16;
-                    回魔次数 = 5;
+                    ManaRestoreCount = 5;
                     break;
                 case "魔法药(中)包":
                     if (InventorySize - Inventory.Count < 5)
@@ -24032,9 +24034,9 @@ public sealed class PlayerObject : MapObject
                         });
                     }
                     ConsumeItem(1, v);
-                    药品回魔 = SEngine.CurrentTime.AddSeconds(1.0);
+                    ManaRegenTime = SEngine.CurrentTime.AddSeconds(1.0);
                     ManaRegenAmount = 25;
-                    回魔次数 = 6;
+                    ManaRestoreCount = 6;
                     break;
                 case "超级魔法药":
                     if (InventorySize - Inventory.Count < 5)
