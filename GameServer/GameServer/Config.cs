@@ -2043,6 +2043,17 @@ public static class Config
     public static bool DebugPackets { get; set; }
     public static bool GuardKillWillDrop { get; set; }
 
+    public static string GoldStoneName;
+    public static string SilverStoneName;
+    public static string IronStoneName;
+    public static string CopperStoneName;
+    public static string BlackIronStoneName;
+
+    public static string Gem1StoneName;
+    public static string Gem2StoneName;
+    public static string Gem3StoneName;
+    public static string Gem4StoneName;
+
     static Config()
     {
         SendPacketsAsync = true;

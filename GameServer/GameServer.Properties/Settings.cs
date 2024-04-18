@@ -15237,4 +15237,139 @@ internal sealed class Settings : ApplicationSettingsBase
             this["GuardKillWillDrop"] = value;
         }
     }
+
+    [UserScopedSetting]
+    [DebuggerNonUserCode]
+    [DefaultSettingValue("GoldOre")]
+    public string GoldStoneName
+    {
+        get
+        {
+            return (string)this["GoldStoneName"];
+        }
+        set
+        {
+            this["GoldStoneName"] = value;
+        }
+    }
+
+    [UserScopedSetting]
+    [DebuggerNonUserCode]
+    [DefaultSettingValue("SilverOre")]
+    public string SilverStoneName
+    {
+        get
+        {
+            return (string)this["SilverStoneName"];
+        }
+        set
+        {
+            this["SilverStoneName"] = value;
+        }
+    }
+
+    [UserScopedSetting]
+    [DebuggerNonUserCode]
+    [DefaultSettingValue("IronOre")]
+    public string IronStoneName
+    {
+        get
+        {
+            return (string)this["IronStoneName"];
+        }
+        set
+        {
+            this["IronStoneName"] = value;
+        }
+    }
+
+    [UserScopedSetting]
+    [DebuggerNonUserCode]
+    [DefaultSettingValue("CopperOre")]
+    public string CopperStoneName
+    {
+        get
+        {
+            return (string)this["CopperStoneName"];
+        }
+        set
+        {
+            this["CopperStoneName"] = value;
+        }
+    }
+
+    [UserScopedSetting]
+    [DebuggerNonUserCode]
+    [DefaultSettingValue("BlackIronOre")]
+    public string BlackIronStoneName
+    {
+        get
+        {
+            return (string)this["BlackIronStoneName"];
+        }
+        set
+        {
+            this["BlackIronStoneName"] = value;
+        }
+    }
+
+    [UserScopedSetting]
+    [DebuggerNonUserCode]
+    [DefaultSettingValue("RubyGem")]
+    public string Gem1StoneName
+    {
+        get
+        {
+            return (string)this["Gem1StoneName"];
+        }
+        set
+        {
+            this["Gem1StoneName"] = value;
+        }
+    }
+
+    [UserScopedSetting]
+    [DebuggerNonUserCode]
+    [DefaultSettingValue("AmethystGem")]
+    public string Gem2StoneName
+    {
+        get
+        {
+            return (string)this["Gem2StoneName"];
+        }
+        set
+        {
+            this["Gem2StoneName"] = value;
+        }
+    }
+
+    [UserScopedSetting]
+    [DebuggerNonUserCode]
+    [DefaultSettingValue("NephriteGem")]
+    public string Gem3StoneName
+    {
+        get
+        {
+            return (string)this["Gem3StoneName"];
+        }
+        set
+        {
+            this["Gem3StoneName"] = value;
+        }
+    }
+
+    [UserScopedSetting]
+    [DebuggerNonUserCode]
+    [DefaultSettingValue("PlatinumGem")]
+    public string Gem4StoneName
+    {
+        get
+        {
+            return (string)this["Gem4StoneName"];
+        }
+        set
+        {
+            this["Gem4StoneName"] = value;
+        }
+    }
 }

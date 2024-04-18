@@ -1692,6 +1692,16 @@ public partial class SMain : Form
         S_特权玛法战将元宝.Value = (Config.特权玛法战将元宝 = Settings.Default.特权玛法战将元宝);
         S_御兽切换开关.Value = (Config.御兽切换开关 = Settings.Default.御兽切换开关);
         Config.GuardKillWillDrop = Settings.Default.GuardKillWillDrop == 1;
+        Config.GoldStoneName = Settings.Default.GoldStoneName;
+        Config.SilverStoneName = Settings.Default.SilverStoneName;
+        Config.IronStoneName = Settings.Default.IronStoneName;
+        Config.CopperStoneName = Settings.Default.CopperStoneName;
+        Config.BlackIronStoneName = Settings.Default.BlackIronStoneName;
+
+        Config.Gem1StoneName = Settings.Default.Gem1StoneName;
+        Config.Gem2StoneName = Settings.Default.Gem2StoneName;
+        Config.Gem3StoneName = Settings.Default.Gem3StoneName;
+        Config.Gem4StoneName = Settings.Default.Gem4StoneName;
 
         Task.Run(delegate
         {
