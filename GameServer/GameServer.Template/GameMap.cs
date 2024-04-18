@@ -17,6 +17,7 @@ public sealed class GameMap
     public bool NoReconnect;
     public byte NoReconnectMapID;
     public bool QuestMap;
+    public byte MineMap;
 
     public static void LoadData()
     {
