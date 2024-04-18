@@ -7764,26 +7764,25 @@ public sealed class PlayerObject : MapObject
 
         if (!Dead && StallState <= 0 && TradeState < 3)
         {
-            GameMap value2;
-            if (!CurrentMap.TeleportGates.TryGetValue((byte)id, out var value))
+            if (!CurrentMap.TeleportGates.TryGetValue((byte)id, out var gate))
             {
                 Enqueue(new GameErrorMessagePacket { ErrorCode = 775 });
             }
-            else if (GetDistance(value.Coordinates) >= 8)
+            else if (GetDistance(gate.Coordinates) >= 8)
             {
                 Enqueue(new GameErrorMessagePacket { ErrorCode = 4609 });
             }
-            else if (!GameMap.DataSheet.TryGetValue(value.ToMapID, out value2))
+            else if (!GameMap.DataSheet.TryGetValue(gate.ToMapID, out var map))
             {
                 Enqueue(new GameErrorMessagePacket { ErrorCode = 775 });
             }
-            else if (CurrentLevel < value2.MinLevel)
+            else if (CurrentLevel < map.MinLevel)
             {
                 Enqueue(new GameErrorMessagePacket { ErrorCode = 4624 });
             }
             else
             {
-                Teleport((CurrentMap.MapID == value2.MapID) ? CurrentMap : MapManager.GetMap(value2.MapID), AreaType.Unknown, value.ToCoordinates);
+                Teleport((CurrentMap.MapID == map.MapID) ? CurrentMap : MapManager.GetMap(map.MapID), AreaType.Unknown, gate.ToCoordinates);
             }
         }
         else
