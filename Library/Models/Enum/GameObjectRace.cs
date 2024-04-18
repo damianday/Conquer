@@ -6,6 +6,6 @@ public enum GameObjectRace
     Archer,         // 弓手
     Taoist,         // 道士
     DragonLance,    // 龙枪
-    通用,             // 通用
+    Any,            // 通用
     Demon           // 电脑
 }
