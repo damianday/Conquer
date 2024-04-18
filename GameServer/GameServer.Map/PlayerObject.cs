@@ -78,7 +78,7 @@ public sealed class PlayerObject : MapObject
     public DateTime TeamTime;
     public DateTime 战具计时;
     public DateTime 回击计时;
-    public DateTime 经验计时;
+    public DateTime ExperienceTime;
     public DateTime 漫游时间;
     public DateTime 充值发放;
     public DateTime 自动刷新背包时间;
@@ -1685,9 +1685,10 @@ public sealed class PlayerObject : MapObject
                 ManaRegenTime = SEngine.CurrentTime.AddMilliseconds(1000.0);
                 CurrentMP += (int)Math.Max(0f, (float)ManaRegenAmount * (1f + (float)this[Stat.MPRatePercent] / 10000f));
             }
-            if (CurrentMap.MapID == 183 && SEngine.CurrentTime > 经验计时)
+
+            if (CurrentMap.MapID == 183 && SEngine.CurrentTime > ExperienceTime)
             {
-                经验计时 = SEngine.CurrentTime.AddSeconds(5.0);
+                ExperienceTime = SEngine.CurrentTime.AddSeconds(5.0);
                 GainExperience(null, (CurrentMap[CurrentPosition].FirstOrDefault((MapObject O) => O is GuardObject guard && guard.GuardID == 6121) == null) ? Config.武斗场经验小 : Config.武斗场经验大);
             }
             Guild?.Process();
@@ -2771,9 +2772,9 @@ public sealed class PlayerObject : MapObject
                 }
             }
         }
-        if (Config.泡点等级开关 == 1 && CurrentMap.IsSafeArea(CurrentPosition) && SEngine.CurrentTime > 经验计时 && Character.CurrentMap.V != 179 && CurrentLevel <= Config.泡点限制等级)
+        if (Config.泡点等级开关 == 1 && CurrentMap.IsSafeArea(CurrentPosition) && SEngine.CurrentTime > ExperienceTime && Character.CurrentMap.V != 179 && CurrentLevel <= Config.泡点限制等级)
         {
-            经验计时 = SEngine.CurrentTime.AddSeconds(Config.泡点秒数控制);
+            ExperienceTime = SEngine.CurrentTime.AddSeconds(Config.泡点秒数控制);
             GainExperience(null, Config.泡点当前经验);
         }
         if (SEngine.CurrentTime > 自动刷新背包时间 && Config.自动整理背包开关 == 1 && Character.CurrentTitle.V == Config.称号范围拾取判断)
