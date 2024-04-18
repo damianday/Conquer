@@ -257,15 +257,9 @@ public abstract class MapObject
         MapManager.RemoveActiveObject(this);
     }
 
-    public int GetDistance(Point location)
-    {
-        return Compute.GetDistance(CurrentPosition, location);
-    }
+    public int GetDistance(Point location) => Compute.GetDistance(CurrentPosition, location);
 
-    public int GetDistance(MapObject obj)
-    {
-        return Compute.GetDistance(CurrentPosition, obj.CurrentPosition);
-    }
+    public int GetDistance(MapObject obj) => Compute.GetDistance(CurrentPosition, obj.CurrentPosition);
 
     public void SendPacket(GamePacket packet)
     {
