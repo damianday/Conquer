@@ -625,11 +625,11 @@ public static class MapManager
 
                 map.Terrain = terrain;
                 map.Cells = new HashSet<MapObject>[map.MapSize.X, map.MapSize.Y];
-                for (int i = 0; i < map.MapSize.X; i++)
+                for (var x = 0; x < map.MapSize.X; x++)
                 {
-                    for (int j = 0; j < map.MapSize.Y; j++)
+                    for (var y = 0; y < map.MapSize.Y; y++)
                     {
-                        map.Cells[i, j] = new HashSet<MapObject>();
+                        map.Cells[x, y] = new HashSet<MapObject>();
                     }
                 }
             }
@@ -710,6 +710,7 @@ public static class MapManager
                 }
             }
         }
+
         foreach (TeleportGate gate in TeleportGate.DataSheet)
         {
             foreach (Map map in Maps.Values)
@@ -718,6 +719,7 @@ public static class MapManager
                     map.TeleportGates.Add(gate.GateID, gate);
             }
         }
+
         foreach (MapGuard guard in MapGuard.DataSheet)
         {
             foreach (Map map in Maps.Values)
@@ -726,6 +728,7 @@ public static class MapManager
                     map.Guards.Add(guard);
             }
         }
+
         foreach (MonsterSpawn spawn in MonsterSpawn.DataSheet)
         {
             foreach (Map map in Maps.Values)
@@ -734,6 +737,7 @@ public static class MapManager
                     map.Spawns.Add(spawn);
             }
         }
+
         foreach (Map map in Maps.Values)
         {
             if (!map.QuestMap)
