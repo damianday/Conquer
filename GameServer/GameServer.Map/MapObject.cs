@@ -1462,7 +1462,7 @@ public abstract class MapObject
         {
             if (详情.SkillDamage > 0)
             {
-                玩家实例3.DamageEquipment(详情.SkillDamage);
+                玩家实例3.DamageAllEquipment(详情.SkillDamage);
             }
             if (详情.SkillDamage > 0)
             {

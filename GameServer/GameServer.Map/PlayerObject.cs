@@ -657,6 +657,8 @@ public sealed class PlayerObject : MapObject
 
     public byte 宠物上限 { get; set; }
 
+    public bool IsEnoughBag => RemainingInventorySpace > 0;
+
     public uint CurrentMount
     {
         get { return Character.CurrentMount.V; }
@@ -721,7 +723,7 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public byte 本期特权
+    public byte CurrentDegree
     {
         get
         {
@@ -1057,7 +1059,7 @@ public sealed class PlayerObject : MapObject
         TitleTime = DateTime.MaxValue;
         PickUpTime = SEngine.CurrentTime.AddSeconds(1.0);
         RecoveryTime = SEngine.CurrentTime.AddSeconds(5.0);
-        特权时间 = ((本期特权 > 0) ? 本期日期.AddDays(30.0) : DateTime.MaxValue);
+        特权时间 = ((CurrentDegree > 0) ? 本期日期.AddDays(30.0) : DateTime.MaxValue);
 
         foreach (EquipmentInfo value80 in Equipment.Values)
         {
@@ -1566,7 +1568,7 @@ public sealed class PlayerObject : MapObject
                         预定特权 = 0;
                     }
                 }
-                if (本期特权 == 0)
+                if (CurrentDegree == 0)
                 {
                     Enqueue(new GameErrorMessagePacket
                     {
@@ -3986,7 +3988,7 @@ public sealed class PlayerObject : MapObject
         {
             Mentor.徒弟经验[Character] += (int)((float)CharacterProgression.MaxExpTable[CurrentLevel] * 0.05f);
             Mentor.师父经验[Character] += (int)((float)CharacterProgression.MaxExpTable[CurrentLevel] * 0.05f);
-            if (本期特权 != 0)
+            if (CurrentDegree != 0)
             {
                 Mentor.徒弟金币[Character] += (int)((float)CharacterProgression.MaxExpTable[CurrentLevel] * 0.01f);
                 Mentor.师父金币[Character] += (int)((float)CharacterProgression.MaxExpTable[CurrentLevel] * 0.02f);
@@ -7272,22 +7274,13 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void DamageWeapon()
+    public void DamageWeapon(int damage)
     {
-        var dmg = SEngine.Random.Next(1, 6);
-        if (Equipment.TryGetValue(0, out var v) && v.Dura.V > 0 && v.Dura.V > 0 && (本期特权 != 5 || !v.CanRepair) && (本期特权 != 4 || !Compute.CalculateProbability(0.5f)))
+        if (Equipment.TryGetValue(0, out var v) && 
+            (CurrentDegree != 5 || !v.CanRepair) && 
+            (CurrentDegree != 4 || !Compute.CalculateProbability(0.5f)))
         {
-            v.Dura.V = Math.Max(0, v.Dura.V - dmg);
-            if (v.Dura.V <= 0 && BonusStats.Remove(v))
-            {
-                RefreshStats();
-            }
-            Enqueue(new DurabilityChangedPacket
-            {
-                Grid = v.Grid.V,
-                Location = v.Location.V,
-                Durability = v.Dura.V
-            });
+            DamageItem(v, damage);
         }
     }
 
@@ -7303,11 +7296,11 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void DamageCombatEquipment(int dmg)
+    public void DamageCombatEquipment(int damage)
     {
         if (Equipment.TryGetValue(15, out var v))
         {
-            v.Dura.V = Math.Max(0, v.Dura.V - dmg);
+            v.Dura.V = Math.Max(0, v.Dura.V - damage);
             if (v.Dura.V <= 0)
             {
                 Enqueue(new DeleteItemPacket
@@ -7331,48 +7324,53 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void DamageEquipment(int dmg)
+    public void DamageAllEquipment(int damage)
     {
-        dmg = Math.Min(10, dmg);
-        foreach (EquipmentInfo value in Equipment.Values)
+        damage = Math.Min(10, damage);
+        foreach (var item in Equipment.Values)
         {
-            if (value.Dura.V > 0 && (本期特权 != 5 || !value.CanRepair) &&
-                (本期特权 != 4 || !Compute.CalculateProbability(0.5f)) &&
-                value.PersistType == PersistentItemType.装备 &&
-                Compute.CalculateProbability((value.Type == ItemType.Armour) ? 1f : 0.1f))
+            if (item.Dura.V > 0 && (CurrentDegree != 5 || !item.CanRepair) &&
+                (CurrentDegree != 4 || !Compute.CalculateProbability(0.5f)) &&
+                item.PersistType == PersistentItemType.装备 &&
+                Compute.CalculateProbability((item.Type == ItemType.Armour) ? 1f : 0.1f))
             {
-                int dura = (value.Dura.V = Math.Max(0, value.Dura.V - dmg));
-                if (dura <= 0 && BonusStats.Remove(value))
-                    RefreshStats();
-
-                Enqueue(new DurabilityChangedPacket
-                {
-                    Grid = value.Grid.V,
-                    Location = value.Location.V,
-                    Durability = value.Dura.V
-                });
+                DamageItem(item, damage);
             }
         }
     }
 
+    public void DamageItem(ItemInfo uitem, int damage)
+    {
+        uitem.Dura.V = Math.Max(0, uitem.Dura.V - damage);
+        if (uitem.Dura.V <= 0 && BonusStats.Remove(uitem))
+            RefreshStats();
+
+        Enqueue(new DurabilityChangedPacket
+        {
+            Grid = uitem.Grid.V,
+            Location = uitem.Location.V,
+            Durability = uitem.Dura.V
+        });
+    }
+
     public void 玩家特权到期()
     {
-        if (本期特权 == 3)
+        if (CurrentDegree == 3)
         {
             玩家称号到期(61);
         }
-        else if (本期特权 == 4)
+        else if (CurrentDegree == 4)
         {
             玩家称号到期(124);
         }
-        else if (本期特权 == 5)
+        else if (CurrentDegree == 5)
         {
             玩家称号到期(131);
         }
-        上期特权 = 本期特权;
+        上期特权 = CurrentDegree;
         上期记录 = 本期记录;
         上期日期 = 本期日期;
-        本期特权 = 0;
+        CurrentDegree = 0;
         本期记录 = 0u;
         本期日期 = default(DateTime);
         特权时间 = DateTime.MaxValue;
@@ -7394,7 +7392,7 @@ public sealed class PlayerObject : MapObject
                 玩家获得称号(131);
                 break;
         }
-        本期特权 = 特权类型;
+        CurrentDegree = 特权类型;
         本期记录 = uint.MaxValue;
         本期日期 = SEngine.CurrentTime;
         特权时间 = 本期日期.AddDays(30.0);
@@ -16880,7 +16878,7 @@ public sealed class PlayerObject : MapObject
             }
             Ingot -= num;
             Character.消耗元宝.V += num;
-            if (本期特权 != 0)
+            if (CurrentDegree != 0)
             {
                 剩余特权[特权类型] += 30;
             }
@@ -16937,7 +16935,7 @@ public sealed class PlayerObject : MapObject
         }
         Ingot -= num2;
         Character.消耗元宝.V += num2;
-        if (本期特权 != 0)
+        if (CurrentDegree != 0)
         {
             剩余特权[特权类型] += 30;
         }
@@ -16974,7 +16972,7 @@ public sealed class PlayerObject : MapObject
         {
             return;
         }
-        if (本期特权 == 0)
+        if (CurrentDegree == 0)
         {
             玩家激活特权(特权类型);
             if ((剩余特权[特权类型] -= 30) <= 0)
@@ -17007,7 +17005,7 @@ public sealed class PlayerObject : MapObject
         switch (特权类型)
         {
             case 1:
-                if (本期特权 != 3 && 本期特权 != 4)
+                if (CurrentDegree != 3 && CurrentDegree != 4)
                 {
                     Enqueue(new GameErrorMessagePacket
                     {
@@ -17039,7 +17037,7 @@ public sealed class PlayerObject : MapObject
                         {
                             字节数组 = 玛法特权描述()
                         });
-                        Gold += ((本期特权 == 3) ? 50000 : 100000);
+                        Gold += ((CurrentDegree == 3) ? 50000 : 100000);
                         Enqueue(new 同步货币数量
                         {
                             Description = 全部货币描述()
@@ -17067,7 +17065,7 @@ public sealed class PlayerObject : MapObject
                                     ErrorCode = 6459
                                 });
                             }
-                            else if (GameItem.DataSheetByName.TryGetValue((本期特权 == 3) ? "名俊铭文石礼包" : "豪杰铭文石礼包", out value4))
+                            else if (GameItem.DataSheetByName.TryGetValue((CurrentDegree == 3) ? "名俊铭文石礼包" : "豪杰铭文石礼包", out value4))
                             {
                                 本期记录 &= (uint)(~(1 << (int)礼包位置));
                                 Enqueue(new 同步特权信息
@@ -17141,7 +17139,7 @@ public sealed class PlayerObject : MapObject
                                     ErrorCode = 6459
                                 });
                             }
-                            else if (GameItem.DataSheetByName.TryGetValue((本期特权 == 3) ? "名俊灵石宝盒" : "豪杰灵石宝盒", out value2))
+                            else if (GameItem.DataSheetByName.TryGetValue((CurrentDegree == 3) ? "名俊灵石宝盒" : "豪杰灵石宝盒", out value2))
                             {
                                 本期记录 &= (uint)(~(1 << (int)礼包位置));
                                 Enqueue(new 同步特权信息
@@ -17185,7 +17183,7 @@ public sealed class PlayerObject : MapObject
                                 {
                                     字节数组 = 玛法特权描述()
                                 });
-                                Inventory[b9] = new ItemInfo(value5, Character, 1, b9, (本期特权 == 3) ? 1 : 2);
+                                Inventory[b9] = new ItemInfo(value5, Character, 1, b9, (CurrentDegree == 3) ? 1 : 2);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b9].ToArray()
@@ -17222,7 +17220,7 @@ public sealed class PlayerObject : MapObject
                                 {
                                     字节数组 = 玛法特权描述()
                                 });
-                                Inventory[b5] = new ItemInfo(value3, Character, 1, b5, (本期特权 == 3) ? 1 : 2);
+                                Inventory[b5] = new ItemInfo(value3, Character, 1, b5, (CurrentDegree == 3) ? 1 : 2);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b5].ToArray()
@@ -17259,7 +17257,7 @@ public sealed class PlayerObject : MapObject
                                 {
                                     字节数组 = 玛法特权描述()
                                 });
-                                Inventory[b] = new ItemInfo(value, Character, 1, b, (本期特权 == 3) ? 2 : 4);
+                                Inventory[b] = new ItemInfo(value, Character, 1, b, (CurrentDegree == 3) ? 2 : 4);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
@@ -27589,7 +27587,7 @@ public sealed class PlayerObject : MapObject
                                         if (Character.CurrentMap.V != Config.可摆摊地图编号)
                                             break;
 
-                                        if (CurrentLevel < Config.可摆摊等级 && 本期特权 == 0)
+                                        if (CurrentLevel < Config.可摆摊等级 && CurrentDegree == 0)
                                         {
                                             CurrentTrade?.BreakTrade();
                                             Enqueue(new GameErrorMessagePacket
@@ -28352,7 +28350,7 @@ public sealed class PlayerObject : MapObject
             });
             Enqueue(new 同步玛法特权
             {
-                玛法特权 = player.本期特权
+                玛法特权 = player.CurrentDegree
             });
         }
         else
@@ -30820,7 +30818,7 @@ public sealed class PlayerObject : MapObject
         if (!Dead && StallState <= 0 && TradeState < 3)
         {
             PlayerObject value;
-            if (CurrentLevel < 30 && 本期特权 == 0)
+            if (CurrentLevel < 30 && CurrentDegree == 0)
             {
                 CurrentTrade?.BreakTrade();
                 Enqueue(new GameErrorMessagePacket
@@ -30891,7 +30889,7 @@ public sealed class PlayerObject : MapObject
         if (!Dead && StallState == 0 && TradeState == 2)
         {
             PlayerObject value;
-            if (CurrentLevel < 30 && 本期特权 == 0)
+            if (CurrentLevel < 30 && CurrentDegree == 0)
             {
                 CurrentTrade?.BreakTrade();
                 Enqueue(new GameErrorMessagePacket
@@ -31193,7 +31191,7 @@ public sealed class PlayerObject : MapObject
     {
         if (!Dead && TradeState < 3 && Character.CurrentMap.V == Config.可摆摊地图编号)
         {
-            if (CurrentLevel < Config.可摆摊等级 && 本期特权 == 0)
+            if (CurrentLevel < Config.可摆摊等级 && CurrentDegree == 0)
             {
                 CurrentTrade?.BreakTrade();
                 Enqueue(new GameErrorMessagePacket
@@ -31261,7 +31259,7 @@ public sealed class PlayerObject : MapObject
                 ErrorCode = 2817
             });
         }
-        if (CurrentLevel < Config.可摆摊等级 && 本期特权 == 0)
+        if (CurrentLevel < Config.可摆摊等级 && CurrentDegree == 0)
         {
             CurrentTrade?.BreakTrade();
             Enqueue(new GameErrorMessagePacket
@@ -32623,9 +32621,9 @@ public sealed class PlayerObject : MapObject
         using MemoryStream memoryStream = new MemoryStream();
         using BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
         binaryWriter.Write(Character.预定特权.V);
-        binaryWriter.Write(本期特权);
-        binaryWriter.Write((本期特权 != 0) ? Compute.TimeSeconds(本期日期) : 0);
-        binaryWriter.Write((本期特权 != 0) ? 本期记录 : 0u);
+        binaryWriter.Write(CurrentDegree);
+        binaryWriter.Write((CurrentDegree != 0) ? Compute.TimeSeconds(本期日期) : 0);
+        binaryWriter.Write((CurrentDegree != 0) ? 本期记录 : 0u);
         binaryWriter.Write(上期特权);
         binaryWriter.Write((上期特权 != 0) ? Compute.TimeSeconds(上期日期) : 0);
         binaryWriter.Write((上期特权 != 0) ? 上期记录 : 0u);

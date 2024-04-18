@@ -1015,7 +1015,10 @@ public class SkillObject
         }
         if (task.扣除武器持久 && HitList.Count != 0)
         {
-            (Caster as PlayerObject).DamageWeapon();
+            if (Caster is PlayerObject player)
+            {
+                player.DamageWeapon(SEngine.Random.Next(1, 6));
+            }
         }
     }
 
