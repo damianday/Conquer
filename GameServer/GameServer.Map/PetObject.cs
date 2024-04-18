@@ -175,7 +175,7 @@ public sealed class PetObject : MapObject
 
     public int HateRange => 4;
     public int HateDuration => 15_000;
-    public int 切换间隔 => 5000;
+    public int TargetSelecthInterval => 5000;
     public ushort PetID => MInfo.ID;
 
     public ushort MaxExp
@@ -218,11 +218,9 @@ public sealed class PetObject : MapObject
         BonusStats[master.Character] = new Stats();
         if (MInfo.InheritsStats != null)
         {
-            InheritStat[] 继承属性 = MInfo.InheritsStats;
-            for (int i = 0; i < 继承属性.Length; i++)
+            foreach (var stat in MInfo.InheritsStats)
             {
-                InheritStat 属性继承 = 继承属性[i];
-                BonusStats[master.Character][属性继承.ConvertStat] = (int)((float)master[属性继承.InheritsStats] * 属性继承.Ratio);
+                BonusStats[master.Character][stat.ConvertStat] = (int)((float)master[stat.InheritsStats] * stat.Ratio);
             }
         }
         RefreshStats();
@@ -250,11 +248,9 @@ public sealed class PetObject : MapObject
         BonusStats[master.Character] = new Stats();
         if (MInfo.InheritsStats != null)
         {
-            InheritStat[] 继承属性 = MInfo.InheritsStats;
-            for (int i = 0; i < 继承属性.Length; i++)
+            foreach (var stat in MInfo.InheritsStats)
             {
-                InheritStat 属性继承 = 继承属性[i];
-                BonusStats[master.Character][属性继承.ConvertStat] = (int)((float)master[属性继承.InheritsStats] * 属性继承.Ratio);
+                BonusStats[master.Character][stat.ConvertStat] = (int)((float)master[stat.InheritsStats] * stat.Ratio);
             }
         }
         RefreshStats();
@@ -368,10 +364,8 @@ public sealed class PetObject : MapObject
         }
         else
         {
-            foreach (KeyValuePair<ushort, BuffInfo> item in Buffs.ToList())
-            {
-                ProcessBuffs(item.Value);
-            }
+            foreach (var buff in Buffs)
+                ProcessBuffs(buff.Value);
 
             foreach (var skill in ActiveSkills)
                 skill.Process();
@@ -407,7 +401,7 @@ public sealed class PetObject : MapObject
                 {
                     ProcessFollow();
                 }
-                else if (UpdateTargets())
+                else if (UpdateTarget())
                 {
                     ProcessAttack();
                 }
@@ -603,7 +597,7 @@ public sealed class PetObject : MapObject
         Despawn();
     }
 
-    public bool UpdateTargets()
+    public bool UpdateTarget()
     {
         if (Target.TargetList.Count == 0)
         {
@@ -611,7 +605,7 @@ public sealed class PetObject : MapObject
         }
         if (Target.Target == null)
         {
-            Target.SearchTime = default(DateTime);
+            Target.SelectTargetTime = default(DateTime);
         }
         else if (Target.Target.Dead)
         {
@@ -637,13 +631,13 @@ public sealed class PetObject : MapObject
         {
             Target.TargetList[Target.Target].HateTime = SEngine.CurrentTime.AddMilliseconds(HateDuration);
         }
-        if (Target.SearchTime < SEngine.CurrentTime && Target.SelectTarget(this))
+        if (Target.SelectTargetTime < SEngine.CurrentTime && Target.SelectTarget(this))
         {
-            Target.SearchTime = SEngine.CurrentTime.AddMilliseconds(切换间隔);
+            Target.SelectTargetTime = SEngine.CurrentTime.AddMilliseconds(TargetSelecthInterval);
         }
         if (Target.Target == null)
         {
-            return UpdateTargets();
+            return UpdateTarget();
         }
         return true;
     }

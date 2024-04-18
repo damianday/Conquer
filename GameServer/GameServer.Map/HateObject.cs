@@ -18,7 +18,7 @@ public sealed class HateObject
     }
 
     public MapObject Target;
-    public DateTime SearchTime;
+    public DateTime SelectTargetTime;
     public readonly Dictionary<MapObject, HateInfo> TargetList;
 
     public HateObject()

@@ -192,7 +192,7 @@ public sealed class GuardObject : MapObject
             }
             if (ActiveAttackTarget && SEngine.CurrentTime > BusyTime && SEngine.CurrentTime > HardStunTime)
             {
-                if (UpdateTargets())
+                if (UpdateTarget())
                 {
                     ProcessAttack();
                 }
@@ -286,7 +286,7 @@ public sealed class GuardObject : MapObject
         UpdateAllNeighbours();
     }
 
-    public bool UpdateTargets()
+    public bool UpdateTarget()
     {
         if (Target.TargetList.Count == 0)
         {
@@ -314,7 +314,7 @@ public sealed class GuardObject : MapObject
         }
         if (Target.Target == null)
         {
-            return UpdateTargets();
+            return UpdateTarget();
         }
         return true;
     }

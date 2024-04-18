@@ -141,7 +141,7 @@ public sealed class MonsterObject : MapObject
     }
 
     public int MoveInterval => Info.MoveInterval;
-    public int TargetSearchInterval => 5000;
+    public int TargetSelecthInterval => 5000;
     public int RoamInterval => Info.RoamInterval;
     public int HateTime => Info.HateTime;
     public int CorpsePreservationDuration => Info.CorpsePreservationDuration;
@@ -336,7 +336,7 @@ public sealed class MonsterObject : MapObject
                     CombatStance = false;
                     AddBuff(Info.PetrochemicalStatusID, this);
                 }
-                else if ((Grade == MonsterGradeType.Boss) ? UpdateTargets() : 更新对象仇恨())
+                else if ((Grade == MonsterGradeType.Boss) ? UpdateBestTarget() : UpdateTarget())
                 {
                     ProcessAttack();
                 }
@@ -1685,7 +1685,7 @@ public sealed class MonsterObject : MapObject
         }
     }
 
-    public bool 更新对象仇恨()
+    public bool UpdateTarget()
     {
         if (Target.TargetList.Count == 0)
         {
@@ -1693,7 +1693,7 @@ public sealed class MonsterObject : MapObject
         }
         if (Target.Target == null)
         {
-            Target.SearchTime = default(DateTime);
+            Target.SelectTargetTime = default(DateTime);
         }
         else if (Target.Target.Dead)
         {
@@ -1715,18 +1715,18 @@ public sealed class MonsterObject : MapObject
         {
             Target.TargetList[Target.Target].HateTime = SEngine.CurrentTime.AddMilliseconds(HateTime);
         }
-        if (Target.SearchTime < SEngine.CurrentTime && Target.SelectTarget(this))
+        if (Target.SelectTargetTime < SEngine.CurrentTime && Target.SelectTarget(this))
         {
-            Target.SearchTime = SEngine.CurrentTime.AddMilliseconds(TargetSearchInterval);
+            Target.SelectTargetTime = SEngine.CurrentTime.AddMilliseconds(TargetSelecthInterval);
         }
         if (Target.Target == null)
         {
-            return 更新对象仇恨();
+            return UpdateTarget();
         }
         return true;
     }
 
-    public bool UpdateTargets()
+    public bool UpdateBestTarget()
     {
         if (Target.TargetList.Count == 0)
         {
@@ -1734,7 +1734,7 @@ public sealed class MonsterObject : MapObject
         }
         if (Target.Target == null)
         {
-            Target.SearchTime = default(DateTime);
+            Target.SelectTargetTime = default(DateTime);
         }
         else if (Target.Target.Dead)
         {
@@ -1756,13 +1756,13 @@ public sealed class MonsterObject : MapObject
         {
             Target.TargetList[Target.Target].HateTime = SEngine.CurrentTime.AddMilliseconds(HateTime);
         }
-        if (Target.SearchTime < SEngine.CurrentTime && Target.SelectBestTarget(this))
+        if (Target.SelectTargetTime < SEngine.CurrentTime && Target.SelectBestTarget(this))
         {
-            Target.SearchTime = SEngine.CurrentTime.AddMilliseconds(TargetSearchInterval);
+            Target.SelectTargetTime = SEngine.CurrentTime.AddMilliseconds(TargetSelecthInterval);
         }
         if (Target.Target == null)
         {
-            return 更新对象仇恨();
+            return UpdateTarget();
         }
         return true;
     }
