@@ -17,7 +17,6 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-		<Reference Include="System.Core" />
 		<Reference Include="AlibabaCloud.SDK.Dysmsapi20170525">
 			<HintPath>..\AlibabaCloud.SDK.Dysmsapi20170525.dll</HintPath>
 		</Reference>
