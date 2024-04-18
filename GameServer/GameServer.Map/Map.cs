@@ -109,8 +109,8 @@ public sealed class Map
         Items = new HashSet<ItemObject>();
         Objects = new HashSet<MapObject>();
         TeleportGates = new Dictionary<byte, TeleportGate>();
-        this.MapInfo = info;
-        this.RouteID = 路线编号;
+        MapInfo = info;
+        RouteID = 路线编号;
     }
 
     public void Process()
