@@ -40,14 +40,14 @@ public sealed class DictionaryMonitor<TK, TV> : IEnumerable<KeyValuePair<TK, TV>
         m_Data = data;
     }
 
-    public bool ContainsKey(TK k)
+    public bool ContainsKey(TK key)
     {
-        return m_Value.ContainsKey(k);
+        return m_Value.ContainsKey(key);
     }
 
-    public bool TryGetValue(TK k, out TV v)
+    public bool TryGetValue(TK key, out TV value)
     {
-        return m_Value.TryGetValue(k, out v);
+        return m_Value.TryGetValue(key, out value);
     }
 
     public void Add(TK key, TV value)

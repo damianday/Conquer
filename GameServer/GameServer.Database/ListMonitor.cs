@@ -6,143 +6,136 @@ namespace GameServer.Database;
 
 public sealed class ListMonitor<T> : IEnumerable<T>, IEnumerable
 {
-    public delegate void 更改委托(List<T> 更改列表);
+    public delegate void ChangedDelegate(List<T> 更改列表);
 
-    private List<T> v;
-
-    private readonly DBObject 对应数据;
+    private List<T> m_Value;
+    private readonly DBObject m_Data;
 
     public T Last
     {
         get
         {
-            if (v.Count != 0)
-            {
-                return v.Last();
-            }
+            if (m_Value.Count != 0)
+                return m_Value.Last();
             return default(T);
         }
     }
 
-    public T this[int 索引]
+    public T this[int index]
     {
         get
         {
-            if (索引 >= v.Count)
-            {
+            if (index >= m_Value.Count)
                 return default(T);
-            }
-            return v[索引];
+            return m_Value[index];
         }
         set
         {
-            if (索引 < v.Count)
+            if (index < m_Value.Count)
             {
-                v[索引] = value;
-                this.更改事件?.Invoke(v.ToList());
-                设置状态();
+                m_Value[index] = value;
+                Changed?.Invoke(m_Value.ToList());
+                Updated();
             }
         }
     }
 
-    public IList IList => v;
+    public IList IList => m_Value;
+    public int Count => m_Value.Count;
+    public event ChangedDelegate Changed;
 
-    public int Count => v.Count;
-
-    public event 更改委托 更改事件;
-
-    public ListMonitor(DBObject 数据)
+    public ListMonitor(DBObject data)
     {
-        v = new List<T>();
-        对应数据 = 数据;
+        m_Value = new List<T>();
+        m_Data = data;
     }
 
     public IEnumerator<T> GetEnumerator()
     {
-        return v.GetEnumerator();
+        return m_Value.GetEnumerator();
     }
 
     IEnumerator IEnumerable.GetEnumerator()
     {
-        return ((IEnumerable)v).GetEnumerator();
+        return ((IEnumerable)m_Value).GetEnumerator();
     }
 
     IEnumerator<T> IEnumerable<T>.GetEnumerator()
     {
-        return v.GetEnumerator();
+        return m_Value.GetEnumerator();
     }
 
     public override string ToString()
     {
-        return v?.Count.ToString();
+        return m_Value?.Count.ToString();
     }
 
-    private void 设置状态()
+    private void Updated()
     {
-        if (对应数据 != null)
+        if (m_Data != null)
         {
-            对应数据.IsModified = true;
+            m_Data.IsModified = true;
             Session.Modified = true;
         }
     }
 
     public List<T> GetRange(int index, int count)
     {
-        return v.GetRange(index, count);
+        return m_Value.GetRange(index, count);
     }
 
-    public void Add(T Tv)
+    public void Add(T item)
     {
-        v.Add(Tv);
-        this.更改事件?.Invoke(v.ToList());
-        设置状态();
+        m_Value.Add(item);
+        this.Changed?.Invoke(m_Value.ToList());
+        Updated();
     }
 
-    public void Insert(int index, T Tv)
+    public void Insert(int index, T item)
     {
-        v.Insert(index, Tv);
-        this.更改事件?.Invoke(v.ToList());
-        设置状态();
+        m_Value.Insert(index, item);
+        this.Changed?.Invoke(m_Value.ToList());
+        Updated();
     }
 
-    public void Remove(T Tv)
+    public void Remove(T item)
     {
-        if (v.Remove(Tv))
+        if (m_Value.Remove(item))
         {
-            this.更改事件?.Invoke(v.ToList());
-            设置状态();
+            this.Changed?.Invoke(m_Value.ToList());
+            Updated();
         }
     }
 
     public void RemoveAt(int i)
     {
-        if (v.Count > i)
+        if (m_Value.Count > i)
         {
-            v.RemoveAt(i);
-            this.更改事件?.Invoke(v.ToList());
-            设置状态();
+            m_Value.RemoveAt(i);
+            this.Changed?.Invoke(m_Value.ToList());
+            Updated();
         }
     }
 
     public void Clear()
     {
-        if (v.Count > 0)
+        if (m_Value.Count > 0)
         {
-            v.Clear();
-            this.更改事件?.Invoke(v.ToList());
-            设置状态();
+            m_Value.Clear();
+            this.Changed?.Invoke(m_Value.ToList());
+            Updated();
         }
     }
 
-    public void SetValue(List<T> Lv)
+    public void SetValue(List<T> list)
     {
-        v = Lv;
-        this.更改事件?.Invoke(v.ToList());
-        设置状态();
+        m_Value = list;
+        this.Changed?.Invoke(m_Value.ToList());
+        Updated();
     }
 
-    public void QuietlyAdd(T Tv)
+    public void QuietlyAdd(T item)
     {
-        v.Add(Tv);
+        m_Value.Add(item);
     }
 }
