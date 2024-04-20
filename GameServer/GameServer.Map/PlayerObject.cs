@@ -68,7 +68,7 @@ public sealed class PlayerObject : MapObject
     public int HealthRegenAmount;
     public int ManaRegenAmount;
 
-    public DateTime 邮件时间;
+    public DateTime MailTime;
     public DateTime HealthRegenTime;
     public DateTime ManaRegenTime;
     public DateTime TitleTime;
@@ -79,7 +79,7 @@ public sealed class PlayerObject : MapObject
     public DateTime 战具计时;
     public DateTime 回击计时;
     public DateTime ExperienceTime;
-    public DateTime 漫游时间;
+    public DateTime RoamTime;
     public DateTime 充值发放;
     public DateTime 自动刷新背包时间;
     public DateTime VIP奖励时间;
@@ -1609,42 +1609,47 @@ public sealed class PlayerObject : MapObject
         base.Process();
     }
 
-    public override void Die(MapObject obj, bool skillDeath)
+    public override void Die(MapObject attacker, bool skillDeath)
     {
-        base.Die(obj, skillDeath);
-        foreach (BuffInfo item in Buffs.Values)
+        base.Die(attacker, skillDeath);
+
+        foreach (var buff in Buffs.Values)
         {
-            if (item.死亡消失)
+            if (buff.死亡消失)
             {
-                RemoveBuff(item.ID.V);
+                RemoveBuff(buff.ID.V);
             }
         }
+
         ManaRestoreCount = 0;
         HealthRestoreCount = 0;
-        base.治疗次数 = 0;
+        HealCount = 0;
+
         CurrentTrade?.BreakTrade();
-        foreach (PetObject item2 in Pets)
-        {
-            item2.Die(null, false);
-        }
+
+        foreach (var pet in Pets)
+            pet.Die(null, false);
+ 
         Enqueue(new 离开战斗姿态
         {
             对象编号 = ObjectID
         });
         Enqueue(new 发送复活信息());
+
         PlayerObject 玩家实例2 = null;
-        if (obj is PlayerObject 玩家实例3)
+        if (attacker is PlayerObject 玩家实例3)
         {
             玩家实例2 = 玩家实例3;
         }
-        else if (obj is PetObject 宠物实例2)
+        else if (attacker is PetObject pet)
         {
-            玩家实例2 = 宠物实例2.Master;
+            玩家实例2 = pet.Master;
         }
-        else if (obj is TrapObject 陷阱实例2 && 陷阱实例2.Caster is PlayerObject 玩家实例4)
+        else if (attacker is TrapObject trap && trap.Caster is PlayerObject caster)
         {
-            玩家实例2 = 玩家实例4;
+            玩家实例2 = caster;
         }
+
         if (玩家实例2 != null && !CurrentMap.自由区内(CurrentPosition) && !GreyName && !RedName && (MapManager.SandCityStage < 2 || (CurrentMap.MapID != 152 && CurrentMap.MapID != 178)) && Config.杀人PK红名开关 == 0)
         {
             玩家实例2.PKPoint += 50;
@@ -1653,6 +1658,7 @@ public sealed class PlayerObject : MapObject
                 玩家实例2.DecreaseWeaponLuck();
             }
         }
+
         if (玩家实例2 != null)
         {
             Enqueue(new 同步气泡提示
@@ -1671,6 +1677,7 @@ public sealed class PlayerObject : MapObject
             string text2 = ((玩家实例2.Guild != null) ? $"[{玩家实例2.Guild}]行会的" : "");
             NetworkManager.SendAnnouncement($"{text}[{this}]在{CurrentMap}被{text2}[{玩家实例2}]击杀");
         }
+
         if (Config.狂暴货币格式 == 1 && 玩家实例2 != null && Titles.ContainsKey(Config.狂暴称号格式) && GameTitle.DataSheet.TryGetValue(Config.狂暴称号格式, out var value))
         {
             玩家称号到期(Config.狂暴称号格式);
@@ -1765,6 +1772,7 @@ public sealed class PlayerObject : MapObject
                 }
             }
         }
+
         if (Config.狂暴货币格式 == 0 && 玩家实例2 != null)
         {
             if (Titles.ContainsKey(Config.狂暴称号格式) && GameTitle.DataSheet.TryGetValue(Config.狂暴称号格式, out var value2))
@@ -1858,6 +1866,7 @@ public sealed class PlayerObject : MapObject
                 }
             }
         }
+
         if (Config.狂暴货币格式 == 2 && 玩家实例2 != null && Titles.ContainsKey(Config.狂暴称号格式) && GameTitle.DataSheet.TryGetValue(Config.狂暴称号格式, out var value3))
         {
             玩家称号到期(Config.狂暴称号格式);
@@ -1967,10 +1976,12 @@ public sealed class PlayerObject : MapObject
                 }
             }
         }
+
         if (玩家实例2 == null || !CurrentMap.掉落装备(CurrentPosition, RedName))
         {
             return;
         }
+
         foreach (EquipmentInfo item3 in Equipment.Values.ToList())
         {
             if (item3.CanDrop && Compute.CalculateProbability(Config.死亡掉落身上几率) && !HasResurrectionRing && ResurrectionRingReady)
@@ -1989,6 +2000,7 @@ public sealed class PlayerObject : MapObject
                 });
             }
         }
+
         foreach (ItemInfo item4 in Inventory.Values.ToList())
         {
             if (item4.CanDrop && Compute.CalculateProbability(Config.死亡掉落背包几率) && !HasResurrectionRing && ResurrectionRingReady)
@@ -2022,6 +2034,7 @@ public sealed class PlayerObject : MapObject
                 }
             }
         }
+
         if (CurrentMap.MapID == 183 && Config.武斗场杀人开关 == 1)
         {
             GainExperience(null, Config.武斗场杀人经验);
@@ -28828,7 +28841,7 @@ public sealed class PlayerObject : MapObject
     {
         if (数据.Length >= 94 && 数据.Length <= 839)
         {
-            if (SEngine.CurrentTime < 邮件时间)
+            if (SEngine.CurrentTime < MailTime)
             {
                 Enqueue(new SocialErrorPacket
                 {
@@ -31622,7 +31635,7 @@ public sealed class PlayerObject : MapObject
 
     public void 玩家拾取移动(Point 终点坐标)
     {
-        if (SEngine.CurrentTime < 漫游时间)
+        if (SEngine.CurrentTime < RoamTime)
         {
             return;
         }
@@ -31638,7 +31651,7 @@ public sealed class PlayerObject : MapObject
                 }
             }
         }
-        漫游时间 = SEngine.CurrentTime.AddMilliseconds(50.0);
+        RoamTime = SEngine.CurrentTime.AddMilliseconds(50.0);
     }
 
     public void 获得最近对象(MapObject 待判断目标)
@@ -31899,7 +31912,7 @@ public sealed class PlayerObject : MapObject
                     for (int i = 0; i < 4; i++)
                     {
                         Task.Delay(100);
-                        if (!CanAutoRun() || SEngine.CurrentTime < 漫游时间)
+                        if (!CanAutoRun() || SEngine.CurrentTime < RoamTime)
                         {
                             continue;
                         }
@@ -31915,7 +31928,7 @@ public sealed class PlayerObject : MapObject
                                 }
                             }
                         }
-                        漫游时间 = SEngine.CurrentTime.AddMilliseconds(RunInterval + SEngine.Random.Next(100));
+                        RoamTime = SEngine.CurrentTime.AddMilliseconds(RunInterval + SEngine.Random.Next(100));
                         return;
                     }
                 }
@@ -32265,7 +32278,7 @@ public sealed class PlayerObject : MapObject
                     for (int i = 0; i < 4; i++)
                     {
                         Task.Delay(100);
-                        if (!CanAutoRun() || SEngine.CurrentTime < 漫游时间)
+                        if (!CanAutoRun() || SEngine.CurrentTime < RoamTime)
                         {
                             continue;
                         }
@@ -32281,7 +32294,7 @@ public sealed class PlayerObject : MapObject
                                 }
                             }
                         }
-                        漫游时间 = SEngine.CurrentTime.AddMilliseconds(RunInterval + SEngine.Random.Next(100));
+                        RoamTime = SEngine.CurrentTime.AddMilliseconds(RunInterval + SEngine.Random.Next(100));
                         return;
                     }
                 }
@@ -32331,7 +32344,7 @@ public sealed class PlayerObject : MapObject
         for (int i = 0; i < 4; i++)
         {
             Task.Delay(200);
-            if (!CanAutoRun() || SEngine.CurrentTime < 漫游时间)
+            if (!CanAutoRun() || SEngine.CurrentTime < RoamTime)
             {
                 continue;
             }
@@ -32348,7 +32361,7 @@ public sealed class PlayerObject : MapObject
                     }
                 }
             }
-            漫游时间 = SEngine.CurrentTime.AddMilliseconds(RunInterval + SEngine.Random.Next(100));
+            RoamTime = SEngine.CurrentTime.AddMilliseconds(RunInterval + SEngine.Random.Next(100));
             CurrentAutoState = AutoSystem.RoamingComplete;
             SearchMonster();
             break;
