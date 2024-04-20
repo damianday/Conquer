@@ -303,8 +303,8 @@ public sealed class MonsterObject : MapObject
         }
         else
         {
-            foreach (KeyValuePair<ushort, BuffInfo> item in Buffs.ToList())
-                ProcessBuffs(item.Value);
+            foreach (var buff in Buffs)
+                ProcessBuffs(buff.Value);
 
             foreach (var skill in ActiveSkills)
                 skill.Process();
