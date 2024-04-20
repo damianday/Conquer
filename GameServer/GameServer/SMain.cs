@@ -32,7 +32,7 @@ public partial class SMain : Form
     private static System.Data.DataTable 掉落数据表;
     private static System.Data.DataTable 封禁数据表;
 
-    private static Dictionary<CharacterInfo, DataRow> 角色数据行;
+    private static Dictionary<CharacterInfo, DataRow> RoleDataRows;
     private static Dictionary<DataRow, CharacterInfo> 数据行角色;
     private static Dictionary<GameMap, DataRow> 地图数据行;
     private static Dictionary<MonsterInfo, DataRow> 怪物数据行;
@@ -102,7 +102,7 @@ public partial class SMain : Form
         背包数据表 = new System.Data.DataTable("装备数据表");
         仓库数据表 = new System.Data.DataTable("装备数据表");
         角色数据表 = new System.Data.DataTable("角色数据表");
-        角色数据行 = new Dictionary<CharacterInfo, DataRow>();
+        RoleDataRows = new Dictionary<CharacterInfo, DataRow>();
         数据行角色 = new Dictionary<DataRow, CharacterInfo>();
         角色数据表.Columns.Add("角色名字", typeof(string));
         角色数据表.Columns.Add("角色封禁", typeof(string));
@@ -330,18 +330,18 @@ public partial class SMain : Form
 
     public static void 添加数据显示(CharacterInfo 数据)
     {
-        if (!角色数据行.ContainsKey(数据))
+        if (!RoleDataRows.ContainsKey(数据))
         {
-            角色数据行[数据] = 角色数据表.NewRow();
-            角色数据表.Rows.Add(角色数据行[数据]);
+            RoleDataRows[数据] = 角色数据表.NewRow();
+            角色数据表.Rows.Add(RoleDataRows[数据]);
         }
     }
 
     public static void 修改数据显示(CharacterInfo 数据, string 表头文本, string 表格内容)
     {
-        if (角色数据行.ContainsKey(数据))
+        if (RoleDataRows.ContainsKey(数据))
         {
-            角色数据行[数据][表头文本] = 表格内容;
+            RoleDataRows[数据][表头文本] = 表格内容;
         }
     }
 
@@ -349,7 +349,7 @@ public partial class SMain : Form
     {
         Main?.BeginInvoke((MethodInvoker)delegate
         {
-            if (!角色数据行.ContainsKey(角色))
+            if (!RoleDataRows.ContainsKey(角色))
             {
                 DataRow dataRow = 角色数据表.NewRow();
                 dataRow["角色名字"] = 角色;
@@ -385,7 +385,7 @@ public partial class SMain : Form
                 dataRow["当前PK值"] = 角色.CurrentPKPoint;
                 dataRow["当前坐标"] = $"{角色.CurrentPosition.V.X}, {角色.CurrentPosition.V.Y}";
                 dataRow["激活标识"] = 角色.激活标识;
-                角色数据行[角色] = dataRow;
+                RoleDataRows[角色] = dataRow;
                 数据行角色[dataRow] = 角色;
                 角色数据表.Rows.Add(dataRow);
             }
@@ -396,7 +396,7 @@ public partial class SMain : Form
     {
         Main?.BeginInvoke((MethodInvoker)delegate
         {
-            if (角色数据行.TryGetValue(角色, out var value))
+            if (RoleDataRows.TryGetValue(角色, out var value))
             {
                 数据行角色.Remove(value);
                 角色数据表.Rows.Remove(value);
@@ -486,13 +486,13 @@ public partial class SMain : Form
         }
     }
 
-    public static void UpdateCharacter(CharacterInfo 角色, string 表头, object 内容)
+    public static void UpdateCharacter(CharacterInfo character, string key, object value)
     {
         Main?.BeginInvoke((MethodInvoker)delegate
         {
-            if (角色数据行.TryGetValue(角色, out var value))
+            if (RoleDataRows.TryGetValue(character, out var row))
             {
-                value[表头] = 内容;
+                row[key] = value;
             }
         });
     }
