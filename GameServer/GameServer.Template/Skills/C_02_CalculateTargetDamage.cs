@@ -5,7 +5,7 @@ namespace GameServer.Template;
 public sealed class C_02_CalculateTargetDamage : SkillTask
 {
     public bool 点爆命中目标;
-    public ushort 点爆标记编号;
+    public ushort[] 点爆标记编号;
     public byte 点爆需要层数;
     public bool 失败添加层数;
     public int[] 技能伤害基数;

@@ -861,15 +861,25 @@ public class SkillObject
         float num9 = 1f;
         foreach (var hitter in HitList)
         {
-            if (task.点爆命中目标 && hitter.Value.Target.Buffs.ContainsKey(task.点爆标记编号))
+            var flag = false;
+            if (task.点爆标记编号 != null)
             {
-                hitter.Value.Target.移除Buff时处理(task.点爆标记编号);
+                foreach (var value in task.点爆标记编号)
+                {
+                    if (task.点爆命中目标 && hitter.Value.Target.Buffs.ContainsKey(value))
+                    {
+                        hitter.Value.Target.移除Buff时处理(value);
+                    }
+                    else if (task.点爆命中目标 && task.失败添加层数)
+                    {
+                        hitter.Value.Target.AddBuff(value, Caster);
+                        flag = true;
+                    }
+                }
             }
-            else if (task.点爆命中目标 && task.失败添加层数)
-            {
-                hitter.Value.Target.AddBuff(task.点爆标记编号, Caster);
-                continue;
-            }
+
+            if (flag) continue;
+
             hitter.Value.Target.被动受伤时处理(this, task, hitter.Value, num9);
             if ((hitter.Value.SkillFeedback & SkillHitFeedback.Lose) == 0)
             {
