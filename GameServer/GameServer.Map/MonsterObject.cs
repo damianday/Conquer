@@ -25,7 +25,7 @@ public sealed class MonsterObject : MapObject
     public Map BirthMap;
 
     public GameSkill NormalAttackSkill;
-    public GameSkill RandomAttackSkill;
+    public List<GameSkill> RandomAttackSkill = new List<GameSkill>();
     public GameSkill EnterCombatSkill;
     public GameSkill ExitCombatSkill;
     public GameSkill BirthSkill;
@@ -177,8 +177,14 @@ public sealed class MonsterObject : MapObject
         if (!string.IsNullOrEmpty(Info.NormalAttackSkills))
             GameSkill.DataSheet.TryGetValue(Info.NormalAttackSkills, out NormalAttackSkill);
 
-        if (!string.IsNullOrEmpty(Info.ProbabilityTriggerSkills))
-            GameSkill.DataSheet.TryGetValue(Info.ProbabilityTriggerSkills, out RandomAttackSkill);
+        foreach (var name in Info.RandomTriggerSkills)
+        {
+            if (!string.IsNullOrEmpty(name))
+            {
+                if (GameSkill.DataSheet.TryGetValue(name, out var skill))
+                    RandomAttackSkill.Add(skill);
+            }
+        }
 
         if (!string.IsNullOrEmpty(Info.EnterCombatSkills))
             GameSkill.DataSheet.TryGetValue(Info.EnterCombatSkills, out EnterCombatSkill);
@@ -221,8 +227,15 @@ public sealed class MonsterObject : MapObject
         if (!string.IsNullOrEmpty(Info.NormalAttackSkills))
             GameSkill.DataSheet.TryGetValue(Info.NormalAttackSkills, out NormalAttackSkill);
 
-        if (!string.IsNullOrEmpty(Info.ProbabilityTriggerSkills))
-            GameSkill.DataSheet.TryGetValue(Info.ProbabilityTriggerSkills, out RandomAttackSkill);
+        RandomAttackSkill.Clear();
+        foreach (var name in Info.RandomTriggerSkills)
+        {
+            if (!string.IsNullOrEmpty(name))
+            {
+                if (GameSkill.DataSheet.TryGetValue(name, out var skill))
+                    RandomAttackSkill.Add(skill);
+            }
+        }
  
         if (!string.IsNullOrEmpty(Info.EnterCombatSkills))
             GameSkill.DataSheet.TryGetValue(Info.EnterCombatSkills, out EnterCombatSkill);
@@ -501,10 +514,19 @@ public sealed class MonsterObject : MapObject
         if (CheckStatus(GameObjectState.BusyGreen | GameObjectState.Paralyzed | GameObjectState.Unconscious))
             return;
 
-        GameSkill skill;
-        if (RandomAttackSkill != null && (!Cooldowns.ContainsKey(RandomAttackSkill.OwnSkillID | 0x1000000) || SEngine.CurrentTime > Cooldowns[RandomAttackSkill.OwnSkillID | 0x1000000]) && Compute.CalculateProbability(RandomAttackSkill.CalculateTriggerProbability))
+        GameSkill skill = null;
+
+        if (RandomAttackSkill.Count > 0)
         {
-            skill = RandomAttackSkill;
+            var rskill = RandomAttackSkill[SEngine.Random.Next(RandomAttackSkill.Count)];
+
+            if (rskill != null && 
+                (!Cooldowns.ContainsKey(rskill.OwnSkillID | 0x1000000) || SEngine.CurrentTime > Cooldowns[rskill.OwnSkillID | 0x1000000]) &&
+                Compute.CalculateProbability(rskill.CalculateLuckyProbability ? Compute.CalcLuck(this[Stat.Luck]) : rskill.CalculateTriggerProbability))
+                //Compute.CalculateProbability(rskill.CalculateTriggerProbability))
+            {
+                skill = rskill;
+            }
         }
         else
         {

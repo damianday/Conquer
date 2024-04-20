@@ -29,7 +29,7 @@ public sealed class MonsterInfo
     public byte RangeHate;
     public ushort HateTime;
     public string NormalAttackSkills;
-    public string ProbabilityTriggerSkills;
+    public string[] RandomTriggerSkills;
     public string EnterCombatSkills;
     public string ExitCombatSkills;
     public string MoveReleaseSkill;

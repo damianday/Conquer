@@ -20,7 +20,7 @@ public sealed class PetObject : MapObject
     public HateObject Target;
 
     public GameSkill NormalAttackSkill;
-    public GameSkill RandomAttackSkill;
+    public List<GameSkill> RandomAttackSkill = new List<GameSkill>();
     public GameSkill EnterCombatSkill;
     public GameSkill ExitCombatSkill;
     public GameSkill DeathSkill;
@@ -327,8 +327,15 @@ public sealed class PetObject : MapObject
         if (!string.IsNullOrEmpty(MInfo.NormalAttackSkills))
             GameSkill.DataSheet.TryGetValue(MInfo.NormalAttackSkills, out NormalAttackSkill);
 
-        if (!string.IsNullOrEmpty(MInfo.ProbabilityTriggerSkills))
-            GameSkill.DataSheet.TryGetValue(MInfo.ProbabilityTriggerSkills, out RandomAttackSkill);
+        RandomAttackSkill.Clear();
+        foreach (var name in MInfo.RandomTriggerSkills)
+        {
+            if (!string.IsNullOrEmpty(name))
+            {
+                if (GameSkill.DataSheet.TryGetValue(name, out var skill))
+                    RandomAttackSkill.Add(skill);
+            }
+        }
 
         if (!string.IsNullOrEmpty(MInfo.EnterCombatSkills))
             GameSkill.DataSheet.TryGetValue(MInfo.EnterCombatSkills, out EnterCombatSkill);
@@ -476,10 +483,18 @@ public sealed class PetObject : MapObject
         if (CheckStatus(GameObjectState.Paralyzed | GameObjectState.Unconscious))
             return;
 
-        GameSkill skill;
-        if (RandomAttackSkill != null && (!Cooldowns.ContainsKey(NormalAttackSkill.OwnSkillID | 0x1000000) || SEngine.CurrentTime > Cooldowns[NormalAttackSkill.OwnSkillID | 0x1000000]) && Compute.CalculateProbability(RandomAttackSkill.CalculateLuckyProbability ? Compute.CalcLuck(this[Stat.Luck]) : RandomAttackSkill.CalculateTriggerProbability))
+        GameSkill skill = null;
+
+        if (RandomAttackSkill.Count > 0)
         {
-            skill = RandomAttackSkill;
+            var rskill = RandomAttackSkill[SEngine.Random.Next(RandomAttackSkill.Count)];
+
+            if (rskill != null && 
+                (!Cooldowns.ContainsKey(NormalAttackSkill.OwnSkillID | 0x1000000) || SEngine.CurrentTime > Cooldowns[NormalAttackSkill.OwnSkillID | 0x1000000]) &&
+                Compute.CalculateProbability(rskill.CalculateLuckyProbability ? Compute.CalcLuck(this[Stat.Luck]) : rskill.CalculateTriggerProbability))
+            {
+                skill = rskill;
+            }
         }
         else
         {
