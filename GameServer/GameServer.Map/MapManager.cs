@@ -772,6 +772,9 @@ public static class MapManager
             {
                 map.TotalFixedMonsters = (uint)map.Spawns.Sum((MonsterSpawn O) => O.Spawns.Sum((MonsterSpawnInfo X) => X.SpawnCount));
             }
+
+            map.MakeStoneMines();
+
             SMain.添加地图数据(map);
         }
     }

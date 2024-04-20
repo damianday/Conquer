@@ -13,6 +13,35 @@ using GamePackets.Server;
 
 namespace GameServer.Map;
 
+public enum MineType : byte
+{
+    Mine,
+    Mine2,
+    Mine3
+}
+
+public class StoneMineInfo
+{
+    public MineType Mine;
+    public int MineCount;
+    public int MineFillCount;
+    public DateTime RefillTime;
+
+    public StoneMineInfo(MineType mine)
+    {
+        Mine = mine;
+        MineCount = SEngine.Random.Next(200);
+        RefillTime = SEngine.CurrentTime;
+        MineFillCount = SEngine.Random.Next(80);
+    }
+
+    public void Refill()
+    {
+        MineCount = MineFillCount;
+        RefillTime = SEngine.CurrentTime.AddMinutes(10.0);
+    }
+}
+
 public sealed class Map
 {
     public readonly int RouteID;
@@ -31,6 +60,7 @@ public sealed class Map
     public int 刷怪记录;
     public List<MonsterSpawn> Respawns;
     public HashSet<MapObject>[,] Cells;
+    public StoneMineInfo[,] Mines;
     public Terrain Terrain;
 
     public MapArea ResurrectionArea;
@@ -97,6 +127,14 @@ public sealed class Map
 
             return Cells[x, y];
         }
+    }
+
+    public StoneMineInfo GetMine(Point point)
+    {
+        var x = point.X - StartPoint.X;
+        var y = point.Y - StartPoint.Y;
+
+        return Mines[x, y];
     }
 
     public Map(GameMap info, int 路线编号 = 1)
@@ -223,6 +261,32 @@ public sealed class Map
             foreach (var obj in Objects)
                 obj.Despawn();
             ReplicaClosed = true;
+        }
+    }
+
+    public void MakeStoneMines()
+    {
+        if (MapInfo.MineMap > 0)
+        {
+            Mines = new StoneMineInfo[MapSize.X, MapSize.Y];
+            for (var x = 0; x < MapSize.X; x++)
+            {
+                for (var y = 0; y < MapSize.Y; y++)
+                {
+                    if ((x % 2 == 0) && (y % 2 == 0))
+                    {
+                        var m = MapInfo.MineMap switch
+                        {
+                            1 => MineType.Mine,
+                            2 => MineType.Mine2,
+                            3 => MineType.Mine3,
+                            _ => MineType.Mine,
+                        };
+
+                        Mines[x, y] = new StoneMineInfo(m);
+                    }
+                }
+            }
         }
     }
 
