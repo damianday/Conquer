@@ -32653,14 +32653,14 @@ public sealed class PlayerObject : MapObject
 
     public byte[] 全部货币描述()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
+        using var ms = new MemoryStream();
+        using var writer = new BinaryWriter(ms);
         for (int i = 0; i <= 19; i++)
         {
-            binaryWriter.Seek(i * 48, SeekOrigin.Begin);
-            binaryWriter.Write(Character.Currencies[(CurrencyType)i]);
+            writer.Seek(i * 48, SeekOrigin.Begin);
+            writer.Write(Character.Currencies[(CurrencyType)i]);
         }
-        return memoryStream.ToArray();
+        return ms.ToArray();
     }
 
     public byte[] 全部称号描述()
