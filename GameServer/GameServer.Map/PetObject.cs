@@ -385,11 +385,11 @@ public sealed class PetObject : MapObject
                 }
                 RecoveryTime = SEngine.CurrentTime.AddSeconds(5.0);
             }
-            if (SEngine.CurrentTime > HealTime && base.治疗次数 > 0)
+            if (SEngine.CurrentTime > HealTime && HealCount > 0)
             {
-                base.治疗次数--;
+                HealCount--;
                 HealTime = SEngine.CurrentTime.AddMilliseconds(500.0);
-                CurrentHP += base.治疗基数;
+                CurrentHP += HealAmount;
             }
             if (EnterCombatSkill != null && !CombatStance && Target.TargetList.Count != 0)
             {

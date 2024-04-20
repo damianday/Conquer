@@ -36,9 +36,8 @@ public abstract class MapObject
 
     public virtual int ProcessInterval { get; }
 
-    public int 治疗次数 { get; set; }
-
-    public int 治疗基数 { get; set; }
+    public int HealCount { get; set; }
+    public int HealAmount { get; set; }
 
     public byte ActionID { get; set; }
 
@@ -1604,20 +1603,20 @@ public abstract class MapObject
     {
         if (!Dead && CurrentMap == skill.Caster.CurrentMap && (this == skill.Caster || Neighbors.Contains(skill.Caster)))
         {
-            MapObject 地图对象2 = ((skill.Caster is TrapObject 陷阱实例2) ? 陷阱实例2.Caster : skill.Caster);
+            MapObject caster = ((skill.Caster is TrapObject trap) ? trap.Caster : skill.Caster);
             int num = ((参数.体力回复次数?.Length > skill.SkillLevel) ? 参数.体力回复次数[skill.SkillLevel] : 0);
             int num2 = ((参数.HealthRecoveryBase?.Length > skill.SkillLevel) ? 参数.HealthRecoveryBase[skill.SkillLevel] : 0);
             float num3 = ((参数.道术叠加次数?.Length > skill.SkillLevel) ? 参数.道术叠加次数[skill.SkillLevel] : 0f);
             float num4 = ((参数.道术叠加基数?.Length > skill.SkillLevel) ? 参数.道术叠加基数[skill.SkillLevel] : 0f);
-            int num5 = ((参数.立即回复基数?.Length > skill.SkillLevel && 地图对象2 == this) ? 参数.立即回复基数[skill.SkillLevel] : 0);
-            float num6 = ((!(参数.立即回复系数?.Length > skill.SkillLevel) || 地图对象2 != this) ? 0f : 参数.立即回复系数[skill.SkillLevel]);
+            int num5 = ((参数.立即回复基数?.Length > skill.SkillLevel && caster == this) ? 参数.立即回复基数[skill.SkillLevel] : 0);
+            float num6 = ((!(参数.立即回复系数?.Length > skill.SkillLevel) || caster != this) ? 0f : 参数.立即回复系数[skill.SkillLevel]);
             if (num3 > 0f)
             {
-                num += (int)(num3 * (float)Compute.CalculateAttack(地图对象2[Stat.MinSC], 地图对象2[Stat.MaxSC], 地图对象2[Stat.Luck]));
+                num += (int)(num3 * (float)Compute.CalculateAttack(caster[Stat.MinSC], caster[Stat.MaxSC], caster[Stat.Luck]));
             }
             if (num4 > 0f)
             {
-                num2 += (int)(num4 * (float)Compute.CalculateAttack(地图对象2[Stat.MinSC], 地图对象2[Stat.MaxSC], 地图对象2[Stat.Luck]));
+                num2 += (int)(num4 * (float)Compute.CalculateAttack(caster[Stat.MinSC], caster[Stat.MaxSC], caster[Stat.Luck]));
             }
             if (num5 > 0)
             {
@@ -1627,10 +1626,10 @@ public abstract class MapObject
             {
                 CurrentHP += (int)((float)this[Stat.MaxHP] * num6);
             }
-            if (num > 治疗次数 && num2 > 0)
+            if (num > HealCount && num2 > 0)
             {
-                治疗次数 = (byte)num;
-                治疗基数 = num2;
+                HealCount = (byte)num;
+                HealAmount = num2;
                 HealTime = SEngine.CurrentTime.AddMilliseconds(500.0);
             }
         }

@@ -1577,10 +1577,10 @@ public sealed class PlayerObject : MapObject
                 Character.九层妖塔次数.V = 0;
                 Character.屠魔令回收数量.V = 0;
             }
-            if (base.治疗次数 > 0 && SEngine.CurrentTime > base.HealTime)
+            if (HealCount > 0 && SEngine.CurrentTime > HealTime)
             {
-                base.治疗次数--;
-                CurrentHP += base.治疗基数;
+                HealCount--;
+                CurrentHP += HealAmount;
                 HealTime = SEngine.CurrentTime.AddMilliseconds(500.0);
             }
 
