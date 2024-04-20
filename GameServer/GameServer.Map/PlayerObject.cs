@@ -19351,7 +19351,13 @@ public sealed class PlayerObject : MapObject
 
     public void UserMoveItem(byte grid, byte location, byte targetGrid, byte targetLocation)
     {
-        if (Dead || StallState > 0 || TradeState >= 3 || (grid == 0 && location >= 16) || (grid == 1 && location >= InventorySize) || (grid == 2 && location >= WarehouseSize) || (targetGrid == 0 && targetLocation >= 16) || (targetGrid == 1 && targetLocation >= InventorySize) || (targetGrid == 2 && targetLocation >= WarehouseSize))
+        if (Dead || StallState > 0 || TradeState >= 3 || 
+            (grid == 0 && location >= 16) || 
+            (grid == 1 && location >= InventorySize) || 
+            (grid == 2 && location >= WarehouseSize) || 
+            (targetGrid == 0 && targetLocation >= 16) || 
+            (targetGrid == 1 && targetLocation >= InventorySize) || 
+            (targetGrid == 2 && targetLocation >= WarehouseSize))
         {
             return;
         }
