@@ -748,6 +748,7 @@ public sealed class CharacterInfo : DBObject
         {
             return;
         }
+
         Level.V = Config.StartingLevel;
         InventorySize.V = 32;
         WarehouseSize.V = 16;
@@ -766,6 +767,7 @@ public sealed class CharacterInfo : DBObject
         CurrentMap.V = 142;
         HomeMap.V = 142;
         CurrentPosition.V = MapManager.GetMap(142).ResurrectionArea.RandomCoords;
+
         if (Config.CurrentVersion == 0)
         {
             for (int i = 0; i <= 19; i++)
@@ -782,6 +784,7 @@ public sealed class CharacterInfo : DBObject
                 Inventory[1] = new ItemInfo(value2, this, 1, 1, 1);
             }
         }
+
         if (Config.CurrentVersion >= 1)
         {
             for (int j = 0; j <= 19; j++)
@@ -825,6 +828,7 @@ public sealed class CharacterInfo : DBObject
                 }
             }
         }
+
         if (GameItem.DataSheetByName.TryGetValue((job == GameObjectRace.Assassin) ? "柴刀" : "木剑", out var value11) && value11 is EquipmentItem 模板)
         {
             Equipment[0] = new EquipmentInfo(模板, this, 0, 0);
