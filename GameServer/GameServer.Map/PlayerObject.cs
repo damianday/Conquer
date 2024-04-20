@@ -25769,6 +25769,28 @@ public sealed class PlayerObject : MapObject
         }
     }
 
+    private void AddItemByName(string iname, int durability, int quantity = 1)
+    {
+        byte location = 0;
+        byte b2 = 0;
+        if (!GameItem.DataSheetByName.TryGetValue(iname, out var item))
+            return;
+
+        while (location < InventorySize && b2 < quantity)
+        {
+            if (!Inventory.ContainsKey(location))
+            {
+                Inventory[location] = new ItemInfo(item, Character, 1, location, durability);
+                Enqueue(new SyncItemPacket
+                {
+                    Description = Inventory[location].ToArray()
+                });
+                b2 = (byte)(b2 + 1);
+            }
+            location = (byte)(location + 1);
+        }
+    }
+
     public void UserSellItem(byte grid, byte location, ushort quantity)
     {
         if (!Dead && StallState <= 0 && TradeState < 3 && CurrentNPC != null && CurrentMap == CurrentNPC.CurrentMap && GetDistance(CurrentNPC) <= 12 && CurrentStoreID != 0 && quantity > 0 && GameStore.DataSheet.TryGetValue(CurrentStoreID, out var value))
@@ -32337,6 +32359,205 @@ public sealed class PlayerObject : MapObject
     {
     }
     #endregion
+
+    #region Mining
+    public void UserTryDigMine(Point location)
+    {
+        // TODO: Add mine area
+        if (CurrentMap.MapInfo.MineMap == 0) return;
+
+        //var weapon = GetWeapon();
+        // TODO: Check Weapon
+        if (Compute.GetDistance(CurrentPosition, location) > 1) return;
+
+        if (!CurrentMap.ValidPoint(location)) return;
+        if (!CurrentMap.CanMove(location))
+        {
+            //if (weapon.S.Shape == 19)
+            {
+                if (DigUpMine(location))
+                {
+                    SendPacket(new ObjectMineSuccess
+                    {
+                        ObjectID = ObjectID,
+                        Location = location,
+                        ActionTime = (ushort)Compute.CalcAttackSpeed(this[Stat.AttackSpeed])
+                    });
+                }
+
+
+                //WalkTime = SEngine.CurrentTime.AddMilliseconds(WalkInterval);
+                //BusyTime = SEngine.CurrentTime.AddMilliseconds(WalkInterval);
+
+                HealthRegenTime = HealthRegenTime.AddMilliseconds(30);
+                ManaRegenTime = ManaRegenTime.AddMilliseconds(30);
+
+                //SpellTick -= 50;
+                //SpellTick = Math.Max(0, SpellTick);
+                //PerHealth -= 2;
+                //PerSpell -= 2;
+            }
+        }
+    }
+
+    private bool DigUpMine(Point location)
+    {
+        var flag = false;
+
+        if (CurrentMap.Mines == null) return false;
+
+        var mine = CurrentMap.GetMine(location);
+        if (mine != null)
+        {
+            if (mine.Mine is MineType.Mine or MineType.Mine2 or MineType.Mine3)
+            {
+                if (mine.MineCount > 0)
+                {
+                    mine.MineCount--;
+                    if (SEngine.Random.Next(4) == 0)
+                    {
+                        /*var ev2 = PEnvir.GetEvent(CX, CY);
+                        if (ev2 == null)
+                        {
+                            ev2 = new PileStones(PEnvir, CX, CY, 5 * Time.Minute);
+                            EventManager.Instance.AddEvent(ev2);
+                        }
+                        else
+                        {
+                            if (ev2.EventType == EventType.PileStones)
+                                ((PileStones)ev2).EnlargePile();
+                        }*/
+
+                        if (SEngine.Random.Next(12) == 0)
+                        {
+                            if (mine.Mine == MineType.Mine) GetRandomMineral();
+                            else if (mine.Mine == MineType.Mine2) GetRandomGems();
+                            else GetRandomMineral3();
+                        }
+
+                        DamageWeapon(SEngine.Random.Next(5, 20));
+                        flag = true;
+                    }
+                }
+                else
+                {
+                    if (SEngine.CurrentTime > mine.RefillTime)
+                        mine.Refill();
+                }
+            }
+        }
+
+        return flag;
+    }
+
+    private void GetRandomMineral()
+    {
+        if (IsEnoughBag)
+        {
+            var iname = string.Empty;
+            switch (SEngine.Random.Next(120))
+            {
+                case 1 or 2: iname = Config.GoldStoneName; break;
+                case >= 3 and <= 20: iname = Config.SilverStoneName; break;
+                case >= 21 and <= 45: iname = Config.IronStoneName; break;
+                case >= 46 and <= 56: iname = Config.BlackIronStoneName; break;
+                default: iname = Config.CopperStoneName; break;
+            }
+
+            if (!string.IsNullOrEmpty(iname))
+            {
+                AddItemByName(iname + GetPurity().ToString(), 1, 1);
+            }
+        }
+    }
+
+    private void GetRandomGems()
+    {
+        if (IsEnoughBag)
+        {
+            var iname = string.Empty;
+            switch (SEngine.Random.Next(120))
+            {
+                case 1 or 2: iname = Config.Gem1StoneName; break;
+                case >= 3 and <= 20: iname = Config.Gem2StoneName; break;
+                case >= 21 and <= 45: iname = Config.Gem4StoneName; break;
+                default: iname = Config.Gem3StoneName; break;
+            }
+
+            if (!string.IsNullOrEmpty(iname))
+            {
+                AddItemByName(iname + GetPurity().ToString(), 1, 1);
+                /*if (UserEngine.CopyToUserItem(iname, out var ui))
+                {
+                    ui.Dura = (ushort)GetPurity();
+                    ItemList.Add(ui);
+                    WeightChanged();
+                    SendAddItem(ui);
+                }*/
+            }
+        }
+    }
+
+    private void GetRandomMineral3()
+    {
+        if (IsEnoughBag)
+        {
+            var iname = string.Empty;
+            switch (SEngine.Random.Next(240))
+            {
+                case >= 1 and <= 6: iname = Config.GoldStoneName; break;
+                case >= 7 and <= 30: iname = Config.SilverStoneName; break;
+                case >= 31 and <= 66: iname = Config.IronStoneName; break;
+                case >= 67 and <= 91: iname = Config.BlackIronStoneName; break;
+                case >= 92 and <= 131: iname = Config.CopperStoneName; break;
+
+                case >= 132 and <= 137: iname = Config.Gem1StoneName; break;
+                case >= 138 and <= 161: iname = Config.Gem2StoneName; break;
+                case >= 162 and <= 197: iname = Config.Gem4StoneName; break;
+
+                default: iname = Config.Gem3StoneName; break;
+            }
+
+            if (!string.IsNullOrEmpty(iname))
+            {
+                AddItemByName(iname + GetPurity().ToString(), 1, 1);
+                /*if (UserEngine.CopyToUserItem(iname, out var ui))
+                {
+                    ui.Dura = (ushort)GetPurity();
+                    ItemList.Add(ui);
+                    WeightChanged();
+                    SendAddItem(ui);
+                }*/
+            }
+        }
+    }
+
+    private int GetPurity()
+    {
+        var n = 0;
+        if (ObjectType == GameObjectType.Player)
+        {
+            if (Equipment.TryGetValue(0, out var v) && v.Dura.V == 0)
+                n = SEngine.Random.Next(1, 6);
+            else
+            {
+                n = SEngine.Random.Next(3, 16);
+                if (SEngine.Random.Next(20) == 0) n += SEngine.Random.Next(10);
+            }
+
+            //if (ApprovalMode == 1)
+            //    n = Math.Min(10, n);
+        }
+        else
+        {
+            n = SEngine.Random.Next(3, 14);
+            if (SEngine.Random.Next(20) == 0) n += SEngine.Random.Next(10);
+        }
+
+        return Math.Min(6, n);
+    } 
+    #endregion
+
 
     #region Descriptions
     public byte[] 玩家属性描述()

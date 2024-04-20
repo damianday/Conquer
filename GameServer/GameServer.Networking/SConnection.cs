@@ -2686,6 +2686,13 @@ public sealed class SConnection
     {
         // TODO:
         // Start Mining..
+        if (Stage != GameStage.Game)
+        {
+            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            return;
+        }
+
+        Player.UserTryDigMine(P.Position);
     }
 
     public void Process(请求悬赏剩余 P) { }
