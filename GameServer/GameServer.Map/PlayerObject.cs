@@ -240,8 +240,6 @@ public sealed class PlayerObject : MapObject
 
     public string StallName => (CurrentStall != null) ? CurrentStall.Name : string.Empty;
 
-    public static bool Unk2 { get; set; }
-
     public static bool 不抢怪 { get; set; }
 
     public static bool 不捡取他人装备 { get; set; }
