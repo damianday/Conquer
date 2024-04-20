@@ -4,5 +4,5 @@ namespace GamePackets.Server;
 public sealed class 玩家拾取金币 : GamePacket
 {
     [FieldAttribute(Position = 6, Length = 4)]
-    public int 金币数量;
+    public int Amount;
 }

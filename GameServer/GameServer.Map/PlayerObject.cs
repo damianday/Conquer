@@ -17754,7 +17754,7 @@ public sealed class PlayerObject : MapObject
         {
             Enqueue(new 玩家拾取金币
             {
-                金币数量 = item.Quantity
+                Amount = item.Quantity
             });
             Gold += item.Quantity;
             Enqueue(new 同步货币数量
