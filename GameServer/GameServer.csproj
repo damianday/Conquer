@@ -13,17 +13,19 @@
 		<Platforms>AnyCPU;x64;x86</Platforms>
 		<FileVersion>1.0.3.94</FileVersion>
 	</PropertyGroup>
+	<ItemGroup>
+	  <Compile Include="..\Common\DB.cs" Link="DB.cs" />
+	  <Compile Include="..\Common\SqlReaderExtension.cs" Link="SqlReaderExtension.cs" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="CsvHelper" Version="31.0.2" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="SharpZipLib" Version="1.4.2" />
-
+		<PackageReference Include="Microsoft.Data.Sqlite" Version="7.0.11" />
+		<PackageReference Include="System.Text.Encoding.CodePages" Version="8.0.0" />
+		
 		<ProjectReference Include="..\Library\Library.csproj" />
 		<ProjectReference Include="..\GamePackets\GamePackets.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<PackageReference Include="System.Text.Encoding.CodePages" Version="8.0.0" />
 	</ItemGroup>
 </Project>
