@@ -1,10 +1,7 @@
-using CsvHelper;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace GameServer.Template;
 
@@ -40,46 +37,45 @@ public sealed class RareTreasureItem
     {
         DataSheet = new Dictionary<int, RareTreasureItem>();
 
-        var path = Config.GameDataPath + "\\System\\Items\\Treasures\\";
-        if (Directory.Exists(path) && Config.珍宝模块切换 == 0)
-        {
-            var array = Serializer.Deserialize<RareTreasureItem>(path);
-            foreach (var obj in array)
-                DataSheet.Add(obj.ItemID, obj);
-        }
+        if (!DBAgent.X.Connected)
+            return;
 
-        if (Directory.Exists(path) && Config.珍宝模块切换 == 1)
+        try
         {
-            using var reader = new StreamReader(path + "\\珍宝数据.csv", Encoding.GetEncoding("GB18030"));
-            using var csvReader = new CsvReader(reader, CultureInfo.InvariantCulture);
-            csvReader.Read();
-            csvReader.ReadHeader();
-            try
+            var qstr = "SELECT * FROM Treasures";
+            using (var connection = DBAgent.X.DB.GetConnection())
             {
-                while (csvReader.Read())
+                using var command = DBAgent.X.DB.GetCommand(connection, qstr);
+
+                using var reader = command.ExecuteReader();
+                if (reader != null)
                 {
-                    var treasure = new RareTreasureItem
+                    while (reader.Read() == true)
                     {
-                        ItemID = csvReader.GetField<int>("物品编号"),
-                        UnitCount = csvReader.GetField<int>("单位数量"),
-                        Type = csvReader.GetField<byte>("商品分类"),
-                        Label = csvReader.GetField<byte>("商品标签"),
-                        AdditionalParam = csvReader.GetField<byte>("补充参数"),
-                        OriginalPrice = csvReader.GetField<int>("商品原价"),
-                        CurrentPrice = csvReader.GetField<int>("商品现价"),
-                        BuyBound = csvReader.GetField<byte>("买入绑定"),
-                        UID = csvReader.GetField<int>("Uid"),
-                        珍宝阁排版 = csvReader.GetField<int>("珍宝阁排版"),
-                        类别 = csvReader.GetField<byte>("类别"),
-                        事件 = csvReader.GetField<byte>("事件")
-                    };
-                    DataSheet.Add(treasure.ItemID, treasure);
+                        var treasure = new RareTreasureItem
+                        {
+                            ItemID = reader.GetInt32("ItemID"),
+                            UnitCount = reader.GetInt32("UnitCount"),
+                            Type = reader.GetByte("Type"),
+                            Label = reader.GetByte("Label"),
+                            AdditionalParam = reader.GetByte("AdditionalParam"),
+                            OriginalPrice = reader.GetInt32("OriginalPrice"),
+                            CurrentPrice = reader.GetInt32("CurrentPrice"),
+                            BuyBound = reader.GetByte("BuyBound"),
+                            UID = reader.GetInt32("UID"),
+                            珍宝阁排版 = reader.GetInt32("珍宝阁排版"),
+                            类别 = reader.GetByte("类别"),
+                            事件 = reader.GetByte("事件")
+                        };
+                        DataSheet.Add(treasure.ItemID, treasure);
+                    }
                 }
             }
-            catch (Exception ex)
-            {
-                SEngine.AddSystemLog(ex.Message);
-            }
+        }
+        catch (Exception err)
+        {
+            SMain.AddSystemLog(err.ToString());
+            return;
         }
 
         using var ms = new MemoryStream();
