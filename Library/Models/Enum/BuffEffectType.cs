@@ -1,8 +1,4 @@
-﻿using System;
-
-namespace GameServer.Template;
-
-[Flags]
+﻿[Flags]
 public enum BuffEffectType
 {
     SkillSign = 0,              // 技能标志

@@ -1,5 +1,3 @@
-namespace GameServer.Template;
-
 public enum SkillDamageType
 {
     Attack,     // 攻击

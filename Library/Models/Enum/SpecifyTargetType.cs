@@ -1,8 +1,4 @@
-﻿using System;
-
-namespace GameServer.Template;
-
-[Flags]
+﻿[Flags]
 public enum SpecifyTargetType
 {
     None = 0,               // 无

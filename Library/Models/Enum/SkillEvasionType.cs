@@ -1,6 +1,4 @@
-﻿namespace GameServer.Template;
-
-public enum SkillEvasionType
+﻿public enum SkillEvasionType
 {
     SkillCannotBeEvaded,        // 技能无法闪避
     CanBePhsyicallyEvaded,      // 可被物理闪避

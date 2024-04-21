@@ -1,6 +1,4 @@
-﻿namespace GameServer.Template;
-
-public enum BuffStackType
+﻿public enum BuffStackType
 {
     Disabled,           // 禁止叠加
     Substitute,         // 同类替换
