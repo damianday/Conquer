@@ -1061,7 +1061,7 @@ public sealed class PlayerObject : MapObject
         }
         foreach (BuffInfo value82 in Buffs.Values)
         {
-            if ((value82.Buff效果 & BuffEffectType.StatIncOrDec) != 0)
+            if ((value82.BuffEffect & BuffEffectType.StatIncOrDec) != 0)
             {
                 BonusStats.Add(value82, value82.BonusStats);
             }
@@ -7115,7 +7115,7 @@ public sealed class PlayerObject : MapObject
         int num7 = 0;
         foreach (BuffInfo value in Buffs.Values)
         {
-            if ((value.Buff效果 & BuffEffectType.TemptationBoost) != 0)
+            if ((value.BuffEffect & BuffEffectType.TemptationBoost) != 0)
             {
                 num5 += value.Template.IncreasedTemptationChance;
                 num6 += value.Template.TemptationDurationIncreased;
@@ -7178,7 +7178,7 @@ public sealed class PlayerObject : MapObject
         {
             if (item.Buff分组 == 2535)
             {
-                if ((item.剩余时间.V -= TimeSpan.FromSeconds(Math.Min(15f, (float)技能伤害 * 15f / 50f))) < TimeSpan.Zero)
+                if ((item.RemainingTime.V -= TimeSpan.FromSeconds(Math.Min(15f, (float)技能伤害 * 15f / 50f))) < TimeSpan.Zero)
                 {
                     RemoveBuff(item.ID.V);
                     continue;
@@ -7189,7 +7189,7 @@ public sealed class PlayerObject : MapObject
                     Buff编号 = item.ID.V,
                     Buff索引 = item.ID.V,
                     当前层数 = item.当前层数.V,
-                    剩余时间 = (int)item.剩余时间.V.TotalMilliseconds,
+                    剩余时间 = (int)item.RemainingTime.V.TotalMilliseconds,
                     持续时间 = (int)item.Duration.V.TotalMilliseconds
                 });
             }
@@ -7996,7 +7996,7 @@ public sealed class PlayerObject : MapObject
         {
             foreach (BuffInfo item in Buffs.Values.ToList())
             {
-                if ((item.Buff效果 & BuffEffectType.StatusFlag) != 0 && (item.Template.PlayerState & GameObjectState.Stealth) != 0)
+                if ((item.BuffEffect & BuffEffectType.StatusFlag) != 0 && (item.Template.PlayerState & GameObjectState.Stealth) != 0)
                 {
                     移除Buff时处理(item.ID.V);
                 }
@@ -32636,7 +32636,7 @@ public sealed class PlayerObject : MapObject
             binaryWriter.Write(value.ID.V);
             binaryWriter.Write((int)value.ID.V);
             binaryWriter.Write(value.当前层数.V);
-            binaryWriter.Write((int)value.剩余时间.V.TotalMilliseconds);
+            binaryWriter.Write((int)value.RemainingTime.V.TotalMilliseconds);
             binaryWriter.Write((int)value.Duration.V.TotalMilliseconds);
         }
         return memoryStream.ToArray();

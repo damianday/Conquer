@@ -773,7 +773,7 @@ public abstract class MapObject
     {
         foreach (var value in Buffs.Values)
         {
-            if ((value.Buff效果 & BuffEffectType.StatusFlag) != 0 && (value.Template.PlayerState & status) != 0)
+            if ((value.BuffEffect & BuffEffectType.StatusFlag) != 0 && (value.Template.PlayerState & status) != 0)
             {
                 return true;
             }
@@ -846,7 +846,7 @@ public abstract class MapObject
                             AddBuff(value.BuffCraftingID, target);
                             break;
                         }
-                        v2.剩余时间.V = v2.Duration.V;
+                        v2.RemainingTime.V = v2.Duration.V;
                         if (v2.Buff同步)
                         {
                             SendPacket(new 对象状态变动
@@ -855,7 +855,7 @@ public abstract class MapObject
                                 Buff编号 = v2.ID.V,
                                 Buff索引 = v2.ID.V,
                                 当前层数 = v2.当前层数.V,
-                                剩余时间 = (int)v2.剩余时间.V.TotalMilliseconds,
+                                剩余时间 = (int)v2.RemainingTime.V.TotalMilliseconds,
                                 持续时间 = (int)v2.Duration.V.TotalMilliseconds
                             });
                         }
@@ -870,7 +870,7 @@ public abstract class MapObject
                 {
                     if (Buffs.TryGetValue(id, out var v))
                     {
-                        v.剩余时间.V += v.Duration.V;
+                        v.RemainingTime.V += v.Duration.V;
                         if (v.Buff同步)
                         {
                             SendPacket(new 对象状态变动
@@ -879,7 +879,7 @@ public abstract class MapObject
                                 Buff编号 = v.ID.V,
                                 Buff索引 = v.ID.V,
                                 当前层数 = v.当前层数.V,
-                                剩余时间 = (int)v.剩余时间.V.TotalMilliseconds,
+                                剩余时间 = (int)v.RemainingTime.V.TotalMilliseconds,
                                 持续时间 = (int)v.Duration.V.TotalMilliseconds
                             });
                         }
@@ -995,7 +995,7 @@ public abstract class MapObject
                 BuffID = id
             });
         }
-        if ((v.Buff效果 & BuffEffectType.StatIncOrDec) != 0)
+        if ((v.BuffEffect & BuffEffectType.StatIncOrDec) != 0)
         {
             BonusStats.Remove(v);
             RefreshStats();
@@ -1016,7 +1016,7 @@ public abstract class MapObject
                 }
             }
         }
-        if ((v.Buff效果 & BuffEffectType.StatusFlag) == 0)
+        if ((v.BuffEffect & BuffEffectType.StatusFlag) == 0)
             return;
 
         if ((v.Template.PlayerState & GameObjectState.Invisible) != 0)
@@ -1055,12 +1055,12 @@ public abstract class MapObject
                 BuffID = id
             });
         }
-        if ((v.Buff效果 & BuffEffectType.StatIncOrDec) != 0)
+        if ((v.BuffEffect & BuffEffectType.StatIncOrDec) != 0)
         {
             BonusStats.Remove(v);
             RefreshStats();
         }
-        if ((v.Buff效果 & BuffEffectType.StatusFlag) == 0)
+        if ((v.BuffEffect & BuffEffectType.StatusFlag) == 0)
         {
             return;
         }
@@ -1083,18 +1083,18 @@ public abstract class MapObject
 
     public void ProcessBuffs(BuffInfo buff)
     {
-        if (buff.到期消失 && (buff.剩余时间.V -= SEngine.CurrentTime - CurrentTime) < TimeSpan.Zero)
+        if (buff.到期消失 && (buff.RemainingTime.V -= SEngine.CurrentTime - CurrentTime) < TimeSpan.Zero)
         {
             移除Buff时处理(buff.ID.V);
         }
         else if ((buff.ProcessTime.V -= SEngine.CurrentTime - CurrentTime) < TimeSpan.Zero)
         {
             buff.ProcessTime.V += TimeSpan.FromMilliseconds(buff.ProcessInterval);
-            if ((buff.Buff效果 & BuffEffectType.DealDamage) != 0)
+            if ((buff.BuffEffect & BuffEffectType.DealDamage) != 0)
             {
                 被动受伤时处理(buff);
             }
-            if ((buff.Buff效果 & BuffEffectType.HealthRecovery) != 0)
+            if ((buff.BuffEffect & BuffEffectType.HealthRecovery) != 0)
             {
                 被动回复时处理(buff);
             }
@@ -1264,7 +1264,7 @@ public abstract class MapObject
                 int num11 = int.MaxValue;
                 foreach (BuffInfo item in 地图对象2.Buffs.Values.ToList())
                 {
-                    if ((item.Buff效果 & BuffEffectType.DamageIncOrDec) == 0 || (item.Template.HowJudgeEffect != 0 && item.Template.HowJudgeEffect != BuffDetherminationMethod.ActiveAttacksDecreaseDamage))
+                    if ((item.BuffEffect & BuffEffectType.DamageIncOrDec) == 0 || (item.Template.HowJudgeEffect != 0 && item.Template.HowJudgeEffect != BuffDetherminationMethod.ActiveAttacksDecreaseDamage))
                     {
                         continue;
                     }
@@ -1334,7 +1334,7 @@ public abstract class MapObject
                 }
                 foreach (BuffInfo item2 in Buffs.Values.ToList())
                 {
-                    if ((item2.Buff效果 & BuffEffectType.DamageIncOrDec) == 0 || (item2.Template.HowJudgeEffect != BuffDetherminationMethod.PassiveDamageIncrease && item2.Template.HowJudgeEffect != BuffDetherminationMethod.PassiveDecreaseDamage))
+                    if ((item2.BuffEffect & BuffEffectType.DamageIncOrDec) == 0 || (item2.Template.HowJudgeEffect != BuffDetherminationMethod.PassiveDamageIncrease && item2.Template.HowJudgeEffect != BuffDetherminationMethod.PassiveDecreaseDamage))
                     {
                         continue;
                     }
@@ -1437,7 +1437,7 @@ public abstract class MapObject
         {
             foreach (BuffInfo item3 in Buffs.Values.ToList())
             {
-                if ((item3.Buff效果 & BuffEffectType.StatusFlag) != 0 && (item3.Template.PlayerState & GameObjectState.Unconscious) != 0)
+                if ((item3.BuffEffect & BuffEffectType.StatusFlag) != 0 && (item3.Template.PlayerState & GameObjectState.Unconscious) != 0)
                 {
                     移除Buff时处理(item3.ID.V);
                 }
@@ -1572,7 +1572,7 @@ public abstract class MapObject
     public void 被动受伤时处理(BuffInfo buff)
     {
         int num = 0;
-        switch (buff.伤害类型)
+        switch (buff.DamageType)
         {
             case SkillDamageType.Magic:
             case SkillDamageType.Taoism:
@@ -1658,7 +1658,7 @@ public abstract class MapObject
             player.CurrentTrade?.BreakTrade();
             foreach (BuffInfo item in Buffs.Values.ToList())
             {
-                if ((item.Buff效果 & BuffEffectType.CreateTrap) != 0 && SkillTrap.DataSheet.TryGetValue(item.Template.TriggerTrapSkills, out var 陷阱模板2))
+                if ((item.BuffEffect & BuffEffectType.CreateTrap) != 0 && SkillTrap.DataSheet.TryGetValue(item.Template.TriggerTrapSkills, out var 陷阱模板2))
                 {
                     int num = 0;
                     while (true)
@@ -1677,7 +1677,7 @@ public abstract class MapObject
                         num++;
                     }
                 }
-                if ((item.Buff效果 & BuffEffectType.StatusFlag) != 0 && (item.Template.PlayerState & GameObjectState.Invisible) != 0)
+                if ((item.BuffEffect & BuffEffectType.StatusFlag) != 0 && (item.Template.PlayerState & GameObjectState.Invisible) != 0)
                 {
                     移除Buff时处理(item.ID.V);
                 }
@@ -1687,7 +1687,7 @@ public abstract class MapObject
         {
             foreach (BuffInfo item2 in Buffs.Values.ToList())
             {
-                if ((item2.Buff效果 & BuffEffectType.CreateTrap) != 0 && SkillTrap.DataSheet.TryGetValue(item2.Template.TriggerTrapSkills, out var 陷阱模板))
+                if ((item2.BuffEffect & BuffEffectType.CreateTrap) != 0 && SkillTrap.DataSheet.TryGetValue(item2.Template.TriggerTrapSkills, out var 陷阱模板))
                 {
                     var n = 0;
                     while (true)
@@ -1706,7 +1706,7 @@ public abstract class MapObject
                         n++;
                     }
                 }
-                if ((item2.Buff效果 & BuffEffectType.StatusFlag) != 0 && (item2.Template.PlayerState & GameObjectState.Invisible) != 0)
+                if ((item2.BuffEffect & BuffEffectType.StatusFlag) != 0 && (item2.Template.PlayerState & GameObjectState.Invisible) != 0)
                 {
                     移除Buff时处理(item2.ID.V);
                 }
@@ -2303,7 +2303,7 @@ public abstract class MapObject
             writer.Write(kvp.Value.ID.V);
             writer.Write((int)kvp.Value.ID.V);
             writer.Write(kvp.Value.当前层数.V);
-            writer.Write((int)kvp.Value.剩余时间.V.TotalMilliseconds);
+            writer.Write((int)kvp.Value.RemainingTime.V.TotalMilliseconds);
             writer.Write((int)kvp.Value.Duration.V.TotalMilliseconds);
         }
         return ms.ToArray();

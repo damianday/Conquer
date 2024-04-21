@@ -11,14 +11,14 @@ public sealed class BuffInfo : DBObject
 
     public readonly DataMonitor<ushort> ID;
     public readonly DataMonitor<TimeSpan> Duration;
-    public readonly DataMonitor<TimeSpan> 剩余时间;
+    public readonly DataMonitor<TimeSpan> RemainingTime;
     public readonly DataMonitor<TimeSpan> ProcessTime;
     public readonly DataMonitor<byte> 当前层数;
     public readonly DataMonitor<byte> BuffLevel;
     public readonly DataMonitor<int> DamageBase;
 
-    public BuffEffectType Buff效果 => Template.Effect;
-    public SkillDamageType 伤害类型 => Template.DamageType;
+    public BuffEffectType BuffEffect => Template.Effect;
+    public SkillDamageType DamageType => Template.DamageType;
 
     public GameBuff Template
     {
@@ -30,7 +30,7 @@ public sealed class BuffInfo : DBObject
         }
     }
 
-    public bool 增益Buff => Template.ActionType == BuffActionType.Gain;
+    public bool GainBuff => Template.ActionType == BuffActionType.Gain;
     public bool Buff同步 => Template.SyncClient;
     public bool 到期消失 => Template?.RemoveOnExpire ?? false;
     public bool 下线消失 => Template.OnPlayerDisconnectRemove;
@@ -40,7 +40,7 @@ public sealed class BuffInfo : DBObject
     public bool 添加冷却 => Template.RemoveAddCooling;
     public ushort 绑定技能 => Template.BindingSkillLevel;
     public ushort 冷却时间 => Template.SkillCooldown;
-    public int 处理延迟 => Template.ProcessDelay;
+    public int ProcessDelay => Template.ProcessDelay;
     public int ProcessInterval => Template.ProcessInterval;
     public byte 最大层数 => Template.MaxBuffCount;
 
@@ -60,10 +60,9 @@ public sealed class BuffInfo : DBObject
     {
         get
         {
-            if ((Buff效果 & BuffEffectType.StatIncOrDec) != 0)
-            {
+            if ((BuffEffect & BuffEffectType.StatIncOrDec) != 0)
                 return Template.BaseStatsIncOrDec[BuffLevel.V];
-            }
+
             return null;
         }
     }
@@ -117,8 +116,8 @@ public sealed class BuffInfo : DBObject
                 Duration.V += TimeSpan.FromMilliseconds(Template.InscriptionExtendedTime);
             }
         }
-        剩余时间.V = Duration.V;
-        if ((Buff效果 & BuffEffectType.DealDamage) != 0)
+        RemainingTime.V = Duration.V;
+        if ((BuffEffect & BuffEffectType.DealDamage) != 0)
         {
             int num = ((Template.DamageBase?.Length > BuffLevel.V) ? Template.DamageBase[BuffLevel.V] : 0);
             float num2 = ((Template.DamageFactor?.Length > BuffLevel.V) ? Template.DamageFactor[BuffLevel.V] : 0f);
@@ -127,32 +126,32 @@ public sealed class BuffInfo : DBObject
                 num += Template.StrengthenInscriptionBase;
                 num2 += Template.InscriptionEnhancementFactor;
             }
-            int num3 = 0;
-            switch (伤害类型)
+            int damage = 0;
+            switch (DamageType)
             {
                 case SkillDamageType.Attack:
-                    num3 = Compute.CalculateAttack(caster[Stat.MinDC], caster[Stat.MaxDC], caster[Stat.Luck]);
+                    damage = Compute.CalculateAttack(caster[Stat.MinDC], caster[Stat.MaxDC], caster[Stat.Luck]);
                     break;
                 case SkillDamageType.Magic:
-                    num3 = Compute.CalculateAttack(caster[Stat.MinMC], caster[Stat.MaxMC], caster[Stat.Luck]);
+                    damage = Compute.CalculateAttack(caster[Stat.MinMC], caster[Stat.MaxMC], caster[Stat.Luck]);
                     break;
                 case SkillDamageType.Taoism:
-                    num3 = Compute.CalculateAttack(caster[Stat.MinSC], caster[Stat.MaxSC], caster[Stat.Luck]);
+                    damage = Compute.CalculateAttack(caster[Stat.MinSC], caster[Stat.MaxSC], caster[Stat.Luck]);
                     break;
                 case SkillDamageType.Piercing:
-                    num3 = Compute.CalculateAttack(caster[Stat.MinNC], caster[Stat.MaxNC], caster[Stat.Luck]);
+                    damage = Compute.CalculateAttack(caster[Stat.MinNC], caster[Stat.MaxNC], caster[Stat.Luck]);
                     break;
                 case SkillDamageType.Archery:
-                    num3 = Compute.CalculateAttack(caster[Stat.MinBC], caster[Stat.MaxBC], caster[Stat.Luck]);
+                    damage = Compute.CalculateAttack(caster[Stat.MinBC], caster[Stat.MaxBC], caster[Stat.Luck]);
                     break;
                 case SkillDamageType.Toxicity:
-                    num3 = caster[Stat.MaxSC];
+                    damage = caster[Stat.MaxSC];
                     break;
                 case SkillDamageType.Sacred:
-                    num3 = Compute.CalculateAttack(caster[Stat.MinHC], caster[Stat.MaxHC], 0);
+                    damage = Compute.CalculateAttack(caster[Stat.MinHC], caster[Stat.MaxHC], 0);
                     break;
             }
-            DamageBase.V = num + (int)((float)num3 * num2);
+            DamageBase.V = num + (int)((float)damage * num2);
         }
         if (target is PlayerObject)
         {
