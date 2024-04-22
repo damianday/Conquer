@@ -24,7 +24,7 @@ public sealed class MapGuard
 
         try
         {
-            var qstr = "SELECT * FROM Guards";
+            var qstr = "SELECT * FROM GuardZen";
             using (var connection = DBAgent.X.DB.GetConnection())
             {
                 using var command = DBAgent.X.DB.GetCommand(connection, qstr);
