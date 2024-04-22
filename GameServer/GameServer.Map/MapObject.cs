@@ -205,7 +205,7 @@ public abstract class MapObject
     {
         if (Buffs.TryGetValue(2555, out var v))
         {
-            移除Buff时处理(v.ID.V);
+            RemoveBuffEx(v.ID.V);
         }
         SendPacket(new ObjectDiePacket
         {
@@ -785,17 +785,14 @@ public abstract class MapObject
     public void AddBuff(ushort id, MapObject target)
     {
         if (this is ItemObject || this is TrapObject || (this is GuardObject guard && !guard.CanBeInjured))
-        {
             return;
-        }
+
         if (target is TrapObject trap)
-        {
             target = trap.Caster;
-        }
+
         if (!GameBuff.DataSheet.TryGetValue(id, out var value))
-        {
             return;
-        }
+
         if ((value.Effect & BuffEffectType.StatusFlag) != 0)
         {
             if (((value.PlayerState & GameObjectState.Invisible) != 0 || (value.PlayerState & GameObjectState.Stealth) != 0) && CheckStatus(GameObjectState.Exposed))
@@ -804,11 +801,11 @@ public abstract class MapObject
             }
             if ((value.PlayerState & GameObjectState.Exposed) != 0)
             {
-                foreach (BuffInfo item in Buffs.Values.ToList())
+                foreach (BuffInfo buff in Buffs.Values)
                 {
-                    if ((item.Template.PlayerState & GameObjectState.Invisible) != 0 || (item.Template.PlayerState & GameObjectState.Stealth) != 0)
+                    if ((buff.Template.PlayerState & GameObjectState.Invisible) != 0 || (buff.Template.PlayerState & GameObjectState.Stealth) != 0)
                     {
-                        移除Buff时处理(item.ID.V);
+                        RemoveBuffEx(buff.ID.V);
                     }
                 }
             }
@@ -831,7 +828,7 @@ public abstract class MapObject
                 {
                     foreach (BuffInfo item2 in Buffs.Values.Where((BuffInfo O) => O.Buff分组 == 分组编号).ToList())
                     {
-                        移除Buff时处理(item2.ID.V);
+                        RemoveBuffEx(item2.ID.V);
                     }
                     buff数据 = (Buffs[value.ID] = new BuffInfo(target, this, value.ID));
                     break;
@@ -843,12 +840,12 @@ public abstract class MapObject
                         v2.当前层数.V = Math.Min((byte)(v2.当前层数.V + 1), v2.最大层数);
                         if (value.AllowsSynthesis && v2.当前层数.V >= value.BuffCraftingStacks && GameBuff.DataSheet.TryGetValue(value.BuffCraftingID, out var _))
                         {
-                            移除Buff时处理(v2.ID.V);
+                            RemoveBuffEx(v2.ID.V);
                             AddBuff(value.BuffCraftingID, target);
                             break;
                         }
                         v2.RemainingTime.V = v2.Duration.V;
-                        if (v2.Buff同步)
+                        if (v2.SyncClient)
                         {
                             SendPacket(new 对象状态变动
                             {
@@ -872,7 +869,7 @@ public abstract class MapObject
                     if (Buffs.TryGetValue(id, out var v))
                     {
                         v.RemainingTime.V += v.Duration.V;
-                        if (v.Buff同步)
+                        if (v.SyncClient)
                         {
                             SendPacket(new 对象状态变动
                             {
@@ -896,7 +893,7 @@ public abstract class MapObject
         {
             return;
         }
-        if (buff数据.Buff同步)
+        if (buff数据.SyncClient)
         {
             SendPacket(new 对象添加状态
             {
@@ -917,35 +914,36 @@ public abstract class MapObject
         {
             if ((value.PlayerState & GameObjectState.Invisible) != 0)
             {
-                foreach (MapObject item3 in Neighbors.ToList())
+                foreach (MapObject obj in Neighbors)
                 {
-                    item3.OnInvisible(this);
+                    obj.OnInvisible(this);
                 }
             }
             if ((value.PlayerState & GameObjectState.Stealth) != 0)
             {
-                foreach (MapObject item4 in Neighbors.ToList())
+                foreach (MapObject obj in Neighbors)
                 {
-                    item4.OnSneaking(this);
+                    obj.OnSneaking(this);
                 }
             }
         }
-        if (this is PlayerObject 玩家实例2 && value.ID == 2555 && GameMount.DataSheet.TryGetValue(玩家实例2.CurrentMount, out var value3))
+        if (this is PlayerObject player && value.ID == 2555 && GameMount.DataSheet.TryGetValue(player.CurrentMount, out var mount))
         {
-            if (value3.BuffID != 0)
+            if (mount.BuffID != 0)
             {
-                AddBuff(value3.BuffID, target);
+                AddBuff(mount.BuffID, target);
             }
-            坐骑属性脱落 = value3;
-            BonusStats.Add(value3, value3.Stats);
+            坐骑属性脱落 = mount;
+            BonusStats.Add(mount, mount.Stats);
             RefreshStats();
-            foreach (MapObject item5 in Neighbors.ToList())
+            
+            foreach (MapObject obj in Neighbors)
             {
-                if (item5 is PlayerObject 玩家实例3)
+                if (obj is PlayerObject neighbour)
                 {
-                    玩家实例3.Enqueue(new SyncObjectMountPacket
+                    neighbour.Enqueue(new SyncObjectMountPacket
                     {
-                        ObjectID = 玩家实例2.ObjectID
+                        ObjectID = player.ObjectID
                     });
                 }
             }
@@ -956,7 +954,7 @@ public abstract class MapObject
         }
     }
 
-    public void 移除Buff时处理(ushort id)
+    public void RemoveBuffEx(ushort id)
     {
         if (!Buffs.TryGetValue(id, out var v))
             return;
@@ -965,16 +963,16 @@ public abstract class MapObject
         {
             AddBuff(v.Template.FollowedByID, v.Caster);
         }
-        if (v.依存列表 != null)
+
+        if (v.RequiredBuffs != null)
         {
-            foreach (ushort 编号2 in v.依存列表)
-            {
-                RemoveBuff(编号2);
-            }
+            foreach (ushort r in v.RequiredBuffs)
+                RemoveBuff(r);
         }
-        if (v.添加冷却 && v.绑定技能 != 0 && v.冷却时间 != 0 && this is PlayerObject 玩家实例2 && 玩家实例2.Skills.ContainsKey(v.绑定技能))
+
+        if (v.添加冷却 && v.绑定技能 != 0 && v.CooldownTime != 0 && this is PlayerObject 玩家实例2 && 玩家实例2.Skills.ContainsKey(v.绑定技能))
         {
-            DateTime dateTime = SEngine.CurrentTime.AddMilliseconds((int)v.冷却时间);
+            DateTime dateTime = SEngine.CurrentTime.AddMilliseconds((int)v.CooldownTime);
             DateTime dateTime2 = (Cooldowns.ContainsKey(v.绑定技能 | 0x1000000) ? Cooldowns[v.绑定技能 | 0x1000000] : default(DateTime));
             if (dateTime > dateTime2)
             {
@@ -982,13 +980,13 @@ public abstract class MapObject
                 SendPacket(new 添加技能冷却
                 {
                     冷却编号 = (v.绑定技能 | 0x1000000),
-                    冷却时间 = v.冷却时间
+                    冷却时间 = v.CooldownTime
                 });
             }
         }
         Buffs.Remove(id);
         v.Remove();
-        if (v.Buff同步)
+        if (v.SyncClient)
         {
             SendPacket(new ObjectRemoveBuffPacket
             {
@@ -1001,22 +999,23 @@ public abstract class MapObject
             BonusStats.Remove(v);
             RefreshStats();
         }
-        if (v.Template.ID == 2555 && this is PlayerObject 玩家实例3 && GameMount.DataSheet.TryGetValue(玩家实例3.CurrentMount, out var value2))
+        if (v.Template.ID == 2555 && this is PlayerObject 玩家实例3 && GameMount.DataSheet.TryGetValue(玩家实例3.CurrentMount, out var mount))
         {
-            坐骑属性脱落 = value2;
+            坐骑属性脱落 = mount;
             BonusStats.Remove(坐骑属性脱落);
             RefreshStats();
-            foreach (MapObject item in Neighbors.ToList())
+            foreach (var obj in Neighbors)
             {
-                if (item is PlayerObject 玩家实例4)
+                if (obj is PlayerObject neighbour)
                 {
-                    玩家实例4.Enqueue(new SyncObjectMountPacket
+                    neighbour.Enqueue(new SyncObjectMountPacket
                     {
                         ObjectID = 玩家实例3.ObjectID
                     });
                 }
             }
         }
+
         if ((v.BuffEffect & BuffEffectType.StatusFlag) == 0)
             return;
 
@@ -1027,6 +1026,7 @@ public abstract class MapObject
                 obj.ProcessStealthTarget(this);
             }
         }
+
         if ((v.Template.PlayerState & GameObjectState.Stealth) == 0)
             return;
 
@@ -1039,16 +1039,15 @@ public abstract class MapObject
         if (!Buffs.TryGetValue(id, out var v))
             return;
  
-        if (v.依存列表 != null)
+        if (v.RequiredBuffs != null)
         {
-            foreach (ushort 编号2 in v.依存列表)
-            {
-                RemoveBuff(编号2);
-            }
+            foreach (ushort r in v.RequiredBuffs)
+                RemoveBuff(r);
         }
+
         Buffs.Remove(id);
         v.Remove();
-        if (v.Buff同步)
+        if (v.SyncClient)
         {
             SendPacket(new ObjectRemoveBuffPacket
             {
@@ -1056,56 +1055,53 @@ public abstract class MapObject
                 BuffID = id
             });
         }
+
         if ((v.BuffEffect & BuffEffectType.StatIncOrDec) != 0)
         {
             BonusStats.Remove(v);
             RefreshStats();
         }
+
         if ((v.BuffEffect & BuffEffectType.StatusFlag) == 0)
-        {
             return;
-        }
+
         if ((v.Template.PlayerState & GameObjectState.Invisible) != 0)
         {
-            foreach (MapObject item in Neighbors)
-            {
-                item.ProcessStealthTarget(this);
-            }
+            foreach (var obj in Neighbors)
+                obj.ProcessStealthTarget(this);
         }
+
         if ((v.Template.PlayerState & GameObjectState.Stealth) == 0)
-        {
             return;
-        }
-        foreach (MapObject item2 in Neighbors)
-        {
-            item2.ProcessVisibleTarget(this);
-        }
+
+        foreach (MapObject obj in Neighbors)
+            obj.ProcessVisibleTarget(this);
     }
 
     public void ProcessBuffs(BuffInfo buff)
     {
         if (buff.到期消失 && (buff.RemainingTime.V -= SEngine.CurrentTime - CurrentTime) < TimeSpan.Zero)
         {
-            移除Buff时处理(buff.ID.V);
+            RemoveBuffEx(buff.ID.V);
         }
         else if ((buff.ProcessTime.V -= SEngine.CurrentTime - CurrentTime) < TimeSpan.Zero)
         {
             buff.ProcessTime.V += TimeSpan.FromMilliseconds(buff.ProcessInterval);
             if ((buff.BuffEffect & BuffEffectType.DealDamage) != 0)
             {
-                被动受伤时处理(buff);
+                ProcessBuffDamage(buff);
             }
             if ((buff.BuffEffect & BuffEffectType.HealthRecovery) != 0)
             {
-                被动回复时处理(buff);
+                ProcessBuffHealthRecovery(buff);
             }
         }
     }
 
     public void 被技能命中处理(SkillObject skill, C_01_CalculateHitTarget 参数)
     {
-        MapObject 地图对象2 = ((skill.Caster is TrapObject trap) ? trap.Caster : skill.Caster);
-        if (skill.HitList.ContainsKey(ObjectID) || !CanBeHit || (this != 地图对象2 && !Neighbors.Contains(地图对象2)) || skill.HitList.Count >= 参数.HitsLimit || (参数.LimitTargetRelationship & 地图对象2.GetRelationship(this)) == 0 || (参数.LimitTargetType & ObjectType) == 0 || !IsValidTarget(skill.Caster, 参数.LimitSpecificType) || ((参数.LimitTargetRelationship & GameObjectRelationship.Hostile) != 0 && (CheckStatus(GameObjectState.Invincible) || ((this is PlayerObject || this is PetObject) && (地图对象2 is PlayerObject || 地图对象2 is PetObject) && (CurrentMap.IsSafeArea(CurrentPosition) || 地图对象2.CurrentMap.IsSafeArea(地图对象2.CurrentPosition))) || (地图对象2 is MonsterObject && CurrentMap.IsSafeArea(CurrentPosition)))) || (this is MonsterObject 怪物实例2 && (怪物实例2.MonID == 8618 || 怪物实例2.MonID == 8621) && ((地图对象2 is PlayerObject 玩家实例2 && 玩家实例2.Guild != null && 玩家实例2.Guild == SystemInfo.Info.OccupyGuild.V) || (地图对象2 is PetObject 宠物实例2 && 宠物实例2.Master != null && 宠物实例2.Master.Guild != null && 宠物实例2.Master.Guild == SystemInfo.Info.OccupyGuild.V))) || (CurrentLevel <= Config.NoobProtectionLevel && ObjectType == GameObjectType.Player && (CurrentMap.MapID == Config.新手地图保护1 || CurrentMap.MapID == Config.新手地图保护2 || CurrentMap.MapID == Config.新手地图保护3 || CurrentMap.MapID == Config.新手地图保护4 || CurrentMap.MapID == Config.新手地图保护5 || CurrentMap.MapID == Config.新手地图保护6 || CurrentMap.MapID == Config.新手地图保护7 || CurrentMap.MapID == Config.新手地图保护8 || CurrentMap.MapID == Config.新手地图保护9 || CurrentMap.MapID == Config.新手地图保护10)))
+        MapObject caster = ((skill.Caster is TrapObject trap) ? trap.Caster : skill.Caster);
+        if (skill.HitList.ContainsKey(ObjectID) || !CanBeHit || (this != caster && !Neighbors.Contains(caster)) || skill.HitList.Count >= 参数.HitsLimit || (参数.LimitTargetRelationship & caster.GetRelationship(this)) == 0 || (参数.LimitTargetType & ObjectType) == 0 || !IsValidTarget(skill.Caster, 参数.LimitSpecificType) || ((参数.LimitTargetRelationship & GameObjectRelationship.Hostile) != 0 && (CheckStatus(GameObjectState.Invincible) || ((this is PlayerObject || this is PetObject) && (caster is PlayerObject || caster is PetObject) && (CurrentMap.IsSafeArea(CurrentPosition) || caster.CurrentMap.IsSafeArea(caster.CurrentPosition))) || (caster is MonsterObject && CurrentMap.IsSafeArea(CurrentPosition)))) || (this is MonsterObject 怪物实例2 && (怪物实例2.MonID == 8618 || 怪物实例2.MonID == 8621) && ((caster is PlayerObject 玩家实例2 && 玩家实例2.Guild != null && 玩家实例2.Guild == SystemInfo.Info.OccupyGuild.V) || (caster is PetObject 宠物实例2 && 宠物实例2.Master != null && 宠物实例2.Master.Guild != null && 宠物实例2.Master.Guild == SystemInfo.Info.OccupyGuild.V))) || (CurrentLevel <= Config.NoobProtectionLevel && ObjectType == GameObjectType.Player && (CurrentMap.MapID == Config.新手地图保护1 || CurrentMap.MapID == Config.新手地图保护2 || CurrentMap.MapID == Config.新手地图保护3 || CurrentMap.MapID == Config.新手地图保护4 || CurrentMap.MapID == Config.新手地图保护5 || CurrentMap.MapID == Config.新手地图保护6 || CurrentMap.MapID == Config.新手地图保护7 || CurrentMap.MapID == Config.新手地图保护8 || CurrentMap.MapID == Config.新手地图保护9 || CurrentMap.MapID == Config.新手地图保护10)))
         {
             return;
         }
@@ -1120,12 +1116,12 @@ public abstract class MapObject
                 break;
             case SkillEvasionType.CanBePhsyicallyEvaded:
                 num3 = this[Stat.PhysicalAgility];
-                num = 地图对象2[Stat.PhysicalAccuracy];
+                num = caster[Stat.PhysicalAccuracy];
                 if (this is MonsterObject)
                 {
-                    num2 += (float)地图对象2[Stat.怪物命中] / 10000f;
+                    num2 += (float)caster[Stat.怪物命中] / 10000f;
                 }
-                if (地图对象2 is MonsterObject)
+                if (caster is MonsterObject)
                 {
                     num4 += (float)this[Stat.怪物闪避] / 10000f;
                 }
@@ -1134,9 +1130,9 @@ public abstract class MapObject
                 num4 = (float)this[Stat.MagicEvade] / 10000f;
                 if (this is MonsterObject)
                 {
-                    num2 += (float)地图对象2[Stat.怪物命中] / 10000f;
+                    num2 += (float)caster[Stat.怪物命中] / 10000f;
                 }
-                if (地图对象2 is MonsterObject)
+                if (caster is MonsterObject)
                 {
                     num4 += (float)this[Stat.怪物闪避] / 10000f;
                 }
@@ -1151,7 +1147,7 @@ public abstract class MapObject
                     break;
                 }
                 num3 = this[Stat.PhysicalAgility];
-                num = 地图对象2[Stat.PhysicalAccuracy];
+                num = caster[Stat.PhysicalAccuracy];
                 break;
         }
         HitInfo value = new HitInfo(this)
@@ -1162,7 +1158,7 @@ public abstract class MapObject
         int num5 = SEngine.Random.Next(100);
         if (Buffs.TryGetValue(2555, out var v) && num5 <= Config.下马击落机率)
         {
-            移除Buff时处理(v.ID.V);
+            RemoveBuffEx(v.ID.V);
         }
     }
 
@@ -1172,24 +1168,24 @@ public abstract class MapObject
         {
             AddBuff(49160, 玩家实例2);
         }
-        MapObject 地图对象2 = ((skill.Caster is TrapObject 陷阱实例2) ? 陷阱实例2.Caster : skill.Caster);
-        if (地图对象2.Buffs.TryGetValue(2555, out var v))
+        MapObject caster = ((skill.Caster is TrapObject trap) ? trap.Caster : skill.Caster);
+        if (caster.Buffs.TryGetValue(2555, out var v))
         {
-            地图对象2.移除Buff时处理(v.ID.V);
+            caster.RemoveBuffEx(v.ID.V);
         }
         if (Dead)
         {
             详情.SkillFeedback = SkillHitFeedback.Lose;
         }
-        else if (!Neighbors.Contains(地图对象2))
+        else if (!Neighbors.Contains(caster))
         {
             详情.SkillFeedback = SkillHitFeedback.Lose;
         }
-        else if ((地图对象2.GetRelationship(this) & GameObjectRelationship.Hostile) == 0)
+        else if ((caster.GetRelationship(this) & GameObjectRelationship.Hostile) == 0)
         {
             详情.SkillFeedback = SkillHitFeedback.Lose;
         }
-        else if (this is MonsterObject 怪物实例2 && (怪物实例2.MonID == 8618 || 怪物实例2.MonID == 8621) && GetDistance(地图对象2) >= 4)
+        else if (this is MonsterObject 怪物实例2 && (怪物实例2.MonID == 8618 || 怪物实例2.MonID == 8621) && GetDistance(caster) >= 4)
         {
             详情.SkillFeedback = SkillHitFeedback.Lose;
         }
@@ -1199,7 +1195,7 @@ public abstract class MapObject
         }
         if ((详情.SkillFeedback & SkillHitFeedback.Miss) == 0)
         {
-            if (参数.技能斩杀类型 != 0 && Compute.CalculateProbability(参数.技能斩杀概率) && IsValidTarget(地图对象2, 参数.技能斩杀类型))
+            if (参数.技能斩杀类型 != 0 && Compute.CalculateProbability(参数.技能斩杀概率) && IsValidTarget(caster, 参数.技能斩杀类型))
             {
                 详情.SkillDamage = CurrentHP;
             }
@@ -1209,11 +1205,11 @@ public abstract class MapObject
                 float num2 = ((参数.技能伤害系数?.Length > skill.SkillLevel) ? 参数.技能伤害系数[skill.SkillLevel] : 0f);
                 if (this is MonsterObject)
                 {
-                    num += 地图对象2[Stat.怪物伤害];
+                    num += caster[Stat.怪物伤害];
                 }
                 int num3 = 0;
                 float num4 = 0f;
-                if (参数.技能增伤类型 != 0 && IsValidTarget(地图对象2, 参数.技能增伤类型))
+                if (参数.技能增伤类型 != 0 && IsValidTarget(caster, 参数.技能增伤类型))
                 {
                     num3 = 参数.技能增伤基数;
                     num4 = 参数.技能增伤系数;
@@ -1231,39 +1227,39 @@ public abstract class MapObject
                 {
                     case SkillDamageType.Attack:
                         num8 = Compute.CalculateDefence(this[Stat.MinDef], this[Stat.MaxDef]);
-                        num7 = Compute.CalculateAttack(地图对象2[Stat.MinDC], 地图对象2[Stat.MaxDC], 地图对象2[Stat.Luck]);
+                        num7 = Compute.CalculateAttack(caster[Stat.MinDC], caster[Stat.MaxDC], caster[Stat.Luck]);
                         break;
                     case SkillDamageType.Magic:
                         num8 = Compute.CalculateDefence(this[Stat.MinMCDef], this[Stat.MaxMCDef]);
-                        num7 = Compute.CalculateAttack(地图对象2[Stat.MinMC], 地图对象2[Stat.MaxMC], 地图对象2[Stat.Luck]);
+                        num7 = Compute.CalculateAttack(caster[Stat.MinMC], caster[Stat.MaxMC], caster[Stat.Luck]);
                         break;
                     case SkillDamageType.Taoism:
                         num8 = Compute.CalculateDefence(this[Stat.MinMCDef], this[Stat.MaxMCDef]);
-                        num7 = Compute.CalculateAttack(地图对象2[Stat.MinSC], 地图对象2[Stat.MaxSC], 地图对象2[Stat.Luck]);
+                        num7 = Compute.CalculateAttack(caster[Stat.MinSC], caster[Stat.MaxSC], caster[Stat.Luck]);
                         break;
                     case SkillDamageType.Piercing:
                         num8 = Compute.CalculateDefence(this[Stat.MinDef], this[Stat.MaxDef]);
-                        num7 = Compute.CalculateAttack(地图对象2[Stat.MinNC], 地图对象2[Stat.MaxNC], 地图对象2[Stat.Luck]);
+                        num7 = Compute.CalculateAttack(caster[Stat.MinNC], caster[Stat.MaxNC], caster[Stat.Luck]);
                         break;
                     case SkillDamageType.Archery:
                         num8 = Compute.CalculateDefence(this[Stat.MinDef], this[Stat.MaxDef]);
-                        num7 = Compute.CalculateAttack(地图对象2[Stat.MinBC], 地图对象2[Stat.MaxBC], 地图对象2[Stat.Luck]);
+                        num7 = Compute.CalculateAttack(caster[Stat.MinBC], caster[Stat.MaxBC], caster[Stat.Luck]);
                         break;
                     case SkillDamageType.Toxicity:
-                        num7 = 地图对象2[Stat.MaxSC];
+                        num7 = caster[Stat.MaxSC];
                         break;
                     case SkillDamageType.Sacred:
-                        num7 = Compute.CalculateAttack(地图对象2[Stat.MinHC], 地图对象2[Stat.MaxHC], 地图对象2[Stat.Luck]);
+                        num7 = Compute.CalculateAttack(caster[Stat.MinHC], caster[Stat.MaxHC], caster[Stat.Luck]);
                         break;
                 }
                 if (this is MonsterObject)
                 {
-                    num8 = Math.Max(0, num8 - (int)((float)(num8 * 地图对象2[Stat.怪物破防]) / 10000f));
+                    num8 = Math.Max(0, num8 - (int)((float)(num8 * caster[Stat.怪物破防]) / 10000f));
                 }
                 int num9 = 0;
                 float num10 = 0f;
                 int num11 = int.MaxValue;
-                foreach (BuffInfo item in 地图对象2.Buffs.Values.ToList())
+                foreach (BuffInfo item in caster.Buffs.Values.ToList())
                 {
                     if ((item.BuffEffect & BuffEffectType.DamageIncOrDec) == 0 || (item.Template.HowJudgeEffect != 0 && item.Template.HowJudgeEffect != BuffDeterminationMethod.ActiveAttacksDecreaseDamage))
                     {
@@ -1321,7 +1317,7 @@ public abstract class MapObject
                     {
                         if (item.Template.FollowedBySkillOwner)
                         {
-                            地图对象2.AddBuff(item.Template.EffectiveFollowedByID, item.Caster);
+                            caster.AddBuff(item.Template.EffectiveFollowedByID, item.Caster);
                         }
                         else
                         {
@@ -1330,7 +1326,7 @@ public abstract class MapObject
                     }
                     if (item.Template.EffectRemoved)
                     {
-                        地图对象2.移除Buff时处理(item.ID.V);
+                        caster.RemoveBuffEx(item.ID.V);
                     }
                 }
                 foreach (BuffInfo item2 in Buffs.Values.ToList())
@@ -1354,11 +1350,11 @@ public abstract class MapObject
                                     flag2 = item2.Template.SpecificSkillID.Contains(skill.SkillID);
                                     break;
                                 case BuffDeterminationType.SourceSpecificDamage:
-                                    flag2 = 地图对象2 == item2.Caster && (item2.Template.SpecificSkillID?.Contains(skill.SkillID) ?? false);
+                                    flag2 = caster == item2.Caster && (item2.Template.SpecificSkillID?.Contains(skill.SkillID) ?? false);
                                     break;
                                 case BuffDeterminationType.SourceSkillDamage:
                                 case BuffDeterminationType.SourceMagicDamage:
-                                    flag2 = 地图对象2 == item2.Caster;
+                                    flag2 = caster == item2.Caster;
                                     break;
                             }
                             break;
@@ -1375,11 +1371,11 @@ public abstract class MapObject
                                     flag2 = true;
                                     break;
                                 case BuffDeterminationType.SourceSpecificDamage:
-                                    flag2 = 地图对象2 == item2.Caster && (item2.Template.SpecificSkillID?.Contains(skill.SkillID) ?? false);
+                                    flag2 = caster == item2.Caster && (item2.Template.SpecificSkillID?.Contains(skill.SkillID) ?? false);
                                     break;
                                 case BuffDeterminationType.SourceSkillDamage:
                                 case BuffDeterminationType.SourcePhysicalDamage:
-                                    flag2 = 地图对象2 == item2.Caster;
+                                    flag2 = caster == item2.Caster;
                                     break;
                             }
                             break;
@@ -1390,7 +1386,7 @@ public abstract class MapObject
                             switch (item2.Template.EffectJudgeType)
                             {
                                 case BuffDeterminationType.SourceSpecificDamage:
-                                    flag2 = 地图对象2 == item2.Caster && (item2.Template.SpecificSkillID?.Contains(skill.SkillID) ?? false);
+                                    flag2 = caster == item2.Caster && (item2.Template.SpecificSkillID?.Contains(skill.SkillID) ?? false);
                                     break;
                                 case BuffDeterminationType.AllSpecificDamage:
                                     flag2 = item2.Template.SpecificSkillID?.Contains(skill.SkillID) ?? false;
@@ -1410,7 +1406,7 @@ public abstract class MapObject
                     {
                         if (item2.Template.FollowedBySkillOwner)
                         {
-                            地图对象2.AddBuff(item2.Template.EffectiveFollowedByID, item2.Caster);
+                            caster.AddBuff(item2.Template.EffectiveFollowedByID, item2.Caster);
                         }
                         else
                         {
@@ -1423,7 +1419,7 @@ public abstract class MapObject
                     }
                     if (item2.Template.EffectRemoved)
                     {
-                        移除Buff时处理(item2.ID.V);
+                        RemoveBuffEx(item2.ID.V);
                     }
                 }
                 float num16 = (num2 + num4) * (float)num7 + (float)num + (float)num3 + (float)num9;
@@ -1433,23 +1429,23 @@ public abstract class MapObject
             }
         }
         AttackStopTime = SEngine.CurrentTime.AddSeconds(10.0);
-        地图对象2.AttackStopTime = SEngine.CurrentTime.AddSeconds(10.0);
+        caster.AttackStopTime = SEngine.CurrentTime.AddSeconds(10.0);
         if ((详情.SkillFeedback & SkillHitFeedback.Miss) == 0)
         {
             foreach (BuffInfo item3 in Buffs.Values.ToList())
             {
                 if ((item3.BuffEffect & BuffEffectType.StatusFlag) != 0 && (item3.Template.PlayerState & GameObjectState.Unconscious) != 0)
                 {
-                    移除Buff时处理(item3.ID.V);
+                    RemoveBuffEx(item3.ID.V);
                 }
             }
         }
         if (this is MonsterObject 怪物实例3)
         {
             怪物实例3.HardStunTime = SEngine.CurrentTime.AddMilliseconds(参数.目标硬直时间);
-            if (地图对象2 is PlayerObject || 地图对象2 is PetObject)
+            if (caster is PlayerObject || caster is PetObject)
             {
-                怪物实例3.Target.Add(地图对象2, SEngine.CurrentTime.AddMilliseconds(怪物实例3.HateTime), 详情.SkillDamage);
+                怪物实例3.Target.Add(caster, SEngine.CurrentTime.AddMilliseconds(怪物实例3.HateTime), 详情.SkillDamage);
             }
         }
         else if (this is PlayerObject 玩家实例3)
@@ -1462,17 +1458,17 @@ public abstract class MapObject
             {
                 玩家实例3.扣除护盾时间(详情.SkillDamage);
             }
-            if (玩家实例3.GetRelationship(地图对象2) == GameObjectRelationship.Hostile)
+            if (玩家实例3.GetRelationship(caster) == GameObjectRelationship.Hostile)
             {
                 foreach (PetObject item4 in 玩家实例3.Pets.ToList())
                 {
-                    if (item4.Neighbors.Contains(地图对象2) && !地图对象2.CheckStatus(GameObjectState.Invisible | GameObjectState.Stealth))
+                    if (item4.Neighbors.Contains(caster) && !caster.CheckStatus(GameObjectState.Invisible | GameObjectState.Stealth))
                     {
-                        item4.Target.Add(地图对象2, SEngine.CurrentTime.AddMilliseconds(item4.HateDuration), 0);
+                        item4.Target.Add(caster, SEngine.CurrentTime.AddMilliseconds(item4.HateDuration), 0);
                     }
                 }
             }
-            if (地图对象2 is PlayerObject 玩家实例4 && !CurrentMap.自由区内(CurrentPosition) && !玩家实例3.GreyName && !玩家实例3.RedName)
+            if (caster is PlayerObject 玩家实例4 && !CurrentMap.自由区内(CurrentPosition) && !玩家实例3.GreyName && !玩家实例3.RedName)
             {
                 if (玩家实例4.RedName)
                 {
@@ -1483,7 +1479,7 @@ public abstract class MapObject
                     玩家实例4.GreyTime = TimeSpan.FromMinutes(1.0);
                 }
             }
-            else if (地图对象2 is PetObject 宠物实例2 && !CurrentMap.自由区内(CurrentPosition) && !玩家实例3.GreyName && !玩家实例3.RedName)
+            else if (caster is PetObject 宠物实例2 && !CurrentMap.自由区内(CurrentPosition) && !玩家实例3.GreyName && !玩家实例3.RedName)
             {
                 if (宠物实例2.Master.RedName)
                 {
@@ -1497,26 +1493,26 @@ public abstract class MapObject
         }
         else if (this is PetObject 宠物实例3)
         {
-            if (地图对象2 != 宠物实例3.Master && 宠物实例3.GetRelationship(地图对象2) == GameObjectRelationship.Hostile)
+            if (caster != 宠物实例3.Master && 宠物实例3.GetRelationship(caster) == GameObjectRelationship.Hostile)
             {
                 foreach (PetObject item5 in 宠物实例3.Master?.Pets.ToList())
                 {
-                    if (item5.Neighbors.Contains(地图对象2) && !地图对象2.CheckStatus(GameObjectState.Invisible | GameObjectState.Stealth))
+                    if (item5.Neighbors.Contains(caster) && !caster.CheckStatus(GameObjectState.Invisible | GameObjectState.Stealth))
                     {
-                        item5.Target.Add(地图对象2, SEngine.CurrentTime.AddMilliseconds(item5.HateDuration), 0);
+                        item5.Target.Add(caster, SEngine.CurrentTime.AddMilliseconds(item5.HateDuration), 0);
                     }
                 }
             }
-            if (地图对象2 != 宠物实例3.Master && 地图对象2 is PlayerObject 玩家实例5 && !CurrentMap.自由区内(CurrentPosition) && !宠物实例3.Master.GreyName && !宠物实例3.Master.RedName)
+            if (caster != 宠物实例3.Master && caster is PlayerObject 玩家实例5 && !CurrentMap.自由区内(CurrentPosition) && !宠物实例3.Master.GreyName && !宠物实例3.Master.RedName)
             {
                 玩家实例5.GreyTime = TimeSpan.FromMinutes(1.0);
             }
         }
-        else if (this is GuardObject 守卫实例2 && 守卫实例2.GetRelationship(地图对象2) == GameObjectRelationship.Hostile)
+        else if (this is GuardObject 守卫实例2 && 守卫实例2.GetRelationship(caster) == GameObjectRelationship.Hostile)
         {
-            守卫实例2.Target.Add(地图对象2, default(DateTime), 0);
+            守卫实例2.Target.Add(caster, default(DateTime), 0);
         }
-        if (地图对象2 is PlayerObject 玩家实例6)
+        if (caster is PlayerObject 玩家实例6)
         {
             if (玩家实例6.GetRelationship(this) == GameObjectRelationship.Hostile && !CheckStatus(GameObjectState.Invisible | GameObjectState.Stealth))
             {
@@ -1543,60 +1539,30 @@ public abstract class MapObject
                 if (num19 == 0 && (CurrentHP = Math.Max(0, CurrentHP - 详情.SkillDamage)) == 0)
                 {
                     详情.SkillFeedback |= SkillHitFeedback.Death;
-                    Die(地图对象2, skillDeath: true);
+                    Die(caster, skillDeath: true);
                 }
             }
             else if ((CurrentHP = Math.Max(0, CurrentHP - 详情.SkillDamage)) == 0)
             {
                 详情.SkillFeedback |= SkillHitFeedback.Death;
-                Die(地图对象2, skillDeath: true);
+                Die(caster, skillDeath: true);
             }
             return;
         }
         if ((CurrentHP = Math.Max(0, CurrentHP - 详情.SkillDamage)) == 0)
         {
             详情.SkillFeedback |= SkillHitFeedback.Death;
-            Die(地图对象2, skillDeath: true);
+            Die(caster, skillDeath: true);
         }
-        if (地图对象2 is PlayerObject 玩家实例8 && 玩家实例8.Character.当前角色魔法回击.V > 0 && SEngine.CurrentTime > 玩家实例8.回击计时 && 玩家实例8.Character.当前角色魔法回击.V > 0)
+        if (caster is PlayerObject 玩家实例8 && 玩家实例8.Character.当前角色魔法回击.V > 0 && SEngine.CurrentTime > 玩家实例8.回击计时 && 玩家实例8.Character.当前角色魔法回击.V > 0)
         {
             玩家实例8.CurrentHP += (int)((double)((float)玩家实例8[Stat.MaxHP] * (float)(玩家实例8.Character.当前角色魔法回击.V / 48)) * 2.2) / 100;
             玩家实例8.回击计时 = SEngine.CurrentTime.AddMilliseconds(1000.0);
         }
-        if (地图对象2 is PlayerObject 玩家实例9 && 玩家实例9.Character.当前角色物理回击.V > 0 && SEngine.CurrentTime > 玩家实例9.回击计时 && 玩家实例9.Character.当前角色物理回击.V > 0)
+        if (caster is PlayerObject 玩家实例9 && 玩家实例9.Character.当前角色物理回击.V > 0 && SEngine.CurrentTime > 玩家实例9.回击计时 && 玩家实例9.Character.当前角色物理回击.V > 0)
         {
             玩家实例9.CurrentHP += (int)((double)((float)玩家实例9[Stat.MaxHP] * (float)(玩家实例9.Character.当前角色物理回击.V / 48)) * 2.2) / 100;
             玩家实例9.回击计时 = SEngine.CurrentTime.AddMilliseconds(1000.0);
-        }
-    }
-
-    public void 被动受伤时处理(BuffInfo buff)
-    {
-        int num = 0;
-        switch (buff.DamageType)
-        {
-            case SkillDamageType.Magic:
-            case SkillDamageType.Taoism:
-                num = Compute.CalculateDefence(this[Stat.MinMCDef], this[Stat.MaxMCDef]);
-                break;
-            case SkillDamageType.Attack:
-            case SkillDamageType.Piercing:
-            case SkillDamageType.Archery:
-                num = Compute.CalculateDefence(this[Stat.MinDef], this[Stat.MaxDef]);
-                break;
-        }
-        int num2 = Math.Max(0, buff.DamageBase.V * buff.当前层数.V - num);
-        CurrentHP = Math.Max(0, CurrentHP - num2);
-        SendPacket(new 触发状态效果
-        {
-            BuffID = buff.ID.V,
-            CasterID = (buff.Caster?.ObjectID ?? 0),
-            TargetID = ObjectID,
-            HealthAmount = -num2
-        });
-        if (CurrentHP == 0)
-        {
-            Die(buff.Caster, skillDeath: false);
         }
     }
 
@@ -1636,7 +1602,39 @@ public abstract class MapObject
         }
     }
 
-    public void 被动回复时处理(BuffInfo buff)
+    public void ProcessBuffDamage(BuffInfo buff)
+    {
+        int defence = 0;
+        switch (buff.DamageType)
+        {
+            case SkillDamageType.Magic:
+            case SkillDamageType.Taoism:
+                defence = Compute.CalculateDefence(this[Stat.MinMCDef], this[Stat.MaxMCDef]);
+                break;
+            case SkillDamageType.Attack:
+            case SkillDamageType.Piercing:
+            case SkillDamageType.Archery:
+                defence = Compute.CalculateDefence(this[Stat.MinDef], this[Stat.MaxDef]);
+                break;
+        }
+        int damage = Math.Max(0, buff.DamageBase.V * buff.当前层数.V - defence);
+        CurrentHP = Math.Max(0, CurrentHP - damage);
+
+        SendPacket(new 触发状态效果
+        {
+            BuffID = buff.ID.V,
+            CasterID = (buff.Caster?.ObjectID ?? 0),
+            TargetID = ObjectID,
+            HealthAmount = -damage
+        });
+
+        if (CurrentHP == 0)
+        {
+            Die(buff.Caster, false);
+        }
+    }
+
+    public void ProcessBuffHealthRecovery(BuffInfo buff)
     {
         if (buff.Template.HealthRecoveryBase != null && buff.Template.HealthRecoveryBase.Length > buff.BuffLevel.V)
         {
@@ -1680,7 +1678,7 @@ public abstract class MapObject
                 }
                 if ((item.BuffEffect & BuffEffectType.StatusFlag) != 0 && (item.Template.PlayerState & GameObjectState.Invisible) != 0)
                 {
-                    移除Buff时处理(item.ID.V);
+                    RemoveBuffEx(item.ID.V);
                 }
             }
         }
@@ -1709,7 +1707,7 @@ public abstract class MapObject
                 }
                 if ((item2.BuffEffect & BuffEffectType.StatusFlag) != 0 && (item2.Template.PlayerState & GameObjectState.Invisible) != 0)
                 {
-                    移除Buff时处理(item2.ID.V);
+                    RemoveBuffEx(item2.ID.V);
                 }
             }
         }
