@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace GameServer.Template;
 
-public sealed class MountBeast
+public sealed class MountStats
 {
-    public static IDictionary<uint, MountBeast> DataSheet;
+    public static IDictionary<uint, MountStats> DataSheet;
 
     public ushort MountID;
     public string Name;
@@ -13,14 +13,14 @@ public sealed class MountBeast
 
     public static void LoadData()
     {
-        DataSheet = new Dictionary<uint, MountBeast>();
+        DataSheet = new Dictionary<uint, MountStats>();
 
         if (!DBAgent.X.Connected)
             return;
 
         try
         {
-            var qstr = "SELECT * FROM MountBeast";
+            var qstr = "SELECT * FROM MountStats";
             using (var connection = DBAgent.X.DB.GetConnection())
             {
                 using var command = DBAgent.X.DB.GetCommand(connection, qstr);
@@ -30,7 +30,7 @@ public sealed class MountBeast
                 {
                     while (reader.Read() == true)
                     {
-                        var obj = new MountBeast();
+                        var obj = new MountStats();
                         obj.MountID = reader.GetUInt16("MountID");
                         obj.Name = reader.GetString("Name");
 
