@@ -1,8 +1,4 @@
-﻿using System;
-
-namespace GameServer.Template;
-
-[Flags]
+﻿[Flags]
 public enum GameObjectState
 {
     Normal = 0,             // 正常状态

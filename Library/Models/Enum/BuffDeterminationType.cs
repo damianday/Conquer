@@ -1,6 +1,4 @@
-namespace GameServer.Template;
-
-public enum BuffDetherminationType
+public enum BuffDeterminationType
 {
     AllSpellDamage = 0,             // 所有技能伤害
     AllPhysicalDamage = 1,          // 所有物理伤害

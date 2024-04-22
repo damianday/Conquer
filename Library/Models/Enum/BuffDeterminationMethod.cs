@@ -1,6 +1,4 @@
-namespace GameServer.Template;
-
-public enum BuffDetherminationMethod
+public enum BuffDeterminationMethod
 {
     ActiveAttacksIncreaseDamage,    // 主动攻击增伤
     ActiveAttacksDecreaseDamage,    // 主动攻击减伤

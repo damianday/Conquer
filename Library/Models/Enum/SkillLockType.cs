@@ -1,5 +1,3 @@
-namespace GameServer.Template;
-
 public enum SkillLockType
 {
     LockSelf,               // 锁定自身

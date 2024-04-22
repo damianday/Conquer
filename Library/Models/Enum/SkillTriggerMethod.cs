@@ -1,6 +1,4 @@
-﻿namespace GameServer.Template;
-
-public enum SkillTriggerMethod
+﻿public enum SkillTriggerMethod
 {
     OriginAbsolutePosition,             // 原点位置绝对触发
     AnchorAbsolutePosition,             // 锚点位置绝对触发
