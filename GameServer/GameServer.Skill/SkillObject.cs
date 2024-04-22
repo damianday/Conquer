@@ -210,7 +210,7 @@ public class SkillObject
                 }
                 else if (task.触发成功移除)
                 {
-                    Caster.移除Buff时处理(task.自身Buff编号);
+                    Caster.RemoveBuffEx(task.自身Buff编号);
                 }
             }
             if (flag && task.验证铭文技能 && Caster is PlayerObject 玩家实例)
@@ -342,11 +342,11 @@ public class SkillObject
                 {
                     if (task.触发成功移除)
                     {
-                        Caster.移除Buff时处理(task.自身Buff编号);
+                        Caster.RemoveBuffEx(task.自身Buff编号);
                     }
                     if (task.移除伴生Buff)
                     {
-                        Caster.移除Buff时处理(task.移除伴生编号);
+                        Caster.RemoveBuffEx(task.移除伴生编号);
                     }
                 }
             }
@@ -385,11 +385,11 @@ public class SkillObject
                 {
                     if (task.触发成功移除)
                     {
-                        Caster.移除Buff时处理(task.自身Buff编号);
+                        Caster.RemoveBuffEx(task.自身Buff编号);
                     }
                     if (task.移除伴生Buff)
                     {
-                        Caster.移除Buff时处理(task.移除伴生编号);
+                        Caster.RemoveBuffEx(task.移除伴生编号);
                     }
                 }
             }
@@ -469,7 +469,7 @@ public class SkillObject
         {
             if (task.TagRemovalAllowed)
             {
-                Caster.移除Buff时处理(task.SkillTagID);
+                Caster.RemoveBuffEx(task.SkillTagID);
             }
         }
         else if (GameBuff.DataSheet.ContainsKey(task.SkillTagID))
@@ -499,7 +499,7 @@ public class SkillObject
         }
         if (task.移除技能标记 && Template.SkillTagID != 0)
         {
-            Caster.移除Buff时处理(Template.SkillTagID);
+            Caster.RemoveBuffEx(Template.SkillTagID);
         }
         if (task.SelfCooldown != 0 || task.Buff增加冷却)
         {
@@ -814,7 +814,7 @@ public class SkillObject
                 }
                 foreach (ushort item15 in task.清除状态列表.ToList())
                 {
-                    item14.Value.Target.移除Buff时处理(item15);
+                    item14.Value.Target.RemoveBuffEx(item15);
                 }
             }
         }
@@ -868,7 +868,7 @@ public class SkillObject
                 {
                     if (task.点爆命中目标 && hitter.Value.Target.Buffs.ContainsKey(value))
                     {
-                        hitter.Value.Target.移除Buff时处理(value);
+                        hitter.Value.Target.RemoveBuffEx(value);
                     }
                     else if (task.点爆命中目标 && task.失败添加层数)
                     {
@@ -1015,7 +1015,7 @@ public class SkillObject
                 }
                 foreach (ushort item22 in task.清除状态列表)
                 {
-                    item21.Value.Target.移除Buff时处理(item22);
+                    item21.Value.Target.RemoveBuffEx(item22);
                 }
             }
         }
