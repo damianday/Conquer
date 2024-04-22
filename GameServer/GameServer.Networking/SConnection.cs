@@ -327,7 +327,7 @@ public sealed class SConnection
             Disconnect(new Exception($"Abnormal stage, disconnecting.Process:{P.GetType()},CurrentStage:{Stage}"));
             return;
         }
-        Player.移除Buff时处理(2555);
+        Player.RemoveBuffEx(2555);
         Player.玩家选中坐骑(P.编号);
     }
 
@@ -886,7 +886,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.玩家镶嵌灵石(P.装备类型, P.装备位置, P.装备孔位, P.灵石类型, P.灵石位置);
+            Player.UserAddSpiritStone(P.装备类型, P.装备位置, P.装备孔位, P.灵石类型, P.灵石位置);
         }
     }
 
@@ -898,7 +898,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.玩家拆除灵石(P.装备类型, P.装备位置, P.装备孔位);
+            Player.UserRemoveSpiritStone(P.装备类型, P.装备位置, P.装备孔位);
         }
     }
 
