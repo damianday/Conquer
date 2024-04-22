@@ -5,11 +5,11 @@ using System.Linq;
 
 using GameServer.Map;
 using GameServer.Database;
-using GameServer.Networking;
+using GameServer.Template;
 
 using GamePackets.Server;
 
-namespace GameServer.Template;
+namespace GameServer.Skill;
 
 public class SkillObject
 {
@@ -200,7 +200,7 @@ public class SkillObject
             bool flag = true;
             if (task.CalculateTriggerProbability)
             {
-                flag = ((!task.CalculateLuckyProbability) ? Compute.CalculateProbability(task.技能触发概率 + ((task.增加概率Buff == 0 || !Caster.Buffs.ContainsKey(task.增加概率Buff)) ? 0f : task.Buff增加系数)) : Compute.CalculateProbability(Compute.CalcLuck(Caster[Stat.Luck])));
+                flag = !task.CalculateLuckyProbability ? Compute.CalculateProbability(task.技能触发概率 + (task.增加概率Buff == 0 || !Caster.Buffs.ContainsKey(task.增加概率Buff) ? 0f : task.Buff增加系数)) : Compute.CalculateProbability(Compute.CalcLuck(Caster[Stat.Luck]));
             }
             if (flag && task.验证自身Buff)
             {
@@ -215,9 +215,9 @@ public class SkillObject
             }
             if (flag && task.验证铭文技能 && Caster is PlayerObject 玩家实例)
             {
-                int num = (int)task.所需铭文编号 / 10;
-                int num2 = (int)task.所需铭文编号 % 10;
-                flag = 玩家实例.Skills.TryGetValue((ushort)num, out var v) && (task.同组铭文无效 ? (num2 == v.InscriptionID) : (num2 == 0 || num2 == v.InscriptionID));
+                int num = task.所需铭文编号 / 10;
+                int num2 = task.所需铭文编号 % 10;
+                flag = 玩家实例.Skills.TryGetValue((ushort)num, out var v) && (task.同组铭文无效 ? num2 == v.InscriptionID : num2 == 0 || num2 == v.InscriptionID);
             }
             if (flag)
             {
@@ -237,7 +237,7 @@ public class SkillObject
                         {
                             if ((item.Value.SkillFeedback & SkillHitFeedback.Miss) == 0 && (item.Value.SkillFeedback & SkillHitFeedback.Lose) == 0)
                             {
-                                new SkillObject(Caster, value2, Skill, ActionID, CurrentMap, (ParentSkill == null) ? CastLocation : TargetLocation, item.Value.Target, item.Value.Target.CurrentPosition, this);
+                                new SkillObject(Caster, value2, Skill, ActionID, CurrentMap, ParentSkill == null ? CastLocation : TargetLocation, item.Value.Target, item.Value.Target.CurrentPosition, this);
                             }
                         }
                         break;
@@ -264,12 +264,12 @@ public class SkillObject
                         {
                             if (item4.Value.Target is MonsterObject && (item4.Value.SkillFeedback & SkillHitFeedback.Lose) == 0)
                             {
-                                new SkillObject(Caster, value2, Skill, ActionID, CurrentMap, (ParentSkill == null) ? CastLocation : TargetLocation, item4.Value.Target, item4.Value.Target.CurrentPosition, this);
+                                new SkillObject(Caster, value2, Skill, ActionID, CurrentMap, ParentSkill == null ? CastLocation : TargetLocation, item4.Value.Target, item4.Value.Target.CurrentPosition, this);
                             }
                         }
                         break;
                     case SkillTriggerMethod.NoTargetPosition:
-                        if (HitList.Count == 0 || HitList.Values.FirstOrDefault((HitInfo O) => O.SkillFeedback != SkillHitFeedback.Lose) == null)
+                        if (HitList.Count == 0 || HitList.Values.FirstOrDefault((O) => O.SkillFeedback != SkillHitFeedback.Lose) == null)
                         {
                             new SkillObject(Caster, value2, Skill, ActionID, CurrentMap, CastLocation, null, TargetLocation, this);
                         }
@@ -328,9 +328,9 @@ public class SkillObject
             }
             if (flag3 && task.验证铭文技能 && Caster is PlayerObject 玩家实例2)
             {
-                int num3 = (int)task.所需铭文编号 / 10;
-                int num4 = (int)task.所需铭文编号 % 10;
-                flag3 = 玩家实例2.Skills.TryGetValue((ushort)num3, out var v2) && (task.同组铭文无效 ? (num4 == v2.InscriptionID) : (num4 == 0 || num4 == v2.InscriptionID));
+                int num3 = task.所需铭文编号 / 10;
+                int num4 = task.所需铭文编号 % 10;
+                flag3 = 玩家实例2.Skills.TryGetValue((ushort)num3, out var v2) && (task.同组铭文无效 ? num4 == v2.InscriptionID : num4 == 0 || num4 == v2.InscriptionID);
             }
             if (flag3 && task.验证自身Buff)
             {
@@ -350,15 +350,15 @@ public class SkillObject
                     }
                 }
             }
-            if (flag3 && task.验证分组Buff && Caster.Buffs.Values.FirstOrDefault((BuffInfo O) => O.Buff分组 == task.BuffGroupID) == null)
+            if (flag3 && task.验证分组Buff && Caster.Buffs.Values.FirstOrDefault((O) => O.Buff分组 == task.BuffGroupID) == null)
             {
                 flag3 = false;
             }
-            if (flag3 && task.VerifyTargetBuff && HitList.Values.FirstOrDefault((HitInfo O) => (O.SkillFeedback & SkillHitFeedback.Miss) == 0 && (O.SkillFeedback & SkillHitFeedback.Lose) == 0 && O.Target.Buffs.TryGetValue(task.目标Buff编号, out var v10) && v10.当前层数.V >= task.所需Buff层数) == null)
+            if (flag3 && task.VerifyTargetBuff && HitList.Values.FirstOrDefault((O) => (O.SkillFeedback & SkillHitFeedback.Miss) == 0 && (O.SkillFeedback & SkillHitFeedback.Lose) == 0 && O.Target.Buffs.TryGetValue(task.目标Buff编号, out var v10) && v10.当前层数.V >= task.所需Buff层数) == null)
             {
                 flag3 = false;
             }
-            if (flag3 && task.VerifyTargetType && HitList.Values.FirstOrDefault((HitInfo O) => (O.SkillFeedback & SkillHitFeedback.Miss) == 0 && (O.SkillFeedback & SkillHitFeedback.Lose) == 0 && O.Target.IsValidTarget(Caster, task.所需目标类型)) == null)
+            if (flag3 && task.VerifyTargetType && HitList.Values.FirstOrDefault((O) => (O.SkillFeedback & SkillHitFeedback.Miss) == 0 && (O.SkillFeedback & SkillHitFeedback.Lose) == 0 && O.Target.IsValidTarget(Caster, task.所需目标类型)) == null)
             {
                 flag3 = false;
             }
@@ -393,15 +393,15 @@ public class SkillObject
                     }
                 }
             }
-            if (flag4 && task.验证分组Buff && Caster.Buffs.Values.FirstOrDefault((BuffInfo O) => O.Buff分组 == task.BuffGroupID) == null)
+            if (flag4 && task.验证分组Buff && Caster.Buffs.Values.FirstOrDefault((O) => O.Buff分组 == task.BuffGroupID) == null)
             {
                 flag4 = false;
             }
             if (flag4 && task.验证铭文技能 && Caster is PlayerObject 玩家实例3)
             {
-                int num5 = (int)task.所需铭文编号 / 10;
-                int num6 = (int)task.所需铭文编号 % 10;
-                flag4 = 玩家实例3.Skills.TryGetValue((ushort)num5, out var v3) && (task.同组铭文无效 ? (num6 == v3.InscriptionID) : (num6 == 0 || num6 == v3.InscriptionID));
+                int num5 = task.所需铭文编号 / 10;
+                int num6 = task.所需铭文编号 % 10;
+                flag4 = 玩家实例3.Skills.TryGetValue((ushort)num5, out var v3) && (task.同组铭文无效 ? num6 == v3.InscriptionID : num6 == 0 || num6 == v3.InscriptionID);
             }
             if (flag4)
             {
@@ -450,7 +450,7 @@ public class SkillObject
             Point[] array = Compute.CalculateGrid(TargetLocation, Compute.DirectionFromPoint(CastLocation, TargetLocation), task.NumberTrapsTriggered);
             foreach (Point 坐标 in array)
             {
-                if (CurrentMap.ValidTerrain(坐标) && (陷阱模板.AllowStacking || CurrentMap[坐标].FirstOrDefault((MapObject O) => O is TrapObject 陷阱实例 && 陷阱实例.GroupID != 0 && 陷阱实例.GroupID == 陷阱模板.GroupID) == null))
+                if (CurrentMap.ValidTerrain(坐标) && (陷阱模板.AllowStacking || CurrentMap[坐标].FirstOrDefault((O) => O is TrapObject 陷阱实例 && 陷阱实例.GroupID != 0 && 陷阱实例.GroupID == 陷阱模板.GroupID) == null))
                 {
                     Caster.Traps.Add(new TrapObject(Caster, 陷阱模板, CurrentMap, 坐标));
                     num7++;
@@ -489,7 +489,7 @@ public class SkillObject
                 {
                     ObjectID = Caster.ObjectID,
                     Direction = (ushort)dir,
-                    ActionTime = ((!(Caster is PlayerObject)) ? ((ushort)1) : ((ushort)0))
+                    ActionTime = !(Caster is PlayerObject) ? (ushort)1 : (ushort)0
                 });
             }
             else
@@ -524,13 +524,13 @@ public class SkillObject
                     num8 += task.冷却增加时间;
                 }
                 DateTime dateTime = ReleaseTime.AddMilliseconds(num8);
-                DateTime dateTime2 = (Caster.Cooldowns.ContainsKey(SkillID | 0x1000000) ? Caster.Cooldowns[SkillID | 0x1000000] : default(DateTime));
+                DateTime dateTime2 = Caster.Cooldowns.ContainsKey(SkillID | 0x1000000) ? Caster.Cooldowns[SkillID | 0x1000000] : default;
                 if (num8 > 0 && dateTime > dateTime2)
                 {
                     Caster.Cooldowns[SkillID | 0x1000000] = dateTime;
                     Caster.SendPacket(new 添加技能冷却
                     {
-                        冷却编号 = (SkillID | 0x1000000),
+                        冷却编号 = SkillID | 0x1000000,
                         冷却时间 = num8
                     });
                 }
@@ -539,14 +539,14 @@ public class SkillObject
         if (Caster is PlayerObject 玩家实例5 && task.分组冷却时间 != 0 && GroupID != 0)
         {
             DateTime dateTime3 = ReleaseTime.AddMilliseconds(task.分组冷却时间);
-            DateTime dateTime4 = (玩家实例5.Cooldowns.ContainsKey(GroupID | 0) ? 玩家实例5.Cooldowns[GroupID | 0] : default(DateTime));
+            DateTime dateTime4 = 玩家实例5.Cooldowns.ContainsKey(GroupID | 0) ? 玩家实例5.Cooldowns[GroupID | 0] : default;
             if (dateTime3 > dateTime4)
             {
                 玩家实例5.Cooldowns[GroupID | 0] = dateTime3;
             }
             Caster.SendPacket(new 添加技能冷却
             {
-                冷却编号 = (GroupID | 0),
+                冷却编号 = GroupID | 0,
                 冷却时间 = task.分组冷却时间
             });
         }
@@ -558,13 +558,13 @@ public class SkillObject
         {
             Caster.SendPacket(new 开始释放技能
             {
-                ObjectID = ((!TargetBorrow || Target == null) ? Caster.ObjectID : Target.ObjectID),
+                ObjectID = !TargetBorrow || Target == null ? Caster.ObjectID : Target.ObjectID,
                 SkillID = SkillID,
                 SkillLevel = SkillLevel,
                 InscriptionID = InscriptionID,
                 TargetLocation = TargetLocation,
                 ActionID = ActionID,
-                TargetID = (Target?.ObjectID ?? 0),
+                TargetID = Target?.ObjectID ?? 0,
                 TargetHeight = CurrentMap.GetTerrainHeight(TargetLocation)
             });
         }
@@ -576,7 +576,7 @@ public class SkillObject
         {
             Caster.SendPacket(new 触发技能扩展
             {
-                ObjectID = ((!TargetBorrow || Target == null) ? Caster.ObjectID : Target.ObjectID),
+                ObjectID = !TargetBorrow || Target == null ? Caster.ObjectID : Target.ObjectID,
                 SkillID = SkillID,
                 SkillLevel = SkillLevel,
                 InscriptionID = InscriptionID,
@@ -588,7 +588,7 @@ public class SkillObject
         {
             Caster.SendPacket(new 触发技能正常
             {
-                ObjectID = ((!TargetBorrow || Target == null) ? Caster.ObjectID : Target.ObjectID),
+                ObjectID = !TargetBorrow || Target == null ? Caster.ObjectID : Target.ObjectID,
                 SkillID = SkillID,
                 SkillLevel = SkillLevel,
                 InscriptionID = InscriptionID,
@@ -634,13 +634,13 @@ public class SkillObject
         }
         if (task.角色硬直时间 != 0)
         {
-            Caster.HardStunTime = ReleaseTime.AddMilliseconds(task.计算攻速缩减 ? (task.角色硬直时间 - AttackSpeedDecrease) : task.角色硬直时间);
+            Caster.HardStunTime = ReleaseTime.AddMilliseconds(task.计算攻速缩减 ? task.角色硬直时间 - AttackSpeedDecrease : task.角色硬直时间);
         }
         if (task.发送结束通知)
         {
             Caster.SendPacket(new 触发技能正常
             {
-                ObjectID = ((!TargetBorrow || Target == null) ? Caster.ObjectID : Target.ObjectID),
+                ObjectID = !TargetBorrow || Target == null ? Caster.ObjectID : Target.ObjectID,
                 SkillID = SkillID,
                 SkillLevel = SkillLevel,
                 InscriptionID = InscriptionID,
@@ -790,11 +790,11 @@ public class SkillObject
         {
             Caster.SendPacket(new 开始释放技能
             {
-                ObjectID = ((!TargetBorrow || Target == null) ? Caster.ObjectID : Target.ObjectID),
+                ObjectID = !TargetBorrow || Target == null ? Caster.ObjectID : Target.ObjectID,
                 SkillID = SkillID,
                 SkillLevel = SkillLevel,
                 InscriptionID = InscriptionID,
-                TargetID = (Target?.ObjectID ?? 0),
+                TargetID = Target?.ObjectID ?? 0,
                 TargetLocation = TargetLocation,
                 TargetHeight = CurrentMap.GetTerrainHeight(TargetLocation),
                 ActionID = ActionID
@@ -834,7 +834,7 @@ public class SkillObject
         {
             Caster.SendPacket(new 触发技能正常
             {
-                ObjectID = ((!TargetBorrow || Target == null) ? Caster.ObjectID : Target.ObjectID),
+                ObjectID = !TargetBorrow || Target == null ? Caster.ObjectID : Target.ObjectID,
                 SkillID = SkillID,
                 SkillLevel = SkillLevel,
                 InscriptionID = InscriptionID,
@@ -846,7 +846,7 @@ public class SkillObject
         {
             Caster.SendPacket(new 触发技能扩展
             {
-                ObjectID = ((!TargetBorrow || Target == null) ? Caster.ObjectID : Target.ObjectID),
+                ObjectID = !TargetBorrow || Target == null ? Caster.ObjectID : Target.ObjectID,
                 SkillID = SkillID,
                 SkillLevel = SkillLevel,
                 InscriptionID = InscriptionID,
@@ -889,7 +889,7 @@ public class SkillObject
                 }
                 Caster.SendPacket(new 触发命中特效
                 {
-                    ObjectID = ((!TargetBorrow || Target == null) ? Caster.ObjectID : Target.ObjectID),
+                    ObjectID = !TargetBorrow || Target == null ? Caster.ObjectID : Target.ObjectID,
                     SkillID = SkillID,
                     SkillLevel = SkillLevel,
                     InscriptionID = InscriptionID,
@@ -912,8 +912,8 @@ public class SkillObject
                     {
                         int 数值 = Caster.CurrentLevel - hitter.Value.Target.CurrentLevel - task.减回复等级差;
                         int num11 = task.零回复等级差 - task.减回复等级差;
-                        float num12 = (float)Compute.Clamp(0, 数值, num11) / (float)num11;
-                        amount = (int)((float)amount - (float)amount * num12);
+                        float num12 = Compute.Clamp(0, 数值, num11) / (float)num11;
+                        amount = (int)(amount - amount * num12);
                     }
                     if (amount > 0)
                     {
@@ -945,7 +945,7 @@ public class SkillObject
                     Caster.Cooldowns[task.冷却减少技能 | 0x1000000] = v5;
                     Caster.SendPacket(new 添加技能冷却
                     {
-                        冷却编号 = (task.冷却减少技能 | 0x1000000),
+                        冷却编号 = task.冷却减少技能 | 0x1000000,
                         冷却时间 = Math.Max(0, (int)(v5 - SEngine.CurrentTime).TotalMilliseconds)
                     });
                 }
@@ -955,7 +955,7 @@ public class SkillObject
                     玩家实例6.Cooldowns[task.冷却减少分组 | 0] = v6;
                     Caster.SendPacket(new 添加技能冷却
                     {
-                        冷却编号 = (task.冷却减少分组 | 0),
+                        冷却编号 = task.冷却减少分组 | 0,
                         冷却时间 = Math.Max(0, (int)(v6 - SEngine.CurrentTime).TotalMilliseconds)
                     });
                 }
@@ -979,7 +979,7 @@ public class SkillObject
                     Caster.Cooldowns[task.冷却减少技能 | 0x1000000] = v7;
                     Caster.SendPacket(new 添加技能冷却
                     {
-                        冷却编号 = (task.冷却减少技能 | 0x1000000),
+                        冷却编号 = task.冷却减少技能 | 0x1000000,
                         冷却时间 = Math.Max(0, (int)(v7 - SEngine.CurrentTime).TotalMilliseconds)
                     });
                 }
@@ -989,7 +989,7 @@ public class SkillObject
                     玩家实例7.Cooldowns[task.冷却减少分组 | 0] = v8;
                     Caster.SendPacket(new 添加技能冷却
                     {
-                        冷却编号 = (task.冷却减少分组 | 0),
+                        冷却编号 = task.冷却减少分组 | 0,
                         冷却时间 = Math.Max(0, (int)(v8 - SEngine.CurrentTime).TotalMilliseconds)
                     });
                 }
@@ -1035,12 +1035,12 @@ public class SkillObject
     private void ProcessC_03_CalculateObjectDisplacement(C_03_CalculateObjectDisplacement task)
     {
         byte[] 自身位移次数 = task.自身位移次数;
-        byte b = (byte)((((自身位移次数 != null) ? 自身位移次数.Length : 0) > SkillLevel) ? task.自身位移次数[SkillLevel] : 0);
+        byte b = (byte)((自身位移次数 != null ? 自身位移次数.Length : 0) > SkillLevel ? task.自身位移次数[SkillLevel] : 0);
         if (task.角色自身位移 && (CurrentMap != Caster.CurrentMap || SegmentID >= b))
         {
             Caster.SendPacket(new 技能释放中断
             {
-                ObjectID = ((!TargetBorrow || Target == null) ? Caster.ObjectID : Target.ObjectID),
+                ObjectID = !TargetBorrow || Target == null ? Caster.ObjectID : Target.ObjectID,
                 SkillID = SkillID,
                 SkillLevel = SkillLevel,
                 InscriptionID = InscriptionID,
@@ -1055,11 +1055,11 @@ public class SkillObject
         }
         else if (task.角色自身位移)
         {
-            int 数量 = (task.推动目标位移 ? task.连续推动数量 : 0);
+            int 数量 = task.推动目标位移 ? task.连续推动数量 : 0;
             byte[] 自身位移距离 = task.自身位移距离;
-            int num15 = ((((自身位移距离 != null) ? 自身位移距离.Length : 0) > SkillLevel) ? task.自身位移距离[SkillLevel] : 0);
-            int distance = ((task.允许超出锚点 || task.锚点反向位移) ? num15 : Math.Min(num15, Compute.GetDistance(CastLocation, TargetLocation)));
-            Point location = (task.锚点反向位移 ? Compute.GetNextPosition(Caster.CurrentPosition, Compute.DirectionFromPoint(TargetLocation, Caster.CurrentPosition), distance) : TargetLocation);
+            int num15 = (自身位移距离 != null ? 自身位移距离.Length : 0) > SkillLevel ? task.自身位移距离[SkillLevel] : 0;
+            int distance = task.允许超出锚点 || task.锚点反向位移 ? num15 : Math.Min(num15, Compute.GetDistance(CastLocation, TargetLocation));
+            Point location = task.锚点反向位移 ? Compute.GetNextPosition(Caster.CurrentPosition, Compute.DirectionFromPoint(TargetLocation, Caster.CurrentPosition), distance) : TargetLocation;
             if (Caster.CanRush(Caster, location, distance, 数量, task.能否穿越障碍, out var 终点, out var targets))
             {
                 foreach (MapObject obj in targets)
@@ -1114,7 +1114,7 @@ public class SkillObject
                 {
                     Caster.SendPacket(new 触发技能正常
                     {
-                        ObjectID = ((!TargetBorrow || Target == null) ? Caster.ObjectID : Target.ObjectID),
+                        ObjectID = !TargetBorrow || Target == null ? Caster.ObjectID : Target.ObjectID,
                         SkillID = SkillID,
                         SkillLevel = SkillLevel,
                         InscriptionID = InscriptionID,
@@ -1134,7 +1134,7 @@ public class SkillObject
                 {
                     Caster.AddBuff(task.失败Buff编号, Caster);
                 }
-                Caster.HardStunTime = SEngine.CurrentTime.AddMilliseconds((int)task.自身硬直时间);
+                Caster.HardStunTime = SEngine.CurrentTime.AddMilliseconds(task.自身硬直时间);
                 SegmentID = b;
             }
             if (b > 1)
@@ -1151,15 +1151,15 @@ public class SkillObject
             foreach (var hitter in HitList)
             {
                 if ((hitter.Value.SkillFeedback & SkillHitFeedback.Miss) != 0 ||
-                    (hitter.Value.SkillFeedback & SkillHitFeedback.Lose) != 0 || 
-                    (hitter.Value.SkillFeedback & SkillHitFeedback.Death) != 0 || 
-                    !Compute.CalculateProbability(task.推动目标概率) || 
+                    (hitter.Value.SkillFeedback & SkillHitFeedback.Lose) != 0 ||
+                    (hitter.Value.SkillFeedback & SkillHitFeedback.Death) != 0 ||
+                    !Compute.CalculateProbability(task.推动目标概率) ||
                     !hitter.Value.Target.IsValidTarget(Caster, task.推动目标类型))
                 {
                     continue;
                 }
                 byte[] 目标位移距离 = task.目标位移距离;
-                int val = ((((目标位移距离 != null) ? 目标位移距离.Length : 0) > SkillLevel) ? task.目标位移距离[SkillLevel] : 0);
+                int val = (目标位移距离 != null ? 目标位移距离.Length : 0) > SkillLevel ? task.目标位移距离[SkillLevel] : 0;
                 int num20 = Compute.GetDistance(Caster.CurrentPosition, hitter.Value.Target.CurrentPosition);
                 int distance = Math.Max(0, Math.Min(8 - num20, val));
                 if (distance == 0)
@@ -1234,13 +1234,13 @@ public class SkillObject
         }
         else if (Caster is PlayerObject player)
         {
-            if ((task.CheckSkillInscriptions && (!player.Skills.TryGetValue(SkillID, out var v9) || v9.InscriptionID != InscriptionID)) || string.IsNullOrEmpty(task.PetName))
+            if (task.CheckSkillInscriptions && (!player.Skills.TryGetValue(SkillID, out var v9) || v9.InscriptionID != InscriptionID) || string.IsNullOrEmpty(task.PetName))
                 return;
 
-            int max = ((task.SpawnCount?.Length > SkillLevel) ? task.SpawnCount[SkillLevel] : 0);
+            int max = task.SpawnCount?.Length > SkillLevel ? task.SpawnCount[SkillLevel] : 0;
             if (player.Pets.Count < max && MonsterInfo.DataSheet.TryGetValue(task.PetName, out var moni))
             {
-                byte levelMax = (byte)((task.LevelCap?.Length > SkillLevel) ? task.LevelCap[SkillLevel] : 0);
+                byte levelMax = (byte)(task.LevelCap?.Length > SkillLevel ? task.LevelCap[SkillLevel] : 0);
                 PetObject pet = new PetObject(player, moni, SkillLevel, levelMax, task.PetBoundWeapons);
                 player.Enqueue(new SyncPetLevelPacket
                 {
@@ -1273,7 +1273,7 @@ public class SkillObject
 
         Caster?.SendPacket(new 技能释放中断
         {
-            ObjectID = ((!TargetBorrow || Target == null) ? Caster.ObjectID : Target.ObjectID),
+            ObjectID = !TargetBorrow || Target == null ? Caster.ObjectID : Target.ObjectID,
             SkillID = SkillID,
             SkillLevel = SkillLevel,
             InscriptionID = InscriptionID,

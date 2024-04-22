@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using GameServer.Map;
 
-namespace GameServer.Template;
+using GameServer.Map;
+using GameServer.Template;
+
+namespace GameServer.Skill;
 
 public class HitInfo
 {
