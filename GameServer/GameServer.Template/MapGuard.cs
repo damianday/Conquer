@@ -1,6 +1,6 @@
+using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 
 namespace GameServer.Template;
 
@@ -11,7 +11,7 @@ public sealed class MapGuard
     public ushort GuardID;
     public byte MapID;
     public string MapName;
-    public Point Coordinates;
+    public Point Coordinates = Point.Empty;
     public GameDirection Direction;
     public string RegionName;
 
@@ -19,12 +19,39 @@ public sealed class MapGuard
     {
         DataSheet = new HashSet<MapGuard>();
 
-        string path = Config.GameDataPath + "\\System\\GameMap\\Guards\\";
-        if (!Directory.Exists(path))
+        if (!DBAgent.X.Connected)
             return;
 
-        var array = Serializer.Deserialize<MapGuard>(path);
-        foreach (var obj in array)
-            DataSheet.Add(obj);
+        try
+        {
+            var qstr = "SELECT * FROM Guards";
+            using (var connection = DBAgent.X.DB.GetConnection())
+            {
+                using var command = DBAgent.X.DB.GetCommand(connection, qstr);
+
+                using var reader = command.ExecuteReader();
+                if (reader != null)
+                {
+                    while (reader.Read() == true)
+                    {
+                        var guard = new MapGuard();
+                        guard.GuardID = reader.GetUInt16("GuardID");
+                        guard.MapID = reader.GetByte("MapID");
+                        guard.MapName = reader.GetString("MapName");
+                        guard.Coordinates.X = reader.GetInt32("MapPosX");
+                        guard.Coordinates.Y = reader.GetInt32("MapPosY");
+                        guard.Direction = (GameDirection)reader.GetByte("Direction");
+                        guard.RegionName = reader.GetString("RegionName");
+
+                        DataSheet.Add(guard);
+                    }
+                }
+            }
+        }
+        catch (Exception err)
+        {
+            SMain.AddSystemLog(err.ToString());
+            return;
+        }
     }
 }
