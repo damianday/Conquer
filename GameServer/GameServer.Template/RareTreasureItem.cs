@@ -27,12 +27,6 @@ public sealed class RareTreasureItem
     public byte 事件;
     public byte 类别;
 
-    //public byte 职业限制;
-    //public int 商品编号;
-    //public int 热销排名;
-    //public byte 活动商品;
-    //public byte 绑定商品;
-
     public static void LoadData()
     {
         DataSheet = new Dictionary<int, RareTreasureItem>();
@@ -42,7 +36,7 @@ public sealed class RareTreasureItem
 
         try
         {
-            var qstr = "SELECT * FROM Treasures";
+            var qstr = "SELECT * FROM Treasure";
             using (var connection = DBAgent.X.DB.GetConnection())
             {
                 using var command = DBAgent.X.DB.GetCommand(connection, qstr);
@@ -80,16 +74,13 @@ public sealed class RareTreasureItem
 
         using var ms = new MemoryStream();
         using var writer = new BinaryWriter(ms);
-        foreach (RareTreasureItem treasure in
-            (from X in DataSheet.Values.ToList()
-             orderby X.ItemID
-             select X).ToList())
+        foreach (var treasure in DataSheet.Values.OrderBy(x => x.ItemID))
         {
             writer.Write(treasure.ItemID);
             writer.Write(treasure.UnitCount);
             writer.Write(treasure.Type);
             writer.Write(treasure.Label);
-            writer.Write(treasure.AdditionalParam);
+            writer.Write(treasure.AdditionalParam); 
             writer.Write(treasure.OriginalPrice);
             writer.Write(treasure.CurrentPrice);
             writer.Write(new byte[8]);
