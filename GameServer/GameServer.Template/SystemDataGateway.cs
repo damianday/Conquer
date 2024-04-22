@@ -92,7 +92,7 @@ public static class SystemDataGateway
 
     public static void LoadItemSetInfos() => ReloadDataType(typeof(ItemSetInfo));
 
-    public static void LoadMountBeasts() => ReloadDataType(typeof(MountBeast));
+    public static void LoadMountBeasts() => ReloadDataType(typeof(MountStats));
 
     public static void LoadItemCraftings() => ReloadDataType(typeof(ItemCrafting));
 
@@ -125,7 +125,7 @@ public static class SystemDataGateway
             typeof(GameBuff),
             typeof(GameMount),
             typeof(ItemSetInfo),
-            typeof(MountBeast),
+            typeof(MountStats),
             typeof(ItemCrafting),
             typeof(VIPSystem),
             typeof(TreasureChestInfo)
@@ -163,7 +163,7 @@ public static class SystemDataGateway
             typeof(GameBuff),
             typeof(GameMount),
             typeof(ItemSetInfo),
-            typeof(MountBeast),
+            typeof(MountStats),
             typeof(ItemCrafting),
             typeof(VIPSystem),
             typeof(TreasureChestInfo)
