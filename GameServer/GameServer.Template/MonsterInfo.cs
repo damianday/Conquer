@@ -1,7 +1,13 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 
 namespace GameServer.Template;
+
+public struct BasicStat
+{
+    public Stat Stat;       // 属性
+    public int Value;       // 数值
+}
 
 public sealed class MonsterInfo
 {
@@ -35,7 +41,7 @@ public sealed class MonsterInfo
     public string MoveReleaseSkill;
     public string BirthReleaseSkill;
     public string DeathReleaseSkill;
-    public BasicStats[] Stats;
+    public BasicStat[] Stats;
     public GrowthStat[] Grows;
     public InheritStat[] InheritsStats;
     public ushort ProvideExperience;
