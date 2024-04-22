@@ -3,6 +3,11 @@ using System.IO;
 
 namespace GameServer.Template;
 
+public abstract class SkillTask
+{
+    public string Statement;
+}
+
 public sealed class GameSkill
 {
     public static Dictionary<string, GameSkill> DataSheet;
