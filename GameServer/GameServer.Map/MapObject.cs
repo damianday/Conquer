@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+
 using GameServer.Database;
 using GameServer.Template;
-using GameServer.Networking;
+using GameServer.Skill;
 
 using GamePackets;
 using GamePackets.Server;
@@ -1264,7 +1265,7 @@ public abstract class MapObject
                 int num11 = int.MaxValue;
                 foreach (BuffInfo item in 地图对象2.Buffs.Values.ToList())
                 {
-                    if ((item.BuffEffect & BuffEffectType.DamageIncOrDec) == 0 || (item.Template.HowJudgeEffect != 0 && item.Template.HowJudgeEffect != BuffDetherminationMethod.ActiveAttacksDecreaseDamage))
+                    if ((item.BuffEffect & BuffEffectType.DamageIncOrDec) == 0 || (item.Template.HowJudgeEffect != 0 && item.Template.HowJudgeEffect != BuffDeterminationMethod.ActiveAttacksDecreaseDamage))
                     {
                         continue;
                     }
@@ -1275,11 +1276,11 @@ public abstract class MapObject
                         case SkillDamageType.Taoism:
                             switch (item.Template.EffectJudgeType)
                             {
-                                case BuffDetherminationType.AllSpellDamage:
-                                case BuffDetherminationType.AllMagicDamage:
+                                case BuffDeterminationType.AllSpellDamage:
+                                case BuffDeterminationType.AllMagicDamage:
                                     flag = true;
                                     break;
-                                case BuffDetherminationType.AllSpecificDamage:
+                                case BuffDeterminationType.AllSpecificDamage:
                                     flag = item.Template.SpecificSkillID?.Contains(skill.SkillID) ?? false;
                                     break;
                             }
@@ -1289,11 +1290,11 @@ public abstract class MapObject
                         case SkillDamageType.Archery:
                             switch (item.Template.EffectJudgeType)
                             {
-                                case BuffDetherminationType.AllSpecificDamage:
+                                case BuffDeterminationType.AllSpecificDamage:
                                     flag = item.Template.SpecificSkillID?.Contains(skill.SkillID) ?? false;
                                     break;
-                                case BuffDetherminationType.AllSpellDamage:
-                                case BuffDetherminationType.AllPhysicalDamage:
+                                case BuffDeterminationType.AllSpellDamage:
+                                case BuffDeterminationType.AllPhysicalDamage:
                                     flag = true;
                                     break;
                             }
@@ -1302,7 +1303,7 @@ public abstract class MapObject
                         case SkillDamageType.Sacred:
                         case SkillDamageType.Burn:
                         case SkillDamageType.Tear:
-                            if (item.Template.EffectJudgeType == BuffDetherminationType.AllSpecificDamage)
+                            if (item.Template.EffectJudgeType == BuffDeterminationType.AllSpecificDamage)
                             {
                                 flag = item.Template.SpecificSkillID?.Contains(skill.SkillID) ?? false;
                             }
@@ -1314,8 +1315,8 @@ public abstract class MapObject
                     }
                     int num12 = item.当前层数.V * ((item.Template.DamageIncOrDecBase?.Length > item.BuffLevel.V) ? item.Template.DamageIncOrDecBase[item.BuffLevel.V] : 0);
                     float num13 = (float)(int)item.当前层数.V * ((item.Template.DamageIncOrDecFactor?.Length > item.BuffLevel.V) ? item.Template.DamageIncOrDecFactor[item.BuffLevel.V] : 0f);
-                    num9 += ((item.Template.HowJudgeEffect == BuffDetherminationMethod.ActiveAttacksIncreaseDamage) ? num12 : (-num12));
-                    num10 += ((item.Template.HowJudgeEffect == BuffDetherminationMethod.ActiveAttacksIncreaseDamage) ? num13 : (0f - num13));
+                    num9 += ((item.Template.HowJudgeEffect == BuffDeterminationMethod.ActiveAttacksIncreaseDamage) ? num12 : (-num12));
+                    num10 += ((item.Template.HowJudgeEffect == BuffDeterminationMethod.ActiveAttacksIncreaseDamage) ? num13 : (0f - num13));
                     if (item.Template.EffectiveFollowedByID != 0 && item.Caster != null && MapManager.Objects.TryGetValue(item.Caster.ObjectID, out var value) && value == item.Caster)
                     {
                         if (item.Template.FollowedBySkillOwner)
@@ -1334,7 +1335,7 @@ public abstract class MapObject
                 }
                 foreach (BuffInfo item2 in Buffs.Values.ToList())
                 {
-                    if ((item2.BuffEffect & BuffEffectType.DamageIncOrDec) == 0 || (item2.Template.HowJudgeEffect != BuffDetherminationMethod.PassiveDamageIncrease && item2.Template.HowJudgeEffect != BuffDetherminationMethod.PassiveDecreaseDamage))
+                    if ((item2.BuffEffect & BuffEffectType.DamageIncOrDec) == 0 || (item2.Template.HowJudgeEffect != BuffDeterminationMethod.PassiveDamageIncrease && item2.Template.HowJudgeEffect != BuffDeterminationMethod.PassiveDecreaseDamage))
                     {
                         continue;
                     }
@@ -1345,18 +1346,18 @@ public abstract class MapObject
                         case SkillDamageType.Taoism:
                             switch (item2.Template.EffectJudgeType)
                             {
-                                case BuffDetherminationType.AllSpellDamage:
-                                case BuffDetherminationType.AllMagicDamage:
+                                case BuffDeterminationType.AllSpellDamage:
+                                case BuffDeterminationType.AllMagicDamage:
                                     flag2 = true;
                                     break;
-                                case BuffDetherminationType.AllSpecificDamage:
+                                case BuffDeterminationType.AllSpecificDamage:
                                     flag2 = item2.Template.SpecificSkillID.Contains(skill.SkillID);
                                     break;
-                                case BuffDetherminationType.SourceSpecificDamage:
+                                case BuffDeterminationType.SourceSpecificDamage:
                                     flag2 = 地图对象2 == item2.Caster && (item2.Template.SpecificSkillID?.Contains(skill.SkillID) ?? false);
                                     break;
-                                case BuffDetherminationType.SourceSkillDamage:
-                                case BuffDetherminationType.SourceMagicDamage:
+                                case BuffDeterminationType.SourceSkillDamage:
+                                case BuffDeterminationType.SourceMagicDamage:
                                     flag2 = 地图对象2 == item2.Caster;
                                     break;
                             }
@@ -1366,18 +1367,18 @@ public abstract class MapObject
                         case SkillDamageType.Archery:
                             switch (item2.Template.EffectJudgeType)
                             {
-                                case BuffDetherminationType.AllSpecificDamage:
+                                case BuffDeterminationType.AllSpecificDamage:
                                     flag2 = item2.Template.SpecificSkillID?.Contains(skill.SkillID) ?? false;
                                     break;
-                                case BuffDetherminationType.AllSpellDamage:
-                                case BuffDetherminationType.AllPhysicalDamage:
+                                case BuffDeterminationType.AllSpellDamage:
+                                case BuffDeterminationType.AllPhysicalDamage:
                                     flag2 = true;
                                     break;
-                                case BuffDetherminationType.SourceSpecificDamage:
+                                case BuffDeterminationType.SourceSpecificDamage:
                                     flag2 = 地图对象2 == item2.Caster && (item2.Template.SpecificSkillID?.Contains(skill.SkillID) ?? false);
                                     break;
-                                case BuffDetherminationType.SourceSkillDamage:
-                                case BuffDetherminationType.SourcePhysicalDamage:
+                                case BuffDeterminationType.SourceSkillDamage:
+                                case BuffDeterminationType.SourcePhysicalDamage:
                                     flag2 = 地图对象2 == item2.Caster;
                                     break;
                             }
@@ -1388,10 +1389,10 @@ public abstract class MapObject
                         case SkillDamageType.Tear:
                             switch (item2.Template.EffectJudgeType)
                             {
-                                case BuffDetherminationType.SourceSpecificDamage:
+                                case BuffDeterminationType.SourceSpecificDamage:
                                     flag2 = 地图对象2 == item2.Caster && (item2.Template.SpecificSkillID?.Contains(skill.SkillID) ?? false);
                                     break;
-                                case BuffDetherminationType.AllSpecificDamage:
+                                case BuffDeterminationType.AllSpecificDamage:
                                     flag2 = item2.Template.SpecificSkillID?.Contains(skill.SkillID) ?? false;
                                     break;
                             }
@@ -1403,8 +1404,8 @@ public abstract class MapObject
                     }
                     int num14 = item2.当前层数.V * ((item2.Template.DamageIncOrDecBase?.Length > item2.BuffLevel.V) ? item2.Template.DamageIncOrDecBase[item2.BuffLevel.V] : 0);
                     float num15 = (float)(int)item2.当前层数.V * ((item2.Template.DamageIncOrDecFactor?.Length > item2.BuffLevel.V) ? item2.Template.DamageIncOrDecFactor[item2.BuffLevel.V] : 0f);
-                    num9 += ((item2.Template.HowJudgeEffect == BuffDetherminationMethod.PassiveDamageIncrease) ? num14 : (-num14));
-                    num10 += ((item2.Template.HowJudgeEffect == BuffDetherminationMethod.PassiveDamageIncrease) ? num15 : (0f - num15));
+                    num9 += ((item2.Template.HowJudgeEffect == BuffDeterminationMethod.PassiveDamageIncrease) ? num14 : (-num14));
+                    num10 += ((item2.Template.HowJudgeEffect == BuffDeterminationMethod.PassiveDamageIncrease) ? num15 : (0f - num15));
                     if (item2.Template.EffectiveFollowedByID != 0 && item2.Caster != null && MapManager.Objects.TryGetValue(item2.Caster.ObjectID, out var value2) && value2 == item2.Caster)
                     {
                         if (item2.Template.FollowedBySkillOwner)
@@ -1416,7 +1417,7 @@ public abstract class MapObject
                             AddBuff(item2.Template.EffectiveFollowedByID, item2.Caster);
                         }
                     }
-                    if (item2.Template.HowJudgeEffect == BuffDetherminationMethod.PassiveDecreaseDamage && item2.Template.LimitedDamage)
+                    if (item2.Template.HowJudgeEffect == BuffDeterminationMethod.PassiveDecreaseDamage && item2.Template.LimitedDamage)
                     {
                         num11 = Math.Min(num11, item2.Template.LimitedDamageValue);
                     }

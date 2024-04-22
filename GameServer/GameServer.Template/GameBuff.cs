@@ -55,10 +55,10 @@ public sealed class GameBuff
     public bool EffectRemoved;
     public ushort EffectiveFollowedByID;
     public bool FollowedBySkillOwner;
-    public BuffDetherminationMethod HowJudgeEffect;
+    public BuffDeterminationMethod HowJudgeEffect;
     public bool LimitedDamage;
     public int LimitedDamageValue;
-    public BuffDetherminationType EffectJudgeType;
+    public BuffDeterminationType EffectJudgeType;
     public HashSet<ushort> SpecificSkillID;
     public int[] DamageIncOrDecBase;
     public float[] DamageIncOrDecFactor;

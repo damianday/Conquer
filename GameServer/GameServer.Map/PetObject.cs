@@ -5,7 +5,7 @@ using System.Linq;
 
 using GameServer.Database;
 using GameServer.Template;
-using GameServer.Networking;
+using GameServer.Skill;
 
 using GamePackets.Server;
 

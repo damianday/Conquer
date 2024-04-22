@@ -10,6 +10,7 @@ using WindowsFormsApp8;
 using GameServer.Database;
 using GameServer.Template;
 using GameServer.Networking;
+using GameServer.Skill;
 
 using GamePackets;
 using GamePackets.Client;
@@ -1443,26 +1444,25 @@ public sealed class PlayerObject : MapObject
                     });
                 }
             }
-            foreach (SkillObject item2 in ActiveSkills.ToList())
-            {
-                item2.Process();
-            }
-            foreach (KeyValuePair<ushort, BuffInfo> item3 in Buffs.ToList())
-            {
-                ProcessBuffs(item3.Value);
-            }
+            foreach (var skill in ActiveSkills)
+
+                skill.Process();
+
+            foreach (var buff in Buffs)
+                ProcessBuffs(buff.Value);
+
             if (SEngine.CurrentTime >= TitleTime)
             {
                 DateTime dateTime = DateTime.MaxValue;
-                foreach (KeyValuePair<byte, DateTime> item4 in Titles.ToList())
+                foreach (var title in Titles)
                 {
-                    if (SEngine.CurrentTime >= item4.Value)
+                    if (SEngine.CurrentTime >= title.Value)
                     {
-                        玩家称号到期(item4.Key);
+                        玩家称号到期(title.Key);
                     }
-                    else if (item4.Value < dateTime)
+                    else if (title.Value < dateTime)
                     {
-                        dateTime = item4.Value;
+                        dateTime = title.Value;
                     }
                 }
                 TitleTime = dateTime;
