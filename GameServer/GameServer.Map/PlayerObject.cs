@@ -128,7 +128,7 @@ public sealed class PlayerObject : MapObject
             else
             {
                 ProtectionRing = false;
-                移除Buff时处理(47340);
+                RemoveBuffEx(47340);
             }
         }
     }
@@ -1129,11 +1129,11 @@ public sealed class PlayerObject : MapObject
 
                 foreach (var number in bonuses)
                 {
-                    if (MountBeast.DataSheet.ContainsKey(number))
+                    if (MountStats.DataSheet.ContainsKey(number))
                     {
-                        if (character.Mounts.Contains(number) && MountBeast.DataSheet.TryGetValue(number, out var value19))
+                        if (character.Mounts.Contains(number) && MountStats.DataSheet.TryGetValue(number, out var mount))
                         {
-                            BonusStats.Add(value19, value19.Stats);
+                            BonusStats.Add(mount, mount.Stats);
                         }
                     }
                 }
@@ -1144,11 +1144,11 @@ public sealed class PlayerObject : MapObject
 
                 foreach (var number in bonuses)
                 {
-                    if (MountBeast.DataSheet.ContainsKey(number) && character.Mounts.Contains(number))
+                    if (MountStats.DataSheet.ContainsKey(number) && character.Mounts.Contains(number))
                     {
-                        if (character.Mounts.Contains(number) && MountBeast.DataSheet.TryGetValue(number, out var value41))
+                        if (character.Mounts.Contains(number) && MountStats.DataSheet.TryGetValue(number, out var mount))
                         {
-                            BonusStats.Add(value41, value41.Stats);
+                            BonusStats.Add(mount, mount.Stats);
                         }
                     }
                 }
@@ -1872,18 +1872,8 @@ public sealed class PlayerObject : MapObject
             CombatPowerBonus.Remove(value3);
             RefreshStats();
             UpdateCombatPower();
-            byte b = byte.MaxValue;
-            byte b2 = 0;
-            while (b2 < 玩家实例2.Character.InventorySize.V)
-            {
-                if (玩家实例2.Character.Inventory.ContainsKey(b2))
-                {
-                    b2 = (byte)(b2 + 1);
-                    continue;
-                }
-                b = b2;
-                break;
-            }
+            byte b = 玩家实例2.FindEmptyInventoryIndex();
+ 
             GameItem value4 = null;
             GameItem.DataSheetByName.TryGetValue(Config.狂暴名称, out value4);
             玩家实例2.Character.Inventory[b] = new ItemInfo(value4, 玩家实例2.Character, 1, b, 1);
@@ -2044,7 +2034,7 @@ public sealed class PlayerObject : MapObject
         if (!ResurrectionRingReady && HasResurrectionRing && SEngine.CurrentTime > ReviveTime)
         {
             ResurrectionRingReady = true;
-            移除Buff时处理(47391);
+            RemoveBuffEx(47391);
         }
         if (CurrentMap.MapID == 183 && SEngine.CurrentTime.Hour != Config.武斗场时间一 && SEngine.CurrentTime.Hour != Config.武斗场时间二)
         {
@@ -3822,12 +3812,12 @@ public sealed class PlayerObject : MapObject
         {
             if (GameMount.DataSheet.TryGetValue(Character.CurrentMount.V, out var value2) && value2.BuffID > 0)
             {
-                移除Buff时处理(value2.BuffID);
+                RemoveBuffEx(value2.BuffID);
             }
             Character.CurrentMount.V = 坐骑编号;
             if (value.BuffID >= 0)
             {
-                移除Buff时处理(value.BuffID);
+                RemoveBuffEx(value.BuffID);
                 Enqueue(new 坐骑面板回执
                 {
                     坐骑编号 = 坐骑编号
@@ -4175,7 +4165,7 @@ public sealed class PlayerObject : MapObject
         }
         foreach (ushort item2 in Skills[skillID].SkillBuffs)
         {
-            移除Buff时处理(item2);
+            RemoveBuffEx(item2);
         }
         CombatPowerBonus[Skills[skillID]] = Skills[skillID].CombatBonus;
         UpdateCombatPower();
@@ -4329,7 +4319,7 @@ public sealed class PlayerObject : MapObject
         {
             if (Buffs.TryGetValue(2555, out var v))
             {
-                移除Buff时处理(v.ID.V);
+                RemoveBuffEx(v.ID.V);
             }
             SendPacket(new 同步角色外形
             {
@@ -4515,7 +4505,7 @@ public sealed class PlayerObject : MapObject
             }
             if (Buffs.TryGetValue(原有装备.BuffID, out var v2))
             {
-                移除Buff时处理(v2.ID.V);
+                RemoveBuffEx(v2.ID.V);
             }
             CombatPowerBonus.Remove(原有装备);
             BonusStats.Remove(原有装备);
@@ -7379,6 +7369,17 @@ public sealed class PlayerObject : MapObject
         return false;
     }
 
+    public byte FindEmptyInventoryIndex()
+    {
+        for (byte i = 0; i < InventorySize; i++)
+        {
+            if (!Inventory.ContainsKey(i))
+                return i;
+        }
+
+        return byte.MaxValue;
+    }
+
     public bool FindItem(int quantity, int id, out List<ItemInfo> items)
     {
         items = new List<ItemInfo>();
@@ -7998,7 +7999,7 @@ public sealed class PlayerObject : MapObject
             {
                 if ((item.BuffEffect & BuffEffectType.StatusFlag) != 0 && (item.Template.PlayerState & GameObjectState.Stealth) != 0)
                 {
-                    移除Buff时处理(item.ID.V);
+                    RemoveBuffEx(item.ID.V);
                 }
             }
         }
@@ -8944,18 +8945,7 @@ public sealed class PlayerObject : MapObject
                                 {
                                     break;
                                 }
-                                byte b26 = byte.MaxValue;
-                                byte b27 = 0;
-                                while (b27 < InventorySize)
-                                {
-                                    if (Inventory.ContainsKey(b27))
-                                    {
-                                        b27 = (byte)(b27 + 1);
-                                        continue;
-                                    }
-                                    b26 = b27;
-                                    break;
-                                }
+                                byte b26 = FindEmptyInventoryIndex();
                                 if (b26 == byte.MaxValue)
                                 {
                                     Enqueue(new GameErrorMessagePacket
@@ -8994,18 +8984,7 @@ public sealed class PlayerObject : MapObject
                                 {
                                     break;
                                 }
-                                byte b24 = byte.MaxValue;
-                                byte b25 = 0;
-                                while (b25 < InventorySize)
-                                {
-                                    if (Inventory.ContainsKey(b25))
-                                    {
-                                        b25 = (byte)(b25 + 1);
-                                        continue;
-                                    }
-                                    b24 = b25;
-                                    break;
-                                }
+                                byte b24 = FindEmptyInventoryIndex();
                                 if (b24 == byte.MaxValue)
                                 {
                                     Enqueue(new GameErrorMessagePacket
@@ -9044,18 +9023,7 @@ public sealed class PlayerObject : MapObject
                                 {
                                     break;
                                 }
-                                byte b16 = byte.MaxValue;
-                                byte b17 = 0;
-                                while (b17 < InventorySize)
-                                {
-                                    if (Inventory.ContainsKey(b17))
-                                    {
-                                        b17 = (byte)(b17 + 1);
-                                        continue;
-                                    }
-                                    b16 = b17;
-                                    break;
-                                }
+                                byte b16 = FindEmptyInventoryIndex();
                                 if (b16 == byte.MaxValue)
                                 {
                                     Enqueue(new GameErrorMessagePacket
@@ -9094,18 +9062,7 @@ public sealed class PlayerObject : MapObject
                                 {
                                     break;
                                 }
-                                byte b20 = byte.MaxValue;
-                                byte b21 = 0;
-                                while (b21 < InventorySize)
-                                {
-                                    if (Inventory.ContainsKey(b21))
-                                    {
-                                        b21 = (byte)(b21 + 1);
-                                        continue;
-                                    }
-                                    b20 = b21;
-                                    break;
-                                }
+                                byte b20 = FindEmptyInventoryIndex();
                                 if (b20 == byte.MaxValue)
                                 {
                                     Enqueue(new GameErrorMessagePacket
@@ -9144,18 +9101,7 @@ public sealed class PlayerObject : MapObject
                                 {
                                     break;
                                 }
-                                byte b28 = byte.MaxValue;
-                                byte b29 = 0;
-                                while (b29 < InventorySize)
-                                {
-                                    if (Inventory.ContainsKey(b29))
-                                    {
-                                        b29 = (byte)(b29 + 1);
-                                        continue;
-                                    }
-                                    b28 = b29;
-                                    break;
-                                }
+                                byte b28 = FindEmptyInventoryIndex();
                                 if (b28 == byte.MaxValue)
                                 {
                                     Enqueue(new GameErrorMessagePacket
@@ -9189,18 +9135,7 @@ public sealed class PlayerObject : MapObject
                                 {
                                     break;
                                 }
-                                byte b18 = byte.MaxValue;
-                                byte b19 = 0;
-                                while (b19 < InventorySize)
-                                {
-                                    if (Inventory.ContainsKey(b19))
-                                    {
-                                        b19 = (byte)(b19 + 1);
-                                        continue;
-                                    }
-                                    b18 = b19;
-                                    break;
-                                }
+                                byte b18 = FindEmptyInventoryIndex();
                                 if (b18 == byte.MaxValue)
                                 {
                                     Enqueue(new GameErrorMessagePacket
@@ -9239,18 +9174,7 @@ public sealed class PlayerObject : MapObject
                                 {
                                     break;
                                 }
-                                byte b30 = byte.MaxValue;
-                                byte b31 = 0;
-                                while (b31 < InventorySize)
-                                {
-                                    if (Inventory.ContainsKey(b31))
-                                    {
-                                        b31 = (byte)(b31 + 1);
-                                        continue;
-                                    }
-                                    b30 = b31;
-                                    break;
-                                }
+                                byte b30 = FindEmptyInventoryIndex();
                                 if (b30 == byte.MaxValue)
                                 {
                                     Enqueue(new GameErrorMessagePacket
@@ -9289,18 +9213,7 @@ public sealed class PlayerObject : MapObject
                                 {
                                     break;
                                 }
-                                byte b22 = byte.MaxValue;
-                                byte b23 = 0;
-                                while (b23 < InventorySize)
-                                {
-                                    if (Inventory.ContainsKey(b23))
-                                    {
-                                        b23 = (byte)(b23 + 1);
-                                        continue;
-                                    }
-                                    b22 = b23;
-                                    break;
-                                }
+                                byte b22 = FindEmptyInventoryIndex();
                                 if (b22 == byte.MaxValue)
                                 {
                                     Enqueue(new GameErrorMessagePacket
@@ -9339,18 +9252,7 @@ public sealed class PlayerObject : MapObject
                                 {
                                     break;
                                 }
-                                byte b14 = byte.MaxValue;
-                                byte b15 = 0;
-                                while (b15 < InventorySize)
-                                {
-                                    if (Inventory.ContainsKey(b15))
-                                    {
-                                        b15 = (byte)(b15 + 1);
-                                        continue;
-                                    }
-                                    b14 = b15;
-                                    break;
-                                }
+                                byte b14 = FindEmptyInventoryIndex();
                                 if (b14 == byte.MaxValue)
                                 {
                                     Enqueue(new GameErrorMessagePacket
@@ -10550,18 +10452,7 @@ public sealed class PlayerObject : MapObject
                         SMain.AddSystemLog($"{Name}捐献{Config.沙城捐献货币类型}货币类型,捐献金额{Config.沙城捐献支付数量},累积捐献{Config.沙城捐献赞助金额},赞助总人数{Config.沙城捐献赞助人数}");
                         if (GameItem.DataSheet.TryGetValue(Config.沙城捐献获得物品1, out var value33))
                         {
-                            byte b7 = byte.MaxValue;
-                            byte b8 = 0;
-                            while (b8 < InventorySize)
-                            {
-                                if (Inventory.ContainsKey(b8))
-                                {
-                                    b8 = (byte)(b8 + 1);
-                                    continue;
-                                }
-                                b7 = b8;
-                                break;
-                            }
+                            byte b7 = FindEmptyInventoryIndex();
                             if (b7 == byte.MaxValue)
                             {
                                 Enqueue(new GameErrorMessagePacket
@@ -10663,20 +10554,20 @@ public sealed class PlayerObject : MapObject
                             {
                                 if (MapManager.Maps.TryGetValue(Config.暗之门地图1 * 16 + 1, out var value27))
                                 {
-                                    Map 地图实例6 = new Map(GameMap.DataSheet[(byte)Config.暗之门地图1]);
-                                    地图实例6.Terrain = value27.Terrain;
-                                    地图实例6.Areas = value27.Areas;
-                                    地图实例6.Spawns = value27.Spawns;
-                                    地图实例6.Guards = value27.Guards;
-                                    地图实例6.TeleportationArea = value27.TeleportationArea;
-                                    地图实例6.Cells = new HashSet<MapObject>[value27.MapSize.X, value27.MapSize.Y];
-                                    Map 地图实例7 = 地图实例6;
-                                    MapManager.ReplicateMaps.Add(地图实例7);
-                                    Teleport(地图实例7, AreaType.Teleportation);
-                                    NetworkManager.SendAnnouncement($"玩家：{Name}进入【{地图实例7}】魔渊历练", rolling: true);
+                                    Map map = new Map(GameMap.DataSheet[(byte)Config.暗之门地图1]);
+                                    map.Terrain = value27.Terrain;
+                                    map.Areas = value27.Areas;
+                                    map.Spawns = value27.Spawns;
+                                    map.Guards = value27.Guards;
+                                    map.TeleportationArea = value27.TeleportationArea;
+                                    map.Cells = new HashSet<MapObject>[value27.MapSize.X, value27.MapSize.Y];
+                                    
+                                    MapManager.ReplicateMaps.Add(map);
+                                    Teleport(map, AreaType.Teleportation);
+                                    NetworkManager.SendAnnouncement($"玩家：{Name}进入【{map}】魔渊历练", rolling: true);
                                     if (MonsterInfo.DataSheet.TryGetValue(Config.暗之门地图1BOSS, out var value28))
                                     {
-                                        MonsterObject 怪物实例2 = new MonsterObject(value28, 地图实例7, int.MaxValue, new Point[1]
+                                        MonsterObject 怪物实例2 = new MonsterObject(value28, map, int.MaxValue, new Point[1]
                                         {
                                 new Point(Config.暗之门地图1X, Config.暗之门地图1Y)
                                         }, forbidResurrection: true, 立即刷新: true);
@@ -10692,20 +10583,20 @@ public sealed class PlayerObject : MapObject
                             {
                                 if (MapManager.Maps.TryGetValue(Config.暗之门地图2 * 16 + 1, out var value29))
                                 {
-                                    Map 地图实例8 = new Map(GameMap.DataSheet[(byte)Config.暗之门地图2]);
-                                    地图实例8.Terrain = value29.Terrain;
-                                    地图实例8.Areas = value29.Areas;
-                                    地图实例8.Spawns = value29.Spawns;
-                                    地图实例8.Guards = value29.Guards;
-                                    地图实例8.TeleportationArea = value29.TeleportationArea;
-                                    地图实例8.Cells = new HashSet<MapObject>[value29.MapSize.X, value29.MapSize.Y];
-                                    Map 地图实例9 = 地图实例8;
-                                    MapManager.ReplicateMaps.Add(地图实例9);
-                                    Teleport(地图实例9, AreaType.Teleportation);
-                                    NetworkManager.SendAnnouncement($"玩家：{Name}进入【{地图实例9}】魔渊历练", rolling: true);
+                                    Map map = new Map(GameMap.DataSheet[(byte)Config.暗之门地图2]);
+                                    map.Terrain = value29.Terrain;
+                                    map.Areas = value29.Areas;
+                                    map.Spawns = value29.Spawns;
+                                    map.Guards = value29.Guards;
+                                    map.TeleportationArea = value29.TeleportationArea;
+                                    map.Cells = new HashSet<MapObject>[value29.MapSize.X, value29.MapSize.Y];
+                                    
+                                    MapManager.ReplicateMaps.Add(map);
+                                    Teleport(map, AreaType.Teleportation);
+                                    NetworkManager.SendAnnouncement($"玩家：{Name}进入【{map}】魔渊历练", rolling: true);
                                     if (MonsterInfo.DataSheet.TryGetValue(Config.暗之门地图2BOSS, out var value30))
                                     {
-                                        MonsterObject 怪物实例2 = new MonsterObject(value30, 地图实例9, int.MaxValue, new Point[1]
+                                        MonsterObject 怪物实例2 = new MonsterObject(value30, map, int.MaxValue, new Point[1]
                                         {
                                 new Point(Config.暗之门地图2X, Config.暗之门地图2Y)
                                         }, forbidResurrection: true, 立即刷新: true);
@@ -10721,22 +10612,22 @@ public sealed class PlayerObject : MapObject
                             {
                                 if (MapManager.Maps.TryGetValue(Config.暗之门地图3 * 16 + 1, out var value25))
                                 {
-                                    Map 地图实例4 = new Map(GameMap.DataSheet[(byte)Config.暗之门地图3]);
-                                    地图实例4.Terrain = value25.Terrain;
-                                    地图实例4.Areas = value25.Areas;
-                                    地图实例4.Spawns = value25.Spawns;
-                                    地图实例4.Guards = value25.Guards;
-                                    地图实例4.TeleportationArea = value25.TeleportationArea;
-                                    地图实例4.Cells = new HashSet<MapObject>[value25.MapSize.X, value25.MapSize.Y];
-                                    Map 地图实例5 = 地图实例4;
-                                    MapManager.ReplicateMaps.Add(地图实例5);
-                                    Teleport(地图实例5, AreaType.Teleportation);
-                                    NetworkManager.SendAnnouncement($"玩家：{Name}进入【{地图实例5}】魔渊历练", rolling: true);
+                                    Map map = new Map(GameMap.DataSheet[(byte)Config.暗之门地图3]);
+                                    map.Terrain = value25.Terrain;
+                                    map.Areas = value25.Areas;
+                                    map.Spawns = value25.Spawns;
+                                    map.Guards = value25.Guards;
+                                    map.TeleportationArea = value25.TeleportationArea;
+                                    map.Cells = new HashSet<MapObject>[value25.MapSize.X, value25.MapSize.Y];
+                                    
+                                    MapManager.ReplicateMaps.Add(map);
+                                    Teleport(map, AreaType.Teleportation);
+                                    NetworkManager.SendAnnouncement($"玩家：{Name}进入【{map}】魔渊历练", rolling: true);
                                     if (MonsterInfo.DataSheet.TryGetValue(Config.暗之门地图3BOSS, out var value26))
                                     {
-                                        MonsterObject 怪物实例2 = new MonsterObject(value26, 地图实例5, int.MaxValue, new Point[1]
+                                        MonsterObject 怪物实例2 = new MonsterObject(value26, map, int.MaxValue, new Point[1]
                                         {
-                                new Point(Config.暗之门地图3X, Config.暗之门地图3Y)
+                                            new Point(Config.暗之门地图3X, Config.暗之门地图3Y)
                                         }, forbidResurrection: true, 立即刷新: true);
                                         怪物实例2.CurrentDirection = GameDirection.UpRight;
                                         怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(30.0);
@@ -10750,20 +10641,20 @@ public sealed class PlayerObject : MapObject
                             {
                                 if (MapManager.Maps.TryGetValue(Config.暗之门地图4 * 16 + 1, out var value23))
                                 {
-                                    Map 地图实例2 = new Map(GameMap.DataSheet[(byte)Config.暗之门地图4]);
-                                    地图实例2.Terrain = value23.Terrain;
-                                    地图实例2.Areas = value23.Areas;
-                                    地图实例2.Spawns = value23.Spawns;
-                                    地图实例2.Guards = value23.Guards;
-                                    地图实例2.TeleportationArea = value23.TeleportationArea;
-                                    地图实例2.Cells = new HashSet<MapObject>[value23.MapSize.X, value23.MapSize.Y];
-                                    Map 地图实例3 = 地图实例2;
-                                    MapManager.ReplicateMaps.Add(地图实例3);
-                                    Teleport(地图实例3, AreaType.Teleportation);
-                                    NetworkManager.SendAnnouncement($"玩家：{Name}进入【{地图实例3}】魔渊历练", rolling: true);
+                                    Map map = new Map(GameMap.DataSheet[(byte)Config.暗之门地图4]);
+                                    map.Terrain = value23.Terrain;
+                                    map.Areas = value23.Areas;
+                                    map.Spawns = value23.Spawns;
+                                    map.Guards = value23.Guards;
+                                    map.TeleportationArea = value23.TeleportationArea;
+                                    map.Cells = new HashSet<MapObject>[value23.MapSize.X, value23.MapSize.Y];
+                                    
+                                    MapManager.ReplicateMaps.Add(map);
+                                    Teleport(map, AreaType.Teleportation);
+                                    NetworkManager.SendAnnouncement($"玩家：{Name}进入【{map}】魔渊历练", rolling: true);
                                     if (MonsterInfo.DataSheet.TryGetValue(Config.暗之门地图4BOSS, out var value24))
                                     {
-                                        MonsterObject 怪物实例2 = new MonsterObject(value24, 地图实例3, int.MaxValue, new Point[1]
+                                        MonsterObject 怪物实例2 = new MonsterObject(value24, map, int.MaxValue, new Point[1]
                                         {
                                 new Point(Config.暗之门地图4X, Config.暗之门地图4Y)
                                         }, forbidResurrection: true, 立即刷新: true);
@@ -10843,19 +10734,19 @@ public sealed class PlayerObject : MapObject
                                 {
                                     break;
                                 }
-                                Map 地图实例10 = new Map(GameMap.DataSheet[72]);
-                                地图实例10.Terrain = value48.Terrain;
-                                地图实例10.Areas = value48.Areas;
-                                地图实例10.Spawns = value48.Spawns;
-                                地图实例10.Guards = value48.Guards;
-                                地图实例10.TeleportationArea = value48.TeleportationArea;
-                                地图实例10.Respawns = value48.Spawns.OrderBy((MonsterSpawn O) => O.Coordinates.X).ToList();
-                                地图实例10.Cells = new HashSet<MapObject>[value48.MapSize.X, value48.MapSize.Y];
-                                Map 地图实例11 = 地图实例10;
-                                MapManager.ReplicateMaps.Add(地图实例11);
-                                Teleport(地图实例11, AreaType.Teleportation);
+                                Map map = new Map(GameMap.DataSheet[72]);
+                                map.Terrain = value48.Terrain;
+                                map.Areas = value48.Areas;
+                                map.Spawns = value48.Spawns;
+                                map.Guards = value48.Guards;
+                                map.TeleportationArea = value48.TeleportationArea;
+                                map.Respawns = value48.Spawns.OrderBy((MonsterSpawn O) => O.Coordinates.X).ToList();
+                                map.Cells = new HashSet<MapObject>[value48.MapSize.X, value48.MapSize.Y];
+                                
+                                MapManager.ReplicateMaps.Add(map);
+                                Teleport(map, AreaType.Teleportation);
                                 Character.魔虫窟次数.V++;
-                                NetworkManager.SendAnnouncement($"玩家：{Name}进入{地图实例11}副本历练", rolling: true);
+                                NetworkManager.SendAnnouncement($"玩家：{Name}进入{map}副本历练", rolling: true);
                                 foreach (MonsterSpawn item in value48.Spawns)
                                 {
                                     if (item.Spawns == null)
@@ -10863,16 +10754,13 @@ public sealed class PlayerObject : MapObject
                                         continue;
                                     }
                                     Point[] 出生范围 = item.RangeCoordinates.ToArray();
-                                    MonsterSpawnInfo[] 刷新列表 = item.Spawns;
-                                    MonsterSpawnInfo[] array = 刷新列表;
-                                    MonsterSpawnInfo[] array2 = array;
-                                    foreach (MonsterSpawnInfo 刷新信息 in array2)
+                                    foreach (MonsterSpawnInfo 刷新信息 in item.Spawns)
                                     {
                                         if (MonsterInfo.DataSheet.TryGetValue(刷新信息.MonsterName, out var value49))
                                         {
                                             for (int j = 0; j < 刷新信息.SpawnCount; j++)
                                             {
-                                                MonsterObject 怪物实例2 = new MonsterObject(value49, 地图实例11, int.MaxValue, 出生范围, forbidResurrection: true, 立即刷新: true);
+                                                MonsterObject 怪物实例2 = new MonsterObject(value49, map, int.MaxValue, 出生范围, forbidResurrection: true, 立即刷新: true);
                                                 怪物实例2.CurrentDirection = GameDirection.UpRight;
                                                 怪物实例2.SurvivalTime = SEngine.CurrentTime.AddHours(Config.魔虫窟分钟限制);
                                                 魔虫窟怪物 = 怪物实例2;
@@ -10904,19 +10792,19 @@ public sealed class PlayerObject : MapObject
                                 {
                                     break;
                                 }
-                                Map 地图实例12 = new Map(GameMap.DataSheet[72]);
-                                地图实例12.Terrain = value50.Terrain;
-                                地图实例12.Areas = value50.Areas;
-                                地图实例12.Spawns = value50.Spawns;
-                                地图实例12.Guards = value50.Guards;
-                                地图实例12.TeleportationArea = value50.TeleportationArea;
-                                地图实例12.Respawns = value50.Spawns.OrderBy((MonsterSpawn O) => O.Coordinates.X).ToList();
-                                地图实例12.Cells = new HashSet<MapObject>[value50.MapSize.X, value50.MapSize.Y];
-                                Map 地图实例13 = 地图实例12;
-                                MapManager.ReplicateMaps.Add(地图实例13);
-                                Teleport(地图实例13, AreaType.Teleportation);
+                                Map map = new Map(GameMap.DataSheet[72]);
+                                map.Terrain = value50.Terrain;
+                                map.Areas = value50.Areas;
+                                map.Spawns = value50.Spawns;
+                                map.Guards = value50.Guards;
+                                map.TeleportationArea = value50.TeleportationArea;
+                                map.Respawns = value50.Spawns.OrderBy((MonsterSpawn O) => O.Coordinates.X).ToList();
+                                map.Cells = new HashSet<MapObject>[value50.MapSize.X, value50.MapSize.Y];
+                               
+                                MapManager.ReplicateMaps.Add(map);
+                                Teleport(map, AreaType.Teleportation);
                                 Character.魔虫窟次数.V++;
-                                NetworkManager.SendAnnouncement($"玩家：{Name}进入{地图实例13}副本历练", rolling: true);
+                                NetworkManager.SendAnnouncement($"玩家：{Name}进入{map}副本历练", rolling: true);
                                 foreach (MonsterSpawn item2 in value50.Spawns)
                                 {
                                     if (item2.Spawns == null)
@@ -10924,16 +10812,13 @@ public sealed class PlayerObject : MapObject
                                         continue;
                                     }
                                     Point[] 出生范围2 = item2.RangeCoordinates.ToArray();
-                                    MonsterSpawnInfo[] 刷新列表2 = item2.Spawns;
-                                    MonsterSpawnInfo[] array3 = 刷新列表2;
-                                    MonsterSpawnInfo[] array4 = array3;
-                                    foreach (MonsterSpawnInfo 刷新信息2 in array4)
+                                    foreach (MonsterSpawnInfo 刷新信息2 in item2.Spawns)
                                     {
                                         if (MonsterInfo.DataSheet.TryGetValue(刷新信息2.MonsterName, out var value51))
                                         {
                                             for (int l = 0; l < 刷新信息2.SpawnCount; l++)
                                             {
-                                                MonsterObject 怪物实例2 = new MonsterObject(value51, 地图实例13, int.MaxValue, 出生范围2, forbidResurrection: true, 立即刷新: true);
+                                                MonsterObject 怪物实例2 = new MonsterObject(value51, map, int.MaxValue, 出生范围2, forbidResurrection: true, 立即刷新: true);
                                                 怪物实例2.CurrentDirection = GameDirection.UpRight;
                                                 怪物实例2.SurvivalTime = SEngine.CurrentTime.AddHours(Config.魔虫窟分钟限制);
                                                 魔虫窟怪物 = 怪物实例2;
@@ -10963,40 +10848,35 @@ public sealed class PlayerObject : MapObject
                             {
                                 break;
                             }
-                            Map 地图实例14 = new Map(GameMap.DataSheet[72]);
-                            地图实例14.Terrain = value52.Terrain;
-                            地图实例14.Areas = value52.Areas;
-                            地图实例14.Spawns = value52.Spawns;
-                            地图实例14.Guards = value52.Guards;
-                            地图实例14.TeleportationArea = value52.TeleportationArea;
-                            地图实例14.Respawns = value52.Spawns.OrderBy((MonsterSpawn O) => O.Coordinates.X).ToList();
-                            地图实例14.Cells = new HashSet<MapObject>[value52.MapSize.X, value52.MapSize.Y];
-                            Map 地图实例15 = 地图实例14;
-                            MapManager.ReplicateMaps.Add(地图实例15);
-                            Teleport(地图实例15, AreaType.Teleportation);
+                            Map map = new Map(GameMap.DataSheet[72]);
+                            map.Terrain = value52.Terrain;
+                            map.Areas = value52.Areas;
+                            map.Spawns = value52.Spawns;
+                            map.Guards = value52.Guards;
+                            map.TeleportationArea = value52.TeleportationArea;
+                            map.Respawns = value52.Spawns.OrderBy((MonsterSpawn O) => O.Coordinates.X).ToList();
+                            map.Cells = new HashSet<MapObject>[value52.MapSize.X, value52.MapSize.Y];
+                            
+                            MapManager.ReplicateMaps.Add(map);
+                            Teleport(map, AreaType.Teleportation);
                             Character.魔虫窟次数.V++;
-                            NetworkManager.SendAnnouncement($"玩家：{Name}进入{地图实例15}副本历练", rolling: true);
+                            NetworkManager.SendAnnouncement($"玩家：{Name}进入{map}副本历练", rolling: true);
                             {
-                                foreach (MonsterSpawn item3 in value52.Spawns)
+                                foreach (MonsterSpawn spawn in value52.Spawns)
                                 {
-                                    if (item3.Spawns == null)
+                                    if (spawn.Spawns == null) continue;
+                                    
+                                    Point[] locations = spawn.RangeCoordinates.ToArray();
+                                    foreach (MonsterSpawnInfo spawni in spawn.Spawns)
                                     {
-                                        continue;
-                                    }
-                                    Point[] 出生范围3 = item3.RangeCoordinates.ToArray();
-                                    MonsterSpawnInfo[] 刷新列表3 = item3.Spawns;
-                                    MonsterSpawnInfo[] array5 = 刷新列表3;
-                                    MonsterSpawnInfo[] array6 = array5;
-                                    foreach (MonsterSpawnInfo 刷新信息3 in array6)
-                                    {
-                                        if (MonsterInfo.DataSheet.TryGetValue(刷新信息3.MonsterName, out var value53))
+                                        if (MonsterInfo.DataSheet.TryGetValue(spawni.MonsterName, out var value53))
                                         {
-                                            for (int n = 0; n < 刷新信息3.SpawnCount; n++)
+                                            for (int n = 0; n < spawni.SpawnCount; n++)
                                             {
-                                                MonsterObject 怪物实例2 = new MonsterObject(value53, 地图实例15, int.MaxValue, 出生范围3, forbidResurrection: true, 立即刷新: true);
-                                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                                怪物实例2.SurvivalTime = SEngine.CurrentTime.AddHours(Config.魔虫窟分钟限制);
-                                                魔虫窟怪物 = 怪物实例2;
+                                                MonsterObject mon = new MonsterObject(value53, map, int.MaxValue, locations, forbidResurrection: true, 立即刷新: true);
+                                                mon.CurrentDirection = GameDirection.UpRight;
+                                                mon.SurvivalTime = SEngine.CurrentTime.AddHours(Config.魔虫窟分钟限制);
+                                                魔虫窟怪物 = mon;
                                             }
                                         }
                                     }
@@ -12814,18 +12694,7 @@ public sealed class PlayerObject : MapObject
                         {
                             break;
                         }
-                        byte b36 = byte.MaxValue;
-                        byte b37 = 0;
-                        while (b37 < Character.InventorySize.V)
-                        {
-                            if (Character.Inventory.ContainsKey(b37))
-                            {
-                                b37 = (byte)(b37 + 1);
-                                continue;
-                            }
-                            b36 = b37;
-                            break;
-                        }
+                        byte b36 = FindEmptyInventoryIndex();
                         GameItem value55 = null;
                         GameItem value56 = null;
                         if (FindItem(31031, out var 物品9) || FindItem(31032, out 物品9) || FindItem(31033, out 物品9) || FindItem(31034, out 物品9) || FindItem(31035, out 物品9) || FindItem(31036, out 物品9) || FindItem(31037, out 物品9) || FindItem(31038, out 物品9) || FindItem(31042, out 物品9) || FindItem(31043, out 物品9) || FindItem(31044, out 物品9) || FindItem(31045, out 物品9) || FindItem(31046, out 物品9) || FindItem(32531, out 物品9) || FindItem(32532, out 物品9) || FindItem(32533, out 物品9) || FindItem(32534, out 物品9) || FindItem(32535, out 物品9) || FindItem(32536, out 物品9) || FindItem(32537, out 物品9) || FindItem(32538, out 物品9) || FindItem(32539, out 物品9) || FindItem(32540, out 物品9) || FindItem(32541, out 物品9) || FindItem(32544, out 物品9) || FindItem(32545, out 物品9) || FindItem(32546, out 物品9) || FindItem(32547, out 物品9) || FindItem(32548, out 物品9) || FindItem(32549, out 物品9) || FindItem(32550, out 物品9) || FindItem(32551, out 物品9) || FindItem(32552, out 物品9) || FindItem(32553, out 物品9) || FindItem(32554, out 物品9) || FindItem(33001, out 物品9) || FindItem(33002, out 物品9) || FindItem(33003, out 物品9) || FindItem(33004, out 物品9) || FindItem(33005, out 物品9) || FindItem(33006, out 物品9) || FindItem(33007, out 物品9) || FindItem(33008, out 物品9) || FindItem(33009, out 物品9) || FindItem(33010, out 物品9) || FindItem(33011, out 物品9) || FindItem(33012, out 物品9) || FindItem(33014, out 物品9) || FindItem(33015, out 物品9) || FindItem(33016, out 物品9) || FindItem(33017, out 物品9) || FindItem(33018, out 物品9) || FindItem(33019, out 物品9) || FindItem(33020, out 物品9) || FindItem(34001, out 物品9) || FindItem(34002, out 物品9) || FindItem(34003, out 物品9) || FindItem(34004, out 物品9) || FindItem(34005, out 物品9) || FindItem(34006, out 物品9) || FindItem(34007, out 物品9) || FindItem(34008, out 物品9) || FindItem(34009, out 物品9) || FindItem(34010, out 物品9) || FindItem(34011, out 物品9) || FindItem(34012, out 物品9) || FindItem(34013, out 物品9) || FindItem(34014, out 物品9) || FindItem(34015, out 物品9) || FindItem(35001, out 物品9) || FindItem(35002, out 物品9) || FindItem(35003, out 物品9) || FindItem(35004, out 物品9) || FindItem(35005, out 物品9) || FindItem(35006, out 物品9) || FindItem(35007, out 物品9) || FindItem(35008, out 物品9) || FindItem(35009, out 物品9) || FindItem(35010, out 物品9) || FindItem(35011, out 物品9) || FindItem(35012, out 物品9) || FindItem(35013, out 物品9) || FindItem(35014, out 物品9) || FindItem(35015, out 物品9) || FindItem(36001, out 物品9) || FindItem(36002, out 物品9) || FindItem(36003, out 物品9) || FindItem(36004, out 物品9) || FindItem(36005, out 物品9) || FindItem(36006, out 物品9) || FindItem(36007, out 物品9) || FindItem(36008, out 物品9) || FindItem(36009, out 物品9) || FindItem(36010, out 物品9) || FindItem(36011, out 物品9) || FindItem(36012, out 物品9) || FindItem(36013, out 物品9) || FindItem(36014, out 物品9) || FindItem(36015, out 物品9))
@@ -16965,18 +16834,7 @@ public sealed class PlayerObject : MapObject
                         break;
                     case 1:
                         {
-                            byte b7 = byte.MaxValue;
-                            byte b8 = 0;
-                            while (b8 < InventorySize)
-                            {
-                                if (Inventory.ContainsKey(b8))
-                                {
-                                    b8 = (byte)(b8 + 1);
-                                    continue;
-                                }
-                                b7 = b8;
-                                break;
-                            }
+                            byte b7 = FindEmptyInventoryIndex();
                             GameItem value4;
                             if (b7 == byte.MaxValue)
                             {
@@ -17002,18 +16860,7 @@ public sealed class PlayerObject : MapObject
                         }
                     case 2:
                         {
-                            byte b11 = byte.MaxValue;
-                            byte b12 = 0;
-                            while (b12 < InventorySize)
-                            {
-                                if (Inventory.ContainsKey(b12))
-                                {
-                                    b12 = (byte)(b12 + 1);
-                                    continue;
-                                }
-                                b11 = b12;
-                                break;
-                            }
+                            byte b11 = FindEmptyInventoryIndex();
                             GameItem value6;
                             if (b11 == byte.MaxValue)
                             {
@@ -17039,18 +16886,7 @@ public sealed class PlayerObject : MapObject
                         }
                     case 3:
                         {
-                            byte b3 = byte.MaxValue;
-                            byte b4 = 0;
-                            while (b4 < InventorySize)
-                            {
-                                if (Inventory.ContainsKey(b4))
-                                {
-                                    b4 = (byte)(b4 + 1);
-                                    continue;
-                                }
-                                b3 = b4;
-                                break;
-                            }
+                            byte b3 = FindEmptyInventoryIndex();
                             GameItem value2;
                             if (b3 == byte.MaxValue)
                             {
@@ -17076,18 +16912,7 @@ public sealed class PlayerObject : MapObject
                         }
                     case 4:
                         {
-                            byte b9 = byte.MaxValue;
-                            byte b10 = 0;
-                            while (b10 < InventorySize)
-                            {
-                                if (Inventory.ContainsKey(b10))
-                                {
-                                    b10 = (byte)(b10 + 1);
-                                    continue;
-                                }
-                                b9 = b10;
-                                break;
-                            }
+                            byte b9 = FindEmptyInventoryIndex();
                             GameItem value5;
                             if (b9 == byte.MaxValue)
                             {
@@ -17113,18 +16938,7 @@ public sealed class PlayerObject : MapObject
                         }
                     case 5:
                         {
-                            byte b5 = byte.MaxValue;
-                            byte b6 = 0;
-                            while (b6 < InventorySize)
-                            {
-                                if (Inventory.ContainsKey(b6))
-                                {
-                                    b6 = (byte)(b6 + 1);
-                                    continue;
-                                }
-                                b5 = b6;
-                                break;
-                            }
+                            byte b5 = FindEmptyInventoryIndex();
                             GameItem value3;
                             if (b5 == byte.MaxValue)
                             {
@@ -17150,18 +16964,7 @@ public sealed class PlayerObject : MapObject
                         }
                     case 6:
                         {
-                            byte b = byte.MaxValue;
-                            byte b2 = 0;
-                            while (b2 < InventorySize)
-                            {
-                                if (Inventory.ContainsKey(b2))
-                                {
-                                    b2 = (byte)(b2 + 1);
-                                    continue;
-                                }
-                                b = b2;
-                                break;
-                            }
+                            byte b = FindEmptyInventoryIndex();
                             GameItem value;
                             if (b == byte.MaxValue)
                             {
@@ -17220,18 +17023,7 @@ public sealed class PlayerObject : MapObject
                         break;
                     case 1:
                         {
-                            byte b19 = byte.MaxValue;
-                            byte b20 = 0;
-                            while (b20 < InventorySize)
-                            {
-                                if (Inventory.ContainsKey(b20))
-                                {
-                                    b20 = (byte)(b20 + 1);
-                                    continue;
-                                }
-                                b19 = b20;
-                                break;
-                            }
+                            byte b19 = FindEmptyInventoryIndex();
                             GameItem value10;
                             if (b19 == byte.MaxValue)
                             {
@@ -17257,18 +17049,7 @@ public sealed class PlayerObject : MapObject
                         }
                     case 2:
                         {
-                            byte b23 = byte.MaxValue;
-                            byte b24 = 0;
-                            while (b24 < InventorySize)
-                            {
-                                if (Inventory.ContainsKey(b24))
-                                {
-                                    b24 = (byte)(b24 + 1);
-                                    continue;
-                                }
-                                b23 = b24;
-                                break;
-                            }
+                            byte b23 = FindEmptyInventoryIndex();
                             GameItem value12;
                             if (b23 == byte.MaxValue)
                             {
@@ -17294,18 +17075,7 @@ public sealed class PlayerObject : MapObject
                         }
                     case 3:
                         {
-                            byte b15 = byte.MaxValue;
-                            byte b16 = 0;
-                            while (b16 < InventorySize)
-                            {
-                                if (Inventory.ContainsKey(b16))
-                                {
-                                    b16 = (byte)(b16 + 1);
-                                    continue;
-                                }
-                                b15 = b16;
-                                break;
-                            }
+                            byte b15 = FindEmptyInventoryIndex();
                             GameItem value8;
                             if (b15 == byte.MaxValue)
                             {
@@ -17331,18 +17101,7 @@ public sealed class PlayerObject : MapObject
                         }
                     case 4:
                         {
-                            byte b21 = byte.MaxValue;
-                            byte b22 = 0;
-                            while (b22 < InventorySize)
-                            {
-                                if (Inventory.ContainsKey(b22))
-                                {
-                                    b22 = (byte)(b22 + 1);
-                                    continue;
-                                }
-                                b21 = b22;
-                                break;
-                            }
+                            byte b21 = FindEmptyInventoryIndex();
                             GameItem value11;
                             if (b21 == byte.MaxValue)
                             {
@@ -17368,18 +17127,7 @@ public sealed class PlayerObject : MapObject
                         }
                     case 5:
                         {
-                            byte b17 = byte.MaxValue;
-                            byte b18 = 0;
-                            while (b18 < InventorySize)
-                            {
-                                if (Inventory.ContainsKey(b18))
-                                {
-                                    b18 = (byte)(b18 + 1);
-                                    continue;
-                                }
-                                b17 = b18;
-                                break;
-                            }
+                            byte b17 = FindEmptyInventoryIndex();
                             GameItem value9;
                             if (b17 == byte.MaxValue)
                             {
@@ -17405,18 +17153,7 @@ public sealed class PlayerObject : MapObject
                         }
                     case 6:
                         {
-                            byte b13 = byte.MaxValue;
-                            byte b14 = 0;
-                            while (b14 < InventorySize)
-                            {
-                                if (Inventory.ContainsKey(b14))
-                                {
-                                    b14 = (byte)(b14 + 1);
-                                    continue;
-                                }
-                                b13 = b14;
-                                break;
-                            }
+                            byte b13 = FindEmptyInventoryIndex();
                             GameItem value7;
                             if (b13 == byte.MaxValue)
                             {
@@ -17762,20 +17499,9 @@ public sealed class PlayerObject : MapObject
             item.PickedUp();
             return;
         }
-        byte b = 0;
-        while (true)
-        {
-            if (b < InventorySize)
-            {
-                if (!Inventory.ContainsKey(b))
-                {
-                    break;
-                }
-                b = (byte)(b + 1);
-                continue;
-            }
-            return;
-        }
+        byte b = FindEmptyInventoryIndex();
+        if (b == byte.MaxValue) return;
+
         if (item.Item != null)
         {
             Inventory[b] = item.Item;
@@ -17921,18 +17647,7 @@ public sealed class PlayerObject : MapObject
                     Grid = grid,
                     Position = location
                 });
-                byte b = byte.MaxValue;
-                byte b2 = 0;
-                while (b2 < InventorySize)
-                {
-                    if (Inventory.ContainsKey(b2))
-                    {
-                        b2 = (byte)(b2 + 1);
-                        continue;
-                    }
-                    b = b2;
-                    break;
-                }
+                byte b = FindEmptyInventoryIndex();
                 if (b == byte.MaxValue)
                 {
                     Enqueue(new GameErrorMessagePacket
@@ -19744,18 +19459,7 @@ public sealed class PlayerObject : MapObject
                 {
                     return;
                 }
-                byte b = byte.MaxValue;
-                byte b2 = 0;
-                while (b2 < Character.InventorySize.V)
-                {
-                    if (Character.Inventory.ContainsKey(b2))
-                    {
-                        b2 = (byte)(b2 + 1);
-                        continue;
-                    }
-                    b = b2;
-                    break;
-                }
+                byte b = FindEmptyInventoryIndex();
                 Character.Inventory[b] = new ItemInfo(value, Character, 1, b, 1);
                 Character.Inventory[b].Dura.V = v.给予物品数量;
                 Character.Enqueue(new SyncItemPacket
@@ -19780,18 +19484,7 @@ public sealed class PlayerObject : MapObject
                 }
                 if (GameItem.DataSheet.TryGetValue(value2.Item1ID, out var value3))
                 {
-                    byte b3 = byte.MaxValue;
-                    byte b4 = 0;
-                    while (b4 < InventorySize)
-                    {
-                        if (Inventory.ContainsKey(b4))
-                        {
-                            b4 = (byte)(b4 + 1);
-                            continue;
-                        }
-                        b3 = b4;
-                        break;
-                    }
+                    byte b3 = FindEmptyInventoryIndex();
                     if (b3 == byte.MaxValue)
                     {
                         Enqueue(new GameErrorMessagePacket
@@ -19978,18 +19671,7 @@ public sealed class PlayerObject : MapObject
                         {
                             break;
                         }
-                        byte b105 = byte.MaxValue;
-                        byte b106 = 0;
-                        while (b106 < InventorySize)
-                        {
-                            if (Inventory.ContainsKey(b106))
-                            {
-                                b106 = (byte)(b106 + 1);
-                                continue;
-                            }
-                            b105 = b106;
-                            break;
-                        }
+                        byte b105 = FindEmptyInventoryIndex();
                         if (b105 == byte.MaxValue)
                         {
                             Enqueue(new GameErrorMessagePacket
@@ -20072,18 +19754,7 @@ public sealed class PlayerObject : MapObject
                         {
                             break;
                         }
-                        byte b79 = byte.MaxValue;
-                        byte b80 = 0;
-                        while (b80 < InventorySize)
-                        {
-                            if (Inventory.ContainsKey(b80))
-                            {
-                                b80 = (byte)(b80 + 1);
-                                continue;
-                            }
-                            b79 = b80;
-                            break;
-                        }
+                        byte b79 = FindEmptyInventoryIndex();
                         if (b79 == byte.MaxValue)
                         {
                             Enqueue(new GameErrorMessagePacket
@@ -20144,18 +19815,7 @@ public sealed class PlayerObject : MapObject
                     }
                 case "铭文石福袋3":
                     {
-                        byte b75 = byte.MaxValue;
-                        byte b76 = 0;
-                        while (b76 < InventorySize)
-                        {
-                            if (Inventory.ContainsKey(b76))
-                            {
-                                b76 = (byte)(b76 + 1);
-                                continue;
-                            }
-                            b75 = b76;
-                            break;
-                        }
+                        byte b75 = FindEmptyInventoryIndex();
                         if (b75 == byte.MaxValue)
                         {
                             Enqueue(new GameErrorMessagePacket
@@ -20202,18 +19862,7 @@ public sealed class PlayerObject : MapObject
                     }
                 case "铭文石福袋2":
                     {
-                        byte b155 = byte.MaxValue;
-                        byte b156 = 0;
-                        while (b156 < InventorySize)
-                        {
-                            if (Inventory.ContainsKey(b156))
-                            {
-                                b156 = (byte)(b156 + 1);
-                                continue;
-                            }
-                            b155 = b156;
-                            break;
-                        }
+                        byte b155 = FindEmptyInventoryIndex();
                         if (b155 == byte.MaxValue)
                         {
                             Enqueue(new GameErrorMessagePacket
@@ -20260,18 +19909,7 @@ public sealed class PlayerObject : MapObject
                     }
                 case "铭文石福袋1":
                     {
-                        byte b143 = byte.MaxValue;
-                        byte b144 = 0;
-                        while (b144 < InventorySize)
-                        {
-                            if (Inventory.ContainsKey(b144))
-                            {
-                                b144 = (byte)(b144 + 1);
-                                continue;
-                            }
-                            b143 = b144;
-                            break;
-                        }
+                        byte b143 = FindEmptyInventoryIndex();
                         if (b143 == byte.MaxValue)
                         {
                             Enqueue(new GameErrorMessagePacket
@@ -20318,18 +19956,7 @@ public sealed class PlayerObject : MapObject
                     }
                 case "铭文石福袋":
                     {
-                        byte b113 = byte.MaxValue;
-                        byte b114 = 0;
-                        while (b114 < InventorySize)
-                        {
-                            if (Inventory.ContainsKey(b114))
-                            {
-                                b114 = (byte)(b114 + 1);
-                                continue;
-                            }
-                            b113 = b114;
-                            break;
-                        }
+                        byte b113 = FindEmptyInventoryIndex();
                         if (b113 == byte.MaxValue)
                         {
                             Enqueue(new GameErrorMessagePacket
@@ -20380,18 +20007,7 @@ public sealed class PlayerObject : MapObject
                         {
                             break;
                         }
-                        byte b139 = byte.MaxValue;
-                        byte b140 = 0;
-                        while (b140 < InventorySize)
-                        {
-                            if (Inventory.ContainsKey(b140))
-                            {
-                                b140 = (byte)(b140 + 1);
-                                continue;
-                            }
-                            b139 = b140;
-                            break;
-                        }
+                        byte b139 = FindEmptyInventoryIndex();
                         if (b139 == byte.MaxValue)
                         {
                             Enqueue(new GameErrorMessagePacket
@@ -20470,18 +20086,7 @@ public sealed class PlayerObject : MapObject
                     }
                 case "初级装备礼包":
                     {
-                        byte b109 = byte.MaxValue;
-                        byte b110 = 0;
-                        while (b110 < InventorySize)
-                        {
-                            if (Inventory.ContainsKey(b110))
-                            {
-                                b110 = (byte)(b110 + 1);
-                                continue;
-                            }
-                            b109 = b110;
-                            break;
-                        }
+                        byte b109 = FindEmptyInventoryIndex();
                         if (b109 == byte.MaxValue)
                         {
                             Enqueue(new GameErrorMessagePacket
@@ -20528,18 +20133,7 @@ public sealed class PlayerObject : MapObject
                     }
                 case "初级技能礼包":
                     {
-                        byte b59 = byte.MaxValue;
-                        byte b60 = 0;
-                        while (b60 < InventorySize)
-                        {
-                            if (Inventory.ContainsKey(b60))
-                            {
-                                b60 = (byte)(b60 + 1);
-                                continue;
-                            }
-                            b59 = b60;
-                            break;
-                        }
+                        byte b59 = FindEmptyInventoryIndex();
                         if (b59 == byte.MaxValue)
                         {
                             Enqueue(new GameErrorMessagePacket
@@ -20590,18 +20184,7 @@ public sealed class PlayerObject : MapObject
                         {
                             break;
                         }
-                        byte b161 = byte.MaxValue;
-                        byte b162 = 0;
-                        while (b162 < InventorySize)
-                        {
-                            if (Inventory.ContainsKey(b162))
-                            {
-                                b162 = (byte)(b162 + 1);
-                                continue;
-                            }
-                            b161 = b162;
-                            break;
-                        }
+                        byte b161 = FindEmptyInventoryIndex();
                         if (b161 == byte.MaxValue)
                         {
                             Enqueue(new GameErrorMessagePacket
@@ -20654,18 +20237,7 @@ public sealed class PlayerObject : MapObject
                         {
                             break;
                         }
-                        byte b19 = byte.MaxValue;
-                        byte b20 = 0;
-                        while (b20 < InventorySize)
-                        {
-                            if (Inventory.ContainsKey(b20))
-                            {
-                                b20 = (byte)(b20 + 1);
-                                continue;
-                            }
-                            b19 = b20;
-                            break;
-                        }
+                        byte b19 = FindEmptyInventoryIndex();
                         if (b19 == byte.MaxValue)
                         {
                             Enqueue(new GameErrorMessagePacket
@@ -20751,18 +20323,7 @@ public sealed class PlayerObject : MapObject
                         {
                             break;
                         }
-                        byte b147 = byte.MaxValue;
-                        byte b148 = 0;
-                        while (b148 < InventorySize)
-                        {
-                            if (Inventory.ContainsKey(b148))
-                            {
-                                b148 = (byte)(b148 + 1);
-                                continue;
-                            }
-                            b147 = b148;
-                            break;
-                        }
+                        byte b147 = FindEmptyInventoryIndex();
                         if (b147 == byte.MaxValue)
                         {
                             Enqueue(new GameErrorMessagePacket
@@ -20845,18 +20406,7 @@ public sealed class PlayerObject : MapObject
                         {
                             break;
                         }
-                        byte b61 = byte.MaxValue;
-                        byte b62 = 0;
-                        while (b62 < InventorySize)
-                        {
-                            if (Inventory.ContainsKey(b62))
-                            {
-                                b62 = (byte)(b62 + 1);
-                                continue;
-                            }
-                            b61 = b62;
-                            break;
-                        }
+                        byte b61 = FindEmptyInventoryIndex();
                         if (b61 == byte.MaxValue)
                         {
                             Enqueue(new GameErrorMessagePacket
@@ -20891,18 +20441,7 @@ public sealed class PlayerObject : MapObject
                         {
                             break;
                         }
-                        byte b25 = byte.MaxValue;
-                        byte b26 = 0;
-                        while (b26 < InventorySize)
-                        {
-                            if (Inventory.ContainsKey(b26))
-                            {
-                                b26 = (byte)(b26 + 1);
-                                continue;
-                            }
-                            b25 = b26;
-                            break;
-                        }
+                        byte b25 = FindEmptyInventoryIndex();
                         if (b25 == byte.MaxValue)
                         {
                             Enqueue(new GameErrorMessagePacket
@@ -20949,18 +20488,7 @@ public sealed class PlayerObject : MapObject
                         {
                             break;
                         }
-                        byte b71 = byte.MaxValue;
-                        byte b72 = 0;
-                        while (b72 < InventorySize)
-                        {
-                            if (Inventory.ContainsKey(b72))
-                            {
-                                b72 = (byte)(b72 + 1);
-                                continue;
-                            }
-                            b71 = b72;
-                            break;
-                        }
+                        byte b71 = FindEmptyInventoryIndex();
                         if (b71 == byte.MaxValue)
                         {
                             Enqueue(new GameErrorMessagePacket
@@ -21007,18 +20535,7 @@ public sealed class PlayerObject : MapObject
                         {
                             break;
                         }
-                        byte b153 = byte.MaxValue;
-                        byte b154 = 0;
-                        while (b154 < InventorySize)
-                        {
-                            if (Inventory.ContainsKey(b154))
-                            {
-                                b154 = (byte)(b154 + 1);
-                                continue;
-                            }
-                            b153 = b154;
-                            break;
-                        }
+                        byte b153 = FindEmptyInventoryIndex();
                         if (b153 == byte.MaxValue)
                         {
                             Enqueue(new GameErrorMessagePacket
@@ -21101,18 +20618,7 @@ public sealed class PlayerObject : MapObject
                         {
                             break;
                         }
-                        byte b53 = byte.MaxValue;
-                        byte b54 = 0;
-                        while (b54 < InventorySize)
-                        {
-                            if (Inventory.ContainsKey(b54))
-                            {
-                                b54 = (byte)(b54 + 1);
-                                continue;
-                            }
-                            b53 = b54;
-                            break;
-                        }
+                        byte b53 = FindEmptyInventoryIndex();
                         if (b53 == byte.MaxValue)
                         {
                             Enqueue(new GameErrorMessagePacket
@@ -21177,18 +20683,7 @@ public sealed class PlayerObject : MapObject
                         {
                             break;
                         }
-                        byte b117 = byte.MaxValue;
-                        byte b118 = 0;
-                        while (b118 < InventorySize)
-                        {
-                            if (Inventory.ContainsKey(b118))
-                            {
-                                b118 = (byte)(b118 + 1);
-                                continue;
-                            }
-                            b117 = b118;
-                            break;
-                        }
+                        byte b117 = FindEmptyInventoryIndex();
                         if (b117 == byte.MaxValue)
                         {
                             Enqueue(new GameErrorMessagePacket
@@ -21271,18 +20766,7 @@ public sealed class PlayerObject : MapObject
                         {
                             break;
                         }
-                        byte b15 = byte.MaxValue;
-                        byte b16 = 0;
-                        while (b16 < InventorySize)
-                        {
-                            if (Inventory.ContainsKey(b16))
-                            {
-                                b16 = (byte)(b16 + 1);
-                                continue;
-                            }
-                            b15 = b16;
-                            break;
-                        }
+                        byte b15 = FindEmptyInventoryIndex();
                         if (b15 == byte.MaxValue)
                         {
                             Enqueue(new GameErrorMessagePacket
@@ -21329,18 +20813,7 @@ public sealed class PlayerObject : MapObject
                         {
                             break;
                         }
-                        byte b81 = byte.MaxValue;
-                        byte b82 = 0;
-                        while (b82 < InventorySize)
-                        {
-                            if (Inventory.ContainsKey(b82))
-                            {
-                                b82 = (byte)(b82 + 1);
-                                continue;
-                            }
-                            b81 = b82;
-                            break;
-                        }
+                        byte b81 = FindEmptyInventoryIndex();
                         if (b81 == byte.MaxValue)
                         {
                             Enqueue(new GameErrorMessagePacket
@@ -21405,18 +20878,7 @@ public sealed class PlayerObject : MapObject
                         {
                             break;
                         }
-                        byte b29 = byte.MaxValue;
-                        byte b30 = 0;
-                        while (b30 < InventorySize)
-                        {
-                            if (Inventory.ContainsKey(b30))
-                            {
-                                b30 = (byte)(b30 + 1);
-                                continue;
-                            }
-                            b29 = b30;
-                            break;
-                        }
+                        byte b29 = FindEmptyInventoryIndex();
                         if (b29 == byte.MaxValue)
                         {
                             Enqueue(new GameErrorMessagePacket
@@ -21459,18 +20921,7 @@ public sealed class PlayerObject : MapObject
                     }
                 case "战具礼盒":
                     {
-                        byte b151 = byte.MaxValue;
-                        byte b152 = 0;
-                        while (b152 < InventorySize)
-                        {
-                            if (Inventory.ContainsKey(b152))
-                            {
-                                b152 = (byte)(b152 + 1);
-                                continue;
-                            }
-                            b151 = b152;
-                            break;
-                        }
+                        byte b151 = FindEmptyInventoryIndex();
                         if (b151 == byte.MaxValue)
                         {
                             Enqueue(new GameErrorMessagePacket
@@ -22141,18 +21592,7 @@ public sealed class PlayerObject : MapObject
                         }
                         if (GameItem.DataSheet.TryGetValue(Config.初级赞助礼包1, out var value17))
                         {
-                            byte b31 = byte.MaxValue;
-                            byte b32 = 0;
-                            while (b32 < Character.InventorySize.V)
-                            {
-                                if (Character.Inventory.ContainsKey(b32))
-                                {
-                                    b32 = (byte)(b32 + 1);
-                                    continue;
-                                }
-                                b31 = b32;
-                                break;
-                            }
+                            byte b31 = FindEmptyInventoryIndex();
                             Character.Inventory[b31] = new ItemInfo(value17, Character, 1, b31, 1);
                             Character.Enqueue(new SyncItemPacket
                             {
@@ -24018,18 +23458,7 @@ public sealed class PlayerObject : MapObject
                         {
                             break;
                         }
-                        byte b77 = byte.MaxValue;
-                        byte b78 = 0;
-                        while (b78 < Character.InventorySize.V)
-                        {
-                            if (Character.Inventory.ContainsKey(b78))
-                            {
-                                b78 = (byte)(b78 + 1);
-                                continue;
-                            }
-                            b77 = b78;
-                            break;
-                        }
+                        byte b77 = FindEmptyInventoryIndex();
                         Character.Inventory[b77] = new ItemInfo(value51, Character, 1, b77, 1);
                         Character.Inventory[b77].Dura.V = Config.自定义物品数量一;
                         Character.Enqueue(new SyncItemPacket
@@ -24045,18 +23474,7 @@ public sealed class PlayerObject : MapObject
                         {
                             break;
                         }
-                        byte b73 = byte.MaxValue;
-                        byte b74 = 0;
-                        while (b74 < Character.InventorySize.V)
-                        {
-                            if (Character.Inventory.ContainsKey(b74))
-                            {
-                                b74 = (byte)(b74 + 1);
-                                continue;
-                            }
-                            b73 = b74;
-                            break;
-                        }
+                        byte b73 = FindEmptyInventoryIndex();
                         Character.Inventory[b73] = new ItemInfo(value48, Character, 1, b73, 1);
                         Character.Inventory[b73].Dura.V = Config.自定义物品数量二;
                         Character.Enqueue(new SyncItemPacket
@@ -24072,18 +23490,7 @@ public sealed class PlayerObject : MapObject
                         {
                             break;
                         }
-                        byte b67 = byte.MaxValue;
-                        byte b68 = 0;
-                        while (b68 < Character.InventorySize.V)
-                        {
-                            if (Character.Inventory.ContainsKey(b68))
-                            {
-                                b68 = (byte)(b68 + 1);
-                                continue;
-                            }
-                            b67 = b68;
-                            break;
-                        }
+                        byte b67 = FindEmptyInventoryIndex();
                         Character.Inventory[b67] = new ItemInfo(value44, Character, 1, b67, 1);
                         Character.Inventory[b67].Dura.V = Config.自定义物品数量三;
                         Character.Enqueue(new SyncItemPacket
@@ -24099,18 +23506,7 @@ public sealed class PlayerObject : MapObject
                         {
                             break;
                         }
-                        byte b63 = byte.MaxValue;
-                        byte b64 = 0;
-                        while (b64 < Character.InventorySize.V)
-                        {
-                            if (Character.Inventory.ContainsKey(b64))
-                            {
-                                b64 = (byte)(b64 + 1);
-                                continue;
-                            }
-                            b63 = b64;
-                            break;
-                        }
+                        byte b63 = FindEmptyInventoryIndex();
                         Character.Inventory[b63] = new ItemInfo(value35, Character, 1, b63, 1);
                         Character.Inventory[b63].Dura.V = Config.自定义物品数量四;
                         Character.Enqueue(new SyncItemPacket
@@ -24126,18 +23522,7 @@ public sealed class PlayerObject : MapObject
                         {
                             break;
                         }
-                        byte b57 = byte.MaxValue;
-                        byte b58 = 0;
-                        while (b58 < Character.InventorySize.V)
-                        {
-                            if (Character.Inventory.ContainsKey(b58))
-                            {
-                                b58 = (byte)(b58 + 1);
-                                continue;
-                            }
-                            b57 = b58;
-                            break;
-                        }
+                        byte b57 = FindEmptyInventoryIndex();
                         Character.Inventory[b57] = new ItemInfo(value32, Character, 1, b57, 1);
                         Character.Inventory[b57].Dura.V = Config.自定义物品数量五;
                         Character.Enqueue(new SyncItemPacket
@@ -24784,18 +24169,7 @@ public sealed class PlayerObject : MapObject
                     }
                 case "强化战具礼盒":
                     {
-                        byte b17 = byte.MaxValue;
-                        byte b18 = 0;
-                        while (b18 < InventorySize)
-                        {
-                            if (Inventory.ContainsKey(b18))
-                            {
-                                b18 = (byte)(b18 + 1);
-                                continue;
-                            }
-                            b17 = b18;
-                            break;
-                        }
+                        byte b17 = FindEmptyInventoryIndex();
                         if (b17 == byte.MaxValue)
                         {
                             Enqueue(new GameErrorMessagePacket
@@ -24984,18 +24358,7 @@ public sealed class PlayerObject : MapObject
                         {
                             break;
                         }
-                        byte b119 = byte.MaxValue;
-                        byte b120 = 0;
-                        while (b120 < InventorySize)
-                        {
-                            if (Inventory.ContainsKey(b120))
-                            {
-                                b120 = (byte)(b120 + 1);
-                                continue;
-                            }
-                            b119 = b120;
-                            break;
-                        }
+                        byte b119 = FindEmptyInventoryIndex();
                         if (b119 == byte.MaxValue)
                         {
                             Enqueue(new GameErrorMessagePacket
@@ -25107,18 +24470,7 @@ public sealed class PlayerObject : MapObject
                         {
                             break;
                         }
-                        byte b85 = byte.MaxValue;
-                        byte b86 = 0;
-                        while (b86 < InventorySize)
-                        {
-                            if (Inventory.ContainsKey(b86))
-                            {
-                                b86 = (byte)(b86 + 1);
-                                continue;
-                            }
-                            b85 = b86;
-                            break;
-                        }
+                        byte b85 = FindEmptyInventoryIndex();
                         if (b85 == byte.MaxValue)
                         {
                             Enqueue(new GameErrorMessagePacket
@@ -25230,18 +24582,7 @@ public sealed class PlayerObject : MapObject
                         {
                             break;
                         }
-                        byte b65 = byte.MaxValue;
-                        byte b66 = 0;
-                        while (b66 < InventorySize)
-                        {
-                            if (Inventory.ContainsKey(b66))
-                            {
-                                b66 = (byte)(b66 + 1);
-                                continue;
-                            }
-                            b65 = b66;
-                            break;
-                        }
+                        byte b65 = FindEmptyInventoryIndex();
                         if (b65 == byte.MaxValue)
                         {
                             Enqueue(new GameErrorMessagePacket
@@ -25349,18 +24690,7 @@ public sealed class PlayerObject : MapObject
                     }
                 case "名俊铭文石礼包":
                     {
-                        byte b55 = byte.MaxValue;
-                        byte b56 = 0;
-                        while (b56 < InventorySize)
-                        {
-                            if (Inventory.ContainsKey(b56))
-                            {
-                                b56 = (byte)(b56 + 1);
-                                continue;
-                            }
-                            b55 = b56;
-                            break;
-                        }
+                        byte b55 = FindEmptyInventoryIndex();
                         if (b55 == byte.MaxValue)
                         {
                             Enqueue(new GameErrorMessagePacket
@@ -25411,18 +24741,7 @@ public sealed class PlayerObject : MapObject
                         {
                             break;
                         }
-                        byte b49 = byte.MaxValue;
-                        byte b50 = 0;
-                        while (b50 < InventorySize)
-                        {
-                            if (Inventory.ContainsKey(b50))
-                            {
-                                b50 = (byte)(b50 + 1);
-                                continue;
-                            }
-                            b49 = b50;
-                            break;
-                        }
+                        byte b49 = FindEmptyInventoryIndex();
                         if (b49 == byte.MaxValue)
                         {
                             Enqueue(new GameErrorMessagePacket
@@ -25471,18 +24790,7 @@ public sealed class PlayerObject : MapObject
                     }
                 case "豪杰铭文石礼包":
                     {
-                        byte b21 = byte.MaxValue;
-                        byte b22 = 0;
-                        while (b22 < InventorySize)
-                        {
-                            if (Inventory.ContainsKey(b22))
-                            {
-                                b22 = (byte)(b22 + 1);
-                                continue;
-                            }
-                            b21 = b22;
-                            break;
-                        }
+                        byte b21 = FindEmptyInventoryIndex();
                         if (b21 == byte.MaxValue)
                         {
                             Enqueue(new GameErrorMessagePacket
@@ -26019,7 +25327,7 @@ public sealed class PlayerObject : MapObject
         });
     }
 
-    public void 玩家镶嵌灵石(byte 装备类型, byte 装备位置, byte 装备孔位, byte 灵石类型, byte 灵石位置)
+    public void UserAddSpiritStone(byte 装备类型, byte location, byte slot, byte 灵石类型, byte 灵石位置)
     {
         if (Dead || StallState > 0 || TradeState >= 3)
         {
@@ -26031,30 +25339,37 @@ public sealed class PlayerObject : MapObject
         }
         else if (装备类型 == 1 && 灵石类型 == 1)
         {
-            if (Inventory.TryGetValue(装备位置, out var v) && v is EquipmentInfo 装备数据)
+            if (Inventory.TryGetValue(location, out var v) && v is EquipmentInfo 装备数据)
             {
-                if (!Inventory.TryGetValue(灵石位置, out var v2))
+                if (!Inventory.TryGetValue(灵石位置, out var item))
                 {
                     Connection.Disconnect(new Exception("错误操作: 玩家镶嵌灵石.  错误: 没有找到灵石"));
                     return;
                 }
-                if (装备数据.SlotColor.Count <= 装备孔位)
+                if (装备数据.SlotColor.Count <= slot)
                 {
                     Connection.Disconnect(new Exception("错误操作: 玩家镶嵌灵石.  错误: 装备孔位错误"));
                     return;
                 }
-                if (装备数据.镶嵌灵石.ContainsKey(装备孔位))
+                if (装备数据.镶嵌灵石.ContainsKey(slot))
                 {
                     Connection.Disconnect(new Exception("错误操作: 玩家镶嵌灵石.  错误: 已有镶嵌灵石"));
                     return;
                 }
-                if ((装备数据.SlotColor[装备孔位] == EquipSlotColor.Green && v2.Name.IndexOf("精绿灵石") == -1) || (装备数据.SlotColor[装备孔位] == EquipSlotColor.Yellow && v2.Name.IndexOf("守阳灵石") == -1) || (装备数据.SlotColor[装备孔位] == EquipSlotColor.Blue && v2.Name.IndexOf("蔚蓝灵石") == -1) || (装备数据.SlotColor[装备孔位] == EquipSlotColor.Purple && v2.Name.IndexOf("纯紫灵石") == -1) || (装备数据.SlotColor[装备孔位] == EquipSlotColor.Grey && v2.Name.IndexOf("深灰灵石") == -1) || (装备数据.SlotColor[装备孔位] == EquipSlotColor.Orange && v2.Name.IndexOf("橙黄灵石") == -1) || (装备数据.SlotColor[装备孔位] == EquipSlotColor.Red && v2.Name.IndexOf("驭朱灵石") == -1 && v2.Name.IndexOf("命朱灵石") == -1))
+                if ((装备数据.SlotColor[slot] == EquipSlotColor.Green && item.Name.IndexOf("精绿灵石") == -1) || 
+                    (装备数据.SlotColor[slot] == EquipSlotColor.Yellow && item.Name.IndexOf("守阳灵石") == -1) || 
+                    (装备数据.SlotColor[slot] == EquipSlotColor.Blue && item.Name.IndexOf("蔚蓝灵石") == -1) || 
+                    (装备数据.SlotColor[slot] == EquipSlotColor.Purple && item.Name.IndexOf("纯紫灵石") == -1) || 
+                    (装备数据.SlotColor[slot] == EquipSlotColor.Grey && item.Name.IndexOf("深灰灵石") == -1) || 
+                    (装备数据.SlotColor[slot] == EquipSlotColor.Orange && item.Name.IndexOf("橙黄灵石") == -1) || 
+                    (装备数据.SlotColor[slot] == EquipSlotColor.Red && item.Name.IndexOf("驭朱灵石") == -1 &&
+                    item.Name.IndexOf("命朱灵石") == -1))
                 {
                     Connection.Disconnect(new Exception("错误操作: 玩家镶嵌灵石.  错误: 指定灵石错误"));
                     return;
                 }
-                ConsumeItem(1, v2);
-                装备数据.镶嵌灵石[装备孔位] = v2.Info;
+                ConsumeItem(1, item);
+                装备数据.镶嵌灵石[slot] = item.Info;
                 Enqueue(new SyncItemPacket
                 {
                     Description = 装备数据.ToArray()
@@ -26075,7 +25390,7 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 玩家拆除灵石(byte 装备类型, byte 装备位置, byte 装备孔位)
+    public void UserRemoveSpiritStone(byte 装备类型, byte location, byte slot)
     {
         int num = 0;
         if (Dead || StallState > 0 || TradeState >= 3)
@@ -26098,9 +25413,9 @@ public sealed class PlayerObject : MapObject
                 ErrorCode = 1793
             });
         }
-        else if (Inventory.TryGetValue(装备位置, out v) && v is EquipmentInfo 装备数据)
+        else if (Inventory.TryGetValue(location, out v) && v is EquipmentInfo 装备数据)
         {
-            if (!装备数据.镶嵌灵石.TryGetValue(装备孔位, out var v2))
+            if (!装备数据.镶嵌灵石.TryGetValue(slot, out var v2))
             {
                 Connection.Disconnect(new Exception("错误操作: 玩家镶嵌灵石.  错误: 没有镶嵌灵石"));
                 return;
@@ -26150,26 +25465,15 @@ public sealed class PlayerObject : MapObject
                     goto IL_038c;
                 }
             }
-            byte b = 0;
-            while (true)
-            {
-                if (b < InventorySize)
-                {
-                    if (!Inventory.ContainsKey(b))
-                    {
-                        break;
-                    }
-                    b = (byte)(b + 1);
-                    continue;
-                }
-                return;
-            }
+            byte b = FindEmptyInventoryIndex();
+            if (b == byte.MaxValue) return;
+
             Gold -= num;
             Enqueue(new 同步货币数量
             {
                 Description = 全部货币描述()
             });
-            装备数据.镶嵌灵石.Remove(装备孔位);
+            装备数据.镶嵌灵石.Remove(slot);
             Enqueue(new SyncItemPacket
             {
                 Description = 装备数据.ToArray()
@@ -28993,19 +28297,8 @@ public sealed class PlayerObject : MapObject
                 });
                 return;
             }
-            int num = -1;
-            byte b = 0;
-            while (b < InventorySize)
-            {
-                if (Inventory.ContainsKey(b))
-                {
-                    b = (byte)(b + 1);
-                    continue;
-                }
-                num = b;
-                break;
-            }
-            if (num == -1)
+            byte num = FindEmptyInventoryIndex();
+            if (num == byte.MaxValue)
             {
                 Enqueue(new SocialErrorPacket
                 {
@@ -29017,8 +28310,8 @@ public sealed class PlayerObject : MapObject
             {
                 邮件编号 = 邮件数据.MailID
             });
-            Inventory[(byte)num] = 邮件数据.Attachment.V;
-            邮件数据.Attachment.V.Location.V = (byte)num;
+            Inventory[num] = 邮件数据.Attachment.V;
+            邮件数据.Attachment.V.Location.V = num;
             邮件数据.Attachment.V.Grid.V = 1;
             邮件数据.Attachment.V = null;
         }
@@ -31459,18 +30752,7 @@ public sealed class PlayerObject : MapObject
                 });
                 return;
             }
-            byte b = byte.MaxValue;
-            byte b2 = 0;
-            while (b2 < InventorySize)
-            {
-                if (Inventory.ContainsKey(b2))
-                {
-                    b2 = (byte)(b2 + 1);
-                    continue;
-                }
-                b = b2;
-                break;
-            }
+            byte b = FindEmptyInventoryIndex();
             if (b == byte.MaxValue)
             {
                 Enqueue(new GameErrorMessagePacket
@@ -31550,18 +30832,7 @@ public sealed class PlayerObject : MapObject
             });
             return;
         }
-        byte b3 = byte.MaxValue;
-        byte b4 = 0;
-        while (b4 < InventorySize)
-        {
-            if (Inventory.ContainsKey(b4))
-            {
-                b4 = (byte)(b4 + 1);
-                continue;
-            }
-            b3 = b4;
-            break;
-        }
+        byte b3 = FindEmptyInventoryIndex();
         if (b3 == byte.MaxValue)
         {
             Enqueue(new GameErrorMessagePacket
