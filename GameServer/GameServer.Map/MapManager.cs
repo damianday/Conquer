@@ -366,10 +366,10 @@ public static class MapManager
 
         if (SEngine.CurrentTime.Hour == Config.沙巴克开启 && SandCityStage == 3)
         {
-            沙城城门.移除Buff时处理(22300);
-            下方宫门.移除Buff时处理(22300);
-            上方宫门.移除Buff时处理(22300);
-            左方宫门.移除Buff时处理(22300);
+            沙城城门.RemoveBuffEx(22300);
+            下方宫门.RemoveBuffEx(22300);
+            上方宫门.RemoveBuffEx(22300);
+            左方宫门.RemoveBuffEx(22300);
             NetworkManager.SendAnnouncement("The Siege of Sabak begins! Warriors fight for honor!", true);
             SandCityStage = 4;
         }
