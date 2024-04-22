@@ -273,7 +273,7 @@ public sealed class GuardObject : MapObject
 
         SecondaryObject = false;
         Dead = false;
-        Blocking = !Info.Nothingness;
+        Blocking = !Info.Virtual;
         CurrentMap = BirthMap;
         CurrentDirection = BirthDirection;
         CurrentPosition = BirthPosition;
