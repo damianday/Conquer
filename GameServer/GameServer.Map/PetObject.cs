@@ -202,7 +202,7 @@ public sealed class PetObject : MapObject
         {
             if ((MInfo.GrowStats?.Length > PetLevel))
                 return MInfo.GrowStats[PetLevel];
-            return MInfo.BasicStats;
+            return MInfo.Stats;
         }
     }
 
