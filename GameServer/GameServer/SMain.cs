@@ -22,15 +22,15 @@ public partial class SMain : Form
 {
     public static SMain Main;
 
-    private static System.Data.DataTable 角色数据表;
-    private static System.Data.DataTable 技能数据表;
-    private static System.Data.DataTable 装备数据表;
-    private static System.Data.DataTable 背包数据表;
-    private static System.Data.DataTable 仓库数据表;
+    private static System.Data.DataTable RoleDataTable;
+    private static System.Data.DataTable SkillsDataTable;
+    private static System.Data.DataTable EquipmentDataTable;
+    private static System.Data.DataTable InventoryDataTable;
+    private static System.Data.DataTable WarehouseDataTable;
     private static System.Data.DataTable MapDataTable;
     private static System.Data.DataTable MonsterDataTable;
-    private static System.Data.DataTable 掉落数据表;
-    private static System.Data.DataTable 封禁数据表;
+    private static System.Data.DataTable DropDataTable;
+    private static System.Data.DataTable BlockingDataTable;
 
     private static Dictionary<CharacterInfo, DataRow> RoleDataRows;
     private static Dictionary<DataRow, CharacterInfo> 数据行角色;
@@ -49,6 +49,10 @@ public partial class SMain : Form
     public static void LoadSystemData()
     {
         Main.allToolStripMenuItem.Visible = false;
+
+        AddSystemLog("Connecting to 'System' database");
+        DBAgent.X.InitDB("\\System\\System.db");
+
         AddSystemLog("Loading system data...");
         MapDataTable = new System.Data.DataTable("地图数据表");
         地图数据行 = new Dictionary<GameMap, DataRow>();
@@ -81,13 +85,13 @@ public partial class SMain : Form
         {
             Main.怪物浏览表.DataSource = MonsterDataTable;
         });
-        掉落数据表 = new System.Data.DataTable("掉落数据表");
+        DropDataTable = new System.Data.DataTable("掉落数据表");
         怪物掉落表 = new Dictionary<MonsterInfo, List<KeyValuePair<GameItem, long>>>();
-        掉落数据表.Columns.Add("物品名字", typeof(string));
-        掉落数据表.Columns.Add("掉落数量", typeof(string));
+        DropDataTable.Columns.Add("物品名字", typeof(string));
+        DropDataTable.Columns.Add("掉落数量", typeof(string));
         Main?.掉落浏览表.BeginInvoke((MethodInvoker)delegate
         {
-            Main.掉落浏览表.DataSource = 掉落数据表;
+            Main.掉落浏览表.DataSource = DropDataTable;
         });
         SystemDataGateway.LoadData();
         AddSystemLog("The system data load is complete");
@@ -96,93 +100,93 @@ public partial class SMain : Form
     public static void LoadUserData()
     {
         AddSystemLog("Loading user data...");
-        角色数据表 = new System.Data.DataTable("角色数据表");
-        技能数据表 = new System.Data.DataTable("技能数据表");
-        装备数据表 = new System.Data.DataTable("装备数据表");
-        背包数据表 = new System.Data.DataTable("装备数据表");
-        仓库数据表 = new System.Data.DataTable("装备数据表");
-        角色数据表 = new System.Data.DataTable("角色数据表");
+        RoleDataTable = new System.Data.DataTable("角色数据表");
+        SkillsDataTable = new System.Data.DataTable("技能数据表");
+        EquipmentDataTable = new System.Data.DataTable("装备数据表");
+        InventoryDataTable = new System.Data.DataTable("装备数据表");
+        WarehouseDataTable = new System.Data.DataTable("装备数据表");
+        RoleDataTable = new System.Data.DataTable("角色数据表");
         RoleDataRows = new Dictionary<CharacterInfo, DataRow>();
         数据行角色 = new Dictionary<DataRow, CharacterInfo>();
-        角色数据表.Columns.Add("角色名字", typeof(string));
-        角色数据表.Columns.Add("角色封禁", typeof(string));
-        角色数据表.Columns.Add("所属账号", typeof(string));
-        角色数据表.Columns.Add("账号封禁", typeof(string));
-        角色数据表.Columns.Add("冻结日期", typeof(string));
-        角色数据表.Columns.Add("删除日期", typeof(string));
-        角色数据表.Columns.Add("登录日期", typeof(string));
-        角色数据表.Columns.Add("离线日期", typeof(string));
-        角色数据表.Columns.Add("网络地址", typeof(string));
-        角色数据表.Columns.Add("物理地址", typeof(string));
-        角色数据表.Columns.Add("角色职业", typeof(string));
-        角色数据表.Columns.Add("角色性别", typeof(string));
-        角色数据表.Columns.Add("所属行会", typeof(string));
-        角色数据表.Columns.Add("元宝数量", typeof(string));
-        角色数据表.Columns.Add("消耗元宝", typeof(string));
-        角色数据表.Columns.Add("金币数量", typeof(string));
-        角色数据表.Columns.Add("转出金币", typeof(string));
-        角色数据表.Columns.Add("背包大小", typeof(string));
-        角色数据表.Columns.Add("仓库大小", typeof(string));
-        角色数据表.Columns.Add("师门声望", typeof(string));
-        角色数据表.Columns.Add("本期特权", typeof(string));
-        角色数据表.Columns.Add("本期日期", typeof(string));
-        角色数据表.Columns.Add("上期特权", typeof(string));
-        角色数据表.Columns.Add("上期日期", typeof(string));
-        角色数据表.Columns.Add("剩余特权", typeof(string));
-        角色数据表.Columns.Add("当前等级", typeof(string));
-        角色数据表.Columns.Add("当前经验", typeof(string));
-        角色数据表.Columns.Add("双倍经验", typeof(string));
-        角色数据表.Columns.Add("当前战力", typeof(string));
-        角色数据表.Columns.Add("当前地图", typeof(string));
-        角色数据表.Columns.Add("当前坐标", typeof(string));
-        角色数据表.Columns.Add("当前PK值", typeof(string));
-        角色数据表.Columns.Add("激活标识", typeof(string));
+        RoleDataTable.Columns.Add("角色名字", typeof(string));
+        RoleDataTable.Columns.Add("角色封禁", typeof(string));
+        RoleDataTable.Columns.Add("所属账号", typeof(string));
+        RoleDataTable.Columns.Add("账号封禁", typeof(string));
+        RoleDataTable.Columns.Add("冻结日期", typeof(string));
+        RoleDataTable.Columns.Add("删除日期", typeof(string));
+        RoleDataTable.Columns.Add("登录日期", typeof(string));
+        RoleDataTable.Columns.Add("离线日期", typeof(string));
+        RoleDataTable.Columns.Add("网络地址", typeof(string));
+        RoleDataTable.Columns.Add("物理地址", typeof(string));
+        RoleDataTable.Columns.Add("角色职业", typeof(string));
+        RoleDataTable.Columns.Add("角色性别", typeof(string));
+        RoleDataTable.Columns.Add("所属行会", typeof(string));
+        RoleDataTable.Columns.Add("元宝数量", typeof(string));
+        RoleDataTable.Columns.Add("消耗元宝", typeof(string));
+        RoleDataTable.Columns.Add("金币数量", typeof(string));
+        RoleDataTable.Columns.Add("转出金币", typeof(string));
+        RoleDataTable.Columns.Add("背包大小", typeof(string));
+        RoleDataTable.Columns.Add("仓库大小", typeof(string));
+        RoleDataTable.Columns.Add("师门声望", typeof(string));
+        RoleDataTable.Columns.Add("本期特权", typeof(string));
+        RoleDataTable.Columns.Add("本期日期", typeof(string));
+        RoleDataTable.Columns.Add("上期特权", typeof(string));
+        RoleDataTable.Columns.Add("上期日期", typeof(string));
+        RoleDataTable.Columns.Add("剩余特权", typeof(string));
+        RoleDataTable.Columns.Add("当前等级", typeof(string));
+        RoleDataTable.Columns.Add("当前经验", typeof(string));
+        RoleDataTable.Columns.Add("双倍经验", typeof(string));
+        RoleDataTable.Columns.Add("当前战力", typeof(string));
+        RoleDataTable.Columns.Add("当前地图", typeof(string));
+        RoleDataTable.Columns.Add("当前坐标", typeof(string));
+        RoleDataTable.Columns.Add("当前PK值", typeof(string));
+        RoleDataTable.Columns.Add("激活标识", typeof(string));
         Main?.BeginInvoke((MethodInvoker)delegate
         {
-            Main.角色浏览表.DataSource = 角色数据表;
+            Main.角色浏览表.DataSource = RoleDataTable;
             for (int i = 0; i < Main.角色浏览表.Columns.Count; i++)
             {
                 Main.角色浏览表.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             }
         });
         角色技能表 = new Dictionary<CharacterInfo, List<KeyValuePair<ushort, SkillInfo>>>();
-        技能数据表.Columns.Add("技能名字", typeof(string));
-        技能数据表.Columns.Add("技能编号", typeof(string));
-        技能数据表.Columns.Add("当前等级", typeof(string));
-        技能数据表.Columns.Add("当前经验", typeof(string));
+        SkillsDataTable.Columns.Add("技能名字", typeof(string));
+        SkillsDataTable.Columns.Add("技能编号", typeof(string));
+        SkillsDataTable.Columns.Add("当前等级", typeof(string));
+        SkillsDataTable.Columns.Add("当前经验", typeof(string));
         Main?.BeginInvoke((MethodInvoker)delegate
         {
-            Main.技能浏览表.DataSource = 技能数据表;
+            Main.技能浏览表.DataSource = SkillsDataTable;
         });
         角色装备表 = new Dictionary<CharacterInfo, List<KeyValuePair<byte, EquipmentInfo>>>();
-        装备数据表.Columns.Add("穿戴部位", typeof(string));
-        装备数据表.Columns.Add("穿戴装备", typeof(string));
+        EquipmentDataTable.Columns.Add("穿戴部位", typeof(string));
+        EquipmentDataTable.Columns.Add("穿戴装备", typeof(string));
         Main?.BeginInvoke((MethodInvoker)delegate
         {
-            Main.装备浏览表.DataSource = 装备数据表;
+            Main.装备浏览表.DataSource = EquipmentDataTable;
         });
         角色背包表 = new Dictionary<CharacterInfo, List<KeyValuePair<byte, ItemInfo>>>();
-        背包数据表.Columns.Add("背包位置", typeof(string));
-        背包数据表.Columns.Add("背包物品", typeof(string));
+        InventoryDataTable.Columns.Add("背包位置", typeof(string));
+        InventoryDataTable.Columns.Add("背包物品", typeof(string));
         Main?.BeginInvoke((MethodInvoker)delegate
         {
-            Main.背包浏览表.DataSource = 背包数据表;
+            Main.背包浏览表.DataSource = InventoryDataTable;
         });
         角色仓库表 = new Dictionary<CharacterInfo, List<KeyValuePair<byte, ItemInfo>>>();
-        仓库数据表.Columns.Add("仓库位置", typeof(string));
-        仓库数据表.Columns.Add("仓库物品", typeof(string));
+        WarehouseDataTable.Columns.Add("仓库位置", typeof(string));
+        WarehouseDataTable.Columns.Add("仓库物品", typeof(string));
         Main?.BeginInvoke((MethodInvoker)delegate
         {
-            Main.仓库浏览表.DataSource = 仓库数据表;
+            Main.仓库浏览表.DataSource = WarehouseDataTable;
         });
-        封禁数据表 = new System.Data.DataTable();
+        BlockingDataTable = new System.Data.DataTable();
         封禁数据行 = new Dictionary<string, DataRow>();
-        封禁数据表.Columns.Add("网络地址", typeof(string));
-        封禁数据表.Columns.Add("物理地址", typeof(string));
-        封禁数据表.Columns.Add("到期时间", typeof(string));
+        BlockingDataTable.Columns.Add("网络地址", typeof(string));
+        BlockingDataTable.Columns.Add("物理地址", typeof(string));
+        BlockingDataTable.Columns.Add("到期时间", typeof(string));
         Main?.BeginInvoke((MethodInvoker)delegate
         {
-            Main.封禁浏览表.DataSource = 封禁数据表;
+            Main.封禁浏览表.DataSource = BlockingDataTable;
         });
         Session.Load();
         Main.allToolStripMenuItem.Visible = true;
@@ -332,8 +336,8 @@ public partial class SMain : Form
     {
         if (!RoleDataRows.ContainsKey(数据))
         {
-            RoleDataRows[数据] = 角色数据表.NewRow();
-            角色数据表.Rows.Add(RoleDataRows[数据]);
+            RoleDataRows[数据] = RoleDataTable.NewRow();
+            RoleDataTable.Rows.Add(RoleDataRows[数据]);
         }
     }
 
@@ -345,49 +349,49 @@ public partial class SMain : Form
         }
     }
 
-    public static void 添加角色数据(CharacterInfo 角色)
+    public static void 添加角色数据(CharacterInfo character)
     {
         Main?.BeginInvoke((MethodInvoker)delegate
         {
-            if (!RoleDataRows.ContainsKey(角色))
+            if (!RoleDataRows.ContainsKey(character))
             {
-                DataRow dataRow = 角色数据表.NewRow();
-                dataRow["角色名字"] = 角色;
-                dataRow["所属账号"] = 角色.Account;
-                dataRow["账号封禁"] = ((角色.Account.V.BlockDate.V != default(DateTime)) ? 角色.Account.V.BlockDate : null);
-                dataRow["角色封禁"] = ((角色.BlockDate.V != default(DateTime)) ? 角色.BlockDate : null);
-                dataRow["冻结日期"] = ((角色.FrozenDate.V != default(DateTime)) ? 角色.FrozenDate : null);
-                dataRow["删除日期"] = ((角色.DeletetionDate.V != default(DateTime)) ? 角色.DeletetionDate : null);
-                dataRow["登录日期"] = ((角色.LoginDate.V != default(DateTime)) ? 角色.LoginDate : null);
-                dataRow["离线日期"] = ((角色.Connection == null) ? 角色.DisconnectDate : null);
-                dataRow["网络地址"] = 角色.IPAddress;
-                dataRow["物理地址"] = 角色.MACAddress;
-                dataRow["角色职业"] = 角色.Job;
-                dataRow["角色性别"] = 角色.Gender;
-                dataRow["所属行会"] = 角色.Guild;
-                dataRow["元宝数量"] = 角色.Ingot;
-                dataRow["消耗元宝"] = 角色.消耗元宝;
-                dataRow["金币数量"] = 角色.Gold;
-                dataRow["转出金币"] = 角色.TradeGold;
-                dataRow["背包大小"] = 角色.InventorySize;
-                dataRow["仓库大小"] = 角色.WarehouseSize;
-                dataRow["师门声望"] = 角色.师门声望;
-                dataRow["本期特权"] = 角色.本期特权;
-                dataRow["本期日期"] = 角色.本期日期;
-                dataRow["上期特权"] = 角色.上期特权;
-                dataRow["上期日期"] = 角色.上期日期;
-                dataRow["剩余特权"] = 角色.剩余特权;
-                dataRow["当前等级"] = 角色.Level;
-                dataRow["当前经验"] = 角色.Experience;
-                dataRow["双倍经验"] = 角色.ExperienceRate;
-                dataRow["当前战力"] = 角色.CombatPower;
-                dataRow["当前地图"] = (GameServer.Template.GameMap.DataSheet.TryGetValue((byte)角色.CurrentMap.V, out var value) ? ((object)value.MapName) : ((object)角色.CurrentMap));
-                dataRow["当前PK值"] = 角色.CurrentPKPoint;
-                dataRow["当前坐标"] = $"{角色.CurrentPosition.V.X}, {角色.CurrentPosition.V.Y}";
-                dataRow["激活标识"] = 角色.激活标识;
-                RoleDataRows[角色] = dataRow;
-                数据行角色[dataRow] = 角色;
-                角色数据表.Rows.Add(dataRow);
+                DataRow dataRow = RoleDataTable.NewRow();
+                dataRow["角色名字"] = character;
+                dataRow["所属账号"] = character.Account;
+                dataRow["账号封禁"] = ((character.Account.V.BlockDate.V != default(DateTime)) ? character.Account.V.BlockDate : null);
+                dataRow["角色封禁"] = ((character.BlockDate.V != default(DateTime)) ? character.BlockDate : null);
+                dataRow["冻结日期"] = ((character.FrozenDate.V != default(DateTime)) ? character.FrozenDate : null);
+                dataRow["删除日期"] = ((character.DeletetionDate.V != default(DateTime)) ? character.DeletetionDate : null);
+                dataRow["登录日期"] = ((character.LoginDate.V != default(DateTime)) ? character.LoginDate : null);
+                dataRow["离线日期"] = ((character.Connection == null) ? character.DisconnectDate : null);
+                dataRow["网络地址"] = character.IPAddress;
+                dataRow["物理地址"] = character.MACAddress;
+                dataRow["角色职业"] = character.Job;
+                dataRow["角色性别"] = character.Gender;
+                dataRow["所属行会"] = character.Guild;
+                dataRow["元宝数量"] = character.Ingot;
+                dataRow["消耗元宝"] = character.消耗元宝;
+                dataRow["金币数量"] = character.Gold;
+                dataRow["转出金币"] = character.TradeGold;
+                dataRow["背包大小"] = character.InventorySize;
+                dataRow["仓库大小"] = character.WarehouseSize;
+                dataRow["师门声望"] = character.师门声望;
+                dataRow["本期特权"] = character.本期特权;
+                dataRow["本期日期"] = character.本期日期;
+                dataRow["上期特权"] = character.上期特权;
+                dataRow["上期日期"] = character.上期日期;
+                dataRow["剩余特权"] = character.剩余特权;
+                dataRow["当前等级"] = character.Level;
+                dataRow["当前经验"] = character.Experience;
+                dataRow["双倍经验"] = character.ExperienceRate;
+                dataRow["当前战力"] = character.CombatPower;
+                dataRow["当前地图"] = (GameMap.DataSheet.TryGetValue((byte)character.CurrentMap.V, out var value) ? ((object)value.MapName) : ((object)character.CurrentMap));
+                dataRow["当前PK值"] = character.CurrentPKPoint;
+                dataRow["当前坐标"] = $"{character.CurrentPosition.V.X}, {character.CurrentPosition.V.Y}";
+                dataRow["激活标识"] = character.激活标识;
+                RoleDataRows[character] = dataRow;
+                数据行角色[dataRow] = character;
+                RoleDataTable.Rows.Add(dataRow);
             }
         });
     }
@@ -399,7 +403,7 @@ public partial class SMain : Form
             if (RoleDataRows.TryGetValue(角色, out var value))
             {
                 数据行角色.Remove(value);
-                角色数据表.Rows.Remove(value);
+                RoleDataTable.Rows.Remove(value);
                 角色技能表.Remove(角色);
                 角色背包表.Remove(角色);
                 角色装备表.Remove(角色);
@@ -410,11 +414,11 @@ public partial class SMain : Form
 
     public static void ProcessUpdateUI(object sender, EventArgs e)
     {
-        技能数据表.Rows.Clear();
-        装备数据表.Rows.Clear();
-        背包数据表.Rows.Clear();
-        仓库数据表.Rows.Clear();
-        掉落数据表.Rows.Clear();
+        SkillsDataTable.Rows.Clear();
+        EquipmentDataTable.Rows.Clear();
+        InventoryDataTable.Rows.Clear();
+        WarehouseDataTable.Rows.Clear();
+        DropDataTable.Rows.Clear();
         if (Main == null)
         {
             return;
@@ -428,42 +432,42 @@ public partial class SMain : Form
                 {
                     foreach (KeyValuePair<ushort, SkillInfo> item in value2)
                     {
-                        DataRow dataRow = 技能数据表.NewRow();
+                        DataRow dataRow = SkillsDataTable.NewRow();
                         dataRow["技能名字"] = item.Value.Inscription.SkillName;
                         dataRow["技能编号"] = item.Value.ID;
                         dataRow["当前等级"] = item.Value.Level;
                         dataRow["当前经验"] = item.Value.Experience;
-                        技能数据表.Rows.Add(dataRow);
+                        SkillsDataTable.Rows.Add(dataRow);
                     }
                 }
                 if (角色装备表.TryGetValue(value, out var value3))
                 {
                     foreach (KeyValuePair<byte, EquipmentInfo> item2 in value3)
                     {
-                        DataRow dataRow2 = 装备数据表.NewRow();
+                        DataRow dataRow2 = EquipmentDataTable.NewRow();
                         dataRow2["穿戴部位"] = (装备穿戴部位)item2.Key;
                         dataRow2["穿戴装备"] = item2.Value;
-                        装备数据表.Rows.Add(dataRow2);
+                        EquipmentDataTable.Rows.Add(dataRow2);
                     }
                 }
                 if (角色背包表.TryGetValue(value, out var value4))
                 {
                     foreach (KeyValuePair<byte, ItemInfo> item3 in value4)
                     {
-                        DataRow dataRow3 = 背包数据表.NewRow();
+                        DataRow dataRow3 = InventoryDataTable.NewRow();
                         dataRow3["背包位置"] = item3.Key;
                         dataRow3["背包物品"] = item3.Value;
-                        背包数据表.Rows.Add(dataRow3);
+                        InventoryDataTable.Rows.Add(dataRow3);
                     }
                 }
                 if (角色仓库表.TryGetValue(value, out var value5))
                 {
                     foreach (KeyValuePair<byte, ItemInfo> item4 in value5)
                     {
-                        DataRow dataRow4 = 仓库数据表.NewRow();
+                        DataRow dataRow4 = WarehouseDataTable.NewRow();
                         dataRow4["仓库位置"] = item4.Key;
                         dataRow4["仓库物品"] = item4.Value;
-                        仓库数据表.Rows.Add(dataRow4);
+                        WarehouseDataTable.Rows.Add(dataRow4);
                     }
                 }
             }
@@ -479,10 +483,10 @@ public partial class SMain : Form
         }
         foreach (KeyValuePair<GameItem, long> item5 in value7)
         {
-            DataRow dataRow5 = 掉落数据表.NewRow();
+            DataRow dataRow5 = DropDataTable.NewRow();
             dataRow5["物品名字"] = item5.Key.Name;
             dataRow5["掉落数量"] = item5.Value;
-            掉落数据表.Rows.Add(dataRow5);
+            DropDataTable.Rows.Add(dataRow5);
         }
     }
 
@@ -611,12 +615,12 @@ public partial class SMain : Form
         {
             if (!封禁数据行.ContainsKey(地址))
             {
-                DataRow dataRow = 封禁数据表.NewRow();
+                DataRow dataRow = BlockingDataTable.NewRow();
                 dataRow["网络地址"] = (网络地址 ? 地址 : null);
                 dataRow["物理地址"] = (网络地址 ? null : 地址);
                 dataRow["到期时间"] = 时间;
                 封禁数据行[地址] = dataRow;
-                封禁数据表.Rows.Add(dataRow);
+                BlockingDataTable.Rows.Add(dataRow);
             }
         });
     }
@@ -646,7 +650,7 @@ public partial class SMain : Form
             if (封禁数据行.TryGetValue(地址, out var value))
             {
                 封禁数据行.Remove(地址);
-                封禁数据表.Rows.Remove(value);
+                BlockingDataTable.Rows.Remove(value);
             }
         });
     }
@@ -11174,11 +11178,11 @@ public partial class SMain : Form
         MonsterDataTable.Columns.Add("仇恨范围", typeof(string));
         MonsterDataTable.Columns.Add("仇恨时长", typeof(string));
         Main.怪物浏览表.DataSource = MonsterDataTable;
-        掉落数据表 = new System.Data.DataTable("掉落数据表");
+        DropDataTable = new System.Data.DataTable("掉落数据表");
         怪物掉落表 = new Dictionary<MonsterInfo, List<KeyValuePair<GameItem, long>>>();
-        掉落数据表.Columns.Add("物品名字", typeof(string));
-        掉落数据表.Columns.Add("掉落数量", typeof(string));
-        Main.掉落浏览表.DataSource = 掉落数据表;
+        DropDataTable.Columns.Add("物品名字", typeof(string));
+        DropDataTable.Columns.Add("掉落数量", typeof(string));
+        Main.掉落浏览表.DataSource = DropDataTable;
         主选项卡.SelectedIndex = 0;
         SettingsPage.Enabled = false;
         stopServerToolStripMenuItem.Enabled = false;
