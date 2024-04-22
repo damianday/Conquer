@@ -3,12 +3,6 @@ using System.IO;
 
 namespace GameServer.Template;
 
-public struct BasicStat
-{
-    public Stat Stat;       // 属性
-    public int Value;       // 数值
-}
-
 public sealed class MonsterInfo
 {
     public static Dictionary<string, MonsterInfo> DataSheet;
@@ -34,6 +28,7 @@ public sealed class MonsterInfo
     public bool ActiveAttackTarget;
     public byte RangeHate;
     public ushort HateTime;
+
     public string NormalAttackSkills;
     public string[] RandomTriggerSkills;
     public string EnterCombatSkills;
@@ -41,32 +36,14 @@ public sealed class MonsterInfo
     public string MoveReleaseSkill;
     public string BirthReleaseSkill;
     public string DeathReleaseSkill;
-    public BasicStat[] Stats;
+
+    public Stats Stats = new Stats();
     public GrowthStat[] Grows;
     public InheritStat[] InheritsStats;
     public ushort ProvideExperience;
-    public List<MonsterDrop> Drops;
+    public List<MonsterDrop> Drops = new List<MonsterDrop>();
     public Dictionary<GameItem, long> DropStats = new Dictionary<GameItem, long>();
 
-    private Stats m_BasicStats;
-    public Stats BasicStats
-    {
-        get
-        {
-            if (m_BasicStats != null)
-                return m_BasicStats;
-
-            m_BasicStats = new Stats();
-            if (Stats != null)
-            {
-                foreach (var stat in Stats)
-                {
-                    m_BasicStats[stat.Stat] = stat.Value;
-                }
-            }
-            return m_BasicStats;
-        }
-    }
 
     private Stats[] m_GrowStats;
     public Stats[] GrowStats
