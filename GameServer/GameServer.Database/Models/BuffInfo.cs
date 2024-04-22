@@ -31,7 +31,7 @@ public sealed class BuffInfo : DBObject
     }
 
     public bool GainBuff => Template.ActionType == BuffActionType.Gain;
-    public bool Buff同步 => Template.SyncClient;
+    public bool SyncClient => Template.SyncClient;
     public bool 到期消失 => Template?.RemoveOnExpire ?? false;
     public bool 下线消失 => Template.OnPlayerDisconnectRemove;
     public bool 死亡消失 => Template.OnPlayerDiesRemove;
@@ -39,7 +39,7 @@ public sealed class BuffInfo : DBObject
     public bool 绑定武器 => Template.OnChangeWeaponRemove;
     public bool 添加冷却 => Template.RemoveAddCooling;
     public ushort 绑定技能 => Template.BindingSkillLevel;
-    public ushort 冷却时间 => Template.SkillCooldown;
+    public ushort CooldownTime => Template.SkillCooldown;
     public int ProcessDelay => Template.ProcessDelay;
     public int ProcessInterval => Template.ProcessInterval;
     public byte 最大层数 => Template.MaxBuffCount;
@@ -54,7 +54,7 @@ public sealed class BuffInfo : DBObject
         }
     }
 
-    public ushort[] 依存列表 => Template.RequireBuff;
+    public ushort[] RequiredBuffs => Template.RequireBuff;
 
     public Stats BonusStats
     {
