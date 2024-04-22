@@ -223,7 +223,7 @@ public sealed class MonsterObject : MapObject
         BirthRange = locations;
         ForbidResurrection = forbidResurrection;
         
-        BonusStats[this] = info.BasicStats;
+        BonusStats[this] = info.Stats;
  
         if (!string.IsNullOrEmpty(Info.NormalAttackSkills))
             GameSkill.DataSheet.TryGetValue(Info.NormalAttackSkills, out NormalAttackSkill);
@@ -342,7 +342,7 @@ public sealed class MonsterObject : MapObject
                 else if (Info.OutWarAutomaticPetrochemical && !CombatStance && Target.TargetList.Count != 0)
                 {
                     CombatStance = true;
-                    移除Buff时处理(Info.PetrochemicalStatusID);
+                    RemoveBuffEx(Info.PetrochemicalStatusID);
                     AttackStopTime = SEngine.CurrentTime.AddSeconds(10.0);
                 }
                 else if (Info.OutWarAutomaticPetrochemical && CombatStance && Target.TargetList.Count == 0 && SEngine.CurrentTime > AttackStopTime)
