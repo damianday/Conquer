@@ -13,7 +13,7 @@ public sealed class GameMount
     public short MountPower;
     public ushort BuffID;
     public byte Quality;
-    public byte LevelLimit;
+    public byte RequiredLevel;
     public int SpeedModificationRate;
     public int HitUnmountRate;
     public Stats Stats;
@@ -27,7 +27,7 @@ public sealed class GameMount
 
         try
         {
-            var qstr = "SELECT * FROM HorseRidingMounts";
+            var qstr = "SELECT * FROM Mounts";
             using (var connection = DBAgent.X.DB.GetConnection())
             {
                 using var command = DBAgent.X.DB.GetCommand(connection, qstr);
@@ -45,7 +45,7 @@ public sealed class GameMount
                             MountPower = reader.GetInt16("MountPower"),
                             BuffID = reader.GetUInt16("BuffID"),
                             Quality = reader.GetByte("Quality"),
-                            LevelLimit = reader.GetByte("LevelLimit"),
+                            RequiredLevel = reader.GetByte("RequiredLevel"),
                             SpeedModificationRate = reader.GetInt32("SpeedModificationRate"),
                             HitUnmountRate = reader.GetInt32("HitUnmountRate")
                         };
