@@ -15,7 +15,7 @@ public sealed class Terrain
     public string MapName;
     public Point StartPoint;
     public Point EndPoint;
-    public Point MapSize;
+    public Size MapSize;
     public Point MapHeight;
     public uint[,] Matrix;
 
@@ -35,13 +35,13 @@ public sealed class Terrain
             using var reader = new BinaryReader(ms);
             terrain.StartPoint = new Point(reader.ReadInt32(), reader.ReadInt32());
             terrain.EndPoint = new Point(reader.ReadInt32(), reader.ReadInt32());
-            terrain.MapSize = new Point(terrain.EndPoint.X - terrain.StartPoint.X, terrain.EndPoint.Y - terrain.StartPoint.Y);
+            terrain.MapSize = new Size(terrain.EndPoint.X - terrain.StartPoint.X, terrain.EndPoint.Y - terrain.StartPoint.Y);
             terrain.MapHeight = new Point(reader.ReadInt32(), reader.ReadInt32());
-            terrain.Matrix = new uint[terrain.MapSize.X, terrain.MapSize.Y];
+            terrain.Matrix = new uint[terrain.MapSize.Width, terrain.MapSize.Height];
             
-            for (var x = 0; x < terrain.MapSize.X; x++)
+            for (var x = 0; x < terrain.MapSize.Width; x++)
             {
-                for (var y = 0; y < terrain.MapSize.Y; y++)
+                for (var y = 0; y < terrain.MapSize.Height; y++)
                 {
                     terrain.Matrix[x, y] = reader.ReadUInt32();
                 }
