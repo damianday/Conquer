@@ -10,7 +10,7 @@ public sealed class GameTitle
     public byte ID;
     public string Name;
     public int CombatPower;
-    public int EffectiveTime;
+    public int Duration;
     public Stats Stats;
 
     public static void LoadData()
@@ -37,7 +37,7 @@ public sealed class GameTitle
                         obj.ID = reader.GetByte("TitleID");
                         obj.Name = reader.GetString("Name");
                         obj.CombatPower = reader.GetInt32("CombatPower");
-                        obj.EffectiveTime = reader.GetInt32("EffectiveTime");
+                        obj.Duration = reader.GetInt32("Duration");
 
                         obj.Stats = new Stats();
                         obj.Stats[Stat.MinDef] = reader.GetInt32("MinDef");
