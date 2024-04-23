@@ -26,7 +26,7 @@ public sealed class GuardObject : MapObject
 
     public DateTime ResurrectionTime { get; set; }
     public DateTime DisappearTime { get; set; }
-    public DateTime 转移计时 { get; set; }
+    public DateTime TeleportTime { get; set; }
 
     public bool AutoDisappear { get; set; }
     public DateTime ExistenceTime { get; set; }
@@ -200,14 +200,15 @@ public sealed class GuardObject : MapObject
                     CurrentDirection = BirthDirection;
                 }
             }
-            if (GuardID == 6121 && CurrentMap.MapID == 183 && SEngine.CurrentTime > 转移计时)
+            if (GuardID == 6121 && CurrentMap.MapID == 183 && SEngine.CurrentTime > TeleportTime)
             {
                 RemoveAllNeighbors();
                 UnbindGrid();
-                CurrentPosition = CurrentMap.TeleportationArea.RandomCoords;
+                CurrentPosition = CurrentMap.RandomPosition(AreaType.Teleportation);
                 BindGrid();
                 UpdateAllNeighbours();
-                转移计时 = SEngine.CurrentTime.AddMinutes(2.5);
+
+                TeleportTime = SEngine.CurrentTime.AddMinutes(2.5);
             }
         }
 
