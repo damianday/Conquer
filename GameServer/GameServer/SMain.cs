@@ -51,7 +51,7 @@ public partial class SMain : Form
         Main.allToolStripMenuItem.Visible = false;
 
         AddSystemLog("Connecting to 'System' database");
-        DBAgent.X.InitDB("\\System\\System.db");
+        DBAgent.X.InitDB(Config.GameDataPath + "\\System\\System.db");
 
         AddSystemLog("Loading system data...");
         MapDataTable = new System.Data.DataTable("地图数据表");
