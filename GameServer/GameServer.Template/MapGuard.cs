@@ -40,7 +40,7 @@ public sealed class MapGuard
                         guard.MapName = reader.GetString("MapName");
                         guard.Coordinates.X = reader.GetInt32("MapPosX");
                         guard.Coordinates.Y = reader.GetInt32("MapPosY");
-                        guard.Direction = (GameDirection)reader.GetByte("Direction");
+                        guard.Direction = (GameDirection)reader.GetUInt16("Direction");
                         guard.RegionName = reader.GetString("RegionName");
 
                         DataSheet.Add(guard);
