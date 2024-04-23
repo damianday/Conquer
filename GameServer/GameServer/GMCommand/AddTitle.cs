@@ -28,7 +28,7 @@ public sealed class AddTitle : GMCommand
         {
             if (GameTitle.DataSheet.TryGetValue(TitleID, out var value2))
             {
-                character.Titles[TitleID] = SEngine.CurrentTime.AddMinutes(value2.EffectiveTime);
+                character.Titles[TitleID] = SEngine.CurrentTime.AddMinutes(value2.Duration);
                 character.Enqueue(new AddTitlePacket
                 {
                     TitleID = TitleID,
