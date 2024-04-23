@@ -109,6 +109,8 @@ public static class Compute
         return Math.Max(x, y);
     }
 
+    public static bool InRange(Point start, Point end, int range) => GetDistance(start, end) <= range;
+
     public static int TimeSeconds(DateTime date)
     {
         return (int)(date - SystemTime).TotalSeconds;
@@ -360,9 +362,6 @@ public static class Compute
 
     public static Point[] CalculateGrid(Point point, GameDirection direction, ObjectSize range)
     {
-        if (1 == 0)
-        {
-        }
         Point[] grid;
         switch (range)
         {
@@ -371,9 +370,6 @@ public static class Compute
                 break;
             case ObjectSize.HalfMoon3x1:
                 {
-                    if (1 == 0)
-                    {
-                    }
                     Point[] array = direction switch
                     {
                         GameDirection.Up => new Point[5]
@@ -441,17 +437,12 @@ public static class Compute
                     new Point(point.X + 2, point.Y)
                         },
                     };
-                    if (1 == 0)
-                    {
-                    }
+
                     grid = array;
                     break;
                 }
             case ObjectSize.HalfMoon3x2:
                 {
-                    if (1 == 0)
-                    {
-                    }
                     Point[] array = direction switch
                     {
                         GameDirection.Up => new Point[8]
@@ -543,17 +534,11 @@ public static class Compute
                     new Point(point.X + 1, point.Y - 1)
                         },
                     };
-                    if (1 == 0)
-                    {
-                    }
                     grid = array;
                     break;
                 }
             case ObjectSize.HalfMoon3x3:
                 {
-                    if (1 == 0)
-                    {
-                    }
                     Point[] array = direction switch
                     {
                         GameDirection.Up => new Point[12]
@@ -677,9 +662,6 @@ public static class Compute
                     new Point(point.X + 2, point.Y - 1)
                         },
                     };
-                    if (1 == 0)
-                    {
-                    }
                     grid = array;
                     break;
                 }
@@ -750,9 +732,6 @@ public static class Compute
                 break;
             case ObjectSize.Zhanyue3x3:
                 {
-                    if (1 == 0)
-                    {
-                    }
                     Point[] array = direction switch
                     {
                         GameDirection.Up => new Point[9]
@@ -852,9 +831,6 @@ public static class Compute
                     new Point(point.X - 1, point.Y - 2)
                         },
                     };
-                    if (1 == 0)
-                    {
-                    }
                     grid = array;
                     break;
                 }
@@ -883,9 +859,6 @@ public static class Compute
                 break;
             case ObjectSize.LineType3x8:
                 {
-                    if (1 == 0)
-                    {
-                    }
                     Point[] array = direction switch
                     {
                         GameDirection.Up => new Point[24]
@@ -1105,9 +1078,6 @@ public static class Compute
                     new Point(point.X - 6, point.Y - 7)
                         },
                     };
-                    if (1 == 0)
-                    {
-                    }
                     grid = array;
                     break;
                 }
@@ -1123,9 +1093,6 @@ public static class Compute
                 break;
             case ObjectSize.LineType3x7:
                 {
-                    if (1 == 0)
-                    {
-                    }
                     Point[] array = direction switch
                     {
                         GameDirection.Up => new Point[21]
@@ -1321,9 +1288,6 @@ public static class Compute
                     new Point(point.X - 5, point.Y - 6)
                         },
                     };
-                    if (1 == 0)
-                    {
-                    }
                     grid = array;
                     break;
                 }
@@ -1375,9 +1339,6 @@ public static class Compute
                 break;
             case ObjectSize.Front3x1:
                 {
-                    if (1 == 0)
-                    {
-                    }
                     Point[] array = direction switch
                     {
                         GameDirection.Up => new Point[3]
@@ -1429,9 +1390,6 @@ public static class Compute
                     new Point(point.X + 1, point.Y)
                         },
                     };
-                    if (1 == 0)
-                    {
-                    }
                     grid = array;
                     break;
                 }
@@ -1491,9 +1449,6 @@ public static class Compute
                 break;
             case ObjectSize.Yanlong1x2:
                 {
-                    if (1 == 0)
-                    {
-                    }
                     Point[] array = direction switch
                     {
                         GameDirection.Up => new Point[6]
@@ -1561,9 +1516,6 @@ public static class Compute
                     new Point(point.X, point.Y - 1)
                         },
                     };
-                    if (1 == 0)
-                    {
-                    }
                     grid = array;
                     break;
                 }
@@ -1887,9 +1839,7 @@ public static class Compute
                 grid = new Point[0];
                 break;
         }
-        if (1 == 0)
-        {
-        }
+
         return grid;
     }
 
