@@ -329,8 +329,8 @@ public abstract class MapObject
         {
             case GameObjectType.NPC:
                 {
-                    GameObjectType 游戏对象类型 = obj.ObjectType;
-                    if ((uint)(游戏对象类型 - 1) > 1u && 游戏对象类型 != GameObjectType.Monster && 游戏对象类型 != GameObjectType.Trap)
+                    GameObjectType type = obj.ObjectType;
+                    if ((uint)(type - 1) > 1u && type != GameObjectType.Monster && type != GameObjectType.Trap)
                     {
                         return false;
                     }
@@ -351,12 +351,11 @@ public abstract class MapObject
                     case GameObjectType.Trap:
                         return true;
                 }
-            default:
-                return false;
+            
             case GameObjectType.Trap:
                 {
-                    GameObjectType 游戏对象类型2 = obj.ObjectType;
-                    if ((uint)(游戏对象类型2 - 1) > 1u && 游戏对象类型2 != GameObjectType.Monster && 游戏对象类型2 != GameObjectType.NPC)
+                    GameObjectType type = obj.ObjectType;
+                    if ((uint)(type - 1) > 1u && type != GameObjectType.Monster && type != GameObjectType.NPC)
                     {
                         return false;
                     }
@@ -367,6 +366,9 @@ public abstract class MapObject
                 {
                     return true;
                 }
+                return false;
+
+            default:
                 return false;
         }
     }
