@@ -1229,7 +1229,7 @@ public class SkillObject
 
             if (MonsterInfo.DataSheet.TryGetValue(task.PetName, out var moni))
             {
-                new MonsterObject(moni, CurrentMap, int.MaxValue, new Point[1] { CastLocation }, true, true).SurvivalTime = SEngine.CurrentTime.AddMinutes(1.0);
+                new MonsterObject(moni, CurrentMap, int.MaxValue, CastLocation, 1, true, true).SurvivalTime = SEngine.CurrentTime.AddMinutes(1.0);
             }
         }
         else if (Caster is PlayerObject player)
