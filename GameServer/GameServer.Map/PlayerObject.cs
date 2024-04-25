@@ -23998,7 +23998,10 @@ public sealed class PlayerObject : MapObject
 
     public void UserBuyItem(int storeId, int location, ushort quantity)
     {
-        if (Dead || StallState > 0 || TradeState >= 3 || CurrentNPC == null || CurrentMap != CurrentNPC.CurrentMap || GetDistance(CurrentNPC) > 12 || CurrentStoreID == 0 || quantity <= 0 || CurrentStoreID != storeId || !GameStore.DataSheet.TryGetValue(CurrentStoreID, out var value) || value.Products.Count <= location || !GameItem.DataSheet.TryGetValue(value.Products[location].ItemID, out var value2))
+        if (Dead || StallState > 0 || TradeState >= 3 || 
+            CurrentNPC == null || CurrentMap != CurrentNPC.CurrentMap || GetDistance(CurrentNPC) > 12 || CurrentStoreID == 0 || 
+            quantity <= 0 || CurrentStoreID != storeId || !GameStore.DataSheet.TryGetValue(CurrentStoreID, out var value) || 
+            value.Products.Count <= location || !GameItem.DataSheet.TryGetValue(value.Products[location].ItemID, out var value2))
         {
             return;
         }
