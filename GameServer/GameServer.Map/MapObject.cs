@@ -123,14 +123,14 @@ public abstract class MapObject
         foreach (var stat in Enum.GetValues<Stat>())
         {
             int num5 = 0;
-            foreach (KeyValuePair<object, Stats> item in BonusStats)
+            foreach (var kvp in BonusStats)
             {
-                if (item.Value == null) continue;
+                if (kvp.Value == null) continue;
 
-                var value = item.Value[stat];
+                var value = kvp.Value[stat];
                 if (value == 0) continue;
 
-                if (item.Key is BuffInfo)
+                if (kvp.Key is BuffInfo)
                 {
                     switch (stat)
                     {
@@ -165,32 +165,33 @@ public abstract class MapObject
                     continue;
             }
             this[stat] = Math.Max(0, num5);
-            if (stat == Stat.物理击回 && this is PlayerObject 玩家实例2)
+
+            if (this is PlayerObject player)
             {
-                玩家实例2.Character.当前角色物理回击.V = num5;
-            }
-            if (stat == Stat.魔法击回 && this is PlayerObject 玩家实例3)
-            {
-                玩家实例3.Character.当前角色魔法回击.V = num5;
+                if (stat == Stat.物理击回)
+                    player.Character.当前角色物理回击.V = num5;
+
+                if (stat == Stat.魔法击回)
+                    player.Character.当前角色魔法回击.V = num5;
             }
         }
-        if (!(this is PlayerObject player))
+
         {
-            return;
-        }
-        foreach (PetObject pet in player.Pets)
-        {
-            if (pet.MInfo.InheritsStats != null)
+            if (this is not PlayerObject player)
+                return;
+
+            foreach (PetObject pet in player.Pets)
             {
-                Stats dictionary = new Stats();
-                InheritStat[] 继承属性 = pet.MInfo.InheritsStats;
-                for (int i = 0; i < 继承属性.Length; i++)
+                if (pet.MInfo.InheritedStats != null)
                 {
-                    InheritStat 属性继承 = 继承属性[i];
-                    dictionary[属性继承.ConvertStat] = (int)((float)this[属性继承.InheritsStats] * 属性继承.Ratio);
+                    Stats stats = new Stats();
+                    foreach (var stat in pet.MInfo.InheritedStats)
+                    {
+                        stats[stat.ConvertStat] = (int)((float)this[stat.InheritedStat] * stat.Ratio);
+                    }
+                    pet.BonusStats[player.Character] = stats;
+                    pet.RefreshStats();
                 }
-                pet.BonusStats[player.Character] = dictionary;
-                pet.RefreshStats();
             }
         }
     }
