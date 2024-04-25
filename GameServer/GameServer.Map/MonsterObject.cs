@@ -22,8 +22,9 @@ public sealed class MonsterObject : MapObject
 
     public HateObject Target;
 
-    public Point[] BirthRange;
     public Map BirthMap;
+    public Point BirthPosition;
+    public int BirthRange;
 
     public GameSkill NormalAttackSkill;
     public List<GameSkill> RandomAttackSkill = new List<GameSkill>();
@@ -213,14 +214,15 @@ public sealed class MonsterObject : MapObject
         MapManager.AddObject(this);
     }
 
-    public MonsterObject(MonsterInfo info, Map map, int resInterval, Point[] locations, bool forbidResurrection, bool 立即刷新)
+    public MonsterObject(MonsterInfo info, Map map, int resInterval, Point location, int range, bool forbidResurrection, bool 立即刷新)
     {
         ObjectID = ++MapManager.ObjectID;
         Info = info;
         BirthMap = map;
         CurrentMap = map;
         ResurrectionInterval = resInterval;
-        BirthRange = locations;
+        BirthPosition = location;
+        BirthRange = range;
         ForbidResurrection = forbidResurrection;
         
         BonusStats[this] = info.Stats;
@@ -1594,6 +1596,27 @@ public sealed class MonsterObject : MapObject
 
     public void Resurrect(bool calculate)
     {
+        var position = BirthPosition;
+        BirthMap.GetRandomXY(BirthRange, ref position);
+        var found = false;
+        for (var i = 0; i < 100; i++)
+        {
+            var point = Compute.GetPositionAround(position, i);
+            if (BirthMap.CanMove(point))
+            {
+                position = point;
+                found = true;
+                break;
+            }
+        }
+
+        if (!found)
+        {
+            ResurrectionTime = SEngine.CurrentTime.AddMilliseconds(Math.Max(ResurrectionInterval, CorpsePreservationDuration + 5_000));
+            //SMain.AddSystemLog($"Failed to resurrect {Name} no position available");
+            return;
+        }
+
         if (CurrentMap.QuestMap || !ForbidResurrection)
         {
             CurrentMap.TotalSurvivingMonsters++;
@@ -1604,21 +1627,12 @@ public sealed class MonsterObject : MapObject
                 SMain.更新地图数据(CurrentMap, "怪物复活次数", 1);
             }
         }
+
         RefreshStats();
         CurrentMap = BirthMap;
+        CurrentPosition = position;
         CurrentDirection = Compute.RandomDirection();
         CurrentHP = this[Stat.MaxHP];
-        CurrentPosition = BirthRange[SEngine.Random.Next(0, BirthRange.Length)];
-
-        for (var i = 0; i < 100; i++)
-        {
-            var point = Compute.GetPositionAround(CurrentPosition, i);
-            if (!CurrentMap.IsBlocking(point))
-            {
-                CurrentPosition = point;
-                break;
-            }
-        }
 
         AttackTime = SEngine.CurrentTime.AddSeconds(1.0);
         RecoveryTime = SEngine.CurrentTime.AddMilliseconds(SEngine.Random.Next(5000));
