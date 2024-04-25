@@ -52,10 +52,11 @@ public sealed class Map
     public uint TotalAmountMonsterResurrected;
     public long TotalAmountMonsterDrops;
     public long TotalAmountGoldDrops;
+
     public bool ReplicaClosed;
-    public byte 副本节点;
+    public byte ReplicaNode;
     public byte 九层副本节点;
-    public GuardObject 副本守卫;
+    public GuardObject ReplicaGuards;
     public DateTime ProcessTime;
     public int 刷怪记录;
     public List<MonsterSpawn> Respawns;
@@ -110,7 +111,7 @@ public sealed class Map
 
     public Point StartPoint => Terrain.StartPoint;
     public Point EndPoint => Terrain.EndPoint;
-    public Point MapSize => Terrain.MapSize;
+    public Size MapSize => Terrain.MapSize;
 
     public HashSet<MapObject> this[Point point]
     {
@@ -159,50 +160,48 @@ public sealed class Map
         }
         if (Players.Count == 0)
         {
-            副本节点 = 110;
+            ReplicaNode = 110;
         }
-        else if (副本节点 <= 5)
+        else if (ReplicaNode <= 5)
         {
             if (SEngine.CurrentTime > ProcessTime)
             {
-                地图公告($"怪物将在{30 - 副本节点 * 5}秒后刷新, 请做好准备");
-                副本节点++;
+                BroadcastAnnouncement($"Monsters will refresh in {30 - ReplicaNode * 5} seconds, so be prepared!");
+                ReplicaNode++;
                 ProcessTime = SEngine.CurrentTime.AddSeconds(5.0);
             }
         }
-        else if (副本节点 <= 5 + Respawns.Count)
+        else if (ReplicaNode <= 5 + Respawns.Count)
         {
-            if (副本守卫.Dead)
+            if (ReplicaGuards.Dead)
             {
-                副本节点 = 100;
+                ReplicaNode = 100;
                 ProcessTime = SEngine.CurrentTime;
             }
             else if (SEngine.CurrentTime > ProcessTime)
             {
-                int num = 副本节点 - 6;
-                MonsterSpawn spawn = Respawns[num];
+                int wave = ReplicaNode - 6;
+                MonsterSpawn spawn = Respawns[wave];
                 int num2 = 刷怪记录 >> 16;
                 int num3 = 刷怪记录 & 0xFFFF;
                 MonsterSpawnInfo 刷新信息 = spawn.Spawns[num2];
                 if (刷怪记录 == 0)
                 {
-                    地图公告($"第{num + 1}波怪物已经出现, 请注意防守");
+                    BroadcastAnnouncement($"The {wave + 1}th wave of monsters has appeared, please pay attention to defence.");
                 }
                 if (MonsterInfo.DataSheet.TryGetValue(刷新信息.MonsterName, out var moni))
                 {
-                    new MonsterObject(moni, this, int.MaxValue, new Point[1]
-                    {
-                        new Point(995, 283)
-                    }, forbidResurrection: true, 立即刷新: true).SurvivalTime = SEngine.CurrentTime.AddMinutes(30.0);
+                    new MonsterObject(moni, this, int.MaxValue, new Point(995, 283), new Point(1, 1),
+                        forbidResurrection: true, 立即刷新: true).SurvivalTime = SEngine.CurrentTime.AddMinutes(30.0);
                 }
                 if (++num3 >= 刷新信息.SpawnCount)
                 {
                     num2++;
                     num3 = 0;
                 }
-                if (num2 >= spawn.Spawns.Length)
+                if (num2 >= spawn.Spawns.Count)
                 {
-                    副本节点++;
+                    ReplicaNode++;
                     刷怪记录 = 0;
                     ProcessTime = SEngine.CurrentTime.AddSeconds(60.0);
                 }
@@ -213,35 +212,34 @@ public sealed class Map
                 }
             }
         }
-        else if (副本节点 == 6 + Respawns.Count)
+        else if (ReplicaNode == 6 + Respawns.Count)
         {
-            if (副本守卫.Dead)
+            if (ReplicaGuards.Dead)
             {
-                副本节点 = 100;
+                ReplicaNode = 100;
                 ProcessTime = SEngine.CurrentTime;
             }
             else if (TotalSurvivingMonsters == 0)
             {
-                地图公告("所有怪物都已被击退, 大厅将在30秒后关闭");
-                副本节点 = 110;
+                BroadcastAnnouncement("All monsters have been defeated, and the halls will close in 30 seconds.");
+                ReplicaNode = 110;
                 ProcessTime = SEngine.CurrentTime.AddSeconds(30.0);
             }
         }
-        else if (副本节点 <= 109)
+        else if (ReplicaNode <= 109)
         {
             if (SEngine.CurrentTime > ProcessTime)
             {
-                地图公告("守卫已经死亡, 大厅即将关闭");
-                副本节点 += 2;
+                BroadcastAnnouncement("The guards are dead. The hall is closing.");
+                ReplicaNode += 2;
                 ProcessTime = SEngine.CurrentTime.AddSeconds(2.0);
             }
         }
         else
         {
-            if (副本节点 < 110 || !(SEngine.CurrentTime > ProcessTime))
-            {
+            if (ReplicaNode < 110 || !(SEngine.CurrentTime > ProcessTime))
                 return;
-            }
+
             foreach (var player in Players)
             {
                 if (player.Dead)
@@ -268,10 +266,10 @@ public sealed class Map
     {
         if (MapInfo.MineMap > 0)
         {
-            Mines = new StoneMineInfo[MapSize.X, MapSize.Y];
-            for (var x = 0; x < MapSize.X; x++)
+            Mines = new StoneMineInfo[MapSize.Width, MapSize.Height];
+            for (var x = 0; x < MapSize.Width; x++)
             {
-                for (var y = 0; y < MapSize.Y; y++)
+                for (var y = 0; y < MapSize.Height; y++)
                 {
                     if ((x % 2 == 0) && (y % 2 == 0))
                     {
@@ -312,7 +310,7 @@ public sealed class Map
         }
     }
 
-    public void 地图公告(string 内容)
+    public void BroadcastAnnouncement(string message)
     {
         if (Players.Count == 0)
             return;
@@ -323,7 +321,7 @@ public sealed class Map
         writer.Write(2415919107u);
         writer.Write(3);
         writer.Write(0);
-        writer.Write(Encoding.UTF8.GetBytes(内容 + "\0"));
+        writer.Write(Encoding.UTF8.GetBytes(message + "\0"));
         byte[] buffer = ms.ToArray();
         foreach (var player in Players)
         {
@@ -339,41 +337,143 @@ public sealed class Map
         return MapInfo.ToString();
     }
 
-    public Point RandomPosition(AreaType region)
+    private MapArea GetArea(AreaType region)
     {
-        Point result = region switch
+        return region switch
         {
-            AreaType.Resurrection => ResurrectionArea.RandomCoords,
-            AreaType.攻沙快捷 => 攻沙快捷.RandomCoords,
-            AreaType.传送区域沙左 => 传送区域沙左.RandomCoords,
-            AreaType.传送区域沙右 => 传送区域沙右.RandomCoords,
-            AreaType.传送区域皇宫 => 传送区域皇宫.RandomCoords,
-            AreaType.RedName => RedNameArea.RandomCoords,
-            AreaType.Teleportation => TeleportationArea.RandomCoords,
-            AreaType.DemonTower1 => DemonTower1Area.RandomCoords,
-            AreaType.DemonTower2 => DemonTower2Area.RandomCoords,
-            AreaType.DemonTower3 => DemonTower3Area.RandomCoords,
-            AreaType.DemonTower4 => DemonTower4Area.RandomCoords,
-            AreaType.DemonTower5 => DemonTower5Area.RandomCoords,
-            AreaType.DemonTower6 => DemonTower6Area.RandomCoords,
-            AreaType.DemonTower7 => DemonTower7Area.RandomCoords,
-            AreaType.DemonTower8 => DemonTower8Area.RandomCoords,
-            AreaType.DemonTower9 => DemonTower9Area.RandomCoords,
-            AreaType.Random => Areas.FirstOrDefault(x => x.RegionType == AreaType.Random)?.RandomCoords ?? default(Point),
-            _ => default(Point),
+            AreaType.Unknown => Areas.FirstOrDefault(),
+            AreaType.Resurrection => ResurrectionArea,
+            AreaType.攻沙快捷 => 攻沙快捷,
+            AreaType.传送区域沙左 => 传送区域沙左,
+            AreaType.传送区域沙右 => 传送区域沙右,
+            AreaType.传送区域皇宫 => 传送区域皇宫,
+            AreaType.RedName => RedNameArea,
+            AreaType.Teleportation => TeleportationArea,
+            AreaType.DemonTower1 => DemonTower1Area,
+            AreaType.DemonTower2 => DemonTower2Area,
+            AreaType.DemonTower3 => DemonTower3Area,
+            AreaType.DemonTower4 => DemonTower4Area,
+            AreaType.DemonTower5 => DemonTower5Area,
+            AreaType.DemonTower6 => DemonTower6Area,
+            AreaType.DemonTower7 => DemonTower7Area,
+            AreaType.DemonTower8 => DemonTower8Area,
+            AreaType.DemonTower9 => DemonTower9Area,
+            AreaType.Random => Areas.FirstOrDefault(x => x.RegionType == AreaType.Random),
+            _ => null,
         };
-
-        return result;
     }
 
-    public Point 随机传送(Point point)
+    public Point GetRandomPosition(AreaType region)
+    {
+        var area = GetArea(region);
+        if (area == null)
+            return Point.Empty;
+
+        var position = area.Coordinates;
+        if (GetRandomXY(120, area.AreaRadius, ref position))
+            return position;
+        return Point.Empty;
+    }
+
+    public Point GetRandomTeleportPosition(Point point)
     {
         foreach (var area in Areas)
         {
-            if (area.RangeCoordinates.Contains(point) && area.RegionType == AreaType.Random)
-                return area.RandomCoords;
+            if (area.RegionType == AreaType.Random)
+            {
+                if (Compute.InRange(point, area.Coordinates, area.AreaRadius))
+                {
+                    var position = area.Coordinates;
+                    if (GetRandomXY(120, area.AreaRadius, ref position))
+                        return position;
+                }
+            }
         }
         return Point.Empty;
+    }
+
+    public bool IsInArea(Point point, AreaType region)
+    {
+        var area = GetArea(region);
+        if (area != null)
+        {
+            if (Compute.InRange(point, area.Coordinates, area.AreaRadius))
+                return true;
+        }
+        return false;
+    }
+
+    public bool GetRandomXY(int attempts, Point distance, ref Point position)
+    {
+        for (var i = 0; i < attempts; i++)
+        {
+            if (CanMove(position))
+                return true;
+
+            GetRandomXY(distance, ref position);
+        }
+
+        return false;
+    }
+
+    public void GetRandomXY(Point distance, ref Point position)
+    {
+        if (!distance.IsEmpty)
+        {
+            position.X += SEngine.Random.Next(-distance.X, distance.X + 1);
+            position.Y += SEngine.Random.Next(-distance.Y, distance.Y + 1);
+        }
+        else
+        {
+            int size, edge;
+
+            size = (MapSize.Height + MapSize.Width) / 2;
+
+            if (size < 250)
+            {
+                if (size < 50) edge = 2;
+                else edge = 10;
+            }
+            else
+                edge = SEngine.Random.Next(10, 30);
+
+            position.X = edge + SEngine.Random.Next(MapSize.Width - edge);
+            position.Y = edge + SEngine.Random.Next(MapSize.Height - edge);
+        }
+
+        position.X = Math.Clamp(position.X, 0, MapSize.Width);
+        position.Y = Math.Clamp(position.Y, 0, MapSize.Height);
+    }
+
+    public bool GetNearXY(int attempts, ref Point position)
+    {
+        int size, step, edge;
+
+        size = (MapSize.Height + MapSize.Width) / 2;
+        step = (size < 80) ? 3 : 6;
+
+        if (size < 250)
+        {
+            if (size < 50) edge = 2;
+            else edge = 10;
+        }
+        else
+            edge = SEngine.Random.Next(10, 30);
+
+        for (var i = 0; i < attempts; i++)
+        {
+            if (CanMove(position))
+                return true;
+            if (position.X < MapSize.Width - edge - 1) position.X += step;
+            else
+            {
+                position.X = SEngine.Random.Next(MapSize.Width);
+                if (position.Y < MapSize.Height - edge - 1) position.Y += step;
+                else position.Y = SEngine.Random.Next(MapSize.Height);
+            }
+        }
+
+        return false;
     }
 
     public bool ValidPoint(Point point)
@@ -462,7 +562,7 @@ public sealed class Map
         return false;
     }
 
-    public bool 掉落装备(Point point, bool redName)
+    public bool CanDrop(Point point, bool redName)
     {
         if (MapManager.SandCityStage >= 2 && (MapID == 152 || MapID == 178) && Config.沙巴克爆装备开关 == 0)
             return false;
