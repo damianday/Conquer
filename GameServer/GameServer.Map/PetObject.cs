@@ -216,11 +216,11 @@ public sealed class PetObject : MapObject
         CurrentDirection = Compute.RandomDirection();
         BonusStats[this] = BaseStats;
         BonusStats[master.Character] = new Stats();
-        if (MInfo.InheritsStats != null)
+        if (MInfo.InheritedStats != null)
         {
-            foreach (var stat in MInfo.InheritsStats)
+            foreach (var stat in MInfo.InheritedStats)
             {
-                BonusStats[master.Character][stat.ConvertStat] = (int)((float)master[stat.InheritsStats] * stat.Ratio);
+                BonusStats[master.Character][stat.ConvertStat] = (int)((float)master[stat.InheritedStat] * stat.Ratio);
             }
         }
         RefreshStats();
@@ -246,11 +246,11 @@ public sealed class PetObject : MapObject
         ObjectID = ++MapManager.ObjectID;
         BonusStats[this] = BaseStats;
         BonusStats[master.Character] = new Stats();
-        if (MInfo.InheritsStats != null)
+        if (MInfo.InheritedStats != null)
         {
-            foreach (var stat in MInfo.InheritsStats)
+            foreach (var stat in MInfo.InheritedStats)
             {
-                BonusStats[master.Character][stat.ConvertStat] = (int)((float)master[stat.InheritsStats] * stat.Ratio);
+                BonusStats[master.Character][stat.ConvertStat] = (int)((float)master[stat.InheritedStat] * stat.Ratio);
             }
         }
         RefreshStats();
