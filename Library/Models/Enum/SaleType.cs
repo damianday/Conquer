@@ -1,5 +1,6 @@
 ﻿public enum SaleType
 {
+    All = -1,
     Ban,                // 禁售
     Pharmacy,           // 药品
     Groceries,          // 杂货
