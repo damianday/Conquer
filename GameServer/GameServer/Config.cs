@@ -1787,57 +1787,33 @@ public static class Config
     public static int 自定义元宝兑换05;
 
     public static int 直升等级1;
-
     public static int 直升等级2;
-
     public static int 直升等级3;
-
     public static int 直升等级4;
-
     public static int 直升等级5;
-
     public static int 直升等级6;
-
     public static int 直升等级7;
-
     public static int 直升等级8;
-
     public static int 直升等级9;
 
     public static int 直升经验1;
-
     public static int 直升经验2;
-
     public static int 直升经验3;
-
     public static int 直升经验4;
-
     public static int 直升经验5;
-
     public static int 直升经验6;
-
     public static int 直升经验7;
-
     public static int 直升经验8;
-
     public static int 直升经验9;
 
     public static int 直升物品1;
-
     public static int 直升物品2;
-
     public static int 直升物品3;
-
     public static int 直升物品4;
-
     public static int 直升物品5;
-
     public static int 直升物品6;
-
     public static int 直升物品7;
-
     public static int 直升物品8;
-
     public static int 直升物品9;
 
     public static int 充值模块格式;
@@ -1845,19 +1821,12 @@ public static class Config
     public static int DefaultSkillLevel;
 
     public static int 拾取地图控制1;
-
     public static int 拾取地图控制2;
-
     public static int 拾取地图控制3;
-
     public static int 拾取地图控制4;
-
     public static int 拾取地图控制5;
-
     public static int 拾取地图控制6;
-
     public static int 拾取地图控制7;
-
     public static int 拾取地图控制8;
 
     public static int 沙城捐献货币类型;
@@ -1865,15 +1834,11 @@ public static class Config
     public static int 沙城捐献支付数量;
 
     public static int 沙城捐献获得物品1;
-
     public static int 沙城捐献获得物品2;
-
     public static int 沙城捐献获得物品3;
 
     public static int 沙城捐献物品数量1;
-
     public static int 沙城捐献物品数量2;
-
     public static int 沙城捐献物品数量3;
 
     public static int 沙城捐献赞助人数;
@@ -1911,14 +1876,6 @@ public static class Config
     public static int 龙卫效果提示;
 
     public static int 充值平台切换;
-
-    public static int 坐骑骑乘切换;
-
-    public static int 坐骑属性切换;
-
-    public static int 珍宝模块切换;
-
-    public static int 称号属性切换;
 
     public static int 全服红包等级;
 
@@ -1959,19 +1916,12 @@ public static class Config
     public static int 变性物品数量;
 
     public static byte 称号叠加模块9;
-
     public static byte 称号叠加模块10;
-
     public static byte 称号叠加模块11;
-
     public static byte 称号叠加模块12;
-
     public static byte 称号叠加模块13;
-
     public static byte 称号叠加模块14;
-
     public static byte 称号叠加模块15;
-
     public static byte 称号叠加模块16;
 
     public static int 幸运保底开关;
@@ -2053,6 +2003,8 @@ public static class Config
     public static string Gem2StoneName;
     public static string Gem3StoneName;
     public static string Gem4StoneName;
+
+    public static int DBMethod = 0; // 0: Default (JSON/TXT), 1: SQL, 2: CSV
 
     static Config()
     {
