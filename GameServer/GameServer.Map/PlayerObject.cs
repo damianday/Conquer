@@ -1086,7 +1086,7 @@ public sealed class PlayerObject : MapObject
         }
         if (Config.新手上线赠送称号1 != 999 && !character.Titles.ContainsKey((byte)Config.新手上线赠送称号1) && GameTitle.DataSheet.TryGetValue((byte)Config.新手上线赠送称号1, out var _))
         {
-            玩家获得称号((byte)Config.新手上线赠送称号1);
+            AddTitle((byte)Config.新手上线赠送称号1);
         }
         if (Config.CurrentVersion >= 1 && Config.称号叠加开关 == 1)
         {
@@ -1470,7 +1470,7 @@ public sealed class PlayerObject : MapObject
                 玩家特权到期();
                 if (剩余特权.TryGetValue(预定特权, out var v) && v >= 30)
                 {
-                    玩家激活特权(预定特权);
+                    ChangeDegree(预定特权);
                     if ((剩余特权[预定特权] -= 30) <= 0)
                     {
                         预定特权 = 0;
@@ -1963,7 +1963,7 @@ public sealed class PlayerObject : MapObject
             }
         }
 
-        if (玩家实例2 == null || !CurrentMap.掉落装备(CurrentPosition, RedName))
+        if (玩家实例2 == null || !CurrentMap.CanDrop(CurrentPosition, RedName))
         {
             return;
         }
@@ -3930,7 +3930,7 @@ public sealed class PlayerObject : MapObject
         if (CurrentMap.MapID != map.MapID)
         {
             CurrentMap = map;
-            CurrentPosition = (area == AreaType.Unknown) ? location : map.RandomPosition(area);
+            CurrentPosition = (area == AreaType.Unknown) ? location : map.GetRandomPosition(area);
 
             Enqueue(new MapChangedPacket
             {
@@ -3950,7 +3950,7 @@ public sealed class PlayerObject : MapObject
             return;
         }
 
-        CurrentPosition = (area == AreaType.Unknown) ? location : map.RandomPosition(area);
+        CurrentPosition = (area == AreaType.Unknown) ? location : map.GetRandomPosition(area);
 
         Enqueue(new ObjectStopPacket
         {
@@ -7079,16 +7079,18 @@ public sealed class PlayerObject : MapObject
             ParalysisRing = false;
     }
 
-    public void 玩家诱惑目标(SkillObject skill, C_04_CalculateTargetTemptation task, MapObject 诱惑目标)
+    public void TameTarget(SkillObject skill, C_04_CalculateTargetTemptation task, MapObject target)
     {
-        if (诱惑目标 == null || 诱惑目标.Dead || CurrentLevel + 2 < 诱惑目标.CurrentLevel || (!(诱惑目标 is MonsterObject) && !(诱惑目标 is PetObject)) || (诱惑目标 is PetObject && (skill.SkillLevel < 3 || this == (诱惑目标 as PetObject).Master)) || (task.检查铭文技能 && (!Skills.TryGetValue((ushort)(task.检查铭文编号 / 10), out var v) || v.InscriptionID != task.检查铭文编号 % 10)))
+        if (target == null || target.Dead || CurrentLevel + 2 < target.CurrentLevel || 
+            (!(target is MonsterObject) && !(target is PetObject)) || (target is PetObject && (skill.SkillLevel < 3 || this == (target as PetObject).Master)) || 
+            (task.检查铭文技能 && (!Skills.TryGetValue((ushort)(task.检查铭文编号 / 10), out var v) || v.InscriptionID != task.检查铭文编号 % 10)))
         {
             return;
         }
-        bool flag = task.特定诱惑列表?.Contains(诱惑目标.Name) ?? false;
+        bool flag = task.特定诱惑列表?.Contains(target.Name) ?? false;
         bool flag2 = flag;
         float num = (flag ? task.特定诱惑概率 : 0f);
-        float num2 = ((诱惑目标 is MonsterObject) ? (诱惑目标 as MonsterObject).BaseTemptationProbability : (诱惑目标 as PetObject).BaseTemptationProbability);
+        float num2 = ((target is MonsterObject) ? (target as MonsterObject).BaseTemptationProbability : (target as PetObject).BaseTemptationProbability);
         if ((num2 += num) <= 0f)
         {
             return;
@@ -7110,19 +7112,19 @@ public sealed class PlayerObject : MapObject
                 num7 += value.Template.TemptationLevelIncreased;
             }
         }
-        float num8 = (float)Math.Pow((CurrentLevel >= 诱惑目标.CurrentLevel) ? 1.2 : 0.8, Compute.Clamp(0, Math.Abs(诱惑目标.CurrentLevel - CurrentLevel), 2));
+        float num8 = (float)Math.Pow((CurrentLevel >= target.CurrentLevel) ? 1.2 : 0.8, Compute.Clamp(0, Math.Abs(target.CurrentLevel - CurrentLevel), 2));
         if (!Compute.CalculateProbability(num2 * num8 * (1f + 额外诱惑概率 + num5)))
         {
             return;
         }
-        if (诱惑目标.Buffs.ContainsKey(task.狂暴状态编号))
+        if (target.Buffs.ContainsKey(task.狂暴状态编号))
         {
             if (Pets.Count < num3 + 额外诱惑数量)
             {
                 int num9 = Math.Min(num4 + num7, 7);
                 int 宠物时长 = Config.怪物诱惑时长 + 额外诱惑时长 + num6;
                 bool 绑定武器 = flag2 || num4 != 0 || 额外诱惑时长 != 0 || 额外诱惑概率 != 0f || Pets.Count >= num3;
-                PetObject 宠物实例2 = ((诱惑目标 is MonsterObject 怪物实例2) ? new PetObject(this, 怪物实例2, (byte)Math.Max(怪物实例2.PetLevel, num9), 绑定武器, 宠物时长) : new PetObject(this, (PetObject)诱惑目标, (byte)num9, 绑定武器, 宠物时长));
+                PetObject 宠物实例2 = ((target is MonsterObject 怪物实例2) ? new PetObject(this, 怪物实例2, (byte)Math.Max(怪物实例2.PetLevel, num9), 绑定武器, 宠物时长) : new PetObject(this, (PetObject)target, (byte)num9, 绑定武器, 宠物时长));
                 Enqueue(new SyncPetLevelPacket
                 {
                     ObjectID = 宠物实例2.ObjectID,
@@ -7139,13 +7141,13 @@ public sealed class PlayerObject : MapObject
         }
         else
         {
-            诱惑目标.AddBuff(task.瘫痪状态编号, this);
+            target.AddBuff(task.瘫痪状态编号, this);
         }
     }
 
-    public void 玩家瞬间移动(SkillObject skill, C_07_CalculateTargetTeleportation task)
+    public void UserTeleportSkill(SkillObject skill, C_07_CalculateTargetTeleportation task)
     {
-        if (Compute.CalculateProbability(task.每级成功概率[skill.SkillLevel]) && !(CurrentMap.随机传送(CurrentPosition) == default(Point)))
+        if (Compute.CalculateProbability(task.每级成功概率[skill.SkillLevel]) && !(CurrentMap.GetRandomTeleportPosition(CurrentPosition) == default(Point)))
         {
             Teleport(ResurrectionMap, AreaType.Random);
         }
@@ -7286,23 +7288,16 @@ public sealed class PlayerObject : MapObject
         PrivilegeTime = DateTime.MaxValue;
     }
 
-    public void 玩家激活特权(byte 特权类型)
+    public void ChangeDegree(byte degree)
     {
-        switch (特权类型)
+        switch (degree)
         {
-            default:
-                return;
-            case 3:
-                玩家获得称号(61);
-                break;
-            case 4:
-                玩家获得称号(124);
-                break;
-            case 5:
-                玩家获得称号(131);
-                break;
+            case 3: AddTitle(61); break;
+            case 4: AddTitle(124); break;
+            case 5: AddTitle(131); break;
+            default: return;
         }
-        CurrentDegree = 特权类型;
+        CurrentDegree = degree;
         本期记录 = uint.MaxValue;
         本期日期 = SEngine.CurrentTime;
         PrivilegeTime = 本期日期.AddDays(30.0);
@@ -7331,15 +7326,15 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 玩家获得称号(byte 称号编号)
+    public void AddTitle(byte id)
     {
-        if (GameTitle.DataSheet.TryGetValue(称号编号, out var value))
+        if (GameTitle.DataSheet.TryGetValue(id, out var value))
         {
-            Titles[称号编号] = SEngine.CurrentTime.AddMinutes(value.EffectiveTime);
+            Titles[id] = SEngine.CurrentTime.AddMinutes(value.Duration);
             Enqueue(new AddTitlePacket
             {
-                TitleID = 称号编号,
-                Duration = (int)(Titles[称号编号] - SEngine.CurrentTime).TotalMinutes
+                TitleID = id,
+                Duration = (int)(Titles[id] - SEngine.CurrentTime).TotalMinutes
             });
         }
     }
@@ -7682,33 +7677,38 @@ public sealed class PlayerObject : MapObject
     {
         if (!BoundToMap) return;
 
-        if (!Dead && StallState <= 0 && TradeState < 3)
-        {
-            if (!CurrentMap.TeleportGates.TryGetValue((byte)id, out var gate))
-            {
-                Enqueue(new GameErrorMessagePacket { ErrorCode = 775 });
-            }
-            else if (GetDistance(gate.Coordinates) >= 8)
-            {
-                Enqueue(new GameErrorMessagePacket { ErrorCode = 4609 });
-            }
-            else if (!GameMap.DataSheet.TryGetValue(gate.ToMapID, out var map))
-            {
-                Enqueue(new GameErrorMessagePacket { ErrorCode = 775 });
-            }
-            else if (CurrentLevel < map.MinLevel)
-            {
-                Enqueue(new GameErrorMessagePacket { ErrorCode = 4624 });
-            }
-            else
-            {
-                Teleport((CurrentMap.MapID == map.MapID) ? CurrentMap : MapManager.GetMap(map.MapID), AreaType.Unknown, gate.ToCoordinates);
-            }
-        }
-        else
+        if (Dead || StallState > 0 || TradeState >= 3)
         {
             Enqueue(new GameErrorMessagePacket { ErrorCode = 769 });
+            return;
         }
+
+        if (!CurrentMap.TeleportGates.TryGetValue((byte)id, out var gate))
+        {
+            Enqueue(new GameErrorMessagePacket { ErrorCode = 775 });
+            return;
+        }
+
+        if (GetDistance(gate.Coordinates) >= 8)
+        {
+            Enqueue(new GameErrorMessagePacket { ErrorCode = 4609 });
+            return;
+        }
+
+        var map = (CurrentMap.MapID == gate.ToMapID) ? CurrentMap : MapManager.GetMap(gate.ToMapID);
+        if (map == null)
+        {
+            Enqueue(new GameErrorMessagePacket { ErrorCode = 775 });
+            return;
+        }
+
+        if (CurrentLevel < map.MinLevel)
+        {
+            Enqueue(new GameErrorMessagePacket { ErrorCode = 4624 });
+            return;
+        }
+
+        Teleport(map, AreaType.Unknown, gate.ToCoordinates);
     }
 
     public void WalkTo(Point location)
@@ -7726,6 +7726,7 @@ public sealed class PlayerObject : MapObject
             });
             return;
         }
+
         if (!CanWalk())
         {
             Enqueue(new ObjectStopPacket
@@ -7736,6 +7737,7 @@ public sealed class PlayerObject : MapObject
             });
             return;
         }
+
         GameDirection dir = Compute.DirectionFromPoint(CurrentPosition, location);
         Point point = Compute.GetNextPosition(CurrentPosition, dir, 1);
         if (!CurrentMap.CanMove(point))
@@ -7758,6 +7760,7 @@ public sealed class PlayerObject : MapObject
             });
             return;
         }
+
         WalkTime = SEngine.CurrentTime.AddMilliseconds(WalkInterval);
         BusyTime = SEngine.CurrentTime.AddMilliseconds(WalkInterval);
         if (CurrentDirection != (dir = Compute.DirectionFromPoint(CurrentPosition, point)))
@@ -7770,6 +7773,7 @@ public sealed class PlayerObject : MapObject
                 ActionTime = 100
             });
         }
+
         SendPacket(new ObjectWalkPacket
         {
             ObjectID = ObjectID,
@@ -8222,7 +8226,7 @@ public sealed class PlayerObject : MapObject
             else if (NpcDialog.DataSheet.ContainsKey(CurrentNPC.GuardID * 100000))
             {
                 CurrentStoreID = CurrentNPC.StoreID;
-                打开界面 = CurrentNPC.界面代码;
+                CurrentStoreNameID = CurrentNPC.StoreNameID;
                 对话超时 = SEngine.CurrentTime.AddSeconds(30.0);
                 对话页面 = CurrentNPC.GuardID * 100000;
                 Enqueue(new 同步交互结果
@@ -8234,20 +8238,20 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 快捷对话模块(GuardObject 对话守卫1)
+    public void 快捷对话模块(GuardObject guard)
     {
         if (!Dead && StallState <= 0 && TradeState < 3)
         {
-            CurrentNPC = 对话守卫1;
-            if (NpcDialog.DataSheet.ContainsKey(对话守卫1.GuardID * 100000))
+            CurrentNPC = guard;
+            if (NpcDialog.DataSheet.ContainsKey(guard.GuardID * 100000))
             {
-                CurrentStoreID = 对话守卫1.StoreID;
-                打开界面 = 对话守卫1.界面代码;
+                CurrentStoreID = guard.StoreID;
+                CurrentStoreNameID = guard.StoreNameID;
                 对话超时 = SEngine.CurrentTime.AddSeconds(30.0);
-                对话页面 = 对话守卫1.GuardID * 100000;
+                对话页面 = guard.GuardID * 100000;
                 Enqueue(new 同步交互结果
                 {
-                    对象编号 = 对话守卫1.ObjectID,
+                    对象编号 = guard.ObjectID,
                     交互文本 = NpcDialog.GetBufferFromDialogID(对话页面)
                 });
             }
@@ -8270,185 +8274,185 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 玩家充值模块(bool result, int 充值价值)
+    public void 玩家充值模块(bool result, int amount)
     {
         if (result)
         {
-            if (充值价值 != 0 && Config.平台开关模式 == 19)
+            if (amount != 0 && Config.平台开关模式 == 19)
             {
-                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * 充值价值;
-                Character.VIPPoints.V += 充值价值;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * 充值价值}修罗声威", rolling: true);
+                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * amount;
+                Character.VIPPoints.V += amount;
+                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * amount}修罗声威", rolling: true);
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
                 });
             }
-            if (充值价值 != 0 && Config.平台开关模式 == 18)
+            if (amount != 0 && Config.平台开关模式 == 18)
             {
-                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * 充值价值;
-                Character.VIPPoints.V += 充值价值;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * 充值价值}跨服秘宝", rolling: true);
+                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * amount;
+                Character.VIPPoints.V += amount;
+                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * amount}跨服秘宝", rolling: true);
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
                 });
             }
-            if (充值价值 != 0 && Config.平台开关模式 == 17)
+            if (amount != 0 && Config.平台开关模式 == 17)
             {
-                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * 充值价值;
-                Character.VIPPoints.V += 充值价值;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * 充值价值}勇者金币", rolling: true);
+                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * amount;
+                Character.VIPPoints.V += amount;
+                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * amount}勇者金币", rolling: true);
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
                 });
             }
-            if (充值价值 != 0 && Config.平台开关模式 == 16)
+            if (amount != 0 && Config.平台开关模式 == 16)
             {
-                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * 充值价值;
-                Character.VIPPoints.V += 充值价值;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * 充值价值}武道荣誉", rolling: true);
+                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * amount;
+                Character.VIPPoints.V += amount;
+                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * amount}武道荣誉", rolling: true);
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
                 });
             }
-            if (充值价值 != 0 && Config.平台开关模式 == 13)
+            if (amount != 0 && Config.平台开关模式 == 13)
             {
-                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * 充值价值;
-                Character.VIPPoints.V += 充值价值;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * 充值价值}成就点数", rolling: true);
+                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * amount;
+                Character.VIPPoints.V += amount;
+                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * amount}成就点数", rolling: true);
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
                 });
             }
-            if (充值价值 != 0 && Config.平台开关模式 == 15)
+            if (amount != 0 && Config.平台开关模式 == 15)
             {
-                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * 充值价值 * 100;
-                Character.VIPPoints.V += 充值价值;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * 充值价值}绑定元宝", rolling: true);
+                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * amount * 100;
+                Character.VIPPoints.V += amount;
+                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * amount}绑定元宝", rolling: true);
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
                 });
             }
-            if (充值价值 != 0 && Config.平台开关模式 == 12)
+            if (amount != 0 && Config.平台开关模式 == 12)
             {
-                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * 充值价值;
-                Character.VIPPoints.V += 充值价值;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * 充值价值}擂台积分", rolling: true);
+                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * amount;
+                Character.VIPPoints.V += amount;
+                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * amount}擂台积分", rolling: true);
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
                 });
             }
-            if (充值价值 != 0 && Config.平台开关模式 == 11)
+            if (amount != 0 && Config.平台开关模式 == 11)
             {
-                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * 充值价值;
-                Character.VIPPoints.V += 充值价值;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * 充值价值}道义点数", rolling: true);
+                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * amount;
+                Character.VIPPoints.V += amount;
+                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * amount}道义点数", rolling: true);
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
                 });
             }
-            if (充值价值 != 0 && Config.平台开关模式 == 10)
+            if (amount != 0 && Config.平台开关模式 == 10)
             {
-                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * 充值价值;
-                Character.VIPPoints.V += 充值价值;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * 充值价值}修炼点数", rolling: true);
+                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * amount;
+                Character.VIPPoints.V += amount;
+                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * amount}修炼点数", rolling: true);
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
                 });
             }
-            if (充值价值 != 0 && Config.平台开关模式 == 9)
+            if (amount != 0 && Config.平台开关模式 == 9)
             {
-                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * 充值价值;
-                Character.VIPPoints.V += 充值价值;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * 充值价值}公会贡献", rolling: true);
+                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * amount;
+                Character.VIPPoints.V += amount;
+                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * amount}公会贡献", rolling: true);
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
                 });
             }
-            if (充值价值 != 0 && Config.平台开关模式 == 8)
+            if (amount != 0 && Config.平台开关模式 == 8)
             {
-                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * 充值价值;
-                Character.VIPPoints.V += 充值价值;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * 充值价值}战场点数", rolling: true);
+                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * amount;
+                Character.VIPPoints.V += amount;
+                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * amount}战场点数", rolling: true);
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
                 });
             }
-            if (充值价值 != 0 && Config.平台开关模式 == 7)
+            if (amount != 0 && Config.平台开关模式 == 7)
             {
-                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * 充值价值;
-                Character.VIPPoints.V += 充值价值;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * 充值价值}万法之气", rolling: true);
+                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * amount;
+                Character.VIPPoints.V += amount;
+                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * amount}万法之气", rolling: true);
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
                 });
             }
-            if (充值价值 != 0 && Config.平台开关模式 == 6)
+            if (amount != 0 && Config.平台开关模式 == 6)
             {
-                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * 充值价值;
-                Character.VIPPoints.V += 充值价值;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * 充值价值}名师声望", rolling: true);
+                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * amount;
+                Character.VIPPoints.V += amount;
+                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * amount}名师声望", rolling: true);
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
                 });
             }
-            if (充值价值 != 0 && Config.平台开关模式 == 3)
+            if (amount != 0 && Config.平台开关模式 == 3)
             {
-                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * 充值价值 * 100;
-                Character.VIPPoints.V += 充值价值;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * 充值价值}元宝", rolling: true);
+                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * amount * 100;
+                Character.VIPPoints.V += amount;
+                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * amount}元宝", rolling: true);
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
                 });
             }
-            if (充值价值 != 0 && Config.平台开关模式 == 5)
+            if (amount != 0 && Config.平台开关模式 == 5)
             {
-                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * 充值价值;
-                Character.VIPPoints.V += 充值价值;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * 充值价值}魂值", rolling: true);
+                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * amount;
+                Character.VIPPoints.V += amount;
+                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * amount}魂值", rolling: true);
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
                 });
             }
-            if (充值价值 != 0 && Config.平台开关模式 == 2)
+            if (amount != 0 && Config.平台开关模式 == 2)
             {
-                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * 充值价值;
-                Character.VIPPoints.V += 充值价值;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * 充值价值}声威", rolling: true);
+                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * amount;
+                Character.VIPPoints.V += amount;
+                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * amount}声威", rolling: true);
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
                 });
             }
-            if (充值价值 != 0 && Config.平台开关模式 == 0)
+            if (amount != 0 && Config.平台开关模式 == 0)
             {
-                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * 充值价值;
-                Character.VIPPoints.V += 充值价值;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * 充值价值}银币", rolling: true);
+                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * amount;
+                Character.VIPPoints.V += amount;
+                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * amount}银币", rolling: true);
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
                 });
             }
-            if (充值价值 != 0 && Config.平台开关模式 == 1)
+            if (amount != 0 && Config.平台开关模式 == 1)
             {
-                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * 充值价值;
-                Character.VIPPoints.V += 充值价值;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * 充值价值}金币", rolling: true);
+                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * amount;
+                Character.VIPPoints.V += amount;
+                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * amount}金币", rolling: true);
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
@@ -10558,9 +10562,9 @@ public sealed class PlayerObject : MapObject
                                     map.Spawns = value27.Spawns;
                                     map.Guards = value27.Guards;
                                     map.TeleportationArea = value27.TeleportationArea;
-                                    map.Cells = new HashSet<MapObject>[value27.MapSize.X, value27.MapSize.Y];
+                                    map.Cells = new HashSet<MapObject>[value27.MapSize.Width, value27.MapSize.Height];
                                     
-                                    MapManager.ReplicateMaps.Add(map);
+                                    MapManager.ReplicaMaps.Add(map);
                                     Teleport(map, AreaType.Teleportation);
                                     NetworkManager.SendAnnouncement($"玩家：{Name}进入【{map}】魔渊历练", rolling: true);
                                     if (MonsterInfo.DataSheet.TryGetValue(Config.暗之门地图1BOSS, out var value28))
@@ -10587,9 +10591,9 @@ public sealed class PlayerObject : MapObject
                                     map.Spawns = value29.Spawns;
                                     map.Guards = value29.Guards;
                                     map.TeleportationArea = value29.TeleportationArea;
-                                    map.Cells = new HashSet<MapObject>[value29.MapSize.X, value29.MapSize.Y];
+                                    map.Cells = new HashSet<MapObject>[value29.MapSize.Width, value29.MapSize.Height];
                                     
-                                    MapManager.ReplicateMaps.Add(map);
+                                    MapManager.ReplicaMaps.Add(map);
                                     Teleport(map, AreaType.Teleportation);
                                     NetworkManager.SendAnnouncement($"玩家：{Name}进入【{map}】魔渊历练", rolling: true);
                                     if (MonsterInfo.DataSheet.TryGetValue(Config.暗之门地图2BOSS, out var value30))
@@ -10616,9 +10620,9 @@ public sealed class PlayerObject : MapObject
                                     map.Spawns = value25.Spawns;
                                     map.Guards = value25.Guards;
                                     map.TeleportationArea = value25.TeleportationArea;
-                                    map.Cells = new HashSet<MapObject>[value25.MapSize.X, value25.MapSize.Y];
+                                    map.Cells = new HashSet<MapObject>[value25.MapSize.Width, value25.MapSize.Height];
                                     
-                                    MapManager.ReplicateMaps.Add(map);
+                                    MapManager.ReplicaMaps.Add(map);
                                     Teleport(map, AreaType.Teleportation);
                                     NetworkManager.SendAnnouncement($"玩家：{Name}进入【{map}】魔渊历练", rolling: true);
                                     if (MonsterInfo.DataSheet.TryGetValue(Config.暗之门地图3BOSS, out var value26))
@@ -10645,9 +10649,9 @@ public sealed class PlayerObject : MapObject
                                     map.Spawns = value23.Spawns;
                                     map.Guards = value23.Guards;
                                     map.TeleportationArea = value23.TeleportationArea;
-                                    map.Cells = new HashSet<MapObject>[value23.MapSize.X, value23.MapSize.Y];
+                                    map.Cells = new HashSet<MapObject>[value23.MapSize.Width, value23.MapSize.Height];
                                     
-                                    MapManager.ReplicateMaps.Add(map);
+                                    MapManager.ReplicaMaps.Add(map);
                                     Teleport(map, AreaType.Teleportation);
                                     NetworkManager.SendAnnouncement($"玩家：{Name}进入【{map}】魔渊历练", rolling: true);
                                     if (MonsterInfo.DataSheet.TryGetValue(Config.暗之门地图4BOSS, out var value24))
@@ -10739,9 +10743,9 @@ public sealed class PlayerObject : MapObject
                                 map.Guards = value48.Guards;
                                 map.TeleportationArea = value48.TeleportationArea;
                                 map.Respawns = value48.Spawns.OrderBy((MonsterSpawn O) => O.Coordinates.X).ToList();
-                                map.Cells = new HashSet<MapObject>[value48.MapSize.X, value48.MapSize.Y];
+                                map.Cells = new HashSet<MapObject>[value48.MapSize.Width, value48.MapSize.Height];
                                 
-                                MapManager.ReplicateMaps.Add(map);
+                                MapManager.ReplicaMaps.Add(map);
                                 Teleport(map, AreaType.Teleportation);
                                 Character.魔虫窟次数.V++;
                                 NetworkManager.SendAnnouncement($"玩家：{Name}进入{map}副本历练", rolling: true);
@@ -10797,9 +10801,9 @@ public sealed class PlayerObject : MapObject
                                 map.Guards = value50.Guards;
                                 map.TeleportationArea = value50.TeleportationArea;
                                 map.Respawns = value50.Spawns.OrderBy((MonsterSpawn O) => O.Coordinates.X).ToList();
-                                map.Cells = new HashSet<MapObject>[value50.MapSize.X, value50.MapSize.Y];
+                                map.Cells = new HashSet<MapObject>[value50.MapSize.Width, value50.MapSize.Height];
                                
-                                MapManager.ReplicateMaps.Add(map);
+                                MapManager.ReplicaMaps.Add(map);
                                 Teleport(map, AreaType.Teleportation);
                                 Character.魔虫窟次数.V++;
                                 NetworkManager.SendAnnouncement($"玩家：{Name}进入{map}副本历练", rolling: true);
@@ -10853,9 +10857,9 @@ public sealed class PlayerObject : MapObject
                             map.Guards = value52.Guards;
                             map.TeleportationArea = value52.TeleportationArea;
                             map.Respawns = value52.Spawns.OrderBy((MonsterSpawn O) => O.Coordinates.X).ToList();
-                            map.Cells = new HashSet<MapObject>[value52.MapSize.X, value52.MapSize.Y];
+                            map.Cells = new HashSet<MapObject>[value52.MapSize.Width, value52.MapSize.Height];
                             
-                            MapManager.ReplicateMaps.Add(map);
+                            MapManager.ReplicaMaps.Add(map);
                             Teleport(map, AreaType.Teleportation);
                             Character.魔虫窟次数.V++;
                             NetworkManager.SendAnnouncement($"玩家：{Name}进入{map}副本历练", rolling: true);
@@ -11171,7 +11175,7 @@ public sealed class PlayerObject : MapObject
                             if (Ingot >= 狂暴开启元宝数量2)
                             {
                                 Ingot -= 狂暴开启元宝数量2;
-                                玩家获得称号(Config.狂暴称号格式);
+                                AddTitle(Config.狂暴称号格式);
                                 if (GameTitle.DataSheet.TryGetValue(Config.狂暴称号格式, out var value8))
                                 {
                                     CombatPowerBonus.Add(value8, value8.CombatPower);
@@ -11197,7 +11201,7 @@ public sealed class PlayerObject : MapObject
                                 {
                                     Description = 全部货币描述()
                                 });
-                                玩家获得称号(Config.狂暴称号格式);
+                                AddTitle(Config.狂暴称号格式);
                                 if (GameTitle.DataSheet.TryGetValue(Config.狂暴称号格式, out var value9))
                                 {
                                     CombatPowerBonus.Add(value9, value9.CombatPower);
@@ -11219,7 +11223,7 @@ public sealed class PlayerObject : MapObject
                             if (FindItem(狂暴开启物品数量2, 狂暴开启物品名称2, out var 物品列表11))
                             {
                                 ConsumeItem(狂暴开启物品数量2, 物品列表11);
-                                玩家获得称号(Config.狂暴称号格式);
+                                AddTitle(Config.狂暴称号格式);
                                 if (GameTitle.DataSheet.TryGetValue(Config.狂暴称号格式, out var value10))
                                 {
                                     CombatPowerBonus.Add(value10, value10.CombatPower);
@@ -12590,7 +12594,7 @@ public sealed class PlayerObject : MapObject
                             if (Ingot >= 狂暴开启元宝数量 && Config.称号叠加开关 == 1)
                             {
                                 Ingot -= 狂暴开启元宝数量;
-                                玩家获得称号(Config.狂暴称号格式);
+                                AddTitle(Config.狂暴称号格式);
                                 if (GameTitle.DataSheet.TryGetValue(Config.狂暴称号格式, out var value5))
                                 {
                                     CombatPowerBonus.Add(value5, value5.CombatPower);
@@ -12600,7 +12604,7 @@ public sealed class PlayerObject : MapObject
                             else if (Ingot >= 狂暴开启元宝数量 && Config.称号叠加开关 == 0)
                             {
                                 Ingot -= 狂暴开启元宝数量;
-                                玩家获得称号(Config.狂暴称号格式);
+                                AddTitle(Config.狂暴称号格式);
                             }
                             else
                             {
@@ -12621,7 +12625,7 @@ public sealed class PlayerObject : MapObject
                                 {
                                     Description = 全部货币描述()
                                 });
-                                玩家获得称号(Config.狂暴称号格式);
+                                AddTitle(Config.狂暴称号格式);
                                 if (GameTitle.DataSheet.TryGetValue(Config.狂暴称号格式, out var value6))
                                 {
                                     CombatPowerBonus.Add(value6, value6.CombatPower);
@@ -12635,7 +12639,7 @@ public sealed class PlayerObject : MapObject
                                 {
                                     Description = 全部货币描述()
                                 });
-                                玩家获得称号(Config.狂暴称号格式);
+                                AddTitle(Config.狂暴称号格式);
                             }
                             else
                             {
@@ -12653,7 +12657,7 @@ public sealed class PlayerObject : MapObject
                             if (FindItem(狂暴开启物品数量, 狂暴开启物品名称, out var 物品列表7) && Config.称号叠加开关 == 1)
                             {
                                 ConsumeItem(狂暴开启物品数量, 物品列表7);
-                                玩家获得称号(Config.狂暴称号格式);
+                                AddTitle(Config.狂暴称号格式);
                                 if (GameTitle.DataSheet.TryGetValue(Config.狂暴称号格式, out var value7))
                                 {
                                     CombatPowerBonus.Add(value7, value7.CombatPower);
@@ -12663,7 +12667,7 @@ public sealed class PlayerObject : MapObject
                             else if (FindItem(狂暴开启物品数量, 狂暴开启物品名称, out 物品列表8) && Config.称号叠加开关 == 0)
                             {
                                 ConsumeItem(狂暴开启物品数量, 物品列表8);
-                                玩家获得称号(Config.狂暴称号格式);
+                                AddTitle(Config.狂暴称号格式);
                             }
                             else
                             {
@@ -12919,7 +12923,7 @@ public sealed class PlayerObject : MapObject
                             ConsumeItem(num22, 物品列表14);
                             if (GameTitle.DataSheet.TryGetValue(b4, out var value32))
                             {
-                                Character.Titles[b4] = SEngine.CurrentTime.AddMinutes(value32.EffectiveTime);
+                                Character.Titles[b4] = SEngine.CurrentTime.AddMinutes(value32.Duration);
                                 int 剩余时间 = 65920000;
                                 Enqueue(new AddTitlePacket
                                 {
@@ -14645,11 +14649,11 @@ public sealed class PlayerObject : MapObject
                             {
                                 if (Config.CurrentVersion >= 2 && Guild != null && Guild == SystemInfo.Info.OccupyGuild.V && Guild.Members[Character] == GuildRank.President)
                                 {
-                                    玩家获得称号(Config.沙巴克城主称号);
+                                    AddTitle(Config.沙巴克城主称号);
                                 }
                                 else if (Config.CurrentVersion >= 2 && Guild != null && SystemInfo.Info.OccupyGuild.V == Guild)
                                 {
-                                    玩家获得称号(Config.沙巴克成员称号);
+                                    AddTitle(Config.沙巴克成员称号);
                                 }
                             }
                             byte b2 = byte.MaxValue;
@@ -14959,7 +14963,7 @@ public sealed class PlayerObject : MapObject
                             }
                             else
                             {
-                                打开界面 = "UpgradeCurEquippedWepn";
+                                CurrentStoreNameID = "UpgradeCurEquippedWepn";
                                 对话页面 = 670502000;
                                 Enqueue(new 同步交互结果
                                 {
@@ -16671,7 +16675,7 @@ public sealed class PlayerObject : MapObject
             }
             else
             {
-                玩家激活特权(特权类型);
+                ChangeDegree(特权类型);
             }
             Enqueue(new GameErrorMessagePacket
             {
@@ -16728,7 +16732,7 @@ public sealed class PlayerObject : MapObject
         }
         else
         {
-            玩家激活特权(特权类型);
+            ChangeDegree(特权类型);
         }
         Enqueue(new GameErrorMessagePacket
         {
@@ -16761,7 +16765,7 @@ public sealed class PlayerObject : MapObject
         }
         if (CurrentDegree == 0)
         {
-            玩家激活特权(特权类型);
+            ChangeDegree(特权类型);
             if ((剩余特权[特权类型] -= 30) <= 0)
             {
                 预定特权 = 0;
@@ -19308,7 +19312,7 @@ public sealed class PlayerObject : MapObject
             {
                 if (ConsumeItem(1, v))
                 {
-                    玩家获得称号((byte)v.称号编号值);
+                    AddTitle((byte)v.称号编号值);
                 }
                 return;
             }
@@ -21745,7 +21749,7 @@ public sealed class PlayerObject : MapObject
                             });
                             ConsumeItem(1, v);
                         }
-                        玩家获得称号((byte)Config.初级赞助称号1);
+                        AddTitle((byte)Config.初级赞助称号1);
                         ConsumeItem(1, v);
                         break;
                     }
@@ -21923,7 +21927,7 @@ public sealed class PlayerObject : MapObject
                             });
                             ConsumeItem(1, v);
                         }
-                        玩家获得称号((byte)Config.中级赞助称号1);
+                        AddTitle((byte)Config.中级赞助称号1);
                         ConsumeItem(1, v);
                         break;
                     }
@@ -22101,7 +22105,7 @@ public sealed class PlayerObject : MapObject
                             });
                             ConsumeItem(1, v);
                         }
-                        玩家获得称号((byte)Config.高级赞助称号1);
+                        AddTitle((byte)Config.高级赞助称号1);
                         ConsumeItem(1, v);
                         break;
                     }
@@ -23531,23 +23535,23 @@ public sealed class PlayerObject : MapObject
                         break;
                     }
                 case "自定义称号1":
-                    玩家获得称号(Config.自定义称号内容一);
+                    AddTitle(Config.自定义称号内容一);
                     ConsumeItem(1, v);
                     break;
                 case "自定义称号2":
-                    玩家获得称号(Config.自定义称号内容二);
+                    AddTitle(Config.自定义称号内容二);
                     ConsumeItem(1, v);
                     break;
                 case "自定义称号3":
-                    玩家获得称号(Config.自定义称号内容三);
+                    AddTitle(Config.自定义称号内容三);
                     ConsumeItem(1, v);
                     break;
                 case "自定义称号4":
-                    玩家获得称号(Config.自定义称号内容四);
+                    AddTitle(Config.自定义称号内容四);
                     ConsumeItem(1, v);
                     break;
                 case "自定义称号5":
-                    玩家获得称号(Config.自定义称号内容五);
+                    AddTitle(Config.自定义称号内容五);
                     ConsumeItem(1, v);
                     break;
                 case "魔龙城回城卷包":
@@ -23729,7 +23733,7 @@ public sealed class PlayerObject : MapObject
                 case "随机传送卷":
                     if (Character.CurrentMap.V != 179)
                     {
-                        Point point2 = CurrentMap.随机传送(CurrentPosition);
+                        Point point2 = CurrentMap.GetRandomTeleportPosition(CurrentPosition);
                         if (point2 != default(Point))
                         {
                             ConsumeItem(1, v);
@@ -23737,10 +23741,7 @@ public sealed class PlayerObject : MapObject
                         }
                         else
                         {
-                            Enqueue(new GameErrorMessagePacket
-                            {
-                                ErrorCode = 776
-                            });
+                            Enqueue(new GameErrorMessagePacket { ErrorCode = 776 });
                         }
                     }
                     break;
@@ -23924,7 +23925,7 @@ public sealed class PlayerObject : MapObject
                 case "随机传送石":
                     if (Character.CurrentMap.V != 179 && (Character.CurrentMap.V != 152 || Config.沙巴克禁止随机 != 1))
                     {
-                        Point point = CurrentMap.随机传送(CurrentPosition);
+                        Point point = CurrentMap.GetRandomTeleportPosition(CurrentPosition);
                         if (point != default(Point))
                         {
                             ConsumeItem(1, v);
@@ -25331,7 +25332,7 @@ public sealed class PlayerObject : MapObject
         {
             return;
         }
-        if (打开界面 != "SoulEmbed")
+        if (CurrentStoreNameID != "SoulEmbed")
         {
             Connection.Disconnect(new Exception("错误操作: 玩家镶嵌灵石.  错误: 没有打开界面"));
         }
@@ -25396,7 +25397,7 @@ public sealed class PlayerObject : MapObject
             return;
         }
         ItemInfo v;
-        if (打开界面 != "SoulEmbed")
+        if (CurrentStoreNameID != "SoulEmbed")
         {
             Connection.Disconnect(new Exception("错误操作: 玩家镶嵌灵石.  错误: 没有打开界面"));
         }
@@ -25509,7 +25510,7 @@ public sealed class PlayerObject : MapObject
         {
             装备数据 = 装备数据2;
         }
-        if (打开界面 != "WeaponRune")
+        if (CurrentStoreNameID != "WeaponRune")
         {
             Connection.Disconnect(new Exception("错误操作: 普通铭文洗练.  错误: 没有打开界面"));
         }
@@ -25906,7 +25907,7 @@ public sealed class PlayerObject : MapObject
         {
             装备数据 = 装备数据2;
         }
-        if (打开界面 != "WeaponRune")
+        if (CurrentStoreNameID != "WeaponRune")
         {
             Connection.Disconnect(new Exception("错误操作: 普通铭文洗练.  错误: 没有打开界面"));
         }
@@ -26025,7 +26026,7 @@ public sealed class PlayerObject : MapObject
         {
             装备数据 = 装备数据2;
         }
-        if (打开界面 != "WeaponRune")
+        if (CurrentStoreNameID != "WeaponRune")
         {
             Connection.Disconnect(new Exception("错误操作: 普通铭文洗练.  错误: 没有打开界面"));
         }
@@ -26130,7 +26131,7 @@ public sealed class PlayerObject : MapObject
         {
             装备数据 = 装备数据2;
         }
-        if (打开界面 != "WeaponRune")
+        if (CurrentStoreNameID != "WeaponRune")
         {
             Connection.Disconnect(new Exception("错误操作: 普通铭文洗练.  错误: 没有打开界面"));
             return;
@@ -26188,7 +26189,7 @@ public sealed class PlayerObject : MapObject
         {
             装备数据 = 装备数据2;
         }
-        if (打开界面 != "WeaponRune")
+        if (CurrentStoreNameID != "WeaponRune")
         {
             Connection.Disconnect(new Exception("错误操作: 普通铭文洗练.  错误: 没有打开界面"));
             return;
@@ -26251,7 +26252,7 @@ public sealed class PlayerObject : MapObject
             return;
         }
         ItemInfo v;
-        if (打开界面 != "WeaponRune")
+        if (CurrentStoreNameID != "WeaponRune")
         {
             Connection.Disconnect(new Exception("错误操作: 解锁双铭文位.  错误: 没有打开界面"));
         }
@@ -26318,7 +26319,7 @@ public sealed class PlayerObject : MapObject
             return;
         }
         ItemInfo v;
-        if (打开界面 != "WeaponRune")
+        if (CurrentStoreNameID != "WeaponRune")
         {
             Connection.Disconnect(new Exception("错误操作: 切换双铭文位.  错误: 没有打开界面"));
         }
@@ -26375,7 +26376,7 @@ public sealed class PlayerObject : MapObject
         {
             return;
         }
-        if (打开界面 != "WeaponRune")
+        if (CurrentStoreNameID != "WeaponRune")
         {
             Connection.Disconnect(new Exception("错误操作: 传承武器铭文.  错误: 没有打开界面"));
         }
@@ -28460,7 +28461,7 @@ public sealed class PlayerObject : MapObject
     public void RequestCreateGuild(byte[] data)
     {
         ItemInfo 物品;
-        if (打开界面 != "Guild")
+        if (CurrentStoreNameID != "Guild")
         {
             Connection.Disconnect(new Exception("错误操作: 申请创建行会. 错误: 没有打开界面."));
         }
