@@ -1619,10 +1619,6 @@ public partial class SMain : Form
         系统窗口发送.Value = (Config.系统窗口发送 = Settings.Default.系统窗口发送);
         龙卫效果提示.Value = (Config.龙卫效果提示 = Settings.Default.龙卫效果提示);
         充值平台切换.Value = (Config.充值平台切换 = Settings.Default.充值平台切换);
-        坐骑骑乘切换.Value = (Config.坐骑骑乘切换 = Settings.Default.坐骑骑乘切换);
-        坐骑属性切换.Value = (Config.坐骑属性切换 = Settings.Default.坐骑属性切换);
-        珍宝模块切换.Value = (Config.珍宝模块切换 = Settings.Default.珍宝模块切换);
-        称号属性切换.Value = (Config.称号属性切换 = Settings.Default.称号属性切换);
         全服红包等级.Value = (Config.全服红包等级 = Settings.Default.全服红包等级);
         全服红包时间.Value = (Config.全服红包时间 = Settings.Default.全服红包时间);
         全服红包货币类型.Value = (Config.全服红包货币类型 = Settings.Default.全服红包货币类型);
@@ -1706,6 +1702,8 @@ public partial class SMain : Form
         Config.Gem2StoneName = Settings.Default.Gem2StoneName;
         Config.Gem3StoneName = Settings.Default.Gem3StoneName;
         Config.Gem4StoneName = Settings.Default.Gem4StoneName;
+
+        Config.DBMethod = Settings.Default.DBMethod;
 
         Task.Run(delegate
         {
@@ -10212,86 +10210,6 @@ public partial class SMain : Form
                 int num2 = (Settings.Default.充值平台切换 = (int)numericUpDown.Value);
                 int num3 = num2;
                 int num4 = (Config.充值平台切换 = num3);
-            }
-            else
-            {
-                MessageBox.Show("未知变量! " + numericUpDown.Name);
-            }
-            Settings.Default.Save();
-        }
-    }
-
-    private void 坐骑骑乘切换_ValueChanged(object sender, EventArgs e)
-    {
-        if (sender is NumericUpDown numericUpDown)
-        {
-            string name = numericUpDown.Name;
-            string text = name;
-            if (text == "坐骑骑乘切换")
-            {
-                int num2 = (Settings.Default.坐骑骑乘切换 = (int)numericUpDown.Value);
-                int num3 = num2;
-                int num4 = (Config.坐骑骑乘切换 = num3);
-            }
-            else
-            {
-                MessageBox.Show("未知变量! " + numericUpDown.Name);
-            }
-            Settings.Default.Save();
-        }
-    }
-
-    private void 坐骑属性切换_ValueChanged(object sender, EventArgs e)
-    {
-        if (sender is NumericUpDown numericUpDown)
-        {
-            string name = numericUpDown.Name;
-            string text = name;
-            if (text == "坐骑属性切换")
-            {
-                int num2 = (Settings.Default.坐骑属性切换 = (int)numericUpDown.Value);
-                int num3 = num2;
-                int num4 = (Config.坐骑属性切换 = num3);
-            }
-            else
-            {
-                MessageBox.Show("未知变量! " + numericUpDown.Name);
-            }
-            Settings.Default.Save();
-        }
-    }
-
-    private void 称号属性切换_ValueChanged(object sender, EventArgs e)
-    {
-        if (sender is NumericUpDown numericUpDown)
-        {
-            string name = numericUpDown.Name;
-            string text = name;
-            if (text == "称号属性切换")
-            {
-                int num2 = (Settings.Default.称号属性切换 = (int)numericUpDown.Value);
-                int num3 = num2;
-                int num4 = (Config.称号属性切换 = num3);
-            }
-            else
-            {
-                MessageBox.Show("未知变量! " + numericUpDown.Name);
-            }
-            Settings.Default.Save();
-        }
-    }
-
-    private void 珍宝模块切换_ValueChanged(object sender, EventArgs e)
-    {
-        if (sender is NumericUpDown numericUpDown)
-        {
-            string name = numericUpDown.Name;
-            string text = name;
-            if (text == "珍宝模块切换")
-            {
-                int num2 = (Settings.Default.珍宝模块切换 = (int)numericUpDown.Value);
-                int num3 = num2;
-                int num4 = (Config.珍宝模块切换 = num3);
             }
             else
             {
