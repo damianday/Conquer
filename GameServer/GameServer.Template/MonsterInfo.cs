@@ -5,6 +5,26 @@ using System.Linq;
 
 namespace GameServer.Template;
 
+public struct GrowthStat
+{
+    public Stat Stat;       // 属性
+    public int Level0;      // 零级
+    public int Level1;      // 一级
+    public int Level2;      // 二级
+    public int Level3;      // 三级
+    public int Level4;      // 四级
+    public int Level5;      // 五级
+    public int Level6;      // 六级
+    public int Level7;      // 七级
+}
+
+public struct InheritStat
+{
+    public Stat InheritedStat;  // 继承属性
+    public Stat ConvertStat;    // 转换属性
+    public float Ratio;         // 继承比例
+}
+
 public sealed class MonsterInfo
 {
     public static Dictionary<string, MonsterInfo> DataSheet;
@@ -46,8 +66,8 @@ public sealed class MonsterInfo
     public string BerserkReleaseSkill;
 
     public Stats Stats = new Stats();
-    public GrowthStat[] Grows;
-    public InheritStat[] InheritsStats;
+    public List<GrowthStat> Grows;
+    public List<InheritStat> InheritedStats;
     
     public List<MonsterDrop> Drops = new List<MonsterDrop>();
     public Dictionary<GameItem, long> DropStats = new Dictionary<GameItem, long>();
@@ -183,6 +203,75 @@ public sealed class MonsterInfo
             catch (Exception err)
             {
                 SMain.AddSystemLog(err.ToString());
+                return;
+            }
+
+
+            foreach (var monster in DataSheet)
+            {
+                try
+                {
+                    var qstr = "SELECT * FROM MonsterGrowthAttribute WHERE MonsterID = @MonsterID";
+                    using (var connection = DBAgent.X.DB.GetConnection())
+                    {
+                        using var command = DBAgent.X.DB.GetCommand(connection, qstr);
+                        command.Parameters.AddWithValue("@MonsterID", monster.Value.ID);
+
+                        using var reader = command.ExecuteReader();
+                        if (reader != null)
+                        {
+                            monster.Value.Grows = new List<GrowthStat>();
+                            while (reader.Read() == true)
+                            {
+                                var grow = new GrowthStat();
+                                grow.Stat = (Stat)reader.GetUInt16("Stat");
+                                grow.Level0 = reader.GetInt32("Level0");
+                                grow.Level1 = reader.GetInt32("Level1");
+                                grow.Level2 = reader.GetInt32("Level2");
+                                grow.Level3 = reader.GetInt32("Level3");
+                                grow.Level4 = reader.GetInt32("Level4");
+                                grow.Level5 = reader.GetInt32("Level5");
+                                grow.Level6 = reader.GetInt32("Level6");
+                                grow.Level7 = reader.GetInt32("Level7");
+
+                                monster.Value.Grows.Add(grow);
+                            }
+                        }
+                    }
+                }
+                catch (Exception err)
+                {
+                    SMain.AddSystemLog(err.ToString());
+                }
+
+                try
+                {
+                    var qstr = "SELECT * FROM MonsterInheritedAttribute WHERE MonsterID = @MonsterID";
+                    using (var connection = DBAgent.X.DB.GetConnection())
+                    {
+                        using var command = DBAgent.X.DB.GetCommand(connection, qstr);
+                        command.Parameters.AddWithValue("@MonsterID", monster.Value.ID);
+
+                        using var reader = command.ExecuteReader();
+                        if (reader != null)
+                        {
+                            monster.Value.InheritedStats = new List<InheritStat>(); 
+                            while (reader.Read() == true)
+                            {
+                                var stat = new InheritStat();
+                                stat.InheritedStat = (Stat)reader.GetUInt16("InheritedStat");
+                                stat.ConvertStat = (Stat)reader.GetUInt16("ConvertStat");
+                                stat.Ratio = reader.GetFloat("Ratio");
+
+                                monster.Value.InheritedStats.Add(stat);
+                            }
+                        }
+                    }
+                }
+                catch (Exception err)
+                {
+                    SMain.AddSystemLog(err.ToString());
+                }
             }
         }
     }
