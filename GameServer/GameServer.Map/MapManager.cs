@@ -15,7 +15,7 @@ namespace GameServer.Map;
 
 public static class MapManager
 {
-    public static int 对象表计数;
+    private static int ObjectTableIndex;
 
     public static List<MapObject> SecondaryObjects;
     public static List<MapObject> BackupObjects;
@@ -29,7 +29,7 @@ public static class MapManager
     public static Dictionary<int, TrapObject> Traps;
     public static Dictionary<int, Map> Maps;
 
-    public static HashSet<Map> ReplicateMaps;
+    public static HashSet<Map> ReplicaMaps;
 
     private static ConcurrentQueue<Map> ReplicateClosingMaps;
     private static ConcurrentQueue<MapObject> ActivationQueue;
@@ -104,58 +104,55 @@ public static class MapManager
     public static MapArea 外城复活区域;
     public static MapArea 内城复活区域;
     public static MapArea 守方传送区域;
-    public static MapArea 攻沙快捷;
-    public static MapArea 传送区域沙左;
-    public static MapArea 传送区域沙右;
-    public static MapArea 传送区域皇宫;
+
 
     public static byte SandCityStage;
 
-    public static DateTime 通知时间;
-    public static DateTime 通知时间2;
-    public static DateTime 通知时间3;
-    public static DateTime 通知时间4;
-    public static DateTime 通知时间5;
-    public static DateTime 通知时间6;
-    public static DateTime 通知时间7;
+    private static DateTime NotificationTime;
+    private static DateTime NotificationTime2;
+    private static DateTime NotificationTime3;
+    private static DateTime NotificationTime4;
+    private static DateTime NotificationTime5;
+    private static DateTime NotificationTime6;
+    private static DateTime NotificationTime7;
 
     public static HashSet<GuildInfo> SiegeGuilds;
 
     private static void ProcessSandCity()
     {
-        var dayOfWeek = DateTime.Now.DayOfWeek;
+        var day = DateTime.Now.DayOfWeek;
 
         if (SEngine.CurrentTime.Hour + 2 >= Config.沙巴克开启 && Config.沙巴克每周攻沙时间 == 0)
         {
             ProcessSabakWar();
         }
-        else if (SEngine.CurrentTime.Hour + 2 >= Config.沙巴克开启 && dayOfWeek == DayOfWeek.Monday && Config.沙巴克每周攻沙时间 == 1)
+        else if (SEngine.CurrentTime.Hour + 2 >= Config.沙巴克开启 && day == DayOfWeek.Monday && Config.沙巴克每周攻沙时间 == 1)
         {
             ProcessSabakWar();
         }
-        else if (SEngine.CurrentTime.Hour + 2 >= Config.沙巴克开启 && dayOfWeek == DayOfWeek.Tuesday && Config.沙巴克每周攻沙时间 == 2)
+        else if (SEngine.CurrentTime.Hour + 2 >= Config.沙巴克开启 && day == DayOfWeek.Tuesday && Config.沙巴克每周攻沙时间 == 2)
         {
             ProcessSabakWar();
         }
-        else if (SEngine.CurrentTime.Hour + 2 >= Config.沙巴克开启 && dayOfWeek == DayOfWeek.Wednesday && Config.沙巴克每周攻沙时间 == 3)
+        else if (SEngine.CurrentTime.Hour + 2 >= Config.沙巴克开启 && day == DayOfWeek.Wednesday && Config.沙巴克每周攻沙时间 == 3)
         {
             ProcessSabakWar();
         }
-        else if (SEngine.CurrentTime.Hour + 2 >= Config.沙巴克开启 && dayOfWeek == DayOfWeek.Thursday && Config.沙巴克每周攻沙时间 == 4)
+        else if (SEngine.CurrentTime.Hour + 2 >= Config.沙巴克开启 && day == DayOfWeek.Thursday && Config.沙巴克每周攻沙时间 == 4)
         {
             ProcessSabakWar();
         }
-        else if (SEngine.CurrentTime.Hour + 2 >= Config.沙巴克开启 && dayOfWeek == DayOfWeek.Friday && Config.沙巴克每周攻沙时间 == 5)
+        else if (SEngine.CurrentTime.Hour + 2 >= Config.沙巴克开启 && day == DayOfWeek.Friday && Config.沙巴克每周攻沙时间 == 5)
         {
             ProcessSabakWar();
         }
-        else if (SEngine.CurrentTime.Hour + 2 >= Config.沙巴克开启 && dayOfWeek == DayOfWeek.Saturday && Config.沙巴克每周攻沙时间 == 6)
+        else if (SEngine.CurrentTime.Hour + 2 >= Config.沙巴克开启 && day == DayOfWeek.Saturday && Config.沙巴克每周攻沙时间 == 6)
         {
             ProcessSabakWar();
         }
         else
         {
-            if (SEngine.CurrentTime.Hour + 2 < Config.沙巴克开启 || dayOfWeek != DayOfWeek.Sunday || Config.沙巴克每周攻沙时间 != 7)
+            if (SEngine.CurrentTime.Hour + 2 < Config.沙巴克开启 || day != DayOfWeek.Sunday || Config.沙巴克每周攻沙时间 != 7)
                 return;
 
             ProcessSabakWar();
@@ -430,25 +427,26 @@ public static class MapManager
             foreach (var obj in ActiveObjects)
                 obj.Value?.Process();
 
-            if (对象表计数 >= SecondaryObjects.Count)
+            if (ObjectTableIndex >= SecondaryObjects.Count)
             {
-                对象表计数 = 0;
+                ObjectTableIndex = 0;
                 SecondaryObjects = BackupObjects;
                 BackupObjects = new List<MapObject>();
             }
+
             for (int i = 0; i < 100; i++)
             {
-                if (对象表计数 >= SecondaryObjects.Count)
-                {
+                if (ObjectTableIndex >= SecondaryObjects.Count)
                     break;
-                }
-                if (SecondaryObjects[对象表计数].SecondaryObject)
+
+                if (SecondaryObjects[ObjectTableIndex].SecondaryObject)
                 {
-                    SecondaryObjects[对象表计数].Process();
-                    BackupObjects.Add(SecondaryObjects[对象表计数]);
+                    SecondaryObjects[ObjectTableIndex].Process();
+                    BackupObjects.Add(SecondaryObjects[ObjectTableIndex]);
                 }
-                对象表计数++;
+                ObjectTableIndex++;
             }
+
             while (!DeactivationQueue.IsEmpty)
             {
                 if (DeactivationQueue.TryDequeue(out var result) && !result.Activated)
@@ -456,6 +454,7 @@ public static class MapManager
                     ActiveObjects.Remove(result.ObjectID);
                 }
             }
+
             while (!ActivationQueue.IsEmpty)
             {
                 if (ActivationQueue.TryDequeue(out var result2) && result2.Activated && !ActiveObjects.ContainsKey(result2.ObjectID))
@@ -463,15 +462,16 @@ public static class MapManager
                     ActiveObjects.Add(result2.ObjectID, result2);
                 }
             }
-            if (SEngine.CurrentTime.Minute == 55 && SEngine.CurrentTime.Hour != 通知时间.Hour)
+
+            if (SEngine.CurrentTime.Minute == 55 && SEngine.CurrentTime.Hour != NotificationTime.Hour)
             {
                 if (SEngine.CurrentTime.Hour + 1 == Config.武斗场时间一 || SEngine.CurrentTime.Hour + 1 == Config.武斗场时间二)
                 {
                     NetworkManager.SendAnnouncement("The Experience Arena will open in five minutes, so be prepared if you want to participate", rolling: true);
                 }
-                通知时间 = SEngine.CurrentTime;
+                NotificationTime = SEngine.CurrentTime;
             }
-            if (Config.CurrentVersion >= 3 && SEngine.CurrentTime.Minute == Config.世界BOSS分钟 && SEngine.CurrentTime.Hour != 通知时间3.Hour && SEngine.CurrentTime.Second == 1)
+            if (Config.CurrentVersion >= 3 && SEngine.CurrentTime.Minute == Config.世界BOSS分钟 && SEngine.CurrentTime.Hour != NotificationTime3.Hour && SEngine.CurrentTime.Second == 1)
             {
                 if (SEngine.CurrentTime.Hour == Config.世界BOSS时间 && MonsterInfo.DataSheet.TryGetValue(Config.世界BOSS名字, out var value))
                 {
@@ -486,9 +486,9 @@ public static class MapManager
                     };
                     NetworkManager.SendAnnouncement("世界BOSS[ " + Config.世界BOSS名字 + " ]已经降临秘宝广场, 想要参加的勇士请做好准备", rolling: true);
                 }
-                通知时间3 = SEngine.CurrentTime;
+                NotificationTime3 = SEngine.CurrentTime;
             }
-            if (Config.CurrentVersion >= 1 && SEngine.CurrentTime.Minute == Config.BOSS一分钟 && SEngine.CurrentTime.Hour != 通知时间2.Hour && SEngine.CurrentTime.Second == 1 && Config.自动BOSS1界面1开关 == 1)
+            if (Config.CurrentVersion >= 1 && SEngine.CurrentTime.Minute == Config.BOSS一分钟 && SEngine.CurrentTime.Hour != NotificationTime2.Hour && SEngine.CurrentTime.Second == 1 && Config.自动BOSS1界面1开关 == 1)
             {
                 if (SEngine.CurrentTime.Hour == Config.BOSS一时间 && MonsterInfo.DataSheet.TryGetValue(Config.BOSS名字一, out var value2))
                 {
@@ -503,9 +503,9 @@ public static class MapManager
                     };
                     NetworkManager.SendAnnouncement("世界BOSS[ " + Config.BOSS名字一 + " ]已经降临" + Config.BOSS一地图名字 + ", 想要参加的勇士请做好准备", rolling: true);
                 }
-                通知时间2 = SEngine.CurrentTime;
+                NotificationTime2 = SEngine.CurrentTime;
             }
-            if (Config.CurrentVersion >= 1 && SEngine.CurrentTime.Minute == Config.BOSS二分钟 && SEngine.CurrentTime.Hour != 通知时间4.Hour && SEngine.CurrentTime.Second == 1 && Config.自动BOSS1界面2开关 == 1)
+            if (Config.CurrentVersion >= 1 && SEngine.CurrentTime.Minute == Config.BOSS二分钟 && SEngine.CurrentTime.Hour != NotificationTime4.Hour && SEngine.CurrentTime.Second == 1 && Config.自动BOSS1界面2开关 == 1)
             {
                 if (SEngine.CurrentTime.Hour == Config.BOSS二时间 && MonsterInfo.DataSheet.TryGetValue(Config.BOSS名字二, out var value3))
                 {
@@ -520,9 +520,9 @@ public static class MapManager
                     };
                     NetworkManager.SendAnnouncement("世界BOSS[ " + Config.BOSS名字二 + " ]已经降临" + Config.BOSS二地图名字 + ", 想要参加的勇士请做好准备", rolling: true);
                 }
-                通知时间4 = SEngine.CurrentTime;
+                NotificationTime4 = SEngine.CurrentTime;
             }
-            if (Config.CurrentVersion >= 1 && SEngine.CurrentTime.Minute == Config.BOSS三分钟 && SEngine.CurrentTime.Hour != 通知时间5.Hour && SEngine.CurrentTime.Second == 1 && Config.自动BOSS1界面3开关 == 1)
+            if (Config.CurrentVersion >= 1 && SEngine.CurrentTime.Minute == Config.BOSS三分钟 && SEngine.CurrentTime.Hour != NotificationTime5.Hour && SEngine.CurrentTime.Second == 1 && Config.自动BOSS1界面3开关 == 1)
             {
                 if (SEngine.CurrentTime.Hour == Config.BOSS三时间 && MonsterInfo.DataSheet.TryGetValue(Config.BOSS名字三, out var value4))
                 {
@@ -537,9 +537,9 @@ public static class MapManager
                     };
                     NetworkManager.SendAnnouncement("世界BOSS[ " + Config.BOSS名字三 + " ]已经降临" + Config.BOSS三地图名字 + ", 想要参加的勇士请做好准备", rolling: true);
                 }
-                通知时间5 = SEngine.CurrentTime;
+                NotificationTime5 = SEngine.CurrentTime;
             }
-            if (Config.CurrentVersion >= 1 && SEngine.CurrentTime.Minute == Config.BOSS四分钟 && SEngine.CurrentTime.Hour != 通知时间6.Hour && SEngine.CurrentTime.Second == 1 && Config.自动BOSS1界面4开关 == 1)
+            if (Config.CurrentVersion >= 1 && SEngine.CurrentTime.Minute == Config.BOSS四分钟 && SEngine.CurrentTime.Hour != NotificationTime6.Hour && SEngine.CurrentTime.Second == 1 && Config.自动BOSS1界面4开关 == 1)
             {
                 if (SEngine.CurrentTime.Hour == Config.BOSS四时间 && MonsterInfo.DataSheet.TryGetValue(Config.BOSS名字四, out var value5))
                 {
@@ -554,9 +554,9 @@ public static class MapManager
                     };
                     NetworkManager.SendAnnouncement("世界BOSS[ " + Config.BOSS名字四 + " ]已经降临" + Config.BOSS四地图名字 + ", 想要参加的勇士请做好准备", rolling: true);
                 }
-                通知时间6 = SEngine.CurrentTime;
+                NotificationTime6 = SEngine.CurrentTime;
             }
-            if (Config.CurrentVersion >= 1 && SEngine.CurrentTime.Minute == Config.BOSS五分钟 && SEngine.CurrentTime.Hour != 通知时间7.Hour && SEngine.CurrentTime.Second == 1 && Config.自动BOSS1界面5开关 == 1)
+            if (Config.CurrentVersion >= 1 && SEngine.CurrentTime.Minute == Config.BOSS五分钟 && SEngine.CurrentTime.Hour != NotificationTime7.Hour && SEngine.CurrentTime.Second == 1 && Config.自动BOSS1界面5开关 == 1)
             {
                 if (SEngine.CurrentTime.Hour == Config.BOSS五时间 && MonsterInfo.DataSheet.TryGetValue(Config.BOSS名字五, out var value6))
                 {
@@ -571,20 +571,23 @@ public static class MapManager
                     };
                     NetworkManager.SendAnnouncement("世界BOSS[ " + Config.BOSS名字五 + " ]已经降临" + Config.BOSS五地图名字 + ", 想要参加的勇士请做好准备", rolling: true);
                 }
-                通知时间7 = SEngine.CurrentTime;
+                NotificationTime7 = SEngine.CurrentTime;
             }
-            foreach (Map map in ReplicateMaps)
+
+            foreach (Map map in ReplicaMaps)
             {
                 if (map.ReplicaClosed)
                     ReplicateClosingMaps.Enqueue(map);
                 else
                     map.Process();
             }
+
             while (!ReplicateClosingMaps.IsEmpty)
             {
                 if (ReplicateClosingMaps.TryDequeue(out var map))
-                    ReplicateMaps.Remove(map);
+                    ReplicaMaps.Remove(map);
             }
+
             ProcessSandCity();
         }
         catch (Exception ex)
@@ -597,7 +600,7 @@ public static class MapManager
     {
         SecondaryObjects = new List<MapObject>();
         BackupObjects = new List<MapObject>();
-        ReplicateMaps = new HashSet<Map>();
+        ReplicaMaps = new HashSet<Map>();
         ReplicateClosingMaps = new ConcurrentQueue<Map>();
         ActivationQueue = new ConcurrentQueue<MapObject>();
         DeactivationQueue = new ConcurrentQueue<MapObject>();
@@ -624,10 +627,10 @@ public static class MapManager
                     continue;
 
                 map.Terrain = terrain;
-                map.Cells = new HashSet<MapObject>[map.MapSize.X, map.MapSize.Y];
-                for (var x = 0; x < map.MapSize.X; x++)
+                map.Cells = new HashSet<MapObject>[map.MapSize.Width, map.MapSize.Height];
+                for (var x = 0; x < map.MapSize.Width; x++)
                 {
-                    for (var y = 0; y < map.MapSize.Y; y++)
+                    for (var y = 0; y < map.MapSize.Height; y++)
                     {
                         map.Cells[x, y] = new HashSet<MapObject>();
                     }
@@ -770,7 +773,7 @@ public static class MapManager
             }
             else
             {
-                map.TotalFixedMonsters = (uint)map.Spawns.Sum((MonsterSpawn O) => O.Spawns.Sum((MonsterSpawnInfo X) => X.SpawnCount));
+                map.TotalFixedMonsters = (uint)map.Spawns.Sum(x => x.Spawns.Sum(x => x.SpawnCount));
             }
 
             map.MakeStoneMines();
