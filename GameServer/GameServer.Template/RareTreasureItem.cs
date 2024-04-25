@@ -34,7 +34,7 @@ public sealed class RareTreasureItem
     {
         DataSheet = new Dictionary<int, RareTreasureItem>();
 
-        if (Config.DBMethod == 1)
+        if (Config.DBMethod == 0)
         {
             var path = Config.GameDataPath + "\\System\\Items\\Treasures\\";
             if (!Directory.Exists(path))
@@ -124,6 +124,7 @@ public sealed class RareTreasureItem
             catch (Exception ex)
             {
                 SEngine.AddSystemLog(ex.Message);
+                return;
             }
         }
 
