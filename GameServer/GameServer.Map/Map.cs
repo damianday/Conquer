@@ -191,7 +191,7 @@ public sealed class Map
                 }
                 if (MonsterInfo.DataSheet.TryGetValue(刷新信息.MonsterName, out var moni))
                 {
-                    new MonsterObject(moni, this, int.MaxValue, new Point(995, 283), new Point(1, 1),
+                    new MonsterObject(moni, this, int.MaxValue, new Point(995, 283), 1,
                         forbidResurrection: true, 立即刷新: true).SurvivalTime = SEngine.CurrentTime.AddMinutes(30.0);
                 }
                 if (++num3 >= 刷新信息.SpawnCount)
@@ -403,7 +403,7 @@ public sealed class Map
         return false;
     }
 
-    public bool GetRandomXY(int attempts, Point distance, ref Point position)
+    public bool GetRandomXY(int attempts, int distance, ref Point position)
     {
         for (var i = 0; i < attempts; i++)
         {
@@ -416,12 +416,12 @@ public sealed class Map
         return false;
     }
 
-    public void GetRandomXY(Point distance, ref Point position)
+    public void GetRandomXY(int distance, ref Point position)
     {
-        if (!distance.IsEmpty)
+        if (distance > 0)
         {
-            position.X += SEngine.Random.Next(-distance.X, distance.X + 1);
-            position.Y += SEngine.Random.Next(-distance.Y, distance.Y + 1);
+            position.X += SEngine.Random.Next(-distance, distance + 1);
+            position.Y += SEngine.Random.Next(-distance, distance + 1);
         }
         else
         {
@@ -441,8 +441,8 @@ public sealed class Map
             position.Y = edge + SEngine.Random.Next(MapSize.Height - edge);
         }
 
-        position.X = Math.Clamp(position.X, 0, MapSize.Width);
-        position.Y = Math.Clamp(position.Y, 0, MapSize.Height);
+        position.X = Math.Clamp(position.X, StartPoint.X, EndPoint.X);
+        position.Y = Math.Clamp(position.Y, StartPoint.Y, EndPoint.Y);
     }
 
     public bool GetNearXY(int attempts, ref Point position)
