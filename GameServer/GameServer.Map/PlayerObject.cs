@@ -1168,26 +1168,38 @@ public sealed class PlayerObject : MapObject
         if (CurrentHP == 0)
         {
             CurrentMap = MapManager.GetMap(RespawnMapIndex);
-            CurrentPosition = (RedName ? CurrentMap.RedNameArea.RandomCoords : CurrentMap.ResurrectionArea.RandomCoords);
+            CurrentPosition = (RedName ? CurrentMap.GetRandomPosition(AreaType.RedName) : CurrentMap.GetRandomPosition(AreaType.Resurrection));
             CurrentHP = (int)((float)this[Stat.MaxHP] * 0.3f);
             CurrentMP = (int)((float)this[Stat.MaxMP] * 0.3f);
         }
-        else if (GameMap.DataSheet[(byte)character.CurrentMap.V].NoReconnect)
+        else
         {
-            if (GameMap.DataSheet[(byte)character.CurrentMap.V].NoReconnectMapID == 0)
+            var map = MapManager.GetMap(character.CurrentMap.V);
+            if (map != null)
             {
-                CurrentMap = MapManager.GetMap(RespawnMapIndex);
-                CurrentPosition = CurrentMap.ResurrectionArea.RandomCoords;
+                if (map.NoReconnect)
+                {
+                    if (map.NoReconnectMapID == 0)
+                    {
+                        CurrentMap = MapManager.GetMap(RespawnMapIndex);
+                        CurrentPosition = CurrentMap.GetRandomPosition(AreaType.Resurrection);
+                    }
+                    else
+                    {
+                        CurrentMap = MapManager.GetMap(map.NoReconnectMapID);
+                        CurrentPosition = (CurrentMap.TeleportationArea != null) ?
+                            CurrentMap.GetRandomPosition(AreaType.Teleportation) : CurrentMap.GetRandomPosition(AreaType.Random);
+                    }
+                }
+                else
+                {
+                    CurrentMap = map;
+                }
             }
             else
             {
-                CurrentMap = MapManager.GetMap(GameMap.DataSheet[(byte)character.CurrentMap.V].NoReconnectMapID);
-                CurrentPosition = CurrentMap.TeleportationArea?.RandomCoords ?? CurrentMap.Areas.First().RandomCoords;
+                // TODO: Failed to find user map..
             }
-        }
-        else
-        {
-            CurrentMap = MapManager.GetMap(character.CurrentMap.V);
         }
 
         玩家穿卸装备(装备穿戴部位.武器, null, null);
@@ -7652,7 +7664,8 @@ public sealed class PlayerObject : MapObject
         CurrentHP = (int)((float)this[Stat.MaxHP] * 0.3f);
         CurrentMP = (int)((float)this[Stat.MaxMP] * 0.3f);
 
-        if (CurrentMap == MapManager.SandCityMap && MapManager.SandCityStage >= 2)
+        // TODO: SandCityMap not implemented yet..
+        /*if (CurrentMap == MapManager.SandCityMap && MapManager.SandCityStage >= 2)
         {
             if (Guild != null && Guild == SystemInfo.Info.OccupyGuild.V)
             {
@@ -7670,7 +7683,8 @@ public sealed class PlayerObject : MapObject
         else
         {
             Teleport(ResurrectionMap, (!RedName) ? AreaType.Resurrection : AreaType.RedName);
-        }
+        }*/
+        Teleport(ResurrectionMap, (!RedName) ? AreaType.Resurrection : AreaType.RedName);
     }
 
     public void EnterTeleportGate(int id)
@@ -10569,13 +10583,11 @@ public sealed class PlayerObject : MapObject
                                     NetworkManager.SendAnnouncement($"玩家：{Name}进入【{map}】魔渊历练", rolling: true);
                                     if (MonsterInfo.DataSheet.TryGetValue(Config.暗之门地图1BOSS, out var value28))
                                     {
-                                        MonsterObject 怪物实例2 = new MonsterObject(value28, map, int.MaxValue, new Point[1]
-                                        {
-                                new Point(Config.暗之门地图1X, Config.暗之门地图1Y)
-                                        }, forbidResurrection: true, 立即刷新: true);
-                                        怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                        怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(30.0);
-                                        九层妖塔BOSS1 = 怪物实例2;
+                                        MonsterObject mon = new MonsterObject(value28, map, int.MaxValue, new Point(Config.暗之门地图1X, Config.暗之门地图1Y), 1,
+                                            forbidResurrection: true, 立即刷新: true);
+                                        mon.CurrentDirection = GameDirection.UpRight;
+                                        mon.SurvivalTime = SEngine.CurrentTime.AddMinutes(30.0);
+                                        九层妖塔BOSS1 = mon;
                                     }
                                     删除守卫();
                                 }
@@ -10598,13 +10610,11 @@ public sealed class PlayerObject : MapObject
                                     NetworkManager.SendAnnouncement($"玩家：{Name}进入【{map}】魔渊历练", rolling: true);
                                     if (MonsterInfo.DataSheet.TryGetValue(Config.暗之门地图2BOSS, out var value30))
                                     {
-                                        MonsterObject 怪物实例2 = new MonsterObject(value30, map, int.MaxValue, new Point[1]
-                                        {
-                                new Point(Config.暗之门地图2X, Config.暗之门地图2Y)
-                                        }, forbidResurrection: true, 立即刷新: true);
-                                        怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                        怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(30.0);
-                                        九层妖塔BOSS1 = 怪物实例2;
+                                        MonsterObject mon = new MonsterObject(value30, map, int.MaxValue, new Point(Config.暗之门地图2X, Config.暗之门地图2Y), 1,
+                                            forbidResurrection: true, 立即刷新: true);
+                                        mon.CurrentDirection = GameDirection.UpRight;
+                                        mon.SurvivalTime = SEngine.CurrentTime.AddMinutes(30.0);
+                                        九层妖塔BOSS1 = mon;
                                     }
                                     删除守卫();
                                 }
@@ -10627,13 +10637,11 @@ public sealed class PlayerObject : MapObject
                                     NetworkManager.SendAnnouncement($"玩家：{Name}进入【{map}】魔渊历练", rolling: true);
                                     if (MonsterInfo.DataSheet.TryGetValue(Config.暗之门地图3BOSS, out var value26))
                                     {
-                                        MonsterObject 怪物实例2 = new MonsterObject(value26, map, int.MaxValue, new Point[1]
-                                        {
-                                            new Point(Config.暗之门地图3X, Config.暗之门地图3Y)
-                                        }, forbidResurrection: true, 立即刷新: true);
-                                        怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                        怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(30.0);
-                                        九层妖塔BOSS1 = 怪物实例2;
+                                        MonsterObject mon = new MonsterObject(value26, map, int.MaxValue, new Point(Config.暗之门地图3X, Config.暗之门地图3Y), 1,
+                                            forbidResurrection: true, 立即刷新: true);
+                                        mon.CurrentDirection = GameDirection.UpRight;
+                                        mon.SurvivalTime = SEngine.CurrentTime.AddMinutes(30.0);
+                                        九层妖塔BOSS1 = mon;
                                     }
                                     删除守卫();
                                 }
@@ -10656,13 +10664,11 @@ public sealed class PlayerObject : MapObject
                                     NetworkManager.SendAnnouncement($"玩家：{Name}进入【{map}】魔渊历练", rolling: true);
                                     if (MonsterInfo.DataSheet.TryGetValue(Config.暗之门地图4BOSS, out var value24))
                                     {
-                                        MonsterObject 怪物实例2 = new MonsterObject(value24, map, int.MaxValue, new Point[1]
-                                        {
-                                new Point(Config.暗之门地图4X, Config.暗之门地图4Y)
-                                        }, forbidResurrection: true, 立即刷新: true);
-                                        怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                        怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(30.0);
-                                        九层妖塔BOSS1 = 怪物实例2;
+                                        MonsterObject mon = new MonsterObject(value24, map, int.MaxValue, new Point(Config.暗之门地图4X, Config.暗之门地图4Y), 1,
+                                            forbidResurrection: true, 立即刷新: true);
+                                        mon.CurrentDirection = GameDirection.UpRight;
+                                        mon.SurvivalTime = SEngine.CurrentTime.AddMinutes(30.0);
+                                        九层妖塔BOSS1 = mon;
                                     }
                                     删除守卫();
                                 }
@@ -10749,23 +10755,21 @@ public sealed class PlayerObject : MapObject
                                 Teleport(map, AreaType.Teleportation);
                                 Character.魔虫窟次数.V++;
                                 NetworkManager.SendAnnouncement($"玩家：{Name}进入{map}副本历练", rolling: true);
-                                foreach (MonsterSpawn item in value48.Spawns)
+                                foreach (MonsterSpawn spawn in value48.Spawns)
                                 {
-                                    if (item.Spawns == null)
+                                    if (spawn.Spawns == null) continue;
+
+                                    foreach (MonsterSpawnInfo spawni in spawn.Spawns)
                                     {
-                                        continue;
-                                    }
-                                    Point[] 出生范围 = item.RangeCoordinates.ToArray();
-                                    foreach (MonsterSpawnInfo 刷新信息 in item.Spawns)
-                                    {
-                                        if (MonsterInfo.DataSheet.TryGetValue(刷新信息.MonsterName, out var value49))
+                                        if (MonsterInfo.DataSheet.TryGetValue(spawni.MonsterName, out var moni))
                                         {
-                                            for (int j = 0; j < 刷新信息.SpawnCount; j++)
+                                            for (int j = 0; j < spawni.SpawnCount; j++)
                                             {
-                                                MonsterObject 怪物实例2 = new MonsterObject(value49, map, int.MaxValue, 出生范围, forbidResurrection: true, 立即刷新: true);
-                                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                                怪物实例2.SurvivalTime = SEngine.CurrentTime.AddHours(Config.魔虫窟分钟限制);
-                                                魔虫窟怪物 = 怪物实例2;
+                                                MonsterObject mon = new MonsterObject(moni, map, int.MaxValue, spawn.Coordinates, spawn.AreaRadius, 
+                                                    forbidResurrection: true, 立即刷新: true);
+                                                mon.CurrentDirection = GameDirection.UpRight;
+                                                mon.SurvivalTime = SEngine.CurrentTime.AddHours(Config.魔虫窟分钟限制);
+                                                魔虫窟怪物 = mon;
                                             }
                                         }
                                     }
@@ -10807,23 +10811,21 @@ public sealed class PlayerObject : MapObject
                                 Teleport(map, AreaType.Teleportation);
                                 Character.魔虫窟次数.V++;
                                 NetworkManager.SendAnnouncement($"玩家：{Name}进入{map}副本历练", rolling: true);
-                                foreach (MonsterSpawn item2 in value50.Spawns)
+                                foreach (MonsterSpawn spawn in value50.Spawns)
                                 {
-                                    if (item2.Spawns == null)
+                                    if (spawn.Spawns == null) continue;
+
+                                    foreach (MonsterSpawnInfo spawni in spawn.Spawns)
                                     {
-                                        continue;
-                                    }
-                                    Point[] 出生范围2 = item2.RangeCoordinates.ToArray();
-                                    foreach (MonsterSpawnInfo 刷新信息2 in item2.Spawns)
-                                    {
-                                        if (MonsterInfo.DataSheet.TryGetValue(刷新信息2.MonsterName, out var value51))
+                                        if (MonsterInfo.DataSheet.TryGetValue(spawni.MonsterName, out var value51))
                                         {
-                                            for (int l = 0; l < 刷新信息2.SpawnCount; l++)
+                                            for (int l = 0; l < spawni.SpawnCount; l++)
                                             {
-                                                MonsterObject 怪物实例2 = new MonsterObject(value51, map, int.MaxValue, 出生范围2, forbidResurrection: true, 立即刷新: true);
-                                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                                怪物实例2.SurvivalTime = SEngine.CurrentTime.AddHours(Config.魔虫窟分钟限制);
-                                                魔虫窟怪物 = 怪物实例2;
+                                                MonsterObject mon = new MonsterObject(value51, map, int.MaxValue, spawn.Coordinates, spawn.AreaRadius,
+                                                    forbidResurrection: true, 立即刷新: true);
+                                                mon.CurrentDirection = GameDirection.UpRight;
+                                                mon.SurvivalTime = SEngine.CurrentTime.AddHours(Config.魔虫窟分钟限制);
+                                                魔虫窟怪物 = mon;
                                             }
                                         }
                                     }
@@ -10867,15 +10869,15 @@ public sealed class PlayerObject : MapObject
                                 foreach (MonsterSpawn spawn in value52.Spawns)
                                 {
                                     if (spawn.Spawns == null) continue;
-                                    
-                                    Point[] locations = spawn.RangeCoordinates.ToArray();
+
                                     foreach (MonsterSpawnInfo spawni in spawn.Spawns)
                                     {
                                         if (MonsterInfo.DataSheet.TryGetValue(spawni.MonsterName, out var value53))
                                         {
                                             for (int n = 0; n < spawni.SpawnCount; n++)
                                             {
-                                                MonsterObject mon = new MonsterObject(value53, map, int.MaxValue, locations, forbidResurrection: true, 立即刷新: true);
+                                                MonsterObject mon = new MonsterObject(value53, map, int.MaxValue, spawn.Coordinates, spawn.AreaRadius,
+                                                    forbidResurrection: true, 立即刷新: true);
                                                 mon.CurrentDirection = GameDirection.UpRight;
                                                 mon.SurvivalTime = SEngine.CurrentTime.AddHours(Config.魔虫窟分钟限制);
                                                 魔虫窟怪物 = mon;
@@ -11403,6 +11405,21 @@ public sealed class PlayerObject : MapObject
                             });
                             break;
                         }
+
+                        MonsterObject ZenDemonTowerMonster(Map map, string monName, Point position)
+                        {
+                            if (MonsterInfo.DataSheet.TryGetValue(monName, out var moni))
+                            {
+                                MonsterObject mon = new MonsterObject(moni, map, int.MaxValue, position, 1,
+                                    true, true);
+                                mon.CurrentDirection = GameDirection.UpRight;
+                                mon.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
+                                CurrentMap.TotalSurvivingMonsters++;
+                                return mon;
+                            }
+                            return null;
+                        }
+
                         if (Config.九层妖塔副本物品 == 0)
                         {
                             if (Gold >= Config.九层妖塔副本数量)
@@ -11416,271 +11433,65 @@ public sealed class PlayerObject : MapObject
                                 {
                                     break;
                                 }
-                                Map 地图实例16 = new Map(GameMap.DataSheet[227]);
-                                地图实例16.Terrain = value58.Terrain;
-                                地图实例16.Areas = value58.Areas;
-                                地图实例16.Spawns = value58.Spawns;
-                                地图实例16.Guards = value58.Guards;
-                                地图实例16.TeleportationArea = value58.TeleportationArea;
-                                地图实例16.ProcessTime = SEngine.CurrentTime.AddSeconds(20.0);
-                                地图实例16.Respawns = value58.Spawns.OrderBy((MonsterSpawn O) => O.Coordinates.X).ToList();
-                                地图实例16.Cells = new HashSet<MapObject>[value58.MapSize.X, value58.MapSize.Y];
-                                Map 地图实例17 = 地图实例16;
-                                MapManager.ReplicateMaps.Add(地图实例17);
-                                地图实例17.副本守卫 = new GuardObject(GuardInfo.DataSheet[6123], 地图实例17, GameDirection.DownLeft, new Point(1028, 160));
-                                地图实例17.副本守卫 = new GuardObject(GuardInfo.DataSheet[6183], 地图实例17, GameDirection.DownLeft, new Point(881, 307));
-                                地图实例17.副本守卫 = new GuardObject(GuardInfo.DataSheet[6184], 地图实例17, GameDirection.DownLeft, new Point(733, 454));
-                                地图实例17.副本守卫 = new GuardObject(GuardInfo.DataSheet[6185], 地图实例17, GameDirection.DownLeft, new Point(1148, 280));
-                                地图实例17.副本守卫 = new GuardObject(GuardInfo.DataSheet[6243], 地图实例17, GameDirection.DownLeft, new Point(1001, 427));
-                                地图实例17.副本守卫 = new GuardObject(GuardInfo.DataSheet[6244], 地图实例17, GameDirection.DownLeft, new Point(853, 575));
-                                地图实例17.副本守卫 = new GuardObject(GuardInfo.DataSheet[6215], 地图实例17, GameDirection.DownLeft, new Point(1291, 423));
-                                地图实例17.副本守卫 = new GuardObject(GuardInfo.DataSheet[6342], 地图实例17, GameDirection.DownLeft, new Point(1144, 570));
-                                Teleport(地图实例17, AreaType.Teleportation);
+                                Map map = new Map(GameMap.DataSheet[227]);
+                                map.Terrain = value58.Terrain;
+                                map.Areas = value58.Areas;
+                                map.Spawns = value58.Spawns;
+                                map.Guards = value58.Guards;
+                                map.TeleportationArea = value58.TeleportationArea;
+                                map.ProcessTime = SEngine.CurrentTime.AddSeconds(20.0);
+                                map.Respawns = value58.Spawns.OrderBy((MonsterSpawn O) => O.Coordinates.X).ToList();
+                                map.Cells = new HashSet<MapObject>[value58.MapSize.Width, value58.MapSize.Height];
+                                
+                                MapManager.ReplicaMaps.Add(map);
+                                map.ReplicaGuards = new GuardObject(GuardInfo.DataSheet[6123], map, GameDirection.DownLeft, new Point(1028, 160));
+                                map.ReplicaGuards = new GuardObject(GuardInfo.DataSheet[6183], map, GameDirection.DownLeft, new Point(881, 307));
+                                map.ReplicaGuards = new GuardObject(GuardInfo.DataSheet[6184], map, GameDirection.DownLeft, new Point(733, 454));
+                                map.ReplicaGuards = new GuardObject(GuardInfo.DataSheet[6185], map, GameDirection.DownLeft, new Point(1148, 280));
+                                map.ReplicaGuards = new GuardObject(GuardInfo.DataSheet[6243], map, GameDirection.DownLeft, new Point(1001, 427));
+                                map.ReplicaGuards = new GuardObject(GuardInfo.DataSheet[6244], map, GameDirection.DownLeft, new Point(853, 575));
+                                map.ReplicaGuards = new GuardObject(GuardInfo.DataSheet[6215], map, GameDirection.DownLeft, new Point(1291, 423));
+                                map.ReplicaGuards = new GuardObject(GuardInfo.DataSheet[6342], map, GameDirection.DownLeft, new Point(1144, 570));
+                                Teleport(map, AreaType.Teleportation);
                                 Character.九层妖塔次数.V++;
-                                NetworkManager.SendAnnouncement($"玩家：{Name}进入{地图实例17}副本历练", rolling: true);
-                                if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔BOSS1, out var value59))
-                                {
-                                    MonsterObject 怪物实例2 = new MonsterObject(value59, 地图实例17, int.MaxValue, new Point[1]
-                                    {
-                                new Point(1028, 160)
-                                    }, forbidResurrection: true, 立即刷新: true);
-                                    怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                    怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                    九层妖塔BOSS1 = 怪物实例2;
-                                    Map 地图实例18 = CurrentMap;
-                                    地图实例18.TotalSurvivingMonsters++;
-                                }
-                                if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔BOSS2, out var value60))
-                                {
-                                    MonsterObject 怪物实例2 = new MonsterObject(value60, 地图实例17, int.MaxValue, new Point[1]
-                                    {
-                                new Point(881, 301)
-                                    }, forbidResurrection: true, 立即刷新: true);
-                                    怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                    怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                    九层妖塔BOSS2 = 怪物实例2;
-                                    Map 地图实例18 = CurrentMap;
-                                    地图实例18.TotalSurvivingMonsters++;
-                                }
-                                if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔BOSS3, out var value61))
-                                {
-                                    MonsterObject 怪物实例2 = new MonsterObject(value61, 地图实例17, int.MaxValue, new Point[1]
-                                    {
-                                new Point(733, 454)
-                                    }, forbidResurrection: true, 立即刷新: true);
-                                    怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                    怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                    九层妖塔BOSS3 = 怪物实例2;
-                                    Map 地图实例18 = CurrentMap;
-                                    地图实例18.TotalSurvivingMonsters++;
-                                }
-                                if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔BOSS4, out var value62))
-                                {
-                                    MonsterObject 怪物实例2 = new MonsterObject(value62, 地图实例17, int.MaxValue, new Point[1]
-                                    {
-                                new Point(1148, 280)
-                                    }, forbidResurrection: true, 立即刷新: true);
-                                    怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                    怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                    九层妖塔BOSS4 = 怪物实例2;
-                                    Map 地图实例18 = CurrentMap;
-                                    地图实例18.TotalSurvivingMonsters++;
-                                }
-                                if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔BOSS5, out var value63))
-                                {
-                                    MonsterObject 怪物实例2 = new MonsterObject(value63, 地图实例17, int.MaxValue, new Point[1]
-                                    {
-                                new Point(1001, 427)
-                                    }, forbidResurrection: true, 立即刷新: true);
-                                    怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                    怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                    九层妖塔BOSS5 = 怪物实例2;
-                                    Map 地图实例18 = CurrentMap;
-                                    地图实例18.TotalSurvivingMonsters++;
-                                }
-                                if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔BOSS6, out var value64))
-                                {
-                                    MonsterObject 怪物实例2 = new MonsterObject(value64, 地图实例17, int.MaxValue, new Point[1]
-                                    {
-                                new Point(853, 575)
-                                    }, forbidResurrection: true, 立即刷新: true);
-                                    怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                    怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                    九层妖塔BOSS6 = 怪物实例2;
-                                    Map 地图实例18 = CurrentMap;
-                                    地图实例18.TotalSurvivingMonsters++;
-                                }
-                                if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔BOSS7, out var value65))
-                                {
-                                    MonsterObject 怪物实例2 = new MonsterObject(value65, 地图实例17, int.MaxValue, new Point[1]
-                                    {
-                                new Point(1291, 423)
-                                    }, forbidResurrection: true, 立即刷新: true);
-                                    怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                    怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                    九层妖塔BOSS7 = 怪物实例2;
-                                    Map 地图实例18 = CurrentMap;
-                                    地图实例18.TotalSurvivingMonsters++;
-                                }
-                                if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔BOSS8, out var value66))
-                                {
-                                    MonsterObject 怪物实例2 = new MonsterObject(value66, 地图实例17, int.MaxValue, new Point[1]
-                                    {
-                                new Point(1144, 570)
-                                    }, forbidResurrection: true, 立即刷新: true);
-                                    怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                    怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                    九层妖塔BOSS8 = 怪物实例2;
-                                    Map 地图实例18 = CurrentMap;
-                                    地图实例18.TotalSurvivingMonsters++;
-                                }
-                                if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔BOSS9, out var value67))
-                                {
-                                    MonsterObject 怪物实例2 = new MonsterObject(value67, 地图实例17, int.MaxValue, new Point[1]
-                                    {
-                                new Point(996, 702)
-                                    }, forbidResurrection: true, 立即刷新: true);
-                                    怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                    怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                    九层妖塔BOSS9 = 怪物实例2;
-                                    Map 地图实例18 = CurrentMap;
-                                    地图实例18.TotalSurvivingMonsters++;
-                                }
-                                for (int num70 = 0; num70 <= Config.九层妖塔数量1; num70++)
-                                {
-                                    if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔精英1, out var value68))
-                                    {
-                                        MonsterObject 怪物实例2 = new MonsterObject(value68, 地图实例17, int.MaxValue, new Point[1]
-                                        {
-                                    new Point(1028, 160)
-                                        }, forbidResurrection: true, 立即刷新: true);
-                                        怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                        怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                        九层妖塔精英1 = 怪物实例2;
-                                        Map 地图实例18 = CurrentMap;
-                                        地图实例18.TotalSurvivingMonsters++;
-                                    }
-                                }
-                                for (int num71 = 0; num71 <= Config.九层妖塔数量2; num71++)
-                                {
-                                    if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔精英2, out var value69))
-                                    {
-                                        MonsterObject 怪物实例2 = new MonsterObject(value69, 地图实例17, int.MaxValue, new Point[1]
-                                        {
-                                    new Point(881, 301)
-                                        }, forbidResurrection: true, 立即刷新: true);
-                                        怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                        怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                        九层妖塔精英2 = 怪物实例2;
-                                        Map 地图实例18 = CurrentMap;
-                                        地图实例18.TotalSurvivingMonsters++;
-                                    }
-                                }
-                                for (int num72 = 0; num72 <= Config.九层妖塔数量3; num72++)
-                                {
-                                    if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔精英3, out var value70))
-                                    {
-                                        MonsterObject 怪物实例2 = new MonsterObject(value70, 地图实例17, int.MaxValue, new Point[1]
-                                        {
-                                    new Point(733, 454)
-                                        }, forbidResurrection: true, 立即刷新: true);
-                                        怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                        怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                        九层妖塔精英3 = 怪物实例2;
-                                        Map 地图实例18 = CurrentMap;
-                                        地图实例18.TotalSurvivingMonsters++;
-                                    }
-                                }
-                                for (int num73 = 0; num73 <= Config.九层妖塔数量4; num73++)
-                                {
-                                    if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔精英4, out var value71))
-                                    {
-                                        MonsterObject 怪物实例2 = new MonsterObject(value71, 地图实例17, int.MaxValue, new Point[1]
-                                        {
-                                    new Point(1148, 280)
-                                        }, forbidResurrection: true, 立即刷新: true);
-                                        怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                        怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                        九层妖塔精英4 = 怪物实例2;
-                                        Map 地图实例18 = CurrentMap;
-                                        地图实例18.TotalSurvivingMonsters++;
-                                    }
-                                }
-                                for (int num74 = 0; num74 <= Config.九层妖塔数量5; num74++)
-                                {
-                                    if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔精英5, out var value72))
-                                    {
-                                        MonsterObject 怪物实例2 = new MonsterObject(value72, 地图实例17, int.MaxValue, new Point[1]
-                                        {
-                                    new Point(1001, 427)
-                                        }, forbidResurrection: true, 立即刷新: true);
-                                        怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                        怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                        九层妖塔精英5 = 怪物实例2;
-                                        Map 地图实例18 = CurrentMap;
-                                        地图实例18.TotalSurvivingMonsters++;
-                                    }
-                                }
-                                for (int num75 = 0; num75 <= Config.九层妖塔数量6; num75++)
-                                {
-                                    if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔精英6, out var value73))
-                                    {
-                                        MonsterObject 怪物实例2 = new MonsterObject(value73, 地图实例17, int.MaxValue, new Point[1]
-                                        {
-                                    new Point(853, 575)
-                                        }, forbidResurrection: true, 立即刷新: true);
-                                        怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                        怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                        九层妖塔精英6 = 怪物实例2;
-                                        Map 地图实例18 = CurrentMap;
-                                        地图实例18.TotalSurvivingMonsters++;
-                                    }
-                                }
-                                for (int num76 = 0; num76 <= Config.九层妖塔数量7; num76++)
-                                {
-                                    if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔精英7, out var value74))
-                                    {
-                                        MonsterObject 怪物实例2 = new MonsterObject(value74, 地图实例17, int.MaxValue, new Point[1]
-                                        {
-                                    new Point(1291, 423)
-                                        }, forbidResurrection: true, 立即刷新: true);
-                                        怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                        怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                        九层妖塔精英7 = 怪物实例2;
-                                        Map 地图实例18 = CurrentMap;
-                                        地图实例18.TotalSurvivingMonsters++;
-                                    }
-                                }
-                                for (int num77 = 0; num77 <= Config.九层妖塔数量8; num77++)
-                                {
-                                    if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔精英8, out var value75))
-                                    {
-                                        MonsterObject 怪物实例2 = new MonsterObject(value75, 地图实例17, int.MaxValue, new Point[1]
-                                        {
-                                    new Point(1144, 570)
-                                        }, forbidResurrection: true, 立即刷新: true);
-                                        怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                        怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                        九层妖塔精英8 = 怪物实例2;
-                                        Map 地图实例18 = CurrentMap;
-                                        地图实例18.TotalSurvivingMonsters++;
-                                    }
-                                }
-                                for (int num78 = 0; num78 <= Config.九层妖塔数量9; num78++)
-                                {
-                                    if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔精英9, out var value76))
-                                    {
-                                        MonsterObject 怪物实例2 = new MonsterObject(value76, 地图实例17, int.MaxValue, new Point[1]
-                                        {
-                                    new Point(996, 702)
-                                        }, forbidResurrection: true, 立即刷新: true);
-                                        怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                        怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                        九层妖塔精英9 = 怪物实例2;
-                                        Map 地图实例18 = CurrentMap;
-                                        地图实例18.TotalSurvivingMonsters++;
-                                    }
-                                }
+                                NetworkManager.SendAnnouncement($"玩家：{Name}进入{map}副本历练", rolling: true);
+
+                                九层妖塔BOSS1 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS1, new Point(1028, 160));
+                                九层妖塔BOSS2 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS2, new Point(881, 301));
+                                九层妖塔BOSS3 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS3, new Point(733, 454));
+                                九层妖塔BOSS4 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS4, new Point(1148, 280));
+                                九层妖塔BOSS5 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS5, new Point(1001, 427));
+                                九层妖塔BOSS6 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS6, new Point(853, 575));
+                                九层妖塔BOSS7 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS7, new Point(1291, 423));
+                                九层妖塔BOSS8 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS8, new Point(1144, 570));
+                                九层妖塔BOSS9 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS9, new Point(996, 702));
+
+                                for (var i = 0; i <= Config.九层妖塔数量1; i++)
+                                    九层妖塔精英1 = ZenDemonTowerMonster(map, Config.九层妖塔精英1, new Point(1028, 160));
+                                
+                                for (var i = 0; i <= Config.九层妖塔数量2; i++)
+                                    九层妖塔精英2 = ZenDemonTowerMonster(map, Config.九层妖塔精英2, new Point(881, 301));
+
+                                for (var i = 0; i <= Config.九层妖塔数量3; i++)
+                                    九层妖塔精英3 = ZenDemonTowerMonster(map, Config.九层妖塔精英3, new Point(733, 454));
+
+                                for (var i = 0; i <= Config.九层妖塔数量4; i++)
+                                    九层妖塔精英4 = ZenDemonTowerMonster(map, Config.九层妖塔精英4, new Point(1148, 280));
+
+                                for (var i = 0; i <= Config.九层妖塔数量5; i++)
+                                    九层妖塔精英5 = ZenDemonTowerMonster(map, Config.九层妖塔精英5, new Point(1001, 427));
+
+                                for (var i = 0; i <= Config.九层妖塔数量6; i++)
+                                    九层妖塔精英6 = ZenDemonTowerMonster(map, Config.九层妖塔精英6, new Point(853, 575));
+
+                                for (var i = 0; i <= Config.九层妖塔数量7; i++)
+                                    九层妖塔精英7 = ZenDemonTowerMonster(map, Config.九层妖塔精英7, new Point(1291, 423));
+
+                                for (var i = 0; i <= Config.九层妖塔数量8; i++)
+                                    九层妖塔精英8 = ZenDemonTowerMonster(map, Config.九层妖塔精英8, new Point(1144, 570));
+
+                                for (var i = 0; i <= Config.九层妖塔数量9; i++)
+                                    九层妖塔精英9 = ZenDemonTowerMonster(map, Config.九层妖塔精英9, new Point(996, 702));
                             }
                             else
                             {
@@ -11701,271 +11512,65 @@ public sealed class PlayerObject : MapObject
                                 {
                                     break;
                                 }
-                                Map 地图实例19 = new Map(GameMap.DataSheet[227]);
-                                地图实例19.Terrain = value77.Terrain;
-                                地图实例19.Areas = value77.Areas;
-                                地图实例19.Spawns = value77.Spawns;
-                                地图实例19.Guards = value77.Guards;
-                                地图实例19.TeleportationArea = value77.TeleportationArea;
-                                地图实例19.ProcessTime = SEngine.CurrentTime.AddSeconds(20.0);
-                                地图实例19.Respawns = value77.Spawns.OrderBy((MonsterSpawn O) => O.Coordinates.X).ToList();
-                                地图实例19.Cells = new HashSet<MapObject>[value77.MapSize.X, value77.MapSize.Y];
-                                Map 地图实例20 = 地图实例19;
-                                MapManager.ReplicateMaps.Add(地图实例20);
-                                地图实例20.副本守卫 = new GuardObject(GuardInfo.DataSheet[6123], 地图实例20, GameDirection.DownLeft, new Point(1028, 160));
-                                地图实例20.副本守卫 = new GuardObject(GuardInfo.DataSheet[6183], 地图实例20, GameDirection.DownLeft, new Point(881, 307));
-                                地图实例20.副本守卫 = new GuardObject(GuardInfo.DataSheet[6184], 地图实例20, GameDirection.DownLeft, new Point(733, 454));
-                                地图实例20.副本守卫 = new GuardObject(GuardInfo.DataSheet[6185], 地图实例20, GameDirection.DownLeft, new Point(1148, 280));
-                                地图实例20.副本守卫 = new GuardObject(GuardInfo.DataSheet[6243], 地图实例20, GameDirection.DownLeft, new Point(1001, 427));
-                                地图实例20.副本守卫 = new GuardObject(GuardInfo.DataSheet[6244], 地图实例20, GameDirection.DownLeft, new Point(853, 575));
-                                地图实例20.副本守卫 = new GuardObject(GuardInfo.DataSheet[6215], 地图实例20, GameDirection.DownLeft, new Point(1291, 423));
-                                地图实例20.副本守卫 = new GuardObject(GuardInfo.DataSheet[6342], 地图实例20, GameDirection.DownLeft, new Point(1144, 570));
-                                Teleport(地图实例20, AreaType.Teleportation);
+                                Map map = new Map(GameMap.DataSheet[227]);
+                                map.Terrain = value77.Terrain;
+                                map.Areas = value77.Areas;
+                                map.Spawns = value77.Spawns;
+                                map.Guards = value77.Guards;
+                                map.TeleportationArea = value77.TeleportationArea;
+                                map.ProcessTime = SEngine.CurrentTime.AddSeconds(20.0);
+                                map.Respawns = value77.Spawns.OrderBy((MonsterSpawn O) => O.Coordinates.X).ToList();
+                                map.Cells = new HashSet<MapObject>[value77.MapSize.Width, value77.MapSize.Height];
+
+                                MapManager.ReplicaMaps.Add(map);
+                                map.ReplicaGuards = new GuardObject(GuardInfo.DataSheet[6123], map, GameDirection.DownLeft, new Point(1028, 160));
+                                map.ReplicaGuards = new GuardObject(GuardInfo.DataSheet[6183], map, GameDirection.DownLeft, new Point(881, 307));
+                                map.ReplicaGuards = new GuardObject(GuardInfo.DataSheet[6184], map, GameDirection.DownLeft, new Point(733, 454));
+                                map.ReplicaGuards = new GuardObject(GuardInfo.DataSheet[6185], map, GameDirection.DownLeft, new Point(1148, 280));
+                                map.ReplicaGuards = new GuardObject(GuardInfo.DataSheet[6243], map, GameDirection.DownLeft, new Point(1001, 427));
+                                map.ReplicaGuards = new GuardObject(GuardInfo.DataSheet[6244], map, GameDirection.DownLeft, new Point(853, 575));
+                                map.ReplicaGuards = new GuardObject(GuardInfo.DataSheet[6215], map, GameDirection.DownLeft, new Point(1291, 423));
+                                map.ReplicaGuards = new GuardObject(GuardInfo.DataSheet[6342], map, GameDirection.DownLeft, new Point(1144, 570));
+                                Teleport(map, AreaType.Teleportation);
                                 Character.九层妖塔次数.V++;
-                                NetworkManager.SendAnnouncement($"玩家：{Name}进入{地图实例20}副本历练", rolling: true);
-                                if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔BOSS1, out var value78))
-                                {
-                                    MonsterObject 怪物实例2 = new MonsterObject(value78, 地图实例20, int.MaxValue, new Point[1]
-                                    {
-                                new Point(1028, 160)
-                                    }, forbidResurrection: true, 立即刷新: true);
-                                    怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                    怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                    九层妖塔BOSS1 = 怪物实例2;
-                                    Map 地图实例18 = CurrentMap;
-                                    地图实例18.TotalSurvivingMonsters++;
-                                }
-                                if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔BOSS2, out var value79))
-                                {
-                                    MonsterObject 怪物实例2 = new MonsterObject(value79, 地图实例20, int.MaxValue, new Point[1]
-                                    {
-                                new Point(881, 301)
-                                    }, forbidResurrection: true, 立即刷新: true);
-                                    怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                    怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                    九层妖塔BOSS2 = 怪物实例2;
-                                    Map 地图实例18 = CurrentMap;
-                                    地图实例18.TotalSurvivingMonsters++;
-                                }
-                                if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔BOSS3, out var value80))
-                                {
-                                    MonsterObject 怪物实例2 = new MonsterObject(value80, 地图实例20, int.MaxValue, new Point[1]
-                                    {
-                                new Point(733, 454)
-                                    }, forbidResurrection: true, 立即刷新: true);
-                                    怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                    怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                    九层妖塔BOSS3 = 怪物实例2;
-                                    Map 地图实例18 = CurrentMap;
-                                    地图实例18.TotalSurvivingMonsters++;
-                                }
-                                if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔BOSS4, out var value81))
-                                {
-                                    MonsterObject 怪物实例2 = new MonsterObject(value81, 地图实例20, int.MaxValue, new Point[1]
-                                    {
-                                new Point(1148, 280)
-                                    }, forbidResurrection: true, 立即刷新: true);
-                                    怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                    怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                    九层妖塔BOSS4 = 怪物实例2;
-                                    Map 地图实例18 = CurrentMap;
-                                    地图实例18.TotalSurvivingMonsters++;
-                                }
-                                if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔BOSS5, out var value82))
-                                {
-                                    MonsterObject 怪物实例2 = new MonsterObject(value82, 地图实例20, int.MaxValue, new Point[1]
-                                    {
-                                new Point(1001, 427)
-                                    }, forbidResurrection: true, 立即刷新: true);
-                                    怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                    怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                    九层妖塔BOSS5 = 怪物实例2;
-                                    Map 地图实例18 = CurrentMap;
-                                    地图实例18.TotalSurvivingMonsters++;
-                                }
-                                if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔BOSS6, out var value83))
-                                {
-                                    MonsterObject 怪物实例2 = new MonsterObject(value83, 地图实例20, int.MaxValue, new Point[1]
-                                    {
-                                new Point(853, 575)
-                                    }, forbidResurrection: true, 立即刷新: true);
-                                    怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                    怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                    九层妖塔BOSS6 = 怪物实例2;
-                                    Map 地图实例18 = CurrentMap;
-                                    地图实例18.TotalSurvivingMonsters++;
-                                }
-                                if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔BOSS7, out var value84))
-                                {
-                                    MonsterObject 怪物实例2 = new MonsterObject(value84, 地图实例20, int.MaxValue, new Point[1]
-                                    {
-                                new Point(1291, 423)
-                                    }, forbidResurrection: true, 立即刷新: true);
-                                    怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                    怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                    九层妖塔BOSS7 = 怪物实例2;
-                                    Map 地图实例18 = CurrentMap;
-                                    地图实例18.TotalSurvivingMonsters++;
-                                }
-                                if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔BOSS8, out var value85))
-                                {
-                                    MonsterObject 怪物实例2 = new MonsterObject(value85, 地图实例20, int.MaxValue, new Point[1]
-                                    {
-                                new Point(1144, 570)
-                                    }, forbidResurrection: true, 立即刷新: true);
-                                    怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                    怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                    九层妖塔BOSS8 = 怪物实例2;
-                                    Map 地图实例18 = CurrentMap;
-                                    地图实例18.TotalSurvivingMonsters++;
-                                }
-                                if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔BOSS9, out var value86))
-                                {
-                                    MonsterObject 怪物实例2 = new MonsterObject(value86, 地图实例20, int.MaxValue, new Point[1]
-                                    {
-                                new Point(996, 702)
-                                    }, forbidResurrection: true, 立即刷新: true);
-                                    怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                    怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                    九层妖塔BOSS9 = 怪物实例2;
-                                    Map 地图实例18 = CurrentMap;
-                                    地图实例18.TotalSurvivingMonsters++;
-                                }
-                                for (int num79 = 0; num79 <= Config.九层妖塔数量1; num79++)
-                                {
-                                    if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔精英1, out var value87))
-                                    {
-                                        MonsterObject 怪物实例2 = new MonsterObject(value87, 地图实例20, int.MaxValue, new Point[1]
-                                        {
-                                    new Point(1028, 160)
-                                        }, forbidResurrection: true, 立即刷新: true);
-                                        怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                        怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                        九层妖塔精英1 = 怪物实例2;
-                                        Map 地图实例18 = CurrentMap;
-                                        地图实例18.TotalSurvivingMonsters++;
-                                    }
-                                }
-                                for (int num80 = 0; num80 <= Config.九层妖塔数量2; num80++)
-                                {
-                                    if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔精英2, out var value88))
-                                    {
-                                        MonsterObject 怪物实例2 = new MonsterObject(value88, 地图实例20, int.MaxValue, new Point[1]
-                                        {
-                                    new Point(881, 301)
-                                        }, forbidResurrection: true, 立即刷新: true);
-                                        怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                        怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                        九层妖塔精英2 = 怪物实例2;
-                                        Map 地图实例18 = CurrentMap;
-                                        地图实例18.TotalSurvivingMonsters++;
-                                    }
-                                }
-                                for (int num81 = 0; num81 <= Config.九层妖塔数量3; num81++)
-                                {
-                                    if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔精英3, out var value89))
-                                    {
-                                        MonsterObject 怪物实例2 = new MonsterObject(value89, 地图实例20, int.MaxValue, new Point[1]
-                                        {
-                                    new Point(733, 454)
-                                        }, forbidResurrection: true, 立即刷新: true);
-                                        怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                        怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                        九层妖塔精英3 = 怪物实例2;
-                                        Map 地图实例18 = CurrentMap;
-                                        地图实例18.TotalSurvivingMonsters++;
-                                    }
-                                }
-                                for (int num82 = 0; num82 <= Config.九层妖塔数量4; num82++)
-                                {
-                                    if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔精英4, out var value90))
-                                    {
-                                        MonsterObject 怪物实例2 = new MonsterObject(value90, 地图实例20, int.MaxValue, new Point[1]
-                                        {
-                                    new Point(1148, 280)
-                                        }, forbidResurrection: true, 立即刷新: true);
-                                        怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                        怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                        九层妖塔精英4 = 怪物实例2;
-                                        Map 地图实例18 = CurrentMap;
-                                        地图实例18.TotalSurvivingMonsters++;
-                                    }
-                                }
-                                for (int num83 = 0; num83 <= Config.九层妖塔数量5; num83++)
-                                {
-                                    if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔精英5, out var value91))
-                                    {
-                                        MonsterObject 怪物实例2 = new MonsterObject(value91, 地图实例20, int.MaxValue, new Point[1]
-                                        {
-                                    new Point(1001, 427)
-                                        }, forbidResurrection: true, 立即刷新: true);
-                                        怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                        怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                        九层妖塔精英5 = 怪物实例2;
-                                        Map 地图实例18 = CurrentMap;
-                                        地图实例18.TotalSurvivingMonsters++;
-                                    }
-                                }
-                                for (int num84 = 0; num84 <= Config.九层妖塔数量6; num84++)
-                                {
-                                    if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔精英6, out var value92))
-                                    {
-                                        MonsterObject 怪物实例2 = new MonsterObject(value92, 地图实例20, int.MaxValue, new Point[1]
-                                        {
-                                    new Point(853, 575)
-                                        }, forbidResurrection: true, 立即刷新: true);
-                                        怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                        怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                        九层妖塔精英6 = 怪物实例2;
-                                        Map 地图实例18 = CurrentMap;
-                                        地图实例18.TotalSurvivingMonsters++;
-                                    }
-                                }
-                                for (int num85 = 0; num85 <= Config.九层妖塔数量7; num85++)
-                                {
-                                    if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔精英7, out var value93))
-                                    {
-                                        MonsterObject 怪物实例2 = new MonsterObject(value93, 地图实例20, int.MaxValue, new Point[1]
-                                        {
-                                    new Point(1291, 423)
-                                        }, forbidResurrection: true, 立即刷新: true);
-                                        怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                        怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                        九层妖塔精英7 = 怪物实例2;
-                                        Map 地图实例18 = CurrentMap;
-                                        地图实例18.TotalSurvivingMonsters++;
-                                    }
-                                }
-                                for (int num86 = 0; num86 <= Config.九层妖塔数量8; num86++)
-                                {
-                                    if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔精英9, out var value94))
-                                    {
-                                        MonsterObject 怪物实例2 = new MonsterObject(value94, 地图实例20, int.MaxValue, new Point[1]
-                                        {
-                                    new Point(1144, 570)
-                                        }, forbidResurrection: true, 立即刷新: true);
-                                        怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                        怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                        九层妖塔精英8 = 怪物实例2;
-                                        Map 地图实例18 = CurrentMap;
-                                        地图实例18.TotalSurvivingMonsters++;
-                                    }
-                                }
-                                for (int num87 = 0; num87 <= Config.九层妖塔数量9; num87++)
-                                {
-                                    if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔精英9, out var value95))
-                                    {
-                                        MonsterObject 怪物实例2 = new MonsterObject(value95, 地图实例20, int.MaxValue, new Point[1]
-                                        {
-                                    new Point(996, 702)
-                                        }, forbidResurrection: true, 立即刷新: true);
-                                        怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                        怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                        九层妖塔精英9 = 怪物实例2;
-                                        Map 地图实例18 = CurrentMap;
-                                        地图实例18.TotalSurvivingMonsters++;
-                                    }
-                                }
+                                NetworkManager.SendAnnouncement($"玩家：{Name}进入{map}副本历练", rolling: true);
+
+                                九层妖塔BOSS1 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS1, new Point(1028, 160));
+                                九层妖塔BOSS2 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS2, new Point(881, 301));
+                                九层妖塔BOSS3 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS3, new Point(733, 454));
+                                九层妖塔BOSS4 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS4, new Point(1148, 280));
+                                九层妖塔BOSS5 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS5, new Point(1001, 427));
+                                九层妖塔BOSS6 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS6, new Point(853, 575));
+                                九层妖塔BOSS7 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS7, new Point(1291, 423));
+                                九层妖塔BOSS8 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS8, new Point(1144, 570));
+                                九层妖塔BOSS9 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS9, new Point(996, 702));
+
+                                for (var i = 0; i <= Config.九层妖塔数量1; i++)
+                                    九层妖塔精英1 = ZenDemonTowerMonster(map, Config.九层妖塔精英1, new Point(1028, 160));
+
+                                for (var i = 0; i <= Config.九层妖塔数量2; i++)
+                                    九层妖塔精英2 = ZenDemonTowerMonster(map, Config.九层妖塔精英2, new Point(881, 301));
+
+                                for (var i = 0; i <= Config.九层妖塔数量3; i++)
+                                    九层妖塔精英3 = ZenDemonTowerMonster(map, Config.九层妖塔精英3, new Point(733, 454));
+
+                                for (var i = 0; i <= Config.九层妖塔数量4; i++)
+                                    九层妖塔精英4 = ZenDemonTowerMonster(map, Config.九层妖塔精英4, new Point(1148, 280));
+
+                                for (var i = 0; i <= Config.九层妖塔数量5; i++)
+                                    九层妖塔精英5 = ZenDemonTowerMonster(map, Config.九层妖塔精英5, new Point(1001, 427));
+
+                                for (var i = 0; i <= Config.九层妖塔数量6; i++)
+                                    九层妖塔精英6 = ZenDemonTowerMonster(map, Config.九层妖塔精英6, new Point(853, 575));
+
+                                for (var i = 0; i <= Config.九层妖塔数量7; i++)
+                                    九层妖塔精英7 = ZenDemonTowerMonster(map, Config.九层妖塔精英7, new Point(1291, 423));
+
+                                for (var i = 0; i <= Config.九层妖塔数量8; i++)
+                                    九层妖塔精英8 = ZenDemonTowerMonster(map, Config.九层妖塔精英8, new Point(1144, 570));
+
+                                for (var i = 0; i <= Config.九层妖塔数量9; i++)
+                                    九层妖塔精英9 = ZenDemonTowerMonster(map, Config.九层妖塔精英9, new Point(996, 702));
                             }
                             else
                             {
@@ -11988,271 +11593,65 @@ public sealed class PlayerObject : MapObject
                             {
                                 break;
                             }
-                            Map 地图实例21 = new Map(GameMap.DataSheet[227]);
-                            地图实例21.Terrain = value96.Terrain;
-                            地图实例21.Areas = value96.Areas;
-                            地图实例21.Spawns = value96.Spawns;
-                            地图实例21.Guards = value96.Guards;
-                            地图实例21.TeleportationArea = value96.TeleportationArea;
-                            地图实例21.ProcessTime = SEngine.CurrentTime.AddSeconds(20.0);
-                            地图实例21.Respawns = value96.Spawns.OrderBy((MonsterSpawn O) => O.Coordinates.X).ToList();
-                            地图实例21.Cells = new HashSet<MapObject>[value96.MapSize.X, value96.MapSize.Y];
-                            Map 地图实例22 = 地图实例21;
-                            MapManager.ReplicateMaps.Add(地图实例22);
-                            地图实例22.副本守卫 = new GuardObject(GuardInfo.DataSheet[6123], 地图实例22, GameDirection.DownLeft, new Point(1028, 160));
-                            地图实例22.副本守卫 = new GuardObject(GuardInfo.DataSheet[6183], 地图实例22, GameDirection.DownLeft, new Point(881, 307));
-                            地图实例22.副本守卫 = new GuardObject(GuardInfo.DataSheet[6184], 地图实例22, GameDirection.DownLeft, new Point(733, 454));
-                            地图实例22.副本守卫 = new GuardObject(GuardInfo.DataSheet[6185], 地图实例22, GameDirection.DownLeft, new Point(1148, 280));
-                            地图实例22.副本守卫 = new GuardObject(GuardInfo.DataSheet[6243], 地图实例22, GameDirection.DownLeft, new Point(1001, 427));
-                            地图实例22.副本守卫 = new GuardObject(GuardInfo.DataSheet[6244], 地图实例22, GameDirection.DownLeft, new Point(853, 575));
-                            地图实例22.副本守卫 = new GuardObject(GuardInfo.DataSheet[6215], 地图实例22, GameDirection.DownLeft, new Point(1291, 423));
-                            地图实例22.副本守卫 = new GuardObject(GuardInfo.DataSheet[6342], 地图实例22, GameDirection.DownLeft, new Point(1144, 570));
-                            Teleport(地图实例22, AreaType.Teleportation);
+                            Map map = new Map(GameMap.DataSheet[227]);
+                            map.Terrain = value96.Terrain;
+                            map.Areas = value96.Areas;
+                            map.Spawns = value96.Spawns;
+                            map.Guards = value96.Guards;
+                            map.TeleportationArea = value96.TeleportationArea;
+                            map.ProcessTime = SEngine.CurrentTime.AddSeconds(20.0);
+                            map.Respawns = value96.Spawns.OrderBy((MonsterSpawn O) => O.Coordinates.X).ToList();
+                            map.Cells = new HashSet<MapObject>[value96.MapSize.Width, value96.MapSize.Height];
+                            
+                            MapManager.ReplicaMaps.Add(map);
+                            map.ReplicaGuards = new GuardObject(GuardInfo.DataSheet[6123], map, GameDirection.DownLeft, new Point(1028, 160));
+                            map.ReplicaGuards = new GuardObject(GuardInfo.DataSheet[6183], map, GameDirection.DownLeft, new Point(881, 307));
+                            map.ReplicaGuards = new GuardObject(GuardInfo.DataSheet[6184], map, GameDirection.DownLeft, new Point(733, 454));
+                            map.ReplicaGuards = new GuardObject(GuardInfo.DataSheet[6185], map, GameDirection.DownLeft, new Point(1148, 280));
+                            map.ReplicaGuards = new GuardObject(GuardInfo.DataSheet[6243], map, GameDirection.DownLeft, new Point(1001, 427));
+                            map.ReplicaGuards = new GuardObject(GuardInfo.DataSheet[6244], map, GameDirection.DownLeft, new Point(853, 575));
+                            map.ReplicaGuards = new GuardObject(GuardInfo.DataSheet[6215], map, GameDirection.DownLeft, new Point(1291, 423));
+                            map.ReplicaGuards = new GuardObject(GuardInfo.DataSheet[6342], map, GameDirection.DownLeft, new Point(1144, 570));
+                            Teleport(map, AreaType.Teleportation);
                             Character.九层妖塔次数.V++;
-                            NetworkManager.SendAnnouncement($"玩家：{Name}进入{地图实例22}副本历练", rolling: true);
-                            if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔BOSS1, out var value97))
-                            {
-                                MonsterObject 怪物实例2 = new MonsterObject(value97, 地图实例22, int.MaxValue, new Point[1]
-                                {
-                            new Point(1028, 160)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                九层妖塔BOSS1 = 怪物实例2;
-                                Map 地图实例18 = CurrentMap;
-                                地图实例18.TotalSurvivingMonsters++;
-                            }
-                            if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔BOSS2, out var value98))
-                            {
-                                MonsterObject 怪物实例2 = new MonsterObject(value98, 地图实例22, int.MaxValue, new Point[1]
-                                {
-                            new Point(881, 301)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                九层妖塔BOSS2 = 怪物实例2;
-                                Map 地图实例18 = CurrentMap;
-                                地图实例18.TotalSurvivingMonsters++;
-                            }
-                            if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔BOSS3, out var value99))
-                            {
-                                MonsterObject 怪物实例2 = new MonsterObject(value99, 地图实例22, int.MaxValue, new Point[1]
-                                {
-                            new Point(733, 454)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                九层妖塔BOSS3 = 怪物实例2;
-                                Map 地图实例18 = CurrentMap;
-                                地图实例18.TotalSurvivingMonsters++;
-                            }
-                            if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔BOSS4, out var value100))
-                            {
-                                MonsterObject 怪物实例2 = new MonsterObject(value100, 地图实例22, int.MaxValue, new Point[1]
-                                {
-                            new Point(1148, 280)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                九层妖塔BOSS4 = 怪物实例2;
-                                Map 地图实例18 = CurrentMap;
-                                地图实例18.TotalSurvivingMonsters++;
-                            }
-                            if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔BOSS5, out var value101))
-                            {
-                                MonsterObject 怪物实例2 = new MonsterObject(value101, 地图实例22, int.MaxValue, new Point[1]
-                                {
-                            new Point(1001, 427)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                九层妖塔BOSS5 = 怪物实例2;
-                                Map 地图实例18 = CurrentMap;
-                                地图实例18.TotalSurvivingMonsters++;
-                            }
-                            if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔BOSS6, out var value102))
-                            {
-                                MonsterObject 怪物实例2 = new MonsterObject(value102, 地图实例22, int.MaxValue, new Point[1]
-                                {
-                            new Point(853, 575)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                九层妖塔BOSS6 = 怪物实例2;
-                                Map 地图实例18 = CurrentMap;
-                                地图实例18.TotalSurvivingMonsters++;
-                            }
-                            if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔BOSS7, out var value103))
-                            {
-                                MonsterObject 怪物实例2 = new MonsterObject(value103, 地图实例22, int.MaxValue, new Point[1]
-                                {
-                            new Point(1291, 423)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                九层妖塔BOSS7 = 怪物实例2;
-                                Map 地图实例18 = CurrentMap;
-                                地图实例18.TotalSurvivingMonsters++;
-                            }
-                            if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔BOSS8, out var value104))
-                            {
-                                MonsterObject 怪物实例2 = new MonsterObject(value104, 地图实例22, int.MaxValue, new Point[1]
-                                {
-                            new Point(1144, 570)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                九层妖塔BOSS8 = 怪物实例2;
-                                Map 地图实例18 = CurrentMap;
-                                地图实例18.TotalSurvivingMonsters++;
-                            }
-                            if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔BOSS9, out var value105))
-                            {
-                                MonsterObject 怪物实例2 = new MonsterObject(value105, 地图实例22, int.MaxValue, new Point[1]
-                                {
-                            new Point(996, 702)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                九层妖塔BOSS9 = 怪物实例2;
-                                Map 地图实例18 = CurrentMap;
-                                地图实例18.TotalSurvivingMonsters++;
-                            }
-                            for (int num88 = 0; num88 <= Config.九层妖塔数量1; num88++)
-                            {
-                                if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔精英1, out var value106))
-                                {
-                                    MonsterObject 怪物实例2 = new MonsterObject(value106, 地图实例22, int.MaxValue, new Point[1]
-                                    {
-                                new Point(1028, 160)
-                                    }, forbidResurrection: true, 立即刷新: true);
-                                    怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                    怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                    九层妖塔精英1 = 怪物实例2;
-                                    Map 地图实例18 = CurrentMap;
-                                    地图实例18.TotalSurvivingMonsters++;
-                                }
-                            }
-                            for (int num89 = 0; num89 <= Config.九层妖塔数量2; num89++)
-                            {
-                                if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔精英2, out var value107))
-                                {
-                                    MonsterObject 怪物实例2 = new MonsterObject(value107, 地图实例22, int.MaxValue, new Point[1]
-                                    {
-                                new Point(881, 301)
-                                    }, forbidResurrection: true, 立即刷新: true);
-                                    怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                    怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                    九层妖塔精英2 = 怪物实例2;
-                                    Map 地图实例18 = CurrentMap;
-                                    地图实例18.TotalSurvivingMonsters++;
-                                }
-                            }
-                            for (int num90 = 0; num90 <= Config.九层妖塔数量3; num90++)
-                            {
-                                if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔精英3, out var value108))
-                                {
-                                    MonsterObject 怪物实例2 = new MonsterObject(value108, 地图实例22, int.MaxValue, new Point[1]
-                                    {
-                                new Point(733, 454)
-                                    }, forbidResurrection: true, 立即刷新: true);
-                                    怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                    怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                    九层妖塔精英3 = 怪物实例2;
-                                    Map 地图实例18 = CurrentMap;
-                                    地图实例18.TotalSurvivingMonsters++;
-                                }
-                            }
-                            for (int num91 = 0; num91 <= Config.九层妖塔数量4; num91++)
-                            {
-                                if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔精英4, out var value109))
-                                {
-                                    MonsterObject 怪物实例2 = new MonsterObject(value109, 地图实例22, int.MaxValue, new Point[1]
-                                    {
-                                new Point(1148, 280)
-                                    }, forbidResurrection: true, 立即刷新: true);
-                                    怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                    怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                    九层妖塔精英4 = 怪物实例2;
-                                    Map 地图实例18 = CurrentMap;
-                                    地图实例18.TotalSurvivingMonsters++;
-                                }
-                            }
-                            for (int num92 = 0; num92 <= Config.九层妖塔数量5; num92++)
-                            {
-                                if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔精英5, out var value110))
-                                {
-                                    MonsterObject 怪物实例2 = new MonsterObject(value110, 地图实例22, int.MaxValue, new Point[1]
-                                    {
-                                new Point(1001, 427)
-                                    }, forbidResurrection: true, 立即刷新: true);
-                                    怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                    怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                    九层妖塔精英5 = 怪物实例2;
-                                    Map 地图实例18 = CurrentMap;
-                                    地图实例18.TotalSurvivingMonsters++;
-                                }
-                            }
-                            for (int num93 = 0; num93 <= Config.九层妖塔数量6; num93++)
-                            {
-                                if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔精英6, out var value111))
-                                {
-                                    MonsterObject 怪物实例2 = new MonsterObject(value111, 地图实例22, int.MaxValue, new Point[1]
-                                    {
-                                new Point(853, 575)
-                                    }, forbidResurrection: true, 立即刷新: true);
-                                    怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                    怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                    九层妖塔精英6 = 怪物实例2;
-                                    Map 地图实例18 = CurrentMap;
-                                    地图实例18.TotalSurvivingMonsters++;
-                                }
-                            }
-                            for (int num94 = 0; num94 <= Config.九层妖塔数量7; num94++)
-                            {
-                                if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔精英7, out var value112))
-                                {
-                                    MonsterObject 怪物实例2 = new MonsterObject(value112, 地图实例22, int.MaxValue, new Point[1]
-                                    {
-                                new Point(1291, 423)
-                                    }, forbidResurrection: true, 立即刷新: true);
-                                    怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                    怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                    九层妖塔精英7 = 怪物实例2;
-                                    Map 地图实例18 = CurrentMap;
-                                    地图实例18.TotalSurvivingMonsters++;
-                                }
-                            }
-                            for (int num95 = 0; num95 <= Config.九层妖塔数量8; num95++)
-                            {
-                                if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔精英9, out var value113))
-                                {
-                                    MonsterObject 怪物实例2 = new MonsterObject(value113, 地图实例22, int.MaxValue, new Point[1]
-                                    {
-                                new Point(1144, 570)
-                                    }, forbidResurrection: true, 立即刷新: true);
-                                    怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                    怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                    九层妖塔精英8 = 怪物实例2;
-                                    Map 地图实例18 = CurrentMap;
-                                    地图实例18.TotalSurvivingMonsters++;
-                                }
-                            }
-                            for (int num96 = 0; num96 <= Config.九层妖塔数量9; num96++)
-                            {
-                                if (MonsterInfo.DataSheet.TryGetValue(Config.九层妖塔精英9, out var value114))
-                                {
-                                    MonsterObject 怪物实例2 = new MonsterObject(value114, 地图实例22, int.MaxValue, new Point[1]
-                                    {
-                                new Point(996, 702)
-                                    }, forbidResurrection: true, 立即刷新: true);
-                                    怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                    怪物实例2.SurvivalTime = SEngine.CurrentTime.AddMinutes(60.0);
-                                    九层妖塔精英9 = 怪物实例2;
-                                    Map 地图实例18 = CurrentMap;
-                                    地图实例18.TotalSurvivingMonsters++;
-                                }
-                            }
+                            NetworkManager.SendAnnouncement($"玩家：{Name}进入{map}副本历练", rolling: true);
+
+                            九层妖塔BOSS1 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS1, new Point(1028, 160));
+                            九层妖塔BOSS2 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS2, new Point(881, 301));
+                            九层妖塔BOSS3 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS3, new Point(733, 454));
+                            九层妖塔BOSS4 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS4, new Point(1148, 280));
+                            九层妖塔BOSS5 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS5, new Point(1001, 427));
+                            九层妖塔BOSS6 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS6, new Point(853, 575));
+                            九层妖塔BOSS7 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS7, new Point(1291, 423));
+                            九层妖塔BOSS8 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS8, new Point(1144, 570));
+                            九层妖塔BOSS9 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS9, new Point(996, 702));
+
+                            for (var i = 0; i <= Config.九层妖塔数量1; i++)
+                                九层妖塔精英1 = ZenDemonTowerMonster(map, Config.九层妖塔精英1, new Point(1028, 160));
+
+                            for (var i = 0; i <= Config.九层妖塔数量2; i++)
+                                九层妖塔精英2 = ZenDemonTowerMonster(map, Config.九层妖塔精英2, new Point(881, 301));
+
+                            for (var i = 0; i <= Config.九层妖塔数量3; i++)
+                                九层妖塔精英3 = ZenDemonTowerMonster(map, Config.九层妖塔精英3, new Point(733, 454));
+
+                            for (var i = 0; i <= Config.九层妖塔数量4; i++)
+                                九层妖塔精英4 = ZenDemonTowerMonster(map, Config.九层妖塔精英4, new Point(1148, 280));
+
+                            for (var i = 0; i <= Config.九层妖塔数量5; i++)
+                                九层妖塔精英5 = ZenDemonTowerMonster(map, Config.九层妖塔精英5, new Point(1001, 427));
+
+                            for (var i = 0; i <= Config.九层妖塔数量6; i++)
+                                九层妖塔精英6 = ZenDemonTowerMonster(map, Config.九层妖塔精英6, new Point(853, 575));
+
+                            for (var i = 0; i <= Config.九层妖塔数量7; i++)
+                                九层妖塔精英7 = ZenDemonTowerMonster(map, Config.九层妖塔精英7, new Point(1291, 423));
+
+                            for (var i = 0; i <= Config.九层妖塔数量8; i++)
+                                九层妖塔精英8 = ZenDemonTowerMonster(map, Config.九层妖塔精英8, new Point(1144, 570));
+
+                            for (var i = 0; i <= Config.九层妖塔数量9; i++)
+                                九层妖塔精英9 = ZenDemonTowerMonster(map, Config.九层妖塔精英9, new Point(996, 702));
                         }
                         else
                         {
@@ -14553,25 +13952,25 @@ public sealed class PlayerObject : MapObject
                             {
                                 break;
                             }
-                            Map 地图实例23 = new Map(GameMap.DataSheet[80]);
-                            地图实例23.Terrain = value115.Terrain;
-                            地图实例23.Areas = value115.Areas;
-                            地图实例23.Spawns = value115.Spawns;
-                            地图实例23.Guards = value115.Guards;
-                            地图实例23.TeleportationArea = value115.TeleportationArea;
-                            地图实例23.ProcessTime = SEngine.CurrentTime.AddSeconds(20.0);
-                            地图实例23.Respawns = value115.Spawns.OrderBy((MonsterSpawn O) => O.Coordinates.X).ToList();
-                            地图实例23.Cells = new HashSet<MapObject>[value115.MapSize.X, value115.MapSize.Y];
-                            Map 地图实例24 = 地图实例23;
-                            MapManager.ReplicateMaps.Add(地图实例24);
-                            地图实例24.副本守卫 = new GuardObject(GuardInfo.DataSheet[6724], 地图实例24, GameDirection.DownLeft, new Point(1005, 273));
+                            Map map = new Map(GameMap.DataSheet[80]);
+                            map.Terrain = value115.Terrain;
+                            map.Areas = value115.Areas;
+                            map.Spawns = value115.Spawns;
+                            map.Guards = value115.Guards;
+                            map.TeleportationArea = value115.TeleportationArea;
+                            map.ProcessTime = SEngine.CurrentTime.AddSeconds(20.0);
+                            map.Respawns = value115.Spawns.OrderBy((MonsterSpawn O) => O.Coordinates.X).ToList();
+                            map.Cells = new HashSet<MapObject>[value115.MapSize.Width, value115.MapSize.Height];
+                            
+                            MapManager.ReplicaMaps.Add(map);
+                            map.ReplicaGuards = new GuardObject(GuardInfo.DataSheet[6724], map, GameDirection.DownLeft, new Point(1005, 273));
                             {
                                 foreach (CharacterInfo item4 in Team.Members)
                                 {
                                     PlayerObject 玩家实例2 = MapManager.ActiveObjects[item4.ID] as PlayerObject;
                                     玩家实例2.CurrentTrade?.BreakTrade();
                                     玩家实例2.Gold -= 扣除金币;
-                                    玩家实例2.Teleport(地图实例24, AreaType.Teleportation);
+                                    玩家实例2.Teleport(map, AreaType.Teleportation);
                                     玩家实例2.Character.屠魔次数.V++;
                                     Enqueue(new 同步货币数量
                                     {
@@ -20968,619 +20367,74 @@ public sealed class PlayerObject : MapObject
                         }
                         break;
                     }
+                
+                
                 case "BOSS卷轴一":
-                    {
-                        if (Character.CurrentMap.V != 179 && !CurrentMap.IsSafeArea(CurrentPosition) && Config.CurrentVersion >= 1 && MonsterInfo.DataSheet.TryGetValue(Config.BOSS卷轴怪物一, out var value82))
-                        {
-                            if (Config.BOSS卷轴地图开关 == 1 && CurrentMap.MapID == Config.BOSS卷轴地图编号)
-                            {
-                                Map 出生地图19 = MapManager.GetMap(CurrentMap.MapID);
-                                MonsterObject 怪物实例2 = new MonsterObject(value82, 出生地图19, int.MaxValue, new Point[1]
-                                {
-                            new Point(CurrentPosition.X, CurrentPosition.Y)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = DateTime.MaxValue;
-                                ConsumeItem(1, v);
-                            }
-                            if (Config.BOSS卷轴地图开关 == 0)
-                            {
-                                Map 出生地图20 = MapManager.GetMap(CurrentMap.MapID);
-                                MonsterObject 怪物实例2 = new MonsterObject(value82, 出生地图20, int.MaxValue, new Point[1]
-                                {
-                            new Point(CurrentPosition.X, CurrentPosition.Y)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = DateTime.MaxValue;
-                                ConsumeItem(1, v);
-                            }
-                        }
-                        break;
-                    }
                 case "BOSS卷轴二":
-                    {
-                        if (Character.CurrentMap.V != 179 && !CurrentMap.IsSafeArea(CurrentPosition) && Config.CurrentVersion >= 1 && MonsterInfo.DataSheet.TryGetValue(Config.BOSS卷轴怪物二, out var value27))
-                        {
-                            if (Config.BOSS卷轴地图开关 == 1 && CurrentMap.MapID == Config.BOSS卷轴地图编号)
-                            {
-                                Map 出生地图 = MapManager.GetMap(CurrentMap.MapID);
-                                MonsterObject 怪物实例2 = new MonsterObject(value27, 出生地图, int.MaxValue, new Point[1]
-                                {
-                            new Point(CurrentPosition.X, CurrentPosition.Y)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = DateTime.MaxValue;
-                                ConsumeItem(1, v);
-                            }
-                            if (Config.BOSS卷轴地图开关 == 0)
-                            {
-                                Map 出生地图2 = MapManager.GetMap(CurrentMap.MapID);
-                                MonsterObject 怪物实例2 = new MonsterObject(value27, 出生地图2, int.MaxValue, new Point[1]
-                                {
-                            new Point(CurrentPosition.X, CurrentPosition.Y)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = DateTime.MaxValue;
-                                ConsumeItem(1, v);
-                            }
-                        }
-                        break;
-                    }
                 case "BOSS卷轴三":
-                    {
-                        if (Character.CurrentMap.V == 179)
-                        {
-                            break;
-                        }
-                        if (CurrentMap.IsSafeArea(CurrentPosition))
-                        {
-                            Enqueue(new GameErrorMessagePacket
-                            {
-                                ErrorCode = 2819
-                            });
-                        }
-                        if (Config.CurrentVersion >= 1 && MonsterInfo.DataSheet.TryGetValue(Config.BOSS卷轴怪物三, out var value107))
-                        {
-                            if (Config.BOSS卷轴地图开关 == 1 && CurrentMap.MapID == Config.BOSS卷轴地图编号)
-                            {
-                                Map 出生地图27 = MapManager.GetMap(CurrentMap.MapID);
-                                MonsterObject 怪物实例2 = new MonsterObject(value107, 出生地图27, int.MaxValue, new Point[1]
-                                {
-                            new Point(CurrentPosition.X, CurrentPosition.Y)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = DateTime.MaxValue;
-                                ConsumeItem(1, v);
-                            }
-                            if (Config.BOSS卷轴地图开关 == 0)
-                            {
-                                Map 出生地图28 = MapManager.GetMap(CurrentMap.MapID);
-                                MonsterObject 怪物实例2 = new MonsterObject(value107, 出生地图28, int.MaxValue, new Point[1]
-                                {
-                            new Point(CurrentPosition.X, CurrentPosition.Y)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = DateTime.MaxValue;
-                                ConsumeItem(1, v);
-                            }
-                        }
-                        break;
-                    }
                 case "BOSS卷轴四":
-                    {
-                        if (Character.CurrentMap.V == 179)
-                        {
-                            break;
-                        }
-                        if (CurrentMap.IsSafeArea(CurrentPosition))
-                        {
-                            Enqueue(new GameErrorMessagePacket
-                            {
-                                ErrorCode = 2819
-                            });
-                        }
-                        if (Config.CurrentVersion >= 1 && MonsterInfo.DataSheet.TryGetValue(Config.BOSS卷轴怪物四, out var value66))
-                        {
-                            if (Config.BOSS卷轴地图开关 == 1 && CurrentMap.MapID == Config.BOSS卷轴地图编号)
-                            {
-                                Map 出生地图13 = MapManager.GetMap(CurrentMap.MapID);
-                                MonsterObject 怪物实例2 = new MonsterObject(value66, 出生地图13, int.MaxValue, new Point[1]
-                                {
-                            new Point(CurrentPosition.X, CurrentPosition.Y)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = DateTime.MaxValue;
-                                ConsumeItem(1, v);
-                            }
-                            if (Config.BOSS卷轴地图开关 == 0)
-                            {
-                                Map 出生地图14 = MapManager.GetMap(CurrentMap.MapID);
-                                MonsterObject 怪物实例2 = new MonsterObject(value66, 出生地图14, int.MaxValue, new Point[1]
-                                {
-                            new Point(CurrentPosition.X, CurrentPosition.Y)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = DateTime.MaxValue;
-                                ConsumeItem(1, v);
-                            }
-                        }
-                        break;
-                    }
                 case "BOSS卷轴五":
-                    {
-                        if (Character.CurrentMap.V == 179)
-                        {
-                            break;
-                        }
-                        if (CurrentMap.IsSafeArea(CurrentPosition))
-                        {
-                            Enqueue(new GameErrorMessagePacket
-                            {
-                                ErrorCode = 2819
-                            });
-                        }
-                        if (Config.CurrentVersion >= 1 && MonsterInfo.DataSheet.TryGetValue(Config.BOSS卷轴怪物五, out var value118))
-                        {
-                            if (Config.BOSS卷轴地图开关 == 1 && CurrentMap.MapID == Config.BOSS卷轴地图编号)
-                            {
-                                Map 出生地图31 = MapManager.GetMap(CurrentMap.MapID);
-                                MonsterObject 怪物实例2 = new MonsterObject(value118, 出生地图31, int.MaxValue, new Point[1]
-                                {
-                            new Point(CurrentPosition.X, CurrentPosition.Y)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = DateTime.MaxValue;
-                                ConsumeItem(1, v);
-                            }
-                            if (Config.BOSS卷轴地图开关 == 0)
-                            {
-                                Map 出生地图32 = MapManager.GetMap(CurrentMap.MapID);
-                                MonsterObject 怪物实例2 = new MonsterObject(value118, 出生地图32, int.MaxValue, new Point[1]
-                                {
-                            new Point(CurrentPosition.X, CurrentPosition.Y)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = DateTime.MaxValue;
-                                ConsumeItem(1, v);
-                            }
-                        }
-                        break;
-                    }
                 case "BOSS卷轴六":
-                    {
-                        if (Character.CurrentMap.V == 179)
-                        {
-                            break;
-                        }
-                        if (CurrentMap.IsSafeArea(CurrentPosition))
-                        {
-                            Enqueue(new GameErrorMessagePacket
-                            {
-                                ErrorCode = 2819
-                            });
-                        }
-                        if (Config.CurrentVersion >= 1 && MonsterInfo.DataSheet.TryGetValue(Config.BOSS卷轴怪物六, out var value103))
-                        {
-                            if (Config.BOSS卷轴地图开关 == 1 && CurrentMap.MapID == Config.BOSS卷轴地图编号)
-                            {
-                                Map 出生地图23 = MapManager.GetMap(CurrentMap.MapID);
-                                MonsterObject 怪物实例2 = new MonsterObject(value103, 出生地图23, int.MaxValue, new Point[1]
-                                {
-                            new Point(CurrentPosition.X, CurrentPosition.Y)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = DateTime.MaxValue;
-                                ConsumeItem(1, v);
-                            }
-                            if (Config.BOSS卷轴地图开关 == 0)
-                            {
-                                Map 出生地图24 = MapManager.GetMap(CurrentMap.MapID);
-                                MonsterObject 怪物实例2 = new MonsterObject(value103, 出生地图24, int.MaxValue, new Point[1]
-                                {
-                            new Point(CurrentPosition.X, CurrentPosition.Y)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = DateTime.MaxValue;
-                                ConsumeItem(1, v);
-                            }
-                        }
-                        break;
-                    }
                 case "BOSS卷轴七":
-                    {
-                        if (Character.CurrentMap.V == 179)
-                        {
-                            break;
-                        }
-                        if (CurrentMap.IsSafeArea(CurrentPosition))
-                        {
-                            Enqueue(new GameErrorMessagePacket
-                            {
-                                ErrorCode = 2819
-                            });
-                        }
-                        if (Config.CurrentVersion >= 1 && MonsterInfo.DataSheet.TryGetValue(Config.BOSS卷轴怪物七, out var value49))
-                        {
-                            if (Config.BOSS卷轴地图开关 == 1 && CurrentMap.MapID == Config.BOSS卷轴地图编号)
-                            {
-                                Map 出生地图7 = MapManager.GetMap(CurrentMap.MapID);
-                                MonsterObject 怪物实例2 = new MonsterObject(value49, 出生地图7, int.MaxValue, new Point[1]
-                                {
-                            new Point(CurrentPosition.X, CurrentPosition.Y)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = DateTime.MaxValue;
-                                ConsumeItem(1, v);
-                            }
-                            if (Config.BOSS卷轴地图开关 == 0)
-                            {
-                                Map 出生地图8 = MapManager.GetMap(CurrentMap.MapID);
-                                MonsterObject 怪物实例2 = new MonsterObject(value49, 出生地图8, int.MaxValue, new Point[1]
-                                {
-                            new Point(CurrentPosition.X, CurrentPosition.Y)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = DateTime.MaxValue;
-                                ConsumeItem(1, v);
-                            }
-                        }
-                        break;
-                    }
                 case "BOSS卷轴八":
-                    {
-                        if (Character.CurrentMap.V == 179)
-                        {
-                            break;
-                        }
-                        if (CurrentMap.IsSafeArea(CurrentPosition))
-                        {
-                            Enqueue(new GameErrorMessagePacket
-                            {
-                                ErrorCode = 2819
-                            });
-                        }
-                        if (Config.CurrentVersion >= 1 && MonsterInfo.DataSheet.TryGetValue(Config.BOSS卷轴怪物八, out var value81))
-                        {
-                            if (Config.BOSS卷轴地图开关 == 1 && CurrentMap.MapID == Config.BOSS卷轴地图编号)
-                            {
-                                Map 出生地图17 = MapManager.GetMap(CurrentMap.MapID);
-                                MonsterObject 怪物实例2 = new MonsterObject(value81, 出生地图17, int.MaxValue, new Point[1]
-                                {
-                            new Point(CurrentPosition.X, CurrentPosition.Y)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = DateTime.MaxValue;
-                                ConsumeItem(1, v);
-                            }
-                            if (Config.BOSS卷轴地图开关 == 0)
-                            {
-                                Map 出生地图18 = MapManager.GetMap(CurrentMap.MapID);
-                                MonsterObject 怪物实例2 = new MonsterObject(value81, 出生地图18, int.MaxValue, new Point[1]
-                                {
-                            new Point(CurrentPosition.X, CurrentPosition.Y)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = DateTime.MaxValue;
-                                ConsumeItem(1, v);
-                            }
-                        }
-                        break;
-                    }
                 case "BOSS卷轴九":
-                    {
-                        if (Character.CurrentMap.V == 179)
-                        {
-                            break;
-                        }
-                        if (CurrentMap.IsSafeArea(CurrentPosition))
-                        {
-                            Enqueue(new GameErrorMessagePacket
-                            {
-                                ErrorCode = 2819
-                            });
-                        }
-                        if (Config.CurrentVersion >= 1 && MonsterInfo.DataSheet.TryGetValue(Config.BOSS卷轴怪物九, out var value78))
-                        {
-                            if (Config.BOSS卷轴地图开关 == 1 && CurrentMap.MapID == Config.BOSS卷轴地图编号)
-                            {
-                                Map 出生地图15 = MapManager.GetMap(CurrentMap.MapID);
-                                MonsterObject 怪物实例2 = new MonsterObject(value78, 出生地图15, int.MaxValue, new Point[1]
-                                {
-                            new Point(CurrentPosition.X, CurrentPosition.Y)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = DateTime.MaxValue;
-                                ConsumeItem(1, v);
-                            }
-                            if (Config.BOSS卷轴地图开关 == 0)
-                            {
-                                Map 出生地图16 = MapManager.GetMap(CurrentMap.MapID);
-                                MonsterObject 怪物实例2 = new MonsterObject(value78, 出生地图16, int.MaxValue, new Point[1]
-                                {
-                            new Point(CurrentPosition.X, CurrentPosition.Y)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = DateTime.MaxValue;
-                                ConsumeItem(1, v);
-                            }
-                        }
-                        break;
-                    }
                 case "BOSS卷轴十":
-                    {
-                        if (Character.CurrentMap.V == 179)
-                        {
-                            break;
-                        }
-                        if (CurrentMap.IsSafeArea(CurrentPosition))
-                        {
-                            Enqueue(new GameErrorMessagePacket
-                            {
-                                ErrorCode = 2819
-                            });
-                        }
-                        if (Config.CurrentVersion >= 1 && MonsterInfo.DataSheet.TryGetValue(Config.BOSS卷轴怪物十, out var value31))
-                        {
-                            if (Config.BOSS卷轴地图开关 == 1 && CurrentMap.MapID == Config.BOSS卷轴地图编号)
-                            {
-                                Map 出生地图3 = MapManager.GetMap(CurrentMap.MapID);
-                                MonsterObject 怪物实例2 = new MonsterObject(value31, 出生地图3, int.MaxValue, new Point[1]
-                                {
-                            new Point(CurrentPosition.X, CurrentPosition.Y)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = DateTime.MaxValue;
-                                ConsumeItem(1, v);
-                            }
-                            if (Config.BOSS卷轴地图开关 == 0)
-                            {
-                                Map 出生地图4 = MapManager.GetMap(CurrentMap.MapID);
-                                MonsterObject 怪物实例2 = new MonsterObject(value31, 出生地图4, int.MaxValue, new Point[1]
-                                {
-                            new Point(CurrentPosition.X, CurrentPosition.Y)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = DateTime.MaxValue;
-                                ConsumeItem(1, v);
-                            }
-                        }
-                        break;
-                    }
                 case "BOSS卷轴11":
-                    {
-                        if (Character.CurrentMap.V == 179)
-                        {
-                            break;
-                        }
-                        if (CurrentMap.IsSafeArea(CurrentPosition))
-                        {
-                            Enqueue(new GameErrorMessagePacket
-                            {
-                                ErrorCode = 2819
-                            });
-                        }
-                        if (Config.CurrentVersion >= 1 && MonsterInfo.DataSheet.TryGetValue(Config.BOSS卷轴怪物11, out var value104))
-                        {
-                            if (Config.BOSS卷轴地图开关 == 1 && CurrentMap.MapID == Config.BOSS卷轴地图编号)
-                            {
-                                Map 出生地图25 = MapManager.GetMap(CurrentMap.MapID);
-                                MonsterObject 怪物实例2 = new MonsterObject(value104, 出生地图25, int.MaxValue, new Point[1]
-                                {
-                            new Point(CurrentPosition.X, CurrentPosition.Y)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = DateTime.MaxValue;
-                                ConsumeItem(1, v);
-                            }
-                            if (Config.BOSS卷轴地图开关 == 0)
-                            {
-                                Map 出生地图26 = MapManager.GetMap(CurrentMap.MapID);
-                                MonsterObject 怪物实例2 = new MonsterObject(value104, 出生地图26, int.MaxValue, new Point[1]
-                                {
-                            new Point(CurrentPosition.X, CurrentPosition.Y)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = DateTime.MaxValue;
-                                ConsumeItem(1, v);
-                            }
-                        }
-                        break;
-                    }
                 case "BOSS卷轴12":
-                    {
-                        if (Character.CurrentMap.V == 179)
-                        {
-                            break;
-                        }
-                        if (CurrentMap.IsSafeArea(CurrentPosition))
-                        {
-                            Enqueue(new GameErrorMessagePacket
-                            {
-                                ErrorCode = 2819
-                            });
-                        }
-                        if (Config.CurrentVersion >= 1 && MonsterInfo.DataSheet.TryGetValue(Config.BOSS卷轴怪物12, out var value64))
-                        {
-                            if (Config.BOSS卷轴地图开关 == 1 && CurrentMap.MapID == Config.BOSS卷轴地图编号)
-                            {
-                                Map 出生地图11 = MapManager.GetMap(CurrentMap.MapID);
-                                MonsterObject 怪物实例2 = new MonsterObject(value64, 出生地图11, int.MaxValue, new Point[1]
-                                {
-                            new Point(CurrentPosition.X, CurrentPosition.Y)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = DateTime.MaxValue;
-                                ConsumeItem(1, v);
-                            }
-                            if (Config.BOSS卷轴地图开关 == 0)
-                            {
-                                Map 出生地图12 = MapManager.GetMap(CurrentMap.MapID);
-                                MonsterObject 怪物实例2 = new MonsterObject(value64, 出生地图12, int.MaxValue, new Point[1]
-                                {
-                            new Point(CurrentPosition.X, CurrentPosition.Y)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = DateTime.MaxValue;
-                                ConsumeItem(1, v);
-                            }
-                        }
-                        break;
-                    }
                 case "BOSS卷轴13":
-                    {
-                        if (Character.CurrentMap.V == 179)
-                        {
-                            break;
-                        }
-                        if (CurrentMap.IsSafeArea(CurrentPosition))
-                        {
-                            Enqueue(new GameErrorMessagePacket
-                            {
-                                ErrorCode = 2819
-                            });
-                        }
-                        if (Config.CurrentVersion >= 1 && MonsterInfo.DataSheet.TryGetValue(Config.BOSS卷轴怪物13, out var value46))
-                        {
-                            if (Config.BOSS卷轴地图开关 == 1 && CurrentMap.MapID == Config.BOSS卷轴地图编号)
-                            {
-                                Map 出生地图5 = MapManager.GetMap(CurrentMap.MapID);
-                                MonsterObject 怪物实例2 = new MonsterObject(value46, 出生地图5, int.MaxValue, new Point[1]
-                                {
-                            new Point(CurrentPosition.X, CurrentPosition.Y)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = DateTime.MaxValue;
-                                ConsumeItem(1, v);
-                            }
-                            if (Config.BOSS卷轴地图开关 == 0)
-                            {
-                                Map 出生地图6 = MapManager.GetMap(CurrentMap.MapID);
-                                MonsterObject 怪物实例2 = new MonsterObject(value46, 出生地图6, int.MaxValue, new Point[1]
-                                {
-                            new Point(CurrentPosition.X, CurrentPosition.Y)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = DateTime.MaxValue;
-                                ConsumeItem(1, v);
-                            }
-                        }
-                        break;
-                    }
                 case "BOSS卷轴14":
-                    {
-                        if (Character.CurrentMap.V == 179)
-                        {
-                            break;
-                        }
-                        if (CurrentMap.IsSafeArea(CurrentPosition))
-                        {
-                            Enqueue(new GameErrorMessagePacket
-                            {
-                                ErrorCode = 2819
-                            });
-                        }
-                        if (Config.CurrentVersion >= 1 && MonsterInfo.DataSheet.TryGetValue(Config.BOSS卷轴怪物14, out var value114))
-                        {
-                            if (Config.BOSS卷轴地图开关 == 1 && CurrentMap.MapID == Config.BOSS卷轴地图编号)
-                            {
-                                Map 出生地图29 = MapManager.GetMap(CurrentMap.MapID);
-                                MonsterObject 怪物实例2 = new MonsterObject(value114, 出生地图29, int.MaxValue, new Point[1]
-                                {
-                            new Point(CurrentPosition.X, CurrentPosition.Y)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = DateTime.MaxValue;
-                                ConsumeItem(1, v);
-                            }
-                            if (Config.BOSS卷轴地图开关 == 0)
-                            {
-                                Map 出生地图30 = MapManager.GetMap(CurrentMap.MapID);
-                                MonsterObject 怪物实例2 = new MonsterObject(value114, 出生地图30, int.MaxValue, new Point[1]
-                                {
-                            new Point(CurrentPosition.X, CurrentPosition.Y)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = DateTime.MaxValue;
-                                ConsumeItem(1, v);
-                            }
-                        }
-                        break;
-                    }
                 case "BOSS卷轴15":
-                    {
-                        if (Character.CurrentMap.V == 179)
-                        {
-                            break;
-                        }
-                        if (CurrentMap.IsSafeArea(CurrentPosition))
-                        {
-                            Enqueue(new GameErrorMessagePacket
-                            {
-                                ErrorCode = 2819
-                            });
-                        }
-                        if (Config.CurrentVersion >= 1 && MonsterInfo.DataSheet.TryGetValue(Config.BOSS卷轴怪物15, out var value84))
-                        {
-                            if (Config.BOSS卷轴地图开关 == 1 && CurrentMap.MapID == Config.BOSS卷轴地图编号)
-                            {
-                                Map 出生地图21 = MapManager.GetMap(CurrentMap.MapID);
-                                MonsterObject 怪物实例2 = new MonsterObject(value84, 出生地图21, int.MaxValue, new Point[1]
-                                {
-                            new Point(CurrentPosition.X, CurrentPosition.Y)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = DateTime.MaxValue;
-                                ConsumeItem(1, v);
-                            }
-                            if (Config.BOSS卷轴地图开关 == 0)
-                            {
-                                Map 出生地图22 = MapManager.GetMap(CurrentMap.MapID);
-                                MonsterObject 怪物实例2 = new MonsterObject(value84, 出生地图22, int.MaxValue, new Point[1]
-                                {
-                            new Point(CurrentPosition.X, CurrentPosition.Y)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = DateTime.MaxValue;
-                                ConsumeItem(1, v);
-                            }
-                        }
-                        break;
-                    }
                 case "BOSS卷轴16":
                     {
                         if (Character.CurrentMap.V == 179)
-                        {
                             break;
-                        }
+
                         if (CurrentMap.IsSafeArea(CurrentPosition))
                         {
-                            Enqueue(new GameErrorMessagePacket
-                            {
-                                ErrorCode = 2819
-                            });
+                            Enqueue(new GameErrorMessagePacket { ErrorCode = 2819 });
+                            break;
                         }
-                        if (Config.CurrentVersion >= 1 && MonsterInfo.DataSheet.TryGetValue(Config.BOSS卷轴怪物16, out var value55))
+
+                        var name = v.Name switch
+                        {
+                            "BOSS卷轴一" => Config.BOSS卷轴怪物一,
+                            "BOSS卷轴二" => Config.BOSS卷轴怪物二,
+                            "BOSS卷轴三" => Config.BOSS卷轴怪物三,
+                            "BOSS卷轴四" => Config.BOSS卷轴怪物四,
+                            "BOSS卷轴五" => Config.BOSS卷轴怪物五,
+                            "BOSS卷轴六" => Config.BOSS卷轴怪物六,
+                            "BOSS卷轴七" => Config.BOSS卷轴怪物七,
+                            "BOSS卷轴八" => Config.BOSS卷轴怪物八,
+                            "BOSS卷轴九" => Config.BOSS卷轴怪物九,
+                            "BOSS卷轴十" => Config.BOSS卷轴怪物十,
+                            "BOSS卷轴11" => Config.BOSS卷轴怪物11,
+                            "BOSS卷轴12" => Config.BOSS卷轴怪物12,
+                            "BOSS卷轴13" => Config.BOSS卷轴怪物13,
+                            "BOSS卷轴14" => Config.BOSS卷轴怪物14,
+                            "BOSS卷轴15" => Config.BOSS卷轴怪物15,
+                            "BOSS卷轴16" => Config.BOSS卷轴怪物16,
+                            _ => string.Empty
+                        };
+
+                        if (string.IsNullOrEmpty(name))
+                            break;
+
+                        if (Config.CurrentVersion >= 1 && MonsterInfo.DataSheet.TryGetValue(name, out var moni))
                         {
                             if (Config.BOSS卷轴地图开关 == 1 && CurrentMap.MapID == Config.BOSS卷轴地图编号)
                             {
-                                Map 出生地图9 = MapManager.GetMap(CurrentMap.MapID);
-                                MonsterObject 怪物实例2 = new MonsterObject(value55, 出生地图9, int.MaxValue, new Point[1]
-                                {
-                            new Point(CurrentPosition.X, CurrentPosition.Y)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = DateTime.MaxValue;
+                                MonsterObject mon = new MonsterObject(moni, CurrentMap, int.MaxValue, new Point(CurrentPosition.X, CurrentPosition.Y), 1,
+                                    true, true);
+                                mon.CurrentDirection = GameDirection.UpRight;
+                                mon.SurvivalTime = DateTime.MaxValue;
                                 ConsumeItem(1, v);
                             }
                             if (Config.BOSS卷轴地图开关 == 0)
                             {
-                                Map 出生地图10 = MapManager.GetMap(CurrentMap.MapID);
-                                MonsterObject 怪物实例2 = new MonsterObject(value55, 出生地图10, int.MaxValue, new Point[1]
-                                {
-                            new Point(CurrentPosition.X, CurrentPosition.Y)
-                                }, forbidResurrection: true, 立即刷新: true);
-                                怪物实例2.CurrentDirection = GameDirection.UpRight;
-                                怪物实例2.SurvivalTime = DateTime.MaxValue;
+                                MonsterObject mon = new MonsterObject(moni, CurrentMap, int.MaxValue, new Point(CurrentPosition.X, CurrentPosition.Y), 1,
+                                    true, true);
+                                mon.CurrentDirection = GameDirection.UpRight;
+                                mon.SurvivalTime = DateTime.MaxValue;
                                 ConsumeItem(1, v);
                             }
                         }
