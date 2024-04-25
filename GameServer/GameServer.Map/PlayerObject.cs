@@ -59,13 +59,10 @@ public sealed class PlayerObject : MapObject
     public static MonsterObject 九层妖塔BOSS9;
 
     public int CurrentStoreID;
-
-    public string 打开界面;
+    public string CurrentStoreNameID;
 
     public int HealthRestoreCount;
-
     public int ManaRestoreCount;
-
     public int HealthRegenAmount;
     public int ManaRegenAmount;
 
@@ -320,13 +317,14 @@ public sealed class PlayerObject : MapObject
         get { return Character.CurrentPosition.V; }
         set
         {
-            if (Character.CurrentPosition.V != value)
+            if (Character.CurrentPosition.V == value)
+                return;
+
+            Character.CurrentPosition.V = value;
+            if (CurrentMap != null)
             {
-                Character.CurrentPosition.V = value;
-                if ((CurrentMap?.ResurrectionArea?.RangeCoordinates.Contains(CurrentPosition)).GetValueOrDefault())
-                {
+                if (CurrentMap.IsInArea(CurrentPosition, AreaType.Resurrection))
                     RespawnMapIndex = CurrentMap.MapID;
-                }
             }
         }
     }
