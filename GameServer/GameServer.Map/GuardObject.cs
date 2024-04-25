@@ -127,7 +127,7 @@ public sealed class GuardObject : MapObject
     public ushort GuardID => Info.GuardID;
     public int RevivalInterval => Info.RevivalInterval;
     public int StoreID => Info.StoreID;
-    public string 界面代码 => Info.InterfaceCode;
+    public string StoreNameID => Info.InterfaceCode;
     public bool CanBeInjured => Info.CanBeInjured;
     public bool ActiveAttackTarget => Info.ActiveAttack;
 
@@ -204,7 +204,7 @@ public sealed class GuardObject : MapObject
             {
                 RemoveAllNeighbors();
                 UnbindGrid();
-                CurrentPosition = CurrentMap.RandomPosition(AreaType.Teleportation);
+                CurrentPosition = CurrentMap.GetRandomPosition(AreaType.Teleportation);
                 BindGrid();
                 UpdateAllNeighbours();
 
