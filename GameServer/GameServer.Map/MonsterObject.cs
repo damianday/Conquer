@@ -384,7 +384,7 @@ public sealed class MonsterObject : MapObject
         DisappearTime = SEngine.CurrentTime.AddMilliseconds(CorpsePreservationDuration);
         ResurrectionTime = SEngine.CurrentTime.AddMilliseconds(Math.Max(ResurrectionInterval, CorpsePreservationDuration + 5000));
 
-       var guardKill = (attacker is GuardObject) ? true : false;
+        var guardKill = (attacker is GuardObject) ? true : false;
 
         (attacker as PetObject)?.GainExperience();
         if (Grade == MonsterGradeType.DarkGateMonster)
