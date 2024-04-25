@@ -265,7 +265,7 @@ public sealed class MonsterObject : MapObject
             return;
         }
 
-        ResurrectionTime = SEngine.CurrentTime.AddMilliseconds(resInterval);
+        ResurrectionTime = SEngine.CurrentTime.AddMilliseconds(ResurrectionInterval);
         Blocking = false;
         Disappeared = true;
         Dead = true;
