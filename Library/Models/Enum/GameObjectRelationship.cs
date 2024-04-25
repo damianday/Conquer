@@ -1,7 +1,5 @@
 ﻿using System;
 
-namespace GameServer.Template;
-
 [Flags]
 public enum GameObjectRelationship
 {
