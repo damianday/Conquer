@@ -437,8 +437,8 @@ public sealed class Map
             else
                 edge = SEngine.Random.Next(10, 30);
 
-            position.X = edge + SEngine.Random.Next(MapSize.Width - edge);
-            position.Y = edge + SEngine.Random.Next(MapSize.Height - edge);
+            position.X = StartPoint.X + (edge + SEngine.Random.Next(MapSize.Width - edge));
+            position.Y = StartPoint.Y + (edge + SEngine.Random.Next(MapSize.Height - edge));
         }
 
         position.X = Math.Clamp(position.X, StartPoint.X, EndPoint.X);
