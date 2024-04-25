@@ -2314,17 +2314,13 @@ public partial class SMain
         tabPage37 = new TabPage();
         groupBox135 = new GroupBox();
         label623 = new Label();
-        珍宝模块切换 = new NumericUpDown();
         label625 = new Label();
         groupBox134 = new GroupBox();
         label621 = new Label();
-        称号属性切换 = new NumericUpDown();
         label624 = new Label();
         groupBox133 = new GroupBox();
         label620 = new Label();
-        坐骑属性切换 = new NumericUpDown();
         label619 = new Label();
-        坐骑骑乘切换 = new NumericUpDown();
         label445 = new Label();
         label8 = new Label();
         SettingsPage = new TabPage();
@@ -3776,12 +3772,8 @@ public partial class SMain
         ((ISupportInitialize)S_平台元宝充值模块).BeginInit();
         tabPage37.SuspendLayout();
         groupBox135.SuspendLayout();
-        ((ISupportInitialize)珍宝模块切换).BeginInit();
         groupBox134.SuspendLayout();
-        ((ISupportInitialize)称号属性切换).BeginInit();
         groupBox133.SuspendLayout();
-        ((ISupportInitialize)坐骑属性切换).BeginInit();
-        ((ISupportInitialize)坐骑骑乘切换).BeginInit();
         SettingsPage.SuspendLayout();
         S_游戏数据分组.SuspendLayout();
         S_游戏设置分组.SuspendLayout();
@@ -32275,7 +32267,6 @@ public partial class SMain
         // groupBox135
         // 
         groupBox135.Controls.Add(label623);
-        groupBox135.Controls.Add(珍宝模块切换);
         groupBox135.Controls.Add(label625);
         groupBox135.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
         groupBox135.Location = new Point(552, 17);
@@ -32297,17 +32288,6 @@ public partial class SMain
         label623.TabIndex = 43;
         label623.Text = "0 Read TXT Format\r\n\r\n1 Read CSV Format\r\n";
         // 
-        // 珍宝模块切换
-        // 
-        珍宝模块切换.Location = new Point(108, 31);
-        珍宝模块切换.Margin = new Padding(4, 3, 4, 3);
-        珍宝模块切换.Maximum = new decimal(new int[] { 1, 0, 0, 0 });
-        珍宝模块切换.Name = "珍宝模块切换";
-        珍宝模块切换.Size = new Size(70, 23);
-        珍宝模块切换.TabIndex = 40;
-        珍宝模块切换.TextAlign = HorizontalAlignment.Center;
-        珍宝模块切换.ValueChanged += (this.珍宝模块切换_ValueChanged);
-        // 
         // label625
         // 
         label625.AutoSize = true;
@@ -32321,7 +32301,6 @@ public partial class SMain
         // groupBox134
         // 
         groupBox134.Controls.Add(label621);
-        groupBox134.Controls.Add(称号属性切换);
         groupBox134.Controls.Add(label624);
         groupBox134.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
         groupBox134.Location = new Point(352, 17);
@@ -32343,17 +32322,6 @@ public partial class SMain
         label621.TabIndex = 43;
         label621.Text = "0 Read TXT Format\r\n\r\n1 Read CSV Format\r\n";
         // 
-        // 称号属性切换
-        // 
-        称号属性切换.Location = new Point(92, 31);
-        称号属性切换.Margin = new Padding(4, 3, 4, 3);
-        称号属性切换.Maximum = new decimal(new int[] { 1, 0, 0, 0 });
-        称号属性切换.Name = "称号属性切换";
-        称号属性切换.Size = new Size(70, 23);
-        称号属性切换.TabIndex = 40;
-        称号属性切换.TextAlign = HorizontalAlignment.Center;
-        称号属性切换.ValueChanged += (this.称号属性切换_ValueChanged);
-        // 
         // label624
         // 
         label624.AutoSize = true;
@@ -32367,9 +32335,7 @@ public partial class SMain
         // groupBox133
         // 
         groupBox133.Controls.Add(label620);
-        groupBox133.Controls.Add(坐骑属性切换);
         groupBox133.Controls.Add(label619);
-        groupBox133.Controls.Add(坐骑骑乘切换);
         groupBox133.Controls.Add(label445);
         groupBox133.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
         groupBox133.Location = new Point(20, 17);
@@ -32391,17 +32357,6 @@ public partial class SMain
         label620.TabIndex = 43;
         label620.Text = "0 Read TXT Format\r\n\r\n1 Read CSV Format";
         // 
-        // 坐骑属性切换
-        // 
-        坐骑属性切换.Location = new Point(131, 66);
-        坐骑属性切换.Margin = new Padding(4, 3, 4, 3);
-        坐骑属性切换.Maximum = new decimal(new int[] { 1, 0, 0, 0 });
-        坐骑属性切换.Name = "坐骑属性切换";
-        坐骑属性切换.Size = new Size(70, 23);
-        坐骑属性切换.TabIndex = 42;
-        坐骑属性切换.TextAlign = HorizontalAlignment.Center;
-        坐骑属性切换.ValueChanged += (this.坐骑属性切换_ValueChanged);
-        // 
         // label619
         // 
         label619.AutoSize = true;
@@ -32411,17 +32366,6 @@ public partial class SMain
         label619.Size = new Size(109, 15);
         label619.TabIndex = 41;
         label619.Text = "Mount Royal Beast";
-        // 
-        // 坐骑骑乘切换
-        // 
-        坐骑骑乘切换.Location = new Point(131, 31);
-        坐骑骑乘切换.Margin = new Padding(4, 3, 4, 3);
-        坐骑骑乘切换.Maximum = new decimal(new int[] { 1, 0, 0, 0 });
-        坐骑骑乘切换.Name = "坐骑骑乘切换";
-        坐骑骑乘切换.Size = new Size(70, 23);
-        坐骑骑乘切换.TabIndex = 40;
-        坐骑骑乘切换.TextAlign = HorizontalAlignment.Center;
-        坐骑骑乘切换.ValueChanged += (this.坐骑骑乘切换_ValueChanged);
         // 
         // label445
         // 
@@ -36457,14 +36401,10 @@ public partial class SMain
         tabPage37.ResumeLayout(false);
         groupBox135.ResumeLayout(false);
         groupBox135.PerformLayout();
-        ((ISupportInitialize)珍宝模块切换).EndInit();
         groupBox134.ResumeLayout(false);
         groupBox134.PerformLayout();
-        ((ISupportInitialize)称号属性切换).EndInit();
         groupBox133.ResumeLayout(false);
         groupBox133.PerformLayout();
-        ((ISupportInitialize)坐骑属性切换).EndInit();
-        ((ISupportInitialize)坐骑骑乘切换).EndInit();
         SettingsPage.ResumeLayout(false);
         SettingsPage.PerformLayout();
         S_游戏数据分组.ResumeLayout(false);
@@ -41114,15 +41054,11 @@ public partial class SMain
 
     private Label label623;
 
-    private NumericUpDown 珍宝模块切换;
-
     private Label label625;
 
     private GroupBox groupBox134;
 
     private Label label621;
-
-    private NumericUpDown 称号属性切换;
 
     private Label label624;
 
@@ -41130,11 +41066,7 @@ public partial class SMain
 
     private Label label620;
 
-    private NumericUpDown 坐骑属性切换;
-
     private Label label619;
-
-    private NumericUpDown 坐骑骑乘切换;
 
     private Label label445;
 
