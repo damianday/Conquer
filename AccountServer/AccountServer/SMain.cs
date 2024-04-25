@@ -9,7 +9,7 @@ using System.Net;
 using System.Text;
 using System.Windows.Forms;
 
-using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
+using Ionic.Zlib;
 using Properties;
 
 using AccountServer.Networking;
@@ -202,7 +202,7 @@ public partial class SMain : Form
 
         var buffer = File.ReadAllBytes(".\\GameLogin.exe");
         using var ms = new MemoryStream();
-        using var writer = new DeflaterOutputStream(ms);
+        using var writer = new DeflateStream(ms, CompressionMode.Decompress);
         writer.Write(buffer, 0, buffer.Length);
         writer.Close();
 
