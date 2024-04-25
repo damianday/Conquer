@@ -1204,7 +1204,7 @@ public class SkillObject
     {
         foreach (var kvp in HitList)
         {
-            (Caster as PlayerObject).玩家诱惑目标(this, task, kvp.Value.Target);
+            (Caster as PlayerObject).TameTarget(this, task, kvp.Value.Target);
         }
     }
 
@@ -1264,7 +1264,7 @@ public class SkillObject
 
     private void ProcessC_07_CalculateTargetTeleportation(C_07_CalculateTargetTeleportation task)
     {
-        (Caster as PlayerObject).玩家瞬间移动(this, task);
+        (Caster as PlayerObject).UserTeleportSkill(this, task);
     }
 
     public void Stop()
