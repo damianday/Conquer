@@ -1808,14 +1808,16 @@ public sealed class MonsterObject : MapObject
                 }
                 Target.Remove(kvp.Key);
             }
-            else if (!(kvp.Key is PlayerObject))
+            else if (kvp.Key is not PlayerObject)
             {
                 Target.Remove(kvp.Key);
             }
         }
-        MapObject target = (from x in Target.TargetList.Keys.ToList()
-                      orderby Target.TargetList[x].Priority descending
-                      select x).FirstOrDefault();
+
+        var target = Target.TargetList.Keys
+            .OrderBy(x => Target.TargetList[x].Priority)
+            .FirstOrDefault();
+
         hitter = (target is PlayerObject player) ? player : null;
         return hitter != null;
     }
