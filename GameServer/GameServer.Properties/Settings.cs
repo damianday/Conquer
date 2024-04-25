@@ -14550,66 +14550,6 @@ internal sealed class Settings : ApplicationSettingsBase
 
     [UserScopedSetting]
     [DebuggerNonUserCode]
-    [DefaultSettingValue("0")]
-    public int 坐骑骑乘切换
-    {
-        get
-        {
-            return (int)this["坐骑骑乘切换"];
-        }
-        set
-        {
-            this["坐骑骑乘切换"] = value;
-        }
-    }
-
-    [UserScopedSetting]
-    [DebuggerNonUserCode]
-    [DefaultSettingValue("0")]
-    public int 坐骑属性切换
-    {
-        get
-        {
-            return (int)this["坐骑属性切换"];
-        }
-        set
-        {
-            this["坐骑属性切换"] = value;
-        }
-    }
-
-    [UserScopedSetting]
-    [DebuggerNonUserCode]
-    [DefaultSettingValue("0")]
-    public int 珍宝模块切换
-    {
-        get
-        {
-            return (int)this["珍宝模块切换"];
-        }
-        set
-        {
-            this["珍宝模块切换"] = value;
-        }
-    }
-
-    [UserScopedSetting]
-    [DebuggerNonUserCode]
-    [DefaultSettingValue("0")]
-    public int 称号属性切换
-    {
-        get
-        {
-            return (int)this["称号属性切换"];
-        }
-        set
-        {
-            this["称号属性切换"] = value;
-        }
-    }
-
-    [UserScopedSetting]
-    [DebuggerNonUserCode]
     [DefaultSettingValue("30")]
     public int 全服红包等级
     {
@@ -15370,6 +15310,21 @@ internal sealed class Settings : ApplicationSettingsBase
         set
         {
             this["Gem4StoneName"] = value;
+        }
+    }
+
+    [UserScopedSetting]
+    [DebuggerNonUserCode]
+    [DefaultSettingValue("0")]
+    public int DBMethod
+    {
+        get
+        {
+            return (int)this["DBMethod"];
+        }
+        set
+        {
+            this["DBMethod"] = value;
         }
     }
 }
