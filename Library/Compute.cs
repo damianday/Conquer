@@ -111,6 +111,13 @@ public static class Compute
 
     public static bool InRange(Point start, Point end, int range) => GetDistance(start, end) <= range;
 
+    public static bool InRange(Point start, Point end, Point range)
+    {
+        int x = Math.Abs(end.X - start.X);
+        int y = Math.Abs(end.Y - start.Y);
+        return x <= range.X && y <= range.Y;
+    }
+
     public static int TimeSeconds(DateTime date)
     {
         return (int)(date - SystemTime).TotalSeconds;
