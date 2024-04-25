@@ -1,5 +1,3 @@
-namespace GameServer.Template;
-
 public enum 挂机技能序列
 {
     默认技能,
