@@ -23,22 +23,20 @@ public sealed class SummonMonster : GMCommand
 
     public override void ExecuteCommand()
     {
-        GameMap value2;
         if (!MonsterInfo.DataSheet.TryGetValue(Name, out var moni))
         {
             SMain.AddCommandLog("<= @" + GetType().Name + " Command execution failed, monster " + Name + " does not exist");
+            return;
         }
-        else if (!GameMap.DataSheet.TryGetValue(MapID, out value2))
+
+        var map = MapManager.GetMap(MapID);
+        if (map == null)
         {
             SMain.AddCommandLog($"<= @{GetType().Name} Command execution failed, map {MapID} does not exist");
+            return;
         }
-        else
-        {
-            var map = MapManager.GetMap(value2.MapID);
-            new MonsterObject(moni, map, int.MaxValue, new Point[1]
-            {
-                new Point(MapX, MapY)
-            }, forbidResurrection: true, true).SurvivalTime = DateTime.MaxValue;
-        }
+
+        new MonsterObject(moni, map, int.MaxValue, new Point(MapX, MapY), 1,
+            forbidResurrection: true, true).SurvivalTime = DateTime.MaxValue;
     }
 }
