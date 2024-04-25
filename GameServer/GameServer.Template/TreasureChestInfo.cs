@@ -1,5 +1,9 @@
+using CsvHelper;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Text;
 
 namespace GameServer.Template;
 
@@ -26,45 +30,87 @@ public sealed class TreasureChestInfo
     {
         DataSheet = new Dictionary<int, TreasureChestInfo>();
 
-        if (!DBAgent.X.Connected)
-            return;
-
-        try
+        if (Config.DBMethod == 1)
         {
-            var qstr = "SELECT * FROM TreasureChest";
-            using (var connection = DBAgent.X.DB.GetConnection())
-            {
-                using var command = DBAgent.X.DB.GetCommand(connection, qstr);
+            if (!DBAgent.X.Connected)
+                return;
 
-                using var reader = command.ExecuteReader();
-                if (reader != null)
+            try
+            {
+                var qstr = "SELECT * FROM TreasureChest";
+                using (var connection = DBAgent.X.DB.GetConnection())
                 {
-                    while (reader.Read() == true)
+                    using var command = DBAgent.X.DB.GetCommand(connection, qstr);
+
+                    using var reader = command.ExecuteReader();
+                    if (reader != null)
                     {
-                        var obj = new TreasureChestInfo
+                        while (reader.Read() == true)
                         {
-                            ChestID = reader.GetInt32("ChestID"),
-                            Item1ID = reader.GetInt32("Item1ID"),
-                            Item1Quantity = reader.GetInt32("Item1Quantity"),
-                            Item2ID = reader.GetInt32("Item2ID"),
-                            Item2Quantity = reader.GetInt32("Item2Quantity"),
-                            Item3ID = reader.GetInt32("Item3ID"),
-                            Item3Quantity = reader.GetInt32("Item3Quantity"),
-                            Item4ID = reader.GetInt32("Item4ID"),
-                            Item4Quantity = reader.GetInt32("Item4Quantity"),
-                            Item5ID = reader.GetInt32("Item5ID"),
-                            Item5Quantity = reader.GetInt32("Item5Quantity"),
-                            Item6ID = reader.GetInt32("Item6ID"),
-                            Item6Quantity = reader.GetInt32("Item6Quantity")
-                        };
-                        DataSheet.Add(obj.ChestID, obj);
+                            var obj = new TreasureChestInfo
+                            {
+                                ChestID = reader.GetInt32("ChestID"),
+                                Item1ID = reader.GetInt32("Item1ID"),
+                                Item1Quantity = reader.GetInt32("Item1Quantity"),
+                                Item2ID = reader.GetInt32("Item2ID"),
+                                Item2Quantity = reader.GetInt32("Item2Quantity"),
+                                Item3ID = reader.GetInt32("Item3ID"),
+                                Item3Quantity = reader.GetInt32("Item3Quantity"),
+                                Item4ID = reader.GetInt32("Item4ID"),
+                                Item4Quantity = reader.GetInt32("Item4Quantity"),
+                                Item5ID = reader.GetInt32("Item5ID"),
+                                Item5Quantity = reader.GetInt32("Item5Quantity"),
+                                Item6ID = reader.GetInt32("Item6ID"),
+                                Item6Quantity = reader.GetInt32("Item6Quantity")
+                            };
+                            DataSheet.Add(obj.ChestID, obj);
+                        }
                     }
                 }
             }
+            catch (Exception err)
+            {
+                SMain.AddSystemLog(err.ToString());
+            }
         }
-        catch (Exception err)
+
+        if (Config.DBMethod == 2)
         {
-            SMain.AddSystemLog(err.ToString());
+            var path = Config.GameDataPath + "\\System\\Items";
+            if (!Directory.Exists(path))
+                return;
+
+            using var reader = new StreamReader(path + "\\TreasureChestData.csv", Encoding.GetEncoding("GB18030"));
+            using var csvReader = new CsvReader(reader, CultureInfo.InvariantCulture);
+            csvReader.Read();
+            csvReader.ReadHeader();
+            try
+            {
+                while (csvReader.Read())
+                {
+                    TreasureChestInfo obj = new TreasureChestInfo
+                    {
+                        ChestID = csvReader.GetField<int>("ChestID"),
+                        Item1ID = csvReader.GetField<int>("Item1ID"),
+                        Item1Quantity = csvReader.GetField<int>("Item1Quantity"),
+                        Item2ID = csvReader.GetField<int>("Item2ID"),
+                        Item2Quantity = csvReader.GetField<int>("Item2Quantity"),
+                        Item3ID = csvReader.GetField<int>("Item3ID"),
+                        Item3Quantity = csvReader.GetField<int>("Item3Quantity"),
+                        Item4ID = csvReader.GetField<int>("Item4ID"),
+                        Item4Quantity = csvReader.GetField<int>("Item4Quantity"),
+                        Item5ID = csvReader.GetField<int>("Item5ID"),
+                        Item5Quantity = csvReader.GetField<int>("Item5Quantity"),
+                        Item6ID = csvReader.GetField<int>("Item6ID"),
+                        Item6Quantity = csvReader.GetField<int>("Item6Quantity")
+                    };
+                    DataSheet.Add(obj.ChestID, obj);
+                }
+            }
+            catch (Exception ex)
+            {
+                SEngine.AddSystemLog(ex.Message);
+            }
         }
     }
 }
