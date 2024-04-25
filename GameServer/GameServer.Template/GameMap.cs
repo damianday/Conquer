@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace GameServer.Template;
 
@@ -23,44 +24,58 @@ public sealed class GameMap
     {
         DataSheet = new Dictionary<byte, GameMap>();
 
-        if (!DBAgent.X.Connected)
-            return;
-
-        try
+        if (Config.DBMethod == 0)
         {
-            var qstr = "SELECT * FROM Maps";
-            using (var connection = DBAgent.X.DB.GetConnection())
-            {
-                using var command = DBAgent.X.DB.GetCommand(connection, qstr);
+            var path = Config.GameDataPath + "\\System\\GameMap\\Maps";
+            if (!Directory.Exists(path))
+                return;
 
-                using var reader = command.ExecuteReader();
-                if (reader != null)
+            var array = Serializer.Deserialize<GameMap>(path);
+            foreach (var obj in array)
+                DataSheet.Add(obj.MapID, obj);
+        }
+
+        if (Config.DBMethod == 1)
+        {
+            if (!DBAgent.X.Connected)
+                return;
+
+            try
+            {
+                var qstr = "SELECT * FROM Maps";
+                using (var connection = DBAgent.X.DB.GetConnection())
                 {
-                    while (reader.Read() == true)
+                    using var command = DBAgent.X.DB.GetCommand(connection, qstr);
+
+                    using var reader = command.ExecuteReader();
+                    if (reader != null)
                     {
-                        var map = new GameMap
+                        while (reader.Read() == true)
                         {
-                            MapID = reader.GetByte("MapID"),
-                            MapName = reader.GetString("MapName"),
-                            MapFile = reader.GetString("MapFile"),
-                            TerrainFile = reader.GetString("TerrainFile"),
-                            LimitPlayers = reader.GetInt32("LimitPlayers"),
-                            MinLevel = reader.GetByte("MinLevel"),
-                            LimitInstances = reader.GetByte("LimitInstances"),
-                            NoReconnect = reader.GetBoolean("NoReconnect"),
-                            NoReconnectMapID = reader.GetByte("NoReconnectMapID"),
-                            QuestMap = reader.GetBoolean("QuestMap"),
-                            MineMap = reader.GetByte("MineMap")
-                        };
-                        DataSheet.Add(map.MapID, map);
+                            var map = new GameMap
+                            {
+                                MapID = reader.GetByte("MapID"),
+                                MapName = reader.GetString("MapName"),
+                                MapFile = reader.GetString("MapFile"),
+                                TerrainFile = reader.GetString("TerrainFile"),
+                                LimitPlayers = reader.GetInt32("LimitPlayers"),
+                                MinLevel = reader.GetByte("MinLevel"),
+                                LimitInstances = reader.GetByte("LimitInstances"),
+                                NoReconnect = reader.GetBoolean("NoReconnect"),
+                                NoReconnectMapID = reader.GetByte("NoReconnectMapID"),
+                                QuestMap = reader.GetBoolean("QuestMap"),
+                                MineMap = reader.GetByte("MineMap")
+                            };
+                            DataSheet.Add(map.MapID, map);
+                        }
                     }
                 }
             }
-        }
-        catch (Exception err)
-        {
-            SMain.AddSystemLog(err.ToString());
-            return;
+            catch (Exception err)
+            {
+                SMain.AddSystemLog(err.ToString());
+                return;
+            }
         }
     }
 
