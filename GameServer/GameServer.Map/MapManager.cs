@@ -163,32 +163,22 @@ public static class MapManager
     {
         static GuildInfo FindGuild(Map map)
         {
-            bool flag = true;
             GuildInfo guild = null;
-            foreach (var point in 皇宫随机区域.RangeCoordinates)
+
+            foreach (var player in Players.Values)
             {
-                foreach (var obj in map[point])
-                {
-                    if (!obj.Dead && obj is PlayerObject player)
-                    {
-                        if (player.Guild == null || !SiegeGuilds.Contains(player.Guild))
-                        {
-                            flag = false;
-                            break;
-                        }
-                        if (guild == null)
-                        {
-                            guild = player.Guild;
-                        }
-                        else if (guild != player.Guild)
-                        {
-                            flag = false;
-                            break;
-                        }
-                    }
-                }
-                if (!flag) break;
+                if (player.Dead) continue;
+
+                if (!Compute.InRange(皇宫随机区域.Coordinates, player.CurrentPosition, 皇宫随机区域.AreaRadius)) continue;
+
+                if (player.Guild == null || !SiegeGuilds.Contains(player.Guild))
+                    break;
+                if (guild == null)
+                    guild = player.Guild;
+                else if (guild != player.Guild)
+                    break;
             }
+
             return guild;
         }
 
@@ -300,23 +290,23 @@ public static class MapManager
         {
             SandCityStage = 2;
             MonsterInfo.DataSheet.TryGetValue("沙巴克城门", out var value);
-            MonsterObject 怪物实例2 = new MonsterObject(value, map, int.MaxValue, new Point[1] { 沙城城门坐标 }, true, true);
-            怪物实例2.CurrentDirection = GameDirection.UpRight;
-            怪物实例2.SurvivalTime = DateTime.MaxValue;
-            沙城城门 = 怪物实例2;
+            沙城城门 = new MonsterObject(value, map, int.MaxValue, 沙城城门坐标, 1, true, true);
+            沙城城门.CurrentDirection = GameDirection.UpRight;
+            沙城城门.SurvivalTime = DateTime.MaxValue;
+
             MonsterInfo.DataSheet.TryGetValue("沙巴克宫门", out var value2);
-            怪物实例2 = new MonsterObject(value2, map, int.MaxValue, new Point[1] { 皇宫上门坐标 }, true, true);
-            怪物实例2.CurrentDirection = GameDirection.DownRight;
-            怪物实例2.SurvivalTime = DateTime.MaxValue;
-            上方宫门 = 怪物实例2;
-            怪物实例2 = new MonsterObject(value2, map, int.MaxValue, new Point[1] { 皇宫下门坐标 }, true, true);
-            怪物实例2.CurrentDirection = GameDirection.DownRight;
-            怪物实例2.SurvivalTime = DateTime.MaxValue;
-            下方宫门 = 怪物实例2;
-            怪物实例2 = new MonsterObject(value2, map, int.MaxValue, new Point[1] { 皇宫左门坐标 }, true, true);
-            怪物实例2.CurrentDirection = GameDirection.DownLeft;
-            怪物实例2.SurvivalTime = DateTime.MaxValue;
-            左方宫门 = 怪物实例2;
+            上方宫门 = new MonsterObject(value2, map, int.MaxValue, 皇宫上门坐标, 1, true, true);
+            上方宫门.CurrentDirection = GameDirection.DownRight;
+            上方宫门.SurvivalTime = DateTime.MaxValue;
+
+            下方宫门 = new MonsterObject(value2, map, int.MaxValue, 皇宫下门坐标, 1, true, true);
+            下方宫门.CurrentDirection = GameDirection.DownRight;
+            下方宫门.SurvivalTime = DateTime.MaxValue;
+
+            左方宫门 = new MonsterObject(value2, map, int.MaxValue, 皇宫左门坐标, 1, true, true);
+            左方宫门.CurrentDirection = GameDirection.DownLeft;
+            左方宫门.SurvivalTime = DateTime.MaxValue;
+
             GameBuff.DataSheet.TryGetValue(22300, out var value3);
             沙城城门.AddBuff(value3.ID, 沙城城门);
             上方宫门.AddBuff(value3.ID, 上方宫门);
@@ -475,11 +465,9 @@ public static class MapManager
             {
                 if (SEngine.CurrentTime.Hour == Config.世界BOSS时间 && MonsterInfo.DataSheet.TryGetValue(Config.世界BOSS名字, out var value))
                 {
-                    Map 出生地图 = GetMap(74);
-                    魔火龙 = new MonsterObject(value, 出生地图, int.MaxValue, new Point[1]
-                    {
-                        new Point(1043, 176)
-                    }, forbidResurrection: true, 立即刷新: true)
+                    Map map = GetMap(74);
+                    魔火龙 = new MonsterObject(value, map, int.MaxValue, new Point(1043, 176), 1,
+                        forbidResurrection: true, 立即刷新: true)
                     {
                         CurrentDirection = GameDirection.UpRight,
                         SurvivalTime = DateTime.MaxValue
@@ -493,10 +481,8 @@ public static class MapManager
                 if (SEngine.CurrentTime.Hour == Config.BOSS一时间 && MonsterInfo.DataSheet.TryGetValue(Config.BOSS名字一, out var value2))
                 {
                     Map 出生地图2 = GetMap(Config.BOSS一地图编号);
-                    BOSS名字一 = new MonsterObject(value2, 出生地图2, int.MaxValue, new Point[1]
-                    {
-                        new Point(Config.BOSS一坐标X, Config.BOSS一坐标Y)
-                    }, forbidResurrection: true, 立即刷新: true)
+                    BOSS名字一 = new MonsterObject(value2, 出生地图2, int.MaxValue, new Point(Config.BOSS一坐标X, Config.BOSS一坐标Y), 1,
+                        forbidResurrection: true, 立即刷新: true)
                     {
                         CurrentDirection = GameDirection.UpRight,
                         SurvivalTime = DateTime.MaxValue
@@ -510,10 +496,8 @@ public static class MapManager
                 if (SEngine.CurrentTime.Hour == Config.BOSS二时间 && MonsterInfo.DataSheet.TryGetValue(Config.BOSS名字二, out var value3))
                 {
                     Map 出生地图3 = GetMap(Config.BOSS二地图编号);
-                    BOSS名字二 = new MonsterObject(value3, 出生地图3, int.MaxValue, new Point[1]
-                    {
-                        new Point(Config.BOSS二坐标X, Config.BOSS二坐标Y)
-                    }, forbidResurrection: true, 立即刷新: true)
+                    BOSS名字二 = new MonsterObject(value3, 出生地图3, int.MaxValue, new Point(Config.BOSS二坐标X, Config.BOSS二坐标Y), 1,
+                        forbidResurrection: true, 立即刷新: true)
                     {
                         CurrentDirection = GameDirection.UpRight,
                         SurvivalTime = DateTime.MaxValue
@@ -527,10 +511,8 @@ public static class MapManager
                 if (SEngine.CurrentTime.Hour == Config.BOSS三时间 && MonsterInfo.DataSheet.TryGetValue(Config.BOSS名字三, out var value4))
                 {
                     Map 出生地图4 = GetMap(Config.BOSS三地图编号);
-                    BOSS名字三 = new MonsterObject(value4, 出生地图4, int.MaxValue, new Point[1]
-                    {
-                        new Point(Config.BOSS三坐标X, Config.BOSS三坐标Y)
-                    }, forbidResurrection: true, 立即刷新: true)
+                    BOSS名字三 = new MonsterObject(value4, 出生地图4, int.MaxValue, new Point(Config.BOSS三坐标X, Config.BOSS三坐标Y), 1,
+                        forbidResurrection: true, 立即刷新: true)
                     {
                         CurrentDirection = GameDirection.UpRight,
                         SurvivalTime = DateTime.MaxValue
@@ -544,10 +526,8 @@ public static class MapManager
                 if (SEngine.CurrentTime.Hour == Config.BOSS四时间 && MonsterInfo.DataSheet.TryGetValue(Config.BOSS名字四, out var value5))
                 {
                     Map 出生地图5 = GetMap(Config.BOSS四地图编号);
-                    BOSS名字四 = new MonsterObject(value5, 出生地图5, int.MaxValue, new Point[1]
-                    {
-                        new Point(Config.BOSS四坐标X, Config.BOSS四坐标Y)
-                    }, forbidResurrection: true, 立即刷新: true)
+                    BOSS名字四 = new MonsterObject(value5, 出生地图5, int.MaxValue, new Point(Config.BOSS四坐标X, Config.BOSS四坐标Y), 1,
+                        forbidResurrection: true, 立即刷新: true)
                     {
                         CurrentDirection = GameDirection.UpRight,
                         SurvivalTime = DateTime.MaxValue
@@ -561,10 +541,8 @@ public static class MapManager
                 if (SEngine.CurrentTime.Hour == Config.BOSS五时间 && MonsterInfo.DataSheet.TryGetValue(Config.BOSS名字五, out var value6))
                 {
                     Map 出生地图6 = GetMap(Config.BOSS五地图编号);
-                    BOSS名字五 = new MonsterObject(value6, 出生地图6, int.MaxValue, new Point[1]
-                    {
-                        new Point(Config.BOSS五坐标X, Config.BOSS五坐标Y)
-                    }, forbidResurrection: true, 立即刷新: true)
+                    BOSS名字五 = new MonsterObject(value6, 出生地图6, int.MaxValue, new Point(Config.BOSS五坐标X, Config.BOSS五坐标Y), 1,
+                        forbidResurrection: true, 立即刷新: true)
                     {
                         CurrentDirection = GameDirection.UpRight,
                         SurvivalTime = DateTime.MaxValue
@@ -748,17 +726,16 @@ public static class MapManager
                 foreach (MonsterSpawn spawn in map.Spawns)
                 {
                     if (spawn.Spawns == null) continue;
-                    
-                    Point[] locations = spawn.RangeCoordinates.ToArray();
+
                     foreach (MonsterSpawnInfo spawni in spawn.Spawns)
                     {
-                        if (MonsterInfo.DataSheet.TryGetValue(spawni.MonsterName, out var value))
+                        if (MonsterInfo.DataSheet.TryGetValue(spawni.MonsterName, out var moni))
                         {
-                            SMain.添加怪物数据(value);
+                            SMain.添加怪物数据(moni);
                             int duration = spawni.RevivalInterval * 60 * 1000;
                             for (int i = 0; i < spawni.SpawnCount; i++)
                             {
-                                new MonsterObject(value, map, duration, locations, forbidResurrection: false, 立即刷新: true);
+                                new MonsterObject(moni, map, duration, spawn.Coordinates, spawn.AreaRadius, false, true);
                             }
                         }
                     }
