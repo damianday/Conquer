@@ -3886,7 +3886,7 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 玩家杀怪增加()
+    public void IncreasePlayerKills()
     {
         if (Character.MonsterKillCount.V >= Config.暗之门杀怪触发 && Config.暗之门开关 == 1)
         {
