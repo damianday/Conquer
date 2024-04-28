@@ -9,8 +9,14 @@ namespace GameServer;
 
 public class Config
 {
-    public static bool SendPacketsAsync = true;
+    [JsonIgnore]
+    public const string SettingFile = "!Settings.txt";
+
+    [JsonIgnore]
     public static int CurrentVersion = 10;
+
+    public static bool SendPacketsAsync = true;
+
     public static string 系统公告内容 = string.Empty;
     public static string GameDataPath = "..\\Database";
     public static string DataBackupPath = ".\\Backup";
@@ -1025,8 +1031,8 @@ public class Config
     public static string 变性内容控件 = "输入密码";
     public static string 挂机权限选项 = "输入密码";
     public static string 合成模块控件 = "输入密码";
-    public static bool DebugPackets { get; set; } = false;
-    public static bool GuardKillWillDrop { get; set; } = false;
+
+    public static bool GuardKillWillDrop = false;
     public static string GoldStoneName = "GoldOre";
     public static string SilverStoneName = "SilverOre";
     public static string IronStoneName = "IronOre";
@@ -1040,10 +1046,10 @@ public class Config
 
     public static void Load()
     {
-        if (!File.Exists("!Settings.txt"))
+        if (!File.Exists(SettingFile))
             return;
 
-        var json = File.ReadAllText("!Settings.txt");
+        var json = File.ReadAllText(SettingFile);
         var settings = new JsonSerializerSettings
         {
             DefaultValueHandling = DefaultValueHandling.Ignore,
@@ -1059,6 +1065,7 @@ public class Config
             var destinationProp = destinationProperties
                 .SingleOrDefault(p => p.Name.Equals(prop.Name, StringComparison.OrdinalIgnoreCase));
             if (destinationProp == null) continue;
+            if (destinationProp.IsLiteral && !destinationProp.IsInitOnly) continue; // Is a const field
             var value = ((JValue)prop.Value).Value;
             //The ChangeType is required because JSON.Net will deserialise
             //numbers as long by default
@@ -1079,6 +1086,6 @@ public class Config
         var myType = typeof(Config);
         var TypeBlob = myType.GetFields().ToDictionary(x => x.Name, x => x.GetValue(null));
         var json = JsonConvert.SerializeObject(TypeBlob, settings);
-        File.WriteAllText("!Settings.txt", json);
+        File.WriteAllText(SettingFile, json);
     }
 }
