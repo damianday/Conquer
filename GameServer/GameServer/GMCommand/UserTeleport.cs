@@ -1,12 +1,10 @@
 using System.Drawing;
-using System.Linq;
 using GameServer.Map;
 using GameServer.Database;
-using GameServer.Template;
 
 namespace GameServer;
 
-public sealed class CharacterTeleport : GMCommand
+public sealed class UserTeleport : GMCommand
 {
     [FieldDescription(0)]
     public string UserName;
