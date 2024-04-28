@@ -25673,7 +25673,7 @@ public sealed class PlayerObject : MapObject
     {
         switch (channel)
         {
-            case 2415919105u:
+            case 0x90000001:
                 {
                     var message = Encoding.UTF8.GetString(data).Trim('\0');
                     if (message.StartsWith("@"))
@@ -25793,7 +25793,7 @@ public sealed class PlayerObject : MapObject
                     break;
                 }
 
-            case 2415919107u:
+            case 0x90000003:
                 {
                     switch (msgtype)
                     {
@@ -25870,7 +25870,7 @@ public sealed class PlayerObject : MapObject
                     using var ms = new MemoryStream();
                     using var writer = new BinaryWriter(ms);
                     writer.Write(ObjectID);
-                    writer.Write(1879048192);
+                    writer.Write(0x70000000u);
                     writer.Write(1);
                     writer.Write((int)CurrentLevel);
                     writer.Write(data);
@@ -25897,7 +25897,7 @@ public sealed class PlayerObject : MapObject
                     using var ms = new MemoryStream();
                     using var writer = new BinaryWriter(ms);
                     writer.Write(ObjectID);
-                    writer.Write(1610612736);
+                    writer.Write(0x60000000u);
                     writer.Write(1);
                     writer.Write((int)CurrentLevel);
                     writer.Write(data);
