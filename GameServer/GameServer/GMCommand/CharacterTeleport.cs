@@ -30,11 +30,14 @@ public sealed class CharacterTeleport : GMCommand
             SMain.AddCommandLog("<= @" + GetType().Name + " Command execution failed, the character " + UserName + " does not exist");
             return;
         }
-        if (!GameMap.DataSheet.TryGetValue(MapID, out var value2))
+
+        var map = MapManager.GetMap(MapID);
+        if (map == null)
         {
             SMain.AddCommandLog($"<= @{GetType().Name} Command execution failed, map {MapID} does not exist");
             return;
         }
+
         var player = character.Connection?.Player;
         if (player == null)
         {
@@ -42,23 +45,29 @@ public sealed class CharacterTeleport : GMCommand
             return;
         }
 
-        var map = MapManager.GetMap(value2.MapID);
-        var area = map.TeleportationArea ?? map.Areas.FirstOrDefault();
-        var location = ((MapX != 0 && MapY != 0) ? new Point(MapX, MapY) : (area?.RandomCoords ?? Point.Empty));
+        var location = (MapX == 0 && MapY == 0) ? map.GetRandomPosition(AreaType.Random) : new Point(MapX, MapY);
+        var found = true;
         if (location.IsEmpty)
         {
-            for (var x = 1; x < map.MapSize.X; x++)
+            found = false;
+            for (var i = 0; i < 100; i++)
             {
-                for (var y = 1; y < map.MapSize.Y; y++)
+                var point = Compute.GetPositionAround(location, i);
+                if (!map.CanMove(point))
                 {
-                    if (map.CanMove(new Point(x, y)))
-                    {
-                        location = new Point(x, y);
-                        break;
-                    }
+                    location = point;
+                    found = true;
+                    break;
                 }
             }
         }
-        player.Teleport(map, area?.RegionType ?? AreaType.Unknown, location);
+
+        if (!found)
+        {
+            SMain.AddCommandLog($"<= @{GetType().Name} Command execution failed, cannot teleport to {location}");
+            return;
+        }
+
+        player.Teleport(map, AreaType.Unknown, location);
     }
 }
