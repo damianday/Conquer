@@ -766,7 +766,7 @@ public sealed class CharacterInfo : DBObject
         CurrentDirection.V = Compute.RandomDirection();
         CurrentMap.V = 142;
         HomeMap.V = 142;
-        CurrentPosition.V = MapManager.GetMap(142).ResurrectionArea.RandomCoords;
+        CurrentPosition.V = MapManager.GetMap(142).GetRandomPosition(AreaType.Resurrection);
 
         if (Config.CurrentVersion == 0)
         {
