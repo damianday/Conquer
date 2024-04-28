@@ -623,16 +623,16 @@ public sealed class MonsterObject : MapObject
         float ratio = Compute.CalculateLevelRatio(hitter.CurrentLevel, CurrentLevel);
         int goldCount = 0;
         int itemCount = 0;
-        if (/*ratio < 1f &&*/ Config.DropRateModifier == 0)
+        if (ratio < 1f && Config.DropRateModifier == 0)
         {
             foreach (MonItemInfo drop in Drops)
             {
                 if (CurrentDropSet != drop.DropSet) continue;
 
-                if (!GameItem.DataSheetByName.TryGetValue(drop.Name, out var item) /*|| 
+                if (!GameItem.DataSheetByName.TryGetValue(drop.Name, out var item) || 
                     Compute.CalculateProbability(ratio) || 
                     (hitter.CurrentDegree == 0 && Grade != MonsterGradeType.Boss && item.Type != ItemType.可用药剂 && Compute.CalculateProbability(0.5f)) || 
-                    (hitter.CurrentDegree == 3 && Grade != MonsterGradeType.Boss && item.Type != ItemType.可用药剂 && Compute.CalculateProbability(0.25f))*/)
+                    (hitter.CurrentDegree == 3 && Grade != MonsterGradeType.Boss && item.Type != ItemType.可用药剂 && Compute.CalculateProbability(0.25f)))
                 {
                     continue;
                 }
