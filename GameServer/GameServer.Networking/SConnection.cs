@@ -1461,10 +1461,6 @@ public sealed class SConnection
         {
             Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
-        else if (P.Description.Length < 7)
-        {
-            Disconnect(new Exception($"Data too short. disconnecting.  Process: {P.GetType()},  data length:{P.Description.Length}"));
-        }
         else if (P.Description.Last() != 0)
         {
             Disconnect(new Exception($"Data error, disconnecting.  Process: {P.GetType()},  no terminator."));
@@ -1481,18 +1477,25 @@ public sealed class SConnection
         {
             Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
-        else if (P.Description.Length < 6)
-        {
-            Disconnect(new Exception($"Data too short. disconnecting.  Process: {P.GetType()},  data length:{P.Description.Length}"));
-        }
         else if (P.Description.Last() != 0)
         {
             Disconnect(new Exception($"Data error, disconnecting.  Process: {P.GetType()},  no terminator."));
         }
         else
         {
-            Player.UserSendMessage(P.Description);
+            Player.UserSendMessage(P.Param1, P.Param2, P.Description);
         }
+    }
+
+    public void Process(FilterUserMessage P)
+    {
+        if (Stage != GameStage.Game)
+        {
+            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            return;
+        }
+
+        Player.UserFilterMessage(P.Param1, P.Description);
     }
 
     public void Process(请求角色数据 P)
