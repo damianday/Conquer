@@ -25855,11 +25855,9 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void UserSendMessage(byte[] data)
+    public void UserSendMessage(ushort param1, int param2, byte[] data)
     {
-        int num = BitConverter.ToInt32(data, 0);
-        byte[] array = data.Skip(4).ToArray();
-        switch (num >> 28)
+        switch (param2 >> 28)
         {
             case 7:
                 {
@@ -25869,19 +25867,19 @@ public sealed class PlayerObject : MapObject
                         break;
                     }
 
-                    using MemoryStream memoryStream3 = new MemoryStream();
-                    using BinaryWriter binaryWriter3 = new BinaryWriter(memoryStream3);
-                    binaryWriter3.Write(ObjectID);
-                    binaryWriter3.Write(1879048192);
-                    binaryWriter3.Write(1);
-                    binaryWriter3.Write((int)CurrentLevel);
-                    binaryWriter3.Write(array);
-                    binaryWriter3.Write(Encoding.UTF8.GetBytes(Name + "\0"));
+                    using var ms = new MemoryStream();
+                    using var writer = new BinaryWriter(ms);
+                    writer.Write(ObjectID);
+                    writer.Write(1879048192);
+                    writer.Write(1);
+                    writer.Write((int)CurrentLevel);
+                    writer.Write(data);
+                    writer.Write(Encoding.UTF8.GetBytes(Name + "\0"));
                     Team.Broadcast(new SystemMessagePacket
                     {
-                        Description = memoryStream3.ToArray()
+                        Description = ms.ToArray()
                     });
-                    SEngine.AddChatLog("[队伍][" + Name + "]: ", array);
+                    SEngine.AddChatLog("[队伍][" + Name + "]: ", data);
                     break;
                 }
             case 6:
@@ -25896,27 +25894,27 @@ public sealed class PlayerObject : MapObject
                         Enqueue(new SocialErrorPacket { ErrorCode = 4870 });
                         break;
                     }
-                    using MemoryStream memoryStream4 = new MemoryStream();
-                    using BinaryWriter binaryWriter4 = new BinaryWriter(memoryStream4);
-                    binaryWriter4.Write(ObjectID);
-                    binaryWriter4.Write(1610612736);
-                    binaryWriter4.Write(1);
-                    binaryWriter4.Write((int)CurrentLevel);
-                    binaryWriter4.Write(array);
-                    binaryWriter4.Write(Encoding.UTF8.GetBytes(Name));
-                    binaryWriter4.Write((byte)0);
+                    using var ms = new MemoryStream();
+                    using var writer = new BinaryWriter(ms);
+                    writer.Write(ObjectID);
+                    writer.Write(1610612736);
+                    writer.Write(1);
+                    writer.Write((int)CurrentLevel);
+                    writer.Write(data);
+                    writer.Write(Encoding.UTF8.GetBytes(Name));
+                    writer.Write((byte)0);
                     Guild.Broadcast(new SystemMessagePacket
                     {
-                        Description = memoryStream4.ToArray()
+                        Description = ms.ToArray()
                     });
-                    SEngine.AddChatLog("[行会][" + Name + "]: ", array);
+                    SEngine.AddChatLog("[行会][" + Name + "]: ", data);
                     break;
                 }
             case 0:
                 {
-                    if (Session.CharacterInfoTable.DataSheet.TryGetValue(num, out var value) && value is CharacterInfo character)
+                    if (Session.CharacterInfoTable.DataSheet.TryGetValue(param2, out var value) && value is CharacterInfo character)
                     {
-                        if (ObjectID == character.ID || this.Character.黑名单表.Contains(this.Character) || character.Connection == null)
+                        if (ObjectID == character.ID || this.Character.黑名单表.Contains(this.Character) || !character.Online)
                         {
                             break;
                         }
@@ -25928,7 +25926,7 @@ public sealed class PlayerObject : MapObject
                             binaryWriter.Write(ObjectID);
                             binaryWriter.Write(1);
                             binaryWriter.Write((int)CurrentLevel);
-                            binaryWriter.Write(array);
+                            binaryWriter.Write(data);
                             binaryWriter.Write(Encoding.UTF8.GetBytes(Name));
                             binaryWriter.Write((byte)0);
                             字节描述 = memoryStream.ToArray();
@@ -25945,7 +25943,7 @@ public sealed class PlayerObject : MapObject
                             binaryWriter2.Write(character.ID);
                             binaryWriter2.Write(1);
                             binaryWriter2.Write((int)CurrentLevel);
-                            binaryWriter2.Write(array);
+                            binaryWriter2.Write(data);
                             binaryWriter2.Write(Encoding.UTF8.GetBytes(Name));
                             binaryWriter2.Write((byte)0);
                             字节描述2 = memoryStream2.ToArray();
@@ -25954,7 +25952,7 @@ public sealed class PlayerObject : MapObject
                         {
                             Description = 字节描述2
                         });
-                        SEngine.AddChatLog($"[私聊][{Name}]=>[{character.UserName}]: ", array);
+                        SEngine.AddChatLog($"[私聊][{Name}]=>[{character.UserName}]: ", data);
                     }
                     else
                     {
