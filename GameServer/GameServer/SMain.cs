@@ -1930,8 +1930,8 @@ public partial class SMain : Form
             case nameof(S_狂暴杀死物品数量): Config.狂暴杀死物品数量 = (int)control.Value; break;
             case nameof(S_狂暴开启元宝数量): Config.狂暴开启元宝数量 = (int)control.Value; break;
             case nameof(S_狂暴杀死元宝数量): Config.狂暴杀死元宝数量 = (int)control.Value; break;
-            case nameof(S_狂暴开启金币数量): Config.狂暴杀死元宝数量 = (int)control.Value; break;
-            case nameof(S_狂暴杀死金币数量): Config.狂暴杀死元宝数量 = (int)control.Value; break;
+            case nameof(S_狂暴开启金币数量): Config.狂暴开启金币数量 = (int)control.Value; break;
+            case nameof(S_狂暴杀死金币数量): Config.狂暴杀死金币数量 = (int)control.Value; break;
             case nameof(S_装备技能开关): Config.装备技能开关 = (int)control.Value; break;
             case nameof(S_御兽属性开启): Config.御兽属性开启 = (int)control.Value; break;
             case nameof(S_可摆摊地图编号): Config.可摆摊地图编号 = (int)control.Value; break;
