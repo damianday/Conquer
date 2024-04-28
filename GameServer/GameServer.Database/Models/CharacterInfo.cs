@@ -479,7 +479,7 @@ public sealed class CharacterInfo : DBObject
 
     public readonly DataMonitor<int> 地图分配线路;
 
-    public readonly DataMonitor<int> 全屏拾取开关;
+    public readonly DataMonitor<bool> AutoPickUpAllVisible;
 
     public int ID => Index.V;
 
