@@ -392,7 +392,7 @@ public sealed class MonsterObject : MapObject
         (attacker as PetObject)?.GainExperience();
         if (Grade == MonsterGradeType.DarkGateMonster)
         {
-            (attacker as PlayerObject)?.玩家杀怪增加();
+            (attacker as PlayerObject)?.IncreasePlayerKills();
         }
         
         if (SelectHitter(out var hitter))
