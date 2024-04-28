@@ -2721,15 +2721,22 @@ public sealed class PlayerObject : MapObject
         }
         if (SEngine.CurrentTime > PickUpTime)
         {
-            if (Character.全屏拾取开关.V == 0)
+            if (Character.AutoPickUpAllVisible.V == false)
             {
                 if (Character.CurrentTitle.V == Config.称号范围拾取判断 || Character.CurrentTitle.V == Config.称号范围拾取判断1)
                 {
-                    if (CurrentMap.MapID == Config.拾取地图控制1 || CurrentMap.MapID == Config.拾取地图控制2 || CurrentMap.MapID == Config.拾取地图控制3 || CurrentMap.MapID == Config.拾取地图控制4 || CurrentMap.MapID == Config.拾取地图控制5 || CurrentMap.MapID == Config.拾取地图控制6 || CurrentMap.MapID == Config.拾取地图控制7 || CurrentMap.MapID == Config.拾取地图控制8)
+                    if (CurrentMap.MapID == Config.AutoPickUpMap1 || 
+                        CurrentMap.MapID == Config.AutoPickUpMap2 || 
+                        CurrentMap.MapID == Config.AutoPickUpMap3 || 
+                        CurrentMap.MapID == Config.AutoPickUpMap4 || 
+                        CurrentMap.MapID == Config.AutoPickUpMap5 || 
+                        CurrentMap.MapID == Config.AutoPickUpMap6 || 
+                        CurrentMap.MapID == Config.AutoPickUpMap7 || 
+                        CurrentMap.MapID == Config.AutoPickUpMap8)
                     {
-                        foreach (MapObject item in CurrentMap[new Point(CurrentPosition.X, CurrentPosition.Y)].ToList())
+                        foreach (MapObject obj in CurrentMap[new Point(CurrentPosition.X, CurrentPosition.Y)].ToList())
                         {
-                            if (item is ItemObject 物品)
+                            if (obj is ItemObject 物品)
                             {
                                 PickUpItem(物品);
                             }
@@ -2872,13 +2879,20 @@ public sealed class PlayerObject : MapObject
                     PickUpTime = SEngine.CurrentTime.AddMilliseconds(300.0);
                 }
             }
-            else if (Character.全屏拾取开关.V == 1)
+            else if (Character.AutoPickUpAllVisible.V == true)
             {
-                if (CurrentMap.MapID == Config.拾取地图控制1 || CurrentMap.MapID == Config.拾取地图控制2 || CurrentMap.MapID == Config.拾取地图控制3 || CurrentMap.MapID == Config.拾取地图控制4 || CurrentMap.MapID == Config.拾取地图控制5 || CurrentMap.MapID == Config.拾取地图控制6 || CurrentMap.MapID == Config.拾取地图控制7 || CurrentMap.MapID == Config.拾取地图控制8)
+                if (CurrentMap.MapID == Config.AutoPickUpMap1 || 
+                    CurrentMap.MapID == Config.AutoPickUpMap2 || 
+                    CurrentMap.MapID == Config.AutoPickUpMap3 || 
+                    CurrentMap.MapID == Config.AutoPickUpMap4 || 
+                    CurrentMap.MapID == Config.AutoPickUpMap5 || 
+                    CurrentMap.MapID == Config.AutoPickUpMap6 || 
+                    CurrentMap.MapID == Config.AutoPickUpMap7 || 
+                    CurrentMap.MapID == Config.AutoPickUpMap8)
                 {
-                    foreach (MapObject item11 in CurrentMap[new Point(CurrentPosition.X, CurrentPosition.Y)].ToList())
+                    foreach (MapObject obj in CurrentMap[new Point(CurrentPosition.X, CurrentPosition.Y)].ToList())
                     {
-                        if (item11 is ItemObject 物品11)
+                        if (obj is ItemObject 物品11)
                         {
                             PickUpItem(物品11);
                         }
@@ -11286,16 +11300,16 @@ public sealed class PlayerObject : MapObject
                     }
                     break;
                 case 848204000:
-                    if (Config.全屏拾取开关)
+                    if (Config.AutoPickUpAllVisible)
                     {
-                        if (Character.全屏拾取开关.V == 0)
+                        if (Character.AutoPickUpAllVisible.V == false)
                         {
-                            Character.全屏拾取开关.V++;
+                            Character.AutoPickUpAllVisible.V = true;
                             NetworkManager.SendMessage(this, "全屏拾取开启");
                         }
-                        else if (Character.全屏拾取开关.V == 1)
+                        else if (Character.AutoPickUpAllVisible.V == true)
                         {
-                            Character.全屏拾取开关.V = 0;
+                            Character.AutoPickUpAllVisible.V = false;
                             NetworkManager.SendMessage(this, "全屏拾取关闭");
                         }
                     }
