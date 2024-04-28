@@ -4108,7 +4108,7 @@ public partial class SMain
         屠魔殿等级限制.TabIndex = 51;
         屠魔殿等级限制.TextAlign = HorizontalAlignment.Center;
         屠魔殿等级限制.Value = new decimal(new int[] { 25, 0, 0, 0 });
-        屠魔殿等级限制.ValueChanged += (this.屠魔殿等级限制_ValueChanged);
+        屠魔殿等级限制.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label813
         // 
@@ -4132,7 +4132,7 @@ public partial class SMain
         S_屠魔组队人数.TabIndex = 39;
         S_屠魔组队人数.TextAlign = HorizontalAlignment.Center;
         S_屠魔组队人数.Value = new decimal(new int[] { 2, 0, 0, 0 });
-        S_屠魔组队人数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_屠魔组队人数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_屠魔副本次数
         // 
@@ -4145,7 +4145,7 @@ public partial class SMain
         S_屠魔副本次数.TabIndex = 42;
         S_屠魔副本次数.TextAlign = HorizontalAlignment.Center;
         S_屠魔副本次数.Value = new decimal(new int[] { 2, 0, 0, 0 });
-        S_屠魔副本次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_屠魔副本次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label387
         // 
@@ -4167,7 +4167,7 @@ public partial class SMain
         S_屠魔爆率开关.Size = new Size(42, 22);
         S_屠魔爆率开关.TabIndex = 45;
         S_屠魔爆率开关.TextAlign = HorizontalAlignment.Center;
-        S_屠魔爆率开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_屠魔爆率开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label386
         // 
@@ -4190,7 +4190,7 @@ public partial class SMain
         S_重置屠魔副本时间.TabIndex = 48;
         S_重置屠魔副本时间.TextAlign = HorizontalAlignment.Center;
         S_重置屠魔副本时间.Value = new decimal(new int[] { 23, 0, 0, 0 });
-        S_重置屠魔副本时间.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_重置屠魔副本时间.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label281
         // 
@@ -4310,7 +4310,7 @@ public partial class SMain
         S_屠魔令回收经验.TextAlign = HorizontalAlignment.Center;
         S_屠魔令回收经验.ThousandsSeparator = true;
         S_屠魔令回收经验.Value = new decimal(new int[] { 1000000, 0, 0, 0 });
-        S_屠魔令回收经验.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_屠魔令回收经验.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_屠魔令回收数量
         // 
@@ -4322,7 +4322,7 @@ public partial class SMain
         S_屠魔令回收数量.TabIndex = 51;
         S_屠魔令回收数量.TextAlign = HorizontalAlignment.Center;
         S_屠魔令回收数量.Value = new decimal(new int[] { 1000, 0, 0, 0 });
-        S_屠魔令回收数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_屠魔令回收数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label34
         // 
@@ -4458,7 +4458,7 @@ public partial class SMain
         九层妖塔统计开关.TabIndex = 117;
         九层妖塔统计开关.TextAlign = HorizontalAlignment.Center;
         九层妖塔统计开关.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        九层妖塔统计开关.ValueChanged += (this.九层妖塔统计开关_ValueChanged);
+        九层妖塔统计开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label394
         // 
@@ -4528,7 +4528,7 @@ public partial class SMain
         S_九层妖塔数量9.TabIndex = 172;
         S_九层妖塔数量9.TextAlign = HorizontalAlignment.Center;
         S_九层妖塔数量9.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_九层妖塔数量9.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_九层妖塔数量9.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // groupBox178
         // 
@@ -4569,7 +4569,7 @@ public partial class SMain
         S_九层妖塔副本时间大.TabIndex = 95;
         S_九层妖塔副本时间大.TextAlign = HorizontalAlignment.Center;
         S_九层妖塔副本时间大.Value = new decimal(new int[] { 12, 0, 0, 0 });
-        S_九层妖塔副本时间大.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_九层妖塔副本时间大.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label718
         // 
@@ -4603,7 +4603,7 @@ public partial class SMain
         S_九层妖塔副本时间小.TabIndex = 82;
         S_九层妖塔副本时间小.TextAlign = HorizontalAlignment.Center;
         S_九层妖塔副本时间小.Value = new decimal(new int[] { 12, 0, 0, 0 });
-        S_九层妖塔副本时间小.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_九层妖塔副本时间小.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_九层妖塔数量8
         // 
@@ -4615,7 +4615,7 @@ public partial class SMain
         S_九层妖塔数量8.TabIndex = 171;
         S_九层妖塔数量8.TextAlign = HorizontalAlignment.Center;
         S_九层妖塔数量8.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_九层妖塔数量8.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_九层妖塔数量8.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_九层妖塔数量7
         // 
@@ -4627,7 +4627,7 @@ public partial class SMain
         S_九层妖塔数量7.TabIndex = 170;
         S_九层妖塔数量7.TextAlign = HorizontalAlignment.Center;
         S_九层妖塔数量7.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_九层妖塔数量7.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_九层妖塔数量7.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_九层妖塔数量6
         // 
@@ -4639,7 +4639,7 @@ public partial class SMain
         S_九层妖塔数量6.TabIndex = 169;
         S_九层妖塔数量6.TextAlign = HorizontalAlignment.Center;
         S_九层妖塔数量6.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_九层妖塔数量6.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_九层妖塔数量6.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_九层妖塔数量5
         // 
@@ -4651,7 +4651,7 @@ public partial class SMain
         S_九层妖塔数量5.TabIndex = 168;
         S_九层妖塔数量5.TextAlign = HorizontalAlignment.Center;
         S_九层妖塔数量5.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_九层妖塔数量5.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_九层妖塔数量5.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_九层妖塔数量4
         // 
@@ -4663,7 +4663,7 @@ public partial class SMain
         S_九层妖塔数量4.TabIndex = 167;
         S_九层妖塔数量4.TextAlign = HorizontalAlignment.Center;
         S_九层妖塔数量4.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_九层妖塔数量4.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_九层妖塔数量4.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_九层妖塔数量3
         // 
@@ -4675,7 +4675,7 @@ public partial class SMain
         S_九层妖塔数量3.TabIndex = 166;
         S_九层妖塔数量3.TextAlign = HorizontalAlignment.Center;
         S_九层妖塔数量3.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_九层妖塔数量3.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_九层妖塔数量3.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_九层妖塔数量2
         // 
@@ -4687,7 +4687,7 @@ public partial class SMain
         S_九层妖塔数量2.TabIndex = 165;
         S_九层妖塔数量2.TextAlign = HorizontalAlignment.Center;
         S_九层妖塔数量2.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_九层妖塔数量2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_九层妖塔数量2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label726
         // 
@@ -4709,7 +4709,7 @@ public partial class SMain
         S_九层妖塔数量1.TabIndex = 163;
         S_九层妖塔数量1.TextAlign = HorizontalAlignment.Center;
         S_九层妖塔数量1.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_九层妖塔数量1.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_九层妖塔数量1.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_九层妖塔精英9
         // 
@@ -4723,7 +4723,7 @@ public partial class SMain
         S_九层妖塔精英9.Tag = "";
         S_九层妖塔精英9.Text = "White Boar";
         S_九层妖塔精英9.TextAlign = HorizontalAlignment.Center;
-        S_九层妖塔精英9.TextChanged += (this.S_九层妖塔精英9_TextChanged);
+        S_九层妖塔精英9.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_九层妖塔精英8
         // 
@@ -4737,7 +4737,7 @@ public partial class SMain
         S_九层妖塔精英8.Tag = "";
         S_九层妖塔精英8.Text = "White Boar";
         S_九层妖塔精英8.TextAlign = HorizontalAlignment.Center;
-        S_九层妖塔精英8.TextChanged += (this.S_九层妖塔精英8_TextChanged);
+        S_九层妖塔精英8.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_九层妖塔精英7
         // 
@@ -4751,7 +4751,7 @@ public partial class SMain
         S_九层妖塔精英7.Tag = "";
         S_九层妖塔精英7.Text = "White Boar";
         S_九层妖塔精英7.TextAlign = HorizontalAlignment.Center;
-        S_九层妖塔精英7.TextChanged += (this.S_九层妖塔精英7_TextChanged);
+        S_九层妖塔精英7.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_九层妖塔精英6
         // 
@@ -4765,7 +4765,7 @@ public partial class SMain
         S_九层妖塔精英6.Tag = "";
         S_九层妖塔精英6.Text = "White Boar";
         S_九层妖塔精英6.TextAlign = HorizontalAlignment.Center;
-        S_九层妖塔精英6.TextChanged += (this.S_九层妖塔精英6_TextChanged);
+        S_九层妖塔精英6.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_九层妖塔精英5
         // 
@@ -4779,7 +4779,7 @@ public partial class SMain
         S_九层妖塔精英5.Tag = "";
         S_九层妖塔精英5.Text = "White Boar";
         S_九层妖塔精英5.TextAlign = HorizontalAlignment.Center;
-        S_九层妖塔精英5.TextChanged += (this.S_九层妖塔精英5_TextChanged);
+        S_九层妖塔精英5.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_九层妖塔精英4
         // 
@@ -4793,7 +4793,7 @@ public partial class SMain
         S_九层妖塔精英4.Tag = "";
         S_九层妖塔精英4.Text = "White Boar";
         S_九层妖塔精英4.TextAlign = HorizontalAlignment.Center;
-        S_九层妖塔精英4.TextChanged += (this.S_九层妖塔精英4_TextChanged);
+        S_九层妖塔精英4.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_九层妖塔精英3
         // 
@@ -4807,7 +4807,7 @@ public partial class SMain
         S_九层妖塔精英3.Tag = "";
         S_九层妖塔精英3.Text = "White Boar";
         S_九层妖塔精英3.TextAlign = HorizontalAlignment.Center;
-        S_九层妖塔精英3.TextChanged += (this.S_九层妖塔精英3_TextChanged);
+        S_九层妖塔精英3.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_九层妖塔精英2
         // 
@@ -4821,7 +4821,7 @@ public partial class SMain
         S_九层妖塔精英2.Tag = "";
         S_九层妖塔精英2.Text = "White Boar";
         S_九层妖塔精英2.TextAlign = HorizontalAlignment.Center;
-        S_九层妖塔精英2.TextChanged += (this.S_九层妖塔精英2_TextChanged);
+        S_九层妖塔精英2.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_九层妖塔BOSS9
         // 
@@ -4835,7 +4835,7 @@ public partial class SMain
         S_九层妖塔BOSS9.Tag = "";
         S_九层妖塔BOSS9.Text = "Bull Devil";
         S_九层妖塔BOSS9.TextAlign = HorizontalAlignment.Center;
-        S_九层妖塔BOSS9.TextChanged += (this.S_九层妖塔BOSS9_TextChanged);
+        S_九层妖塔BOSS9.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_九层妖塔BOSS8
         // 
@@ -4849,7 +4849,7 @@ public partial class SMain
         S_九层妖塔BOSS8.Tag = "";
         S_九层妖塔BOSS8.Text = "Bull Devil";
         S_九层妖塔BOSS8.TextAlign = HorizontalAlignment.Center;
-        S_九层妖塔BOSS8.TextChanged += (this.S_九层妖塔BOSS8_TextChanged);
+        S_九层妖塔BOSS8.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_九层妖塔BOSS7
         // 
@@ -4863,7 +4863,7 @@ public partial class SMain
         S_九层妖塔BOSS7.Tag = "";
         S_九层妖塔BOSS7.Text = "Bull Devil";
         S_九层妖塔BOSS7.TextAlign = HorizontalAlignment.Center;
-        S_九层妖塔BOSS7.TextChanged += (this.S_九层妖塔BOSS7_TextChanged);
+        S_九层妖塔BOSS7.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_九层妖塔BOSS6
         // 
@@ -4877,7 +4877,7 @@ public partial class SMain
         S_九层妖塔BOSS6.Tag = "";
         S_九层妖塔BOSS6.Text = "Bull Devil";
         S_九层妖塔BOSS6.TextAlign = HorizontalAlignment.Center;
-        S_九层妖塔BOSS6.TextChanged += (this.S_九层妖塔BOSS6_TextChanged);
+        S_九层妖塔BOSS6.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_九层妖塔BOSS5
         // 
@@ -4891,7 +4891,7 @@ public partial class SMain
         S_九层妖塔BOSS5.Tag = "";
         S_九层妖塔BOSS5.Text = "Bull Devil";
         S_九层妖塔BOSS5.TextAlign = HorizontalAlignment.Center;
-        S_九层妖塔BOSS5.TextChanged += (this.S_九层妖塔BOSS5_TextChanged);
+        S_九层妖塔BOSS5.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_九层妖塔BOSS4
         // 
@@ -4905,7 +4905,7 @@ public partial class SMain
         S_九层妖塔BOSS4.Tag = "";
         S_九层妖塔BOSS4.Text = "Bull Devil";
         S_九层妖塔BOSS4.TextAlign = HorizontalAlignment.Center;
-        S_九层妖塔BOSS4.TextChanged += (this.S_九层妖塔BOSS4_TextChanged);
+        S_九层妖塔BOSS4.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_九层妖塔BOSS3
         // 
@@ -4919,7 +4919,7 @@ public partial class SMain
         S_九层妖塔BOSS3.Tag = "";
         S_九层妖塔BOSS3.Text = "Bull Devil";
         S_九层妖塔BOSS3.TextAlign = HorizontalAlignment.Center;
-        S_九层妖塔BOSS3.TextChanged += (this.S_九层妖塔BOSS3_TextChanged);
+        S_九层妖塔BOSS3.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_九层妖塔BOSS2
         // 
@@ -4933,7 +4933,7 @@ public partial class SMain
         S_九层妖塔BOSS2.Tag = "";
         S_九层妖塔BOSS2.Text = "Bull Devil";
         S_九层妖塔BOSS2.TextAlign = HorizontalAlignment.Center;
-        S_九层妖塔BOSS2.TextChanged += (this.S_九层妖塔BOSS2_TextChanged);
+        S_九层妖塔BOSS2.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // label724
         // 
@@ -4957,7 +4957,7 @@ public partial class SMain
         S_九层妖塔精英1.Tag = "";
         S_九层妖塔精英1.Text = "White Boar";
         S_九层妖塔精英1.TextAlign = HorizontalAlignment.Center;
-        S_九层妖塔精英1.TextChanged += (this.S_九层妖塔精英1_TextChanged);
+        S_九层妖塔精英1.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // label723
         // 
@@ -4983,7 +4983,7 @@ public partial class SMain
         S_九层妖塔BOSS1.Tag = "";
         S_九层妖塔BOSS1.Text = "Bull Devil";
         S_九层妖塔BOSS1.TextAlign = HorizontalAlignment.Center;
-        S_九层妖塔BOSS1.TextChanged += (this.S_九层妖塔BOSS1_TextChanged);
+        S_九层妖塔BOSS1.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_九层妖塔副本次数
         // 
@@ -4995,7 +4995,7 @@ public partial class SMain
         S_九层妖塔副本次数.TabIndex = 116;
         S_九层妖塔副本次数.TextAlign = HorizontalAlignment.Center;
         S_九层妖塔副本次数.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_九层妖塔副本次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_九层妖塔副本次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label721
         // 
@@ -5028,7 +5028,7 @@ public partial class SMain
         S_九层妖塔副本等级.TabIndex = 112;
         S_九层妖塔副本等级.TextAlign = HorizontalAlignment.Center;
         S_九层妖塔副本等级.Value = new decimal(new int[] { 40, 0, 0, 0 });
-        S_九层妖塔副本等级.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_九层妖塔副本等级.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_九层妖塔副本物品
         // 
@@ -5039,7 +5039,7 @@ public partial class SMain
         S_九层妖塔副本物品.Size = new Size(62, 22);
         S_九层妖塔副本物品.TabIndex = 101;
         S_九层妖塔副本物品.TextAlign = HorizontalAlignment.Center;
-        S_九层妖塔副本物品.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_九层妖塔副本物品.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label731
         // 
@@ -5062,7 +5062,7 @@ public partial class SMain
         S_九层妖塔副本数量.TabIndex = 97;
         S_九层妖塔副本数量.TextAlign = HorizontalAlignment.Center;
         S_九层妖塔副本数量.Value = new decimal(new int[] { 10000, 0, 0, 0 });
-        S_九层妖塔副本数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_九层妖塔副本数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // tabPage97
         // 
@@ -5130,7 +5130,7 @@ public partial class SMain
         S_魔虫窟分钟限制.TabIndex = 121;
         S_魔虫窟分钟限制.TextAlign = HorizontalAlignment.Center;
         S_魔虫窟分钟限制.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_魔虫窟分钟限制.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_魔虫窟分钟限制.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label768
         // 
@@ -5174,7 +5174,7 @@ public partial class SMain
         S_魔虫窟副本次数.TabIndex = 117;
         S_魔虫窟副本次数.TextAlign = HorizontalAlignment.Center;
         S_魔虫窟副本次数.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_魔虫窟副本次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_魔虫窟副本次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_魔虫窟副本数量
         // 
@@ -5186,7 +5186,7 @@ public partial class SMain
         S_魔虫窟副本数量.TabIndex = 115;
         S_魔虫窟副本数量.TextAlign = HorizontalAlignment.Center;
         S_魔虫窟副本数量.Value = new decimal(new int[] { 10000, 0, 0, 0 });
-        S_魔虫窟副本数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_魔虫窟副本数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_魔虫窟副本物品
         // 
@@ -5197,7 +5197,7 @@ public partial class SMain
         S_魔虫窟副本物品.Size = new Size(93, 22);
         S_魔虫窟副本物品.TabIndex = 114;
         S_魔虫窟副本物品.TextAlign = HorizontalAlignment.Center;
-        S_魔虫窟副本物品.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_魔虫窟副本物品.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_魔虫窟副本等级
         // 
@@ -5209,7 +5209,7 @@ public partial class SMain
         S_魔虫窟副本等级.TabIndex = 113;
         S_魔虫窟副本等级.TextAlign = HorizontalAlignment.Center;
         S_魔虫窟副本等级.Value = new decimal(new int[] { 40, 0, 0, 0 });
-        S_魔虫窟副本等级.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_魔虫窟副本等级.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label762
         // 
@@ -5261,7 +5261,7 @@ public partial class SMain
         S_魔虫窟副本时间大.TabIndex = 95;
         S_魔虫窟副本时间大.TextAlign = HorizontalAlignment.Center;
         S_魔虫窟副本时间大.Value = new decimal(new int[] { 12, 0, 0, 0 });
-        S_魔虫窟副本时间大.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_魔虫窟副本时间大.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label760
         // 
@@ -5296,7 +5296,7 @@ public partial class SMain
         S_魔虫窟副本时间小.TabIndex = 82;
         S_魔虫窟副本时间小.TextAlign = HorizontalAlignment.Center;
         S_魔虫窟副本时间小.Value = new decimal(new int[] { 12, 0, 0, 0 });
-        S_魔虫窟副本时间小.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_魔虫窟副本时间小.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // tabPage98
         // 
@@ -5361,7 +5361,7 @@ public partial class SMain
         S_暗之门开关.Size = new Size(43, 22);
         S_暗之门开关.TabIndex = 2;
         S_暗之门开关.TextAlign = HorizontalAlignment.Center;
-        S_暗之门开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_暗之门开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // groupBox206
         // 
@@ -5398,7 +5398,7 @@ public partial class SMain
         S_暗之门时间.TabIndex = 2;
         S_暗之门时间.TextAlign = HorizontalAlignment.Center;
         S_暗之门时间.Value = new decimal(new int[] { 60, 0, 0, 0 });
-        S_暗之门时间.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_暗之门时间.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // groupBox208
         // 
@@ -5482,7 +5482,7 @@ public partial class SMain
         S_暗之门杀怪触发.TabIndex = 2;
         S_暗之门杀怪触发.TextAlign = HorizontalAlignment.Center;
         S_暗之门杀怪触发.Value = new decimal(new int[] { 1000, 0, 0, 0 });
-        S_暗之门杀怪触发.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_暗之门杀怪触发.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // groupBox205
         // 
@@ -5518,7 +5518,7 @@ public partial class SMain
         S_暗之门全服提示.TabIndex = 2;
         S_暗之门全服提示.TextAlign = HorizontalAlignment.Center;
         S_暗之门全服提示.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_暗之门全服提示.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_暗之门全服提示.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // groupBox204
         // 
@@ -5559,7 +5559,7 @@ public partial class SMain
         S_暗之门地图4Y.TabIndex = 22;
         S_暗之门地图4Y.TextAlign = HorizontalAlignment.Center;
         S_暗之门地图4Y.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_暗之门地图4Y.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_暗之门地图4Y.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_暗之门地图3Y
         // 
@@ -5572,7 +5572,7 @@ public partial class SMain
         S_暗之门地图3Y.TabIndex = 21;
         S_暗之门地图3Y.TextAlign = HorizontalAlignment.Center;
         S_暗之门地图3Y.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_暗之门地图3Y.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_暗之门地图3Y.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_暗之门地图2Y
         // 
@@ -5585,7 +5585,7 @@ public partial class SMain
         S_暗之门地图2Y.TabIndex = 20;
         S_暗之门地图2Y.TextAlign = HorizontalAlignment.Center;
         S_暗之门地图2Y.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_暗之门地图2Y.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_暗之门地图2Y.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_暗之门地图4X
         // 
@@ -5598,7 +5598,7 @@ public partial class SMain
         S_暗之门地图4X.TabIndex = 19;
         S_暗之门地图4X.TextAlign = HorizontalAlignment.Center;
         S_暗之门地图4X.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_暗之门地图4X.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_暗之门地图4X.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_暗之门地图3X
         // 
@@ -5611,7 +5611,7 @@ public partial class SMain
         S_暗之门地图3X.TabIndex = 18;
         S_暗之门地图3X.TextAlign = HorizontalAlignment.Center;
         S_暗之门地图3X.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_暗之门地图3X.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_暗之门地图3X.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_暗之门地图2X
         // 
@@ -5624,7 +5624,7 @@ public partial class SMain
         S_暗之门地图2X.TabIndex = 17;
         S_暗之门地图2X.TextAlign = HorizontalAlignment.Center;
         S_暗之门地图2X.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_暗之门地图2X.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_暗之门地图2X.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_暗之门地图1Y
         // 
@@ -5637,7 +5637,7 @@ public partial class SMain
         S_暗之门地图1Y.TabIndex = 16;
         S_暗之门地图1Y.TextAlign = HorizontalAlignment.Center;
         S_暗之门地图1Y.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_暗之门地图1Y.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_暗之门地图1Y.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_暗之门地图1X
         // 
@@ -5650,7 +5650,7 @@ public partial class SMain
         S_暗之门地图1X.TabIndex = 15;
         S_暗之门地图1X.TextAlign = HorizontalAlignment.Center;
         S_暗之门地图1X.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_暗之门地图1X.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_暗之门地图1X.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_暗之门地图4BOSS
         // 
@@ -5661,7 +5661,7 @@ public partial class SMain
         S_暗之门地图4BOSS.Size = new Size(137, 22);
         S_暗之门地图4BOSS.TabIndex = 14;
         S_暗之门地图4BOSS.Text = "   Charmander";
-        S_暗之门地图4BOSS.TextChanged += (this.S_暗之门地图4BOSS_TextChanged);
+        S_暗之门地图4BOSS.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_暗之门地图3BOSS
         // 
@@ -5672,7 +5672,7 @@ public partial class SMain
         S_暗之门地图3BOSS.Size = new Size(137, 22);
         S_暗之门地图3BOSS.TabIndex = 13;
         S_暗之门地图3BOSS.Text = "   Underworld Leader";
-        S_暗之门地图3BOSS.TextChanged += (this.S_暗之门地图3BOSS_TextChanged);
+        S_暗之门地图3BOSS.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_暗之门地图2BOSS
         // 
@@ -5683,7 +5683,7 @@ public partial class SMain
         S_暗之门地图2BOSS.Size = new Size(137, 22);
         S_暗之门地图2BOSS.TabIndex = 12;
         S_暗之门地图2BOSS.Text = "   Bull Devil";
-        S_暗之门地图2BOSS.TextChanged += (this.S_暗之门地图2BOSS_TextChanged);
+        S_暗之门地图2BOSS.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_暗之门地图1BOSS
         // 
@@ -5694,7 +5694,7 @@ public partial class SMain
         S_暗之门地图1BOSS.Size = new Size(137, 22);
         S_暗之门地图1BOSS.TabIndex = 1;
         S_暗之门地图1BOSS.Text = "   Corpse King";
-        S_暗之门地图1BOSS.TextChanged += (this.S_暗之门地图1BOSS_TextChanged);
+        S_暗之门地图1BOSS.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // label733
         // 
@@ -5718,7 +5718,7 @@ public partial class SMain
         S_暗之门地图1.TabIndex = 1;
         S_暗之门地图1.TextAlign = HorizontalAlignment.Center;
         S_暗之门地图1.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_暗之门地图1.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_暗之门地图1.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_暗之门地图4
         // 
@@ -5731,7 +5731,7 @@ public partial class SMain
         S_暗之门地图4.TabIndex = 4;
         S_暗之门地图4.TextAlign = HorizontalAlignment.Center;
         S_暗之门地图4.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_暗之门地图4.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_暗之门地图4.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_暗之门地图3
         // 
@@ -5744,7 +5744,7 @@ public partial class SMain
         S_暗之门地图3.TabIndex = 5;
         S_暗之门地图3.TextAlign = HorizontalAlignment.Center;
         S_暗之门地图3.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_暗之门地图3.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_暗之门地图3.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_暗之门地图2
         // 
@@ -5757,7 +5757,7 @@ public partial class SMain
         S_暗之门地图2.TabIndex = 6;
         S_暗之门地图2.TextAlign = HorizontalAlignment.Center;
         S_暗之门地图2.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_暗之门地图2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_暗之门地图2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // tabPage99
         // 
@@ -5880,7 +5880,7 @@ public partial class SMain
         沙巴克皇宫传送数量.TabIndex = 116;
         沙巴克皇宫传送数量.TextAlign = HorizontalAlignment.Center;
         沙巴克皇宫传送数量.Value = new decimal(new int[] { 10000, 0, 0, 0 });
-        沙巴克皇宫传送数量.ValueChanged += (this.沙巴克皇宫传送数量_ValueChanged);
+        沙巴克皇宫传送数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 沙巴克皇宫传送物品
         // 
@@ -5891,7 +5891,7 @@ public partial class SMain
         沙巴克皇宫传送物品.Size = new Size(93, 22);
         沙巴克皇宫传送物品.TabIndex = 115;
         沙巴克皇宫传送物品.TextAlign = HorizontalAlignment.Center;
-        沙巴克皇宫传送物品.ValueChanged += (this.沙巴克皇宫传送物品_ValueChanged);
+        沙巴克皇宫传送物品.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 沙巴克皇宫传送等级
         // 
@@ -5903,7 +5903,7 @@ public partial class SMain
         沙巴克皇宫传送等级.TabIndex = 114;
         沙巴克皇宫传送等级.TextAlign = HorizontalAlignment.Center;
         沙巴克皇宫传送等级.Value = new decimal(new int[] { 40, 0, 0, 0 });
-        沙巴克皇宫传送等级.ValueChanged += (this.沙巴克皇宫传送等级_ValueChanged);
+        沙巴克皇宫传送等级.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label889
         // 
@@ -5988,7 +5988,7 @@ public partial class SMain
         S_沙巴克爆装备开关.Size = new Size(47, 22);
         S_沙巴克爆装备开关.TabIndex = 26;
         S_沙巴克爆装备开关.TextAlign = HorizontalAlignment.Center;
-        S_沙巴克爆装备开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_沙巴克爆装备开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // groupBox153
         // 
@@ -6037,7 +6037,7 @@ public partial class SMain
         S_沙城地图保护.TabIndex = 26;
         S_沙城地图保护.TextAlign = HorizontalAlignment.Center;
         S_沙城地图保护.Value = new decimal(new int[] { 45, 0, 0, 0 });
-        S_沙城地图保护.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_沙城地图保护.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // groupBox18
         // 
@@ -6086,7 +6086,7 @@ public partial class SMain
         S_行会申请人数限制.TabIndex = 26;
         S_行会申请人数限制.TextAlign = HorizontalAlignment.Center;
         S_行会申请人数限制.Value = new decimal(new int[] { 20, 0, 0, 0 });
-        S_行会申请人数限制.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_行会申请人数限制.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // groupBox28
         // 
@@ -6150,7 +6150,7 @@ public partial class SMain
         S_沙城传送货币开关.Size = new Size(93, 22);
         S_沙城传送货币开关.TabIndex = 52;
         S_沙城传送货币开关.TextAlign = HorizontalAlignment.Center;
-        S_沙城传送货币开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_沙城传送货币开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label302
         // 
@@ -6174,7 +6174,7 @@ public partial class SMain
         S_沙城快捷等级四.TabIndex = 83;
         S_沙城快捷等级四.TextAlign = HorizontalAlignment.Center;
         S_沙城快捷等级四.Value = new decimal(new int[] { 45, 0, 0, 0 });
-        S_沙城快捷等级四.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_沙城快捷等级四.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_沙城快捷等级三
         // 
@@ -6186,7 +6186,7 @@ public partial class SMain
         S_沙城快捷等级三.TabIndex = 82;
         S_沙城快捷等级三.TextAlign = HorizontalAlignment.Center;
         S_沙城快捷等级三.Value = new decimal(new int[] { 45, 0, 0, 0 });
-        S_沙城快捷等级三.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_沙城快捷等级三.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_沙城快捷等级二
         // 
@@ -6198,7 +6198,7 @@ public partial class SMain
         S_沙城快捷等级二.TabIndex = 81;
         S_沙城快捷等级二.TextAlign = HorizontalAlignment.Center;
         S_沙城快捷等级二.Value = new decimal(new int[] { 45, 0, 0, 0 });
-        S_沙城快捷等级二.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_沙城快捷等级二.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_沙城快捷货币四
         // 
@@ -6212,7 +6212,7 @@ public partial class SMain
         S_沙城快捷货币四.TextAlign = HorizontalAlignment.Center;
         S_沙城快捷货币四.ThousandsSeparator = true;
         S_沙城快捷货币四.Value = new decimal(new int[] { 100000, 0, 0, 0 });
-        S_沙城快捷货币四.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_沙城快捷货币四.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_沙城快捷货币三
         // 
@@ -6226,7 +6226,7 @@ public partial class SMain
         S_沙城快捷货币三.TextAlign = HorizontalAlignment.Center;
         S_沙城快捷货币三.ThousandsSeparator = true;
         S_沙城快捷货币三.Value = new decimal(new int[] { 100000, 0, 0, 0 });
-        S_沙城快捷货币三.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_沙城快捷货币三.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_沙城快捷货币二
         // 
@@ -6240,7 +6240,7 @@ public partial class SMain
         S_沙城快捷货币二.TextAlign = HorizontalAlignment.Center;
         S_沙城快捷货币二.ThousandsSeparator = true;
         S_沙城快捷货币二.Value = new decimal(new int[] { 100000, 0, 0, 0 });
-        S_沙城快捷货币二.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_沙城快捷货币二.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label301
         // 
@@ -6263,7 +6263,7 @@ public partial class SMain
         S_沙城快捷等级一.TabIndex = 76;
         S_沙城快捷等级一.TextAlign = HorizontalAlignment.Center;
         S_沙城快捷等级一.Value = new decimal(new int[] { 45, 0, 0, 0 });
-        S_沙城快捷等级一.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_沙城快捷等级一.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_沙城快捷货币一
         // 
@@ -6277,7 +6277,7 @@ public partial class SMain
         S_沙城快捷货币一.TextAlign = HorizontalAlignment.Center;
         S_沙城快捷货币一.ThousandsSeparator = true;
         S_沙城快捷货币一.Value = new decimal(new int[] { 100000, 0, 0, 0 });
-        S_沙城快捷货币一.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_沙城快捷货币一.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label300
         // 
@@ -6405,7 +6405,7 @@ public partial class SMain
         沙巴克每周攻沙时间.Size = new Size(41, 22);
         沙巴克每周攻沙时间.TabIndex = 36;
         沙巴克每周攻沙时间.TextAlign = HorizontalAlignment.Center;
-        沙巴克每周攻沙时间.ValueChanged += (this.沙巴克每周攻沙时间_ValueChanged);
+        沙巴克每周攻沙时间.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label691
         // 
@@ -6465,7 +6465,7 @@ public partial class SMain
         S_沙巴克禁止随机.TabIndex = 26;
         S_沙巴克禁止随机.TextAlign = HorizontalAlignment.Center;
         S_沙巴克禁止随机.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_沙巴克禁止随机.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_沙巴克禁止随机.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // groupBox166
         // 
@@ -6491,7 +6491,7 @@ public partial class SMain
         S_沙巴克停止开关.Size = new Size(47, 22);
         S_沙巴克停止开关.TabIndex = 48;
         S_沙巴克停止开关.TextAlign = HorizontalAlignment.Center;
-        S_沙巴克停止开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_沙巴克停止开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label384
         // 
@@ -6537,7 +6537,7 @@ public partial class SMain
         S_沙巴克重置系统.Size = new Size(47, 22);
         S_沙巴克重置系统.TabIndex = 36;
         S_沙巴克重置系统.TextAlign = HorizontalAlignment.Center;
-        S_沙巴克重置系统.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_沙巴克重置系统.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label426
         // 
@@ -6583,7 +6583,7 @@ public partial class SMain
         S_沙巴克结束.TabIndex = 32;
         S_沙巴克结束.TextAlign = HorizontalAlignment.Center;
         S_沙巴克结束.Value = new decimal(new int[] { 21, 0, 0, 0 });
-        S_沙巴克结束.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_沙巴克结束.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_沙巴克开启
         // 
@@ -6596,7 +6596,7 @@ public partial class SMain
         S_沙巴克开启.TabIndex = 31;
         S_沙巴克开启.TextAlign = HorizontalAlignment.Center;
         S_沙巴克开启.Value = new decimal(new int[] { 20, 0, 0, 0 });
-        S_沙巴克开启.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_沙巴克开启.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label46
         // 
@@ -6661,7 +6661,7 @@ public partial class SMain
         S_沙巴克称号领取开关.Size = new Size(47, 22);
         S_沙巴克称号领取开关.TabIndex = 69;
         S_沙巴克称号领取开关.TextAlign = HorizontalAlignment.Center;
-        S_沙巴克称号领取开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_沙巴克称号领取开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label189
         // 
@@ -6719,7 +6719,7 @@ public partial class SMain
         S_沙巴克成员称号.TabIndex = 29;
         S_沙巴克成员称号.TextAlign = HorizontalAlignment.Center;
         S_沙巴克成员称号.Value = new decimal(new int[] { 145, 0, 0, 0 });
-        S_沙巴克成员称号.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_沙巴克成员称号.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label641
         // 
@@ -6754,7 +6754,7 @@ public partial class SMain
         S_沙巴克城主称号.TabIndex = 26;
         S_沙巴克城主称号.TextAlign = HorizontalAlignment.Center;
         S_沙巴克城主称号.Value = new decimal(new int[] { 144, 0, 0, 0 });
-        S_沙巴克城主称号.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_沙巴克城主称号.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // tabPage34
         // 
@@ -6824,7 +6824,7 @@ public partial class SMain
         S_狂暴称号格式.TabIndex = 56;
         S_狂暴称号格式.TextAlign = HorizontalAlignment.Center;
         S_狂暴称号格式.Value = new decimal(new int[] { 135, 0, 0, 0 });
-        S_狂暴称号格式.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_狂暴称号格式.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label126
         // 
@@ -6882,7 +6882,7 @@ public partial class SMain
         S_狂暴名称.Size = new Size(213, 23);
         S_狂暴名称.TabIndex = 57;
         S_狂暴名称.Text = "Dragon Pattern Exchange Stone";
-        S_狂暴名称.TextChanged += (this.S_狂暴名称_TextChanged);
+        S_狂暴名称.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // label134
         // 
@@ -6961,7 +6961,7 @@ public partial class SMain
         S_狂暴杀死金币数量.TabIndex = 71;
         S_狂暴杀死金币数量.TextAlign = HorizontalAlignment.Center;
         S_狂暴杀死金币数量.Value = new decimal(new int[] { 50000, 0, 0, 0 });
-        S_狂暴杀死金币数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_狂暴杀死金币数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label122
         // 
@@ -6985,7 +6985,7 @@ public partial class SMain
         S_狂暴开启金币数量.TabIndex = 69;
         S_狂暴开启金币数量.TextAlign = HorizontalAlignment.Center;
         S_狂暴开启金币数量.Value = new decimal(new int[] { 100000, 0, 0, 0 });
-        S_狂暴开启金币数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_狂暴开启金币数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label121
         // 
@@ -7009,7 +7009,7 @@ public partial class SMain
         S_狂暴杀死元宝数量.TabIndex = 67;
         S_狂暴杀死元宝数量.TextAlign = HorizontalAlignment.Center;
         S_狂暴杀死元宝数量.Value = new decimal(new int[] { 50000, 0, 0, 0 });
-        S_狂暴杀死元宝数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_狂暴杀死元宝数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label120
         // 
@@ -7044,7 +7044,7 @@ public partial class SMain
         S_狂暴开启元宝数量.TabIndex = 64;
         S_狂暴开启元宝数量.TextAlign = HorizontalAlignment.Center;
         S_狂暴开启元宝数量.Value = new decimal(new int[] { 100000, 0, 0, 0 });
-        S_狂暴开启元宝数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_狂暴开启元宝数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label118
         // 
@@ -7068,7 +7068,7 @@ public partial class SMain
         S_狂暴杀死物品数量.TabIndex = 62;
         S_狂暴杀死物品数量.TextAlign = HorizontalAlignment.Center;
         S_狂暴杀死物品数量.Value = new decimal(new int[] { 10, 0, 0, 0 });
-        S_狂暴杀死物品数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_狂暴杀死物品数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label117
         // 
@@ -7103,7 +7103,7 @@ public partial class SMain
         S_狂暴开启物品数量.TabIndex = 59;
         S_狂暴开启物品数量.TextAlign = HorizontalAlignment.Center;
         S_狂暴开启物品数量.Value = new decimal(new int[] { 20, 0, 0, 0 });
-        S_狂暴开启物品数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_狂暴开启物品数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label95
         // 
@@ -7126,7 +7126,7 @@ public partial class SMain
         S_狂暴开启物品名称.TabIndex = 57;
         S_狂暴开启物品名称.TextAlign = HorizontalAlignment.Center;
         S_狂暴开启物品名称.Value = new decimal(new int[] { 91730, 0, 0, 0 });
-        S_狂暴开启物品名称.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_狂暴开启物品名称.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label108
         // 
@@ -7218,7 +7218,7 @@ public partial class SMain
         S_狂暴货币格式.TabIndex = 56;
         S_狂暴货币格式.TextAlign = HorizontalAlignment.Center;
         S_狂暴货币格式.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_狂暴货币格式.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_狂暴货币格式.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label112
         // 
@@ -7329,7 +7329,7 @@ public partial class SMain
         S_武斗场次数限制.TabIndex = 35;
         S_武斗场次数限制.TextAlign = HorizontalAlignment.Center;
         S_武斗场次数限制.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_武斗场次数限制.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_武斗场次数限制.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label283
         // 
@@ -7377,7 +7377,7 @@ public partial class SMain
         S_武斗场经验大.TextAlign = HorizontalAlignment.Center;
         S_武斗场经验大.ThousandsSeparator = true;
         S_武斗场经验大.Value = new decimal(new int[] { 50000, 0, 0, 0 });
-        S_武斗场经验大.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_武斗场经验大.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_武斗场经验小
         // 
@@ -7392,7 +7392,7 @@ public partial class SMain
         S_武斗场经验小.TextAlign = HorizontalAlignment.Center;
         S_武斗场经验小.ThousandsSeparator = true;
         S_武斗场经验小.Value = new decimal(new int[] { 10000, 0, 0, 0 });
-        S_武斗场经验小.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_武斗场经验小.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label42
         // 
@@ -7438,7 +7438,7 @@ public partial class SMain
         S_武斗场时间二.TabIndex = 26;
         S_武斗场时间二.TextAlign = HorizontalAlignment.Center;
         S_武斗场时间二.Value = new decimal(new int[] { 19, 0, 0, 0 });
-        S_武斗场时间二.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_武斗场时间二.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_武斗场时间一
         // 
@@ -7451,7 +7451,7 @@ public partial class SMain
         S_武斗场时间一.TabIndex = 25;
         S_武斗场时间一.TextAlign = HorizontalAlignment.Center;
         S_武斗场时间一.Value = new decimal(new int[] { 13, 0, 0, 0 });
-        S_武斗场时间一.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_武斗场时间一.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label39
         // 
@@ -8262,7 +8262,7 @@ public partial class SMain
         S_幽冥海副本等级.TabIndex = 85;
         S_幽冥海副本等级.TextAlign = HorizontalAlignment.Center;
         S_幽冥海副本等级.Value = new decimal(new int[] { 45, 0, 0, 0 });
-        S_幽冥海副本等级.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_幽冥海副本等级.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_未知暗点二层等级
         // 
@@ -8274,7 +8274,7 @@ public partial class SMain
         S_未知暗点二层等级.TabIndex = 84;
         S_未知暗点二层等级.TextAlign = HorizontalAlignment.Center;
         S_未知暗点二层等级.Value = new decimal(new int[] { 45, 0, 0, 0 });
-        S_未知暗点二层等级.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_未知暗点二层等级.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_幽冥海副本价格
         // 
@@ -8288,7 +8288,7 @@ public partial class SMain
         S_幽冥海副本价格.TextAlign = HorizontalAlignment.Center;
         S_幽冥海副本价格.ThousandsSeparator = true;
         S_幽冥海副本价格.Value = new decimal(new int[] { 100000, 0, 0, 0 });
-        S_幽冥海副本价格.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_幽冥海副本价格.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_未知暗点二层价格
         // 
@@ -8302,7 +8302,7 @@ public partial class SMain
         S_未知暗点二层价格.TextAlign = HorizontalAlignment.Center;
         S_未知暗点二层价格.ThousandsSeparator = true;
         S_未知暗点二层价格.Value = new decimal(new int[] { 100000, 0, 0, 0 });
-        S_未知暗点二层价格.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_未知暗点二层价格.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_未知暗点副本等级
         // 
@@ -8314,7 +8314,7 @@ public partial class SMain
         S_未知暗点副本等级.TabIndex = 81;
         S_未知暗点副本等级.TextAlign = HorizontalAlignment.Center;
         S_未知暗点副本等级.Value = new decimal(new int[] { 45, 0, 0, 0 });
-        S_未知暗点副本等级.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_未知暗点副本等级.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_未知暗点副本价格
         // 
@@ -8328,7 +8328,7 @@ public partial class SMain
         S_未知暗点副本价格.TextAlign = HorizontalAlignment.Center;
         S_未知暗点副本价格.ThousandsSeparator = true;
         S_未知暗点副本价格.Value = new decimal(new int[] { 100000, 0, 0, 0 });
-        S_未知暗点副本价格.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_未知暗点副本价格.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label341
         // 
@@ -8467,7 +8467,7 @@ public partial class SMain
         S_快捷传送五等级.TabIndex = 79;
         S_快捷传送五等级.TextAlign = HorizontalAlignment.Center;
         S_快捷传送五等级.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_快捷传送五等级.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_快捷传送五等级.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_快捷传送四等级
         // 
@@ -8479,7 +8479,7 @@ public partial class SMain
         S_快捷传送四等级.TabIndex = 78;
         S_快捷传送四等级.TextAlign = HorizontalAlignment.Center;
         S_快捷传送四等级.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_快捷传送四等级.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_快捷传送四等级.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_快捷传送三等级
         // 
@@ -8491,7 +8491,7 @@ public partial class SMain
         S_快捷传送三等级.TabIndex = 77;
         S_快捷传送三等级.TextAlign = HorizontalAlignment.Center;
         S_快捷传送三等级.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_快捷传送三等级.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_快捷传送三等级.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_快捷传送二等级
         // 
@@ -8503,7 +8503,7 @@ public partial class SMain
         S_快捷传送二等级.TabIndex = 76;
         S_快捷传送二等级.TextAlign = HorizontalAlignment.Center;
         S_快捷传送二等级.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_快捷传送二等级.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_快捷传送二等级.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_快捷传送一等级
         // 
@@ -8515,7 +8515,7 @@ public partial class SMain
         S_快捷传送一等级.TabIndex = 75;
         S_快捷传送一等级.TextAlign = HorizontalAlignment.Center;
         S_快捷传送一等级.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_快捷传送一等级.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_快捷传送一等级.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_快捷传送五货币
         // 
@@ -8529,7 +8529,7 @@ public partial class SMain
         S_快捷传送五货币.TextAlign = HorizontalAlignment.Center;
         S_快捷传送五货币.ThousandsSeparator = true;
         S_快捷传送五货币.Value = new decimal(new int[] { 100000, 0, 0, 0 });
-        S_快捷传送五货币.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_快捷传送五货币.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_快捷传送四货币
         // 
@@ -8543,7 +8543,7 @@ public partial class SMain
         S_快捷传送四货币.TextAlign = HorizontalAlignment.Center;
         S_快捷传送四货币.ThousandsSeparator = true;
         S_快捷传送四货币.Value = new decimal(new int[] { 100000, 0, 0, 0 });
-        S_快捷传送四货币.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_快捷传送四货币.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_快捷传送三货币
         // 
@@ -8557,7 +8557,7 @@ public partial class SMain
         S_快捷传送三货币.TextAlign = HorizontalAlignment.Center;
         S_快捷传送三货币.ThousandsSeparator = true;
         S_快捷传送三货币.Value = new decimal(new int[] { 100000, 0, 0, 0 });
-        S_快捷传送三货币.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_快捷传送三货币.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_快捷传送二货币
         // 
@@ -8571,7 +8571,7 @@ public partial class SMain
         S_快捷传送二货币.TextAlign = HorizontalAlignment.Center;
         S_快捷传送二货币.ThousandsSeparator = true;
         S_快捷传送二货币.Value = new decimal(new int[] { 100000, 0, 0, 0 });
-        S_快捷传送二货币.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_快捷传送二货币.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_快捷传送一货币
         // 
@@ -8585,7 +8585,7 @@ public partial class SMain
         S_快捷传送一货币.TextAlign = HorizontalAlignment.Center;
         S_快捷传送一货币.ThousandsSeparator = true;
         S_快捷传送一货币.Value = new decimal(new int[] { 100000, 0, 0, 0 });
-        S_快捷传送一货币.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_快捷传送一货币.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_快捷传送五编号
         // 
@@ -8598,7 +8598,7 @@ public partial class SMain
         S_快捷传送五编号.TabIndex = 69;
         S_快捷传送五编号.TextAlign = HorizontalAlignment.Center;
         S_快捷传送五编号.Value = new decimal(new int[] { 101, 0, 0, 0 });
-        S_快捷传送五编号.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_快捷传送五编号.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_快捷传送四编号
         // 
@@ -8611,7 +8611,7 @@ public partial class SMain
         S_快捷传送四编号.TabIndex = 68;
         S_快捷传送四编号.TextAlign = HorizontalAlignment.Center;
         S_快捷传送四编号.Value = new decimal(new int[] { 101, 0, 0, 0 });
-        S_快捷传送四编号.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_快捷传送四编号.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_快捷传送三编号
         // 
@@ -8624,7 +8624,7 @@ public partial class SMain
         S_快捷传送三编号.TabIndex = 67;
         S_快捷传送三编号.TextAlign = HorizontalAlignment.Center;
         S_快捷传送三编号.Value = new decimal(new int[] { 101, 0, 0, 0 });
-        S_快捷传送三编号.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_快捷传送三编号.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_快捷传送二编号
         // 
@@ -8637,7 +8637,7 @@ public partial class SMain
         S_快捷传送二编号.TabIndex = 66;
         S_快捷传送二编号.TextAlign = HorizontalAlignment.Center;
         S_快捷传送二编号.Value = new decimal(new int[] { 101, 0, 0, 0 });
-        S_快捷传送二编号.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_快捷传送二编号.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label103
         // 
@@ -8694,7 +8694,7 @@ public partial class SMain
         S_快捷传送一编号.TabIndex = 54;
         S_快捷传送一编号.TextAlign = HorizontalAlignment.Center;
         S_快捷传送一编号.Value = new decimal(new int[] { 101, 0, 0, 0 });
-        S_快捷传送一编号.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_快捷传送一编号.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label99
         // 
@@ -8731,7 +8731,7 @@ public partial class SMain
         S_元宝金币传送设定.Size = new Size(93, 22);
         S_元宝金币传送设定.TabIndex = 52;
         S_元宝金币传送设定.TextAlign = HorizontalAlignment.Center;
-        S_元宝金币传送设定.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_元宝金币传送设定.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label98
         // 
@@ -8806,7 +8806,7 @@ public partial class SMain
         S_快捷传送六等级2.TabIndex = 86;
         S_快捷传送六等级2.TextAlign = HorizontalAlignment.Center;
         S_快捷传送六等级2.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_快捷传送六等级2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_快捷传送六等级2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_快捷传送六货币2
         // 
@@ -8820,7 +8820,7 @@ public partial class SMain
         S_快捷传送六货币2.TextAlign = HorizontalAlignment.Center;
         S_快捷传送六货币2.ThousandsSeparator = true;
         S_快捷传送六货币2.Value = new decimal(new int[] { 100000, 0, 0, 0 });
-        S_快捷传送六货币2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_快捷传送六货币2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_快捷传送六编号2
         // 
@@ -8833,7 +8833,7 @@ public partial class SMain
         S_快捷传送六编号2.TabIndex = 84;
         S_快捷传送六编号2.TextAlign = HorizontalAlignment.Center;
         S_快捷传送六编号2.Value = new decimal(new int[] { 101, 0, 0, 0 });
-        S_快捷传送六编号2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_快捷传送六编号2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label253
         // 
@@ -8867,7 +8867,7 @@ public partial class SMain
         S_快捷传送五等级2.TabIndex = 79;
         S_快捷传送五等级2.TextAlign = HorizontalAlignment.Center;
         S_快捷传送五等级2.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_快捷传送五等级2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_快捷传送五等级2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_快捷传送四等级2
         // 
@@ -8879,7 +8879,7 @@ public partial class SMain
         S_快捷传送四等级2.TabIndex = 78;
         S_快捷传送四等级2.TextAlign = HorizontalAlignment.Center;
         S_快捷传送四等级2.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_快捷传送四等级2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_快捷传送四等级2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_快捷传送三等级2
         // 
@@ -8891,7 +8891,7 @@ public partial class SMain
         S_快捷传送三等级2.TabIndex = 77;
         S_快捷传送三等级2.TextAlign = HorizontalAlignment.Center;
         S_快捷传送三等级2.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_快捷传送三等级2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_快捷传送三等级2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_快捷传送二等级2
         // 
@@ -8903,7 +8903,7 @@ public partial class SMain
         S_快捷传送二等级2.TabIndex = 76;
         S_快捷传送二等级2.TextAlign = HorizontalAlignment.Center;
         S_快捷传送二等级2.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_快捷传送二等级2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_快捷传送二等级2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_快捷传送一等级2
         // 
@@ -8915,7 +8915,7 @@ public partial class SMain
         S_快捷传送一等级2.TabIndex = 75;
         S_快捷传送一等级2.TextAlign = HorizontalAlignment.Center;
         S_快捷传送一等级2.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_快捷传送一等级2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_快捷传送一等级2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_快捷传送五货币2
         // 
@@ -8929,7 +8929,7 @@ public partial class SMain
         S_快捷传送五货币2.TextAlign = HorizontalAlignment.Center;
         S_快捷传送五货币2.ThousandsSeparator = true;
         S_快捷传送五货币2.Value = new decimal(new int[] { 100000, 0, 0, 0 });
-        S_快捷传送五货币2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_快捷传送五货币2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_快捷传送四货币2
         // 
@@ -8943,7 +8943,7 @@ public partial class SMain
         S_快捷传送四货币2.TextAlign = HorizontalAlignment.Center;
         S_快捷传送四货币2.ThousandsSeparator = true;
         S_快捷传送四货币2.Value = new decimal(new int[] { 100000, 0, 0, 0 });
-        S_快捷传送四货币2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_快捷传送四货币2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_快捷传送三货币2
         // 
@@ -8957,7 +8957,7 @@ public partial class SMain
         S_快捷传送三货币2.TextAlign = HorizontalAlignment.Center;
         S_快捷传送三货币2.ThousandsSeparator = true;
         S_快捷传送三货币2.Value = new decimal(new int[] { 100000, 0, 0, 0 });
-        S_快捷传送三货币2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_快捷传送三货币2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_快捷传送二货币2
         // 
@@ -8971,7 +8971,7 @@ public partial class SMain
         S_快捷传送二货币2.TextAlign = HorizontalAlignment.Center;
         S_快捷传送二货币2.ThousandsSeparator = true;
         S_快捷传送二货币2.Value = new decimal(new int[] { 100000, 0, 0, 0 });
-        S_快捷传送二货币2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_快捷传送二货币2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_快捷传送一货币2
         // 
@@ -8985,7 +8985,7 @@ public partial class SMain
         S_快捷传送一货币2.TextAlign = HorizontalAlignment.Center;
         S_快捷传送一货币2.ThousandsSeparator = true;
         S_快捷传送一货币2.Value = new decimal(new int[] { 100000, 0, 0, 0 });
-        S_快捷传送一货币2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_快捷传送一货币2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_快捷传送五编号2
         // 
@@ -8998,7 +8998,7 @@ public partial class SMain
         S_快捷传送五编号2.TabIndex = 69;
         S_快捷传送五编号2.TextAlign = HorizontalAlignment.Center;
         S_快捷传送五编号2.Value = new decimal(new int[] { 101, 0, 0, 0 });
-        S_快捷传送五编号2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_快捷传送五编号2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_快捷传送四编号2
         // 
@@ -9011,7 +9011,7 @@ public partial class SMain
         S_快捷传送四编号2.TabIndex = 68;
         S_快捷传送四编号2.TextAlign = HorizontalAlignment.Center;
         S_快捷传送四编号2.Value = new decimal(new int[] { 101, 0, 0, 0 });
-        S_快捷传送四编号2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_快捷传送四编号2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_快捷传送三编号2
         // 
@@ -9024,7 +9024,7 @@ public partial class SMain
         S_快捷传送三编号2.TabIndex = 67;
         S_快捷传送三编号2.TextAlign = HorizontalAlignment.Center;
         S_快捷传送三编号2.Value = new decimal(new int[] { 101, 0, 0, 0 });
-        S_快捷传送三编号2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_快捷传送三编号2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_快捷传送二编号2
         // 
@@ -9037,7 +9037,7 @@ public partial class SMain
         S_快捷传送二编号2.TabIndex = 66;
         S_快捷传送二编号2.TextAlign = HorizontalAlignment.Center;
         S_快捷传送二编号2.Value = new decimal(new int[] { 101, 0, 0, 0 });
-        S_快捷传送二编号2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_快捷传送二编号2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label257
         // 
@@ -9094,7 +9094,7 @@ public partial class SMain
         S_快捷传送一编号2.TabIndex = 54;
         S_快捷传送一编号2.TextAlign = HorizontalAlignment.Center;
         S_快捷传送一编号2.Value = new decimal(new int[] { 101, 0, 0, 0 });
-        S_快捷传送一编号2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_快捷传送一编号2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label261
         // 
@@ -9131,7 +9131,7 @@ public partial class SMain
         S_元宝金币传送设定2.Size = new Size(93, 22);
         S_元宝金币传送设定2.TabIndex = 52;
         S_元宝金币传送设定2.TextAlign = HorizontalAlignment.Center;
-        S_元宝金币传送设定2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_元宝金币传送设定2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label262
         // 
@@ -9280,7 +9280,7 @@ public partial class SMain
         S_装备技能开关.Size = new Size(93, 22);
         S_装备技能开关.TabIndex = 55;
         S_装备技能开关.TextAlign = HorizontalAlignment.Center;
-        S_装备技能开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_装备技能开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // groupBox26
         // 
@@ -9461,7 +9461,7 @@ public partial class SMain
         称号叠加模块13.Size = new Size(70, 22);
         称号叠加模块13.TabIndex = 68;
         称号叠加模块13.TextAlign = HorizontalAlignment.Center;
-        称号叠加模块13.ValueChanged += (this.称号叠加模块13_ValueChanged);
+        称号叠加模块13.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 称号叠加模块14
         // 
@@ -9472,7 +9472,7 @@ public partial class SMain
         称号叠加模块14.Size = new Size(70, 22);
         称号叠加模块14.TabIndex = 67;
         称号叠加模块14.TextAlign = HorizontalAlignment.Center;
-        称号叠加模块14.ValueChanged += (this.称号叠加模块14_ValueChanged);
+        称号叠加模块14.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 称号叠加模块16
         // 
@@ -9483,7 +9483,7 @@ public partial class SMain
         称号叠加模块16.Size = new Size(70, 22);
         称号叠加模块16.TabIndex = 66;
         称号叠加模块16.TextAlign = HorizontalAlignment.Center;
-        称号叠加模块16.ValueChanged += (this.称号叠加模块16_ValueChanged);
+        称号叠加模块16.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 称号叠加模块15
         // 
@@ -9494,7 +9494,7 @@ public partial class SMain
         称号叠加模块15.Size = new Size(70, 22);
         称号叠加模块15.TabIndex = 65;
         称号叠加模块15.TextAlign = HorizontalAlignment.Center;
-        称号叠加模块15.ValueChanged += (this.称号叠加模块15_ValueChanged);
+        称号叠加模块15.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 称号叠加模块12
         // 
@@ -9505,7 +9505,7 @@ public partial class SMain
         称号叠加模块12.Size = new Size(70, 22);
         称号叠加模块12.TabIndex = 64;
         称号叠加模块12.TextAlign = HorizontalAlignment.Center;
-        称号叠加模块12.ValueChanged += (this.称号叠加模块12_ValueChanged);
+        称号叠加模块12.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 称号叠加模块11
         // 
@@ -9516,7 +9516,7 @@ public partial class SMain
         称号叠加模块11.Size = new Size(70, 22);
         称号叠加模块11.TabIndex = 63;
         称号叠加模块11.TextAlign = HorizontalAlignment.Center;
-        称号叠加模块11.ValueChanged += (this.称号叠加模块11_ValueChanged);
+        称号叠加模块11.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 称号叠加模块10
         // 
@@ -9527,7 +9527,7 @@ public partial class SMain
         称号叠加模块10.Size = new Size(70, 22);
         称号叠加模块10.TabIndex = 62;
         称号叠加模块10.TextAlign = HorizontalAlignment.Center;
-        称号叠加模块10.ValueChanged += (this.称号叠加模块10_ValueChanged);
+        称号叠加模块10.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 称号叠加模块9
         // 
@@ -9538,7 +9538,7 @@ public partial class SMain
         称号叠加模块9.Size = new Size(70, 22);
         称号叠加模块9.TabIndex = 61;
         称号叠加模块9.TextAlign = HorizontalAlignment.Center;
-        称号叠加模块9.ValueChanged += (this.称号叠加模块9_ValueChanged);
+        称号叠加模块9.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_称号叠加模块八
         // 
@@ -9549,7 +9549,7 @@ public partial class SMain
         S_称号叠加模块八.Size = new Size(70, 22);
         S_称号叠加模块八.TabIndex = 68;
         S_称号叠加模块八.TextAlign = HorizontalAlignment.Center;
-        S_称号叠加模块八.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_称号叠加模块八.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_称号叠加模块七
         // 
@@ -9560,7 +9560,7 @@ public partial class SMain
         S_称号叠加模块七.Size = new Size(70, 22);
         S_称号叠加模块七.TabIndex = 67;
         S_称号叠加模块七.TextAlign = HorizontalAlignment.Center;
-        S_称号叠加模块七.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_称号叠加模块七.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_称号叠加模块六
         // 
@@ -9571,7 +9571,7 @@ public partial class SMain
         S_称号叠加模块六.Size = new Size(70, 22);
         S_称号叠加模块六.TabIndex = 66;
         S_称号叠加模块六.TextAlign = HorizontalAlignment.Center;
-        S_称号叠加模块六.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_称号叠加模块六.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_称号叠加模块五
         // 
@@ -9582,7 +9582,7 @@ public partial class SMain
         S_称号叠加模块五.Size = new Size(70, 22);
         S_称号叠加模块五.TabIndex = 65;
         S_称号叠加模块五.TextAlign = HorizontalAlignment.Center;
-        S_称号叠加模块五.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_称号叠加模块五.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_称号叠加模块四
         // 
@@ -9593,7 +9593,7 @@ public partial class SMain
         S_称号叠加模块四.Size = new Size(70, 22);
         S_称号叠加模块四.TabIndex = 64;
         S_称号叠加模块四.TextAlign = HorizontalAlignment.Center;
-        S_称号叠加模块四.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_称号叠加模块四.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_称号叠加模块三
         // 
@@ -9604,7 +9604,7 @@ public partial class SMain
         S_称号叠加模块三.Size = new Size(70, 22);
         S_称号叠加模块三.TabIndex = 63;
         S_称号叠加模块三.TextAlign = HorizontalAlignment.Center;
-        S_称号叠加模块三.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_称号叠加模块三.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_称号叠加模块二
         // 
@@ -9615,7 +9615,7 @@ public partial class SMain
         S_称号叠加模块二.Size = new Size(70, 22);
         S_称号叠加模块二.TabIndex = 62;
         S_称号叠加模块二.TextAlign = HorizontalAlignment.Center;
-        S_称号叠加模块二.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_称号叠加模块二.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label296
         // 
@@ -9637,7 +9637,7 @@ public partial class SMain
         S_称号叠加模块一.Size = new Size(70, 22);
         S_称号叠加模块一.TabIndex = 60;
         S_称号叠加模块一.TextAlign = HorizontalAlignment.Center;
-        S_称号叠加模块一.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_称号叠加模块一.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label295
         // 
@@ -9659,7 +9659,7 @@ public partial class SMain
         S_称号叠加开关.Size = new Size(47, 22);
         S_称号叠加开关.TabIndex = 58;
         S_称号叠加开关.TextAlign = HorizontalAlignment.Center;
-        S_称号叠加开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_称号叠加开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label294
         // 
@@ -9759,7 +9759,7 @@ public partial class SMain
         S_御兽切换开关.Size = new Size(47, 22);
         S_御兽切换开关.TabIndex = 30;
         S_御兽切换开关.TextAlign = HorizontalAlignment.Center;
-        S_御兽切换开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_御兽切换开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label368
         // 
@@ -9792,7 +9792,7 @@ public partial class SMain
         S_御兽属性开启.TabIndex = 64;
         S_御兽属性开启.TextAlign = HorizontalAlignment.Center;
         S_御兽属性开启.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_御兽属性开启.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_御兽属性开启.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label153
         // 
@@ -9851,7 +9851,7 @@ public partial class SMain
         S_泡点秒数控制.TabIndex = 66;
         S_泡点秒数控制.TextAlign = HorizontalAlignment.Center;
         S_泡点秒数控制.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_泡点秒数控制.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_泡点秒数控制.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label229
         // 
@@ -9885,7 +9885,7 @@ public partial class SMain
         S_泡点限制等级.TabIndex = 63;
         S_泡点限制等级.TextAlign = HorizontalAlignment.Center;
         S_泡点限制等级.Value = new decimal(new int[] { 40, 0, 0, 0 });
-        S_泡点限制等级.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_泡点限制等级.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label227
         // 
@@ -9920,7 +9920,7 @@ public partial class SMain
         S_泡点当前经验.TabIndex = 60;
         S_泡点当前经验.TextAlign = HorizontalAlignment.Center;
         S_泡点当前经验.Value = new decimal(new int[] { 1000, 0, 0, 0 });
-        S_泡点当前经验.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_泡点当前经验.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label225
         // 
@@ -9953,7 +9953,7 @@ public partial class SMain
         S_泡点等级开关.Size = new Size(47, 22);
         S_泡点等级开关.TabIndex = 57;
         S_泡点等级开关.TextAlign = HorizontalAlignment.Center;
-        S_泡点等级开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_泡点等级开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label223
         // 
@@ -10147,7 +10147,7 @@ public partial class SMain
         S_可摆摊地图范围.TabIndex = 65;
         S_可摆摊地图范围.TextAlign = HorizontalAlignment.Center;
         S_可摆摊地图范围.Value = new decimal(new int[] { 10, 0, 0, 0 });
-        S_可摆摊地图范围.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_可摆摊地图范围.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label151
         // 
@@ -10169,7 +10169,7 @@ public partial class SMain
         S_可摆摊等级.TabIndex = 63;
         S_可摆摊等级.TextAlign = HorizontalAlignment.Center;
         S_可摆摊等级.Value = new decimal(new int[] { 7, 0, 0, 0 });
-        S_可摆摊等级.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_可摆摊等级.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label150
         // 
@@ -10202,7 +10202,7 @@ public partial class SMain
         S_可摆摊货币选择.Size = new Size(58, 23);
         S_可摆摊货币选择.TabIndex = 60;
         S_可摆摊货币选择.TextAlign = HorizontalAlignment.Center;
-        S_可摆摊货币选择.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_可摆摊货币选择.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label148
         // 
@@ -10225,7 +10225,7 @@ public partial class SMain
         S_可摆摊地图坐标Y.TabIndex = 58;
         S_可摆摊地图坐标Y.TextAlign = HorizontalAlignment.Center;
         S_可摆摊地图坐标Y.Value = new decimal(new int[] { 522, 0, 0, 0 });
-        S_可摆摊地图坐标Y.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_可摆摊地图坐标Y.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_可摆摊地图坐标X
         // 
@@ -10237,7 +10237,7 @@ public partial class SMain
         S_可摆摊地图坐标X.TabIndex = 57;
         S_可摆摊地图坐标X.TextAlign = HorizontalAlignment.Center;
         S_可摆摊地图坐标X.Value = new decimal(new int[] { 935, 0, 0, 0 });
-        S_可摆摊地图坐标X.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_可摆摊地图坐标X.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label147
         // 
@@ -10271,7 +10271,7 @@ public partial class SMain
         S_可摆摊地图编号.TabIndex = 54;
         S_可摆摊地图编号.TextAlign = HorizontalAlignment.Center;
         S_可摆摊地图编号.Value = new decimal(new int[] { 147, 0, 0, 0 });
-        S_可摆摊地图编号.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_可摆摊地图编号.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label145
         // 
@@ -10495,7 +10495,7 @@ public partial class SMain
         DefaultSkillLevel.Name = "DefaultSkillLevel";
         DefaultSkillLevel.Size = new Size(42, 22);
         DefaultSkillLevel.TabIndex = 2;
-        DefaultSkillLevel.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        DefaultSkillLevel.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // tabPage58
         // 
@@ -10553,7 +10553,7 @@ public partial class SMain
         沙城捐献赞助金额.Size = new Size(106, 22);
         沙城捐献赞助金额.TabIndex = 13;
         沙城捐献赞助金额.TextAlign = HorizontalAlignment.Center;
-        沙城捐献赞助金额.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        沙城捐献赞助金额.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 沙城捐献赞助人数
         // 
@@ -10564,7 +10564,7 @@ public partial class SMain
         沙城捐献赞助人数.Size = new Size(55, 22);
         沙城捐献赞助人数.TabIndex = 12;
         沙城捐献赞助人数.TextAlign = HorizontalAlignment.Center;
-        沙城捐献赞助人数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        沙城捐献赞助人数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label884
         // 
@@ -10587,7 +10587,7 @@ public partial class SMain
         沙城捐献物品数量3.TabIndex = 10;
         沙城捐献物品数量3.TextAlign = HorizontalAlignment.Center;
         沙城捐献物品数量3.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        沙城捐献物品数量3.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        沙城捐献物品数量3.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 沙城捐献物品数量2
         // 
@@ -10599,7 +10599,7 @@ public partial class SMain
         沙城捐献物品数量2.TabIndex = 9;
         沙城捐献物品数量2.TextAlign = HorizontalAlignment.Center;
         沙城捐献物品数量2.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        沙城捐献物品数量2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        沙城捐献物品数量2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 沙城捐献物品数量1
         // 
@@ -10611,7 +10611,7 @@ public partial class SMain
         沙城捐献物品数量1.TabIndex = 8;
         沙城捐献物品数量1.TextAlign = HorizontalAlignment.Center;
         沙城捐献物品数量1.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        沙城捐献物品数量1.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        沙城捐献物品数量1.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 沙城捐献获得物品3
         // 
@@ -10623,7 +10623,7 @@ public partial class SMain
         沙城捐献获得物品3.TabIndex = 7;
         沙城捐献获得物品3.TextAlign = HorizontalAlignment.Center;
         沙城捐献获得物品3.Value = new decimal(new int[] { 999999, 0, 0, 0 });
-        沙城捐献获得物品3.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        沙城捐献获得物品3.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 沙城捐献获得物品2
         // 
@@ -10635,7 +10635,7 @@ public partial class SMain
         沙城捐献获得物品2.TabIndex = 6;
         沙城捐献获得物品2.TextAlign = HorizontalAlignment.Center;
         沙城捐献获得物品2.Value = new decimal(new int[] { 999999, 0, 0, 0 });
-        沙城捐献获得物品2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        沙城捐献获得物品2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 沙城捐献获得物品1
         // 
@@ -10647,7 +10647,7 @@ public partial class SMain
         沙城捐献获得物品1.TabIndex = 5;
         沙城捐献获得物品1.TextAlign = HorizontalAlignment.Center;
         沙城捐献获得物品1.Value = new decimal(new int[] { 999999, 0, 0, 0 });
-        沙城捐献获得物品1.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        沙城捐献获得物品1.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 沙城捐献支付数量
         // 
@@ -10659,7 +10659,7 @@ public partial class SMain
         沙城捐献支付数量.TabIndex = 4;
         沙城捐献支付数量.TextAlign = HorizontalAlignment.Center;
         沙城捐献支付数量.Value = new decimal(new int[] { 10000000, 0, 0, 0 });
-        沙城捐献支付数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        沙城捐献支付数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label883
         // 
@@ -10682,7 +10682,7 @@ public partial class SMain
         沙城捐献货币类型.TabIndex = 2;
         沙城捐献货币类型.TextAlign = HorizontalAlignment.Center;
         沙城捐献货币类型.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        沙城捐献货币类型.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        沙城捐献货币类型.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // tabPage49
         // 
@@ -10739,7 +10739,7 @@ public partial class SMain
         红包开关.TabIndex = 2;
         红包开关.Text = "Red envelope rain switch";
         红包开关.UseVisualStyleBackColor = true;
-        红包开关.CheckedChanged += (this.红包开关_CheckedChanged);
+        红包开关.CheckedChanged += (this.UpdateBooleanSettingsValue_CheckedChanged);
         // 
         // label628
         // 
@@ -10762,7 +10762,7 @@ public partial class SMain
         全服红包时间.TabIndex = 8;
         全服红包时间.TextAlign = HorizontalAlignment.Center;
         全服红包时间.Value = new decimal(new int[] { 19, 0, 0, 0 });
-        全服红包时间.ValueChanged += (this.全服红包时间_ValueChanged);
+        全服红包时间.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 全服红包等级
         // 
@@ -10773,7 +10773,7 @@ public partial class SMain
         全服红包等级.TabIndex = 7;
         全服红包等级.TextAlign = HorizontalAlignment.Center;
         全服红包等级.Value = new decimal(new int[] { 30, 0, 0, 0 });
-        全服红包等级.ValueChanged += (this.全服红包等级_ValueChanged);
+        全服红包等级.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 全服红包货币类型
         // 
@@ -10785,7 +10785,7 @@ public partial class SMain
         全服红包货币类型.TabIndex = 6;
         全服红包货币类型.TextAlign = HorizontalAlignment.Center;
         全服红包货币类型.Value = new decimal(new int[] { 3, 0, 0, 0 });
-        全服红包货币类型.ValueChanged += (this.全服红包货币类型_ValueChanged);
+        全服红包货币类型.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 全服红包货币数量
         // 
@@ -10797,7 +10797,7 @@ public partial class SMain
         全服红包货币数量.TabIndex = 5;
         全服红包货币数量.TextAlign = HorizontalAlignment.Center;
         全服红包货币数量.Value = new decimal(new int[] { 1000, 0, 0, 0 });
-        全服红包货币数量.ValueChanged += (this.全服红包货币数量_ValueChanged);
+        全服红包货币数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label627
         // 
@@ -10865,7 +10865,7 @@ public partial class SMain
         安全区收刀开关.TabIndex = 1;
         安全区收刀开关.Text = "Safety Zone Retract Switch";
         安全区收刀开关.UseVisualStyleBackColor = true;
-        安全区收刀开关.CheckedChanged += (this.安全区收刀开关_CheckedChanged);
+        安全区收刀开关.CheckedChanged += (this.UpdateBooleanSettingsValue_CheckedChanged);
         // 
         // tabPage92
         // 
@@ -11069,7 +11069,7 @@ public partial class SMain
         S_猎魔暗使数量三.TabIndex = 54;
         S_猎魔暗使数量三.TextAlign = HorizontalAlignment.Center;
         S_猎魔暗使数量三.Value = new decimal(new int[] { 500, 0, 0, 0 });
-        S_猎魔暗使数量三.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_猎魔暗使数量三.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_猎魔暗使数量四
         // 
@@ -11082,7 +11082,7 @@ public partial class SMain
         S_猎魔暗使数量四.TabIndex = 53;
         S_猎魔暗使数量四.TextAlign = HorizontalAlignment.Center;
         S_猎魔暗使数量四.Value = new decimal(new int[] { 500, 0, 0, 0 });
-        S_猎魔暗使数量四.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_猎魔暗使数量四.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_猎魔暗使数量六
         // 
@@ -11095,7 +11095,7 @@ public partial class SMain
         S_猎魔暗使数量六.TabIndex = 52;
         S_猎魔暗使数量六.TextAlign = HorizontalAlignment.Center;
         S_猎魔暗使数量六.Value = new decimal(new int[] { 500, 0, 0, 0 });
-        S_猎魔暗使数量六.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_猎魔暗使数量六.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_猎魔暗使数量五
         // 
@@ -11108,7 +11108,7 @@ public partial class SMain
         S_猎魔暗使数量五.TabIndex = 51;
         S_猎魔暗使数量五.TextAlign = HorizontalAlignment.Center;
         S_猎魔暗使数量五.Value = new decimal(new int[] { 500, 0, 0, 0 });
-        S_猎魔暗使数量五.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_猎魔暗使数量五.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_猎魔暗使数量二
         // 
@@ -11121,7 +11121,7 @@ public partial class SMain
         S_猎魔暗使数量二.TabIndex = 50;
         S_猎魔暗使数量二.TextAlign = HorizontalAlignment.Center;
         S_猎魔暗使数量二.Value = new decimal(new int[] { 500, 0, 0, 0 });
-        S_猎魔暗使数量二.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_猎魔暗使数量二.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_猎魔暗使材料二
         // 
@@ -11135,7 +11135,7 @@ public partial class SMain
         S_猎魔暗使材料二.TabIndex = 49;
         S_猎魔暗使材料二.TextAlign = HorizontalAlignment.Center;
         S_猎魔暗使材料二.Value = new decimal(new int[] { 111025, 0, 0, 0 });
-        S_猎魔暗使材料二.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_猎魔暗使材料二.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_猎魔暗使材料三
         // 
@@ -11149,7 +11149,7 @@ public partial class SMain
         S_猎魔暗使材料三.TabIndex = 48;
         S_猎魔暗使材料三.TextAlign = HorizontalAlignment.Center;
         S_猎魔暗使材料三.Value = new decimal(new int[] { 111027, 0, 0, 0 });
-        S_猎魔暗使材料三.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_猎魔暗使材料三.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_猎魔暗使材料四
         // 
@@ -11163,7 +11163,7 @@ public partial class SMain
         S_猎魔暗使材料四.TabIndex = 46;
         S_猎魔暗使材料四.TextAlign = HorizontalAlignment.Center;
         S_猎魔暗使材料四.Value = new decimal(new int[] { 90220, 0, 0, 0 });
-        S_猎魔暗使材料四.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_猎魔暗使材料四.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_猎魔暗使材料六
         // 
@@ -11177,7 +11177,7 @@ public partial class SMain
         S_猎魔暗使材料六.TabIndex = 45;
         S_猎魔暗使材料六.TextAlign = HorizontalAlignment.Center;
         S_猎魔暗使材料六.Value = new decimal(new int[] { 90236, 0, 0, 0 });
-        S_猎魔暗使材料六.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_猎魔暗使材料六.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_猎魔暗使材料五
         // 
@@ -11191,7 +11191,7 @@ public partial class SMain
         S_猎魔暗使材料五.TabIndex = 44;
         S_猎魔暗使材料五.TextAlign = HorizontalAlignment.Center;
         S_猎魔暗使材料五.Value = new decimal(new int[] { 90228, 0, 0, 0 });
-        S_猎魔暗使材料五.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_猎魔暗使材料五.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_猎魔暗使称号六
         // 
@@ -11204,7 +11204,7 @@ public partial class SMain
         S_猎魔暗使称号六.TabIndex = 43;
         S_猎魔暗使称号六.TextAlign = HorizontalAlignment.Center;
         S_猎魔暗使称号六.Value = new decimal(new int[] { 60, 0, 0, 0 });
-        S_猎魔暗使称号六.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_猎魔暗使称号六.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_猎魔暗使称号二
         // 
@@ -11217,7 +11217,7 @@ public partial class SMain
         S_猎魔暗使称号二.TabIndex = 42;
         S_猎魔暗使称号二.TextAlign = HorizontalAlignment.Center;
         S_猎魔暗使称号二.Value = new decimal(new int[] { 102, 0, 0, 0 });
-        S_猎魔暗使称号二.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_猎魔暗使称号二.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_猎魔暗使称号三
         // 
@@ -11230,7 +11230,7 @@ public partial class SMain
         S_猎魔暗使称号三.TabIndex = 41;
         S_猎魔暗使称号三.TextAlign = HorizontalAlignment.Center;
         S_猎魔暗使称号三.Value = new decimal(new int[] { 107, 0, 0, 0 });
-        S_猎魔暗使称号三.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_猎魔暗使称号三.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_猎魔暗使称号四
         // 
@@ -11243,7 +11243,7 @@ public partial class SMain
         S_猎魔暗使称号四.TabIndex = 40;
         S_猎魔暗使称号四.TextAlign = HorizontalAlignment.Center;
         S_猎魔暗使称号四.Value = new decimal(new int[] { 59, 0, 0, 0 });
-        S_猎魔暗使称号四.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_猎魔暗使称号四.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_猎魔暗使称号五
         // 
@@ -11256,7 +11256,7 @@ public partial class SMain
         S_猎魔暗使称号五.TabIndex = 39;
         S_猎魔暗使称号五.TextAlign = HorizontalAlignment.Center;
         S_猎魔暗使称号五.Value = new decimal(new int[] { 138, 0, 0, 0 });
-        S_猎魔暗使称号五.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_猎魔暗使称号五.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label357
         // 
@@ -11279,7 +11279,7 @@ public partial class SMain
         S_猎魔暗使称号一.TabIndex = 37;
         S_猎魔暗使称号一.TextAlign = HorizontalAlignment.Center;
         S_猎魔暗使称号一.Value = new decimal(new int[] { 99, 0, 0, 0 });
-        S_猎魔暗使称号一.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_猎魔暗使称号一.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_猎魔暗使数量一
         // 
@@ -11292,7 +11292,7 @@ public partial class SMain
         S_猎魔暗使数量一.TabIndex = 36;
         S_猎魔暗使数量一.TextAlign = HorizontalAlignment.Center;
         S_猎魔暗使数量一.Value = new decimal(new int[] { 500, 0, 0, 0 });
-        S_猎魔暗使数量一.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_猎魔暗使数量一.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_猎魔暗使材料一
         // 
@@ -11306,7 +11306,7 @@ public partial class SMain
         S_猎魔暗使材料一.TabIndex = 30;
         S_猎魔暗使材料一.TextAlign = HorizontalAlignment.Center;
         S_猎魔暗使材料一.Value = new decimal(new int[] { 111023, 0, 0, 0 });
-        S_猎魔暗使材料一.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_猎魔暗使材料一.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 对话三
         // 
@@ -11395,7 +11395,7 @@ public partial class SMain
         S_书店商贩物品.Size = new Size(116, 23);
         S_书店商贩物品.TabIndex = 1;
         S_书店商贩物品.Text = "Remnant Pages";
-        S_书店商贩物品.TextChanged += (this.S_书店商贩物品_TextChanged);
+        S_书店商贩物品.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // tabPage26
         // 
@@ -11437,7 +11437,7 @@ public partial class SMain
         幸运保底开关.TabIndex = 5;
         幸运保底开关.Text = "Lucky Guarantee Switch";
         幸运保底开关.UseVisualStyleBackColor = true;
-        幸运保底开关.CheckedChanged += (this.幸运保底开关_CheckedChanged);
+        幸运保底开关.CheckedChanged += (this.UpdateBooleanSettingsValue_CheckedChanged);
         // 
         // label797
         // 
@@ -11461,7 +11461,7 @@ public partial class SMain
         S_幸运洗练次数保底.TabIndex = 3;
         S_幸运洗练次数保底.TextAlign = HorizontalAlignment.Center;
         S_幸运洗练次数保底.Value = new decimal(new int[] { 2000, 0, 0, 0 });
-        S_幸运洗练次数保底.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_幸运洗练次数保底.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label796
         // 
@@ -11484,7 +11484,7 @@ public partial class SMain
         S_幸运洗练点数.TabIndex = 1;
         S_幸运洗练点数.TextAlign = HorizontalAlignment.Center;
         S_幸运洗练点数.Value = new decimal(new int[] { 2, 0, 0, 0 });
-        S_幸运洗练点数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_幸运洗练点数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label795
         // 
@@ -11558,7 +11558,7 @@ public partial class SMain
         S_锻造成功倍数.TabIndex = 32;
         S_锻造成功倍数.TextAlign = HorizontalAlignment.Center;
         S_锻造成功倍数.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_锻造成功倍数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_锻造成功倍数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label56
         // 
@@ -11614,7 +11614,7 @@ public partial class SMain
         S_武器强化取回时间.TabIndex = 9;
         S_武器强化取回时间.TextAlign = HorizontalAlignment.Center;
         S_武器强化取回时间.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_武器强化取回时间.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_武器强化取回时间.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label801
         // 
@@ -11645,7 +11645,7 @@ public partial class SMain
         S_武器强化消耗货币开关.Size = new Size(54, 23);
         S_武器强化消耗货币开关.TabIndex = 6;
         S_武器强化消耗货币开关.TextAlign = HorizontalAlignment.Center;
-        S_武器强化消耗货币开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_武器强化消耗货币开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label799
         // 
@@ -11668,7 +11668,7 @@ public partial class SMain
         S_武器强化消耗货币值.TabIndex = 4;
         S_武器强化消耗货币值.TextAlign = HorizontalAlignment.Center;
         S_武器强化消耗货币值.Value = new decimal(new int[] { 100000, 0, 0, 0 });
-        S_武器强化消耗货币值.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_武器强化消耗货币值.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label798
         // 
@@ -11750,7 +11750,7 @@ public partial class SMain
         S_监狱货币类型.TabIndex = 2;
         S_监狱货币类型.TextAlign = HorizontalAlignment.Center;
         S_监狱货币类型.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_监狱货币类型.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_监狱货币类型.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label789
         // 
@@ -11783,7 +11783,7 @@ public partial class SMain
         S_监狱货币.TabIndex = 1;
         S_监狱货币.TextAlign = HorizontalAlignment.Center;
         S_监狱货币.Value = new decimal(new int[] { 10000, 0, 0, 0 });
-        S_监狱货币.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_监狱货币.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // tabPage93
         // 
@@ -11920,7 +11920,7 @@ public partial class SMain
         S_自定义元宝兑换05.TabIndex = 11;
         S_自定义元宝兑换05.TextAlign = HorizontalAlignment.Center;
         S_自定义元宝兑换05.Value = new decimal(new int[] { 999999, 0, 0, 0 });
-        S_自定义元宝兑换05.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_自定义元宝兑换05.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_自定义元宝兑换04
         // 
@@ -11933,7 +11933,7 @@ public partial class SMain
         S_自定义元宝兑换04.TabIndex = 10;
         S_自定义元宝兑换04.TextAlign = HorizontalAlignment.Center;
         S_自定义元宝兑换04.Value = new decimal(new int[] { 999999, 0, 0, 0 });
-        S_自定义元宝兑换04.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_自定义元宝兑换04.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_自定义元宝兑换03
         // 
@@ -11946,7 +11946,7 @@ public partial class SMain
         S_自定义元宝兑换03.TabIndex = 9;
         S_自定义元宝兑换03.TextAlign = HorizontalAlignment.Center;
         S_自定义元宝兑换03.Value = new decimal(new int[] { 999999, 0, 0, 0 });
-        S_自定义元宝兑换03.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_自定义元宝兑换03.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_自定义元宝兑换02
         // 
@@ -11959,7 +11959,7 @@ public partial class SMain
         S_自定义元宝兑换02.TabIndex = 8;
         S_自定义元宝兑换02.TextAlign = HorizontalAlignment.Center;
         S_自定义元宝兑换02.Value = new decimal(new int[] { 999999, 0, 0, 0 });
-        S_自定义元宝兑换02.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_自定义元宝兑换02.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_自定义元宝兑换01
         // 
@@ -11972,7 +11972,7 @@ public partial class SMain
         S_自定义元宝兑换01.TabIndex = 7;
         S_自定义元宝兑换01.TextAlign = HorizontalAlignment.Center;
         S_自定义元宝兑换01.Value = new decimal(new int[] { 999999, 0, 0, 0 });
-        S_自定义元宝兑换01.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_自定义元宝兑换01.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label817
         // 
@@ -12059,7 +12059,7 @@ public partial class SMain
         S_直升物品9.TabIndex = 34;
         S_直升物品9.TextAlign = HorizontalAlignment.Center;
         S_直升物品9.Value = new decimal(new int[] { 999999, 0, 0, 0 });
-        S_直升物品9.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_直升物品9.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_直升物品8
         // 
@@ -12072,7 +12072,7 @@ public partial class SMain
         S_直升物品8.TabIndex = 33;
         S_直升物品8.TextAlign = HorizontalAlignment.Center;
         S_直升物品8.Value = new decimal(new int[] { 999999, 0, 0, 0 });
-        S_直升物品8.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_直升物品8.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_直升物品7
         // 
@@ -12085,7 +12085,7 @@ public partial class SMain
         S_直升物品7.TabIndex = 32;
         S_直升物品7.TextAlign = HorizontalAlignment.Center;
         S_直升物品7.Value = new decimal(new int[] { 999999, 0, 0, 0 });
-        S_直升物品7.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_直升物品7.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_直升物品6
         // 
@@ -12098,7 +12098,7 @@ public partial class SMain
         S_直升物品6.TabIndex = 31;
         S_直升物品6.TextAlign = HorizontalAlignment.Center;
         S_直升物品6.Value = new decimal(new int[] { 999999, 0, 0, 0 });
-        S_直升物品6.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_直升物品6.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_直升物品5
         // 
@@ -12111,7 +12111,7 @@ public partial class SMain
         S_直升物品5.TabIndex = 30;
         S_直升物品5.TextAlign = HorizontalAlignment.Center;
         S_直升物品5.Value = new decimal(new int[] { 999999, 0, 0, 0 });
-        S_直升物品5.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_直升物品5.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_直升物品4
         // 
@@ -12124,7 +12124,7 @@ public partial class SMain
         S_直升物品4.TabIndex = 29;
         S_直升物品4.TextAlign = HorizontalAlignment.Center;
         S_直升物品4.Value = new decimal(new int[] { 999999, 0, 0, 0 });
-        S_直升物品4.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_直升物品4.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_直升物品3
         // 
@@ -12137,7 +12137,7 @@ public partial class SMain
         S_直升物品3.TabIndex = 28;
         S_直升物品3.TextAlign = HorizontalAlignment.Center;
         S_直升物品3.Value = new decimal(new int[] { 999999, 0, 0, 0 });
-        S_直升物品3.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_直升物品3.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_直升物品2
         // 
@@ -12150,7 +12150,7 @@ public partial class SMain
         S_直升物品2.TabIndex = 27;
         S_直升物品2.TextAlign = HorizontalAlignment.Center;
         S_直升物品2.Value = new decimal(new int[] { 999999, 0, 0, 0 });
-        S_直升物品2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_直升物品2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_直升物品1
         // 
@@ -12163,7 +12163,7 @@ public partial class SMain
         S_直升物品1.TabIndex = 26;
         S_直升物品1.TextAlign = HorizontalAlignment.Center;
         S_直升物品1.Value = new decimal(new int[] { 999999, 0, 0, 0 });
-        S_直升物品1.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_直升物品1.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_直升经验9
         // 
@@ -12176,7 +12176,7 @@ public partial class SMain
         S_直升经验9.TabIndex = 25;
         S_直升经验9.TextAlign = HorizontalAlignment.Center;
         S_直升经验9.Value = new decimal(new int[] { 100000, 0, 0, 0 });
-        S_直升经验9.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_直升经验9.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_直升经验8
         // 
@@ -12189,7 +12189,7 @@ public partial class SMain
         S_直升经验8.TabIndex = 24;
         S_直升经验8.TextAlign = HorizontalAlignment.Center;
         S_直升经验8.Value = new decimal(new int[] { 100000, 0, 0, 0 });
-        S_直升经验8.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_直升经验8.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_直升经验7
         // 
@@ -12202,7 +12202,7 @@ public partial class SMain
         S_直升经验7.TabIndex = 23;
         S_直升经验7.TextAlign = HorizontalAlignment.Center;
         S_直升经验7.Value = new decimal(new int[] { 100000, 0, 0, 0 });
-        S_直升经验7.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_直升经验7.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_直升经验6
         // 
@@ -12215,7 +12215,7 @@ public partial class SMain
         S_直升经验6.TabIndex = 22;
         S_直升经验6.TextAlign = HorizontalAlignment.Center;
         S_直升经验6.Value = new decimal(new int[] { 100000, 0, 0, 0 });
-        S_直升经验6.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_直升经验6.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_直升经验5
         // 
@@ -12228,7 +12228,7 @@ public partial class SMain
         S_直升经验5.TabIndex = 21;
         S_直升经验5.TextAlign = HorizontalAlignment.Center;
         S_直升经验5.Value = new decimal(new int[] { 100000, 0, 0, 0 });
-        S_直升经验5.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_直升经验5.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_直升经验4
         // 
@@ -12241,7 +12241,7 @@ public partial class SMain
         S_直升经验4.TabIndex = 20;
         S_直升经验4.TextAlign = HorizontalAlignment.Center;
         S_直升经验4.Value = new decimal(new int[] { 100000, 0, 0, 0 });
-        S_直升经验4.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_直升经验4.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_直升经验3
         // 
@@ -12254,7 +12254,7 @@ public partial class SMain
         S_直升经验3.TabIndex = 19;
         S_直升经验3.TextAlign = HorizontalAlignment.Center;
         S_直升经验3.Value = new decimal(new int[] { 100000, 0, 0, 0 });
-        S_直升经验3.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_直升经验3.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_直升经验2
         // 
@@ -12267,7 +12267,7 @@ public partial class SMain
         S_直升经验2.TabIndex = 18;
         S_直升经验2.TextAlign = HorizontalAlignment.Center;
         S_直升经验2.Value = new decimal(new int[] { 100000, 0, 0, 0 });
-        S_直升经验2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_直升经验2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_直升经验1
         // 
@@ -12280,7 +12280,7 @@ public partial class SMain
         S_直升经验1.TabIndex = 17;
         S_直升经验1.TextAlign = HorizontalAlignment.Center;
         S_直升经验1.Value = new decimal(new int[] { 100000, 0, 0, 0 });
-        S_直升经验1.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_直升经验1.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_直升等级9
         // 
@@ -12292,7 +12292,7 @@ public partial class SMain
         S_直升等级9.TabIndex = 16;
         S_直升等级9.TextAlign = HorizontalAlignment.Center;
         S_直升等级9.Value = new decimal(new int[] { 15, 0, 0, 0 });
-        S_直升等级9.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_直升等级9.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_直升等级8
         // 
@@ -12304,7 +12304,7 @@ public partial class SMain
         S_直升等级8.TabIndex = 15;
         S_直升等级8.TextAlign = HorizontalAlignment.Center;
         S_直升等级8.Value = new decimal(new int[] { 15, 0, 0, 0 });
-        S_直升等级8.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_直升等级8.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_直升等级7
         // 
@@ -12316,7 +12316,7 @@ public partial class SMain
         S_直升等级7.TabIndex = 14;
         S_直升等级7.TextAlign = HorizontalAlignment.Center;
         S_直升等级7.Value = new decimal(new int[] { 15, 0, 0, 0 });
-        S_直升等级7.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_直升等级7.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_直升等级6
         // 
@@ -12328,7 +12328,7 @@ public partial class SMain
         S_直升等级6.TabIndex = 13;
         S_直升等级6.TextAlign = HorizontalAlignment.Center;
         S_直升等级6.Value = new decimal(new int[] { 15, 0, 0, 0 });
-        S_直升等级6.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_直升等级6.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_直升等级5
         // 
@@ -12340,7 +12340,7 @@ public partial class SMain
         S_直升等级5.TabIndex = 12;
         S_直升等级5.TextAlign = HorizontalAlignment.Center;
         S_直升等级5.Value = new decimal(new int[] { 15, 0, 0, 0 });
-        S_直升等级5.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_直升等级5.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_直升等级4
         // 
@@ -12352,7 +12352,7 @@ public partial class SMain
         S_直升等级4.TabIndex = 11;
         S_直升等级4.TextAlign = HorizontalAlignment.Center;
         S_直升等级4.Value = new decimal(new int[] { 15, 0, 0, 0 });
-        S_直升等级4.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_直升等级4.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_直升等级3
         // 
@@ -12364,7 +12364,7 @@ public partial class SMain
         S_直升等级3.TabIndex = 10;
         S_直升等级3.TextAlign = HorizontalAlignment.Center;
         S_直升等级3.Value = new decimal(new int[] { 15, 0, 0, 0 });
-        S_直升等级3.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_直升等级3.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_直升等级2
         // 
@@ -12376,7 +12376,7 @@ public partial class SMain
         S_直升等级2.TabIndex = 9;
         S_直升等级2.TextAlign = HorizontalAlignment.Center;
         S_直升等级2.Value = new decimal(new int[] { 15, 0, 0, 0 });
-        S_直升等级2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_直升等级2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_直升等级1
         // 
@@ -12388,7 +12388,7 @@ public partial class SMain
         S_直升等级1.TabIndex = 8;
         S_直升等级1.TextAlign = HorizontalAlignment.Center;
         S_直升等级1.Value = new decimal(new int[] { 15, 0, 0, 0 });
-        S_直升等级1.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_直升等级1.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label824
         // 
@@ -12483,7 +12483,7 @@ public partial class SMain
         雕爷3号位铭文石.TabIndex = 56;
         雕爷3号位铭文石.TextAlign = HorizontalAlignment.Center;
         雕爷3号位铭文石.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        雕爷3号位铭文石.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        雕爷3号位铭文石.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 雕爷2号位铭文石
         // 
@@ -12496,7 +12496,7 @@ public partial class SMain
         雕爷2号位铭文石.TabIndex = 55;
         雕爷2号位铭文石.TextAlign = HorizontalAlignment.Center;
         雕爷2号位铭文石.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        雕爷2号位铭文石.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        雕爷2号位铭文石.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 雕爷2号位灵符
         // 
@@ -12509,7 +12509,7 @@ public partial class SMain
         雕爷2号位灵符.TabIndex = 54;
         雕爷2号位灵符.TextAlign = HorizontalAlignment.Center;
         雕爷2号位灵符.Value = new decimal(new int[] { 1000, 0, 0, 0 });
-        雕爷2号位灵符.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        雕爷2号位灵符.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 雕爷3号位灵符
         // 
@@ -12522,7 +12522,7 @@ public partial class SMain
         雕爷3号位灵符.TabIndex = 53;
         雕爷3号位灵符.TextAlign = HorizontalAlignment.Center;
         雕爷3号位灵符.Value = new decimal(new int[] { 1000, 0, 0, 0 });
-        雕爷3号位灵符.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        雕爷3号位灵符.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 雕爷1号位铭文石
         // 
@@ -12535,7 +12535,7 @@ public partial class SMain
         雕爷1号位铭文石.TabIndex = 52;
         雕爷1号位铭文石.TextAlign = HorizontalAlignment.Center;
         雕爷1号位铭文石.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        雕爷1号位铭文石.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        雕爷1号位铭文石.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 雕爷1号位灵符
         // 
@@ -12548,7 +12548,7 @@ public partial class SMain
         雕爷1号位灵符.TabIndex = 51;
         雕爷1号位灵符.TextAlign = HorizontalAlignment.Center;
         雕爷1号位灵符.Value = new decimal(new int[] { 1000, 0, 0, 0 });
-        雕爷1号位灵符.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        雕爷1号位灵符.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label832
         // 
@@ -12583,7 +12583,7 @@ public partial class SMain
         雕爷激活灵符需求.TabIndex = 48;
         雕爷激活灵符需求.TextAlign = HorizontalAlignment.Center;
         雕爷激活灵符需求.Value = new decimal(new int[] { 6000, 0, 0, 0 });
-        雕爷激活灵符需求.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        雕爷激活灵符需求.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label830
         // 
@@ -12660,7 +12660,7 @@ public partial class SMain
         S_雕爷使用金币.TabIndex = 48;
         S_雕爷使用金币.TextAlign = HorizontalAlignment.Center;
         S_雕爷使用金币.Value = new decimal(new int[] { 10000, 0, 0, 0 });
-        S_雕爷使用金币.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_雕爷使用金币.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label80
         // 
@@ -12696,7 +12696,7 @@ public partial class SMain
         S_雕爷使用物品.TabIndex = 45;
         S_雕爷使用物品.TextAlign = HorizontalAlignment.Center;
         S_雕爷使用物品.Value = new decimal(new int[] { 90235, 0, 0, 0 });
-        S_雕爷使用物品.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_雕爷使用物品.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // tabPage45
         // 
@@ -12807,7 +12807,7 @@ public partial class SMain
         S_铭文战士3挡技能编号.TabIndex = 75;
         S_铭文战士3挡技能编号.TextAlign = HorizontalAlignment.Center;
         S_铭文战士3挡技能编号.Value = new decimal(new int[] { 1000, 0, 0, 0 });
-        S_铭文战士3挡技能编号.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文战士3挡技能编号.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文战士2挡技能编号
         // 
@@ -12820,7 +12820,7 @@ public partial class SMain
         S_铭文战士2挡技能编号.TabIndex = 74;
         S_铭文战士2挡技能编号.TextAlign = HorizontalAlignment.Center;
         S_铭文战士2挡技能编号.Value = new decimal(new int[] { 1000, 0, 0, 0 });
-        S_铭文战士2挡技能编号.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文战士2挡技能编号.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文战士3挡3次数
         // 
@@ -12833,7 +12833,7 @@ public partial class SMain
         S_铭文战士3挡3次数.TabIndex = 73;
         S_铭文战士3挡3次数.TextAlign = HorizontalAlignment.Center;
         S_铭文战士3挡3次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文战士3挡3次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文战士3挡3次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文战士3挡3概率
         // 
@@ -12845,7 +12845,7 @@ public partial class SMain
         S_铭文战士3挡3概率.TabIndex = 72;
         S_铭文战士3挡3概率.TextAlign = HorizontalAlignment.Center;
         S_铭文战士3挡3概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文战士3挡3概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文战士3挡3概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文战士2挡3概率
         // 
@@ -12857,7 +12857,7 @@ public partial class SMain
         S_铭文战士2挡3概率.TabIndex = 71;
         S_铭文战士2挡3概率.TextAlign = HorizontalAlignment.Center;
         S_铭文战士2挡3概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文战士2挡3概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文战士2挡3概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文战士3挡2概率
         // 
@@ -12869,7 +12869,7 @@ public partial class SMain
         S_铭文战士3挡2概率.TabIndex = 70;
         S_铭文战士3挡2概率.TextAlign = HorizontalAlignment.Center;
         S_铭文战士3挡2概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文战士3挡2概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文战士3挡2概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文战士2挡2概率
         // 
@@ -12881,7 +12881,7 @@ public partial class SMain
         S_铭文战士2挡2概率.TabIndex = 69;
         S_铭文战士2挡2概率.TextAlign = HorizontalAlignment.Center;
         S_铭文战士2挡2概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文战士2挡2概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文战士2挡2概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文战士2挡3次数
         // 
@@ -12894,7 +12894,7 @@ public partial class SMain
         S_铭文战士2挡3次数.TabIndex = 68;
         S_铭文战士2挡3次数.TextAlign = HorizontalAlignment.Center;
         S_铭文战士2挡3次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文战士2挡3次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文战士2挡3次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文战士3挡2次数
         // 
@@ -12907,7 +12907,7 @@ public partial class SMain
         S_铭文战士3挡2次数.TabIndex = 67;
         S_铭文战士3挡2次数.TextAlign = HorizontalAlignment.Center;
         S_铭文战士3挡2次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文战士3挡2次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文战士3挡2次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文战士2挡2次数
         // 
@@ -12920,7 +12920,7 @@ public partial class SMain
         S_铭文战士2挡2次数.TabIndex = 66;
         S_铭文战士2挡2次数.TextAlign = HorizontalAlignment.Center;
         S_铭文战士2挡2次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文战士2挡2次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文战士2挡2次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文战士3挡1概率
         // 
@@ -12932,7 +12932,7 @@ public partial class SMain
         S_铭文战士3挡1概率.TabIndex = 65;
         S_铭文战士3挡1概率.TextAlign = HorizontalAlignment.Center;
         S_铭文战士3挡1概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文战士3挡1概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文战士3挡1概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文战士2挡1概率
         // 
@@ -12944,7 +12944,7 @@ public partial class SMain
         S_铭文战士2挡1概率.TabIndex = 64;
         S_铭文战士2挡1概率.TextAlign = HorizontalAlignment.Center;
         S_铭文战士2挡1概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文战士2挡1概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文战士2挡1概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文战士1挡3概率
         // 
@@ -12956,7 +12956,7 @@ public partial class SMain
         S_铭文战士1挡3概率.TabIndex = 63;
         S_铭文战士1挡3概率.TextAlign = HorizontalAlignment.Center;
         S_铭文战士1挡3概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文战士1挡3概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文战士1挡3概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文战士1挡3次数
         // 
@@ -12969,7 +12969,7 @@ public partial class SMain
         S_铭文战士1挡3次数.TabIndex = 62;
         S_铭文战士1挡3次数.TextAlign = HorizontalAlignment.Center;
         S_铭文战士1挡3次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文战士1挡3次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文战士1挡3次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文战士1挡2概率
         // 
@@ -12981,7 +12981,7 @@ public partial class SMain
         S_铭文战士1挡2概率.TabIndex = 61;
         S_铭文战士1挡2概率.TextAlign = HorizontalAlignment.Center;
         S_铭文战士1挡2概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文战士1挡2概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文战士1挡2概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文战士1挡2次数
         // 
@@ -12994,7 +12994,7 @@ public partial class SMain
         S_铭文战士1挡2次数.TabIndex = 60;
         S_铭文战士1挡2次数.TextAlign = HorizontalAlignment.Center;
         S_铭文战士1挡2次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文战士1挡2次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文战士1挡2次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文战士1挡1概率
         // 
@@ -13006,7 +13006,7 @@ public partial class SMain
         S_铭文战士1挡1概率.TabIndex = 59;
         S_铭文战士1挡1概率.TextAlign = HorizontalAlignment.Center;
         S_铭文战士1挡1概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文战士1挡1概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文战士1挡1概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label747
         // 
@@ -13042,7 +13042,7 @@ public partial class SMain
         S_铭文战士3挡技能铭文.TabIndex = 56;
         S_铭文战士3挡技能铭文.TextAlign = HorizontalAlignment.Center;
         S_铭文战士3挡技能铭文.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文战士3挡技能铭文.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文战士3挡技能铭文.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文战士2挡技能铭文
         // 
@@ -13055,7 +13055,7 @@ public partial class SMain
         S_铭文战士2挡技能铭文.TabIndex = 55;
         S_铭文战士2挡技能铭文.TextAlign = HorizontalAlignment.Center;
         S_铭文战士2挡技能铭文.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文战士2挡技能铭文.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文战士2挡技能铭文.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文战士3挡1次数
         // 
@@ -13068,7 +13068,7 @@ public partial class SMain
         S_铭文战士3挡1次数.TabIndex = 52;
         S_铭文战士3挡1次数.TextAlign = HorizontalAlignment.Center;
         S_铭文战士3挡1次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文战士3挡1次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文战士3挡1次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文战士2挡1次数
         // 
@@ -13081,7 +13081,7 @@ public partial class SMain
         S_铭文战士2挡1次数.TabIndex = 51;
         S_铭文战士2挡1次数.TextAlign = HorizontalAlignment.Center;
         S_铭文战士2挡1次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文战士2挡1次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文战士2挡1次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文战士1挡技能铭文
         // 
@@ -13094,7 +13094,7 @@ public partial class SMain
         S_铭文战士1挡技能铭文.TabIndex = 50;
         S_铭文战士1挡技能铭文.TextAlign = HorizontalAlignment.Center;
         S_铭文战士1挡技能铭文.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文战士1挡技能铭文.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文战士1挡技能铭文.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文战士1挡技能编号
         // 
@@ -13107,7 +13107,7 @@ public partial class SMain
         S_铭文战士1挡技能编号.TabIndex = 49;
         S_铭文战士1挡技能编号.TextAlign = HorizontalAlignment.Center;
         S_铭文战士1挡技能编号.Value = new decimal(new int[] { 1000, 0, 0, 0 });
-        S_铭文战士1挡技能编号.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文战士1挡技能编号.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label745
         // 
@@ -13131,7 +13131,7 @@ public partial class SMain
         S_铭文战士1挡1次数.TabIndex = 46;
         S_铭文战士1挡1次数.TextAlign = HorizontalAlignment.Center;
         S_铭文战士1挡1次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文战士1挡1次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文战士1挡1次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // tabPage62
         // 
@@ -13194,7 +13194,7 @@ public partial class SMain
         S_铭文法师3挡技能编号.TabIndex = 75;
         S_铭文法师3挡技能编号.TextAlign = HorizontalAlignment.Center;
         S_铭文法师3挡技能编号.Value = new decimal(new int[] { 1000, 0, 0, 0 });
-        S_铭文法师3挡技能编号.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文法师3挡技能编号.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文法师2挡技能编号
         // 
@@ -13207,7 +13207,7 @@ public partial class SMain
         S_铭文法师2挡技能编号.TabIndex = 74;
         S_铭文法师2挡技能编号.TextAlign = HorizontalAlignment.Center;
         S_铭文法师2挡技能编号.Value = new decimal(new int[] { 1000, 0, 0, 0 });
-        S_铭文法师2挡技能编号.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文法师2挡技能编号.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文法师3挡3次数
         // 
@@ -13220,7 +13220,7 @@ public partial class SMain
         S_铭文法师3挡3次数.TabIndex = 73;
         S_铭文法师3挡3次数.TextAlign = HorizontalAlignment.Center;
         S_铭文法师3挡3次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文法师3挡3次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文法师3挡3次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文法师3挡3概率
         // 
@@ -13232,7 +13232,7 @@ public partial class SMain
         S_铭文法师3挡3概率.TabIndex = 72;
         S_铭文法师3挡3概率.TextAlign = HorizontalAlignment.Center;
         S_铭文法师3挡3概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文法师3挡3概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文法师3挡3概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文法师2挡3概率
         // 
@@ -13244,7 +13244,7 @@ public partial class SMain
         S_铭文法师2挡3概率.TabIndex = 71;
         S_铭文法师2挡3概率.TextAlign = HorizontalAlignment.Center;
         S_铭文法师2挡3概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文法师2挡3概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文法师2挡3概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文法师3挡2概率
         // 
@@ -13256,7 +13256,7 @@ public partial class SMain
         S_铭文法师3挡2概率.TabIndex = 70;
         S_铭文法师3挡2概率.TextAlign = HorizontalAlignment.Center;
         S_铭文法师3挡2概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文法师3挡2概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文法师3挡2概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文法师2挡2概率
         // 
@@ -13268,7 +13268,7 @@ public partial class SMain
         S_铭文法师2挡2概率.TabIndex = 69;
         S_铭文法师2挡2概率.TextAlign = HorizontalAlignment.Center;
         S_铭文法师2挡2概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文法师2挡2概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文法师2挡2概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文法师2挡3次数
         // 
@@ -13281,7 +13281,7 @@ public partial class SMain
         S_铭文法师2挡3次数.TabIndex = 68;
         S_铭文法师2挡3次数.TextAlign = HorizontalAlignment.Center;
         S_铭文法师2挡3次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文法师2挡3次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文法师2挡3次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文法师3挡2次数
         // 
@@ -13294,7 +13294,7 @@ public partial class SMain
         S_铭文法师3挡2次数.TabIndex = 67;
         S_铭文法师3挡2次数.TextAlign = HorizontalAlignment.Center;
         S_铭文法师3挡2次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文法师3挡2次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文法师3挡2次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文法师2挡2次数
         // 
@@ -13307,7 +13307,7 @@ public partial class SMain
         S_铭文法师2挡2次数.TabIndex = 66;
         S_铭文法师2挡2次数.TextAlign = HorizontalAlignment.Center;
         S_铭文法师2挡2次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文法师2挡2次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文法师2挡2次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文法师3挡1概率
         // 
@@ -13319,7 +13319,7 @@ public partial class SMain
         S_铭文法师3挡1概率.TabIndex = 65;
         S_铭文法师3挡1概率.TextAlign = HorizontalAlignment.Center;
         S_铭文法师3挡1概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文法师3挡1概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文法师3挡1概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文法师2挡1概率
         // 
@@ -13331,7 +13331,7 @@ public partial class SMain
         S_铭文法师2挡1概率.TabIndex = 64;
         S_铭文法师2挡1概率.TextAlign = HorizontalAlignment.Center;
         S_铭文法师2挡1概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文法师2挡1概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文法师2挡1概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文法师1挡3概率
         // 
@@ -13343,7 +13343,7 @@ public partial class SMain
         S_铭文法师1挡3概率.TabIndex = 63;
         S_铭文法师1挡3概率.TextAlign = HorizontalAlignment.Center;
         S_铭文法师1挡3概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文法师1挡3概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文法师1挡3概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文法师1挡3次数
         // 
@@ -13356,7 +13356,7 @@ public partial class SMain
         S_铭文法师1挡3次数.TabIndex = 62;
         S_铭文法师1挡3次数.TextAlign = HorizontalAlignment.Center;
         S_铭文法师1挡3次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文法师1挡3次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文法师1挡3次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文法师1挡2概率
         // 
@@ -13368,7 +13368,7 @@ public partial class SMain
         S_铭文法师1挡2概率.TabIndex = 61;
         S_铭文法师1挡2概率.TextAlign = HorizontalAlignment.Center;
         S_铭文法师1挡2概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文法师1挡2概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文法师1挡2概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文法师1挡2次数
         // 
@@ -13381,7 +13381,7 @@ public partial class SMain
         S_铭文法师1挡2次数.TabIndex = 60;
         S_铭文法师1挡2次数.TextAlign = HorizontalAlignment.Center;
         S_铭文法师1挡2次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文法师1挡2次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文法师1挡2次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文法师1挡1概率
         // 
@@ -13393,7 +13393,7 @@ public partial class SMain
         S_铭文法师1挡1概率.TabIndex = 59;
         S_铭文法师1挡1概率.TextAlign = HorizontalAlignment.Center;
         S_铭文法师1挡1概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文法师1挡1概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文法师1挡1概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label739
         // 
@@ -13429,7 +13429,7 @@ public partial class SMain
         S_铭文法师3挡技能铭文.TabIndex = 56;
         S_铭文法师3挡技能铭文.TextAlign = HorizontalAlignment.Center;
         S_铭文法师3挡技能铭文.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文法师3挡技能铭文.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文法师3挡技能铭文.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文法师2挡技能铭文
         // 
@@ -13442,7 +13442,7 @@ public partial class SMain
         S_铭文法师2挡技能铭文.TabIndex = 55;
         S_铭文法师2挡技能铭文.TextAlign = HorizontalAlignment.Center;
         S_铭文法师2挡技能铭文.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文法师2挡技能铭文.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文法师2挡技能铭文.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文法师3挡1次数
         // 
@@ -13455,7 +13455,7 @@ public partial class SMain
         S_铭文法师3挡1次数.TabIndex = 52;
         S_铭文法师3挡1次数.TextAlign = HorizontalAlignment.Center;
         S_铭文法师3挡1次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文法师3挡1次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文法师3挡1次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文法师2挡1次数
         // 
@@ -13468,7 +13468,7 @@ public partial class SMain
         S_铭文法师2挡1次数.TabIndex = 51;
         S_铭文法师2挡1次数.TextAlign = HorizontalAlignment.Center;
         S_铭文法师2挡1次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文法师2挡1次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文法师2挡1次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文法师1挡技能铭文
         // 
@@ -13481,7 +13481,7 @@ public partial class SMain
         S_铭文法师1挡技能铭文.TabIndex = 50;
         S_铭文法师1挡技能铭文.TextAlign = HorizontalAlignment.Center;
         S_铭文法师1挡技能铭文.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文法师1挡技能铭文.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文法师1挡技能铭文.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文法师1挡技能编号
         // 
@@ -13494,7 +13494,7 @@ public partial class SMain
         S_铭文法师1挡技能编号.TabIndex = 49;
         S_铭文法师1挡技能编号.TextAlign = HorizontalAlignment.Center;
         S_铭文法师1挡技能编号.Value = new decimal(new int[] { 1000, 0, 0, 0 });
-        S_铭文法师1挡技能编号.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文法师1挡技能编号.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label742
         // 
@@ -13518,7 +13518,7 @@ public partial class SMain
         S_铭文法师1挡1次数.TabIndex = 46;
         S_铭文法师1挡1次数.TextAlign = HorizontalAlignment.Center;
         S_铭文法师1挡1次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文法师1挡1次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文法师1挡1次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // tabPage63
         // 
@@ -13581,7 +13581,7 @@ public partial class SMain
         S_铭文道士3挡技能编号.TabIndex = 75;
         S_铭文道士3挡技能编号.TextAlign = HorizontalAlignment.Center;
         S_铭文道士3挡技能编号.Value = new decimal(new int[] { 1000, 0, 0, 0 });
-        S_铭文道士3挡技能编号.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文道士3挡技能编号.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文道士2挡技能编号
         // 
@@ -13594,7 +13594,7 @@ public partial class SMain
         S_铭文道士2挡技能编号.TabIndex = 74;
         S_铭文道士2挡技能编号.TextAlign = HorizontalAlignment.Center;
         S_铭文道士2挡技能编号.Value = new decimal(new int[] { 1000, 0, 0, 0 });
-        S_铭文道士2挡技能编号.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文道士2挡技能编号.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文道士3挡3次数
         // 
@@ -13607,7 +13607,7 @@ public partial class SMain
         S_铭文道士3挡3次数.TabIndex = 73;
         S_铭文道士3挡3次数.TextAlign = HorizontalAlignment.Center;
         S_铭文道士3挡3次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文道士3挡3次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文道士3挡3次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文道士3挡3概率
         // 
@@ -13619,7 +13619,7 @@ public partial class SMain
         S_铭文道士3挡3概率.TabIndex = 72;
         S_铭文道士3挡3概率.TextAlign = HorizontalAlignment.Center;
         S_铭文道士3挡3概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文道士3挡3概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文道士3挡3概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文道士2挡3概率
         // 
@@ -13631,7 +13631,7 @@ public partial class SMain
         S_铭文道士2挡3概率.TabIndex = 71;
         S_铭文道士2挡3概率.TextAlign = HorizontalAlignment.Center;
         S_铭文道士2挡3概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文道士2挡3概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文道士2挡3概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文道士3挡2概率
         // 
@@ -13643,7 +13643,7 @@ public partial class SMain
         S_铭文道士3挡2概率.TabIndex = 70;
         S_铭文道士3挡2概率.TextAlign = HorizontalAlignment.Center;
         S_铭文道士3挡2概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文道士3挡2概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文道士3挡2概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文道士2挡2概率
         // 
@@ -13655,7 +13655,7 @@ public partial class SMain
         S_铭文道士2挡2概率.TabIndex = 69;
         S_铭文道士2挡2概率.TextAlign = HorizontalAlignment.Center;
         S_铭文道士2挡2概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文道士2挡2概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文道士2挡2概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文道士2挡3次数
         // 
@@ -13668,7 +13668,7 @@ public partial class SMain
         S_铭文道士2挡3次数.TabIndex = 68;
         S_铭文道士2挡3次数.TextAlign = HorizontalAlignment.Center;
         S_铭文道士2挡3次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文道士2挡3次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文道士2挡3次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文道士3挡2次数
         // 
@@ -13681,7 +13681,7 @@ public partial class SMain
         S_铭文道士3挡2次数.TabIndex = 67;
         S_铭文道士3挡2次数.TextAlign = HorizontalAlignment.Center;
         S_铭文道士3挡2次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文道士3挡2次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文道士3挡2次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文道士2挡2次数
         // 
@@ -13694,7 +13694,7 @@ public partial class SMain
         S_铭文道士2挡2次数.TabIndex = 66;
         S_铭文道士2挡2次数.TextAlign = HorizontalAlignment.Center;
         S_铭文道士2挡2次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文道士2挡2次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文道士2挡2次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文道士3挡1概率
         // 
@@ -13706,7 +13706,7 @@ public partial class SMain
         S_铭文道士3挡1概率.TabIndex = 65;
         S_铭文道士3挡1概率.TextAlign = HorizontalAlignment.Center;
         S_铭文道士3挡1概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文道士3挡1概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文道士3挡1概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文道士2挡1概率
         // 
@@ -13718,7 +13718,7 @@ public partial class SMain
         S_铭文道士2挡1概率.TabIndex = 64;
         S_铭文道士2挡1概率.TextAlign = HorizontalAlignment.Center;
         S_铭文道士2挡1概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文道士2挡1概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文道士2挡1概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文道士1挡3概率
         // 
@@ -13730,7 +13730,7 @@ public partial class SMain
         S_铭文道士1挡3概率.TabIndex = 63;
         S_铭文道士1挡3概率.TextAlign = HorizontalAlignment.Center;
         S_铭文道士1挡3概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文道士1挡3概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文道士1挡3概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文道士1挡3次数
         // 
@@ -13743,7 +13743,7 @@ public partial class SMain
         S_铭文道士1挡3次数.TabIndex = 62;
         S_铭文道士1挡3次数.TextAlign = HorizontalAlignment.Center;
         S_铭文道士1挡3次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文道士1挡3次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文道士1挡3次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文道士1挡2概率
         // 
@@ -13755,7 +13755,7 @@ public partial class SMain
         S_铭文道士1挡2概率.TabIndex = 61;
         S_铭文道士1挡2概率.TextAlign = HorizontalAlignment.Center;
         S_铭文道士1挡2概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文道士1挡2概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文道士1挡2概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文道士1挡2次数
         // 
@@ -13768,7 +13768,7 @@ public partial class SMain
         S_铭文道士1挡2次数.TabIndex = 60;
         S_铭文道士1挡2次数.TextAlign = HorizontalAlignment.Center;
         S_铭文道士1挡2次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文道士1挡2次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文道士1挡2次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文道士1挡1概率
         // 
@@ -13780,7 +13780,7 @@ public partial class SMain
         S_铭文道士1挡1概率.TabIndex = 59;
         S_铭文道士1挡1概率.TextAlign = HorizontalAlignment.Center;
         S_铭文道士1挡1概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文道士1挡1概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文道士1挡1概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label743
         // 
@@ -13816,7 +13816,7 @@ public partial class SMain
         S_铭文道士3挡技能铭文.TabIndex = 56;
         S_铭文道士3挡技能铭文.TextAlign = HorizontalAlignment.Center;
         S_铭文道士3挡技能铭文.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文道士3挡技能铭文.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文道士3挡技能铭文.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文道士2挡技能铭文
         // 
@@ -13829,7 +13829,7 @@ public partial class SMain
         S_铭文道士2挡技能铭文.TabIndex = 55;
         S_铭文道士2挡技能铭文.TextAlign = HorizontalAlignment.Center;
         S_铭文道士2挡技能铭文.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文道士2挡技能铭文.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文道士2挡技能铭文.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文道士3挡1次数
         // 
@@ -13842,7 +13842,7 @@ public partial class SMain
         S_铭文道士3挡1次数.TabIndex = 52;
         S_铭文道士3挡1次数.TextAlign = HorizontalAlignment.Center;
         S_铭文道士3挡1次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文道士3挡1次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文道士3挡1次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文道士2挡1次数
         // 
@@ -13855,7 +13855,7 @@ public partial class SMain
         S_铭文道士2挡1次数.TabIndex = 51;
         S_铭文道士2挡1次数.TextAlign = HorizontalAlignment.Center;
         S_铭文道士2挡1次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文道士2挡1次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文道士2挡1次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文道士1挡技能铭文
         // 
@@ -13868,7 +13868,7 @@ public partial class SMain
         S_铭文道士1挡技能铭文.TabIndex = 50;
         S_铭文道士1挡技能铭文.TextAlign = HorizontalAlignment.Center;
         S_铭文道士1挡技能铭文.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文道士1挡技能铭文.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文道士1挡技能铭文.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文道士1挡技能编号
         // 
@@ -13881,7 +13881,7 @@ public partial class SMain
         S_铭文道士1挡技能编号.TabIndex = 49;
         S_铭文道士1挡技能编号.TextAlign = HorizontalAlignment.Center;
         S_铭文道士1挡技能编号.Value = new decimal(new int[] { 1000, 0, 0, 0 });
-        S_铭文道士1挡技能编号.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文道士1挡技能编号.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label748
         // 
@@ -13905,7 +13905,7 @@ public partial class SMain
         S_铭文道士1挡1次数.TabIndex = 46;
         S_铭文道士1挡1次数.TextAlign = HorizontalAlignment.Center;
         S_铭文道士1挡1次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文道士1挡1次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文道士1挡1次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // tabPage64
         // 
@@ -13968,7 +13968,7 @@ public partial class SMain
         S_铭文刺客3挡技能编号.TabIndex = 75;
         S_铭文刺客3挡技能编号.TextAlign = HorizontalAlignment.Center;
         S_铭文刺客3挡技能编号.Value = new decimal(new int[] { 1000, 0, 0, 0 });
-        S_铭文刺客3挡技能编号.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文刺客3挡技能编号.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文刺客2挡技能编号
         // 
@@ -13981,7 +13981,7 @@ public partial class SMain
         S_铭文刺客2挡技能编号.TabIndex = 74;
         S_铭文刺客2挡技能编号.TextAlign = HorizontalAlignment.Center;
         S_铭文刺客2挡技能编号.Value = new decimal(new int[] { 1000, 0, 0, 0 });
-        S_铭文刺客2挡技能编号.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文刺客2挡技能编号.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文刺客3挡3次数
         // 
@@ -13994,7 +13994,7 @@ public partial class SMain
         S_铭文刺客3挡3次数.TabIndex = 73;
         S_铭文刺客3挡3次数.TextAlign = HorizontalAlignment.Center;
         S_铭文刺客3挡3次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文刺客3挡3次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文刺客3挡3次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文刺客3挡3概率
         // 
@@ -14006,7 +14006,7 @@ public partial class SMain
         S_铭文刺客3挡3概率.TabIndex = 72;
         S_铭文刺客3挡3概率.TextAlign = HorizontalAlignment.Center;
         S_铭文刺客3挡3概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文刺客3挡3概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文刺客3挡3概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文刺客2挡3概率
         // 
@@ -14018,7 +14018,7 @@ public partial class SMain
         S_铭文刺客2挡3概率.TabIndex = 71;
         S_铭文刺客2挡3概率.TextAlign = HorizontalAlignment.Center;
         S_铭文刺客2挡3概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文刺客2挡3概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文刺客2挡3概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文刺客3挡2概率
         // 
@@ -14030,7 +14030,7 @@ public partial class SMain
         S_铭文刺客3挡2概率.TabIndex = 70;
         S_铭文刺客3挡2概率.TextAlign = HorizontalAlignment.Center;
         S_铭文刺客3挡2概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文刺客3挡2概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文刺客3挡2概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文刺客2挡2概率
         // 
@@ -14042,7 +14042,7 @@ public partial class SMain
         S_铭文刺客2挡2概率.TabIndex = 69;
         S_铭文刺客2挡2概率.TextAlign = HorizontalAlignment.Center;
         S_铭文刺客2挡2概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文刺客2挡2概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文刺客2挡2概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文刺客2挡3次数
         // 
@@ -14055,7 +14055,7 @@ public partial class SMain
         S_铭文刺客2挡3次数.TabIndex = 68;
         S_铭文刺客2挡3次数.TextAlign = HorizontalAlignment.Center;
         S_铭文刺客2挡3次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文刺客2挡3次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文刺客2挡3次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文刺客3挡2次数
         // 
@@ -14068,7 +14068,7 @@ public partial class SMain
         S_铭文刺客3挡2次数.TabIndex = 67;
         S_铭文刺客3挡2次数.TextAlign = HorizontalAlignment.Center;
         S_铭文刺客3挡2次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文刺客3挡2次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文刺客3挡2次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文刺客2挡2次数
         // 
@@ -14081,7 +14081,7 @@ public partial class SMain
         S_铭文刺客2挡2次数.TabIndex = 66;
         S_铭文刺客2挡2次数.TextAlign = HorizontalAlignment.Center;
         S_铭文刺客2挡2次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文刺客2挡2次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文刺客2挡2次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文刺客3挡1概率
         // 
@@ -14093,7 +14093,7 @@ public partial class SMain
         S_铭文刺客3挡1概率.TabIndex = 65;
         S_铭文刺客3挡1概率.TextAlign = HorizontalAlignment.Center;
         S_铭文刺客3挡1概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文刺客3挡1概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文刺客3挡1概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文刺客2挡1概率
         // 
@@ -14105,7 +14105,7 @@ public partial class SMain
         S_铭文刺客2挡1概率.TabIndex = 64;
         S_铭文刺客2挡1概率.TextAlign = HorizontalAlignment.Center;
         S_铭文刺客2挡1概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文刺客2挡1概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文刺客2挡1概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文刺客1挡3概率
         // 
@@ -14117,7 +14117,7 @@ public partial class SMain
         S_铭文刺客1挡3概率.TabIndex = 63;
         S_铭文刺客1挡3概率.TextAlign = HorizontalAlignment.Center;
         S_铭文刺客1挡3概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文刺客1挡3概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文刺客1挡3概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文刺客1挡3次数
         // 
@@ -14130,7 +14130,7 @@ public partial class SMain
         S_铭文刺客1挡3次数.TabIndex = 62;
         S_铭文刺客1挡3次数.TextAlign = HorizontalAlignment.Center;
         S_铭文刺客1挡3次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文刺客1挡3次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文刺客1挡3次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文刺客1挡2概率
         // 
@@ -14142,7 +14142,7 @@ public partial class SMain
         S_铭文刺客1挡2概率.TabIndex = 61;
         S_铭文刺客1挡2概率.TextAlign = HorizontalAlignment.Center;
         S_铭文刺客1挡2概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文刺客1挡2概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文刺客1挡2概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文刺客1挡2次数
         // 
@@ -14155,7 +14155,7 @@ public partial class SMain
         S_铭文刺客1挡2次数.TabIndex = 60;
         S_铭文刺客1挡2次数.TextAlign = HorizontalAlignment.Center;
         S_铭文刺客1挡2次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文刺客1挡2次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文刺客1挡2次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文刺客1挡1概率
         // 
@@ -14167,7 +14167,7 @@ public partial class SMain
         S_铭文刺客1挡1概率.TabIndex = 59;
         S_铭文刺客1挡1概率.TextAlign = HorizontalAlignment.Center;
         S_铭文刺客1挡1概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文刺客1挡1概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文刺客1挡1概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label749
         // 
@@ -14203,7 +14203,7 @@ public partial class SMain
         S_铭文刺客3挡技能铭文.TabIndex = 56;
         S_铭文刺客3挡技能铭文.TextAlign = HorizontalAlignment.Center;
         S_铭文刺客3挡技能铭文.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文刺客3挡技能铭文.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文刺客3挡技能铭文.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文刺客2挡技能铭文
         // 
@@ -14216,7 +14216,7 @@ public partial class SMain
         S_铭文刺客2挡技能铭文.TabIndex = 55;
         S_铭文刺客2挡技能铭文.TextAlign = HorizontalAlignment.Center;
         S_铭文刺客2挡技能铭文.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文刺客2挡技能铭文.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文刺客2挡技能铭文.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文刺客3挡1次数
         // 
@@ -14229,7 +14229,7 @@ public partial class SMain
         S_铭文刺客3挡1次数.TabIndex = 52;
         S_铭文刺客3挡1次数.TextAlign = HorizontalAlignment.Center;
         S_铭文刺客3挡1次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文刺客3挡1次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文刺客3挡1次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文刺客2挡1次数
         // 
@@ -14242,7 +14242,7 @@ public partial class SMain
         S_铭文刺客2挡1次数.TabIndex = 51;
         S_铭文刺客2挡1次数.TextAlign = HorizontalAlignment.Center;
         S_铭文刺客2挡1次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文刺客2挡1次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文刺客2挡1次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文刺客1挡技能铭文
         // 
@@ -14255,7 +14255,7 @@ public partial class SMain
         S_铭文刺客1挡技能铭文.TabIndex = 50;
         S_铭文刺客1挡技能铭文.TextAlign = HorizontalAlignment.Center;
         S_铭文刺客1挡技能铭文.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文刺客1挡技能铭文.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文刺客1挡技能铭文.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文刺客1挡技能编号
         // 
@@ -14268,7 +14268,7 @@ public partial class SMain
         S_铭文刺客1挡技能编号.TabIndex = 49;
         S_铭文刺客1挡技能编号.TextAlign = HorizontalAlignment.Center;
         S_铭文刺客1挡技能编号.Value = new decimal(new int[] { 1000, 0, 0, 0 });
-        S_铭文刺客1挡技能编号.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文刺客1挡技能编号.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label751
         // 
@@ -14292,7 +14292,7 @@ public partial class SMain
         S_铭文刺客1挡1次数.TabIndex = 46;
         S_铭文刺客1挡1次数.TextAlign = HorizontalAlignment.Center;
         S_铭文刺客1挡1次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文刺客1挡1次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文刺客1挡1次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // tabPage65
         // 
@@ -14355,7 +14355,7 @@ public partial class SMain
         S_铭文弓手3挡技能编号.TabIndex = 75;
         S_铭文弓手3挡技能编号.TextAlign = HorizontalAlignment.Center;
         S_铭文弓手3挡技能编号.Value = new decimal(new int[] { 1000, 0, 0, 0 });
-        S_铭文弓手3挡技能编号.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文弓手3挡技能编号.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文弓手2挡技能编号
         // 
@@ -14368,7 +14368,7 @@ public partial class SMain
         S_铭文弓手2挡技能编号.TabIndex = 74;
         S_铭文弓手2挡技能编号.TextAlign = HorizontalAlignment.Center;
         S_铭文弓手2挡技能编号.Value = new decimal(new int[] { 1000, 0, 0, 0 });
-        S_铭文弓手2挡技能编号.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文弓手2挡技能编号.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文弓手3挡3次数
         // 
@@ -14381,7 +14381,7 @@ public partial class SMain
         S_铭文弓手3挡3次数.TabIndex = 73;
         S_铭文弓手3挡3次数.TextAlign = HorizontalAlignment.Center;
         S_铭文弓手3挡3次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文弓手3挡3次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文弓手3挡3次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文弓手3挡3概率
         // 
@@ -14393,7 +14393,7 @@ public partial class SMain
         S_铭文弓手3挡3概率.TabIndex = 72;
         S_铭文弓手3挡3概率.TextAlign = HorizontalAlignment.Center;
         S_铭文弓手3挡3概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文弓手3挡3概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文弓手3挡3概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文弓手2挡3概率
         // 
@@ -14405,7 +14405,7 @@ public partial class SMain
         S_铭文弓手2挡3概率.TabIndex = 71;
         S_铭文弓手2挡3概率.TextAlign = HorizontalAlignment.Center;
         S_铭文弓手2挡3概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文弓手2挡3概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文弓手2挡3概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文弓手3挡2概率
         // 
@@ -14417,7 +14417,7 @@ public partial class SMain
         S_铭文弓手3挡2概率.TabIndex = 70;
         S_铭文弓手3挡2概率.TextAlign = HorizontalAlignment.Center;
         S_铭文弓手3挡2概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文弓手3挡2概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文弓手3挡2概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文弓手2挡2概率
         // 
@@ -14429,7 +14429,7 @@ public partial class SMain
         S_铭文弓手2挡2概率.TabIndex = 69;
         S_铭文弓手2挡2概率.TextAlign = HorizontalAlignment.Center;
         S_铭文弓手2挡2概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文弓手2挡2概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文弓手2挡2概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文弓手2挡3次数
         // 
@@ -14442,7 +14442,7 @@ public partial class SMain
         S_铭文弓手2挡3次数.TabIndex = 68;
         S_铭文弓手2挡3次数.TextAlign = HorizontalAlignment.Center;
         S_铭文弓手2挡3次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文弓手2挡3次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文弓手2挡3次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文弓手3挡2次数
         // 
@@ -14455,7 +14455,7 @@ public partial class SMain
         S_铭文弓手3挡2次数.TabIndex = 67;
         S_铭文弓手3挡2次数.TextAlign = HorizontalAlignment.Center;
         S_铭文弓手3挡2次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文弓手3挡2次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文弓手3挡2次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文弓手2挡2次数
         // 
@@ -14468,7 +14468,7 @@ public partial class SMain
         S_铭文弓手2挡2次数.TabIndex = 66;
         S_铭文弓手2挡2次数.TextAlign = HorizontalAlignment.Center;
         S_铭文弓手2挡2次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文弓手2挡2次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文弓手2挡2次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文弓手3挡1概率
         // 
@@ -14480,7 +14480,7 @@ public partial class SMain
         S_铭文弓手3挡1概率.TabIndex = 65;
         S_铭文弓手3挡1概率.TextAlign = HorizontalAlignment.Center;
         S_铭文弓手3挡1概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文弓手3挡1概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文弓手3挡1概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文弓手2挡1概率
         // 
@@ -14492,7 +14492,7 @@ public partial class SMain
         S_铭文弓手2挡1概率.TabIndex = 64;
         S_铭文弓手2挡1概率.TextAlign = HorizontalAlignment.Center;
         S_铭文弓手2挡1概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文弓手2挡1概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文弓手2挡1概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文弓手1挡3概率
         // 
@@ -14504,7 +14504,7 @@ public partial class SMain
         S_铭文弓手1挡3概率.TabIndex = 63;
         S_铭文弓手1挡3概率.TextAlign = HorizontalAlignment.Center;
         S_铭文弓手1挡3概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文弓手1挡3概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文弓手1挡3概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文弓手1挡3次数
         // 
@@ -14517,7 +14517,7 @@ public partial class SMain
         S_铭文弓手1挡3次数.TabIndex = 62;
         S_铭文弓手1挡3次数.TextAlign = HorizontalAlignment.Center;
         S_铭文弓手1挡3次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文弓手1挡3次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文弓手1挡3次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文弓手1挡2概率
         // 
@@ -14541,7 +14541,7 @@ public partial class SMain
         S_铭文弓手1挡2次数.TabIndex = 60;
         S_铭文弓手1挡2次数.TextAlign = HorizontalAlignment.Center;
         S_铭文弓手1挡2次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文弓手1挡2次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文弓手1挡2次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文弓手1挡1概率
         // 
@@ -14553,7 +14553,7 @@ public partial class SMain
         S_铭文弓手1挡1概率.TabIndex = 59;
         S_铭文弓手1挡1概率.TextAlign = HorizontalAlignment.Center;
         S_铭文弓手1挡1概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文弓手1挡1概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文弓手1挡1概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label752
         // 
@@ -14589,7 +14589,7 @@ public partial class SMain
         S_铭文弓手3挡技能铭文.TabIndex = 56;
         S_铭文弓手3挡技能铭文.TextAlign = HorizontalAlignment.Center;
         S_铭文弓手3挡技能铭文.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文弓手3挡技能铭文.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文弓手3挡技能铭文.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文弓手2挡技能铭文
         // 
@@ -14602,7 +14602,7 @@ public partial class SMain
         S_铭文弓手2挡技能铭文.TabIndex = 55;
         S_铭文弓手2挡技能铭文.TextAlign = HorizontalAlignment.Center;
         S_铭文弓手2挡技能铭文.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文弓手2挡技能铭文.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文弓手2挡技能铭文.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文弓手3挡1次数
         // 
@@ -14615,7 +14615,7 @@ public partial class SMain
         S_铭文弓手3挡1次数.TabIndex = 52;
         S_铭文弓手3挡1次数.TextAlign = HorizontalAlignment.Center;
         S_铭文弓手3挡1次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文弓手3挡1次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文弓手3挡1次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文弓手2挡1次数
         // 
@@ -14628,7 +14628,7 @@ public partial class SMain
         S_铭文弓手2挡1次数.TabIndex = 51;
         S_铭文弓手2挡1次数.TextAlign = HorizontalAlignment.Center;
         S_铭文弓手2挡1次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文弓手2挡1次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文弓手2挡1次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文弓手1挡技能铭文
         // 
@@ -14641,7 +14641,7 @@ public partial class SMain
         S_铭文弓手1挡技能铭文.TabIndex = 50;
         S_铭文弓手1挡技能铭文.TextAlign = HorizontalAlignment.Center;
         S_铭文弓手1挡技能铭文.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文弓手1挡技能铭文.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文弓手1挡技能铭文.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文弓手1挡技能编号
         // 
@@ -14654,7 +14654,7 @@ public partial class SMain
         S_铭文弓手1挡技能编号.TabIndex = 49;
         S_铭文弓手1挡技能编号.TextAlign = HorizontalAlignment.Center;
         S_铭文弓手1挡技能编号.Value = new decimal(new int[] { 1000, 0, 0, 0 });
-        S_铭文弓手1挡技能编号.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文弓手1挡技能编号.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label754
         // 
@@ -14678,7 +14678,7 @@ public partial class SMain
         S_铭文弓手1挡1次数.TabIndex = 46;
         S_铭文弓手1挡1次数.TextAlign = HorizontalAlignment.Center;
         S_铭文弓手1挡1次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文弓手1挡1次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文弓手1挡1次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // tabPage66
         // 
@@ -14741,7 +14741,7 @@ public partial class SMain
         S_铭文龙枪3挡技能编号.TabIndex = 75;
         S_铭文龙枪3挡技能编号.TextAlign = HorizontalAlignment.Center;
         S_铭文龙枪3挡技能编号.Value = new decimal(new int[] { 1000, 0, 0, 0 });
-        S_铭文龙枪3挡技能编号.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文龙枪3挡技能编号.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文龙枪2挡技能编号
         // 
@@ -14754,7 +14754,7 @@ public partial class SMain
         S_铭文龙枪2挡技能编号.TabIndex = 74;
         S_铭文龙枪2挡技能编号.TextAlign = HorizontalAlignment.Center;
         S_铭文龙枪2挡技能编号.Value = new decimal(new int[] { 1000, 0, 0, 0 });
-        S_铭文龙枪2挡技能编号.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文龙枪2挡技能编号.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文龙枪3挡3次数
         // 
@@ -14767,7 +14767,7 @@ public partial class SMain
         S_铭文龙枪3挡3次数.TabIndex = 73;
         S_铭文龙枪3挡3次数.TextAlign = HorizontalAlignment.Center;
         S_铭文龙枪3挡3次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文龙枪3挡3次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文龙枪3挡3次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文龙枪3挡3概率
         // 
@@ -14779,7 +14779,7 @@ public partial class SMain
         S_铭文龙枪3挡3概率.TabIndex = 72;
         S_铭文龙枪3挡3概率.TextAlign = HorizontalAlignment.Center;
         S_铭文龙枪3挡3概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文龙枪3挡3概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文龙枪3挡3概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文龙枪2挡3概率
         // 
@@ -14791,7 +14791,7 @@ public partial class SMain
         S_铭文龙枪2挡3概率.TabIndex = 71;
         S_铭文龙枪2挡3概率.TextAlign = HorizontalAlignment.Center;
         S_铭文龙枪2挡3概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文龙枪2挡3概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文龙枪2挡3概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文龙枪3挡2概率
         // 
@@ -14803,7 +14803,7 @@ public partial class SMain
         S_铭文龙枪3挡2概率.TabIndex = 70;
         S_铭文龙枪3挡2概率.TextAlign = HorizontalAlignment.Center;
         S_铭文龙枪3挡2概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文龙枪3挡2概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文龙枪3挡2概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文龙枪2挡2概率
         // 
@@ -14815,7 +14815,7 @@ public partial class SMain
         S_铭文龙枪2挡2概率.TabIndex = 69;
         S_铭文龙枪2挡2概率.TextAlign = HorizontalAlignment.Center;
         S_铭文龙枪2挡2概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文龙枪2挡2概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文龙枪2挡2概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文龙枪2挡3次数
         // 
@@ -14828,7 +14828,7 @@ public partial class SMain
         S_铭文龙枪2挡3次数.TabIndex = 68;
         S_铭文龙枪2挡3次数.TextAlign = HorizontalAlignment.Center;
         S_铭文龙枪2挡3次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文龙枪2挡3次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文龙枪2挡3次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文龙枪3挡2次数
         // 
@@ -14841,7 +14841,7 @@ public partial class SMain
         S_铭文龙枪3挡2次数.TabIndex = 67;
         S_铭文龙枪3挡2次数.TextAlign = HorizontalAlignment.Center;
         S_铭文龙枪3挡2次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文龙枪3挡2次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文龙枪3挡2次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文龙枪2挡2次数
         // 
@@ -14854,7 +14854,7 @@ public partial class SMain
         S_铭文龙枪2挡2次数.TabIndex = 66;
         S_铭文龙枪2挡2次数.TextAlign = HorizontalAlignment.Center;
         S_铭文龙枪2挡2次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文龙枪2挡2次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文龙枪2挡2次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文龙枪3挡1概率
         // 
@@ -14866,7 +14866,7 @@ public partial class SMain
         S_铭文龙枪3挡1概率.TabIndex = 65;
         S_铭文龙枪3挡1概率.TextAlign = HorizontalAlignment.Center;
         S_铭文龙枪3挡1概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文龙枪3挡1概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文龙枪3挡1概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文龙枪2挡1概率
         // 
@@ -14878,7 +14878,7 @@ public partial class SMain
         S_铭文龙枪2挡1概率.TabIndex = 64;
         S_铭文龙枪2挡1概率.TextAlign = HorizontalAlignment.Center;
         S_铭文龙枪2挡1概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文龙枪2挡1概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文龙枪2挡1概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文龙枪1挡3概率
         // 
@@ -14890,7 +14890,7 @@ public partial class SMain
         S_铭文龙枪1挡3概率.TabIndex = 63;
         S_铭文龙枪1挡3概率.TextAlign = HorizontalAlignment.Center;
         S_铭文龙枪1挡3概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文龙枪1挡3概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文龙枪1挡3概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文龙枪1挡3次数
         // 
@@ -14903,7 +14903,7 @@ public partial class SMain
         S_铭文龙枪1挡3次数.TabIndex = 62;
         S_铭文龙枪1挡3次数.TextAlign = HorizontalAlignment.Center;
         S_铭文龙枪1挡3次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文龙枪1挡3次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文龙枪1挡3次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文龙枪1挡2概率
         // 
@@ -14915,7 +14915,7 @@ public partial class SMain
         S_铭文龙枪1挡2概率.TabIndex = 61;
         S_铭文龙枪1挡2概率.TextAlign = HorizontalAlignment.Center;
         S_铭文龙枪1挡2概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文龙枪1挡2概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文龙枪1挡2概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文龙枪1挡2次数
         // 
@@ -14928,7 +14928,7 @@ public partial class SMain
         S_铭文龙枪1挡2次数.TabIndex = 60;
         S_铭文龙枪1挡2次数.TextAlign = HorizontalAlignment.Center;
         S_铭文龙枪1挡2次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文龙枪1挡2次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文龙枪1挡2次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文龙枪1挡1概率
         // 
@@ -14940,7 +14940,7 @@ public partial class SMain
         S_铭文龙枪1挡1概率.TabIndex = 59;
         S_铭文龙枪1挡1概率.TextAlign = HorizontalAlignment.Center;
         S_铭文龙枪1挡1概率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文龙枪1挡1概率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文龙枪1挡1概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label755
         // 
@@ -14976,7 +14976,7 @@ public partial class SMain
         S_铭文龙枪3挡技能铭文.TabIndex = 56;
         S_铭文龙枪3挡技能铭文.TextAlign = HorizontalAlignment.Center;
         S_铭文龙枪3挡技能铭文.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文龙枪3挡技能铭文.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文龙枪3挡技能铭文.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文龙枪2挡技能铭文
         // 
@@ -14989,7 +14989,7 @@ public partial class SMain
         S_铭文龙枪2挡技能铭文.TabIndex = 55;
         S_铭文龙枪2挡技能铭文.TextAlign = HorizontalAlignment.Center;
         S_铭文龙枪2挡技能铭文.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文龙枪2挡技能铭文.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文龙枪2挡技能铭文.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文龙枪3挡1次数
         // 
@@ -15002,7 +15002,7 @@ public partial class SMain
         S_铭文龙枪3挡1次数.TabIndex = 52;
         S_铭文龙枪3挡1次数.TextAlign = HorizontalAlignment.Center;
         S_铭文龙枪3挡1次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文龙枪3挡1次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文龙枪3挡1次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文龙枪2挡1次数
         // 
@@ -15015,7 +15015,7 @@ public partial class SMain
         S_铭文龙枪2挡1次数.TabIndex = 51;
         S_铭文龙枪2挡1次数.TextAlign = HorizontalAlignment.Center;
         S_铭文龙枪2挡1次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文龙枪2挡1次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文龙枪2挡1次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文龙枪1挡技能铭文
         // 
@@ -15028,7 +15028,7 @@ public partial class SMain
         S_铭文龙枪1挡技能铭文.TabIndex = 50;
         S_铭文龙枪1挡技能铭文.TextAlign = HorizontalAlignment.Center;
         S_铭文龙枪1挡技能铭文.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文龙枪1挡技能铭文.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文龙枪1挡技能铭文.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_铭文龙枪1挡技能编号
         // 
@@ -15041,7 +15041,7 @@ public partial class SMain
         S_铭文龙枪1挡技能编号.TabIndex = 49;
         S_铭文龙枪1挡技能编号.TextAlign = HorizontalAlignment.Center;
         S_铭文龙枪1挡技能编号.Value = new decimal(new int[] { 1000, 0, 0, 0 });
-        S_铭文龙枪1挡技能编号.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文龙枪1挡技能编号.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label757
         // 
@@ -15065,7 +15065,7 @@ public partial class SMain
         S_铭文龙枪1挡1次数.TabIndex = 46;
         S_铭文龙枪1挡1次数.TextAlign = HorizontalAlignment.Center;
         S_铭文龙枪1挡1次数.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_铭文龙枪1挡1次数.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文龙枪1挡1次数.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // groupBox181
         // 
@@ -15113,7 +15113,7 @@ public partial class SMain
         S_禁止背包铭文洗练.Size = new Size(47, 23);
         S_禁止背包铭文洗练.TabIndex = 45;
         S_禁止背包铭文洗练.TextAlign = HorizontalAlignment.Center;
-        S_禁止背包铭文洗练.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_禁止背包铭文洗练.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // groupBox193
         // 
@@ -15180,7 +15180,7 @@ public partial class SMain
         S_铭文龙枪保底开关.TabIndex = 51;
         S_铭文龙枪保底开关.TextAlign = HorizontalAlignment.Center;
         S_铭文龙枪保底开关.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文龙枪保底开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文龙枪保底开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // groupBox198
         // 
@@ -15204,7 +15204,7 @@ public partial class SMain
         S_铭文弓手保底开关.TabIndex = 51;
         S_铭文弓手保底开关.TextAlign = HorizontalAlignment.Center;
         S_铭文弓手保底开关.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文弓手保底开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文弓手保底开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // groupBox197
         // 
@@ -15228,7 +15228,7 @@ public partial class SMain
         S_铭文刺客保底开关.TabIndex = 51;
         S_铭文刺客保底开关.TextAlign = HorizontalAlignment.Center;
         S_铭文刺客保底开关.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文刺客保底开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文刺客保底开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // groupBox196
         // 
@@ -15252,7 +15252,7 @@ public partial class SMain
         S_铭文道士保底开关.TabIndex = 51;
         S_铭文道士保底开关.TextAlign = HorizontalAlignment.Center;
         S_铭文道士保底开关.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文道士保底开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文道士保底开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // groupBox195
         // 
@@ -15276,7 +15276,7 @@ public partial class SMain
         S_铭文法师保底开关.TabIndex = 51;
         S_铭文法师保底开关.TextAlign = HorizontalAlignment.Center;
         S_铭文法师保底开关.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文法师保底开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文法师保底开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // groupBox194
         // 
@@ -15300,7 +15300,7 @@ public partial class SMain
         S_铭文战士保底开关.TabIndex = 51;
         S_铭文战士保底开关.TextAlign = HorizontalAlignment.Center;
         S_铭文战士保底开关.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_铭文战士保底开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_铭文战士保底开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // tabPage88
         // 
@@ -15405,7 +15405,7 @@ public partial class SMain
         转职内容控件.Size = new Size(158, 23);
         转职内容控件.TabIndex = 60;
         转职内容控件.Text = "输入密码";
-        转职内容控件.TextChanged += (this.转职内容控件_TextChanged);
+        转职内容控件.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // label815
         // 
@@ -15427,7 +15427,7 @@ public partial class SMain
         职业物品数量.TabIndex = 50;
         职业物品数量.TextAlign = HorizontalAlignment.Center;
         职业物品数量.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        职业物品数量.ValueChanged += (this.职业物品数量_ValueChanged);
+        职业物品数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 职业物品ID
         // 
@@ -15439,7 +15439,7 @@ public partial class SMain
         职业物品ID.TabIndex = 49;
         职业物品ID.TextAlign = HorizontalAlignment.Center;
         职业物品ID.Value = new decimal(new int[] { 999999, 0, 0, 0 });
-        职业物品ID.ValueChanged += (this.职业物品ID_ValueChanged);
+        职业物品ID.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 职业货币值
         // 
@@ -15451,7 +15451,7 @@ public partial class SMain
         职业货币值.TabIndex = 48;
         职业货币值.TextAlign = HorizontalAlignment.Center;
         职业货币值.Value = new decimal(new int[] { 10000000, 0, 0, 0 });
-        职业货币值.ValueChanged += (this.职业货币值_ValueChanged);
+        职业货币值.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 职业货币类型
         // 
@@ -15463,7 +15463,7 @@ public partial class SMain
         职业货币类型.TabIndex = 47;
         职业货币类型.TextAlign = HorizontalAlignment.Center;
         职业货币类型.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        职业货币类型.ValueChanged += (this.职业货币类型_ValueChanged);
+        职业货币类型.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 职业等级
         // 
@@ -15474,7 +15474,7 @@ public partial class SMain
         职业等级.TabIndex = 46;
         职业等级.TextAlign = HorizontalAlignment.Center;
         职业等级.Value = new decimal(new int[] { 40, 0, 0, 0 });
-        职业等级.ValueChanged += (this.职业等级_ValueChanged);
+        职业等级.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label886
         // 
@@ -15541,7 +15541,7 @@ public partial class SMain
         变性内容控件.Size = new Size(158, 23);
         变性内容控件.TabIndex = 60;
         变性内容控件.Text = "输入密码";
-        变性内容控件.TextChanged += (this.变性内容控件_TextChanged);
+        变性内容控件.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // label808
         // 
@@ -15563,7 +15563,7 @@ public partial class SMain
         变性物品数量.TabIndex = 50;
         变性物品数量.TextAlign = HorizontalAlignment.Center;
         变性物品数量.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        变性物品数量.ValueChanged += (this.变性物品数量_ValueChanged);
+        变性物品数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 变性物品ID
         // 
@@ -15575,7 +15575,7 @@ public partial class SMain
         变性物品ID.TabIndex = 49;
         变性物品ID.TextAlign = HorizontalAlignment.Center;
         变性物品ID.Value = new decimal(new int[] { 999999, 0, 0, 0 });
-        变性物品ID.ValueChanged += (this.变性物品ID_ValueChanged);
+        变性物品ID.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 变性货币值
         // 
@@ -15587,7 +15587,7 @@ public partial class SMain
         变性货币值.TabIndex = 48;
         变性货币值.TextAlign = HorizontalAlignment.Center;
         变性货币值.Value = new decimal(new int[] { 10000000, 0, 0, 0 });
-        变性货币值.ValueChanged += (this.变性货币值_ValueChanged);
+        变性货币值.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 变性货币类型
         // 
@@ -15599,7 +15599,7 @@ public partial class SMain
         变性货币类型.TabIndex = 47;
         变性货币类型.TextAlign = HorizontalAlignment.Center;
         变性货币类型.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        变性货币类型.ValueChanged += (this.变性货币类型_ValueChanged);
+        变性货币类型.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 变性等级
         // 
@@ -15610,7 +15610,7 @@ public partial class SMain
         变性等级.TabIndex = 46;
         变性等级.TextAlign = HorizontalAlignment.Center;
         变性等级.Value = new decimal(new int[] { 40, 0, 0, 0 });
-        变性等级.ValueChanged += (this.变性等级_ValueChanged);
+        变性等级.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label807
         // 
@@ -15713,7 +15713,7 @@ public partial class SMain
         S_新手上线赠送物品6.Size = new Size(117, 22);
         S_新手上线赠送物品6.TabIndex = 46;
         S_新手上线赠送物品6.TextAlign = HorizontalAlignment.Center;
-        S_新手上线赠送物品6.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_新手上线赠送物品6.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_新手上线赠送物品5
         // 
@@ -15724,7 +15724,7 @@ public partial class SMain
         S_新手上线赠送物品5.Size = new Size(117, 22);
         S_新手上线赠送物品5.TabIndex = 45;
         S_新手上线赠送物品5.TextAlign = HorizontalAlignment.Center;
-        S_新手上线赠送物品5.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_新手上线赠送物品5.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_新手上线赠送物品4
         // 
@@ -15735,7 +15735,7 @@ public partial class SMain
         S_新手上线赠送物品4.Size = new Size(117, 22);
         S_新手上线赠送物品4.TabIndex = 44;
         S_新手上线赠送物品4.TextAlign = HorizontalAlignment.Center;
-        S_新手上线赠送物品4.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_新手上线赠送物品4.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_新手上线赠送物品3
         // 
@@ -15746,7 +15746,7 @@ public partial class SMain
         S_新手上线赠送物品3.Size = new Size(117, 22);
         S_新手上线赠送物品3.TabIndex = 43;
         S_新手上线赠送物品3.TextAlign = HorizontalAlignment.Center;
-        S_新手上线赠送物品3.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_新手上线赠送物品3.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_新手上线赠送物品2
         // 
@@ -15757,7 +15757,7 @@ public partial class SMain
         S_新手上线赠送物品2.Size = new Size(117, 22);
         S_新手上线赠送物品2.TabIndex = 42;
         S_新手上线赠送物品2.TextAlign = HorizontalAlignment.Center;
-        S_新手上线赠送物品2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_新手上线赠送物品2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_新手上线赠送物品1
         // 
@@ -15768,7 +15768,7 @@ public partial class SMain
         S_新手上线赠送物品1.Size = new Size(117, 22);
         S_新手上线赠送物品1.TabIndex = 41;
         S_新手上线赠送物品1.TextAlign = HorizontalAlignment.Center;
-        S_新手上线赠送物品1.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_新手上线赠送物品1.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label404
         // 
@@ -15792,7 +15792,7 @@ public partial class SMain
         S_新手上线赠送称号1.TabIndex = 30;
         S_新手上线赠送称号1.TextAlign = HorizontalAlignment.Center;
         S_新手上线赠送称号1.Value = new decimal(new int[] { 147, 0, 0, 0 });
-        S_新手上线赠送称号1.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_新手上线赠送称号1.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label398
         // 
@@ -15836,7 +15836,7 @@ public partial class SMain
         S_新手上线赠送开关.Size = new Size(47, 22);
         S_新手上线赠送开关.TabIndex = 26;
         S_新手上线赠送开关.TextAlign = HorizontalAlignment.Center;
-        S_新手上线赠送开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_新手上线赠送开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 新手赠送
         // 
@@ -15866,7 +15866,7 @@ public partial class SMain
         S_豪杰特权礼包.Tag = "";
         S_豪杰特权礼包.Text = "Hero Privilege Package";
         S_豪杰特权礼包.TextAlign = HorizontalAlignment.Center;
-        S_豪杰特权礼包.TextChanged += (this.S_豪杰特权礼包_TextChanged);
+        S_豪杰特权礼包.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_战将特权礼包
         // 
@@ -15879,7 +15879,7 @@ public partial class SMain
         S_战将特权礼包.Tag = "";
         S_战将特权礼包.Text = "Warlord Privilege Package";
         S_战将特权礼包.TextAlign = HorizontalAlignment.Center;
-        S_战将特权礼包.TextChanged += (this.S_战将特权礼包_TextChanged);
+        S_战将特权礼包.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // 赠送二号位
         // 
@@ -15928,7 +15928,7 @@ public partial class SMain
         自定义初始货币类型.TabIndex = 29;
         自定义初始货币类型.TextAlign = HorizontalAlignment.Center;
         自定义初始货币类型.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        自定义初始货币类型.ValueChanged += (this.自定义初始货币类型_ValueChanged);
+        自定义初始货币类型.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label638
         // 
@@ -15961,7 +15961,7 @@ public partial class SMain
         S_新手出售货币值.Size = new Size(117, 22);
         S_新手出售货币值.TabIndex = 26;
         S_新手出售货币值.TextAlign = HorizontalAlignment.Center;
-        S_新手出售货币值.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_新手出售货币值.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // groupBox37
         // 
@@ -16021,7 +16021,7 @@ public partial class SMain
         S_AllowRaceDragonLance.TabIndex = 30;
         S_AllowRaceDragonLance.TextAlign = HorizontalAlignment.Center;
         S_AllowRaceDragonLance.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_AllowRaceDragonLance.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_AllowRaceDragonLance.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_AllowRaceAssassin
         // 
@@ -16033,7 +16033,7 @@ public partial class SMain
         S_AllowRaceAssassin.TabIndex = 29;
         S_AllowRaceAssassin.TextAlign = HorizontalAlignment.Center;
         S_AllowRaceAssassin.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_AllowRaceAssassin.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_AllowRaceAssassin.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_AllowRaceArcher
         // 
@@ -16045,7 +16045,7 @@ public partial class SMain
         S_AllowRaceArcher.TabIndex = 28;
         S_AllowRaceArcher.TextAlign = HorizontalAlignment.Center;
         S_AllowRaceArcher.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_AllowRaceArcher.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_AllowRaceArcher.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_AllowRaceTaoist
         // 
@@ -16057,7 +16057,7 @@ public partial class SMain
         S_AllowRaceTaoist.TabIndex = 27;
         S_AllowRaceTaoist.TextAlign = HorizontalAlignment.Center;
         S_AllowRaceTaoist.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_AllowRaceTaoist.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_AllowRaceTaoist.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_AllowRaceWizard
         // 
@@ -16069,7 +16069,7 @@ public partial class SMain
         S_AllowRaceWizard.TabIndex = 26;
         S_AllowRaceWizard.TextAlign = HorizontalAlignment.Center;
         S_AllowRaceWizard.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_AllowRaceWizard.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_AllowRaceWizard.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_AllowRaceWarrior
         // 
@@ -16081,7 +16081,7 @@ public partial class SMain
         S_AllowRaceWarrior.TabIndex = 25;
         S_AllowRaceWarrior.TextAlign = HorizontalAlignment.Center;
         S_AllowRaceWarrior.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_AllowRaceWarrior.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_AllowRaceWarrior.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label220
         // 
@@ -16181,7 +16181,7 @@ public partial class SMain
         S_新手地图保护5.TabIndex = 39;
         S_新手地图保护5.TextAlign = HorizontalAlignment.Center;
         S_新手地图保护5.Value = new decimal(new int[] { 147, 0, 0, 0 });
-        S_新手地图保护5.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_新手地图保护5.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_新手地图保护10
         // 
@@ -16194,7 +16194,7 @@ public partial class SMain
         S_新手地图保护10.TabIndex = 38;
         S_新手地图保护10.TextAlign = HorizontalAlignment.Center;
         S_新手地图保护10.Value = new decimal(new int[] { 147, 0, 0, 0 });
-        S_新手地图保护10.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_新手地图保护10.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_新手地图保护9
         // 
@@ -16207,7 +16207,7 @@ public partial class SMain
         S_新手地图保护9.TabIndex = 37;
         S_新手地图保护9.TextAlign = HorizontalAlignment.Center;
         S_新手地图保护9.Value = new decimal(new int[] { 147, 0, 0, 0 });
-        S_新手地图保护9.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_新手地图保护9.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_新手地图保护8
         // 
@@ -16220,7 +16220,7 @@ public partial class SMain
         S_新手地图保护8.TabIndex = 36;
         S_新手地图保护8.TextAlign = HorizontalAlignment.Center;
         S_新手地图保护8.Value = new decimal(new int[] { 147, 0, 0, 0 });
-        S_新手地图保护8.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_新手地图保护8.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_新手地图保护7
         // 
@@ -16233,7 +16233,7 @@ public partial class SMain
         S_新手地图保护7.TabIndex = 35;
         S_新手地图保护7.TextAlign = HorizontalAlignment.Center;
         S_新手地图保护7.Value = new decimal(new int[] { 147, 0, 0, 0 });
-        S_新手地图保护7.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_新手地图保护7.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_新手地图保护6
         // 
@@ -16246,7 +16246,7 @@ public partial class SMain
         S_新手地图保护6.TabIndex = 34;
         S_新手地图保护6.TextAlign = HorizontalAlignment.Center;
         S_新手地图保护6.Value = new decimal(new int[] { 147, 0, 0, 0 });
-        S_新手地图保护6.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_新手地图保护6.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_新手地图保护4
         // 
@@ -16259,7 +16259,7 @@ public partial class SMain
         S_新手地图保护4.TabIndex = 33;
         S_新手地图保护4.TextAlign = HorizontalAlignment.Center;
         S_新手地图保护4.Value = new decimal(new int[] { 147, 0, 0, 0 });
-        S_新手地图保护4.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_新手地图保护4.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_新手地图保护3
         // 
@@ -16272,7 +16272,7 @@ public partial class SMain
         S_新手地图保护3.TabIndex = 32;
         S_新手地图保护3.TextAlign = HorizontalAlignment.Center;
         S_新手地图保护3.Value = new decimal(new int[] { 147, 0, 0, 0 });
-        S_新手地图保护3.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_新手地图保护3.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_新手地图保护2
         // 
@@ -16285,7 +16285,7 @@ public partial class SMain
         S_新手地图保护2.TabIndex = 31;
         S_新手地图保护2.TextAlign = HorizontalAlignment.Center;
         S_新手地图保护2.Value = new decimal(new int[] { 147, 0, 0, 0 });
-        S_新手地图保护2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_新手地图保护2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_新手地图保护1
         // 
@@ -16298,7 +16298,7 @@ public partial class SMain
         S_新手地图保护1.TabIndex = 30;
         S_新手地图保护1.TextAlign = HorizontalAlignment.Center;
         S_新手地图保护1.Value = new decimal(new int[] { 147, 0, 0, 0 });
-        S_新手地图保护1.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_新手地图保护1.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label490
         // 
@@ -16345,7 +16345,7 @@ public partial class SMain
         S_NoobProtectionLevel.TabIndex = 26;
         S_NoobProtectionLevel.TextAlign = HorizontalAlignment.Center;
         S_NoobProtectionLevel.Value = new decimal(new int[] { 15, 0, 0, 0 });
-        S_NoobProtectionLevel.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_NoobProtectionLevel.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // groupBox69
         // 
@@ -16384,7 +16384,7 @@ public partial class SMain
         S_StartingLevel.TabIndex = 26;
         S_StartingLevel.TextAlign = HorizontalAlignment.Center;
         S_StartingLevel.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_StartingLevel.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_StartingLevel.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // tabPage52
         // 
@@ -16529,7 +16529,7 @@ public partial class SMain
         UpgradeXPLevel39.TabIndex = 106;
         UpgradeXPLevel39.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel39.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel39.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel39.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // UpgradeXPLevel33
         // 
@@ -16543,7 +16543,7 @@ public partial class SMain
         UpgradeXPLevel33.TabIndex = 105;
         UpgradeXPLevel33.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel33.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel33.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel33.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // UpgradeXPLevel34
         // 
@@ -16557,7 +16557,7 @@ public partial class SMain
         UpgradeXPLevel34.TabIndex = 104;
         UpgradeXPLevel34.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel34.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel34.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel34.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // UpgradeXPLevel35
         // 
@@ -16571,7 +16571,7 @@ public partial class SMain
         UpgradeXPLevel35.TabIndex = 103;
         UpgradeXPLevel35.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel35.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel35.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel35.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // UpgradeXPLevel36
         // 
@@ -16585,7 +16585,7 @@ public partial class SMain
         UpgradeXPLevel36.TabIndex = 102;
         UpgradeXPLevel36.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel36.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel36.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel36.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // UpgradeXPLevel37
         // 
@@ -16599,7 +16599,7 @@ public partial class SMain
         UpgradeXPLevel37.TabIndex = 101;
         UpgradeXPLevel37.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel37.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel37.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel37.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // UpgradeXPLevel38
         // 
@@ -16613,7 +16613,7 @@ public partial class SMain
         UpgradeXPLevel38.TabIndex = 100;
         UpgradeXPLevel38.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel38.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel38.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel38.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label869
         // 
@@ -16715,7 +16715,7 @@ public partial class SMain
         UpgradeXPLevel22.TabIndex = 89;
         UpgradeXPLevel22.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel22.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel22.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel22.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // UpgradeXPLevel23
         // 
@@ -16729,7 +16729,7 @@ public partial class SMain
         UpgradeXPLevel23.TabIndex = 88;
         UpgradeXPLevel23.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel23.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel23.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel23.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // UpgradeXPLevel24
         // 
@@ -16743,7 +16743,7 @@ public partial class SMain
         UpgradeXPLevel24.TabIndex = 87;
         UpgradeXPLevel24.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel24.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel24.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel24.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // UpgradeXPLevel31
         // 
@@ -16757,7 +16757,7 @@ public partial class SMain
         UpgradeXPLevel31.TabIndex = 86;
         UpgradeXPLevel31.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel31.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel31.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel31.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // UpgradeXPLevel25
         // 
@@ -16771,7 +16771,7 @@ public partial class SMain
         UpgradeXPLevel25.TabIndex = 85;
         UpgradeXPLevel25.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel25.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel25.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel25.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // UpgradeXPLevel30
         // 
@@ -16785,7 +16785,7 @@ public partial class SMain
         UpgradeXPLevel30.TabIndex = 84;
         UpgradeXPLevel30.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel30.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel30.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel30.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // UpgradeXPLevel29
         // 
@@ -16799,7 +16799,7 @@ public partial class SMain
         UpgradeXPLevel29.TabIndex = 83;
         UpgradeXPLevel29.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel29.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel29.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel29.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // UpgradeXPLevel28
         // 
@@ -16813,7 +16813,7 @@ public partial class SMain
         UpgradeXPLevel28.TabIndex = 82;
         UpgradeXPLevel28.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel28.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel28.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel28.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // UpgradeXPLevel27
         // 
@@ -16827,7 +16827,7 @@ public partial class SMain
         UpgradeXPLevel27.TabIndex = 81;
         UpgradeXPLevel27.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel27.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel27.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel27.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // UpgradeXPLevel26
         // 
@@ -16841,7 +16841,7 @@ public partial class SMain
         UpgradeXPLevel26.TabIndex = 80;
         UpgradeXPLevel26.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel26.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel26.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel26.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // UpgradeXPLevel32
         // 
@@ -16855,7 +16855,7 @@ public partial class SMain
         UpgradeXPLevel32.TabIndex = 79;
         UpgradeXPLevel32.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel32.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel32.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel32.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label859
         // 
@@ -16979,7 +16979,7 @@ public partial class SMain
         UpgradeXPLevel12.TabIndex = 68;
         UpgradeXPLevel12.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel12.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel12.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel12.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // UpgradeXPLevel13
         // 
@@ -16993,7 +16993,7 @@ public partial class SMain
         UpgradeXPLevel13.TabIndex = 67;
         UpgradeXPLevel13.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel13.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel13.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel13.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // UpgradeXPLevel14
         // 
@@ -17007,7 +17007,7 @@ public partial class SMain
         UpgradeXPLevel14.TabIndex = 66;
         UpgradeXPLevel14.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel14.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel14.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel14.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // UpgradeXPLevel15
         // 
@@ -17021,7 +17021,7 @@ public partial class SMain
         UpgradeXPLevel15.TabIndex = 65;
         UpgradeXPLevel15.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel15.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel15.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel15.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // UpgradeXPLevel16
         // 
@@ -17035,7 +17035,7 @@ public partial class SMain
         UpgradeXPLevel16.TabIndex = 64;
         UpgradeXPLevel16.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel16.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel16.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel16.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // UpgradeXPLevel17
         // 
@@ -17049,7 +17049,7 @@ public partial class SMain
         UpgradeXPLevel17.TabIndex = 63;
         UpgradeXPLevel17.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel17.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel17.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel17.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // UpgradeXPLevel18
         // 
@@ -17063,7 +17063,7 @@ public partial class SMain
         UpgradeXPLevel18.TabIndex = 62;
         UpgradeXPLevel18.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel18.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel18.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel18.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // UpgradeXPLevel19
         // 
@@ -17077,7 +17077,7 @@ public partial class SMain
         UpgradeXPLevel19.TabIndex = 61;
         UpgradeXPLevel19.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel19.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel19.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel19.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // UpgradeXPLevel20
         // 
@@ -17091,7 +17091,7 @@ public partial class SMain
         UpgradeXPLevel20.TabIndex = 60;
         UpgradeXPLevel20.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel20.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel20.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel20.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // UpgradeXPLevel21
         // 
@@ -17105,7 +17105,7 @@ public partial class SMain
         UpgradeXPLevel21.TabIndex = 59;
         UpgradeXPLevel21.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel21.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel21.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel21.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label779
         // 
@@ -17229,7 +17229,7 @@ public partial class SMain
         UpgradeXPLevel11.TabIndex = 44;
         UpgradeXPLevel11.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel11.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel11.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel11.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // UpgradeXPLevel10
         // 
@@ -17243,7 +17243,7 @@ public partial class SMain
         UpgradeXPLevel10.TabIndex = 43;
         UpgradeXPLevel10.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel10.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel10.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel10.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label841
         // 
@@ -17279,7 +17279,7 @@ public partial class SMain
         UpgradeXPLevel9.TabIndex = 40;
         UpgradeXPLevel9.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel9.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel9.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel9.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // UpgradeXPLevel8
         // 
@@ -17293,7 +17293,7 @@ public partial class SMain
         UpgradeXPLevel8.TabIndex = 39;
         UpgradeXPLevel8.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel8.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel8.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel8.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // UpgradeXPLevel7
         // 
@@ -17307,7 +17307,7 @@ public partial class SMain
         UpgradeXPLevel7.TabIndex = 38;
         UpgradeXPLevel7.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel7.Value = new decimal(new int[] { 1280000000, 0, 0, 0 });
-        UpgradeXPLevel7.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel7.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // UpgradeXPLevel6
         // 
@@ -17321,7 +17321,7 @@ public partial class SMain
         UpgradeXPLevel6.TabIndex = 37;
         UpgradeXPLevel6.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel6.Value = new decimal(new int[] { 640000000, 0, 0, 0 });
-        UpgradeXPLevel6.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel6.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label843
         // 
@@ -17379,7 +17379,7 @@ public partial class SMain
         UpgradeXPLevel5.TabIndex = 31;
         UpgradeXPLevel5.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel5.Value = new decimal(new int[] { 320000000, 0, 0, 0 });
-        UpgradeXPLevel5.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel5.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // UpgradeXPLevel4
         // 
@@ -17393,7 +17393,7 @@ public partial class SMain
         UpgradeXPLevel4.TabIndex = 30;
         UpgradeXPLevel4.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel4.Value = new decimal(new int[] { 160000000, 0, 0, 0 });
-        UpgradeXPLevel4.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel4.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // UpgradeXPLevel3
         // 
@@ -17407,7 +17407,7 @@ public partial class SMain
         UpgradeXPLevel3.TabIndex = 29;
         UpgradeXPLevel3.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel3.Value = new decimal(new int[] { 80000000, 0, 0, 0 });
-        UpgradeXPLevel3.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel3.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // UpgradeXPLevel2
         // 
@@ -17421,7 +17421,7 @@ public partial class SMain
         UpgradeXPLevel2.TabIndex = 28;
         UpgradeXPLevel2.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel2.Value = new decimal(new int[] { 40000000, 0, 0, 0 });
-        UpgradeXPLevel2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label847
         // 
@@ -17479,7 +17479,7 @@ public partial class SMain
         UpgradeXPLevel1.TabIndex = 23;
         UpgradeXPLevel1.TextAlign = HorizontalAlignment.Center;
         UpgradeXPLevel1.Value = new decimal(new int[] { 20000000, 0, 0, 0 });
-        UpgradeXPLevel1.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        UpgradeXPLevel1.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label887
         // 
@@ -17589,7 +17589,7 @@ public partial class SMain
         S_升级经验模块三十.TabIndex = 83;
         S_升级经验模块三十.TextAlign = HorizontalAlignment.Center;
         S_升级经验模块三十.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块三十.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_升级经验模块三十.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_升级经验模块二十九
         // 
@@ -17603,7 +17603,7 @@ public partial class SMain
         S_升级经验模块二十九.TabIndex = 82;
         S_升级经验模块二十九.TextAlign = HorizontalAlignment.Center;
         S_升级经验模块二十九.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块二十九.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_升级经验模块二十九.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_升级经验模块二十八
         // 
@@ -17617,7 +17617,7 @@ public partial class SMain
         S_升级经验模块二十八.TabIndex = 81;
         S_升级经验模块二十八.TextAlign = HorizontalAlignment.Center;
         S_升级经验模块二十八.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块二十八.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_升级经验模块二十八.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_升级经验模块二十七
         // 
@@ -17631,7 +17631,7 @@ public partial class SMain
         S_升级经验模块二十七.TabIndex = 80;
         S_升级经验模块二十七.TextAlign = HorizontalAlignment.Center;
         S_升级经验模块二十七.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块二十七.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_升级经验模块二十七.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_升级经验模块二十六
         // 
@@ -17645,7 +17645,7 @@ public partial class SMain
         S_升级经验模块二十六.TabIndex = 79;
         S_升级经验模块二十六.TextAlign = HorizontalAlignment.Center;
         S_升级经验模块二十六.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块二十六.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_升级经验模块二十六.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_升级经验模块二十五
         // 
@@ -17659,7 +17659,7 @@ public partial class SMain
         S_升级经验模块二十五.TabIndex = 77;
         S_升级经验模块二十五.TextAlign = HorizontalAlignment.Center;
         S_升级经验模块二十五.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块二十五.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_升级经验模块二十五.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label184
         // 
@@ -17761,7 +17761,7 @@ public partial class SMain
         S_升级经验模块十二.TabIndex = 68;
         S_升级经验模块十二.TextAlign = HorizontalAlignment.Center;
         S_升级经验模块十二.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块十二.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_升级经验模块十二.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_升级经验模块十三
         // 
@@ -17775,7 +17775,7 @@ public partial class SMain
         S_升级经验模块十三.TabIndex = 67;
         S_升级经验模块十三.TextAlign = HorizontalAlignment.Center;
         S_升级经验模块十三.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块十三.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_升级经验模块十三.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_升级经验模块十四
         // 
@@ -17789,7 +17789,7 @@ public partial class SMain
         S_升级经验模块十四.TabIndex = 66;
         S_升级经验模块十四.TextAlign = HorizontalAlignment.Center;
         S_升级经验模块十四.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块十四.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_升级经验模块十四.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_升级经验模块十五
         // 
@@ -17803,7 +17803,7 @@ public partial class SMain
         S_升级经验模块十五.TabIndex = 65;
         S_升级经验模块十五.TextAlign = HorizontalAlignment.Center;
         S_升级经验模块十五.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块十五.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_升级经验模块十五.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_升级经验模块十六
         // 
@@ -17817,7 +17817,7 @@ public partial class SMain
         S_升级经验模块十六.TabIndex = 64;
         S_升级经验模块十六.TextAlign = HorizontalAlignment.Center;
         S_升级经验模块十六.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块十六.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_升级经验模块十六.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_升级经验模块十七
         // 
@@ -17831,7 +17831,7 @@ public partial class SMain
         S_升级经验模块十七.TabIndex = 63;
         S_升级经验模块十七.TextAlign = HorizontalAlignment.Center;
         S_升级经验模块十七.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块十七.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_升级经验模块十七.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_升级经验模块十八
         // 
@@ -17845,7 +17845,7 @@ public partial class SMain
         S_升级经验模块十八.TabIndex = 62;
         S_升级经验模块十八.TextAlign = HorizontalAlignment.Center;
         S_升级经验模块十八.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块十八.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_升级经验模块十八.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_升级经验模块十九
         // 
@@ -17859,7 +17859,7 @@ public partial class SMain
         S_升级经验模块十九.TabIndex = 61;
         S_升级经验模块十九.TextAlign = HorizontalAlignment.Center;
         S_升级经验模块十九.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块十九.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_升级经验模块十九.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_升级经验模块二十
         // 
@@ -17873,7 +17873,7 @@ public partial class SMain
         S_升级经验模块二十.TabIndex = 60;
         S_升级经验模块二十.TextAlign = HorizontalAlignment.Center;
         S_升级经验模块二十.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块二十.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_升级经验模块二十.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_升级经验模块二十一
         // 
@@ -17887,7 +17887,7 @@ public partial class SMain
         S_升级经验模块二十一.TabIndex = 59;
         S_升级经验模块二十一.TextAlign = HorizontalAlignment.Center;
         S_升级经验模块二十一.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块二十一.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_升级经验模块二十一.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_升级经验模块二十二
         // 
@@ -17901,7 +17901,7 @@ public partial class SMain
         S_升级经验模块二十二.TabIndex = 58;
         S_升级经验模块二十二.TextAlign = HorizontalAlignment.Center;
         S_升级经验模块二十二.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块二十二.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_升级经验模块二十二.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_升级经验模块二十四
         // 
@@ -17915,7 +17915,7 @@ public partial class SMain
         S_升级经验模块二十四.TabIndex = 57;
         S_升级经验模块二十四.TextAlign = HorizontalAlignment.Center;
         S_升级经验模块二十四.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块二十四.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_升级经验模块二十四.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_升级经验模块二十三
         // 
@@ -17929,7 +17929,7 @@ public partial class SMain
         S_升级经验模块二十三.TabIndex = 56;
         S_升级经验模块二十三.TextAlign = HorizontalAlignment.Center;
         S_升级经验模块二十三.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块二十三.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_升级经验模块二十三.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label176
         // 
@@ -18064,7 +18064,7 @@ public partial class SMain
         S_升级经验模块十一.TabIndex = 44;
         S_升级经验模块十一.TextAlign = HorizontalAlignment.Center;
         S_升级经验模块十一.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块十一.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_升级经验模块十一.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_升级经验模块十
         // 
@@ -18078,7 +18078,7 @@ public partial class SMain
         S_升级经验模块十.TabIndex = 43;
         S_升级经验模块十.TextAlign = HorizontalAlignment.Center;
         S_升级经验模块十.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块十.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_升级经验模块十.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label78
         // 
@@ -18114,7 +18114,7 @@ public partial class SMain
         S_升级经验模块九.TabIndex = 40;
         S_升级经验模块九.TextAlign = HorizontalAlignment.Center;
         S_升级经验模块九.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块九.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_升级经验模块九.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_升级经验模块八
         // 
@@ -18128,7 +18128,7 @@ public partial class SMain
         S_升级经验模块八.TabIndex = 39;
         S_升级经验模块八.TextAlign = HorizontalAlignment.Center;
         S_升级经验模块八.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块八.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_升级经验模块八.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_升级经验模块七
         // 
@@ -18142,7 +18142,7 @@ public partial class SMain
         S_升级经验模块七.TabIndex = 38;
         S_升级经验模块七.TextAlign = HorizontalAlignment.Center;
         S_升级经验模块七.Value = new decimal(new int[] { 1280000000, 0, 0, 0 });
-        S_升级经验模块七.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_升级经验模块七.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_升级经验模块六
         // 
@@ -18156,7 +18156,7 @@ public partial class SMain
         S_升级经验模块六.TabIndex = 37;
         S_升级经验模块六.TextAlign = HorizontalAlignment.Center;
         S_升级经验模块六.Value = new decimal(new int[] { 640000000, 0, 0, 0 });
-        S_升级经验模块六.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_升级经验模块六.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label76
         // 
@@ -18214,7 +18214,7 @@ public partial class SMain
         S_升级经验模块五.TabIndex = 31;
         S_升级经验模块五.TextAlign = HorizontalAlignment.Center;
         S_升级经验模块五.Value = new decimal(new int[] { 320000000, 0, 0, 0 });
-        S_升级经验模块五.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_升级经验模块五.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_升级经验模块四
         // 
@@ -18228,7 +18228,7 @@ public partial class SMain
         S_升级经验模块四.TabIndex = 30;
         S_升级经验模块四.TextAlign = HorizontalAlignment.Center;
         S_升级经验模块四.Value = new decimal(new int[] { 160000000, 0, 0, 0 });
-        S_升级经验模块四.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_升级经验模块四.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_升级经验模块三
         // 
@@ -18242,7 +18242,7 @@ public partial class SMain
         S_升级经验模块三.TabIndex = 29;
         S_升级经验模块三.TextAlign = HorizontalAlignment.Center;
         S_升级经验模块三.Value = new decimal(new int[] { 80000000, 0, 0, 0 });
-        S_升级经验模块三.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_升级经验模块三.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_升级经验模块二
         // 
@@ -18256,7 +18256,7 @@ public partial class SMain
         S_升级经验模块二.TabIndex = 28;
         S_升级经验模块二.TextAlign = HorizontalAlignment.Center;
         S_升级经验模块二.Value = new decimal(new int[] { 40000000, 0, 0, 0 });
-        S_升级经验模块二.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_升级经验模块二.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label72
         // 
@@ -18314,7 +18314,7 @@ public partial class SMain
         S_升级经验模块一.TabIndex = 23;
         S_升级经验模块一.TextAlign = HorizontalAlignment.Center;
         S_升级经验模块一.Value = new decimal(new int[] { 20000000, 0, 0, 0 });
-        S_升级经验模块一.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_升级经验模块一.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label68
         // 
@@ -18381,7 +18381,7 @@ public partial class SMain
         S_PetUpgradeXPLevel9.TabIndex = 50;
         S_PetUpgradeXPLevel9.TextAlign = HorizontalAlignment.Center;
         S_PetUpgradeXPLevel9.Value = new decimal(new int[] { 35, 0, 0, 0 });
-        S_PetUpgradeXPLevel9.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_PetUpgradeXPLevel9.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_PetUpgradeXPLevel8
         // 
@@ -18394,7 +18394,7 @@ public partial class SMain
         S_PetUpgradeXPLevel8.TabIndex = 49;
         S_PetUpgradeXPLevel8.TextAlign = HorizontalAlignment.Center;
         S_PetUpgradeXPLevel8.Value = new decimal(new int[] { 35, 0, 0, 0 });
-        S_PetUpgradeXPLevel8.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_PetUpgradeXPLevel8.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label204
         // 
@@ -18462,7 +18462,7 @@ public partial class SMain
         S_PetUpgradeXPLevel7.TabIndex = 43;
         S_PetUpgradeXPLevel7.TextAlign = HorizontalAlignment.Center;
         S_PetUpgradeXPLevel7.Value = new decimal(new int[] { 35, 0, 0, 0 });
-        S_PetUpgradeXPLevel7.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_PetUpgradeXPLevel7.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_PetUpgradeXPLevel6
         // 
@@ -18475,7 +18475,7 @@ public partial class SMain
         S_PetUpgradeXPLevel6.TabIndex = 42;
         S_PetUpgradeXPLevel6.TextAlign = HorizontalAlignment.Center;
         S_PetUpgradeXPLevel6.Value = new decimal(new int[] { 30, 0, 0, 0 });
-        S_PetUpgradeXPLevel6.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_PetUpgradeXPLevel6.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_PetUpgradeXPLevel5
         // 
@@ -18488,7 +18488,7 @@ public partial class SMain
         S_PetUpgradeXPLevel5.TabIndex = 41;
         S_PetUpgradeXPLevel5.TextAlign = HorizontalAlignment.Center;
         S_PetUpgradeXPLevel5.Value = new decimal(new int[] { 25, 0, 0, 0 });
-        S_PetUpgradeXPLevel5.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_PetUpgradeXPLevel5.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_PetUpgradeXPLevel4
         // 
@@ -18501,7 +18501,7 @@ public partial class SMain
         S_PetUpgradeXPLevel4.TabIndex = 40;
         S_PetUpgradeXPLevel4.TextAlign = HorizontalAlignment.Center;
         S_PetUpgradeXPLevel4.Value = new decimal(new int[] { 20, 0, 0, 0 });
-        S_PetUpgradeXPLevel4.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_PetUpgradeXPLevel4.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_PetUpgradeXPLevel3
         // 
@@ -18514,7 +18514,7 @@ public partial class SMain
         S_PetUpgradeXPLevel3.TabIndex = 39;
         S_PetUpgradeXPLevel3.TextAlign = HorizontalAlignment.Center;
         S_PetUpgradeXPLevel3.Value = new decimal(new int[] { 15, 0, 0, 0 });
-        S_PetUpgradeXPLevel3.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_PetUpgradeXPLevel3.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_PetUpgradeXPLevel2
         // 
@@ -18527,7 +18527,7 @@ public partial class SMain
         S_PetUpgradeXPLevel2.TabIndex = 38;
         S_PetUpgradeXPLevel2.TextAlign = HorizontalAlignment.Center;
         S_PetUpgradeXPLevel2.Value = new decimal(new int[] { 10, 0, 0, 0 });
-        S_PetUpgradeXPLevel2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_PetUpgradeXPLevel2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label212
         // 
@@ -18584,7 +18584,7 @@ public partial class SMain
         S_PetUpgradeXPLevel1.TabIndex = 26;
         S_PetUpgradeXPLevel1.TextAlign = HorizontalAlignment.Center;
         S_PetUpgradeXPLevel1.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_PetUpgradeXPLevel1.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_PetUpgradeXPLevel1.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // tabPage7
         // 
@@ -18704,7 +18704,7 @@ public partial class SMain
         S_ReviveInterval.TabIndex = 58;
         S_ReviveInterval.TextAlign = HorizontalAlignment.Center;
         S_ReviveInterval.Value = new decimal(new int[] { 60, 0, 0, 0 });
-        S_ReviveInterval.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_ReviveInterval.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label163
         // 
@@ -18727,7 +18727,7 @@ public partial class SMain
         S_自定义麻痹几率.TabIndex = 56;
         S_自定义麻痹几率.TextAlign = HorizontalAlignment.Center;
         S_自定义麻痹几率.Value = new decimal(new int[] { 1, 0, 0, 131072 });
-        S_自定义麻痹几率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_自定义麻痹几率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label162
         // 
@@ -18845,7 +18845,7 @@ public partial class SMain
         S_幸运额外5伤害.TabIndex = 56;
         S_幸运额外5伤害.TextAlign = HorizontalAlignment.Center;
         S_幸运额外5伤害.Value = new decimal(new int[] { 22, 0, 0, 65536 });
-        S_幸运额外5伤害.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_幸运额外5伤害.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // groupBox217
         // 
@@ -18882,7 +18882,7 @@ public partial class SMain
         S_幸运额外4伤害.TabIndex = 55;
         S_幸运额外4伤害.TextAlign = HorizontalAlignment.Center;
         S_幸运额外4伤害.Value = new decimal(new int[] { 18, 0, 0, 65536 });
-        S_幸运额外4伤害.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_幸运额外4伤害.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_幸运额外3伤害
         // 
@@ -18895,7 +18895,7 @@ public partial class SMain
         S_幸运额外3伤害.TabIndex = 54;
         S_幸运额外3伤害.TextAlign = HorizontalAlignment.Center;
         S_幸运额外3伤害.Value = new decimal(new int[] { 15, 0, 0, 65536 });
-        S_幸运额外3伤害.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_幸运额外3伤害.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_幸运额外2伤害
         // 
@@ -18908,7 +18908,7 @@ public partial class SMain
         S_幸运额外2伤害.TabIndex = 53;
         S_幸运额外2伤害.TextAlign = HorizontalAlignment.Center;
         S_幸运额外2伤害.Value = new decimal(new int[] { 12, 0, 0, 65536 });
-        S_幸运额外2伤害.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_幸运额外2伤害.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_幸运额外5值
         // 
@@ -18921,7 +18921,7 @@ public partial class SMain
         S_幸运额外5值.TabIndex = 52;
         S_幸运额外5值.TextAlign = HorizontalAlignment.Center;
         S_幸运额外5值.Value = new decimal(new int[] { 999, 0, 0, 0 });
-        S_幸运额外5值.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_幸运额外5值.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_幸运额外4值
         // 
@@ -18934,7 +18934,7 @@ public partial class SMain
         S_幸运额外4值.TabIndex = 51;
         S_幸运额外4值.TextAlign = HorizontalAlignment.Center;
         S_幸运额外4值.Value = new decimal(new int[] { 25, 0, 0, 0 });
-        S_幸运额外4值.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_幸运额外4值.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_幸运额外3值
         // 
@@ -18947,7 +18947,7 @@ public partial class SMain
         S_幸运额外3值.TabIndex = 50;
         S_幸运额外3值.TextAlign = HorizontalAlignment.Center;
         S_幸运额外3值.Value = new decimal(new int[] { 20, 0, 0, 0 });
-        S_幸运额外3值.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_幸运额外3值.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_幸运额外2值
         // 
@@ -18960,7 +18960,7 @@ public partial class SMain
         S_幸运额外2值.TabIndex = 49;
         S_幸运额外2值.TextAlign = HorizontalAlignment.Center;
         S_幸运额外2值.Value = new decimal(new int[] { 15, 0, 0, 0 });
-        S_幸运额外2值.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_幸运额外2值.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_幸运额外1伤害
         // 
@@ -18973,7 +18973,7 @@ public partial class SMain
         S_幸运额外1伤害.TabIndex = 30;
         S_幸运额外1伤害.TextAlign = HorizontalAlignment.Center;
         S_幸运额外1伤害.Value = new decimal(new int[] { 110, 0, 0, 131072 });
-        S_幸运额外1伤害.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_幸运额外1伤害.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_幸运额外1值
         // 
@@ -18986,7 +18986,7 @@ public partial class SMain
         S_幸运额外1值.TabIndex = 29;
         S_幸运额外1值.TextAlign = HorizontalAlignment.Center;
         S_幸运额外1值.Value = new decimal(new int[] { 12, 0, 0, 0 });
-        S_幸运额外1值.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_幸运额外1值.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label787
         // 
@@ -19047,7 +19047,7 @@ public partial class SMain
         S_高级祝福油幸运机率.TabIndex = 26;
         S_高级祝福油幸运机率.TextAlign = HorizontalAlignment.Center;
         S_高级祝福油幸运机率.Value = new decimal(new int[] { 80, 0, 0, 0 });
-        S_高级祝福油幸运机率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_高级祝福油幸运机率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // groupBox6
         // 
@@ -19192,7 +19192,7 @@ public partial class SMain
         S_祝福油幸运7机率.TabIndex = 43;
         S_祝福油幸运7机率.TextAlign = HorizontalAlignment.Center;
         S_祝福油幸运7机率.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_祝福油幸运7机率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_祝福油幸运7机率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_祝福油幸运6机率
         // 
@@ -19204,7 +19204,7 @@ public partial class SMain
         S_祝福油幸运6机率.TabIndex = 42;
         S_祝福油幸运6机率.TextAlign = HorizontalAlignment.Center;
         S_祝福油幸运6机率.Value = new decimal(new int[] { 3, 0, 0, 0 });
-        S_祝福油幸运6机率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_祝福油幸运6机率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_祝福油幸运5机率
         // 
@@ -19216,7 +19216,7 @@ public partial class SMain
         S_祝福油幸运5机率.TabIndex = 41;
         S_祝福油幸运5机率.TextAlign = HorizontalAlignment.Center;
         S_祝福油幸运5机率.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_祝福油幸运5机率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_祝福油幸运5机率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_祝福油幸运4机率
         // 
@@ -19228,7 +19228,7 @@ public partial class SMain
         S_祝福油幸运4机率.TabIndex = 40;
         S_祝福油幸运4机率.TextAlign = HorizontalAlignment.Center;
         S_祝福油幸运4机率.Value = new decimal(new int[] { 8, 0, 0, 0 });
-        S_祝福油幸运4机率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_祝福油幸运4机率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_祝福油幸运3机率
         // 
@@ -19240,7 +19240,7 @@ public partial class SMain
         S_祝福油幸运3机率.TabIndex = 39;
         S_祝福油幸运3机率.TextAlign = HorizontalAlignment.Center;
         S_祝福油幸运3机率.Value = new decimal(new int[] { 10, 0, 0, 0 });
-        S_祝福油幸运3机率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_祝福油幸运3机率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_祝福油幸运2机率
         // 
@@ -19252,7 +19252,7 @@ public partial class SMain
         S_祝福油幸运2机率.TabIndex = 38;
         S_祝福油幸运2机率.TextAlign = HorizontalAlignment.Center;
         S_祝福油幸运2机率.Value = new decimal(new int[] { 15, 0, 0, 0 });
-        S_祝福油幸运2机率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_祝福油幸运2机率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label10
         // 
@@ -19319,7 +19319,7 @@ public partial class SMain
         S_祝福油幸运1机率.TabIndex = 26;
         S_祝福油幸运1机率.TextAlign = HorizontalAlignment.Center;
         S_祝福油幸运1机率.Value = new decimal(new int[] { 80, 0, 0, 0 });
-        S_祝福油幸运1机率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_祝福油幸运1机率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // groupBox10
         // 
@@ -19370,7 +19370,7 @@ public partial class SMain
         S_PK死亡幸运开关.TabIndex = 32;
         S_PK死亡幸运开关.TextAlign = HorizontalAlignment.Center;
         S_PK死亡幸运开关.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_PK死亡幸运开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_PK死亡幸运开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label63
         // 
@@ -19447,7 +19447,7 @@ public partial class SMain
         S_资源包开关.Size = new Size(58, 23);
         S_资源包开关.TabIndex = 32;
         S_资源包开关.TextAlign = HorizontalAlignment.Center;
-        S_资源包开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_资源包开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // tabPage79
         // 
@@ -19504,7 +19504,7 @@ public partial class SMain
         S_死亡掉落身上几率.TabIndex = 34;
         S_死亡掉落身上几率.TextAlign = HorizontalAlignment.Center;
         S_死亡掉落身上几率.Value = new decimal(new int[] { 1, 0, 0, 131072 });
-        S_死亡掉落身上几率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_死亡掉落身上几率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label62
         // 
@@ -19533,7 +19533,7 @@ public partial class SMain
         S_死亡掉落背包几率.TabIndex = 32;
         S_死亡掉落背包几率.TextAlign = HorizontalAlignment.Center;
         S_死亡掉落背包几率.Value = new decimal(new int[] { 1, 0, 0, 131072 });
-        S_死亡掉落背包几率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_死亡掉落背包几率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label59
         // 
@@ -19614,7 +19614,7 @@ public partial class SMain
         S_杀人PK红名开关.Size = new Size(47, 23);
         S_杀人PK红名开关.TabIndex = 35;
         S_杀人PK红名开关.TextAlign = HorizontalAlignment.Center;
-        S_杀人PK红名开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_杀人PK红名开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label230
         // 
@@ -19640,7 +19640,7 @@ public partial class SMain
         S_PKCrimsonNamePoint.TabIndex = 33;
         S_PKCrimsonNamePoint.TextAlign = HorizontalAlignment.Center;
         S_PKCrimsonNamePoint.Value = new decimal(new int[] { 800, 0, 0, 0 });
-        S_PKCrimsonNamePoint.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_PKCrimsonNamePoint.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_PKRedNamePoint
         // 
@@ -19653,7 +19653,7 @@ public partial class SMain
         S_PKRedNamePoint.TabIndex = 32;
         S_PKRedNamePoint.TextAlign = HorizontalAlignment.Center;
         S_PKRedNamePoint.Value = new decimal(new int[] { 300, 0, 0, 0 });
-        S_PKRedNamePoint.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_PKRedNamePoint.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_PKYellowNamePoint
         // 
@@ -19666,7 +19666,7 @@ public partial class SMain
         S_PKYellowNamePoint.TabIndex = 31;
         S_PKYellowNamePoint.TextAlign = HorizontalAlignment.Center;
         S_PKYellowNamePoint.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_PKYellowNamePoint.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_PKYellowNamePoint.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label55
         // 
@@ -19768,7 +19768,7 @@ public partial class SMain
         S_下马击落机率.TabIndex = 32;
         S_下马击落机率.TextAlign = HorizontalAlignment.Center;
         S_下马击落机率.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_下马击落机率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_下马击落机率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label207
         // 
@@ -19822,7 +19822,7 @@ public partial class SMain
         S_冥想丹自定义经验.TabIndex = 32;
         S_冥想丹自定义经验.TextAlign = HorizontalAlignment.Center;
         S_冥想丹自定义经验.Value = new decimal(new int[] { 1000000, 0, 0, 0 });
-        S_冥想丹自定义经验.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_冥想丹自定义经验.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label738
         // 
@@ -19869,7 +19869,7 @@ public partial class SMain
         S_万年雪霜MP.TabIndex = 33;
         S_万年雪霜MP.TextAlign = HorizontalAlignment.Center;
         S_万年雪霜MP.Value = new decimal(new int[] { 110, 0, 0, 0 });
-        S_万年雪霜MP.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_万年雪霜MP.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_万年雪霜HP
         // 
@@ -19882,7 +19882,7 @@ public partial class SMain
         S_万年雪霜HP.TabIndex = 32;
         S_万年雪霜HP.TextAlign = HorizontalAlignment.Center;
         S_万年雪霜HP.Value = new decimal(new int[] { 75, 0, 0, 0 });
-        S_万年雪霜HP.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_万年雪霜HP.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label94
         // 
@@ -19906,7 +19906,7 @@ public partial class SMain
         S_疗伤药MP.TabIndex = 30;
         S_疗伤药MP.TextAlign = HorizontalAlignment.Center;
         S_疗伤药MP.Value = new decimal(new int[] { 160, 0, 0, 0 });
-        S_疗伤药MP.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_疗伤药MP.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label93
         // 
@@ -19952,7 +19952,7 @@ public partial class SMain
         S_疗伤药HP.TabIndex = 26;
         S_疗伤药HP.TextAlign = HorizontalAlignment.Center;
         S_疗伤药HP.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_疗伤药HP.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_疗伤药HP.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // tabPage83
         // 
@@ -19992,7 +19992,7 @@ public partial class SMain
         S_法阵卡BUG清理.Size = new Size(47, 23);
         S_法阵卡BUG清理.TabIndex = 68;
         S_法阵卡BUG清理.TextAlign = HorizontalAlignment.Center;
-        S_法阵卡BUG清理.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_法阵卡BUG清理.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label646
         // 
@@ -20072,7 +20072,7 @@ public partial class SMain
         系统窗口发送.Size = new Size(47, 23);
         系统窗口发送.TabIndex = 34;
         系统窗口发送.TextAlign = HorizontalAlignment.Center;
-        系统窗口发送.ValueChanged += (this.系统窗口发送_ValueChanged);
+        系统窗口发送.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label440
         // 
@@ -20106,7 +20106,7 @@ public partial class SMain
         S_珍宝阁提示开关.TabIndex = 31;
         S_珍宝阁提示开关.TextAlign = HorizontalAlignment.Center;
         S_珍宝阁提示开关.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_珍宝阁提示开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_珍宝阁提示开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_怪物掉落窗口开关
         // 
@@ -20117,7 +20117,7 @@ public partial class SMain
         S_怪物掉落窗口开关.Size = new Size(47, 23);
         S_怪物掉落窗口开关.TabIndex = 30;
         S_怪物掉落窗口开关.TextAlign = HorizontalAlignment.Center;
-        S_怪物掉落窗口开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_怪物掉落窗口开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label363
         // 
@@ -20162,7 +20162,7 @@ public partial class SMain
         S_怪物掉落广播开关.TabIndex = 26;
         S_怪物掉落广播开关.TextAlign = HorizontalAlignment.Center;
         S_怪物掉落广播开关.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_怪物掉落广播开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_怪物掉落广播开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // groupBox70
         // 
@@ -20220,7 +20220,7 @@ public partial class SMain
         S_掉落星王物品颜色.Size = new Size(47, 23);
         S_掉落星王物品颜色.TabIndex = 61;
         S_掉落星王物品颜色.TextAlign = HorizontalAlignment.Center;
-        S_掉落星王物品颜色.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_掉落星王物品颜色.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_掉落城主物品颜色
         // 
@@ -20231,7 +20231,7 @@ public partial class SMain
         S_掉落城主物品颜色.Size = new Size(47, 23);
         S_掉落城主物品颜色.TabIndex = 60;
         S_掉落城主物品颜色.TextAlign = HorizontalAlignment.Center;
-        S_掉落城主物品颜色.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_掉落城主物品颜色.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_掉落书籍物品颜色
         // 
@@ -20242,7 +20242,7 @@ public partial class SMain
         S_掉落书籍物品颜色.Size = new Size(47, 23);
         S_掉落书籍物品颜色.TabIndex = 59;
         S_掉落书籍物品颜色.TextAlign = HorizontalAlignment.Center;
-        S_掉落书籍物品颜色.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_掉落书籍物品颜色.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_掉落赤月物品颜色
         // 
@@ -20253,7 +20253,7 @@ public partial class SMain
         S_掉落赤月物品颜色.Size = new Size(47, 23);
         S_掉落赤月物品颜色.TabIndex = 58;
         S_掉落赤月物品颜色.TextAlign = HorizontalAlignment.Center;
-        S_掉落赤月物品颜色.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_掉落赤月物品颜色.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_掉落魔龙物品颜色
         // 
@@ -20264,7 +20264,7 @@ public partial class SMain
         S_掉落魔龙物品颜色.Size = new Size(47, 23);
         S_掉落魔龙物品颜色.TabIndex = 57;
         S_掉落魔龙物品颜色.TextAlign = HorizontalAlignment.Center;
-        S_掉落魔龙物品颜色.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_掉落魔龙物品颜色.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_掉落苍月物品颜色
         // 
@@ -20275,7 +20275,7 @@ public partial class SMain
         S_掉落苍月物品颜色.Size = new Size(47, 23);
         S_掉落苍月物品颜色.TabIndex = 56;
         S_掉落苍月物品颜色.TextAlign = HorizontalAlignment.Center;
-        S_掉落苍月物品颜色.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_掉落苍月物品颜色.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_掉落祖玛物品颜色
         // 
@@ -20286,7 +20286,7 @@ public partial class SMain
         S_掉落祖玛物品颜色.Size = new Size(47, 23);
         S_掉落祖玛物品颜色.TabIndex = 55;
         S_掉落祖玛物品颜色.TextAlign = HorizontalAlignment.Center;
-        S_掉落祖玛物品颜色.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_掉落祖玛物品颜色.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_掉落沃玛物品颜色
         // 
@@ -20297,7 +20297,7 @@ public partial class SMain
         S_掉落沃玛物品颜色.Size = new Size(47, 23);
         S_掉落沃玛物品颜色.TabIndex = 54;
         S_掉落沃玛物品颜色.TextAlign = HorizontalAlignment.Center;
-        S_掉落沃玛物品颜色.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_掉落沃玛物品颜色.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label484
         // 
@@ -20502,7 +20502,7 @@ public partial class SMain
         S_狂暴被杀玩家颜色.Size = new Size(47, 23);
         S_狂暴被杀玩家颜色.TabIndex = 41;
         S_狂暴被杀玩家颜色.TextAlign = HorizontalAlignment.Center;
-        S_狂暴被杀玩家颜色.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_狂暴被杀玩家颜色.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label473
         // 
@@ -20601,7 +20601,7 @@ public partial class SMain
         S_狂暴击杀玩家颜色.Size = new Size(47, 23);
         S_狂暴击杀玩家颜色.TabIndex = 32;
         S_狂暴击杀玩家颜色.TextAlign = HorizontalAlignment.Center;
-        S_狂暴击杀玩家颜色.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_狂暴击杀玩家颜色.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_DropPlayerNameColor
         // 
@@ -20612,7 +20612,7 @@ public partial class SMain
         S_DropPlayerNameColor.Size = new Size(47, 23);
         S_DropPlayerNameColor.TabIndex = 31;
         S_DropPlayerNameColor.TextAlign = HorizontalAlignment.Center;
-        S_DropPlayerNameColor.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_DropPlayerNameColor.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label465
         // 
@@ -20634,7 +20634,7 @@ public partial class SMain
         S_掉落贵重物品颜色.Size = new Size(47, 23);
         S_掉落贵重物品颜色.TabIndex = 29;
         S_掉落贵重物品颜色.TextAlign = HorizontalAlignment.Center;
-        S_掉落贵重物品颜色.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_掉落贵重物品颜色.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label464
         // 
@@ -20706,7 +20706,7 @@ public partial class SMain
         S_DropRateModifier.Size = new Size(44, 23);
         S_DropRateModifier.TabIndex = 1;
         S_DropRateModifier.TextAlign = HorizontalAlignment.Center;
-        S_DropRateModifier.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_DropRateModifier.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label586
         // 
@@ -20793,7 +20793,7 @@ public partial class SMain
         S_分解称号选项.Size = new Size(70, 22);
         S_分解称号选项.TabIndex = 26;
         S_分解称号选项.TextAlign = HorizontalAlignment.Center;
-        S_分解称号选项.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_分解称号选项.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // groupBox158
         // 
@@ -20940,7 +20940,7 @@ public partial class SMain
         S_祖玛分解数量二.TabIndex = 42;
         S_祖玛分解数量二.TextAlign = HorizontalAlignment.Center;
         S_祖玛分解数量二.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_祖玛分解数量二.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_祖玛分解数量二.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_祖玛分解数量三
         // 
@@ -20952,7 +20952,7 @@ public partial class SMain
         S_祖玛分解数量三.TabIndex = 41;
         S_祖玛分解数量三.TextAlign = HorizontalAlignment.Center;
         S_祖玛分解数量三.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_祖玛分解数量三.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_祖玛分解数量三.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_祖玛分解数量四
         // 
@@ -20964,7 +20964,7 @@ public partial class SMain
         S_祖玛分解数量四.TabIndex = 40;
         S_祖玛分解数量四.TextAlign = HorizontalAlignment.Center;
         S_祖玛分解数量四.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_祖玛分解数量四.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_祖玛分解数量四.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_祖玛分解开关
         // 
@@ -20976,7 +20976,7 @@ public partial class SMain
         S_祖玛分解开关.TabIndex = 79;
         S_祖玛分解开关.TextAlign = HorizontalAlignment.Center;
         S_祖玛分解开关.Value = new decimal(new int[] { 3, 0, 0, 0 });
-        S_祖玛分解开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_祖玛分解开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_祖玛分解数量一
         // 
@@ -20988,7 +20988,7 @@ public partial class SMain
         S_祖玛分解数量一.TabIndex = 39;
         S_祖玛分解数量一.TextAlign = HorizontalAlignment.Center;
         S_祖玛分解数量一.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_祖玛分解数量一.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_祖玛分解数量一.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_祖玛分解几率三
         // 
@@ -21000,7 +21000,7 @@ public partial class SMain
         S_祖玛分解几率三.TabIndex = 38;
         S_祖玛分解几率三.TextAlign = HorizontalAlignment.Center;
         S_祖玛分解几率三.Value = new decimal(new int[] { 95, 0, 0, 0 });
-        S_祖玛分解几率三.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_祖玛分解几率三.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_祖玛分解几率四
         // 
@@ -21012,7 +21012,7 @@ public partial class SMain
         S_祖玛分解几率四.TabIndex = 37;
         S_祖玛分解几率四.TextAlign = HorizontalAlignment.Center;
         S_祖玛分解几率四.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_祖玛分解几率四.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_祖玛分解几率四.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_祖玛分解几率二
         // 
@@ -21024,7 +21024,7 @@ public partial class SMain
         S_祖玛分解几率二.TabIndex = 36;
         S_祖玛分解几率二.TextAlign = HorizontalAlignment.Center;
         S_祖玛分解几率二.Value = new decimal(new int[] { 85, 0, 0, 0 });
-        S_祖玛分解几率二.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_祖玛分解几率二.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label367
         // 
@@ -21047,7 +21047,7 @@ public partial class SMain
         S_祖玛分解物品一.TabIndex = 27;
         S_祖玛分解物品一.Text = "Demon Slaying Order";
         S_祖玛分解物品一.TextAlign = HorizontalAlignment.Center;
-        S_祖玛分解物品一.TextChanged += (this.S_祖玛分解物品一_TextChanged);
+        S_祖玛分解物品一.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_祖玛分解物品四
         // 
@@ -21059,7 +21059,7 @@ public partial class SMain
         S_祖玛分解物品四.TabIndex = 28;
         S_祖玛分解物品四.Text = "Dragon Pattern Exchange Stone";
         S_祖玛分解物品四.TextAlign = HorizontalAlignment.Center;
-        S_祖玛分解物品四.TextChanged += (this.S_祖玛分解物品四_TextChanged);
+        S_祖玛分解物品四.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_祖玛分解物品二
         // 
@@ -21071,7 +21071,7 @@ public partial class SMain
         S_祖玛分解物品二.TabIndex = 29;
         S_祖玛分解物品二.Text = "Remnant Pages";
         S_祖玛分解物品二.TextAlign = HorizontalAlignment.Center;
-        S_祖玛分解物品二.TextChanged += (this.S_祖玛分解物品二_TextChanged);
+        S_祖玛分解物品二.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_祖玛分解物品三
         // 
@@ -21083,7 +21083,7 @@ public partial class SMain
         S_祖玛分解物品三.TabIndex = 26;
         S_祖玛分解物品三.Text = "Equipment Fragments";
         S_祖玛分解物品三.TextAlign = HorizontalAlignment.Center;
-        S_祖玛分解物品三.TextChanged += (this.S_祖玛分解物品三_TextChanged);
+        S_祖玛分解物品三.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_祖玛分解几率一
         // 
@@ -21095,7 +21095,7 @@ public partial class SMain
         S_祖玛分解几率一.TabIndex = 24;
         S_祖玛分解几率一.TextAlign = HorizontalAlignment.Center;
         S_祖玛分解几率一.Value = new decimal(new int[] { 70, 0, 0, 0 });
-        S_祖玛分解几率一.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_祖玛分解几率一.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label369
         // 
@@ -21215,7 +21215,7 @@ public partial class SMain
         S_赤月分解数量二.TabIndex = 42;
         S_赤月分解数量二.TextAlign = HorizontalAlignment.Center;
         S_赤月分解数量二.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_赤月分解数量二.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_赤月分解数量二.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_赤月分解数量三
         // 
@@ -21227,7 +21227,7 @@ public partial class SMain
         S_赤月分解数量三.TabIndex = 41;
         S_赤月分解数量三.TextAlign = HorizontalAlignment.Center;
         S_赤月分解数量三.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_赤月分解数量三.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_赤月分解数量三.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_赤月分解数量四
         // 
@@ -21239,7 +21239,7 @@ public partial class SMain
         S_赤月分解数量四.TabIndex = 40;
         S_赤月分解数量四.TextAlign = HorizontalAlignment.Center;
         S_赤月分解数量四.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_赤月分解数量四.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_赤月分解数量四.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_赤月分解开关
         // 
@@ -21251,7 +21251,7 @@ public partial class SMain
         S_赤月分解开关.TabIndex = 79;
         S_赤月分解开关.TextAlign = HorizontalAlignment.Center;
         S_赤月分解开关.Value = new decimal(new int[] { 3, 0, 0, 0 });
-        S_赤月分解开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_赤月分解开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_赤月分解数量一
         // 
@@ -21263,7 +21263,7 @@ public partial class SMain
         S_赤月分解数量一.TabIndex = 39;
         S_赤月分解数量一.TextAlign = HorizontalAlignment.Center;
         S_赤月分解数量一.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_赤月分解数量一.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_赤月分解数量一.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_赤月分解几率三
         // 
@@ -21275,7 +21275,7 @@ public partial class SMain
         S_赤月分解几率三.TabIndex = 38;
         S_赤月分解几率三.TextAlign = HorizontalAlignment.Center;
         S_赤月分解几率三.Value = new decimal(new int[] { 95, 0, 0, 0 });
-        S_赤月分解几率三.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_赤月分解几率三.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_赤月分解几率四
         // 
@@ -21287,7 +21287,7 @@ public partial class SMain
         S_赤月分解几率四.TabIndex = 37;
         S_赤月分解几率四.TextAlign = HorizontalAlignment.Center;
         S_赤月分解几率四.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_赤月分解几率四.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_赤月分解几率四.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_赤月分解几率二
         // 
@@ -21299,7 +21299,7 @@ public partial class SMain
         S_赤月分解几率二.TabIndex = 36;
         S_赤月分解几率二.TextAlign = HorizontalAlignment.Center;
         S_赤月分解几率二.Value = new decimal(new int[] { 85, 0, 0, 0 });
-        S_赤月分解几率二.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_赤月分解几率二.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_赤月分解物品一
         // 
@@ -21311,7 +21311,7 @@ public partial class SMain
         S_赤月分解物品一.TabIndex = 27;
         S_赤月分解物品一.Text = "屠魔令";
         S_赤月分解物品一.TextAlign = HorizontalAlignment.Center;
-        S_赤月分解物品一.TextChanged += (this.S_赤月分解物品一_TextChanged);
+        S_赤月分解物品一.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_赤月分解物品四
         // 
@@ -21323,7 +21323,7 @@ public partial class SMain
         S_赤月分解物品四.TabIndex = 28;
         S_赤月分解物品四.Text = "龍纹兑换石";
         S_赤月分解物品四.TextAlign = HorizontalAlignment.Center;
-        S_赤月分解物品四.TextChanged += (this.S_赤月分解物品四_TextChanged);
+        S_赤月分解物品四.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_赤月分解物品二
         // 
@@ -21335,7 +21335,7 @@ public partial class SMain
         S_赤月分解物品二.TabIndex = 29;
         S_赤月分解物品二.Text = "天书残页";
         S_赤月分解物品二.TextAlign = HorizontalAlignment.Center;
-        S_赤月分解物品二.TextChanged += (this.S_赤月分解物品二_TextChanged);
+        S_赤月分解物品二.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_赤月分解物品三
         // 
@@ -21347,7 +21347,7 @@ public partial class SMain
         S_赤月分解物品三.TabIndex = 26;
         S_赤月分解物品三.Text = "装备碎片";
         S_赤月分解物品三.TextAlign = HorizontalAlignment.Center;
-        S_赤月分解物品三.TextChanged += (this.S_赤月分解物品三_TextChanged);
+        S_赤月分解物品三.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_赤月分解几率一
         // 
@@ -21359,7 +21359,7 @@ public partial class SMain
         S_赤月分解几率一.TabIndex = 24;
         S_赤月分解几率一.TextAlign = HorizontalAlignment.Center;
         S_赤月分解几率一.Value = new decimal(new int[] { 70, 0, 0, 0 });
-        S_赤月分解几率一.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_赤月分解几率一.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label192
         // 
@@ -21479,7 +21479,7 @@ public partial class SMain
         S_魔龙分解数量二.TabIndex = 42;
         S_魔龙分解数量二.TextAlign = HorizontalAlignment.Center;
         S_魔龙分解数量二.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_魔龙分解数量二.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_魔龙分解数量二.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_魔龙分解数量三
         // 
@@ -21491,7 +21491,7 @@ public partial class SMain
         S_魔龙分解数量三.TabIndex = 41;
         S_魔龙分解数量三.TextAlign = HorizontalAlignment.Center;
         S_魔龙分解数量三.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_魔龙分解数量三.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_魔龙分解数量三.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_魔龙分解数量四
         // 
@@ -21503,7 +21503,7 @@ public partial class SMain
         S_魔龙分解数量四.TabIndex = 40;
         S_魔龙分解数量四.TextAlign = HorizontalAlignment.Center;
         S_魔龙分解数量四.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_魔龙分解数量四.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_魔龙分解数量四.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_魔龙分解开关
         // 
@@ -21514,7 +21514,7 @@ public partial class SMain
         S_魔龙分解开关.Size = new Size(47, 23);
         S_魔龙分解开关.TabIndex = 79;
         S_魔龙分解开关.TextAlign = HorizontalAlignment.Center;
-        S_魔龙分解开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_魔龙分解开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_魔龙分解数量一
         // 
@@ -21526,7 +21526,7 @@ public partial class SMain
         S_魔龙分解数量一.TabIndex = 39;
         S_魔龙分解数量一.TextAlign = HorizontalAlignment.Center;
         S_魔龙分解数量一.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_魔龙分解数量一.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_魔龙分解数量一.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_魔龙分解几率三
         // 
@@ -21538,7 +21538,7 @@ public partial class SMain
         S_魔龙分解几率三.TabIndex = 38;
         S_魔龙分解几率三.TextAlign = HorizontalAlignment.Center;
         S_魔龙分解几率三.Value = new decimal(new int[] { 95, 0, 0, 0 });
-        S_魔龙分解几率三.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_魔龙分解几率三.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_魔龙分解几率四
         // 
@@ -21550,7 +21550,7 @@ public partial class SMain
         S_魔龙分解几率四.TabIndex = 37;
         S_魔龙分解几率四.TextAlign = HorizontalAlignment.Center;
         S_魔龙分解几率四.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_魔龙分解几率四.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_魔龙分解几率四.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_魔龙分解几率二
         // 
@@ -21562,7 +21562,7 @@ public partial class SMain
         S_魔龙分解几率二.TabIndex = 36;
         S_魔龙分解几率二.TextAlign = HorizontalAlignment.Center;
         S_魔龙分解几率二.Value = new decimal(new int[] { 85, 0, 0, 0 });
-        S_魔龙分解几率二.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_魔龙分解几率二.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_魔龙分解物品一
         // 
@@ -21574,7 +21574,7 @@ public partial class SMain
         S_魔龙分解物品一.TabIndex = 27;
         S_魔龙分解物品一.Text = "屠魔令";
         S_魔龙分解物品一.TextAlign = HorizontalAlignment.Center;
-        S_魔龙分解物品一.TextChanged += (this.S_魔龙分解物品一_TextChanged);
+        S_魔龙分解物品一.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_魔龙分解物品四
         // 
@@ -21586,7 +21586,7 @@ public partial class SMain
         S_魔龙分解物品四.TabIndex = 28;
         S_魔龙分解物品四.Text = "龍纹兑换石";
         S_魔龙分解物品四.TextAlign = HorizontalAlignment.Center;
-        S_魔龙分解物品四.TextChanged += (this.S_魔龙分解物品四_TextChanged);
+        S_魔龙分解物品四.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_魔龙分解物品二
         // 
@@ -21598,7 +21598,7 @@ public partial class SMain
         S_魔龙分解物品二.TabIndex = 29;
         S_魔龙分解物品二.Text = "天书残页";
         S_魔龙分解物品二.TextAlign = HorizontalAlignment.Center;
-        S_魔龙分解物品二.TextChanged += (this.S_魔龙分解物品二_TextChanged);
+        S_魔龙分解物品二.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_魔龙分解物品三
         // 
@@ -21610,7 +21610,7 @@ public partial class SMain
         S_魔龙分解物品三.TabIndex = 26;
         S_魔龙分解物品三.Text = "装备碎片";
         S_魔龙分解物品三.TextAlign = HorizontalAlignment.Center;
-        S_魔龙分解物品三.TextChanged += (this.S_魔龙分解物品三_TextChanged);
+        S_魔龙分解物品三.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_魔龙分解几率一
         // 
@@ -21622,7 +21622,7 @@ public partial class SMain
         S_魔龙分解几率一.TabIndex = 24;
         S_魔龙分解几率一.TextAlign = HorizontalAlignment.Center;
         S_魔龙分解几率一.Value = new decimal(new int[] { 70, 0, 0, 0 });
-        S_魔龙分解几率一.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_魔龙分解几率一.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label376
         // 
@@ -21742,7 +21742,7 @@ public partial class SMain
         S_苍月分解数量二.TabIndex = 42;
         S_苍月分解数量二.TextAlign = HorizontalAlignment.Center;
         S_苍月分解数量二.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_苍月分解数量二.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_苍月分解数量二.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_苍月分解数量三
         // 
@@ -21754,7 +21754,7 @@ public partial class SMain
         S_苍月分解数量三.TabIndex = 41;
         S_苍月分解数量三.TextAlign = HorizontalAlignment.Center;
         S_苍月分解数量三.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_苍月分解数量三.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_苍月分解数量三.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_苍月分解数量四
         // 
@@ -21766,7 +21766,7 @@ public partial class SMain
         S_苍月分解数量四.TabIndex = 40;
         S_苍月分解数量四.TextAlign = HorizontalAlignment.Center;
         S_苍月分解数量四.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_苍月分解数量四.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_苍月分解数量四.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_苍月分解开关
         // 
@@ -21778,7 +21778,7 @@ public partial class SMain
         S_苍月分解开关.TabIndex = 79;
         S_苍月分解开关.TextAlign = HorizontalAlignment.Center;
         S_苍月分解开关.Value = new decimal(new int[] { 3, 0, 0, 0 });
-        S_苍月分解开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_苍月分解开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_苍月分解数量一
         // 
@@ -21790,7 +21790,7 @@ public partial class SMain
         S_苍月分解数量一.TabIndex = 39;
         S_苍月分解数量一.TextAlign = HorizontalAlignment.Center;
         S_苍月分解数量一.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_苍月分解数量一.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_苍月分解数量一.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_苍月分解几率三
         // 
@@ -21802,7 +21802,7 @@ public partial class SMain
         S_苍月分解几率三.TabIndex = 38;
         S_苍月分解几率三.TextAlign = HorizontalAlignment.Center;
         S_苍月分解几率三.Value = new decimal(new int[] { 95, 0, 0, 0 });
-        S_苍月分解几率三.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_苍月分解几率三.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_苍月分解几率四
         // 
@@ -21814,7 +21814,7 @@ public partial class SMain
         S_苍月分解几率四.TabIndex = 37;
         S_苍月分解几率四.TextAlign = HorizontalAlignment.Center;
         S_苍月分解几率四.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_苍月分解几率四.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_苍月分解几率四.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_苍月分解几率二
         // 
@@ -21826,7 +21826,7 @@ public partial class SMain
         S_苍月分解几率二.TabIndex = 36;
         S_苍月分解几率二.TextAlign = HorizontalAlignment.Center;
         S_苍月分解几率二.Value = new decimal(new int[] { 85, 0, 0, 0 });
-        S_苍月分解几率二.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_苍月分解几率二.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_苍月分解物品一
         // 
@@ -21838,7 +21838,7 @@ public partial class SMain
         S_苍月分解物品一.TabIndex = 27;
         S_苍月分解物品一.Text = "屠魔令";
         S_苍月分解物品一.TextAlign = HorizontalAlignment.Center;
-        S_苍月分解物品一.TextChanged += (this.S_苍月分解物品一_TextChanged);
+        S_苍月分解物品一.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_苍月分解物品四
         // 
@@ -21850,7 +21850,7 @@ public partial class SMain
         S_苍月分解物品四.TabIndex = 28;
         S_苍月分解物品四.Text = "龍纹兑换石";
         S_苍月分解物品四.TextAlign = HorizontalAlignment.Center;
-        S_苍月分解物品四.TextChanged += (this.S_苍月分解物品四_TextChanged);
+        S_苍月分解物品四.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_苍月分解物品二
         // 
@@ -21862,7 +21862,7 @@ public partial class SMain
         S_苍月分解物品二.TabIndex = 29;
         S_苍月分解物品二.Text = "天书残页";
         S_苍月分解物品二.TextAlign = HorizontalAlignment.Center;
-        S_苍月分解物品二.TextChanged += (this.S_苍月分解物品二_TextChanged);
+        S_苍月分解物品二.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_苍月分解物品三
         // 
@@ -21874,7 +21874,7 @@ public partial class SMain
         S_苍月分解物品三.TabIndex = 26;
         S_苍月分解物品三.Text = "装备碎片";
         S_苍月分解物品三.TextAlign = HorizontalAlignment.Center;
-        S_苍月分解物品三.TextChanged += (this.S_苍月分解物品三_TextChanged);
+        S_苍月分解物品三.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_苍月分解几率一
         // 
@@ -21886,7 +21886,7 @@ public partial class SMain
         S_苍月分解几率一.TabIndex = 24;
         S_苍月分解几率一.TextAlign = HorizontalAlignment.Center;
         S_苍月分解几率一.Value = new decimal(new int[] { 70, 0, 0, 0 });
-        S_苍月分解几率一.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_苍月分解几率一.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label390
         // 
@@ -22006,7 +22006,7 @@ public partial class SMain
         S_星王分解数量二.TabIndex = 42;
         S_星王分解数量二.TextAlign = HorizontalAlignment.Center;
         S_星王分解数量二.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_星王分解数量二.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_星王分解数量二.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_星王分解数量三
         // 
@@ -22018,7 +22018,7 @@ public partial class SMain
         S_星王分解数量三.TabIndex = 41;
         S_星王分解数量三.TextAlign = HorizontalAlignment.Center;
         S_星王分解数量三.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_星王分解数量三.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_星王分解数量三.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_星王分解数量四
         // 
@@ -22030,7 +22030,7 @@ public partial class SMain
         S_星王分解数量四.TabIndex = 40;
         S_星王分解数量四.TextAlign = HorizontalAlignment.Center;
         S_星王分解数量四.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_星王分解数量四.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_星王分解数量四.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_星王分解开关
         // 
@@ -22042,7 +22042,7 @@ public partial class SMain
         S_星王分解开关.TabIndex = 79;
         S_星王分解开关.TextAlign = HorizontalAlignment.Center;
         S_星王分解开关.Value = new decimal(new int[] { 3, 0, 0, 0 });
-        S_星王分解开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_星王分解开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_星王分解数量一
         // 
@@ -22054,7 +22054,7 @@ public partial class SMain
         S_星王分解数量一.TabIndex = 39;
         S_星王分解数量一.TextAlign = HorizontalAlignment.Center;
         S_星王分解数量一.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_星王分解数量一.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_星王分解数量一.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_星王分解几率三
         // 
@@ -22066,7 +22066,7 @@ public partial class SMain
         S_星王分解几率三.TabIndex = 38;
         S_星王分解几率三.TextAlign = HorizontalAlignment.Center;
         S_星王分解几率三.Value = new decimal(new int[] { 95, 0, 0, 0 });
-        S_星王分解几率三.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_星王分解几率三.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_星王分解几率四
         // 
@@ -22089,7 +22089,7 @@ public partial class SMain
         S_星王分解几率二.TabIndex = 36;
         S_星王分解几率二.TextAlign = HorizontalAlignment.Center;
         S_星王分解几率二.Value = new decimal(new int[] { 85, 0, 0, 0 });
-        S_星王分解几率二.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_星王分解几率二.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_星王分解物品一
         // 
@@ -22101,7 +22101,7 @@ public partial class SMain
         S_星王分解物品一.TabIndex = 27;
         S_星王分解物品一.Text = "屠魔令";
         S_星王分解物品一.TextAlign = HorizontalAlignment.Center;
-        S_星王分解物品一.TextChanged += (this.S_星王分解物品一_TextChanged);
+        S_星王分解物品一.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_星王分解物品四
         // 
@@ -22113,7 +22113,7 @@ public partial class SMain
         S_星王分解物品四.TabIndex = 28;
         S_星王分解物品四.Text = "龍纹兑换石";
         S_星王分解物品四.TextAlign = HorizontalAlignment.Center;
-        S_星王分解物品四.TextChanged += (this.S_星王分解物品四_TextChanged);
+        S_星王分解物品四.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_星王分解物品二
         // 
@@ -22125,7 +22125,7 @@ public partial class SMain
         S_星王分解物品二.TabIndex = 29;
         S_星王分解物品二.Text = "天书残页";
         S_星王分解物品二.TextAlign = HorizontalAlignment.Center;
-        S_星王分解物品二.TextChanged += (this.S_星王分解物品二_TextChanged);
+        S_星王分解物品二.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_星王分解物品三
         // 
@@ -22137,7 +22137,7 @@ public partial class SMain
         S_星王分解物品三.TabIndex = 26;
         S_星王分解物品三.Text = "装备碎片";
         S_星王分解物品三.TextAlign = HorizontalAlignment.Center;
-        S_星王分解物品三.TextChanged += (this.S_星王分解物品三_TextChanged);
+        S_星王分解物品三.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_星王分解几率一
         // 
@@ -22149,7 +22149,7 @@ public partial class SMain
         S_星王分解几率一.TabIndex = 24;
         S_星王分解几率一.TextAlign = HorizontalAlignment.Center;
         S_星王分解几率一.Value = new decimal(new int[] { 70, 0, 0, 0 });
-        S_星王分解几率一.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_星王分解几率一.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label402
         // 
@@ -22269,7 +22269,7 @@ public partial class SMain
         S_城主分解数量二.TabIndex = 42;
         S_城主分解数量二.TextAlign = HorizontalAlignment.Center;
         S_城主分解数量二.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_城主分解数量二.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_城主分解数量二.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_城主分解数量三
         // 
@@ -22281,7 +22281,7 @@ public partial class SMain
         S_城主分解数量三.TabIndex = 41;
         S_城主分解数量三.TextAlign = HorizontalAlignment.Center;
         S_城主分解数量三.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_城主分解数量三.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_城主分解数量三.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_城主分解数量四
         // 
@@ -22293,7 +22293,7 @@ public partial class SMain
         S_城主分解数量四.TabIndex = 40;
         S_城主分解数量四.TextAlign = HorizontalAlignment.Center;
         S_城主分解数量四.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_城主分解数量四.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_城主分解数量四.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_城主分解开关
         // 
@@ -22305,7 +22305,7 @@ public partial class SMain
         S_城主分解开关.TabIndex = 79;
         S_城主分解开关.TextAlign = HorizontalAlignment.Center;
         S_城主分解开关.Value = new decimal(new int[] { 3, 0, 0, 0 });
-        S_城主分解开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_城主分解开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_城主分解数量一
         // 
@@ -22317,7 +22317,7 @@ public partial class SMain
         S_城主分解数量一.TabIndex = 39;
         S_城主分解数量一.TextAlign = HorizontalAlignment.Center;
         S_城主分解数量一.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_城主分解数量一.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_城主分解数量一.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_城主分解几率三
         // 
@@ -22329,7 +22329,7 @@ public partial class SMain
         S_城主分解几率三.TabIndex = 38;
         S_城主分解几率三.TextAlign = HorizontalAlignment.Center;
         S_城主分解几率三.Value = new decimal(new int[] { 95, 0, 0, 0 });
-        S_城主分解几率三.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_城主分解几率三.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_城主分解几率四
         // 
@@ -22341,7 +22341,7 @@ public partial class SMain
         S_城主分解几率四.TabIndex = 37;
         S_城主分解几率四.TextAlign = HorizontalAlignment.Center;
         S_城主分解几率四.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_城主分解几率四.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_城主分解几率四.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_城主分解几率二
         // 
@@ -22353,7 +22353,7 @@ public partial class SMain
         S_城主分解几率二.TabIndex = 36;
         S_城主分解几率二.TextAlign = HorizontalAlignment.Center;
         S_城主分解几率二.Value = new decimal(new int[] { 85, 0, 0, 0 });
-        S_城主分解几率二.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_城主分解几率二.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_城主分解物品一
         // 
@@ -22365,7 +22365,7 @@ public partial class SMain
         S_城主分解物品一.TabIndex = 27;
         S_城主分解物品一.Text = "屠魔令";
         S_城主分解物品一.TextAlign = HorizontalAlignment.Center;
-        S_城主分解物品一.TextChanged += (this.S_城主分解物品一_TextChanged);
+        S_城主分解物品一.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_城主分解物品四
         // 
@@ -22377,7 +22377,7 @@ public partial class SMain
         S_城主分解物品四.TabIndex = 28;
         S_城主分解物品四.Text = "龍纹兑换石";
         S_城主分解物品四.TextAlign = HorizontalAlignment.Center;
-        S_城主分解物品四.TextChanged += (this.S_城主分解物品四_TextChanged);
+        S_城主分解物品四.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_城主分解物品二
         // 
@@ -22389,7 +22389,7 @@ public partial class SMain
         S_城主分解物品二.TabIndex = 29;
         S_城主分解物品二.Text = "天书残页";
         S_城主分解物品二.TextAlign = HorizontalAlignment.Center;
-        S_城主分解物品二.TextChanged += (this.S_城主分解物品二_TextChanged);
+        S_城主分解物品二.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_城主分解物品三
         // 
@@ -22401,7 +22401,7 @@ public partial class SMain
         S_城主分解物品三.TabIndex = 26;
         S_城主分解物品三.Text = "装备碎片";
         S_城主分解物品三.TextAlign = HorizontalAlignment.Center;
-        S_城主分解物品三.TextChanged += (this.S_城主分解物品三_TextChanged);
+        S_城主分解物品三.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_城主分解几率一
         // 
@@ -22413,7 +22413,7 @@ public partial class SMain
         S_城主分解几率一.TabIndex = 24;
         S_城主分解几率一.TextAlign = HorizontalAlignment.Center;
         S_城主分解几率一.Value = new decimal(new int[] { 70, 0, 0, 0 });
-        S_城主分解几率一.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_城主分解几率一.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label414
         // 
@@ -22533,7 +22533,7 @@ public partial class SMain
         S_沃玛分解数量二.TabIndex = 42;
         S_沃玛分解数量二.TextAlign = HorizontalAlignment.Center;
         S_沃玛分解数量二.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_沃玛分解数量二.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_沃玛分解数量二.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_沃玛分解数量三
         // 
@@ -22545,7 +22545,7 @@ public partial class SMain
         S_沃玛分解数量三.TabIndex = 41;
         S_沃玛分解数量三.TextAlign = HorizontalAlignment.Center;
         S_沃玛分解数量三.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_沃玛分解数量三.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_沃玛分解数量三.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_沃玛分解数量四
         // 
@@ -22557,7 +22557,7 @@ public partial class SMain
         S_沃玛分解数量四.TabIndex = 40;
         S_沃玛分解数量四.TextAlign = HorizontalAlignment.Center;
         S_沃玛分解数量四.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_沃玛分解数量四.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_沃玛分解数量四.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_沃玛分解开关
         // 
@@ -22569,7 +22569,7 @@ public partial class SMain
         S_沃玛分解开关.TabIndex = 79;
         S_沃玛分解开关.TextAlign = HorizontalAlignment.Center;
         S_沃玛分解开关.Value = new decimal(new int[] { 3, 0, 0, 0 });
-        S_沃玛分解开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_沃玛分解开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_沃玛分解数量一
         // 
@@ -22581,7 +22581,7 @@ public partial class SMain
         S_沃玛分解数量一.TabIndex = 39;
         S_沃玛分解数量一.TextAlign = HorizontalAlignment.Center;
         S_沃玛分解数量一.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_沃玛分解数量一.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_沃玛分解数量一.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_沃玛分解几率三
         // 
@@ -22593,7 +22593,7 @@ public partial class SMain
         S_沃玛分解几率三.TabIndex = 38;
         S_沃玛分解几率三.TextAlign = HorizontalAlignment.Center;
         S_沃玛分解几率三.Value = new decimal(new int[] { 95, 0, 0, 0 });
-        S_沃玛分解几率三.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_沃玛分解几率三.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_沃玛分解几率四
         // 
@@ -22605,7 +22605,7 @@ public partial class SMain
         S_沃玛分解几率四.TabIndex = 37;
         S_沃玛分解几率四.TextAlign = HorizontalAlignment.Center;
         S_沃玛分解几率四.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_沃玛分解几率四.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_沃玛分解几率四.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_沃玛分解几率二
         // 
@@ -22617,7 +22617,7 @@ public partial class SMain
         S_沃玛分解几率二.TabIndex = 36;
         S_沃玛分解几率二.TextAlign = HorizontalAlignment.Center;
         S_沃玛分解几率二.Value = new decimal(new int[] { 85, 0, 0, 0 });
-        S_沃玛分解几率二.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_沃玛分解几率二.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_沃玛分解物品一
         // 
@@ -22629,7 +22629,7 @@ public partial class SMain
         S_沃玛分解物品一.TabIndex = 27;
         S_沃玛分解物品一.Text = "屠魔令";
         S_沃玛分解物品一.TextAlign = HorizontalAlignment.Center;
-        S_沃玛分解物品一.TextChanged += (this.S_沃玛分解物品一_TextChanged);
+        S_沃玛分解物品一.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_沃玛分解物品四
         // 
@@ -22641,7 +22641,7 @@ public partial class SMain
         S_沃玛分解物品四.TabIndex = 28;
         S_沃玛分解物品四.Text = "龍纹兑换石";
         S_沃玛分解物品四.TextAlign = HorizontalAlignment.Center;
-        S_沃玛分解物品四.TextChanged += (this.S_沃玛分解物品四_TextChanged);
+        S_沃玛分解物品四.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_沃玛分解物品二
         // 
@@ -22653,7 +22653,7 @@ public partial class SMain
         S_沃玛分解物品二.TabIndex = 29;
         S_沃玛分解物品二.Text = "天书残页";
         S_沃玛分解物品二.TextAlign = HorizontalAlignment.Center;
-        S_沃玛分解物品二.TextChanged += (this.S_沃玛分解物品二_TextChanged);
+        S_沃玛分解物品二.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_沃玛分解物品三
         // 
@@ -22665,7 +22665,7 @@ public partial class SMain
         S_沃玛分解物品三.TabIndex = 26;
         S_沃玛分解物品三.Text = "装备碎片";
         S_沃玛分解物品三.TextAlign = HorizontalAlignment.Center;
-        S_沃玛分解物品三.TextChanged += (this.S_沃玛分解物品三_TextChanged);
+        S_沃玛分解物品三.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_沃玛分解几率一
         // 
@@ -22677,7 +22677,7 @@ public partial class SMain
         S_沃玛分解几率一.TabIndex = 24;
         S_沃玛分解几率一.TextAlign = HorizontalAlignment.Center;
         S_沃玛分解几率一.Value = new decimal(new int[] { 70, 0, 0, 0 });
-        S_沃玛分解几率一.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_沃玛分解几率一.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label875
         // 
@@ -22797,7 +22797,7 @@ public partial class SMain
         S_其他分解数量二.TabIndex = 42;
         S_其他分解数量二.TextAlign = HorizontalAlignment.Center;
         S_其他分解数量二.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_其他分解数量二.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_其他分解数量二.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_其他分解数量三
         // 
@@ -22809,7 +22809,7 @@ public partial class SMain
         S_其他分解数量三.TabIndex = 41;
         S_其他分解数量三.TextAlign = HorizontalAlignment.Center;
         S_其他分解数量三.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_其他分解数量三.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_其他分解数量三.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_其他分解数量四
         // 
@@ -22821,7 +22821,7 @@ public partial class SMain
         S_其他分解数量四.TabIndex = 40;
         S_其他分解数量四.TextAlign = HorizontalAlignment.Center;
         S_其他分解数量四.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_其他分解数量四.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_其他分解数量四.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_其他分解开关
         // 
@@ -22833,7 +22833,7 @@ public partial class SMain
         S_其他分解开关.TabIndex = 79;
         S_其他分解开关.TextAlign = HorizontalAlignment.Center;
         S_其他分解开关.Value = new decimal(new int[] { 3, 0, 0, 0 });
-        S_其他分解开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_其他分解开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_其他分解数量一
         // 
@@ -22845,7 +22845,7 @@ public partial class SMain
         S_其他分解数量一.TabIndex = 39;
         S_其他分解数量一.TextAlign = HorizontalAlignment.Center;
         S_其他分解数量一.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_其他分解数量一.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_其他分解数量一.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_其他分解几率三
         // 
@@ -22857,7 +22857,7 @@ public partial class SMain
         S_其他分解几率三.TabIndex = 38;
         S_其他分解几率三.TextAlign = HorizontalAlignment.Center;
         S_其他分解几率三.Value = new decimal(new int[] { 95, 0, 0, 0 });
-        S_其他分解几率三.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_其他分解几率三.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_其他分解几率四
         // 
@@ -22869,7 +22869,7 @@ public partial class SMain
         S_其他分解几率四.TabIndex = 37;
         S_其他分解几率四.TextAlign = HorizontalAlignment.Center;
         S_其他分解几率四.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_其他分解几率四.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_其他分解几率四.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_其他分解几率二
         // 
@@ -22881,7 +22881,7 @@ public partial class SMain
         S_其他分解几率二.TabIndex = 36;
         S_其他分解几率二.TextAlign = HorizontalAlignment.Center;
         S_其他分解几率二.Value = new decimal(new int[] { 85, 0, 0, 0 });
-        S_其他分解几率二.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_其他分解几率二.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_其他分解物品一
         // 
@@ -22893,7 +22893,7 @@ public partial class SMain
         S_其他分解物品一.TabIndex = 27;
         S_其他分解物品一.Text = "屠魔令";
         S_其他分解物品一.TextAlign = HorizontalAlignment.Center;
-        S_其他分解物品一.TextChanged += (this.S_其他分解物品一_TextChanged);
+        S_其他分解物品一.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_其他分解物品四
         // 
@@ -22905,7 +22905,7 @@ public partial class SMain
         S_其他分解物品四.TabIndex = 28;
         S_其他分解物品四.Text = "龍纹兑换石";
         S_其他分解物品四.TextAlign = HorizontalAlignment.Center;
-        S_其他分解物品四.TextChanged += (this.S_其他分解物品四_TextChanged);
+        S_其他分解物品四.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_其他分解物品二
         // 
@@ -22917,7 +22917,7 @@ public partial class SMain
         S_其他分解物品二.TabIndex = 29;
         S_其他分解物品二.Text = "天书残页";
         S_其他分解物品二.TextAlign = HorizontalAlignment.Center;
-        S_其他分解物品二.TextChanged += (this.S_其他分解物品二_TextChanged);
+        S_其他分解物品二.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_其他分解物品三
         // 
@@ -22929,7 +22929,7 @@ public partial class SMain
         S_其他分解物品三.TabIndex = 26;
         S_其他分解物品三.Text = "装备碎片";
         S_其他分解物品三.TextAlign = HorizontalAlignment.Center;
-        S_其他分解物品三.TextChanged += (this.S_其他分解物品三_TextChanged);
+        S_其他分解物品三.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_其他分解几率一
         // 
@@ -22941,7 +22941,7 @@ public partial class SMain
         S_其他分解几率一.TabIndex = 24;
         S_其他分解几率一.TextAlign = HorizontalAlignment.Center;
         S_其他分解几率一.Value = new decimal(new int[] { 70, 0, 0, 0 });
-        S_其他分解几率一.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_其他分解几率一.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label881
         // 
@@ -23039,7 +23039,7 @@ public partial class SMain
         S_元宝金币回收设定.Size = new Size(58, 23);
         S_元宝金币回收设定.TabIndex = 40;
         S_元宝金币回收设定.TextAlign = HorizontalAlignment.Center;
-        S_元宝金币回收设定.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_元宝金币回收设定.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label107
         // 
@@ -23096,7 +23096,7 @@ public partial class SMain
         S_神秘分解元宝.TabIndex = 35;
         S_神秘分解元宝.TextAlign = HorizontalAlignment.Center;
         S_神秘分解元宝.Value = new decimal(new int[] { 800, 0, 0, 0 });
-        S_神秘分解元宝.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_神秘分解元宝.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_城主分解元宝
         // 
@@ -23109,7 +23109,7 @@ public partial class SMain
         S_城主分解元宝.TabIndex = 34;
         S_城主分解元宝.TextAlign = HorizontalAlignment.Center;
         S_城主分解元宝.Value = new decimal(new int[] { 700, 0, 0, 0 });
-        S_城主分解元宝.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_城主分解元宝.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label29
         // 
@@ -23144,7 +23144,7 @@ public partial class SMain
         S_星王分解元宝.TabIndex = 31;
         S_星王分解元宝.TextAlign = HorizontalAlignment.Center;
         S_星王分解元宝.Value = new decimal(new int[] { 600, 0, 0, 0 });
-        S_星王分解元宝.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_星王分解元宝.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_苍月分解元宝
         // 
@@ -23157,7 +23157,7 @@ public partial class SMain
         S_苍月分解元宝.TabIndex = 30;
         S_苍月分解元宝.TextAlign = HorizontalAlignment.Center;
         S_苍月分解元宝.Value = new decimal(new int[] { 500, 0, 0, 0 });
-        S_苍月分解元宝.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_苍月分解元宝.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label27
         // 
@@ -23192,7 +23192,7 @@ public partial class SMain
         S_魔龙分解元宝.TabIndex = 27;
         S_魔龙分解元宝.TextAlign = HorizontalAlignment.Center;
         S_魔龙分解元宝.Value = new decimal(new int[] { 400, 0, 0, 0 });
-        S_魔龙分解元宝.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_魔龙分解元宝.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_赤月分解元宝
         // 
@@ -23205,7 +23205,7 @@ public partial class SMain
         S_赤月分解元宝.TabIndex = 26;
         S_赤月分解元宝.TextAlign = HorizontalAlignment.Center;
         S_赤月分解元宝.Value = new decimal(new int[] { 300, 0, 0, 0 });
-        S_赤月分解元宝.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_赤月分解元宝.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label25
         // 
@@ -23229,7 +23229,7 @@ public partial class SMain
         S_祖玛分解元宝.TabIndex = 24;
         S_祖玛分解元宝.TextAlign = HorizontalAlignment.Center;
         S_祖玛分解元宝.Value = new decimal(new int[] { 200, 0, 0, 0 });
-        S_祖玛分解元宝.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_祖玛分解元宝.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label24
         // 
@@ -23253,7 +23253,7 @@ public partial class SMain
         S_沃玛分解元宝.TabIndex = 22;
         S_沃玛分解元宝.TextAlign = HorizontalAlignment.Center;
         S_沃玛分解元宝.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_沃玛分解元宝.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_沃玛分解元宝.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label23
         // 
@@ -23478,7 +23478,7 @@ public partial class SMain
         S_元宝袋新创数量5.TabIndex = 46;
         S_元宝袋新创数量5.TextAlign = HorizontalAlignment.Center;
         S_元宝袋新创数量5.Value = new decimal(new int[] { 50000000, 0, 0, 0 });
-        S_元宝袋新创数量5.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_元宝袋新创数量5.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_元宝袋新创数量4
         // 
@@ -23490,7 +23490,7 @@ public partial class SMain
         S_元宝袋新创数量4.TabIndex = 45;
         S_元宝袋新创数量4.TextAlign = HorizontalAlignment.Center;
         S_元宝袋新创数量4.Value = new decimal(new int[] { 10000000, 0, 0, 0 });
-        S_元宝袋新创数量4.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_元宝袋新创数量4.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_元宝袋新创数量2
         // 
@@ -23502,7 +23502,7 @@ public partial class SMain
         S_元宝袋新创数量2.TabIndex = 44;
         S_元宝袋新创数量2.TextAlign = HorizontalAlignment.Center;
         S_元宝袋新创数量2.Value = new decimal(new int[] { 1000000, 0, 0, 0 });
-        S_元宝袋新创数量2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_元宝袋新创数量2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_元宝袋新创数量3
         // 
@@ -23514,7 +23514,7 @@ public partial class SMain
         S_元宝袋新创数量3.TabIndex = 42;
         S_元宝袋新创数量3.TextAlign = HorizontalAlignment.Center;
         S_元宝袋新创数量3.Value = new decimal(new int[] { 5000000, 0, 0, 0 });
-        S_元宝袋新创数量3.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_元宝袋新创数量3.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_元宝袋新创数量1
         // 
@@ -23526,7 +23526,7 @@ public partial class SMain
         S_元宝袋新创数量1.TabIndex = 41;
         S_元宝袋新创数量1.TextAlign = HorizontalAlignment.Center;
         S_元宝袋新创数量1.Value = new decimal(new int[] { 500000, 0, 0, 0 });
-        S_元宝袋新创数量1.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_元宝袋新创数量1.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label702
         // 
@@ -23680,7 +23680,7 @@ public partial class SMain
         S_每周特惠礼包二元宝.TabIndex = 31;
         S_每周特惠礼包二元宝.TextAlign = HorizontalAlignment.Center;
         S_每周特惠礼包二元宝.Value = new decimal(new int[] { 3000, 0, 0, 0 });
-        S_每周特惠礼包二元宝.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_每周特惠礼包二元宝.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_每周特惠礼包一元宝
         // 
@@ -23693,7 +23693,7 @@ public partial class SMain
         S_每周特惠礼包一元宝.TabIndex = 30;
         S_每周特惠礼包一元宝.TextAlign = HorizontalAlignment.Center;
         S_每周特惠礼包一元宝.Value = new decimal(new int[] { 600, 0, 0, 0 });
-        S_每周特惠礼包一元宝.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_每周特惠礼包一元宝.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 战备礼包
         // 
@@ -23849,7 +23849,7 @@ public partial class SMain
         S_自定义称号内容五.TabIndex = 85;
         S_自定义称号内容五.TextAlign = HorizontalAlignment.Center;
         S_自定义称号内容五.Value = new decimal(new int[] { 101, 0, 0, 0 });
-        S_自定义称号内容五.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_自定义称号内容五.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_自定义称号内容四
         // 
@@ -23862,7 +23862,7 @@ public partial class SMain
         S_自定义称号内容四.TabIndex = 84;
         S_自定义称号内容四.TextAlign = HorizontalAlignment.Center;
         S_自定义称号内容四.Value = new decimal(new int[] { 101, 0, 0, 0 });
-        S_自定义称号内容四.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_自定义称号内容四.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_自定义称号内容三
         // 
@@ -23875,7 +23875,7 @@ public partial class SMain
         S_自定义称号内容三.TabIndex = 83;
         S_自定义称号内容三.TextAlign = HorizontalAlignment.Center;
         S_自定义称号内容三.Value = new decimal(new int[] { 101, 0, 0, 0 });
-        S_自定义称号内容三.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_自定义称号内容三.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_自定义称号内容二
         // 
@@ -23888,7 +23888,7 @@ public partial class SMain
         S_自定义称号内容二.TabIndex = 82;
         S_自定义称号内容二.TextAlign = HorizontalAlignment.Center;
         S_自定义称号内容二.Value = new decimal(new int[] { 101, 0, 0, 0 });
-        S_自定义称号内容二.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_自定义称号内容二.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_自定义称号内容一
         // 
@@ -23901,7 +23901,7 @@ public partial class SMain
         S_自定义称号内容一.TabIndex = 81;
         S_自定义称号内容一.TextAlign = HorizontalAlignment.Center;
         S_自定义称号内容一.Value = new decimal(new int[] { 101, 0, 0, 0 });
-        S_自定义称号内容一.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_自定义称号内容一.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label245
         // 
@@ -23937,7 +23937,7 @@ public partial class SMain
         S_自定义物品数量二.TabIndex = 77;
         S_自定义物品数量二.TextAlign = HorizontalAlignment.Center;
         S_自定义物品数量二.Value = new decimal(new int[] { 10, 0, 0, 0 });
-        S_自定义物品数量二.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_自定义物品数量二.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_自定义物品数量三
         // 
@@ -23951,7 +23951,7 @@ public partial class SMain
         S_自定义物品数量三.TabIndex = 76;
         S_自定义物品数量三.TextAlign = HorizontalAlignment.Center;
         S_自定义物品数量三.Value = new decimal(new int[] { 10, 0, 0, 0 });
-        S_自定义物品数量三.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_自定义物品数量三.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_自定义物品数量四
         // 
@@ -23965,7 +23965,7 @@ public partial class SMain
         S_自定义物品数量四.TabIndex = 75;
         S_自定义物品数量四.TextAlign = HorizontalAlignment.Center;
         S_自定义物品数量四.Value = new decimal(new int[] { 10, 0, 0, 0 });
-        S_自定义物品数量四.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_自定义物品数量四.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_自定义物品数量五
         // 
@@ -23979,7 +23979,7 @@ public partial class SMain
         S_自定义物品数量五.TabIndex = 74;
         S_自定义物品数量五.TextAlign = HorizontalAlignment.Center;
         S_自定义物品数量五.Value = new decimal(new int[] { 10, 0, 0, 0 });
-        S_自定义物品数量五.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_自定义物品数量五.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label242
         // 
@@ -24056,7 +24056,7 @@ public partial class SMain
         S_自定义物品内容五.Size = new Size(121, 23);
         S_自定义物品内容五.TabIndex = 67;
         S_自定义物品内容五.Text = "自定义物品一";
-        S_自定义物品内容五.TextChanged += (this.S_自定义物品内容五_TextChanged);
+        S_自定义物品内容五.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_自定义物品内容四
         // 
@@ -24067,7 +24067,7 @@ public partial class SMain
         S_自定义物品内容四.Size = new Size(121, 23);
         S_自定义物品内容四.TabIndex = 66;
         S_自定义物品内容四.Text = "自定义物品一";
-        S_自定义物品内容四.TextChanged += (this.S_自定义物品内容四_TextChanged);
+        S_自定义物品内容四.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_自定义物品内容三
         // 
@@ -24078,7 +24078,7 @@ public partial class SMain
         S_自定义物品内容三.Size = new Size(121, 23);
         S_自定义物品内容三.TabIndex = 65;
         S_自定义物品内容三.Text = "自定义物品一";
-        S_自定义物品内容三.TextChanged += (this.S_自定义物品内容三_TextChanged);
+        S_自定义物品内容三.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_自定义物品内容二
         // 
@@ -24089,7 +24089,7 @@ public partial class SMain
         S_自定义物品内容二.Size = new Size(121, 23);
         S_自定义物品内容二.TabIndex = 64;
         S_自定义物品内容二.Text = "自定义物品一";
-        S_自定义物品内容二.TextChanged += (this.S_自定义物品内容二_TextChanged);
+        S_自定义物品内容二.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // label236
         // 
@@ -24136,7 +24136,7 @@ public partial class SMain
         S_自定义物品数量一.TabIndex = 60;
         S_自定义物品数量一.TextAlign = HorizontalAlignment.Center;
         S_自定义物品数量一.Value = new decimal(new int[] { 10, 0, 0, 0 });
-        S_自定义物品数量一.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_自定义物品数量一.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_自定义物品内容一
         // 
@@ -24147,7 +24147,7 @@ public partial class SMain
         S_自定义物品内容一.Size = new Size(121, 23);
         S_自定义物品内容一.TabIndex = 59;
         S_自定义物品内容一.Text = "Custom Item One";
-        S_自定义物品内容一.TextChanged += (this.S_自定义物品内容一_TextChanged);
+        S_自定义物品内容一.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // label233
         // 
@@ -24265,7 +24265,7 @@ public partial class SMain
         S_BOSS卷轴怪物16.Tag = "";
         S_BOSS卷轴怪物16.Text = "牛魔王";
         S_BOSS卷轴怪物16.TextAlign = HorizontalAlignment.Center;
-        S_BOSS卷轴怪物16.TextChanged += (this.S_BOSS卷轴怪物16_TextChanged);
+        S_BOSS卷轴怪物16.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_BOSS卷轴怪物15
         // 
@@ -24278,7 +24278,7 @@ public partial class SMain
         S_BOSS卷轴怪物15.Tag = "";
         S_BOSS卷轴怪物15.Text = "牛魔王";
         S_BOSS卷轴怪物15.TextAlign = HorizontalAlignment.Center;
-        S_BOSS卷轴怪物15.TextChanged += (this.S_BOSS卷轴怪物15_TextChanged);
+        S_BOSS卷轴怪物15.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_BOSS卷轴怪物14
         // 
@@ -24291,7 +24291,7 @@ public partial class SMain
         S_BOSS卷轴怪物14.Tag = "";
         S_BOSS卷轴怪物14.Text = "牛魔王";
         S_BOSS卷轴怪物14.TextAlign = HorizontalAlignment.Center;
-        S_BOSS卷轴怪物14.TextChanged += (this.S_BOSS卷轴怪物14_TextChanged);
+        S_BOSS卷轴怪物14.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_BOSS卷轴怪物13
         // 
@@ -24304,7 +24304,7 @@ public partial class SMain
         S_BOSS卷轴怪物13.Tag = "";
         S_BOSS卷轴怪物13.Text = "牛魔王";
         S_BOSS卷轴怪物13.TextAlign = HorizontalAlignment.Center;
-        S_BOSS卷轴怪物13.TextChanged += (this.S_BOSS卷轴怪物13_TextChanged);
+        S_BOSS卷轴怪物13.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_BOSS卷轴怪物八
         // 
@@ -24317,7 +24317,7 @@ public partial class SMain
         S_BOSS卷轴怪物八.Tag = "";
         S_BOSS卷轴怪物八.Text = "牛魔王";
         S_BOSS卷轴怪物八.TextAlign = HorizontalAlignment.Center;
-        S_BOSS卷轴怪物八.TextChanged += (this.S_BOSS卷轴怪物八_TextChanged);
+        S_BOSS卷轴怪物八.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_BOSS卷轴怪物九
         // 
@@ -24330,7 +24330,7 @@ public partial class SMain
         S_BOSS卷轴怪物九.Tag = "";
         S_BOSS卷轴怪物九.Text = "牛魔王";
         S_BOSS卷轴怪物九.TextAlign = HorizontalAlignment.Center;
-        S_BOSS卷轴怪物九.TextChanged += (this.S_BOSS卷轴怪物九_TextChanged);
+        S_BOSS卷轴怪物九.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_BOSS卷轴怪物十
         // 
@@ -24343,7 +24343,7 @@ public partial class SMain
         S_BOSS卷轴怪物十.Tag = "";
         S_BOSS卷轴怪物十.Text = "牛魔王";
         S_BOSS卷轴怪物十.TextAlign = HorizontalAlignment.Center;
-        S_BOSS卷轴怪物十.TextChanged += (this.S_BOSS卷轴怪物十_TextChanged);
+        S_BOSS卷轴怪物十.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_BOSS卷轴怪物11
         // 
@@ -24356,7 +24356,7 @@ public partial class SMain
         S_BOSS卷轴怪物11.Tag = "";
         S_BOSS卷轴怪物11.Text = "牛魔王";
         S_BOSS卷轴怪物11.TextAlign = HorizontalAlignment.Center;
-        S_BOSS卷轴怪物11.TextChanged += (this.S_BOSS卷轴怪物11_TextChanged);
+        S_BOSS卷轴怪物11.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_BOSS卷轴怪物12
         // 
@@ -24369,7 +24369,7 @@ public partial class SMain
         S_BOSS卷轴怪物12.Tag = "";
         S_BOSS卷轴怪物12.Text = "牛魔王";
         S_BOSS卷轴怪物12.TextAlign = HorizontalAlignment.Center;
-        S_BOSS卷轴怪物12.TextChanged += (this.S_BOSS卷轴怪物12_TextChanged);
+        S_BOSS卷轴怪物12.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_BOSS卷轴怪物七
         // 
@@ -24382,7 +24382,7 @@ public partial class SMain
         S_BOSS卷轴怪物七.Tag = "";
         S_BOSS卷轴怪物七.Text = "牛魔王";
         S_BOSS卷轴怪物七.TextAlign = HorizontalAlignment.Center;
-        S_BOSS卷轴怪物七.TextChanged += (this.S_BOSS卷轴怪物七_TextChanged);
+        S_BOSS卷轴怪物七.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // label460
         // 
@@ -24465,7 +24465,7 @@ public partial class SMain
         S_BOSS卷轴地图编号.TabIndex = 94;
         S_BOSS卷轴地图编号.TextAlign = HorizontalAlignment.Center;
         S_BOSS卷轴地图编号.Value = new decimal(new int[] { 147, 0, 0, 0 });
-        S_BOSS卷轴地图编号.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_BOSS卷轴地图编号.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label424
         // 
@@ -24498,7 +24498,7 @@ public partial class SMain
         S_BOSS卷轴地图开关.Size = new Size(47, 23);
         S_BOSS卷轴地图开关.TabIndex = 81;
         S_BOSS卷轴地图开关.TextAlign = HorizontalAlignment.Center;
-        S_BOSS卷轴地图开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_BOSS卷轴地图开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label422
         // 
@@ -24623,7 +24623,7 @@ public partial class SMain
         S_BOSS卷轴怪物二.Tag = "";
         S_BOSS卷轴怪物二.Text = "黄泉教主";
         S_BOSS卷轴怪物二.TextAlign = HorizontalAlignment.Center;
-        S_BOSS卷轴怪物二.TextChanged += (this.S_BOSS卷轴怪物二_TextChanged);
+        S_BOSS卷轴怪物二.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_BOSS卷轴怪物三
         // 
@@ -24636,7 +24636,7 @@ public partial class SMain
         S_BOSS卷轴怪物三.Tag = "";
         S_BOSS卷轴怪物三.Text = "魔龙教主";
         S_BOSS卷轴怪物三.TextAlign = HorizontalAlignment.Center;
-        S_BOSS卷轴怪物三.TextChanged += (this.S_BOSS卷轴怪物三_TextChanged);
+        S_BOSS卷轴怪物三.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_BOSS卷轴怪物六
         // 
@@ -24649,7 +24649,7 @@ public partial class SMain
         S_BOSS卷轴怪物六.Tag = "";
         S_BOSS卷轴怪物六.Text = "赤月恶魔";
         S_BOSS卷轴怪物六.TextAlign = HorizontalAlignment.Center;
-        S_BOSS卷轴怪物六.TextChanged += (this.S_BOSS卷轴怪物六_TextChanged);
+        S_BOSS卷轴怪物六.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_BOSS卷轴怪物五
         // 
@@ -24662,7 +24662,7 @@ public partial class SMain
         S_BOSS卷轴怪物五.Tag = "";
         S_BOSS卷轴怪物五.Text = "魔火龙";
         S_BOSS卷轴怪物五.TextAlign = HorizontalAlignment.Center;
-        S_BOSS卷轴怪物五.TextChanged += (this.S_BOSS卷轴怪物五_TextChanged);
+        S_BOSS卷轴怪物五.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_BOSS卷轴怪物四
         // 
@@ -24675,7 +24675,7 @@ public partial class SMain
         S_BOSS卷轴怪物四.Tag = "";
         S_BOSS卷轴怪物四.Text = "血手";
         S_BOSS卷轴怪物四.TextAlign = HorizontalAlignment.Center;
-        S_BOSS卷轴怪物四.TextChanged += (this.S_BOSS卷轴怪物四_TextChanged);
+        S_BOSS卷轴怪物四.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // BOSS卷轴三
         // 
@@ -24698,7 +24698,7 @@ public partial class SMain
         S_BOSS卷轴怪物一.Tag = "";
         S_BOSS卷轴怪物一.Text = "Bull Devil";
         S_BOSS卷轴怪物一.TextAlign = HorizontalAlignment.Center;
-        S_BOSS卷轴怪物一.TextChanged += (this.S_BOSS卷轴怪物一_TextChanged);
+        S_BOSS卷轴怪物一.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // BOSS卷轴二
         // 
@@ -24859,7 +24859,7 @@ public partial class SMain
         S_每周特惠二物品5.TabIndex = 86;
         S_每周特惠二物品5.TextAlign = HorizontalAlignment.Center;
         S_每周特惠二物品5.Value = new decimal(new int[] { 80202, 0, 0, 0 });
-        S_每周特惠二物品5.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_每周特惠二物品5.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_每周特惠二物品1
         // 
@@ -24872,7 +24872,7 @@ public partial class SMain
         S_每周特惠二物品1.TabIndex = 82;
         S_每周特惠二物品1.TextAlign = HorizontalAlignment.Center;
         S_每周特惠二物品1.Value = new decimal(new int[] { 875000, 0, 0, 0 });
-        S_每周特惠二物品1.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_每周特惠二物品1.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_每周特惠二物品4
         // 
@@ -24885,7 +24885,7 @@ public partial class SMain
         S_每周特惠二物品4.TabIndex = 85;
         S_每周特惠二物品4.TextAlign = HorizontalAlignment.Center;
         S_每周特惠二物品4.Value = new decimal(new int[] { 91156, 0, 0, 0 });
-        S_每周特惠二物品4.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_每周特惠二物品4.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_每周特惠二物品2
         // 
@@ -24898,7 +24898,7 @@ public partial class SMain
         S_每周特惠二物品2.TabIndex = 83;
         S_每周特惠二物品2.TextAlign = HorizontalAlignment.Center;
         S_每周特惠二物品2.Value = new decimal(new int[] { 2750000, 0, 0, 0 });
-        S_每周特惠二物品2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_每周特惠二物品2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_每周特惠二物品3
         // 
@@ -24911,7 +24911,7 @@ public partial class SMain
         S_每周特惠二物品3.TabIndex = 84;
         S_每周特惠二物品3.TextAlign = HorizontalAlignment.Center;
         S_每周特惠二物品3.Value = new decimal(new int[] { 1500130, 0, 0, 0 });
-        S_每周特惠二物品3.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_每周特惠二物品3.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // groupBox66
         // 
@@ -25001,7 +25001,7 @@ public partial class SMain
         S_每周特惠一物品5.TabIndex = 86;
         S_每周特惠一物品5.TextAlign = HorizontalAlignment.Center;
         S_每周特惠一物品5.Value = new decimal(new int[] { 80007, 0, 0, 0 });
-        S_每周特惠一物品5.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_每周特惠一物品5.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_每周特惠一物品1
         // 
@@ -25014,7 +25014,7 @@ public partial class SMain
         S_每周特惠一物品1.TabIndex = 82;
         S_每周特惠一物品1.TextAlign = HorizontalAlignment.Center;
         S_每周特惠一物品1.Value = new decimal(new int[] { 165000, 0, 0, 0 });
-        S_每周特惠一物品1.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_每周特惠一物品1.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_每周特惠一物品4
         // 
@@ -25027,7 +25027,7 @@ public partial class SMain
         S_每周特惠一物品4.TabIndex = 85;
         S_每周特惠一物品4.TextAlign = HorizontalAlignment.Center;
         S_每周特惠一物品4.Value = new decimal(new int[] { 80203, 0, 0, 0 });
-        S_每周特惠一物品4.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_每周特惠一物品4.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_每周特惠一物品2
         // 
@@ -25040,7 +25040,7 @@ public partial class SMain
         S_每周特惠一物品2.TabIndex = 83;
         S_每周特惠一物品2.TextAlign = HorizontalAlignment.Center;
         S_每周特惠一物品2.Value = new decimal(new int[] { 500000, 0, 0, 0 });
-        S_每周特惠一物品2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_每周特惠一物品2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_每周特惠一物品3
         // 
@@ -25053,7 +25053,7 @@ public partial class SMain
         S_每周特惠一物品3.TabIndex = 84;
         S_每周特惠一物品3.TextAlign = HorizontalAlignment.Center;
         S_每周特惠一物品3.Value = new decimal(new int[] { 1500230, 0, 0, 0 });
-        S_每周特惠一物品3.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_每周特惠一物品3.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // tabPage39
         // 
@@ -25188,7 +25188,7 @@ public partial class SMain
         S_随机宝箱三数量8.TabIndex = 146;
         S_随机宝箱三数量8.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱三数量8.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱三数量8.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱三数量8.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱三数量7
         // 
@@ -25200,7 +25200,7 @@ public partial class SMain
         S_随机宝箱三数量7.TabIndex = 145;
         S_随机宝箱三数量7.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱三数量7.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱三数量7.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱三数量7.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱三数量6
         // 
@@ -25212,7 +25212,7 @@ public partial class SMain
         S_随机宝箱三数量6.TabIndex = 144;
         S_随机宝箱三数量6.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱三数量6.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱三数量6.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱三数量6.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱三数量5
         // 
@@ -25224,7 +25224,7 @@ public partial class SMain
         S_随机宝箱三数量5.TabIndex = 143;
         S_随机宝箱三数量5.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱三数量5.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱三数量5.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱三数量5.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱三数量4
         // 
@@ -25236,7 +25236,7 @@ public partial class SMain
         S_随机宝箱三数量4.TabIndex = 142;
         S_随机宝箱三数量4.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱三数量4.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱三数量4.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱三数量4.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱三数量3
         // 
@@ -25248,7 +25248,7 @@ public partial class SMain
         S_随机宝箱三数量3.TabIndex = 141;
         S_随机宝箱三数量3.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱三数量3.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱三数量3.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱三数量3.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱三数量2
         // 
@@ -25260,7 +25260,7 @@ public partial class SMain
         S_随机宝箱三数量2.TabIndex = 140;
         S_随机宝箱三数量2.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱三数量2.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱三数量2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱三数量2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱三数量1
         // 
@@ -25272,7 +25272,7 @@ public partial class SMain
         S_随机宝箱三数量1.TabIndex = 139;
         S_随机宝箱三数量1.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱三数量1.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱三数量1.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱三数量1.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label677
         // 
@@ -25372,7 +25372,7 @@ public partial class SMain
         S_随机宝箱三几率8.TabIndex = 106;
         S_随机宝箱三几率8.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱三几率8.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_随机宝箱三几率8.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱三几率8.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱三几率7
         // 
@@ -25384,7 +25384,7 @@ public partial class SMain
         S_随机宝箱三几率7.TabIndex = 105;
         S_随机宝箱三几率7.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱三几率7.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_随机宝箱三几率7.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱三几率7.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱三几率6
         // 
@@ -25396,7 +25396,7 @@ public partial class SMain
         S_随机宝箱三几率6.TabIndex = 104;
         S_随机宝箱三几率6.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱三几率6.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_随机宝箱三几率6.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱三几率6.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱三几率5
         // 
@@ -25408,7 +25408,7 @@ public partial class SMain
         S_随机宝箱三几率5.TabIndex = 103;
         S_随机宝箱三几率5.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱三几率5.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_随机宝箱三几率5.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱三几率5.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱三几率4
         // 
@@ -25420,7 +25420,7 @@ public partial class SMain
         S_随机宝箱三几率4.TabIndex = 102;
         S_随机宝箱三几率4.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱三几率4.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_随机宝箱三几率4.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱三几率4.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱三几率3
         // 
@@ -25432,7 +25432,7 @@ public partial class SMain
         S_随机宝箱三几率3.TabIndex = 101;
         S_随机宝箱三几率3.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱三几率3.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_随机宝箱三几率3.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱三几率3.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱三几率2
         // 
@@ -25444,7 +25444,7 @@ public partial class SMain
         S_随机宝箱三几率2.TabIndex = 100;
         S_随机宝箱三几率2.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱三几率2.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_随机宝箱三几率2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱三几率2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label678
         // 
@@ -25467,7 +25467,7 @@ public partial class SMain
         S_随机宝箱三几率1.TabIndex = 98;
         S_随机宝箱三几率1.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱三几率1.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_随机宝箱三几率1.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱三几率1.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱三物品8
         // 
@@ -25480,7 +25480,7 @@ public partial class SMain
         S_随机宝箱三物品8.TabIndex = 97;
         S_随机宝箱三物品8.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱三物品8.Value = new decimal(new int[] { 80007, 0, 0, 0 });
-        S_随机宝箱三物品8.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱三物品8.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱三物品7
         // 
@@ -25493,7 +25493,7 @@ public partial class SMain
         S_随机宝箱三物品7.TabIndex = 96;
         S_随机宝箱三物品7.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱三物品7.Value = new decimal(new int[] { 80007, 0, 0, 0 });
-        S_随机宝箱三物品7.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱三物品7.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱三物品6
         // 
@@ -25506,7 +25506,7 @@ public partial class SMain
         S_随机宝箱三物品6.TabIndex = 95;
         S_随机宝箱三物品6.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱三物品6.Value = new decimal(new int[] { 80007, 0, 0, 0 });
-        S_随机宝箱三物品6.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱三物品6.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label679
         // 
@@ -25541,7 +25541,7 @@ public partial class SMain
         S_随机宝箱三物品5.TabIndex = 86;
         S_随机宝箱三物品5.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱三物品5.Value = new decimal(new int[] { 80007, 0, 0, 0 });
-        S_随机宝箱三物品5.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱三物品5.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱三物品1
         // 
@@ -25554,7 +25554,7 @@ public partial class SMain
         S_随机宝箱三物品1.TabIndex = 82;
         S_随机宝箱三物品1.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱三物品1.Value = new decimal(new int[] { 165000, 0, 0, 0 });
-        S_随机宝箱三物品1.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱三物品1.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱三物品4
         // 
@@ -25567,7 +25567,7 @@ public partial class SMain
         S_随机宝箱三物品4.TabIndex = 85;
         S_随机宝箱三物品4.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱三物品4.Value = new decimal(new int[] { 80203, 0, 0, 0 });
-        S_随机宝箱三物品4.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱三物品4.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱三物品2
         // 
@@ -25580,7 +25580,7 @@ public partial class SMain
         S_随机宝箱三物品2.TabIndex = 83;
         S_随机宝箱三物品2.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱三物品2.Value = new decimal(new int[] { 500000, 0, 0, 0 });
-        S_随机宝箱三物品2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱三物品2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱三物品3
         // 
@@ -25593,7 +25593,7 @@ public partial class SMain
         S_随机宝箱三物品3.TabIndex = 84;
         S_随机宝箱三物品3.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱三物品3.Value = new decimal(new int[] { 1500230, 0, 0, 0 });
-        S_随机宝箱三物品3.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱三物品3.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // groupBox150
         // 
@@ -25653,7 +25653,7 @@ public partial class SMain
         S_随机宝箱二数量8.TabIndex = 137;
         S_随机宝箱二数量8.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱二数量8.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱二数量8.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱二数量8.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱二数量7
         // 
@@ -25665,7 +25665,7 @@ public partial class SMain
         S_随机宝箱二数量7.TabIndex = 136;
         S_随机宝箱二数量7.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱二数量7.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱二数量7.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱二数量7.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱二数量6
         // 
@@ -25677,7 +25677,7 @@ public partial class SMain
         S_随机宝箱二数量6.TabIndex = 135;
         S_随机宝箱二数量6.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱二数量6.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱二数量6.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱二数量6.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱二数量5
         // 
@@ -25689,7 +25689,7 @@ public partial class SMain
         S_随机宝箱二数量5.TabIndex = 134;
         S_随机宝箱二数量5.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱二数量5.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱二数量5.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱二数量5.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱二数量4
         // 
@@ -25701,7 +25701,7 @@ public partial class SMain
         S_随机宝箱二数量4.TabIndex = 133;
         S_随机宝箱二数量4.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱二数量4.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱二数量4.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱二数量4.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱二数量3
         // 
@@ -25713,7 +25713,7 @@ public partial class SMain
         S_随机宝箱二数量3.TabIndex = 132;
         S_随机宝箱二数量3.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱二数量3.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱二数量3.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱二数量3.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱二数量2
         // 
@@ -25725,7 +25725,7 @@ public partial class SMain
         S_随机宝箱二数量2.TabIndex = 131;
         S_随机宝箱二数量2.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱二数量2.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱二数量2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱二数量2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱二数量1
         // 
@@ -25737,7 +25737,7 @@ public partial class SMain
         S_随机宝箱二数量1.TabIndex = 130;
         S_随机宝箱二数量1.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱二数量1.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱二数量1.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱二数量1.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label676
         // 
@@ -25837,7 +25837,7 @@ public partial class SMain
         S_随机宝箱二几率8.TabIndex = 106;
         S_随机宝箱二几率8.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱二几率8.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_随机宝箱二几率8.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱二几率8.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱二几率7
         // 
@@ -25849,7 +25849,7 @@ public partial class SMain
         S_随机宝箱二几率7.TabIndex = 105;
         S_随机宝箱二几率7.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱二几率7.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_随机宝箱二几率7.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱二几率7.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱二几率6
         // 
@@ -25861,7 +25861,7 @@ public partial class SMain
         S_随机宝箱二几率6.TabIndex = 104;
         S_随机宝箱二几率6.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱二几率6.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_随机宝箱二几率6.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱二几率6.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱二几率5
         // 
@@ -25873,7 +25873,7 @@ public partial class SMain
         S_随机宝箱二几率5.TabIndex = 103;
         S_随机宝箱二几率5.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱二几率5.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_随机宝箱二几率5.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱二几率5.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱二几率4
         // 
@@ -25885,7 +25885,7 @@ public partial class SMain
         S_随机宝箱二几率4.TabIndex = 102;
         S_随机宝箱二几率4.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱二几率4.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_随机宝箱二几率4.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱二几率4.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱二几率3
         // 
@@ -25897,7 +25897,7 @@ public partial class SMain
         S_随机宝箱二几率3.TabIndex = 101;
         S_随机宝箱二几率3.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱二几率3.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_随机宝箱二几率3.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱二几率3.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱二几率2
         // 
@@ -25909,7 +25909,7 @@ public partial class SMain
         S_随机宝箱二几率2.TabIndex = 100;
         S_随机宝箱二几率2.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱二几率2.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_随机宝箱二几率2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱二几率2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label665
         // 
@@ -25932,7 +25932,7 @@ public partial class SMain
         S_随机宝箱二几率1.TabIndex = 98;
         S_随机宝箱二几率1.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱二几率1.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_随机宝箱二几率1.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱二几率1.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱二物品8
         // 
@@ -25945,7 +25945,7 @@ public partial class SMain
         S_随机宝箱二物品8.TabIndex = 97;
         S_随机宝箱二物品8.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱二物品8.Value = new decimal(new int[] { 80007, 0, 0, 0 });
-        S_随机宝箱二物品8.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱二物品8.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱二物品7
         // 
@@ -25958,7 +25958,7 @@ public partial class SMain
         S_随机宝箱二物品7.TabIndex = 96;
         S_随机宝箱二物品7.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱二物品7.Value = new decimal(new int[] { 80007, 0, 0, 0 });
-        S_随机宝箱二物品7.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱二物品7.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱二物品6
         // 
@@ -25971,7 +25971,7 @@ public partial class SMain
         S_随机宝箱二物品6.TabIndex = 95;
         S_随机宝箱二物品6.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱二物品6.Value = new decimal(new int[] { 80007, 0, 0, 0 });
-        S_随机宝箱二物品6.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱二物品6.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label666
         // 
@@ -26006,7 +26006,7 @@ public partial class SMain
         S_随机宝箱二物品5.TabIndex = 86;
         S_随机宝箱二物品5.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱二物品5.Value = new decimal(new int[] { 80007, 0, 0, 0 });
-        S_随机宝箱二物品5.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱二物品5.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱二物品1
         // 
@@ -26019,7 +26019,7 @@ public partial class SMain
         S_随机宝箱二物品1.TabIndex = 82;
         S_随机宝箱二物品1.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱二物品1.Value = new decimal(new int[] { 165000, 0, 0, 0 });
-        S_随机宝箱二物品1.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱二物品1.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱二物品4
         // 
@@ -26032,7 +26032,7 @@ public partial class SMain
         S_随机宝箱二物品4.TabIndex = 85;
         S_随机宝箱二物品4.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱二物品4.Value = new decimal(new int[] { 80203, 0, 0, 0 });
-        S_随机宝箱二物品4.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱二物品4.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱二物品2
         // 
@@ -26045,7 +26045,7 @@ public partial class SMain
         S_随机宝箱二物品2.TabIndex = 83;
         S_随机宝箱二物品2.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱二物品2.Value = new decimal(new int[] { 500000, 0, 0, 0 });
-        S_随机宝箱二物品2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱二物品2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱二物品3
         // 
@@ -26058,7 +26058,7 @@ public partial class SMain
         S_随机宝箱二物品3.TabIndex = 84;
         S_随机宝箱二物品3.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱二物品3.Value = new decimal(new int[] { 1500230, 0, 0, 0 });
-        S_随机宝箱二物品3.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱二物品3.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // groupBox149
         // 
@@ -26118,7 +26118,7 @@ public partial class SMain
         S_随机宝箱一数量8.TabIndex = 128;
         S_随机宝箱一数量8.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱一数量8.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱一数量8.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱一数量8.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱一数量7
         // 
@@ -26130,7 +26130,7 @@ public partial class SMain
         S_随机宝箱一数量7.TabIndex = 127;
         S_随机宝箱一数量7.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱一数量7.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱一数量7.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱一数量7.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱一数量6
         // 
@@ -26142,7 +26142,7 @@ public partial class SMain
         S_随机宝箱一数量6.TabIndex = 126;
         S_随机宝箱一数量6.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱一数量6.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱一数量6.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱一数量6.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱一数量5
         // 
@@ -26154,7 +26154,7 @@ public partial class SMain
         S_随机宝箱一数量5.TabIndex = 125;
         S_随机宝箱一数量5.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱一数量5.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱一数量5.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱一数量5.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱一数量4
         // 
@@ -26166,7 +26166,7 @@ public partial class SMain
         S_随机宝箱一数量4.TabIndex = 124;
         S_随机宝箱一数量4.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱一数量4.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱一数量4.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱一数量4.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱一数量3
         // 
@@ -26178,7 +26178,7 @@ public partial class SMain
         S_随机宝箱一数量3.TabIndex = 123;
         S_随机宝箱一数量3.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱一数量3.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱一数量3.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱一数量3.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱一数量2
         // 
@@ -26190,7 +26190,7 @@ public partial class SMain
         S_随机宝箱一数量2.TabIndex = 122;
         S_随机宝箱一数量2.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱一数量2.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱一数量2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱一数量2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱一数量1
         // 
@@ -26202,7 +26202,7 @@ public partial class SMain
         S_随机宝箱一数量1.TabIndex = 115;
         S_随机宝箱一数量1.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱一数量1.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_随机宝箱一数量1.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱一数量1.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label675
         // 
@@ -26302,7 +26302,7 @@ public partial class SMain
         S_随机宝箱一几率8.TabIndex = 106;
         S_随机宝箱一几率8.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱一几率8.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_随机宝箱一几率8.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱一几率8.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱一几率7
         // 
@@ -26314,7 +26314,7 @@ public partial class SMain
         S_随机宝箱一几率7.TabIndex = 105;
         S_随机宝箱一几率7.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱一几率7.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_随机宝箱一几率7.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱一几率7.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱一几率6
         // 
@@ -26326,7 +26326,7 @@ public partial class SMain
         S_随机宝箱一几率6.TabIndex = 104;
         S_随机宝箱一几率6.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱一几率6.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_随机宝箱一几率6.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱一几率6.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱一几率5
         // 
@@ -26338,7 +26338,7 @@ public partial class SMain
         S_随机宝箱一几率5.TabIndex = 103;
         S_随机宝箱一几率5.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱一几率5.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_随机宝箱一几率5.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱一几率5.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱一几率4
         // 
@@ -26350,7 +26350,7 @@ public partial class SMain
         S_随机宝箱一几率4.TabIndex = 102;
         S_随机宝箱一几率4.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱一几率4.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_随机宝箱一几率4.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱一几率4.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱一几率3
         // 
@@ -26362,7 +26362,7 @@ public partial class SMain
         S_随机宝箱一几率3.TabIndex = 101;
         S_随机宝箱一几率3.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱一几率3.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_随机宝箱一几率3.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱一几率3.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱一几率2
         // 
@@ -26374,7 +26374,7 @@ public partial class SMain
         S_随机宝箱一几率2.TabIndex = 100;
         S_随机宝箱一几率2.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱一几率2.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_随机宝箱一几率2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱一几率2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label654
         // 
@@ -26397,7 +26397,7 @@ public partial class SMain
         S_随机宝箱一几率1.TabIndex = 98;
         S_随机宝箱一几率1.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱一几率1.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_随机宝箱一几率1.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱一几率1.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱一物品8
         // 
@@ -26410,7 +26410,7 @@ public partial class SMain
         S_随机宝箱一物品8.TabIndex = 97;
         S_随机宝箱一物品8.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱一物品8.Value = new decimal(new int[] { 80007, 0, 0, 0 });
-        S_随机宝箱一物品8.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱一物品8.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱一物品7
         // 
@@ -26423,7 +26423,7 @@ public partial class SMain
         S_随机宝箱一物品7.TabIndex = 96;
         S_随机宝箱一物品7.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱一物品7.Value = new decimal(new int[] { 80007, 0, 0, 0 });
-        S_随机宝箱一物品7.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱一物品7.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱一物品6
         // 
@@ -26436,7 +26436,7 @@ public partial class SMain
         S_随机宝箱一物品6.TabIndex = 95;
         S_随机宝箱一物品6.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱一物品6.Value = new decimal(new int[] { 80007, 0, 0, 0 });
-        S_随机宝箱一物品6.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱一物品6.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label655
         // 
@@ -26471,7 +26471,7 @@ public partial class SMain
         S_随机宝箱一物品5.TabIndex = 86;
         S_随机宝箱一物品5.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱一物品5.Value = new decimal(new int[] { 80007, 0, 0, 0 });
-        S_随机宝箱一物品5.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱一物品5.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱一物品1
         // 
@@ -26484,7 +26484,7 @@ public partial class SMain
         S_随机宝箱一物品1.TabIndex = 82;
         S_随机宝箱一物品1.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱一物品1.Value = new decimal(new int[] { 165000, 0, 0, 0 });
-        S_随机宝箱一物品1.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱一物品1.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱一物品4
         // 
@@ -26497,7 +26497,7 @@ public partial class SMain
         S_随机宝箱一物品4.TabIndex = 85;
         S_随机宝箱一物品4.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱一物品4.Value = new decimal(new int[] { 80203, 0, 0, 0 });
-        S_随机宝箱一物品4.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱一物品4.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱一物品2
         // 
@@ -26510,7 +26510,7 @@ public partial class SMain
         S_随机宝箱一物品2.TabIndex = 83;
         S_随机宝箱一物品2.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱一物品2.Value = new decimal(new int[] { 500000, 0, 0, 0 });
-        S_随机宝箱一物品2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱一物品2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_随机宝箱一物品3
         // 
@@ -26523,7 +26523,7 @@ public partial class SMain
         S_随机宝箱一物品3.TabIndex = 84;
         S_随机宝箱一物品3.TextAlign = HorizontalAlignment.Center;
         S_随机宝箱一物品3.Value = new decimal(new int[] { 1500230, 0, 0, 0 });
-        S_随机宝箱一物品3.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_随机宝箱一物品3.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // tabPage47
         // 
@@ -26598,7 +26598,7 @@ public partial class SMain
         S_高级赞助礼包8.Size = new Size(117, 23);
         S_高级赞助礼包8.TabIndex = 48;
         S_高级赞助礼包8.TextAlign = HorizontalAlignment.Center;
-        S_高级赞助礼包8.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_高级赞助礼包8.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_高级赞助礼包7
         // 
@@ -26609,7 +26609,7 @@ public partial class SMain
         S_高级赞助礼包7.Size = new Size(117, 23);
         S_高级赞助礼包7.TabIndex = 47;
         S_高级赞助礼包7.TextAlign = HorizontalAlignment.Center;
-        S_高级赞助礼包7.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_高级赞助礼包7.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_高级赞助礼包5
         // 
@@ -26620,7 +26620,7 @@ public partial class SMain
         S_高级赞助礼包5.Size = new Size(117, 23);
         S_高级赞助礼包5.TabIndex = 46;
         S_高级赞助礼包5.TextAlign = HorizontalAlignment.Center;
-        S_高级赞助礼包5.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_高级赞助礼包5.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_高级赞助礼包4
         // 
@@ -26631,7 +26631,7 @@ public partial class SMain
         S_高级赞助礼包4.Size = new Size(117, 23);
         S_高级赞助礼包4.TabIndex = 45;
         S_高级赞助礼包4.TextAlign = HorizontalAlignment.Center;
-        S_高级赞助礼包4.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_高级赞助礼包4.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_高级赞助礼包2
         // 
@@ -26642,7 +26642,7 @@ public partial class SMain
         S_高级赞助礼包2.Size = new Size(117, 23);
         S_高级赞助礼包2.TabIndex = 44;
         S_高级赞助礼包2.TextAlign = HorizontalAlignment.Center;
-        S_高级赞助礼包2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_高级赞助礼包2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_高级赞助礼包6
         // 
@@ -26653,7 +26653,7 @@ public partial class SMain
         S_高级赞助礼包6.Size = new Size(117, 23);
         S_高级赞助礼包6.TabIndex = 43;
         S_高级赞助礼包6.TextAlign = HorizontalAlignment.Center;
-        S_高级赞助礼包6.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_高级赞助礼包6.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_高级赞助礼包3
         // 
@@ -26664,7 +26664,7 @@ public partial class SMain
         S_高级赞助礼包3.Size = new Size(117, 23);
         S_高级赞助礼包3.TabIndex = 42;
         S_高级赞助礼包3.TextAlign = HorizontalAlignment.Center;
-        S_高级赞助礼包3.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_高级赞助礼包3.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_高级赞助礼包1
         // 
@@ -26675,7 +26675,7 @@ public partial class SMain
         S_高级赞助礼包1.Size = new Size(117, 23);
         S_高级赞助礼包1.TabIndex = 41;
         S_高级赞助礼包1.TextAlign = HorizontalAlignment.Center;
-        S_高级赞助礼包1.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_高级赞助礼包1.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label411
         // 
@@ -26699,7 +26699,7 @@ public partial class SMain
         S_高级赞助称号1.TabIndex = 30;
         S_高级赞助称号1.TextAlign = HorizontalAlignment.Center;
         S_高级赞助称号1.Value = new decimal(new int[] { 147, 0, 0, 0 });
-        S_高级赞助称号1.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_高级赞助称号1.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label412
         // 
@@ -26745,7 +26745,7 @@ public partial class SMain
         S_中级赞助礼包8.Size = new Size(117, 23);
         S_中级赞助礼包8.TabIndex = 48;
         S_中级赞助礼包8.TextAlign = HorizontalAlignment.Center;
-        S_中级赞助礼包8.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_中级赞助礼包8.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_中级赞助礼包7
         // 
@@ -26756,7 +26756,7 @@ public partial class SMain
         S_中级赞助礼包7.Size = new Size(117, 23);
         S_中级赞助礼包7.TabIndex = 47;
         S_中级赞助礼包7.TextAlign = HorizontalAlignment.Center;
-        S_中级赞助礼包7.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_中级赞助礼包7.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_中级赞助礼包5
         // 
@@ -26767,7 +26767,7 @@ public partial class SMain
         S_中级赞助礼包5.Size = new Size(117, 23);
         S_中级赞助礼包5.TabIndex = 46;
         S_中级赞助礼包5.TextAlign = HorizontalAlignment.Center;
-        S_中级赞助礼包5.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_中级赞助礼包5.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_中级赞助礼包4
         // 
@@ -26778,7 +26778,7 @@ public partial class SMain
         S_中级赞助礼包4.Size = new Size(117, 23);
         S_中级赞助礼包4.TabIndex = 45;
         S_中级赞助礼包4.TextAlign = HorizontalAlignment.Center;
-        S_中级赞助礼包4.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_中级赞助礼包4.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_中级赞助礼包2
         // 
@@ -26789,7 +26789,7 @@ public partial class SMain
         S_中级赞助礼包2.Size = new Size(117, 23);
         S_中级赞助礼包2.TabIndex = 44;
         S_中级赞助礼包2.TextAlign = HorizontalAlignment.Center;
-        S_中级赞助礼包2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_中级赞助礼包2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_中级赞助礼包6
         // 
@@ -26800,7 +26800,7 @@ public partial class SMain
         S_中级赞助礼包6.Size = new Size(117, 23);
         S_中级赞助礼包6.TabIndex = 43;
         S_中级赞助礼包6.TextAlign = HorizontalAlignment.Center;
-        S_中级赞助礼包6.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_中级赞助礼包6.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_中级赞助礼包3
         // 
@@ -26811,7 +26811,7 @@ public partial class SMain
         S_中级赞助礼包3.Size = new Size(117, 23);
         S_中级赞助礼包3.TabIndex = 42;
         S_中级赞助礼包3.TextAlign = HorizontalAlignment.Center;
-        S_中级赞助礼包3.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_中级赞助礼包3.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_中级赞助礼包1
         // 
@@ -26822,7 +26822,7 @@ public partial class SMain
         S_中级赞助礼包1.Size = new Size(117, 23);
         S_中级赞助礼包1.TabIndex = 41;
         S_中级赞助礼包1.TextAlign = HorizontalAlignment.Center;
-        S_中级赞助礼包1.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_中级赞助礼包1.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label408
         // 
@@ -26846,7 +26846,7 @@ public partial class SMain
         S_中级赞助称号1.TabIndex = 30;
         S_中级赞助称号1.TextAlign = HorizontalAlignment.Center;
         S_中级赞助称号1.Value = new decimal(new int[] { 147, 0, 0, 0 });
-        S_中级赞助称号1.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_中级赞助称号1.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label410
         // 
@@ -26892,7 +26892,7 @@ public partial class SMain
         S_初级赞助礼包8.Size = new Size(117, 23);
         S_初级赞助礼包8.TabIndex = 48;
         S_初级赞助礼包8.TextAlign = HorizontalAlignment.Center;
-        S_初级赞助礼包8.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_初级赞助礼包8.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_初级赞助礼包7
         // 
@@ -26903,7 +26903,7 @@ public partial class SMain
         S_初级赞助礼包7.Size = new Size(117, 23);
         S_初级赞助礼包7.TabIndex = 47;
         S_初级赞助礼包7.TextAlign = HorizontalAlignment.Center;
-        S_初级赞助礼包7.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_初级赞助礼包7.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_初级赞助礼包5
         // 
@@ -26914,7 +26914,7 @@ public partial class SMain
         S_初级赞助礼包5.Size = new Size(117, 23);
         S_初级赞助礼包5.TabIndex = 46;
         S_初级赞助礼包5.TextAlign = HorizontalAlignment.Center;
-        S_初级赞助礼包5.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_初级赞助礼包5.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_初级赞助礼包4
         // 
@@ -26925,7 +26925,7 @@ public partial class SMain
         S_初级赞助礼包4.Size = new Size(117, 23);
         S_初级赞助礼包4.TabIndex = 45;
         S_初级赞助礼包4.TextAlign = HorizontalAlignment.Center;
-        S_初级赞助礼包4.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_初级赞助礼包4.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_初级赞助礼包2
         // 
@@ -26936,7 +26936,7 @@ public partial class SMain
         S_初级赞助礼包2.Size = new Size(117, 23);
         S_初级赞助礼包2.TabIndex = 44;
         S_初级赞助礼包2.TextAlign = HorizontalAlignment.Center;
-        S_初级赞助礼包2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_初级赞助礼包2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_初级赞助礼包6
         // 
@@ -26947,7 +26947,7 @@ public partial class SMain
         S_初级赞助礼包6.Size = new Size(117, 23);
         S_初级赞助礼包6.TabIndex = 43;
         S_初级赞助礼包6.TextAlign = HorizontalAlignment.Center;
-        S_初级赞助礼包6.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_初级赞助礼包6.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_初级赞助礼包3
         // 
@@ -26958,7 +26958,7 @@ public partial class SMain
         S_初级赞助礼包3.Size = new Size(117, 23);
         S_初级赞助礼包3.TabIndex = 42;
         S_初级赞助礼包3.TextAlign = HorizontalAlignment.Center;
-        S_初级赞助礼包3.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_初级赞助礼包3.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_初级赞助礼包1
         // 
@@ -26969,7 +26969,7 @@ public partial class SMain
         S_初级赞助礼包1.Size = new Size(117, 23);
         S_初级赞助礼包1.TabIndex = 41;
         S_初级赞助礼包1.TextAlign = HorizontalAlignment.Center;
-        S_初级赞助礼包1.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_初级赞助礼包1.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label406
         // 
@@ -26993,7 +26993,7 @@ public partial class SMain
         S_初级赞助称号1.TabIndex = 30;
         S_初级赞助称号1.TextAlign = HorizontalAlignment.Center;
         S_初级赞助称号1.Value = new decimal(new int[] { 147, 0, 0, 0 });
-        S_初级赞助称号1.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_初级赞助称号1.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label409
         // 
@@ -27152,7 +27152,7 @@ public partial class SMain
         S_自动BOSS1界面5开关.Size = new Size(47, 23);
         S_自动BOSS1界面5开关.TabIndex = 32;
         S_自动BOSS1界面5开关.TextAlign = HorizontalAlignment.Center;
-        S_自动BOSS1界面5开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_自动BOSS1界面5开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // groupBox175
         // 
@@ -27197,7 +27197,7 @@ public partial class SMain
         S_自动BOSS1界面4开关.Size = new Size(47, 23);
         S_自动BOSS1界面4开关.TabIndex = 32;
         S_自动BOSS1界面4开关.TextAlign = HorizontalAlignment.Center;
-        S_自动BOSS1界面4开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_自动BOSS1界面4开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // groupBox174
         // 
@@ -27242,7 +27242,7 @@ public partial class SMain
         S_自动BOSS1界面3开关.Size = new Size(47, 23);
         S_自动BOSS1界面3开关.TabIndex = 32;
         S_自动BOSS1界面3开关.TextAlign = HorizontalAlignment.Center;
-        S_自动BOSS1界面3开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_自动BOSS1界面3开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // groupBox173
         // 
@@ -27287,7 +27287,7 @@ public partial class SMain
         S_自动BOSS1界面2开关.Size = new Size(47, 23);
         S_自动BOSS1界面2开关.TabIndex = 32;
         S_自动BOSS1界面2开关.TextAlign = HorizontalAlignment.Center;
-        S_自动BOSS1界面2开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_自动BOSS1界面2开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // groupBox172
         // 
@@ -27332,7 +27332,7 @@ public partial class SMain
         S_自动BOSS1界面1开关.Size = new Size(47, 23);
         S_自动BOSS1界面1开关.TabIndex = 32;
         S_自动BOSS1界面1开关.TextAlign = HorizontalAlignment.Center;
-        S_自动BOSS1界面1开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_自动BOSS1界面1开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // groupBox46
         // 
@@ -27384,7 +27384,7 @@ public partial class SMain
         S_BOSS五地图名字.Tag = "";
         S_BOSS五地图名字.Text = "地图名称";
         S_BOSS五地图名字.TextAlign = HorizontalAlignment.Center;
-        S_BOSS五地图名字.TextChanged += (this.S_BOSS五地图名字_TextChanged);
+        S_BOSS五地图名字.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_BOSS五分钟
         // 
@@ -27397,7 +27397,7 @@ public partial class SMain
         S_BOSS五分钟.TabIndex = 36;
         S_BOSS五分钟.TextAlign = HorizontalAlignment.Center;
         S_BOSS五分钟.Value = new decimal(new int[] { 30, 0, 0, 0 });
-        S_BOSS五分钟.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_BOSS五分钟.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label331
         // 
@@ -27421,7 +27421,7 @@ public partial class SMain
         S_BOSS五坐标Y.TabIndex = 34;
         S_BOSS五坐标Y.TextAlign = HorizontalAlignment.Center;
         S_BOSS五坐标Y.Value = new decimal(new int[] { 999, 0, 0, 0 });
-        S_BOSS五坐标Y.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_BOSS五坐标Y.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label332
         // 
@@ -27454,7 +27454,7 @@ public partial class SMain
         S_BOSS五地图编号.TabIndex = 31;
         S_BOSS五地图编号.TextAlign = HorizontalAlignment.Center;
         S_BOSS五地图编号.Value = new decimal(new int[] { 147, 0, 0, 0 });
-        S_BOSS五地图编号.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_BOSS五地图编号.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label334
         // 
@@ -27478,7 +27478,7 @@ public partial class SMain
         S_BOSS五时间.TabIndex = 29;
         S_BOSS五时间.TextAlign = HorizontalAlignment.Center;
         S_BOSS五时间.Value = new decimal(new int[] { 20, 0, 0, 0 });
-        S_BOSS五时间.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_BOSS五时间.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label335
         // 
@@ -27502,7 +27502,7 @@ public partial class SMain
         S_BOSS五坐标X.TabIndex = 27;
         S_BOSS五坐标X.TextAlign = HorizontalAlignment.Center;
         S_BOSS五坐标X.Value = new decimal(new int[] { 999, 0, 0, 0 });
-        S_BOSS五坐标X.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_BOSS五坐标X.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label336
         // 
@@ -27526,7 +27526,7 @@ public partial class SMain
         S_BOSS名字五.Tag = "";
         S_BOSS名字五.Text = "BOSS名称";
         S_BOSS名字五.TextAlign = HorizontalAlignment.Center;
-        S_BOSS名字五.TextChanged += (this.S_BOSS名字五_TextChanged);
+        S_BOSS名字五.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // label337
         // 
@@ -27588,7 +27588,7 @@ public partial class SMain
         S_BOSS四地图名字.Tag = "";
         S_BOSS四地图名字.Text = "地图名称";
         S_BOSS四地图名字.TextAlign = HorizontalAlignment.Center;
-        S_BOSS四地图名字.TextChanged += (this.S_BOSS四地图名字_TextChanged);
+        S_BOSS四地图名字.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_BOSS四分钟
         // 
@@ -27601,7 +27601,7 @@ public partial class SMain
         S_BOSS四分钟.TabIndex = 36;
         S_BOSS四分钟.TextAlign = HorizontalAlignment.Center;
         S_BOSS四分钟.Value = new decimal(new int[] { 30, 0, 0, 0 });
-        S_BOSS四分钟.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_BOSS四分钟.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label321
         // 
@@ -27625,7 +27625,7 @@ public partial class SMain
         S_BOSS四坐标Y.TabIndex = 34;
         S_BOSS四坐标Y.TextAlign = HorizontalAlignment.Center;
         S_BOSS四坐标Y.Value = new decimal(new int[] { 999, 0, 0, 0 });
-        S_BOSS四坐标Y.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_BOSS四坐标Y.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label322
         // 
@@ -27658,7 +27658,7 @@ public partial class SMain
         S_BOSS四地图编号.TabIndex = 31;
         S_BOSS四地图编号.TextAlign = HorizontalAlignment.Center;
         S_BOSS四地图编号.Value = new decimal(new int[] { 147, 0, 0, 0 });
-        S_BOSS四地图编号.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_BOSS四地图编号.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label324
         // 
@@ -27682,7 +27682,7 @@ public partial class SMain
         S_BOSS四时间.TabIndex = 29;
         S_BOSS四时间.TextAlign = HorizontalAlignment.Center;
         S_BOSS四时间.Value = new decimal(new int[] { 20, 0, 0, 0 });
-        S_BOSS四时间.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_BOSS四时间.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label325
         // 
@@ -27706,7 +27706,7 @@ public partial class SMain
         S_BOSS四坐标X.TabIndex = 27;
         S_BOSS四坐标X.TextAlign = HorizontalAlignment.Center;
         S_BOSS四坐标X.Value = new decimal(new int[] { 999, 0, 0, 0 });
-        S_BOSS四坐标X.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_BOSS四坐标X.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label326
         // 
@@ -27730,7 +27730,7 @@ public partial class SMain
         S_BOSS名字四.Tag = "";
         S_BOSS名字四.Text = "BOSS名称";
         S_BOSS名字四.TextAlign = HorizontalAlignment.Center;
-        S_BOSS名字四.TextChanged += (this.S_BOSS名字四_TextChanged);
+        S_BOSS名字四.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // label327
         // 
@@ -27792,7 +27792,7 @@ public partial class SMain
         S_BOSS三地图名字.Tag = "";
         S_BOSS三地图名字.Text = "地图名称";
         S_BOSS三地图名字.TextAlign = HorizontalAlignment.Center;
-        S_BOSS三地图名字.TextChanged += (this.S_BOSS三地图名字_TextChanged);
+        S_BOSS三地图名字.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_BOSS三分钟
         // 
@@ -27805,7 +27805,7 @@ public partial class SMain
         S_BOSS三分钟.TabIndex = 36;
         S_BOSS三分钟.TextAlign = HorizontalAlignment.Center;
         S_BOSS三分钟.Value = new decimal(new int[] { 30, 0, 0, 0 });
-        S_BOSS三分钟.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_BOSS三分钟.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label313
         // 
@@ -27829,7 +27829,7 @@ public partial class SMain
         S_BOSS三坐标Y.TabIndex = 34;
         S_BOSS三坐标Y.TextAlign = HorizontalAlignment.Center;
         S_BOSS三坐标Y.Value = new decimal(new int[] { 999, 0, 0, 0 });
-        S_BOSS三坐标Y.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_BOSS三坐标Y.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label314
         // 
@@ -27862,7 +27862,7 @@ public partial class SMain
         S_BOSS三地图编号.TabIndex = 31;
         S_BOSS三地图编号.TextAlign = HorizontalAlignment.Center;
         S_BOSS三地图编号.Value = new decimal(new int[] { 147, 0, 0, 0 });
-        S_BOSS三地图编号.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_BOSS三地图编号.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label316
         // 
@@ -27886,7 +27886,7 @@ public partial class SMain
         S_BOSS三时间.TabIndex = 29;
         S_BOSS三时间.TextAlign = HorizontalAlignment.Center;
         S_BOSS三时间.Value = new decimal(new int[] { 20, 0, 0, 0 });
-        S_BOSS三时间.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_BOSS三时间.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label317
         // 
@@ -27910,7 +27910,7 @@ public partial class SMain
         S_BOSS三坐标X.TabIndex = 27;
         S_BOSS三坐标X.TextAlign = HorizontalAlignment.Center;
         S_BOSS三坐标X.Value = new decimal(new int[] { 999, 0, 0, 0 });
-        S_BOSS三坐标X.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_BOSS三坐标X.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label318
         // 
@@ -27934,7 +27934,7 @@ public partial class SMain
         S_BOSS名字三.Tag = "";
         S_BOSS名字三.Text = "BOSS名称";
         S_BOSS名字三.TextAlign = HorizontalAlignment.Center;
-        S_BOSS名字三.TextChanged += (this.S_BOSS名字三_TextChanged);
+        S_BOSS名字三.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // label319
         // 
@@ -27996,7 +27996,7 @@ public partial class SMain
         S_BOSS二地图名字.Tag = "";
         S_BOSS二地图名字.Text = "地图名称";
         S_BOSS二地图名字.TextAlign = HorizontalAlignment.Center;
-        S_BOSS二地图名字.TextChanged += (this.S_BOSS二地图名字_TextChanged);
+        S_BOSS二地图名字.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_BOSS二分钟
         // 
@@ -28009,7 +28009,7 @@ public partial class SMain
         S_BOSS二分钟.TabIndex = 36;
         S_BOSS二分钟.TextAlign = HorizontalAlignment.Center;
         S_BOSS二分钟.Value = new decimal(new int[] { 30, 0, 0, 0 });
-        S_BOSS二分钟.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_BOSS二分钟.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label305
         // 
@@ -28033,7 +28033,7 @@ public partial class SMain
         S_BOSS二坐标Y.TabIndex = 34;
         S_BOSS二坐标Y.TextAlign = HorizontalAlignment.Center;
         S_BOSS二坐标Y.Value = new decimal(new int[] { 999, 0, 0, 0 });
-        S_BOSS二坐标Y.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_BOSS二坐标Y.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label306
         // 
@@ -28066,7 +28066,7 @@ public partial class SMain
         S_BOSS二地图编号.TabIndex = 31;
         S_BOSS二地图编号.TextAlign = HorizontalAlignment.Center;
         S_BOSS二地图编号.Value = new decimal(new int[] { 147, 0, 0, 0 });
-        S_BOSS二地图编号.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_BOSS二地图编号.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label308
         // 
@@ -28090,7 +28090,7 @@ public partial class SMain
         S_BOSS二时间.TabIndex = 29;
         S_BOSS二时间.TextAlign = HorizontalAlignment.Center;
         S_BOSS二时间.Value = new decimal(new int[] { 20, 0, 0, 0 });
-        S_BOSS二时间.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_BOSS二时间.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label309
         // 
@@ -28114,7 +28114,7 @@ public partial class SMain
         S_BOSS二坐标X.TabIndex = 27;
         S_BOSS二坐标X.TextAlign = HorizontalAlignment.Center;
         S_BOSS二坐标X.Value = new decimal(new int[] { 999, 0, 0, 0 });
-        S_BOSS二坐标X.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_BOSS二坐标X.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label310
         // 
@@ -28138,7 +28138,7 @@ public partial class SMain
         S_BOSS名字二.Tag = "";
         S_BOSS名字二.Text = "BOSS名称";
         S_BOSS名字二.TextAlign = HorizontalAlignment.Center;
-        S_BOSS名字二.TextChanged += (this.S_BOSS名字二_TextChanged);
+        S_BOSS名字二.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // label311
         // 
@@ -28200,7 +28200,7 @@ public partial class SMain
         S_BOSS一地图名字.Tag = "";
         S_BOSS一地图名字.Text = "Map Name";
         S_BOSS一地图名字.TextAlign = HorizontalAlignment.Center;
-        S_BOSS一地图名字.TextChanged += (this.S_BOSS一地图名字_TextChanged);
+        S_BOSS一地图名字.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // S_BOSS一分钟
         // 
@@ -28213,7 +28213,7 @@ public partial class SMain
         S_BOSS一分钟.TabIndex = 36;
         S_BOSS一分钟.TextAlign = HorizontalAlignment.Center;
         S_BOSS一分钟.Value = new decimal(new int[] { 30, 0, 0, 0 });
-        S_BOSS一分钟.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_BOSS一分钟.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label275
         // 
@@ -28237,7 +28237,7 @@ public partial class SMain
         S_BOSS一坐标Y.TabIndex = 34;
         S_BOSS一坐标Y.TextAlign = HorizontalAlignment.Center;
         S_BOSS一坐标Y.Value = new decimal(new int[] { 999, 0, 0, 0 });
-        S_BOSS一坐标Y.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_BOSS一坐标Y.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label274
         // 
@@ -28270,7 +28270,7 @@ public partial class SMain
         S_BOSS一地图编号.TabIndex = 31;
         S_BOSS一地图编号.TextAlign = HorizontalAlignment.Center;
         S_BOSS一地图编号.Value = new decimal(new int[] { 147, 0, 0, 0 });
-        S_BOSS一地图编号.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_BOSS一地图编号.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label276
         // 
@@ -28294,7 +28294,7 @@ public partial class SMain
         S_BOSS一时间.TabIndex = 29;
         S_BOSS一时间.TextAlign = HorizontalAlignment.Center;
         S_BOSS一时间.Value = new decimal(new int[] { 20, 0, 0, 0 });
-        S_BOSS一时间.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_BOSS一时间.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label277
         // 
@@ -28318,7 +28318,7 @@ public partial class SMain
         S_BOSS一坐标X.TabIndex = 27;
         S_BOSS一坐标X.TextAlign = HorizontalAlignment.Center;
         S_BOSS一坐标X.Value = new decimal(new int[] { 999, 0, 0, 0 });
-        S_BOSS一坐标X.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_BOSS一坐标X.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label278
         // 
@@ -28342,7 +28342,7 @@ public partial class SMain
         S_BOSS名字一.Tag = "";
         S_BOSS名字一.Text = "BOSS名称";
         S_BOSS名字一.TextAlign = HorizontalAlignment.Center;
-        S_BOSS名字一.TextChanged += (this.S_BOSS名字一_TextChanged);
+        S_BOSS名字一.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // label279
         // 
@@ -28422,7 +28422,7 @@ public partial class SMain
         S_BOSS刷新提示开关.Size = new Size(70, 23);
         S_BOSS刷新提示开关.TabIndex = 32;
         S_BOSS刷新提示开关.TextAlign = HorizontalAlignment.Center;
-        S_BOSS刷新提示开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_BOSS刷新提示开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label286
         // 
@@ -28814,7 +28814,7 @@ public partial class SMain
         S_祖玛刺装备佩戴数量.TabIndex = 26;
         S_祖玛刺装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_祖玛刺装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_祖玛刺装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_祖玛刺装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label350
         // 
@@ -28849,7 +28849,7 @@ public partial class SMain
         S_祖玛弓装备佩戴数量.TabIndex = 26;
         S_祖玛弓装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_祖玛弓装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_祖玛弓装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_祖玛弓装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label347
         // 
@@ -28884,7 +28884,7 @@ public partial class SMain
         S_祖玛枪装备佩戴数量.TabIndex = 26;
         S_祖玛枪装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_祖玛枪装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_祖玛枪装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_祖玛枪装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label345
         // 
@@ -28919,7 +28919,7 @@ public partial class SMain
         S_祖玛道装备佩戴数量.TabIndex = 26;
         S_祖玛道装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_祖玛道装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_祖玛道装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_祖玛道装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label348
         // 
@@ -28954,7 +28954,7 @@ public partial class SMain
         S_祖玛法装备佩戴数量.TabIndex = 26;
         S_祖玛法装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_祖玛法装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_祖玛法装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_祖玛法装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label349
         // 
@@ -28989,7 +28989,7 @@ public partial class SMain
         S_祖玛战装备佩戴数量.TabIndex = 26;
         S_祖玛战装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_祖玛战装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_祖玛战装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_祖玛战装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label346
         // 
@@ -29110,7 +29110,7 @@ public partial class SMain
         S_赤月刺装备佩戴数量.TabIndex = 26;
         S_赤月刺装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_赤月刺装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_赤月刺装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_赤月刺装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label497
         // 
@@ -29145,7 +29145,7 @@ public partial class SMain
         S_赤月弓装备佩戴数量.TabIndex = 26;
         S_赤月弓装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_赤月弓装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_赤月弓装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_赤月弓装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label498
         // 
@@ -29180,7 +29180,7 @@ public partial class SMain
         S_赤月枪装备佩戴数量.TabIndex = 26;
         S_赤月枪装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_赤月枪装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_赤月枪装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_赤月枪装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label499
         // 
@@ -29215,7 +29215,7 @@ public partial class SMain
         S_赤月道装备佩戴数量.TabIndex = 26;
         S_赤月道装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_赤月道装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_赤月道装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_赤月道装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label500
         // 
@@ -29250,7 +29250,7 @@ public partial class SMain
         S_赤月法装备佩戴数量.TabIndex = 26;
         S_赤月法装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_赤月法装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_赤月法装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_赤月法装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label501
         // 
@@ -29285,7 +29285,7 @@ public partial class SMain
         S_赤月战装备佩戴数量.TabIndex = 26;
         S_赤月战装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_赤月战装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_赤月战装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_赤月战装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label502
         // 
@@ -29406,7 +29406,7 @@ public partial class SMain
         S_魔龙刺装备佩戴数量.TabIndex = 26;
         S_魔龙刺装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_魔龙刺装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_魔龙刺装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_魔龙刺装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label508
         // 
@@ -29441,7 +29441,7 @@ public partial class SMain
         S_魔龙弓装备佩戴数量.TabIndex = 26;
         S_魔龙弓装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_魔龙弓装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_魔龙弓装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_魔龙弓装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label509
         // 
@@ -29476,7 +29476,7 @@ public partial class SMain
         S_魔龙枪装备佩戴数量.TabIndex = 26;
         S_魔龙枪装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_魔龙枪装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_魔龙枪装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_魔龙枪装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label510
         // 
@@ -29511,7 +29511,7 @@ public partial class SMain
         S_魔龙道装备佩戴数量.TabIndex = 26;
         S_魔龙道装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_魔龙道装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_魔龙道装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_魔龙道装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label511
         // 
@@ -29546,7 +29546,7 @@ public partial class SMain
         S_魔龙法装备佩戴数量.TabIndex = 26;
         S_魔龙法装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_魔龙法装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_魔龙法装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_魔龙法装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label512
         // 
@@ -29581,7 +29581,7 @@ public partial class SMain
         S_魔龙战装备佩戴数量.TabIndex = 26;
         S_魔龙战装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_魔龙战装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_魔龙战装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_魔龙战装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label513
         // 
@@ -29702,7 +29702,7 @@ public partial class SMain
         S_苍月刺装备佩戴数量.TabIndex = 26;
         S_苍月刺装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_苍月刺装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_苍月刺装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_苍月刺装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label519
         // 
@@ -29737,7 +29737,7 @@ public partial class SMain
         S_苍月弓装备佩戴数量.TabIndex = 26;
         S_苍月弓装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_苍月弓装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_苍月弓装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_苍月弓装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label520
         // 
@@ -29772,7 +29772,7 @@ public partial class SMain
         S_苍月枪装备佩戴数量.TabIndex = 26;
         S_苍月枪装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_苍月枪装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_苍月枪装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_苍月枪装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label521
         // 
@@ -29807,7 +29807,7 @@ public partial class SMain
         S_苍月道装备佩戴数量.TabIndex = 26;
         S_苍月道装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_苍月道装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_苍月道装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_苍月道装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label522
         // 
@@ -29842,7 +29842,7 @@ public partial class SMain
         S_苍月法装备佩戴数量.TabIndex = 26;
         S_苍月法装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_苍月法装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_苍月法装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_苍月法装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label523
         // 
@@ -29877,7 +29877,7 @@ public partial class SMain
         S_苍月战装备佩戴数量.TabIndex = 26;
         S_苍月战装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_苍月战装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_苍月战装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_苍月战装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label524
         // 
@@ -29998,7 +29998,7 @@ public partial class SMain
         S_星王刺装备佩戴数量.TabIndex = 26;
         S_星王刺装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_星王刺装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_星王刺装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_星王刺装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label530
         // 
@@ -30033,7 +30033,7 @@ public partial class SMain
         S_星王弓装备佩戴数量.TabIndex = 26;
         S_星王弓装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_星王弓装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_星王弓装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_星王弓装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label531
         // 
@@ -30068,7 +30068,7 @@ public partial class SMain
         S_星王枪装备佩戴数量.TabIndex = 26;
         S_星王枪装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_星王枪装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_星王枪装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_星王枪装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label532
         // 
@@ -30103,7 +30103,7 @@ public partial class SMain
         S_星王道装备佩戴数量.TabIndex = 26;
         S_星王道装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_星王道装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_星王道装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_星王道装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label533
         // 
@@ -30138,7 +30138,7 @@ public partial class SMain
         S_星王法装备佩戴数量.TabIndex = 26;
         S_星王法装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_星王法装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_星王法装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_星王法装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label534
         // 
@@ -30173,7 +30173,7 @@ public partial class SMain
         S_星王战装备佩戴数量.TabIndex = 26;
         S_星王战装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_星王战装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_星王战装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_星王战装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label535
         // 
@@ -30323,7 +30323,7 @@ public partial class SMain
         S_特殊1刺装备佩戴数量.TabIndex = 26;
         S_特殊1刺装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_特殊1刺装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_特殊1刺装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_特殊1刺装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label563
         // 
@@ -30358,7 +30358,7 @@ public partial class SMain
         S_特殊1弓装备佩戴数量.TabIndex = 26;
         S_特殊1弓装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_特殊1弓装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_特殊1弓装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_特殊1弓装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label564
         // 
@@ -30393,7 +30393,7 @@ public partial class SMain
         S_特殊1枪装备佩戴数量.TabIndex = 26;
         S_特殊1枪装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_特殊1枪装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_特殊1枪装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_特殊1枪装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label565
         // 
@@ -30428,7 +30428,7 @@ public partial class SMain
         S_特殊1道装备佩戴数量.TabIndex = 26;
         S_特殊1道装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_特殊1道装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_特殊1道装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_特殊1道装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label566
         // 
@@ -30463,7 +30463,7 @@ public partial class SMain
         S_特殊1法装备佩戴数量.TabIndex = 26;
         S_特殊1法装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_特殊1法装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_特殊1法装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_特殊1法装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label567
         // 
@@ -30498,7 +30498,7 @@ public partial class SMain
         S_特殊1战装备佩戴数量.TabIndex = 26;
         S_特殊1战装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_特殊1战装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_特殊1战装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_特殊1战装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label568
         // 
@@ -30619,7 +30619,7 @@ public partial class SMain
         S_特殊2刺装备佩戴数量.TabIndex = 26;
         S_特殊2刺装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_特殊2刺装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_特殊2刺装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_特殊2刺装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label552
         // 
@@ -30654,7 +30654,7 @@ public partial class SMain
         S_特殊2弓装备佩戴数量.TabIndex = 26;
         S_特殊2弓装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_特殊2弓装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_特殊2弓装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_特殊2弓装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label553
         // 
@@ -30689,7 +30689,7 @@ public partial class SMain
         S_特殊2枪装备佩戴数量.TabIndex = 26;
         S_特殊2枪装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_特殊2枪装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_特殊2枪装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_特殊2枪装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label554
         // 
@@ -30724,7 +30724,7 @@ public partial class SMain
         S_特殊2道装备佩戴数量.TabIndex = 26;
         S_特殊2道装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_特殊2道装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_特殊2道装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_特殊2道装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label555
         // 
@@ -30759,7 +30759,7 @@ public partial class SMain
         S_特殊2法装备佩戴数量.TabIndex = 26;
         S_特殊2法装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_特殊2法装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_特殊2法装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_特殊2法装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label556
         // 
@@ -30794,7 +30794,7 @@ public partial class SMain
         S_特殊2战装备佩戴数量.TabIndex = 26;
         S_特殊2战装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_特殊2战装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_特殊2战装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_特殊2战装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label557
         // 
@@ -30915,7 +30915,7 @@ public partial class SMain
         S_特殊3刺装备佩戴数量.TabIndex = 26;
         S_特殊3刺装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_特殊3刺装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_特殊3刺装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_特殊3刺装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label541
         // 
@@ -30950,7 +30950,7 @@ public partial class SMain
         S_特殊3弓装备佩戴数量.TabIndex = 26;
         S_特殊3弓装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_特殊3弓装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_特殊3弓装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_特殊3弓装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label542
         // 
@@ -30985,7 +30985,7 @@ public partial class SMain
         S_特殊3枪装备佩戴数量.TabIndex = 26;
         S_特殊3枪装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_特殊3枪装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_特殊3枪装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_特殊3枪装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label543
         // 
@@ -31020,7 +31020,7 @@ public partial class SMain
         S_特殊3道装备佩戴数量.TabIndex = 26;
         S_特殊3道装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_特殊3道装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_特殊3道装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_特殊3道装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label544
         // 
@@ -31055,7 +31055,7 @@ public partial class SMain
         S_特殊3法装备佩戴数量.TabIndex = 26;
         S_特殊3法装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_特殊3法装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_特殊3法装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_特殊3法装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label545
         // 
@@ -31090,7 +31090,7 @@ public partial class SMain
         S_特殊3战装备佩戴数量.TabIndex = 26;
         S_特殊3战装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_特殊3战装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_特殊3战装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_特殊3战装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label546
         // 
@@ -31211,7 +31211,7 @@ public partial class SMain
         S_通用6装备佩戴数量.TabIndex = 26;
         S_通用6装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_通用6装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_通用6装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_通用6装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label201
         // 
@@ -31246,7 +31246,7 @@ public partial class SMain
         S_通用4装备佩戴数量.TabIndex = 26;
         S_通用4装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_通用4装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_通用4装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_通用4装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label202
         // 
@@ -31281,7 +31281,7 @@ public partial class SMain
         S_通用5装备佩戴数量.TabIndex = 26;
         S_通用5装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_通用5装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_通用5装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_通用5装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label372
         // 
@@ -31316,7 +31316,7 @@ public partial class SMain
         S_通用3装备佩戴数量.TabIndex = 26;
         S_通用3装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_通用3装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_通用3装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_通用3装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label373
         // 
@@ -31351,7 +31351,7 @@ public partial class SMain
         S_通用2装备佩戴数量.TabIndex = 26;
         S_通用2装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_通用2装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_通用2装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_通用2装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label374
         // 
@@ -31386,7 +31386,7 @@ public partial class SMain
         S_通用1装备佩戴数量.TabIndex = 26;
         S_通用1装备佩戴数量.TextAlign = HorizontalAlignment.Center;
         S_通用1装备佩戴数量.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_通用1装备佩戴数量.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_通用1装备佩戴数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label380
         // 
@@ -31491,7 +31491,7 @@ public partial class SMain
         合成模块控件.Size = new Size(158, 23);
         合成模块控件.TabIndex = 60;
         合成模块控件.Text = "Enter Password";
-        合成模块控件.TextChanged += (this.合成模块控件_TextChanged);
+        合成模块控件.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // groupBox11
         // 
@@ -31561,7 +31561,7 @@ public partial class SMain
         S_挂机权限选项.Size = new Size(158, 23);
         S_挂机权限选项.TabIndex = 60;
         S_挂机权限选项.Text = "Enter Password";
-        S_挂机权限选项.TextChanged += (this.S_挂机权限选项_TextChanged);
+        S_挂机权限选项.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // label786
         // 
@@ -31585,7 +31585,7 @@ public partial class SMain
         S_AutoBattleLevel.TabIndex = 51;
         S_AutoBattleLevel.TextAlign = HorizontalAlignment.Center;
         S_AutoBattleLevel.Value = new decimal(new int[] { 25, 0, 0, 0 });
-        S_AutoBattleLevel.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_AutoBattleLevel.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label728
         // 
@@ -31618,7 +31618,7 @@ public partial class SMain
         S_挂机称号选项.Size = new Size(70, 23);
         S_挂机称号选项.TabIndex = 26;
         S_挂机称号选项.TextAlign = HorizontalAlignment.Center;
-        S_挂机称号选项.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_挂机称号选项.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label643
         // 
@@ -31707,7 +31707,7 @@ public partial class SMain
         S_称号范围拾取判断1.TabIndex = 79;
         S_称号范围拾取判断1.TextAlign = HorizontalAlignment.Center;
         S_称号范围拾取判断1.Value = new decimal(new int[] { 131, 0, 0, 0 });
-        S_称号范围拾取判断1.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_称号范围拾取判断1.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // groupBox241
         // 
@@ -31739,7 +31739,7 @@ public partial class SMain
         拾取地图控制1.TabIndex = 69;
         拾取地图控制1.TextAlign = HorizontalAlignment.Center;
         拾取地图控制1.Value = new decimal(new int[] { 147, 0, 0, 0 });
-        拾取地图控制1.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        拾取地图控制1.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 拾取地图控制6
         // 
@@ -31752,7 +31752,7 @@ public partial class SMain
         拾取地图控制6.TabIndex = 72;
         拾取地图控制6.TextAlign = HorizontalAlignment.Center;
         拾取地图控制6.Value = new decimal(new int[] { 147, 0, 0, 0 });
-        拾取地图控制6.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        拾取地图控制6.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 拾取地图控制8
         // 
@@ -31765,7 +31765,7 @@ public partial class SMain
         拾取地图控制8.TabIndex = 76;
         拾取地图控制8.TextAlign = HorizontalAlignment.Center;
         拾取地图控制8.Value = new decimal(new int[] { 147, 0, 0, 0 });
-        拾取地图控制8.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        拾取地图控制8.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 拾取地图控制5
         // 
@@ -31778,7 +31778,7 @@ public partial class SMain
         拾取地图控制5.TabIndex = 70;
         拾取地图控制5.TextAlign = HorizontalAlignment.Center;
         拾取地图控制5.Value = new decimal(new int[] { 147, 0, 0, 0 });
-        拾取地图控制5.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        拾取地图控制5.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 拾取地图控制4
         // 
@@ -31791,7 +31791,7 @@ public partial class SMain
         拾取地图控制4.TabIndex = 75;
         拾取地图控制4.TextAlign = HorizontalAlignment.Center;
         拾取地图控制4.Value = new decimal(new int[] { 147, 0, 0, 0 });
-        拾取地图控制4.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        拾取地图控制4.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 拾取地图控制2
         // 
@@ -31804,7 +31804,7 @@ public partial class SMain
         拾取地图控制2.TabIndex = 71;
         拾取地图控制2.TextAlign = HorizontalAlignment.Center;
         拾取地图控制2.Value = new decimal(new int[] { 147, 0, 0, 0 });
-        拾取地图控制2.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        拾取地图控制2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 拾取地图控制7
         // 
@@ -31817,7 +31817,7 @@ public partial class SMain
         拾取地图控制7.TabIndex = 74;
         拾取地图控制7.TextAlign = HorizontalAlignment.Center;
         拾取地图控制7.Value = new decimal(new int[] { 147, 0, 0, 0 });
-        拾取地图控制7.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        拾取地图控制7.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 拾取地图控制3
         // 
@@ -31830,7 +31830,7 @@ public partial class SMain
         拾取地图控制3.TabIndex = 73;
         拾取地图控制3.TextAlign = HorizontalAlignment.Center;
         拾取地图控制3.Value = new decimal(new int[] { 147, 0, 0, 0 });
-        拾取地图控制3.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        拾取地图控制3.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label727
         // 
@@ -31885,7 +31885,7 @@ public partial class SMain
         S_自动整理背包开关.Size = new Size(47, 23);
         S_自动整理背包开关.TabIndex = 63;
         S_自动整理背包开关.TextAlign = HorizontalAlignment.Center;
-        S_自动整理背包开关.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_自动整理背包开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label289
         // 
@@ -31920,7 +31920,7 @@ public partial class SMain
         S_自动整理背包计时.TabIndex = 60;
         S_自动整理背包计时.TextAlign = HorizontalAlignment.Center;
         S_自动整理背包计时.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_自动整理背包计时.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_自动整理背包计时.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label287
         // 
@@ -31955,7 +31955,7 @@ public partial class SMain
         S_AutoPickUpInventorySpace.TabIndex = 57;
         S_AutoPickUpInventorySpace.TextAlign = HorizontalAlignment.Center;
         S_AutoPickUpInventorySpace.Value = new decimal(new int[] { 6, 0, 0, 0 });
-        S_AutoPickUpInventorySpace.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_AutoPickUpInventorySpace.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label87
         // 
@@ -31977,7 +31977,7 @@ public partial class SMain
         S_TitleRangePickUpDistance.TabIndex = 55;
         S_TitleRangePickUpDistance.TextAlign = HorizontalAlignment.Center;
         S_TitleRangePickUpDistance.Value = new decimal(new int[] { 10, 0, 0, 0 });
-        S_TitleRangePickUpDistance.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_TitleRangePickUpDistance.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label86
         // 
@@ -32034,7 +32034,7 @@ public partial class SMain
         S_称号范围拾取判断.TabIndex = 26;
         S_称号范围拾取判断.TextAlign = HorizontalAlignment.Center;
         S_称号范围拾取判断.Value = new decimal(new int[] { 131, 0, 0, 0 });
-        S_称号范围拾取判断.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_称号范围拾取判断.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // tabPage48
         // 
@@ -32096,7 +32096,7 @@ public partial class SMain
         充值平台切换.Size = new Size(70, 23);
         充值平台切换.TabIndex = 39;
         充值平台切换.TextAlign = HorizontalAlignment.Center;
-        充值平台切换.ValueChanged += (this.充值平台切换_ValueChanged);
+        充值平台切换.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label443
         // 
@@ -32128,7 +32128,7 @@ public partial class SMain
         S_充值模块格式.Size = new Size(70, 23);
         S_充值模块格式.TabIndex = 36;
         S_充值模块格式.TextAlign = HorizontalAlignment.Center;
-        S_充值模块格式.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_充值模块格式.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label827
         // 
@@ -32182,7 +32182,7 @@ public partial class SMain
         S_平台开关模式.Size = new Size(70, 23);
         S_平台开关模式.TabIndex = 29;
         S_平台开关模式.TextAlign = HorizontalAlignment.Center;
-        S_平台开关模式.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_平台开关模式.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label688
         // 
@@ -32216,7 +32216,7 @@ public partial class SMain
         S_平台元宝充值模块.TabIndex = 24;
         S_平台元宝充值模块.TextAlign = HorizontalAlignment.Center;
         S_平台元宝充值模块.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_平台元宝充值模块.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_平台元宝充值模块.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label685
         // 
@@ -32619,7 +32619,7 @@ public partial class SMain
         S_物品归属时间.TabIndex = 18;
         S_物品归属时间.TextAlign = HorizontalAlignment.Center;
         S_物品归属时间.Value = new decimal(new int[] { 3, 0, 0, 0 });
-        S_物品归属时间.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_物品归属时间.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_物品清理标签
         // 
@@ -32641,7 +32641,7 @@ public partial class SMain
         S_ItemDisappearTime.TabIndex = 16;
         S_ItemDisappearTime.TextAlign = HorizontalAlignment.Center;
         S_ItemDisappearTime.Value = new decimal(new int[] { 4, 0, 0, 0 });
-        S_ItemDisappearTime.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_ItemDisappearTime.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_诱惑时长标签
         // 
@@ -32664,7 +32664,7 @@ public partial class SMain
         S_怪物诱惑时长.TabIndex = 14;
         S_怪物诱惑时长.TextAlign = HorizontalAlignment.Center;
         S_怪物诱惑时长.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_怪物诱惑时长.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_怪物诱惑时长.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_收益衰减标签
         // 
@@ -32688,7 +32688,7 @@ public partial class SMain
         S_收益减少比率.TabIndex = 12;
         S_收益减少比率.TextAlign = HorizontalAlignment.Center;
         S_收益减少比率.Value = new decimal(new int[] { 1, 0, 0, 65536 });
-        S_收益减少比率.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_收益减少比率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_收益等级标签
         // 
@@ -32710,7 +32710,7 @@ public partial class SMain
         S_减收益等级差.TabIndex = 10;
         S_减收益等级差.TextAlign = HorizontalAlignment.Center;
         S_减收益等级差.Value = new decimal(new int[] { 10, 0, 0, 0 });
-        S_减收益等级差.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_减收益等级差.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_经验倍率标签
         // 
@@ -32735,7 +32735,7 @@ public partial class SMain
         S_MonsterExperienceMultiplier.TabIndex = 8;
         S_MonsterExperienceMultiplier.TextAlign = HorizontalAlignment.Center;
         S_MonsterExperienceMultiplier.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_MonsterExperienceMultiplier.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_MonsterExperienceMultiplier.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_特修折扣标签
         // 
@@ -32760,7 +32760,7 @@ public partial class SMain
         S_SpecialRepairDiscount.TabIndex = 6;
         S_SpecialRepairDiscount.TextAlign = HorizontalAlignment.Center;
         S_SpecialRepairDiscount.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_SpecialRepairDiscount.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_SpecialRepairDiscount.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_怪物爆率标签
         // 
@@ -32785,7 +32785,7 @@ public partial class SMain
         S_ItemDropRate.TabIndex = 4;
         S_ItemDropRate.TextAlign = HorizontalAlignment.Center;
         S_ItemDropRate.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        S_ItemDropRate.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_ItemDropRate.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_开放等级标签
         // 
@@ -32807,7 +32807,7 @@ public partial class SMain
         S_MaxUserLevel.TabIndex = 2;
         S_MaxUserLevel.TextAlign = HorizontalAlignment.Center;
         S_MaxUserLevel.Value = new decimal(new int[] { 40, 0, 0, 0 });
-        S_MaxUserLevel.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_MaxUserLevel.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_注意事项标签6
         // 
@@ -32875,7 +32875,7 @@ public partial class SMain
         S_自动保存日志.TabIndex = 18;
         S_自动保存日志.TextAlign = HorizontalAlignment.Center;
         S_自动保存日志.Value = new decimal(new int[] { 60, 0, 0, 0 });
-        S_自动保存日志.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_自动保存日志.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label396
         // 
@@ -32923,7 +32923,7 @@ public partial class SMain
         S_MaxUserConnections.TabIndex = 14;
         S_MaxUserConnections.TextAlign = HorizontalAlignment.Center;
         S_MaxUserConnections.Value = new decimal(new int[] { 500, 0, 0, 0 });
-        S_MaxUserConnections.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_MaxUserConnections.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label165
         // 
@@ -32960,7 +32960,7 @@ public partial class SMain
         S_自动保存时间.TabIndex = 11;
         S_自动保存时间.TextAlign = HorizontalAlignment.Center;
         S_自动保存时间.Value = new decimal(new int[] { 30, 0, 0, 0 });
-        S_自动保存时间.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_自动保存时间.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_掉线判定标签
         // 
@@ -32984,7 +32984,7 @@ public partial class SMain
         S_DisconnectTime.TabIndex = 8;
         S_DisconnectTime.TextAlign = HorizontalAlignment.Center;
         S_DisconnectTime.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_DisconnectTime.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_DisconnectTime.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_限定封包标签
         // 
@@ -33009,7 +33009,7 @@ public partial class SMain
         S_PacketLimit.TabIndex = 6;
         S_PacketLimit.TextAlign = HorizontalAlignment.Center;
         S_PacketLimit.Value = new decimal(new int[] { 50, 0, 0, 0 });
-        S_PacketLimit.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_PacketLimit.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_屏蔽时间标签
         // 
@@ -33034,7 +33034,7 @@ public partial class SMain
         S_AbnormalBlockTime.TabIndex = 4;
         S_AbnormalBlockTime.TextAlign = HorizontalAlignment.Center;
         S_AbnormalBlockTime.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_AbnormalBlockTime.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_AbnormalBlockTime.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_接收端口标签
         // 
@@ -33059,7 +33059,7 @@ public partial class SMain
         S_TicketReceivePort.TabIndex = 2;
         S_TicketReceivePort.TextAlign = HorizontalAlignment.Center;
         S_TicketReceivePort.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_TicketReceivePort.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_TicketReceivePort.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_监听端口标签
         // 
@@ -33084,7 +33084,7 @@ public partial class SMain
         S_UserConnectionPort.TabIndex = 0;
         S_UserConnectionPort.TextAlign = HorizontalAlignment.Center;
         S_UserConnectionPort.Value = new decimal(new int[] { 100, 0, 0, 0 });
-        S_UserConnectionPort.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_UserConnectionPort.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_注意事项标签5
         // 
@@ -34097,7 +34097,7 @@ public partial class SMain
         龙卫焰焚烈火剑法.Size = new Size(58, 21);
         龙卫焰焚烈火剑法.TabIndex = 37;
         龙卫焰焚烈火剑法.TextAlign = HorizontalAlignment.Center;
-        龙卫焰焚烈火剑法.ValueChanged += (this.龙卫焰焚烈火剑法_ValueChanged);
+        龙卫焰焚烈火剑法.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // groupBox139
         // 
@@ -34138,7 +34138,7 @@ public partial class SMain
         会员物品对接.TabIndex = 31;
         会员物品对接.TextAlign = HorizontalAlignment.Center;
         会员物品对接.Value = new decimal(new int[] { 999999, 0, 0, 0 });
-        会员物品对接.ValueChanged += (this.会员物品对接_ValueChanged);
+        会员物品对接.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label805
         // 
@@ -34179,7 +34179,7 @@ public partial class SMain
         打开随时仓库.TabIndex = 4;
         打开随时仓库.Text = "打开随时仓库";
         打开随时仓库.UseVisualStyleBackColor = true;
-        打开随时仓库.CheckedChanged += (this.打开随时仓库_CheckedChanged);
+        打开随时仓库.CheckedChanged += (this.UpdateBooleanSettingsValue_CheckedChanged);
         // 
         // 购买狂暴之力
         // 
@@ -34190,7 +34190,7 @@ public partial class SMain
         购买狂暴之力.TabIndex = 3;
         购买狂暴之力.Text = "购买狂暴之力";
         购买狂暴之力.UseVisualStyleBackColor = true;
-        购买狂暴之力.CheckedChanged += (this.购买狂暴之力_CheckedChanged);
+        购买狂暴之力.CheckedChanged += (this.UpdateBooleanSettingsValue_CheckedChanged);
         // 
         // 会员满血设置
         // 
@@ -34201,7 +34201,7 @@ public partial class SMain
         会员满血设置.TabIndex = 2;
         会员满血设置.Text = "会员满血设置";
         会员满血设置.UseVisualStyleBackColor = true;
-        会员满血设置.CheckedChanged += (this.会员满血设置_CheckedChanged);
+        会员满血设置.CheckedChanged += (this.UpdateBooleanSettingsValue_CheckedChanged);
         // 
         // 全屏拾取开关
         // 
@@ -34212,7 +34212,7 @@ public partial class SMain
         全屏拾取开关.TabIndex = 1;
         全屏拾取开关.Text = "全屏拾取开关";
         全屏拾取开关.UseVisualStyleBackColor = true;
-        全屏拾取开关.CheckedChanged += (this.全屏拾取开关_CheckedChanged);
+        全屏拾取开关.CheckedChanged += (this.UpdateBooleanSettingsValue_CheckedChanged);
         // 
         // 自动回收设置
         // 
@@ -34223,7 +34223,7 @@ public partial class SMain
         自动回收设置.TabIndex = 0;
         自动回收设置.Text = "自动回收设置";
         自动回收设置.UseVisualStyleBackColor = true;
-        自动回收设置.CheckedChanged += (this.自动回收设置_CheckedChanged);
+        自动回收设置.CheckedChanged += (this.UpdateBooleanSettingsValue_CheckedChanged);
         // 
         // groupBox138
         // 
@@ -34259,7 +34259,7 @@ public partial class SMain
         龙卫橙色词条概率.Size = new Size(58, 21);
         龙卫橙色词条概率.TabIndex = 38;
         龙卫橙色词条概率.TextAlign = HorizontalAlignment.Center;
-        龙卫橙色词条概率.ValueChanged += (this.龙卫橙色词条概率_ValueChanged);
+        龙卫橙色词条概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 龙卫紫色词条概率
         // 
@@ -34268,7 +34268,7 @@ public partial class SMain
         龙卫紫色词条概率.Size = new Size(58, 21);
         龙卫紫色词条概率.TabIndex = 37;
         龙卫紫色词条概率.TextAlign = HorizontalAlignment.Center;
-        龙卫紫色词条概率.ValueChanged += (this.龙卫紫色词条概率_ValueChanged);
+        龙卫紫色词条概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 龙卫蓝色词条概率
         // 
@@ -34277,7 +34277,7 @@ public partial class SMain
         龙卫蓝色词条概率.Size = new Size(58, 21);
         龙卫蓝色词条概率.TabIndex = 36;
         龙卫蓝色词条概率.TextAlign = HorizontalAlignment.Center;
-        龙卫蓝色词条概率.ValueChanged += (this.龙卫蓝色词条概率_ValueChanged);
+        龙卫蓝色词条概率.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label631
         // 
@@ -34346,7 +34346,7 @@ public partial class SMain
         龙卫效果提示.Size = new Size(58, 21);
         龙卫效果提示.TabIndex = 31;
         龙卫效果提示.TextAlign = HorizontalAlignment.Center;
-        龙卫效果提示.ValueChanged += (this.龙卫效果提示_ValueChanged);
+        龙卫效果提示.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 玛法特权
         // 
@@ -34408,7 +34408,7 @@ public partial class SMain
         S_特权玛法战将元宝.TabIndex = 32;
         S_特权玛法战将元宝.TextAlign = HorizontalAlignment.Center;
         S_特权玛法战将元宝.Value = new decimal(new int[] { 28800, 0, 0, 0 });
-        S_特权玛法战将元宝.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_特权玛法战将元宝.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_特权玛法豪杰元宝
         // 
@@ -34421,7 +34421,7 @@ public partial class SMain
         S_特权玛法豪杰元宝.TabIndex = 31;
         S_特权玛法豪杰元宝.TextAlign = HorizontalAlignment.Center;
         S_特权玛法豪杰元宝.Value = new decimal(new int[] { 28800, 0, 0, 0 });
-        S_特权玛法豪杰元宝.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_特权玛法豪杰元宝.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // S_特权玛法名俊元宝
         // 
@@ -34434,7 +34434,7 @@ public partial class SMain
         S_特权玛法名俊元宝.TabIndex = 30;
         S_特权玛法名俊元宝.TextAlign = HorizontalAlignment.Center;
         S_特权玛法名俊元宝.Value = new decimal(new int[] { 12800, 0, 0, 0 });
-        S_特权玛法名俊元宝.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_特权玛法名俊元宝.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 玛法战将
         // 
@@ -34509,7 +34509,7 @@ public partial class SMain
         S_秘宝广场元宝.TabIndex = 29;
         S_秘宝广场元宝.TextAlign = HorizontalAlignment.Center;
         S_秘宝广场元宝.Value = new decimal(new int[] { 20000, 0, 0, 0 });
-        S_秘宝广场元宝.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_秘宝广场元宝.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 秘宝广场
         // 
@@ -34557,7 +34557,7 @@ public partial class SMain
         S_世界BOSS分钟.TabIndex = 29;
         S_世界BOSS分钟.TextAlign = HorizontalAlignment.Center;
         S_世界BOSS分钟.Value = new decimal(new int[] { 30, 0, 0, 0 });
-        S_世界BOSS分钟.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_世界BOSS分钟.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label271
         // 
@@ -34579,7 +34579,7 @@ public partial class SMain
         S_世界BOSS时间.TabIndex = 27;
         S_世界BOSS时间.TextAlign = HorizontalAlignment.Center;
         S_世界BOSS时间.Value = new decimal(new int[] { 19, 0, 0, 0 });
-        S_世界BOSS时间.ValueChanged += (this.UpdateSettingsValue_ValueChanged);
+        S_世界BOSS时间.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 刷新时间
         // 
@@ -34600,7 +34600,7 @@ public partial class SMain
         S_世界BOSS名字.Tag = "";
         S_世界BOSS名字.Text = "魔火龙";
         S_世界BOSS名字.TextAlign = HorizontalAlignment.Center;
-        S_世界BOSS名字.TextChanged += (this.S_世界BOSS名字_TextChanged);
+        S_世界BOSS名字.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
         // 
         // 活动BOSS
         // 

@@ -17,8 +17,8 @@ public sealed class ChangeMaxLevel : GMCommand
             SMain.AddCommandLog("<= @" + GetType().Name + " The command execution failed, and the level is lower than the current max level");
             return;
         }
-        Settings.Default.MaxUserLevel = (Config.MaxUserLevel = MaxLevel);
-        Settings.Default.Save();
+        Config.MaxUserLevel = MaxLevel;
+        Config.Save();
         SMain.Main.BeginInvoke((MethodInvoker)delegate
         {
             SMain.Main.S_MaxUserLevel.Value = MaxLevel;

@@ -2033,7 +2033,7 @@ public sealed class PlayerObject : MapObject
             }
         }
 
-        if (CurrentMap.MapID == 183 && Config.武斗场杀人开关 == 1)
+        if (CurrentMap.MapID == 183 && Config.武斗场杀人开关)
         {
             GainExperience(null, Config.武斗场杀人经验);
         }
@@ -3785,7 +3785,7 @@ public sealed class PlayerObject : MapObject
             }
             充值发放 = SEngine.CurrentTime.AddSeconds(5.0);
         }
-        if (Config.CurrentVersion >= 2 && Character.CurrentLevel >= Config.全服红包等级 && Character.保底参数2.V == 0 && SEngine.CurrentTime.Hour == Config.全服红包时间 && Config.红包开关 == 1)
+        if (Config.CurrentVersion >= 2 && Character.CurrentLevel >= Config.全服红包等级 && Character.保底参数2.V == 0 && SEngine.CurrentTime.Hour == Config.全服红包时间 && Config.红包开关)
         {
             Character.保底参数2.V++;
             int num = SEngine.Random.Next(1, Config.全服红包货币数量);
@@ -3798,7 +3798,7 @@ public sealed class PlayerObject : MapObject
                 Amount = amount
             });
         }
-        if (SEngine.CurrentTime.Hour != Config.全服红包时间 && Config.红包开关 == 1)
+        if (SEngine.CurrentTime.Hour != Config.全服红包时间 && Config.红包开关)
         {
             Character.保底参数2.V = 0;
         }
@@ -7887,7 +7887,7 @@ public sealed class PlayerObject : MapObject
 
     public void SwitchStance(byte 姿态编号, byte 触发动作)
     {
-        if (Config.安全区收刀开关 != 1 || Config.CurrentVersion < 2)
+        if (!Config.安全区收刀开关 || Config.CurrentVersion < 2)
         {
             return;
         }
@@ -11153,7 +11153,7 @@ public sealed class PlayerObject : MapObject
                     }
                     break;
                 case 848202000:
-                    if (Config.购买狂暴之力 == 1)
+                    if (Config.购买狂暴之力)
                     {
                         if (选项编号 != 1)
                         {
@@ -11258,7 +11258,7 @@ public sealed class PlayerObject : MapObject
                     }
                     break;
                 case 848203000:
-                    if (Config.会员满血设置 == 1)
+                    if (Config.会员满血设置)
                     {
                         if (CurrentMap.IsSafeArea(CurrentPosition))
                         {
@@ -11273,7 +11273,7 @@ public sealed class PlayerObject : MapObject
                     }
                     break;
                 case 848204000:
-                    if (Config.全屏拾取开关 == 1)
+                    if (Config.全屏拾取开关)
                     {
                         if (Character.全屏拾取开关.V == 0)
                         {
@@ -12546,7 +12546,7 @@ public sealed class PlayerObject : MapObject
                             Description = 全部货币描述()
                         });
                         v7.RandomStats.SetValue(EquipmentStats.生成属性(v7.Type, 重铸装备: true));
-                        if (Character.幸运项链保底.V >= Config.幸运洗练次数保底 && 重铸部位 == 8 && Config.CurrentVersion >= 1 && Config.幸运保底开关 == 1)
+                        if (Character.幸运项链保底.V >= Config.幸运洗练次数保底 && 重铸部位 == 8 && Config.CurrentVersion >= 1 && Config.幸运保底开关)
                         {
                             Character.幸运项链保底.V = 0;
                             v7.RandomStats.SetValue(EquipmentStats.生成属性1(v7.Type, 重铸装备: true));
@@ -12563,7 +12563,7 @@ public sealed class PlayerObject : MapObject
                             对象编号 = CurrentNPC.ObjectID,
                             交互文本 = NpcDialog.合并数据(对话页面, "<#P1:" + v7.StatDescription + ">")
                         });
-                        if (重铸部位 == 8 && Config.CurrentVersion >= 1 && Config.幸运保底开关 == 1)
+                        if (重铸部位 == 8 && Config.CurrentVersion >= 1 && Config.幸运保底开关)
                         {
                             Character.幸运项链保底.V++;
                         }
@@ -26338,7 +26338,7 @@ public sealed class PlayerObject : MapObject
                     ObjectID = player.ObjectID
                 });
             }
-            if (Config.安全区收刀开关 == 1 && Config.CurrentVersion >= 2 && CurrentMap.IsSafeArea(CurrentPosition))
+            if (Config.安全区收刀开关 && Config.CurrentVersion >= 2 && CurrentMap.IsSafeArea(CurrentPosition))
             {
                 if (GameSkill.DataSheet.TryGetValue("通用-玩家收起武器", out var value2))
                 {

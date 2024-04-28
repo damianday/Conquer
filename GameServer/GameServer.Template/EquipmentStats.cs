@@ -31,12 +31,12 @@ public sealed class EquipmentStats
             for (int i = 0; i < num2; i++)
             {
                 RandomStats 随机属性2 = value2[SEngine.Random.Next(value2.Length)];
-                if (!dictionary.ContainsKey(随机属性2.Stat) && value.ItemType == ItemType.Necklace && Config.幸运保底开关 == 1)
+                if (!dictionary.ContainsKey(随机属性2.Stat) && value.ItemType == ItemType.Necklace && Config.幸运保底开关)
                 {
                     dictionary[随机属性2.Stat] = 随机属性2;
                     continue;
                 }
-                if (!dictionary.ContainsKey(随机属性2.Stat) && Config.幸运保底开关 == 0)
+                if (!dictionary.ContainsKey(随机属性2.Stat) && !Config.幸运保底开关)
                 {
                     dictionary[随机属性2.Stat] = 随机属性2;
                     continue;
@@ -100,7 +100,7 @@ public sealed class EquipmentStats
             ProbabilityTable.TryGetValue((byte)部位, out var value2) && 
             value2.Length != 0 && 
             (重铸装备 || Compute.CalculateProbability(value.MaxProbability)) && 
-            value.ItemType == ItemType.Necklace && Config.幸运保底开关 == 1)
+            value.ItemType == ItemType.Necklace && Config.幸运保底开关)
         {
             int num = SEngine.Random.Next(100);
             Dictionary<Stat, RandomStats> dictionary = new Dictionary<Stat, RandomStats>();

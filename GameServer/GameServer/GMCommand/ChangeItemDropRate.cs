@@ -22,8 +22,8 @@ public sealed class ChangeItemDropRate : GMCommand
             SMain.AddCommandLog("<= @" + GetType().Name + " Failed to execute command. Rate multiplier is too high.");
             return;
         }
-        Settings.Default.ItemDropRate = (Config.ItemDropRate = DropRate);
-        Settings.Default.Save();
+        Config.ItemDropRate = DropRate;
+        Config.Save();
         SMain.Main.BeginInvoke((MethodInvoker)delegate
         {
             SMain.Main.S_ItemDropRate.Value = DropRate;

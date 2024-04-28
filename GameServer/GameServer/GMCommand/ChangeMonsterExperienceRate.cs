@@ -22,8 +22,8 @@ public sealed class ChangeMonsterExperienceRate : GMCommand
             SMain.AddCommandLog("<= @" + GetType().Name + " The command execution failed, and the experience multiplier was too high");
             return;
         }
-        Settings.Default.MonsterExperienceMultiplier = (Config.MonsterExperienceMultiplier = ExperienceRate);
-        Settings.Default.Save();
+        Config.MonsterExperienceMultiplier = ExperienceRate;
+        Config.Save();
         SMain.Main.BeginInvoke((MethodInvoker)delegate
         {
             SMain.Main.S_MonsterExperienceMultiplier.Value = ExperienceRate;

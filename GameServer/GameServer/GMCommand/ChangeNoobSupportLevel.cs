@@ -12,8 +12,8 @@ public sealed class ChangeNoobSupportLevel : GMCommand
 
     public override void ExecuteCommand()
     {
-        Settings.Default.NoobSupportLevel = (Config.NoobSupportLevel = Level);
-        Settings.Default.Save();
+        Config.NoobSupportLevel = Level;
+        Config.Save();
         SMain.Main.BeginInvoke((MethodInvoker)delegate
         {
             SMain.Main.S_NoobSupportLevel.Value = Level;
