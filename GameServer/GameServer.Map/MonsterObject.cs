@@ -395,7 +395,7 @@ public sealed class MonsterObject : MapObject
             (attacker as PlayerObject)?.玩家杀怪增加();
         }
         
-        if (GetKillOwner(out var hitter))
+        if (SelectHitter(out var hitter))
         {
             if (CurrentMap.MapID == 80 && Config.屠魔爆率开关 == 0)
             {
@@ -623,22 +623,22 @@ public sealed class MonsterObject : MapObject
         float ratio = Compute.CalculateLevelRatio(hitter.CurrentLevel, CurrentLevel);
         int goldCount = 0;
         int itemCount = 0;
-        if (ratio < 1f && Config.DropRateModifier == 0)
+        if (/*ratio < 1f &&*/ Config.DropRateModifier == 0)
         {
             foreach (MonItemInfo drop in Drops)
             {
                 if (CurrentDropSet != drop.DropSet) continue;
 
-                if (!GameItem.DataSheetByName.TryGetValue(drop.Name, out var item) || 
+                if (!GameItem.DataSheetByName.TryGetValue(drop.Name, out var item) /*|| 
                     Compute.CalculateProbability(ratio) || 
                     (hitter.CurrentDegree == 0 && Grade != MonsterGradeType.Boss && item.Type != ItemType.可用药剂 && Compute.CalculateProbability(0.5f)) || 
-                    (hitter.CurrentDegree == 3 && Grade != MonsterGradeType.Boss && item.Type != ItemType.可用药剂 && Compute.CalculateProbability(0.25f)))
+                    (hitter.CurrentDegree == 3 && Grade != MonsterGradeType.Boss && item.Type != ItemType.可用药剂 && Compute.CalculateProbability(0.25f))*/)
                 {
                     continue;
                 }
 
                 int chance = Math.Max(1, drop.MaxPoint - (int)Math.Round((decimal)drop.MaxPoint * Config.ItemDropRate));
-                if (drop.SelPoint >= SEngine.Random.Next(chance))
+                if (drop.SelPoint < SEngine.Random.Next(chance))
                     continue;
 
                 int amount = SEngine.Random.Next(drop.MinAmount, drop.MaxAmount + 1);
@@ -707,7 +707,7 @@ public sealed class MonsterObject : MapObject
                 }
 
                 int chance = Math.Max(1, drop.MaxPoint - (int)Math.Round((decimal)drop.MaxPoint * Config.ItemDropRate));
-                if (drop.SelPoint >= SEngine.Random.Next(chance))
+                if (drop.SelPoint < SEngine.Random.Next(chance))
                     continue;
 
                 int amount = SEngine.Random.Next(drop.MinAmount, drop.MaxAmount + 1);
@@ -1815,7 +1815,7 @@ public sealed class MonsterObject : MapObject
         Target.TargetList.Clear();
     }
 
-    public bool GetKillOwner(out PlayerObject hitter)
+    public bool SelectHitter(out PlayerObject hitter)
     {
         foreach (var kvp in Target.TargetList.ToList())
         {
