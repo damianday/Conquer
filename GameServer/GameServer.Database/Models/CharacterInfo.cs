@@ -545,6 +545,21 @@ public sealed class CharacterInfo : DBObject
         }
     }
 
+    public int Silver
+    {
+        get
+        {
+            if (Currencies.TryGetValue(CurrencyType.Silver, out var v))
+                return v;
+            return 0;
+        }
+        set
+        {
+            Currencies[CurrencyType.Silver] = value;
+            //SMain.UpdateCharacter(this, "Silver", value); // No column for silver :)
+        }
+    }
+
     public int Gold
     {
         get

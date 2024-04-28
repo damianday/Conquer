@@ -504,6 +504,19 @@ public sealed class PlayerObject : MapObject
 
     public int MaxExperience => CharacterProgression.MaxExpTable[CurrentLevel];
 
+    public int Silver
+    {
+        get { return Character.Silver; }
+        set
+        {
+            if (Character.Silver != value)
+            {
+                Character.Silver = value;
+                Enqueue(new SyncCurrencyPacket { Currency = 0, Amount = value });
+            }
+        }
+    }
+
     public int Gold
     {
         get { return Character.Gold; }
@@ -16886,13 +16899,18 @@ public sealed class PlayerObject : MapObject
             });
             return;
         }
-        if (item.ItemID == 1)
+        if (item.ItemID == 0 || item.ItemID == 1)
         {
-            Enqueue(new 玩家拾取金币
+            Enqueue(new UserPickUpCoinPacket
             {
                 Amount = item.Quantity
             });
-            Gold += item.Quantity;
+
+            if (item.ItemID == 0)
+                Silver += item.Quantity;
+            if (item.ItemID == 1)
+                Gold += item.Quantity;
+
             Enqueue(new 同步货币数量
             {
                 Description = 全部货币描述()
