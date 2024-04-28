@@ -353,7 +353,7 @@ public sealed class SConnection
 
     public void Process(客户进入法阵 P)
     {
-        if (Config.法阵卡BUG清理 == 1 && Stage != GameStage.Game)
+        /*if (Config.法阵卡BUG清理 == 1 && Stage != GameStage.Game)
         {
             Config.法阵卡BUG清理 = 0;
             Player.EnterScene();
@@ -366,6 +366,15 @@ public sealed class SConnection
         else
         {
             Player.EnterTeleportGate(P.法阵编号);
+        }*/
+
+        if (Stage == GameStage.Loading || Stage == GameStage.Game)
+        {
+            Player.EnterTeleportGate(P.法阵编号);
+        }
+        else
+        {
+            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
     }
 

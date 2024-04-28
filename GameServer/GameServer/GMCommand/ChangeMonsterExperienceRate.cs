@@ -1,5 +1,4 @@
 using System.Windows.Forms;
-using GameServer.Properties;
 
 namespace GameServer;
 
@@ -24,7 +23,7 @@ public sealed class ChangeMonsterExperienceRate : GMCommand
         }
         Config.MonsterExperienceMultiplier = ExperienceRate;
         Config.Save();
-        SMain.Main.BeginInvoke((MethodInvoker)delegate
+        SMain.Main.BeginInvoke(() =>
         {
             SMain.Main.S_MonsterExperienceMultiplier.Value = ExperienceRate;
         });

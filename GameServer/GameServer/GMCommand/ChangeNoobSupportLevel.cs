@@ -1,5 +1,4 @@
 using System.Windows.Forms;
-using GameServer.Properties;
 
 namespace GameServer;
 
@@ -14,7 +13,7 @@ public sealed class ChangeNoobSupportLevel : GMCommand
     {
         Config.NoobSupportLevel = Level;
         Config.Save();
-        SMain.Main.BeginInvoke((MethodInvoker)delegate
+        SMain.Main.BeginInvoke(() =>
         {
             SMain.Main.S_NoobSupportLevel.Value = Level;
         });

@@ -10,7 +10,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using GameServer.Properties;
 using GameServer.Map;
 using GameServer.Database;
 using GameServer.Template;

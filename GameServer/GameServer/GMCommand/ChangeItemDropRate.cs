@@ -1,5 +1,4 @@
 using System.Windows.Forms;
-using GameServer.Properties;
 
 namespace GameServer;
 
@@ -24,7 +23,7 @@ public sealed class ChangeItemDropRate : GMCommand
         }
         Config.ItemDropRate = DropRate;
         Config.Save();
-        SMain.Main.BeginInvoke((MethodInvoker)delegate
+        SMain.Main.BeginInvoke(() =>
         {
             SMain.Main.S_ItemDropRate.Value = DropRate;
         });

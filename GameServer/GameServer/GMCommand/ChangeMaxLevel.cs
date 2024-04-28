@@ -1,5 +1,4 @@
 using System.Windows.Forms;
-using GameServer.Properties;
 
 namespace GameServer;
 
@@ -19,7 +18,7 @@ public sealed class ChangeMaxLevel : GMCommand
         }
         Config.MaxUserLevel = MaxLevel;
         Config.Save();
-        SMain.Main.BeginInvoke((MethodInvoker)delegate
+        SMain.Main.BeginInvoke(() =>
         {
             SMain.Main.S_MaxUserLevel.Value = MaxLevel;
         });
