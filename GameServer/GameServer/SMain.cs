@@ -64,7 +64,7 @@ public partial class SMain : Form
         MapDataTable.Columns.Add("怪物复活次数", typeof(uint));
         MapDataTable.Columns.Add("怪物掉落次数", typeof(long));
         MapDataTable.Columns.Add("金币掉落总数", typeof(long));
-        Main?.地图浏览表.BeginInvoke((MethodInvoker)delegate
+        Main?.地图浏览表.BeginInvoke(() =>
         {
             Main.地图浏览表.DataSource = MapDataTable;
         });
@@ -80,7 +80,7 @@ public partial class SMain : Form
         MonsterDataTable.Columns.Add("漫游间隔", typeof(string));
         MonsterDataTable.Columns.Add("仇恨范围", typeof(string));
         MonsterDataTable.Columns.Add("仇恨时长", typeof(string));
-        Main?.怪物浏览表.BeginInvoke((MethodInvoker)delegate
+        Main?.怪物浏览表.BeginInvoke(() =>
         {
             Main.怪物浏览表.DataSource = MonsterDataTable;
         });
@@ -88,7 +88,7 @@ public partial class SMain : Form
         怪物掉落表 = new Dictionary<MonsterInfo, List<KeyValuePair<GameItem, long>>>();
         DropDataTable.Columns.Add("物品名字", typeof(string));
         DropDataTable.Columns.Add("掉落数量", typeof(string));
-        Main?.掉落浏览表.BeginInvoke((MethodInvoker)delegate
+        Main?.掉落浏览表.BeginInvoke(() =>
         {
             Main.掉落浏览表.DataSource = DropDataTable;
         });
@@ -140,7 +140,7 @@ public partial class SMain : Form
         RoleDataTable.Columns.Add("当前坐标", typeof(string));
         RoleDataTable.Columns.Add("当前PK值", typeof(string));
         RoleDataTable.Columns.Add("激活标识", typeof(string));
-        Main?.BeginInvoke((MethodInvoker)delegate
+        Main?.BeginInvoke(() =>
         {
             Main.角色浏览表.DataSource = RoleDataTable;
             for (int i = 0; i < Main.角色浏览表.Columns.Count; i++)
@@ -153,28 +153,28 @@ public partial class SMain : Form
         SkillsDataTable.Columns.Add("技能编号", typeof(string));
         SkillsDataTable.Columns.Add("当前等级", typeof(string));
         SkillsDataTable.Columns.Add("当前经验", typeof(string));
-        Main?.BeginInvoke((MethodInvoker)delegate
+        Main?.BeginInvoke(() =>
         {
             Main.技能浏览表.DataSource = SkillsDataTable;
         });
         角色装备表 = new Dictionary<CharacterInfo, List<KeyValuePair<byte, EquipmentInfo>>>();
         EquipmentDataTable.Columns.Add("穿戴部位", typeof(string));
         EquipmentDataTable.Columns.Add("穿戴装备", typeof(string));
-        Main?.BeginInvoke((MethodInvoker)delegate
+        Main?.BeginInvoke(() =>
         {
             Main.装备浏览表.DataSource = EquipmentDataTable;
         });
         角色背包表 = new Dictionary<CharacterInfo, List<KeyValuePair<byte, ItemInfo>>>();
         InventoryDataTable.Columns.Add("背包位置", typeof(string));
         InventoryDataTable.Columns.Add("背包物品", typeof(string));
-        Main?.BeginInvoke((MethodInvoker)delegate
+        Main?.BeginInvoke(() =>
         {
             Main.背包浏览表.DataSource = InventoryDataTable;
         });
         角色仓库表 = new Dictionary<CharacterInfo, List<KeyValuePair<byte, ItemInfo>>>();
         WarehouseDataTable.Columns.Add("仓库位置", typeof(string));
         WarehouseDataTable.Columns.Add("仓库物品", typeof(string));
-        Main?.BeginInvoke((MethodInvoker)delegate
+        Main?.BeginInvoke(() =>
         {
             Main.仓库浏览表.DataSource = WarehouseDataTable;
         });
@@ -183,7 +183,7 @@ public partial class SMain : Form
         BlockingDataTable.Columns.Add("网络地址", typeof(string));
         BlockingDataTable.Columns.Add("物理地址", typeof(string));
         BlockingDataTable.Columns.Add("到期时间", typeof(string));
-        Main?.BeginInvoke((MethodInvoker)delegate
+        Main?.BeginInvoke(() =>
         {
             Main.封禁浏览表.DataSource = BlockingDataTable;
         });
@@ -194,7 +194,7 @@ public partial class SMain : Form
 
     public static void OnStartServiceCompleted()
     {
-        Main?.BeginInvoke((MethodInvoker)delegate
+        Main?.BeginInvoke(() =>
         {
             Main.定时发送公告.Enabled = true;
             Main.UIUpdateTimer.Enabled = true;
@@ -206,7 +206,7 @@ public partial class SMain : Form
 
     public static void OnStopServiceCompleted()
     {
-        Main?.BeginInvoke((MethodInvoker)delegate
+        Main?.BeginInvoke(() =>
         {
             Main.定时发送公告.Enabled = true;
             Main.SettingsPage.Enabled = true;
@@ -231,7 +231,7 @@ public partial class SMain : Form
 
     public static void AddSystemLog(string message)
     {
-        Main?.BeginInvoke((MethodInvoker)delegate
+        Main?.BeginInvoke(() =>
         {
             Main.SystemLogsTextBox.AppendText($"[{DateTime.Now:F}]: {message}" + "\r\n");
             Main.SystemLogsTextBox.ScrollToCaret();
@@ -242,7 +242,7 @@ public partial class SMain : Form
 
     public static void AddChatLog(string tag, byte[] message)
     {
-        Main?.BeginInvoke((MethodInvoker)delegate
+        Main?.BeginInvoke(() =>
         {
             Main.ChatLogsTextBox.AppendText($"[{DateTime.Now:F}]: {tag + Encoding.UTF8.GetString(message).Trim(default(char))}" + "\r\n");
             Main.ChatLogsTextBox.ScrollToCaret();
@@ -253,7 +253,7 @@ public partial class SMain : Form
 
     public static void AddCommandLog(string message)
     {
-        Main?.BeginInvoke((MethodInvoker)delegate
+        Main?.BeginInvoke(() =>
         {
             Main.CommandLogsTextBox.AppendText($"[{DateTime.Now:F}]: {message}" + "\r\n");
             Main.CommandLogsTextBox.ScrollToCaret();
@@ -263,7 +263,7 @@ public partial class SMain : Form
 
     public static void UpdateStats()
     {
-        Main?.BeginInvoke((MethodInvoker)delegate
+        Main?.BeginInvoke(() =>
         {
             Main.StatTotalConnections.Text = $"Total Connections: {NetworkManager.Connections.Count}";
             Main.StatLoggedInConnections.Text = $"Already Logged in: {NetworkManager.ActiveConnections}";
@@ -277,7 +277,7 @@ public partial class SMain : Form
 
     public static void 更新连接总数(uint count)
     {
-        Main?.BeginInvoke((MethodInvoker)delegate
+        Main?.BeginInvoke(() =>
         {
             Main.StatTotalConnections.Text = $"Total Connections: {count}";
         });
@@ -285,7 +285,7 @@ public partial class SMain : Form
 
     public static void 更新已经登录(uint count)
     {
-        Main?.BeginInvoke((MethodInvoker)delegate
+        Main?.BeginInvoke(() =>
         {
             Main.StatLoggedInConnections.Text = $"Already Logged in: {count}";
         });
@@ -293,7 +293,7 @@ public partial class SMain : Form
 
     public static void 更新已经上线(uint 内容, uint 内容1, uint 内容2)
     {
-        Main?.BeginInvoke((MethodInvoker)delegate
+        Main?.BeginInvoke(() =>
         {
             Main.StatLiveConnections.Text = $"Now Online: {内容}/{内容1}/{内容2}";
         });
@@ -301,7 +301,7 @@ public partial class SMain : Form
 
     public static void UpdateCycleCount(uint count)
     {
-        Main?.BeginInvoke((MethodInvoker)delegate
+        Main?.BeginInvoke(() =>
         {
             Main.CycleCountLabel.Text = $"Cycle Count: {count}";
         });
@@ -309,7 +309,7 @@ public partial class SMain : Form
 
     public static void 更新接收字节(long 内容)
     {
-        Main?.BeginInvoke((MethodInvoker)delegate
+        Main?.BeginInvoke(() =>
         {
             Main.StatReceived.Text = $"Received: {内容}";
         });
@@ -317,7 +317,7 @@ public partial class SMain : Form
 
     public static void 更新发送字节(long 内容)
     {
-        Main?.BeginInvoke((MethodInvoker)delegate
+        Main?.BeginInvoke(() =>
         {
             Main.StatSent.Text = $"Sent: {内容}";
         });
@@ -325,7 +325,7 @@ public partial class SMain : Form
 
     public static void 更新对象统计(int 激活对象, int 次要对象, int 对象总数)
     {
-        Main?.BeginInvoke((MethodInvoker)delegate
+        Main?.BeginInvoke(() =>
         {
             Main.StatObjectsStatistics.Text = $"Objects Statistics: {激活对象} / {次要对象} / {对象总数}";
         });
@@ -350,7 +350,7 @@ public partial class SMain : Form
 
     public static void 添加角色数据(CharacterInfo character)
     {
-        Main?.BeginInvoke((MethodInvoker)delegate
+        Main?.BeginInvoke(() =>
         {
             if (!RoleDataRows.ContainsKey(character))
             {
@@ -397,7 +397,7 @@ public partial class SMain : Form
 
     public static void 移除角色数据(CharacterInfo 角色)
     {
-        Main?.BeginInvoke((MethodInvoker)delegate
+        Main?.BeginInvoke(() =>
         {
             if (RoleDataRows.TryGetValue(角色, out var value))
             {
@@ -491,7 +491,7 @@ public partial class SMain : Form
 
     public static void UpdateCharacter(CharacterInfo character, string key, object value)
     {
-        Main?.BeginInvoke((MethodInvoker)delegate
+        Main?.BeginInvoke(() =>
         {
             if (RoleDataRows.TryGetValue(character, out var row))
             {
@@ -502,7 +502,7 @@ public partial class SMain : Form
 
     public static void 更新角色技能(CharacterInfo 角色, List<KeyValuePair<ushort, SkillInfo>> 技能)
     {
-        Main?.BeginInvoke((MethodInvoker)delegate
+        Main?.BeginInvoke(() =>
         {
             角色技能表[角色] = 技能;
         });
@@ -510,7 +510,7 @@ public partial class SMain : Form
 
     public static void 更新角色装备(CharacterInfo 角色, List<KeyValuePair<byte, EquipmentInfo>> 装备)
     {
-        Main?.BeginInvoke((MethodInvoker)delegate
+        Main?.BeginInvoke(() =>
         {
             角色装备表[角色] = 装备;
         });
@@ -518,7 +518,7 @@ public partial class SMain : Form
 
     public static void 更新角色背包(CharacterInfo 角色, List<KeyValuePair<byte, ItemInfo>> 物品)
     {
-        Main?.BeginInvoke((MethodInvoker)delegate
+        Main?.BeginInvoke(() =>
         {
             角色背包表[角色] = 物品;
         });
@@ -526,7 +526,7 @@ public partial class SMain : Form
 
     public static void 更新角色仓库(CharacterInfo 角色, List<KeyValuePair<byte, ItemInfo>> 物品)
     {
-        Main?.BeginInvoke((MethodInvoker)delegate
+        Main?.BeginInvoke(() =>
         {
             角色仓库表[角色] = 物品;
         });
@@ -534,7 +534,7 @@ public partial class SMain : Form
 
     public static void 添加地图数据(Map.Map 地图)
     {
-        Main?.BeginInvoke((MethodInvoker)delegate
+        Main?.BeginInvoke(() =>
         {
             if (!地图数据行.ContainsKey(地图.MapInfo))
             {
@@ -556,7 +556,7 @@ public partial class SMain : Form
 
     public static void 更新地图数据(Map.Map 地图, string 表头, object 内容)
     {
-        Main?.BeginInvoke((MethodInvoker)delegate
+        Main?.BeginInvoke(() =>
         {
             if (地图数据行.TryGetValue(地图.MapInfo, out var value))
             {
@@ -580,7 +580,7 @@ public partial class SMain : Form
 
     public static void 添加怪物数据(MonsterInfo 怪物)
     {
-        Main?.BeginInvoke((MethodInvoker)delegate
+        Main?.BeginInvoke(() =>
         {
             if (!怪物数据行.ContainsKey(怪物))
             {
@@ -602,7 +602,7 @@ public partial class SMain : Form
 
     public static void 更新掉落统计(MonsterInfo 怪物, List<KeyValuePair<GameItem, long>> 物品)
     {
-        Main?.BeginInvoke((MethodInvoker)delegate
+        Main?.BeginInvoke(() =>
         {
             怪物掉落表[怪物] = 物品;
         });
@@ -610,7 +610,7 @@ public partial class SMain : Form
 
     public static void 添加封禁数据(string 地址, object 时间, bool 网络地址 = true)
     {
-        Main?.BeginInvoke((MethodInvoker)delegate
+        Main?.BeginInvoke(() =>
         {
             if (!封禁数据行.ContainsKey(地址))
             {
@@ -626,7 +626,7 @@ public partial class SMain : Form
 
     public static void 更新封禁数据(string 地址, object 时间, bool 网络地址 = true)
     {
-        Main?.BeginInvoke((MethodInvoker)delegate
+        Main?.BeginInvoke(() =>
         {
             if (封禁数据行.TryGetValue(地址, out var value))
             {
@@ -644,7 +644,7 @@ public partial class SMain : Form
 
     public static void 移除封禁数据(string 地址)
     {
-        Main?.BeginInvoke((MethodInvoker)delegate
+        Main?.BeginInvoke(() =>
         {
             if (封禁数据行.TryGetValue(地址, out var value))
             {
@@ -1687,14 +1687,14 @@ public partial class SMain : Form
         Task.Run(delegate
         {
             Thread.Sleep(100);
-            BeginInvoke((MethodInvoker)delegate
+            BeginInvoke(() =>
             {
                 SettingsPage.Enabled = false;
                 下方控件页.Enabled = false;
             });
             LoadSystemData();
             LoadUserData();
-            BeginInvoke((MethodInvoker)delegate
+            BeginInvoke(() =>
             {
                 UIUpdateTimer.Tick += ProcessUpdateUI;
                 角色浏览表.SelectionChanged += ProcessUpdateUI;
@@ -1755,7 +1755,7 @@ public partial class SMain : Form
         Task.Run(delegate
         {
             LoadSystemData();
-            BeginInvoke((MethodInvoker)delegate
+            BeginInvoke(() =>
             {
                 SettingsPage.Enabled = true;
                 下方控件页.Enabled = true;
@@ -1770,7 +1770,7 @@ public partial class SMain : Form
         Task.Run(delegate
         {
             LoadUserData();
-            BeginInvoke((MethodInvoker)delegate
+            BeginInvoke(() =>
             {
                 SettingsPage.Enabled = true;
                 下方控件页.Enabled = true;
