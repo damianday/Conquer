@@ -25,6 +25,7 @@ public static class SEngine
     public static Thread MainThread;
 
     public static Random Random;
+    public static MsgFilter Abuse;
 
 
     static SEngine()
@@ -33,6 +34,7 @@ public static class SEngine
         OneSecondTime = CurrentTime.AddSeconds(1.0);
         NextSaveDataTime = CurrentTime.AddMinutes(Config.AutoSaveInterval);
         Random = new Random();
+        Abuse = new MsgFilter();
     }
 
     public static void StartService()
@@ -119,6 +121,11 @@ public static class SEngine
         try
         {
             ExternalCommands = new ConcurrentQueue<GMCommand>();
+
+            SMain.AddSystemLog("Loading Abuse...");
+            if (Abuse.Load("!Abuse.txt"))
+                SMain.AddSystemLog("!Abuse.txt loaded..");
+
             SMain.AddSystemLog("Loading maps...");
             MapManager.Initialize();
             SMain.AddSystemLog("The network service is being started...");

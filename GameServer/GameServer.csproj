@@ -15,6 +15,7 @@
 	</PropertyGroup>
 	<ItemGroup>
 	  <Compile Include="..\Common\DB.cs" Link="DB.cs" />
+	  <Compile Include="..\Common\MsgFilter.cs" Link="MsgFilter.cs" />
 	  <Compile Include="..\Common\SqlReaderExtension.cs" Link="SqlReaderExtension.cs" />
 	</ItemGroup>
 

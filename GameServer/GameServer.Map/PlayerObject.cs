@@ -25997,6 +25997,18 @@ public sealed class PlayerObject : MapObject
         }
     }
 
+    public void UserFilterMessage(ushort param1, byte[] data)
+    {
+        var message = Encoding.UTF8.GetString(data).Trim('\0');
+
+        if (SEngine.Abuse.IsAbusive(message))
+        {
+            // Ask client to block word..
+            //Enqueue(new SocialErrorPacket { ErrorCode = 4868 });
+            return;
+        }
+    }
+
     public void 玩家添加关注(int 对象编号, string 对象名字)
     {
         DBObject value2;
