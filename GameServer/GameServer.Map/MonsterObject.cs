@@ -128,7 +128,7 @@ public sealed class MonsterObject : MapObject
     public MonsterRaceType Race => Info.Race;
     public MonsterGradeType Grade => Info.Grade;
 
-    public List<MonsterDrop> Drops => Info.Drops;
+    public List<MonItemInfo> Drops => Info.Drops;
     public ushort MonID => Info.ID;
     public int Experience => Info.ProvideExperience;
 
@@ -154,6 +154,7 @@ public sealed class MonsterObject : MapObject
     public bool CanBeSeducedBySkills => Info.CanBeSeducedBySkills;
     public float BaseTemptationProbability => Info.BaseTemptationProbability;
     public bool ActiveAttackTarget => Info.ActiveAttackTarget;
+    public int CurrentDropSet = 0;
 
     public MonsterObject(PetObject obj)
     {
@@ -619,23 +620,25 @@ public sealed class MonsterObject : MapObject
             members.Add(hitter.Character);
         }
 
-        float chance = Compute.CalculateLevelRatio(hitter.CurrentLevel, CurrentLevel);
+        float ratio = Compute.CalculateLevelRatio(hitter.CurrentLevel, CurrentLevel);
         int goldCount = 0;
         int itemCount = 0;
-        if (chance < 1f && Config.DropRateModifier == 0)
+        if (ratio < 1f && Config.DropRateModifier == 0)
         {
-            foreach (MonsterDrop drop in Drops)
+            foreach (MonItemInfo drop in Drops)
             {
+                if (CurrentDropSet != drop.DropSet) continue;
+
                 if (!GameItem.DataSheetByName.TryGetValue(drop.Name, out var item) || 
-                    Compute.CalculateProbability(chance) || 
+                    Compute.CalculateProbability(ratio) || 
                     (hitter.CurrentDegree == 0 && Grade != MonsterGradeType.Boss && item.Type != ItemType.可用药剂 && Compute.CalculateProbability(0.5f)) || 
                     (hitter.CurrentDegree == 3 && Grade != MonsterGradeType.Boss && item.Type != ItemType.可用药剂 && Compute.CalculateProbability(0.25f)))
                 {
                     continue;
                 }
 
-                int num13 = Math.Max(1, drop.Probability - (int)Math.Round((decimal)drop.Probability * Config.ItemDropRate));
-                if (SEngine.Random.Next(num13) != num13 / 2)
+                int chance = Math.Max(1, drop.MaxPoint - (int)Math.Round((decimal)drop.MaxPoint * Config.ItemDropRate));
+                if (drop.SelPoint >= SEngine.Random.Next(chance))
                     continue;
 
                 int amount = SEngine.Random.Next(drop.MinAmount, drop.MaxAmount + 1);
@@ -666,7 +669,7 @@ public sealed class MonsterObject : MapObject
             }
         }
 
-        if (chance < 1f && Config.DropRateModifier == 1 && Config.CurrentVersion >= 1)
+        if (ratio < 1f && Config.DropRateModifier == 1 && Config.CurrentVersion >= 1)
         {
             int num15 = 0;
             int num16 = 0;
@@ -690,10 +693,12 @@ public sealed class MonsterObject : MapObject
             int num34 = 0;
             int num35 = 0;
 
-            foreach (MonsterDrop drop in Drops)
+            foreach (MonItemInfo drop in Drops)
             {
+                if (CurrentDropSet != drop.DropSet) continue;
+
                 if (!GameItem.DataSheetByName.TryGetValue(drop.Name, out var item) || 
-                    Compute.CalculateProbability(chance) || 
+                    Compute.CalculateProbability(ratio) || 
                     (hitter.CurrentDegree == 0 && Grade != MonsterGradeType.Boss && item.Type != ItemType.可用药剂 && Compute.CalculateProbability(0.5f)) || 
                     (hitter.CurrentDegree == 3 && Grade != MonsterGradeType.Boss && item.Type != ItemType.可用药剂 && Compute.CalculateProbability(0.25f)) || 
                     (num15 == 1000 && drop.爆率分组 == 1000) || (num16 == 1001 && drop.爆率分组 == 1001) || (num17 == 1002 && drop.爆率分组 == 1002) || (num18 == 1003 && drop.爆率分组 == 1003) || (num19 == 1004 && drop.爆率分组 == 1004) || (num20 == 1005 && drop.爆率分组 == 1005) || (num21 == 1006 && drop.爆率分组 == 1006) || (num22 == 1007 && drop.爆率分组 == 1007) || (num23 == 1008 && drop.爆率分组 == 1008) || (num24 == 1009 && drop.爆率分组 == 1009) || (num25 == 1010 && drop.爆率分组 == 1010) || (num26 == 1011 && drop.爆率分组 == 1011) || (num27 == 1012 && drop.爆率分组 == 1012) || (num28 == 1013 && drop.爆率分组 == 1013) || (num29 == 1014 && drop.爆率分组 == 1014) || (num30 == 1015 && drop.爆率分组 == 1015) || (num31 == 1016 && drop.爆率分组 == 1016) || (num32 == 1017 && drop.爆率分组 == 1017) || (num33 == 1018 && drop.爆率分组 == 1018) || (num34 == 1019 && drop.爆率分组 == 1019) || (num35 == 1020 && drop.爆率分组 == 1020))
@@ -701,8 +706,8 @@ public sealed class MonsterObject : MapObject
                     continue;
                 }
 
-                int num36 = Math.Max(1, drop.Probability - (int)Math.Round((decimal)drop.Probability * Config.ItemDropRate));
-                if (SEngine.Random.Next(num36) != num36 / 2)
+                int chance = Math.Max(1, drop.MaxPoint - (int)Math.Round((decimal)drop.MaxPoint * Config.ItemDropRate));
+                if (drop.SelPoint >= SEngine.Random.Next(chance))
                     continue;
 
                 int amount = SEngine.Random.Next(drop.MinAmount, drop.MaxAmount + 1);
