@@ -31,6 +31,8 @@ public sealed class MonsterInfo
 
     public string MonsterName;
     public ushort ID;
+    public ushort GroupID;
+    public ushort DropGroupID;
     public byte Level;
     public ObjectSize Size;
     public MonsterRaceType Race;
@@ -69,7 +71,7 @@ public sealed class MonsterInfo
     public List<GrowthStat> Grows;
     public List<InheritStat> InheritedStats;
     
-    public List<MonsterDrop> Drops = new List<MonsterDrop>();
+    public List<MonItemInfo> Drops = new List<MonItemInfo>();
     public Dictionary<GameItem, long> DropStats = new Dictionary<GameItem, long>();
 
 
@@ -110,6 +112,48 @@ public sealed class MonsterInfo
         }
     }
 
+    private static int LoadMonItems(ushort id, List<MonItemInfo> items)
+    {
+        var error = -1;
+
+        try
+        {
+            var qstr = "SELECT * FROM MonItem WHERE GroupID=@GroupID";
+
+            using var connection = DBAgent.X.DB.GetConnection();
+            using var command = connection.CreateCommand();
+            command.CommandText = qstr;
+            command.Parameters.AddWithValue("@GroupID", id);
+
+            using var reader = command.ExecuteReader();
+
+            if (reader != null)
+            {
+                error = 0;
+                while (reader.Read() == true)
+                {
+                    var mi = new MonItemInfo();
+                    //mi.ItemID = reader.GetInt32("ItemID");
+                    mi.Name = reader.GetString("ItemName");
+                    mi.SelPoint = reader.GetInt32("SelPoint");
+                    mi.MaxPoint = reader.GetInt32("MaxPoint");
+                    mi.MinAmount = reader.GetInt32("MinAmount");
+                    mi.MaxAmount = reader.GetInt32("MaxAmount");
+                    mi.DropSet = reader.GetInt32("DropSet");
+
+                    items.Add(mi);
+                    error++;
+                }
+            }
+        }
+        catch (Exception err)
+        {
+            SMain.AddSystemLog(err.ToString());
+            error = -2;
+        }
+        return error;
+    }
+
     public static void LoadData()
     {
         DataSheet = new Dictionary<string, MonsterInfo>();
@@ -145,6 +189,8 @@ public sealed class MonsterInfo
                             var monster = new MonsterInfo();
                             monster.MonsterName = reader.GetString("MonsterName");
                             monster.ID = reader.GetUInt16("ID");
+                            monster.GroupID = reader.GetUInt16("GroupID");
+                            monster.DropGroupID = reader.GetUInt16("DropGroupID");
                             monster.Level = reader.GetByte("Level");
                             monster.Size = (ObjectSize)reader.GetInt32("Size");
                             monster.Race = (MonsterRaceType)reader.GetInt32("Race");
@@ -194,6 +240,8 @@ public sealed class MonsterInfo
                             monster.Stats[Stat.PhysicalAccuracy] = reader.GetInt32("PhysicalAccuracy");
                             monster.Stats[Stat.PhysicalAgility] = reader.GetInt32("PhysicalAgility");
                             monster.Stats[Stat.MagicEvade] = reader.GetInt32("MagicEvade");
+
+                            LoadMonItems(monster.DropGroupID, monster.Drops);
 
                             DataSheet.Add(monster.MonsterName, monster);
                         }
