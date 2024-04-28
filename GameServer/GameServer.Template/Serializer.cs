@@ -13,7 +13,6 @@ namespace GameServer.Template;
 public static class Serializer
 {
     private static readonly JsonSerializerSettings Settings;
-
     private static readonly Dictionary<string, string> Replacements;
 
     static Serializer()
@@ -26,14 +25,11 @@ public static class Serializer
             Formatting = Formatting.Indented
         };
         Replacements = new Dictionary<string, string> { ["Assembly-CSharp"] = "GameServer" };
+
         var types = Assembly.GetExecutingAssembly().GetTypes();
         foreach (var type in types)
-        {
             if (type.IsSubclassOf(typeof(SkillTask)))
-            {
                 Replacements[type.Name] = type.FullName;
-            }
-        }
     }
 
     public static T[] Deserialize<T>(string path)
@@ -77,13 +73,5 @@ public static class Serializer
                 inflater.CopyTo(dest);
         }
         return dest.ToArray();
-    }
-
-    public static void BackupDirectory(string sourceDirectory, string fileName)
-    {
-        if (Directory.Exists(sourceDirectory))
-        {
-            new FastZip().CreateZip(fileName, sourceDirectory, recurse: false, "");
-        }
     }
 }
