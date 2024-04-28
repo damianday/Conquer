@@ -1,6 +1,4 @@
-﻿namespace GameServer;
-
-public enum MonsterGradeType
+﻿public enum MonsterGradeType
 {
     Normal = 3,             // 普通怪物
     Elite = 6,              // 精英干将

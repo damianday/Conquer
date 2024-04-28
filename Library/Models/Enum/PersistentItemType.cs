@@ -1,5 +1,3 @@
-namespace GameServer;
-
 public enum PersistentItemType
 {
     None,       // 无
