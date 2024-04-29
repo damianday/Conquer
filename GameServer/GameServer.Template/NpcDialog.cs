@@ -15,29 +15,21 @@ public sealed class NpcDialog
 
     public static byte[] GetBufferFromDialogID(int id)
     {
-        if (DataById.TryGetValue(id, out var value))
-        {
-            return value;
-        }
-        if (DataSheet.TryGetValue(id, out var value2))
-        {
-            return DataById[id] = Encoding.UTF8.GetBytes(value2 + "\0");
-        }
+        if (DataById.TryGetValue(id, out var buffer))
+            return buffer;
+
+        if (DataSheet.TryGetValue(id, out var text))
+            return DataById[id] = Encoding.UTF8.GetBytes(text + "\0");
+
         return new byte[0];
     }
 
-    public static byte[] 合并数据(int 对话编号, string 内容)
+    public static byte[] ConcatData(int id, string str)
     {
-        if (DataById.TryGetValue(对话编号, out var value))
-        {
-            return Encoding.UTF8.GetBytes(内容).Concat(value).ToArray();
-        }
-        if (DataSheet.TryGetValue(对话编号, out var value2))
-        {
-            byte[] bytes = Encoding.UTF8.GetBytes(内容);
-            byte[] array = (DataById[对话编号] = Encoding.UTF8.GetBytes(value2 + "\0"));
-            return bytes.Concat(array).ToArray();
-        }
+        var buffer = GetBufferFromDialogID(id);
+        if (buffer.Length > 0)
+            return Encoding.UTF8.GetBytes(str).Concat(buffer).ToArray();
+
         return new byte[0];
     }
 
