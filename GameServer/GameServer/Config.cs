@@ -973,7 +973,7 @@ public class Config
     public static int 充值平台切换 = 0;
     public static int 全服红包等级 = 30;
     public static int 全服红包时间 = 19;
-    public static int 全服红包货币类型 = 3;
+    public static int GlobalBonusCurrencyType = 3;
     public static int 全服红包货币数量 = 10000;
     public static int 龙卫蓝色词条概率 = 85;
     public static int 龙卫紫色词条概率 = 10;
