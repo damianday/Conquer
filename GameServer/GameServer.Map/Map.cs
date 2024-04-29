@@ -529,7 +529,7 @@ public sealed class Map
     public bool IsTerrainBlocked(Point start, Point end)
     {
         var distance = Compute.GetDistance(start, end);
-        for (var i = 1; i <= distance; i++)
+        for (var i = 0; i <= distance; i++)
         {
             if (!ValidTerrain(Compute.GetFrontPosition(start, end, i)))
                 return false;
