@@ -4,5 +4,5 @@ namespace GamePackets.Server;
 public sealed class 坐骑面板回执 : GamePacket
 {
     [FieldAttribute(Position = 2, Length = 1)]
-    public byte 坐骑编号;
+    public byte MountID;
 }
