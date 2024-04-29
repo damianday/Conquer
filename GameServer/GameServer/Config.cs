@@ -937,14 +937,14 @@ public class Config
     public static int 直升物品9 = 999999;
     public static int 充值模块格式 = 0;
     public static int DefaultSkillLevel = 0;
-    public static int AutoPickUpMap1 = -1;
-    public static int AutoPickUpMap2 = -1;
-    public static int AutoPickUpMap3 = -1;
-    public static int AutoPickUpMap4 = -1;
-    public static int AutoPickUpMap5 = -1;
-    public static int AutoPickUpMap6 = -1;
-    public static int AutoPickUpMap7 = -1;
-    public static int AutoPickUpMap8 = -1;
+    public static int AutoPickUpMap1 = 0;
+    public static int AutoPickUpMap2 = 0;
+    public static int AutoPickUpMap3 = 0;
+    public static int AutoPickUpMap4 = 0;
+    public static int AutoPickUpMap5 = 0;
+    public static int AutoPickUpMap6 = 0;
+    public static int AutoPickUpMap7 = 0;
+    public static int AutoPickUpMap8 = 0;
     public static int 沙城捐献货币类型 = 1;
     public static int 沙城捐献支付数量 = 1000000;
     public static int 沙城捐献获得物品1 = 999999;
@@ -1042,7 +1042,7 @@ public class Config
     public static string Gem2StoneName = "AmethystGem";
     public static string Gem3StoneName = "NephriteGem";
     public static string Gem4StoneName = "PlatinumGem";
-    public static int DBMethod = 0; // 0: Default (JSON/TXT), 1: SQL, 2: CSV
+    public static int DBMethod = 1; // 0: Default (JSON/TXT), 1: SQL, 2: CSV
 
     public static void Load()
     {
@@ -1084,7 +1084,9 @@ public class Config
         };
 
         var myType = typeof(Config);
-        var TypeBlob = myType.GetFields().ToDictionary(x => x.Name, x => x.GetValue(null));
+        var TypeBlob = myType.GetFields()
+            .Where(x => !(x.IsLiteral && !x.IsInitOnly))
+            .ToDictionary(x => x.Name, x => x.GetValue(null));
         var json = JsonConvert.SerializeObject(TypeBlob, settings);
         File.WriteAllText(SettingFile, json);
     }
