@@ -1634,7 +1634,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.申请发送邮件(P.字节数据);
+            Player.UserSendMailRequest(P.字节数据);
         }
     }
 
@@ -1646,7 +1646,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.查询邮箱内容();
+            Player.UserRequestMailbox();
         }
     }
 
@@ -1658,7 +1658,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.查看邮件内容(P.邮件编号);
+            Player.UserViewedMail(P.邮件编号);
         }
     }
 
@@ -1670,7 +1670,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.删除指定邮件(P.邮件编号);
+            Player.UserDeletedMail(P.邮件编号);
         }
     }
 
@@ -1682,7 +1682,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.提取邮件附件(P.邮件编号);
+            Player.UserExtractMailAttachment(P.邮件编号);
         }
     }
 
