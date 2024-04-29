@@ -143,7 +143,7 @@ public sealed class MonsterObject : MapObject
     }
 
     public int MoveInterval => Info.MoveInterval;
-    public int TargetSelecthInterval => 5000;
+    public int TargetSelecthInterval => 5_000;
     public int RoamInterval => Info.RoamInterval;
     public int HateTime => Info.HateTime;
     public int CorpsePreservationDuration => Info.CorpsePreservationDuration;
@@ -1605,7 +1605,7 @@ public sealed class MonsterObject : MapObject
         for (var i = 0; i < 100; i++)
         {
             var point = Compute.GetPositionAround(position, i);
-            if (BirthMap.CanMove(point) && !BirthMap.IsSafeArea(point))
+            if (BirthMap.CanMove(point))
             {
                 position = point;
                 found = true;
