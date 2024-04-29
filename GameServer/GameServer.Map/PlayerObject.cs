@@ -2059,22 +2059,22 @@ public sealed class PlayerObject : MapObject
             ResurrectionRingReady = true;
             RemoveBuffEx(47391);
         }
+
         if (CurrentMap.MapID == 183 && SEngine.CurrentTime.Hour != Config.武斗场时间一 && SEngine.CurrentTime.Hour != Config.武斗场时间二)
         {
             if (Dead)
-            {
                 Resurrect();
-            }
             else
-            {
                 Teleport(ResurrectionMap, AreaType.Resurrection);
-            }
+            
             return;
         }
+
         if (CurrentMap.MapID == 152 && CurrentLevel <= Config.沙城地图保护)
         {
             Teleport((CurrentMap.MapID == 147) ? CurrentMap : MapManager.GetMap(147), AreaType.Teleportation);
         }
+
         if (SEngine.CurrentTime >= VIP奖励时间 && Character.VIPLevel.V != 0)
         {
             if (Character.VIPLevel.V == 1 && VIPSystem.DataSheet.TryGetValue(1, out var value) && Character.CurrentLevel >= value.获得收益等级)
@@ -2708,19 +2708,43 @@ public sealed class PlayerObject : MapObject
                 }
             }
         }
+        
         if (Config.泡点等级开关 == 1 && CurrentMap.IsSafeArea(CurrentPosition) && SEngine.CurrentTime > ExperienceTime && Character.CurrentMap.V != 179 && CurrentLevel <= Config.泡点限制等级)
         {
             ExperienceTime = SEngine.CurrentTime.AddSeconds(Config.泡点秒数控制);
             GainExperience(null, Config.泡点当前经验);
         }
+
         if (SEngine.CurrentTime > 自动刷新背包时间 && Config.自动整理背包开关 == 1 && Character.CurrentTitle.V == Config.称号范围拾取判断)
         {
             byte 背包类型 = 1;
             自动整理背包(背包类型);
             自动刷新背包时间 = SEngine.CurrentTime.AddMinutes(Config.自动整理背包计时);
         }
+
         if (SEngine.CurrentTime > PickUpTime)
         {
+            void PickUpOne(Point location)
+            {
+                foreach (var obj in CurrentMap[location])
+                {
+                    if (obj is ItemObject item)
+                        PickUpItem(item);
+                }
+            }
+
+            void PickUpGrid(ObjectSize size)
+            {
+                var grid = Compute.CalculateGrid(CurrentPosition, GameDirection.Up, size);
+                foreach (var point in grid)
+                {
+                    if (CurrentMap[point].Count <= 0)
+                        continue;
+
+                    PickUpOne(point);
+                }
+            }
+
             if (Character.AutoPickUpAllVisible.V == false)
             {
                 if (Character.CurrentTitle.V == Config.称号范围拾取判断 || Character.CurrentTitle.V == Config.称号范围拾取判断1)
@@ -2734,148 +2758,41 @@ public sealed class PlayerObject : MapObject
                         CurrentMap.MapID == Config.AutoPickUpMap7 || 
                         CurrentMap.MapID == Config.AutoPickUpMap8)
                     {
-                        foreach (MapObject obj in CurrentMap[new Point(CurrentPosition.X, CurrentPosition.Y)].ToList())
-                        {
-                            if (obj is ItemObject 物品)
-                            {
-                                PickUpItem(物品);
-                            }
-                        }
+                        PickUpOne(CurrentPosition);
                         PickUpTime = SEngine.CurrentTime.AddMilliseconds(300.0);
                     }
                     else if (RemainingInventorySpace >= Config.AutoPickUpInventorySpace && Config.TitleRangePickUpDistance >= 10)
                     {
-                        ObjectSize 范围 = ObjectSize.Spiral15x15;
-                        Point[] array = Compute.CalculateGrid(CurrentPosition, GameDirection.Up, 范围);
-                        Point[] array2 = array;
-                        foreach (Point 坐标 in array2)
-                        {
-                            try
-                            {
-                                if (CurrentMap[坐标].Count <= 0)
-                                {
-                                    continue;
-                                }
-                                foreach (MapObject item2 in CurrentMap[坐标].ToList())
-                                {
-                                    if (item2 is ItemObject 物品2 && SEngine.CurrentTime > PickUpTime)
-                                    {
-                                        PickUpItem(物品2);
-                                    }
-                                }
-                            }
-                            catch
-                            {
-                            }
-                        }
-                        foreach (MapObject item3 in CurrentMap[new Point(CurrentPosition.X, CurrentPosition.Y)].ToList())
-                        {
-                            if (item3 is ItemObject 物品3)
-                            {
-                                PickUpItem(物品3);
-                            }
-                        }
+                        PickUpGrid(ObjectSize.Spiral15x15);
+                        PickUpOne(CurrentPosition);
                         PickUpTime = SEngine.CurrentTime.AddMilliseconds(300.0);
                     }
                     else if (RemainingInventorySpace >= Config.AutoPickUpInventorySpace && Config.TitleRangePickUpDistance <= 4 && Config.TitleRangePickUpDistance >= 1)
                     {
-                        ObjectSize 范围2 = ObjectSize.Solid3x3;
-                        Point[] array3 = Compute.CalculateGrid(CurrentPosition, GameDirection.Up, 范围2);
-                        Point[] array4 = array3;
-                        foreach (Point 坐标2 in array4)
-                        {
-                            try
-                            {
-                                if (CurrentMap[坐标2].Count <= 0)
-                                {
-                                    continue;
-                                }
-                                foreach (MapObject item4 in CurrentMap[坐标2].ToList())
-                                {
-                                    if (item4 is ItemObject 物品4 && SEngine.CurrentTime > PickUpTime)
-                                    {
-                                        PickUpItem(物品4);
-                                    }
-                                }
-                            }
-                            catch
-                            {
-                            }
-                        }
-                        foreach (MapObject item5 in CurrentMap[new Point(CurrentPosition.X, CurrentPosition.Y)].ToList())
-                        {
-                            if (item5 is ItemObject 物品5)
-                            {
-                                PickUpItem(物品5);
-                            }
-                        }
+                        PickUpGrid(ObjectSize.Solid3x3);
+                        PickUpOne(CurrentPosition);
                         PickUpTime = SEngine.CurrentTime.AddMilliseconds(300.0);
                     }
                     else if (RemainingInventorySpace >= Config.AutoPickUpInventorySpace && Config.TitleRangePickUpDistance <= 9 && Config.TitleRangePickUpDistance >= 5)
                     {
-                        ObjectSize 范围3 = ObjectSize.Spiral7x7;
-                        Point[] array5 = Compute.CalculateGrid(CurrentPosition, GameDirection.Up, 范围3);
-                        foreach (Point 坐标3 in array5)
-                        {
-                            try
-                            {
-                                if (CurrentMap[坐标3].Count <= 0)
-                                {
-                                    continue;
-                                }
-                                foreach (MapObject item6 in CurrentMap[坐标3].ToList())
-                                {
-                                    if (item6 is ItemObject 物品6 && SEngine.CurrentTime > PickUpTime)
-                                    {
-                                        PickUpItem(物品6);
-                                    }
-                                }
-                            }
-                            catch
-                            {
-                            }
-                        }
-                        foreach (MapObject item7 in CurrentMap[new Point(CurrentPosition.X, CurrentPosition.Y)].ToList())
-                        {
-                            if (item7 is ItemObject 物品7)
-                            {
-                                PickUpItem(物品7);
-                            }
-                        }
+                        PickUpGrid(ObjectSize.Spiral7x7);
+                        PickUpOne(CurrentPosition);
                         PickUpTime = SEngine.CurrentTime.AddMilliseconds(300.0);
                     }
                     else
                     {
-                        foreach (MapObject item8 in CurrentMap[new Point(CurrentPosition.X, CurrentPosition.Y)].ToList())
-                        {
-                            if (item8 is ItemObject 物品8)
-                            {
-                                PickUpItem(物品8);
-                            }
-                        }
+                        PickUpOne(CurrentPosition);
                         PickUpTime = SEngine.CurrentTime.AddMilliseconds(300.0);
                     }
                 }
                 else if (Config.称号范围拾取判断 == 999 || Config.称号范围拾取判断1 == 999)
                 {
-                    foreach (MapObject item9 in CurrentMap[new Point(CurrentPosition.X, CurrentPosition.Y)].ToList())
-                    {
-                        if (item9 is ItemObject 物品9)
-                        {
-                            PickUpItem(物品9);
-                        }
-                    }
+                    PickUpOne(CurrentPosition);
                     PickUpTime = SEngine.CurrentTime.AddMilliseconds(300.0);
                 }
                 else
                 {
-                    foreach (MapObject item10 in CurrentMap[new Point(CurrentPosition.X, CurrentPosition.Y)].ToList())
-                    {
-                        if (item10 is ItemObject 物品10)
-                        {
-                            PickUpItem(物品10);
-                        }
-                    }
+                    PickUpOne(CurrentPosition);
                     PickUpTime = SEngine.CurrentTime.AddMilliseconds(300.0);
                 }
             }
@@ -2890,138 +2807,40 @@ public sealed class PlayerObject : MapObject
                     CurrentMap.MapID == Config.AutoPickUpMap7 || 
                     CurrentMap.MapID == Config.AutoPickUpMap8)
                 {
-                    foreach (MapObject obj in CurrentMap[new Point(CurrentPosition.X, CurrentPosition.Y)].ToList())
-                    {
-                        if (obj is ItemObject 物品11)
-                        {
-                            PickUpItem(物品11);
-                        }
-                    }
+                    PickUpOne(CurrentPosition);
                     PickUpTime = SEngine.CurrentTime.AddMilliseconds(300.0);
                 }
                 else if (RemainingInventorySpace >= Config.AutoPickUpInventorySpace && Config.TitleRangePickUpDistance >= 10)
                 {
-                    ObjectSize 范围4 = ObjectSize.Spiral15x15;
-                    Point[] array7 = Compute.CalculateGrid(CurrentPosition, GameDirection.Up, 范围4);
-                    foreach (Point 坐标4 in array7)
-                    {
-                        try
-                        {
-                            if (CurrentMap[坐标4].Count <= 0)
-                            {
-                                continue;
-                            }
-                            foreach (MapObject item12 in CurrentMap[坐标4].ToList())
-                            {
-                                if (item12 is ItemObject 物品12 && SEngine.CurrentTime > PickUpTime)
-                                {
-                                    PickUpItem(物品12);
-                                }
-                            }
-                        }
-                        catch
-                        {
-                        }
-                    }
-                    foreach (MapObject item13 in CurrentMap[new Point(CurrentPosition.X, CurrentPosition.Y)].ToList())
-                    {
-                        if (item13 is ItemObject 物品13)
-                        {
-                            PickUpItem(物品13);
-                        }
-                    }
+                    PickUpGrid(ObjectSize.Spiral15x15);
+                    PickUpOne(CurrentPosition);
                     PickUpTime = SEngine.CurrentTime.AddMilliseconds(300.0);
                 }
                 else if (RemainingInventorySpace >= Config.AutoPickUpInventorySpace && Config.TitleRangePickUpDistance <= 4 && Config.TitleRangePickUpDistance >= 1)
                 {
-                    ObjectSize 范围5 = ObjectSize.Solid3x3;
-                    Point[] array9 = Compute.CalculateGrid(CurrentPosition, GameDirection.Up, 范围5);
-                    foreach (Point 坐标5 in array9)
-                    {
-                        try
-                        {
-                            if (CurrentMap[坐标5].Count <= 0)
-                            {
-                                continue;
-                            }
-                            foreach (MapObject item14 in CurrentMap[坐标5].ToList())
-                            {
-                                if (item14 is ItemObject 物品14 && SEngine.CurrentTime > PickUpTime)
-                                {
-                                    PickUpItem(物品14);
-                                }
-                            }
-                        }
-                        catch
-                        {
-                        }
-                    }
-                    foreach (MapObject item15 in CurrentMap[new Point(CurrentPosition.X, CurrentPosition.Y)].ToList())
-                    {
-                        if (item15 is ItemObject 物品15)
-                        {
-                            PickUpItem(物品15);
-                        }
-                    }
+                    PickUpGrid(ObjectSize.Solid3x3);
+                    PickUpOne(CurrentPosition);
                     PickUpTime = SEngine.CurrentTime.AddMilliseconds(300.0);
                 }
                 else if (RemainingInventorySpace >= Config.AutoPickUpInventorySpace && Config.TitleRangePickUpDistance <= 9 && Config.TitleRangePickUpDistance >= 5)
                 {
-                    ObjectSize 范围6 = ObjectSize.Spiral7x7;
-                    Point[] array11 = Compute.CalculateGrid(CurrentPosition, GameDirection.Up, 范围6);
-                    foreach (Point 坐标6 in array11)
-                    {
-                        try
-                        {
-                            if (CurrentMap[坐标6].Count <= 0)
-                            {
-                                continue;
-                            }
-                            foreach (MapObject item16 in CurrentMap[坐标6].ToList())
-                            {
-                                if (item16 is ItemObject 物品16 && SEngine.CurrentTime > PickUpTime)
-                                {
-                                    PickUpItem(物品16);
-                                }
-                            }
-                        }
-                        catch
-                        {
-                        }
-                    }
-                    foreach (MapObject item17 in CurrentMap[new Point(CurrentPosition.X, CurrentPosition.Y)].ToList())
-                    {
-                        if (item17 is ItemObject 物品17)
-                        {
-                            PickUpItem(物品17);
-                        }
-                    }
+                    PickUpGrid(ObjectSize.Spiral7x7);
+                    PickUpOne(CurrentPosition);
                     PickUpTime = SEngine.CurrentTime.AddMilliseconds(300.0);
                 }
                 else
                 {
-                    foreach (MapObject item18 in CurrentMap[new Point(CurrentPosition.X, CurrentPosition.Y)].ToList())
-                    {
-                        if (item18 is ItemObject 物品18)
-                        {
-                            PickUpItem(物品18);
-                        }
-                    }
+                    PickUpOne(CurrentPosition);
                     PickUpTime = SEngine.CurrentTime.AddMilliseconds(300.0);
                 }
             }
             else
             {
-                foreach (MapObject item19 in CurrentMap[new Point(CurrentPosition.X, CurrentPosition.Y)].ToList())
-                {
-                    if (item19 is ItemObject 物品19)
-                    {
-                        PickUpItem(物品19);
-                    }
-                }
+                PickUpOne(CurrentPosition);
                 PickUpTime = SEngine.CurrentTime.AddMilliseconds(300.0);
             }
         }
+
         if (Config.CurrentVersion >= 2 && Config.充值平台切换 == 1 && SEngine.CurrentTime > 充值发放)
         {
             if (Config.CurrentVersion >= 1 && Config.充值模块格式 == 0)
@@ -3812,6 +3631,7 @@ public sealed class PlayerObject : MapObject
             }
             充值发放 = SEngine.CurrentTime.AddSeconds(5.0);
         }
+        
         if (Config.CurrentVersion >= 2 && Character.CurrentLevel >= Config.全服红包等级 && Character.保底参数2.V == 0 && SEngine.CurrentTime.Hour == Config.全服红包时间 && Config.红包开关)
         {
             Character.保底参数2.V++;
@@ -3825,6 +3645,7 @@ public sealed class PlayerObject : MapObject
                 Amount = amount
             });
         }
+
         if (SEngine.CurrentTime.Hour != Config.全服红包时间 && Config.红包开关)
         {
             Character.保底参数2.V = 0;
