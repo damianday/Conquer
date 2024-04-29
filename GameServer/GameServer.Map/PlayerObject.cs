@@ -7259,9 +7259,8 @@ public sealed class PlayerObject : MapObject
     public void AttackWithSkill(ushort skillID, byte actionID, int targetID, Point location)
     {
         if (Dead || StallState > 0 || TradeState >= 3)
-        {
             return;
-        }
+
         if (!Skills.TryGetValue(skillID, out var skill) && !被动技能.TryGetValue(skillID, out skill))
         {
             Connection.Disconnect(new Exception($"错误操作: 玩家释放技能. 错误: 没有学会技能. 技能编号:{skillID}"));
