@@ -1605,7 +1605,7 @@ public sealed class MonsterObject : MapObject
         for (var i = 0; i < 100; i++)
         {
             var point = Compute.GetPositionAround(position, i);
-            if (BirthMap.CanMove(point))
+            if (BirthMap.CanMove(point) && !BirthMap.IsSafeArea(point))
             {
                 position = point;
                 found = true;
