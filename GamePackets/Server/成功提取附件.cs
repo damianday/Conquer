@@ -4,5 +4,5 @@ namespace GamePackets.Server;
 public sealed class 成功提取附件 : GamePacket
 {
     [FieldAttribute(Position = 6, Length = 4)]
-    public int 邮件编号;
+    public int MailID;
 }

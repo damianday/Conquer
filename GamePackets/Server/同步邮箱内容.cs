@@ -4,5 +4,5 @@ namespace GamePackets.Server;
 public sealed class 同步邮箱内容 : GamePacket
 {
     [FieldAttribute(Position = 4, Length = 0)]
-    public byte[] 字节数据;
+    public byte[] Description;
 }
