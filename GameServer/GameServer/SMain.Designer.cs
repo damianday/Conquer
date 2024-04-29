@@ -31732,104 +31732,104 @@ public partial class SMain
         // 
         拾取地图控制1.Location = new Point(20, 30);
         拾取地图控制1.Margin = new Padding(4, 3, 4, 3);
-        拾取地图控制1.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
-        拾取地图控制1.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+        拾取地图控制1.Maximum = 999;
+        拾取地图控制1.Minimum = 0;
         拾取地图控制1.Name = "拾取地图控制1";
         拾取地图控制1.Size = new Size(93, 23);
         拾取地图控制1.TabIndex = 69;
         拾取地图控制1.TextAlign = HorizontalAlignment.Center;
-        拾取地图控制1.Value = new decimal(new int[] { 147, 0, 0, 0 });
+        拾取地图控制1.Value = 0;
         拾取地图控制1.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 拾取地图控制6
         // 
         拾取地图控制6.Location = new Point(146, 63);
         拾取地图控制6.Margin = new Padding(4, 3, 4, 3);
-        拾取地图控制6.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
-        拾取地图控制6.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+        拾取地图控制6.Maximum = 999;
+        拾取地图控制6.Minimum = 0;
         拾取地图控制6.Name = "拾取地图控制6";
         拾取地图控制6.Size = new Size(93, 23);
         拾取地图控制6.TabIndex = 72;
         拾取地图控制6.TextAlign = HorizontalAlignment.Center;
-        拾取地图控制6.Value = new decimal(new int[] { 147, 0, 0, 0 });
+        拾取地图控制6.Value = 0;
         拾取地图控制6.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 拾取地图控制8
         // 
         拾取地图控制8.Location = new Point(146, 130);
         拾取地图控制8.Margin = new Padding(4, 3, 4, 3);
-        拾取地图控制8.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
-        拾取地图控制8.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+        拾取地图控制8.Maximum = 999;
+        拾取地图控制8.Minimum = 0;
         拾取地图控制8.Name = "拾取地图控制8";
         拾取地图控制8.Size = new Size(93, 23);
         拾取地图控制8.TabIndex = 76;
         拾取地图控制8.TextAlign = HorizontalAlignment.Center;
-        拾取地图控制8.Value = new decimal(new int[] { 147, 0, 0, 0 });
+        拾取地图控制8.Value = 0;
         拾取地图控制8.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 拾取地图控制5
         // 
         拾取地图控制5.Location = new Point(146, 30);
         拾取地图控制5.Margin = new Padding(4, 3, 4, 3);
-        拾取地图控制5.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
-        拾取地图控制5.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+        拾取地图控制5.Maximum = 999;
+        拾取地图控制5.Minimum = 0;
         拾取地图控制5.Name = "拾取地图控制5";
         拾取地图控制5.Size = new Size(93, 23);
         拾取地图控制5.TabIndex = 70;
         拾取地图控制5.TextAlign = HorizontalAlignment.Center;
-        拾取地图控制5.Value = new decimal(new int[] { 147, 0, 0, 0 });
+        拾取地图控制5.Value = 0;
         拾取地图控制5.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 拾取地图控制4
         // 
         拾取地图控制4.Location = new Point(20, 130);
         拾取地图控制4.Margin = new Padding(4, 3, 4, 3);
-        拾取地图控制4.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
-        拾取地图控制4.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+        拾取地图控制4.Maximum = 999;
+        拾取地图控制4.Minimum = 0;
         拾取地图控制4.Name = "拾取地图控制4";
         拾取地图控制4.Size = new Size(93, 23);
         拾取地图控制4.TabIndex = 75;
         拾取地图控制4.TextAlign = HorizontalAlignment.Center;
-        拾取地图控制4.Value = new decimal(new int[] { 147, 0, 0, 0 });
+        拾取地图控制4.Value = 0;
         拾取地图控制4.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 拾取地图控制2
         // 
         拾取地图控制2.Location = new Point(20, 63);
         拾取地图控制2.Margin = new Padding(4, 3, 4, 3);
-        拾取地图控制2.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
-        拾取地图控制2.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+        拾取地图控制2.Maximum = 999;
+        拾取地图控制2.Minimum = 0;
         拾取地图控制2.Name = "拾取地图控制2";
         拾取地图控制2.Size = new Size(93, 23);
         拾取地图控制2.TabIndex = 71;
         拾取地图控制2.TextAlign = HorizontalAlignment.Center;
-        拾取地图控制2.Value = new decimal(new int[] { 147, 0, 0, 0 });
+        拾取地图控制2.Value = 0;
         拾取地图控制2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 拾取地图控制7
         // 
         拾取地图控制7.Location = new Point(146, 97);
         拾取地图控制7.Margin = new Padding(4, 3, 4, 3);
-        拾取地图控制7.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
-        拾取地图控制7.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+        拾取地图控制7.Maximum = 999;
+        拾取地图控制7.Minimum = 0;
         拾取地图控制7.Name = "拾取地图控制7";
         拾取地图控制7.Size = new Size(93, 23);
         拾取地图控制7.TabIndex = 74;
         拾取地图控制7.TextAlign = HorizontalAlignment.Center;
-        拾取地图控制7.Value = new decimal(new int[] { 147, 0, 0, 0 });
+        拾取地图控制7.Value = 0;
         拾取地图控制7.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 拾取地图控制3
         // 
         拾取地图控制3.Location = new Point(20, 97);
         拾取地图控制3.Margin = new Padding(4, 3, 4, 3);
-        拾取地图控制3.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
-        拾取地图控制3.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+        拾取地图控制3.Maximum = 999;
+        拾取地图控制3.Minimum = 0;
         拾取地图控制3.Name = "拾取地图控制3";
         拾取地图控制3.Size = new Size(93, 23);
         拾取地图控制3.TabIndex = 73;
         拾取地图控制3.TextAlign = HorizontalAlignment.Center;
-        拾取地图控制3.Value = new decimal(new int[] { 147, 0, 0, 0 });
+        拾取地图控制3.Value = 0;
         拾取地图控制3.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label727
