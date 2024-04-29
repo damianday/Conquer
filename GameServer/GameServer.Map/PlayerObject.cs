@@ -7266,6 +7266,7 @@ public sealed class PlayerObject : MapObject
             Connection.Disconnect(new Exception($"错误操作: 玩家释放技能. 错误: 没有学会技能. 技能编号:{skillID}"));
             return;
         }
+
         if (Cooldowns.TryGetValue(skillID | 0x1000000, out var v2) && SEngine.CurrentTime < v2)
         {
             Enqueue(new 添加技能冷却
@@ -7286,6 +7287,7 @@ public sealed class PlayerObject : MapObject
             });
             return;
         }
+
         if (Job == GameObjectRace.Assassin)
         {
             foreach (BuffInfo item in Buffs.Values.ToList())
@@ -7296,6 +7298,7 @@ public sealed class PlayerObject : MapObject
                 }
             }
         }
+
         MapManager.Objects.TryGetValue(targetID, out var target);
         foreach (string item2 in skill.Inscription.MainSkills.ToList())
         {
