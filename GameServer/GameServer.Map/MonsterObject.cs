@@ -630,7 +630,6 @@ public sealed class MonsterObject : MapObject
                 if (CurrentDropSet != drop.DropSet) continue;
 
                 if (!GameItem.DataSheetByName.TryGetValue(drop.Name, out var item) || 
-                    Compute.CalculateProbability(ratio) || 
                     (hitter.CurrentDegree == 0 && Grade != MonsterGradeType.Boss && item.Type != ItemType.可用药剂 && Compute.CalculateProbability(0.5f)) || 
                     (hitter.CurrentDegree == 3 && Grade != MonsterGradeType.Boss && item.Type != ItemType.可用药剂 && Compute.CalculateProbability(0.25f)))
                 {
@@ -697,8 +696,7 @@ public sealed class MonsterObject : MapObject
             {
                 if (CurrentDropSet != drop.DropSet) continue;
 
-                if (!GameItem.DataSheetByName.TryGetValue(drop.Name, out var item) || 
-                    Compute.CalculateProbability(ratio) || 
+                if (!GameItem.DataSheetByName.TryGetValue(drop.Name, out var item) ||
                     (hitter.CurrentDegree == 0 && Grade != MonsterGradeType.Boss && item.Type != ItemType.可用药剂 && Compute.CalculateProbability(0.5f)) || 
                     (hitter.CurrentDegree == 3 && Grade != MonsterGradeType.Boss && item.Type != ItemType.可用药剂 && Compute.CalculateProbability(0.25f)) || 
                     (num15 == 1000 && drop.爆率分组 == 1000) || (num16 == 1001 && drop.爆率分组 == 1001) || (num17 == 1002 && drop.爆率分组 == 1002) || (num18 == 1003 && drop.爆率分组 == 1003) || (num19 == 1004 && drop.爆率分组 == 1004) || (num20 == 1005 && drop.爆率分组 == 1005) || (num21 == 1006 && drop.爆率分组 == 1006) || (num22 == 1007 && drop.爆率分组 == 1007) || (num23 == 1008 && drop.爆率分组 == 1008) || (num24 == 1009 && drop.爆率分组 == 1009) || (num25 == 1010 && drop.爆率分组 == 1010) || (num26 == 1011 && drop.爆率分组 == 1011) || (num27 == 1012 && drop.爆率分组 == 1012) || (num28 == 1013 && drop.爆率分组 == 1013) || (num29 == 1014 && drop.爆率分组 == 1014) || (num30 == 1015 && drop.爆率分组 == 1015) || (num31 == 1016 && drop.爆率分组 == 1016) || (num32 == 1017 && drop.爆率分组 == 1017) || (num33 == 1018 && drop.爆率分组 == 1018) || (num34 == 1019 && drop.爆率分组 == 1019) || (num35 == 1020 && drop.爆率分组 == 1020))
