@@ -80,7 +80,7 @@ public sealed class PlayerObject : MapObject
     public DateTime RoamTime;
     public DateTime 充值发放;
     public DateTime 自动刷新背包时间;
-    public DateTime VIP奖励时间;
+    public DateTime VIPRewardTime;
 
     public List<ItemInfo> SoldItems;
 
@@ -2075,635 +2075,58 @@ public sealed class PlayerObject : MapObject
             Teleport((CurrentMap.MapID == 147) ? CurrentMap : MapManager.GetMap(147), AreaType.Teleportation);
         }
 
-        if (SEngine.CurrentTime >= VIP奖励时间 && Character.VIPLevel.V != 0)
+        if (SEngine.CurrentTime >= VIPRewardTime && Character.VIPLevel.V != 0)
         {
-            if (Character.VIPLevel.V == 1 && VIPSystem.DataSheet.TryGetValue(1, out var value) && Character.CurrentLevel >= value.获得收益等级)
+            if ((Character.VIPLevel.V >= 1 && Character.VIPLevel.V <= 10) && 
+                VIPSystem.DataSheet.TryGetValue(Character.VIPLevel.V, out var vip) && 
+                Character.CurrentLevel >= vip.RequiredLevel)
             {
-                Ingot += value.VIPIngot;
-                Gold += value.VIPGoldCoin;
-                GainExperience(null, value.VIPExperience);
-                VIP奖励时间 = SEngine.CurrentTime.AddMinutes(value.VIP收益间隔);
-                if (GameItem.DataSheet.TryGetValue(value.材料宝箱编号, out var value2))
+                Ingot += vip.VIPIngot;
+                Gold += vip.VIPGoldCoin;
+                GainExperience(null, vip.VIPExperience);
+                VIPRewardTime = SEngine.CurrentTime.AddMinutes(vip.VIPRewardInterval);
+
+                if (GameItem.DataSheet.TryGetValue(vip.材料宝箱编号, out var value2))
                 {
                     byte b = byte.MaxValue;
                     byte b2 = 0;
                     while (b2 < InventorySize)
                     {
                         if (Inventory.ContainsKey(b2))
-                        {
                             b2 = (byte)(b2 + 1);
-                        }
                         else
-                        {
                             b = b2;
-                        }
                     }
                     if (b == byte.MaxValue)
                     {
-                        Enqueue(new GameErrorMessagePacket
-                        {
-                            ErrorCode = 1793
-                        });
+                        Enqueue(new GameErrorMessagePacket { ErrorCode = 1793 });
                     }
-                    Inventory[b] = new ItemInfo(value2, Character, 1, b, value.材料宝箱数量);
+                    Inventory[b] = new ItemInfo(value2, Character, 1, b, vip.材料宝箱数量);
                     Enqueue(new SyncItemPacket
                     {
                         Description = Inventory[b].ToArray()
                     });
                 }
-                if (GameItem.DataSheet.TryGetValue(value.装备宝箱编号, out var value3))
+
+                if (GameItem.DataSheet.TryGetValue(vip.装备宝箱编号, out var value3))
                 {
                     byte b3 = byte.MaxValue;
                     byte b4 = 0;
                     while (b4 < InventorySize)
                     {
                         if (Inventory.ContainsKey(b4))
-                        {
                             b4 = (byte)(b4 + 2);
-                        }
                         else
-                        {
                             b3 = b4;
-                        }
                     }
                     if (b3 == byte.MaxValue)
                     {
-                        Enqueue(new GameErrorMessagePacket
-                        {
-                            ErrorCode = 1793
-                        });
+                        Enqueue(new GameErrorMessagePacket { ErrorCode = 1793 });
                     }
-                    Inventory[b3] = new ItemInfo(value3, Character, 1, b3, value.装备宝箱数量);
+                    Inventory[b3] = new ItemInfo(value3, Character, 1, b3, vip.装备宝箱数量);
                     Enqueue(new SyncItemPacket
                     {
                         Description = Inventory[b3].ToArray()
-                    });
-                }
-            }
-            if (Character.VIPLevel.V == 2 && VIPSystem.DataSheet.TryGetValue(2, out var value4) && Character.CurrentLevel >= value4.获得收益等级)
-            {
-                Ingot += value4.VIPIngot;
-                Gold += value4.VIPGoldCoin;
-                GainExperience(null, value4.VIPExperience);
-                VIP奖励时间 = SEngine.CurrentTime.AddMinutes(value4.VIP收益间隔);
-                if (GameItem.DataSheet.TryGetValue(value4.材料宝箱编号, out var value5))
-                {
-                    byte b5 = byte.MaxValue;
-                    byte b6 = 0;
-                    while (b6 < InventorySize)
-                    {
-                        if (Inventory.ContainsKey(b6))
-                        {
-                            b6 = (byte)(b6 + 1);
-                        }
-                        else
-                        {
-                            b5 = b6;
-                        }
-                    }
-                    if (b5 == byte.MaxValue)
-                    {
-                        Enqueue(new GameErrorMessagePacket
-                        {
-                            ErrorCode = 1793
-                        });
-                    }
-                    Inventory[b5] = new ItemInfo(value5, Character, 1, b5, value4.材料宝箱数量);
-                    Enqueue(new SyncItemPacket
-                    {
-                        Description = Inventory[b5].ToArray()
-                    });
-                }
-                if (GameItem.DataSheet.TryGetValue(value4.装备宝箱编号, out var value6))
-                {
-                    byte b7 = byte.MaxValue;
-                    byte b8 = 0;
-                    while (b8 < InventorySize)
-                    {
-                        if (Inventory.ContainsKey(b8))
-                        {
-                            b8 = (byte)(b8 + 2);
-                        }
-                        else
-                        {
-                            b7 = b8;
-                        }
-                    }
-                    if (b7 == byte.MaxValue)
-                    {
-                        Enqueue(new GameErrorMessagePacket
-                        {
-                            ErrorCode = 1793
-                        });
-                    }
-                    Inventory[b7] = new ItemInfo(value6, Character, 1, b7, value4.装备宝箱数量);
-                    Enqueue(new SyncItemPacket
-                    {
-                        Description = Inventory[b7].ToArray()
-                    });
-                }
-            }
-            if (Character.VIPLevel.V == 3 && VIPSystem.DataSheet.TryGetValue(3, out var value7) && Character.CurrentLevel >= value7.获得收益等级)
-            {
-                Ingot += value7.VIPIngot;
-                Gold += value7.VIPGoldCoin;
-                GainExperience(null, value7.VIPExperience);
-                VIP奖励时间 = SEngine.CurrentTime.AddMinutes(value7.VIP收益间隔);
-                if (GameItem.DataSheet.TryGetValue(value7.材料宝箱编号, out var value8))
-                {
-                    byte b9 = byte.MaxValue;
-                    byte b10 = 0;
-                    while (b10 < InventorySize)
-                    {
-                        if (Inventory.ContainsKey(b10))
-                        {
-                            b10 = (byte)(b10 + 1);
-                        }
-                        else
-                        {
-                            b9 = b10;
-                        }
-                    }
-                    if (b9 == byte.MaxValue)
-                    {
-                        Enqueue(new GameErrorMessagePacket
-                        {
-                            ErrorCode = 1793
-                        });
-                    }
-                    Inventory[b9] = new ItemInfo(value8, Character, 1, b9, value7.材料宝箱数量);
-                    Enqueue(new SyncItemPacket
-                    {
-                        Description = Inventory[b9].ToArray()
-                    });
-                }
-                if (GameItem.DataSheet.TryGetValue(value7.装备宝箱编号, out var value9))
-                {
-                    byte b11 = byte.MaxValue;
-                    byte b12 = 0;
-                    while (b12 < InventorySize)
-                    {
-                        if (Inventory.ContainsKey(b12))
-                        {
-                            b12 = (byte)(b12 + 2);
-                        }
-                        else
-                        {
-                            b11 = b12;
-                        }
-                    }
-                    if (b11 == byte.MaxValue)
-                    {
-                        Enqueue(new GameErrorMessagePacket
-                        {
-                            ErrorCode = 1793
-                        });
-                    }
-                    Inventory[b11] = new ItemInfo(value9, Character, 1, b11, value7.装备宝箱数量);
-                    Enqueue(new SyncItemPacket
-                    {
-                        Description = Inventory[b11].ToArray()
-                    });
-                }
-            }
-            if (Character.VIPLevel.V == 4 && VIPSystem.DataSheet.TryGetValue(4, out var value10) && Character.CurrentLevel >= value10.获得收益等级)
-            {
-                Ingot += value10.VIPIngot;
-                Gold += value10.VIPGoldCoin;
-                GainExperience(null, value10.VIPExperience);
-                VIP奖励时间 = SEngine.CurrentTime.AddMinutes(value10.VIP收益间隔);
-                if (GameItem.DataSheet.TryGetValue(value10.材料宝箱编号, out var value11))
-                {
-                    byte b13 = byte.MaxValue;
-                    byte b14 = 0;
-                    while (b14 < InventorySize)
-                    {
-                        if (Inventory.ContainsKey(b14))
-                        {
-                            b14 = (byte)(b14 + 1);
-                        }
-                        else
-                        {
-                            b13 = b14;
-                        }
-                    }
-                    if (b13 == byte.MaxValue)
-                    {
-                        Enqueue(new GameErrorMessagePacket
-                        {
-                            ErrorCode = 1793
-                        });
-                    }
-                    Inventory[b13] = new ItemInfo(value11, Character, 1, b13, value10.材料宝箱数量);
-                    Enqueue(new SyncItemPacket
-                    {
-                        Description = Inventory[b13].ToArray()
-                    });
-                }
-                if (GameItem.DataSheet.TryGetValue(value10.装备宝箱编号, out var value12))
-                {
-                    byte b15 = byte.MaxValue;
-                    byte b16 = 0;
-                    while (b16 < InventorySize)
-                    {
-                        if (Inventory.ContainsKey(b16))
-                        {
-                            b16 = (byte)(b16 + 2);
-                        }
-                        else
-                        {
-                            b15 = b16;
-                        }
-                    }
-                    if (b15 == byte.MaxValue)
-                    {
-                        Enqueue(new GameErrorMessagePacket
-                        {
-                            ErrorCode = 1793
-                        });
-                    }
-                    Inventory[b15] = new ItemInfo(value12, Character, 1, b15, value10.装备宝箱数量);
-                    Enqueue(new SyncItemPacket
-                    {
-                        Description = Inventory[b15].ToArray()
-                    });
-                }
-            }
-            if (Character.VIPLevel.V == 5 && VIPSystem.DataSheet.TryGetValue(5, out var value13) && Character.CurrentLevel >= value13.获得收益等级)
-            {
-                Ingot += value13.VIPIngot;
-                Gold += value13.VIPGoldCoin;
-                GainExperience(null, value13.VIPExperience);
-                VIP奖励时间 = SEngine.CurrentTime.AddMinutes(value13.VIP收益间隔);
-                if (GameItem.DataSheet.TryGetValue(value13.材料宝箱编号, out var value14))
-                {
-                    byte b17 = byte.MaxValue;
-                    byte b18 = 0;
-                    while (b18 < InventorySize)
-                    {
-                        if (Inventory.ContainsKey(b18))
-                        {
-                            b18 = (byte)(b18 + 1);
-                        }
-                        else
-                        {
-                            b17 = b18;
-                        }
-                    }
-                    if (b17 == byte.MaxValue)
-                    {
-                        Enqueue(new GameErrorMessagePacket
-                        {
-                            ErrorCode = 1793
-                        });
-                    }
-                    Inventory[b17] = new ItemInfo(value14, Character, 1, b17, value13.材料宝箱数量);
-                    Enqueue(new SyncItemPacket
-                    {
-                        Description = Inventory[b17].ToArray()
-                    });
-                }
-                if (GameItem.DataSheet.TryGetValue(value13.装备宝箱编号, out var value15))
-                {
-                    byte b19 = byte.MaxValue;
-                    byte b20 = 0;
-                    while (b20 < InventorySize)
-                    {
-                        if (Inventory.ContainsKey(b20))
-                        {
-                            b20 = (byte)(b20 + 2);
-                        }
-                        else
-                        {
-                            b19 = b20;
-                        }
-                    }
-                    if (b19 == byte.MaxValue)
-                    {
-                        Enqueue(new GameErrorMessagePacket
-                        {
-                            ErrorCode = 1793
-                        });
-                    }
-                    Inventory[b19] = new ItemInfo(value15, Character, 1, b19, value13.装备宝箱数量);
-                    Enqueue(new SyncItemPacket
-                    {
-                        Description = Inventory[b19].ToArray()
-                    });
-                }
-            }
-            if (Character.VIPLevel.V == 6 && VIPSystem.DataSheet.TryGetValue(6, out var value16) && Character.CurrentLevel >= value16.获得收益等级)
-            {
-                Ingot += value16.VIPIngot;
-                Gold += value16.VIPGoldCoin;
-                GainExperience(null, value16.VIPExperience);
-                VIP奖励时间 = SEngine.CurrentTime.AddMinutes(value16.VIP收益间隔);
-                if (GameItem.DataSheet.TryGetValue(value16.材料宝箱编号, out var value17))
-                {
-                    byte b21 = byte.MaxValue;
-                    byte b22 = 0;
-                    while (b22 < InventorySize)
-                    {
-                        if (Inventory.ContainsKey(b22))
-                        {
-                            b22 = (byte)(b22 + 1);
-                        }
-                        else
-                        {
-                            b21 = b22;
-                        }
-                    }
-                    if (b21 == byte.MaxValue)
-                    {
-                        Enqueue(new GameErrorMessagePacket
-                        {
-                            ErrorCode = 1793
-                        });
-                    }
-                    Inventory[b21] = new ItemInfo(value17, Character, 1, b21, value16.材料宝箱数量);
-                    Enqueue(new SyncItemPacket
-                    {
-                        Description = Inventory[b21].ToArray()
-                    });
-                }
-                if (GameItem.DataSheet.TryGetValue(value16.装备宝箱编号, out var value18))
-                {
-                    byte b23 = byte.MaxValue;
-                    byte b24 = 0;
-                    while (b24 < InventorySize)
-                    {
-                        if (Inventory.ContainsKey(b24))
-                        {
-                            b24 = (byte)(b24 + 2);
-                        }
-                        else
-                        {
-                            b23 = b24;
-                        }
-                    }
-                    if (b23 == byte.MaxValue)
-                    {
-                        Enqueue(new GameErrorMessagePacket
-                        {
-                            ErrorCode = 1793
-                        });
-                    }
-                    Inventory[b23] = new ItemInfo(value18, Character, 1, b23, value16.装备宝箱数量);
-                    Enqueue(new SyncItemPacket
-                    {
-                        Description = Inventory[b23].ToArray()
-                    });
-                }
-            }
-            if (Character.VIPLevel.V == 7 && VIPSystem.DataSheet.TryGetValue(7, out var value19) && Character.CurrentLevel >= value19.获得收益等级)
-            {
-                Ingot += value19.VIPIngot;
-                Gold += value19.VIPGoldCoin;
-                GainExperience(null, value19.VIPExperience);
-                VIP奖励时间 = SEngine.CurrentTime.AddMinutes(value19.VIP收益间隔);
-                if (GameItem.DataSheet.TryGetValue(value19.材料宝箱编号, out var value20))
-                {
-                    byte b25 = byte.MaxValue;
-                    byte b26 = 0;
-                    while (b26 < InventorySize)
-                    {
-                        if (Inventory.ContainsKey(b26))
-                        {
-                            b26 = (byte)(b26 + 1);
-                        }
-                        else
-                        {
-                            b25 = b26;
-                        }
-                    }
-                    if (b25 == byte.MaxValue)
-                    {
-                        Enqueue(new GameErrorMessagePacket
-                        {
-                            ErrorCode = 1793
-                        });
-                    }
-                    Inventory[b25] = new ItemInfo(value20, Character, 1, b25, value19.材料宝箱数量);
-                    Enqueue(new SyncItemPacket
-                    {
-                        Description = Inventory[b25].ToArray()
-                    });
-                }
-                if (GameItem.DataSheet.TryGetValue(value19.装备宝箱编号, out var value21))
-                {
-                    byte b27 = byte.MaxValue;
-                    byte b28 = 0;
-                    while (b28 < InventorySize)
-                    {
-                        if (Inventory.ContainsKey(b28))
-                        {
-                            b28 = (byte)(b28 + 2);
-                        }
-                        else
-                        {
-                            b27 = b28;
-                        }
-                    }
-                    if (b27 == byte.MaxValue)
-                    {
-                        Enqueue(new GameErrorMessagePacket
-                        {
-                            ErrorCode = 1793
-                        });
-                    }
-                    Inventory[b27] = new ItemInfo(value21, Character, 1, b27, value19.装备宝箱数量);
-                    Enqueue(new SyncItemPacket
-                    {
-                        Description = Inventory[b27].ToArray()
-                    });
-                }
-            }
-            if (Character.VIPLevel.V == 8 && VIPSystem.DataSheet.TryGetValue(8, out var value22) && Character.CurrentLevel >= value22.获得收益等级)
-            {
-                Ingot += value22.VIPIngot;
-                Gold += value22.VIPGoldCoin;
-                GainExperience(null, value22.VIPExperience);
-                VIP奖励时间 = SEngine.CurrentTime.AddMinutes(value22.VIP收益间隔);
-                if (GameItem.DataSheet.TryGetValue(value22.材料宝箱编号, out var value23))
-                {
-                    byte b29 = byte.MaxValue;
-                    byte b30 = 0;
-                    while (b30 < InventorySize)
-                    {
-                        if (Inventory.ContainsKey(b30))
-                        {
-                            b30 = (byte)(b30 + 1);
-                        }
-                        else
-                        {
-                            b29 = b30;
-                        }
-                    }
-                    if (b29 == byte.MaxValue)
-                    {
-                        Enqueue(new GameErrorMessagePacket
-                        {
-                            ErrorCode = 1793
-                        });
-                    }
-                    Inventory[b29] = new ItemInfo(value23, Character, 1, b29, value22.材料宝箱数量);
-                    Enqueue(new SyncItemPacket
-                    {
-                        Description = Inventory[b29].ToArray()
-                    });
-                }
-                if (GameItem.DataSheet.TryGetValue(value22.装备宝箱编号, out var value24))
-                {
-                    byte b31 = byte.MaxValue;
-                    byte b32 = 0;
-                    while (b32 < InventorySize)
-                    {
-                        if (Inventory.ContainsKey(b32))
-                        {
-                            b32 = (byte)(b32 + 2);
-                        }
-                        else
-                        {
-                            b31 = b32;
-                        }
-                    }
-                    if (b31 == byte.MaxValue)
-                    {
-                        Enqueue(new GameErrorMessagePacket
-                        {
-                            ErrorCode = 1793
-                        });
-                    }
-                    Inventory[b31] = new ItemInfo(value24, Character, 1, b31, value22.装备宝箱数量);
-                    Enqueue(new SyncItemPacket
-                    {
-                        Description = Inventory[b31].ToArray()
-                    });
-                }
-            }
-            if (Character.VIPLevel.V == 9 && VIPSystem.DataSheet.TryGetValue(9, out var value25) && Character.CurrentLevel >= value25.获得收益等级)
-            {
-                Ingot += value25.VIPIngot;
-                Gold += value25.VIPGoldCoin;
-                GainExperience(null, value25.VIPExperience);
-                VIP奖励时间 = SEngine.CurrentTime.AddMinutes(value25.VIP收益间隔);
-                if (GameItem.DataSheet.TryGetValue(value25.材料宝箱编号, out var value26))
-                {
-                    byte b33 = byte.MaxValue;
-                    byte b34 = 0;
-                    while (b34 < InventorySize)
-                    {
-                        if (Inventory.ContainsKey(b34))
-                        {
-                            b34 = (byte)(b34 + 1);
-                        }
-                        else
-                        {
-                            b33 = b34;
-                        }
-                    }
-                    if (b33 == byte.MaxValue)
-                    {
-                        Enqueue(new GameErrorMessagePacket
-                        {
-                            ErrorCode = 1793
-                        });
-                    }
-                    Inventory[b33] = new ItemInfo(value26, Character, 1, b33, value25.材料宝箱数量);
-                    Enqueue(new SyncItemPacket
-                    {
-                        Description = Inventory[b33].ToArray()
-                    });
-                }
-                if (GameItem.DataSheet.TryGetValue(value25.装备宝箱编号, out var value27))
-                {
-                    byte b35 = byte.MaxValue;
-                    byte b36 = 0;
-                    while (b36 < InventorySize)
-                    {
-                        if (Inventory.ContainsKey(b36))
-                        {
-                            b36 = (byte)(b36 + 2);
-                        }
-                        else
-                        {
-                            b35 = b36;
-                        }
-                    }
-                    if (b35 == byte.MaxValue)
-                    {
-                        Enqueue(new GameErrorMessagePacket
-                        {
-                            ErrorCode = 1793
-                        });
-                    }
-                    Inventory[b35] = new ItemInfo(value27, Character, 1, b35, value25.装备宝箱数量);
-                    Enqueue(new SyncItemPacket
-                    {
-                        Description = Inventory[b35].ToArray()
-                    });
-                }
-            }
-            if (Character.VIPLevel.V == 10 && VIPSystem.DataSheet.TryGetValue(10, out var value28) && Character.CurrentLevel >= value28.获得收益等级)
-            {
-                Ingot += value28.VIPIngot;
-                Gold += value28.VIPGoldCoin;
-                GainExperience(null, value28.VIPExperience);
-                VIP奖励时间 = SEngine.CurrentTime.AddMinutes(value28.VIP收益间隔);
-                if (GameItem.DataSheet.TryGetValue(value28.材料宝箱编号, out var value29))
-                {
-                    byte b37 = byte.MaxValue;
-                    byte b38 = 0;
-                    while (b38 < InventorySize)
-                    {
-                        if (Inventory.ContainsKey(b38))
-                        {
-                            b38 = (byte)(b38 + 1);
-                        }
-                        else
-                        {
-                            b37 = b38;
-                        }
-                    }
-                    if (b37 == byte.MaxValue)
-                    {
-                        Enqueue(new GameErrorMessagePacket
-                        {
-                            ErrorCode = 1793
-                        });
-                    }
-                    Inventory[b37] = new ItemInfo(value29, Character, 1, b37, value28.材料宝箱数量);
-                    Enqueue(new SyncItemPacket
-                    {
-                        Description = Inventory[b37].ToArray()
-                    });
-                }
-                if (GameItem.DataSheet.TryGetValue(value28.装备宝箱编号, out var value30))
-                {
-                    byte b39 = byte.MaxValue;
-                    byte b40 = 0;
-                    while (b40 < InventorySize)
-                    {
-                        if (Inventory.ContainsKey(b40))
-                        {
-                            b40 = (byte)(b40 + 2);
-                        }
-                        else
-                        {
-                            b39 = b40;
-                        }
-                    }
-                    if (b39 == byte.MaxValue)
-                    {
-                        Enqueue(new GameErrorMessagePacket
-                        {
-                            ErrorCode = 1793
-                        });
-                    }
-                    Inventory[b39] = new ItemInfo(value30, Character, 1, b39, value28.装备宝箱数量);
-                    Enqueue(new SyncItemPacket
-                    {
-                        Description = Inventory[b39].ToArray()
                     });
                 }
             }

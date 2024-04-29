@@ -20,8 +20,8 @@ public sealed class VIPSystem
     public int 装备宝箱数量;
     public int 材料宝箱数量;
     public int VIPExperience;
-    public int VIP收益间隔;
-    public int 获得收益等级;
+    public int VIPRewardInterval;
+    public int RequiredLevel;
 
     public static void LoadData()
     {
@@ -55,8 +55,8 @@ public sealed class VIPSystem
                                 装备宝箱数量 = reader.GetInt32("装备宝箱数量"),
                                 材料宝箱数量 = reader.GetInt32("材料宝箱数量"),
                                 VIPExperience = reader.GetInt32("VIP经验收益"),
-                                VIP收益间隔 = reader.GetInt32("VIP收益间隔"),
-                                获得收益等级 = reader.GetInt32("获得收益等级")
+                                VIPRewardInterval = reader.GetInt32("VIP收益间隔"),
+                                RequiredLevel = reader.GetInt32("获得收益等级")
                             };
                             DataSheet.Add(obj.VIPID, obj);
                         }
@@ -94,8 +94,8 @@ public sealed class VIPSystem
                         装备宝箱数量 = csvReader.GetField<int>("装备宝箱数量"),
                         材料宝箱数量 = csvReader.GetField<int>("材料宝箱数量"),
                         VIPExperience = csvReader.GetField<int>("VIP经验收益"),
-                        VIP收益间隔 = csvReader.GetField<int>("VIP收益间隔"),
-                        获得收益等级 = csvReader.GetField<int>("获得收益等级")
+                        VIPRewardInterval = csvReader.GetField<int>("VIP收益间隔"),
+                        RequiredLevel = csvReader.GetField<int>("获得收益等级")
                     };
                     DataSheet.Add(obj.VIPID, obj);
                 }
