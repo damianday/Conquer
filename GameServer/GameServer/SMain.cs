@@ -1622,7 +1622,7 @@ public partial class SMain : Form
         充值平台切换.Value = Config.充值平台切换;
         全服红包等级.Value = Config.全服红包等级;
         全服红包时间.Value = Config.全服红包时间;
-        全服红包货币类型.Value = Config.全服红包货币类型;
+        全服红包货币类型.Value = Config.GlobalBonusCurrencyType;
         全服红包货币数量.Value = Config.全服红包货币数量;
         龙卫蓝色词条概率.Value = Config.龙卫蓝色词条概率;
         龙卫紫色词条概率.Value = Config.龙卫紫色词条概率;
@@ -2693,7 +2693,7 @@ public partial class SMain : Form
             case nameof(充值平台切换): Config.充值平台切换 = (int)control.Value; break;
             case nameof(全服红包等级): Config.全服红包等级 = (int)control.Value; break;
             case nameof(全服红包时间): Config.全服红包时间 = (int)control.Value; break;
-            case nameof(全服红包货币类型): Config.全服红包货币类型 = (int)control.Value; break;
+            case nameof(全服红包货币类型): Config.GlobalBonusCurrencyType = (int)control.Value; break;
             case nameof(全服红包货币数量): Config.全服红包货币数量 = (int)control.Value; break;
             case nameof(龙卫蓝色词条概率): Config.龙卫蓝色词条概率 = (int)control.Value; break;
             case nameof(龙卫紫色词条概率): Config.龙卫紫色词条概率 = (int)control.Value; break;
