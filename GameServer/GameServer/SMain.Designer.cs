@@ -35,36 +35,36 @@ public partial class SMain
     {
         components = new Container();
         ComponentResourceManager resources = new ComponentResourceManager(typeof(SMain));
-        DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle13 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle14 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle15 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle16 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle17 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle18 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle19 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle20 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle21 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle22 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle23 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle24 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle25 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle26 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle27 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle28 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle29 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle30 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle85 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle86 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle87 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle115 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle116 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle117 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle118 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle119 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle120 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle121 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle122 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle123 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle124 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle125 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle126 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle127 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle128 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle129 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle130 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle131 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle132 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle133 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle134 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle135 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle136 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle137 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle138 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle139 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle140 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle141 = new DataGridViewCellStyle();
         角色右键菜单 = new ContextMenuStrip(components);
         右键菜单_复制角色名字 = new ToolStripMenuItem();
         右键菜单_复制账号名字 = new ToolStripMenuItem();
@@ -1232,7 +1232,6 @@ public partial class SMain
         checkBox7 = new CheckBox();
         tabPage77 = new TabPage();
         groupBox216 = new GroupBox();
-        label793 = new Label();
         S_幸运额外5伤害 = new NumericUpDown();
         groupBox217 = new GroupBox();
         label794 = new Label();
@@ -1884,113 +1883,6 @@ public partial class SMain
         groupBox212 = new GroupBox();
         webBrowser3 = new WebBrowser();
         tabPage1 = new TabPage();
-        tabControl15 = new TabControl();
-        tabPage55 = new TabPage();
-        BOSS刷新 = new GroupBox();
-        groupBox176 = new GroupBox();
-        label714 = new Label();
-        label715 = new Label();
-        S_自动BOSS1界面5开关 = new NumericUpDown();
-        groupBox175 = new GroupBox();
-        label712 = new Label();
-        label713 = new Label();
-        S_自动BOSS1界面4开关 = new NumericUpDown();
-        groupBox174 = new GroupBox();
-        label710 = new Label();
-        label711 = new Label();
-        S_自动BOSS1界面3开关 = new NumericUpDown();
-        groupBox173 = new GroupBox();
-        label708 = new Label();
-        label709 = new Label();
-        S_自动BOSS1界面2开关 = new NumericUpDown();
-        groupBox172 = new GroupBox();
-        label707 = new Label();
-        label706 = new Label();
-        S_自动BOSS1界面1开关 = new NumericUpDown();
-        groupBox46 = new GroupBox();
-        label330 = new Label();
-        S_BOSS五地图名字 = new TextBox();
-        S_BOSS五分钟 = new NumericUpDown();
-        label331 = new Label();
-        S_BOSS五坐标Y = new NumericUpDown();
-        label332 = new Label();
-        label333 = new Label();
-        S_BOSS五地图编号 = new NumericUpDown();
-        label334 = new Label();
-        S_BOSS五时间 = new NumericUpDown();
-        label335 = new Label();
-        S_BOSS五坐标X = new NumericUpDown();
-        label336 = new Label();
-        S_BOSS名字五 = new TextBox();
-        label337 = new Label();
-        groupBox45 = new GroupBox();
-        label320 = new Label();
-        S_BOSS四地图名字 = new TextBox();
-        S_BOSS四分钟 = new NumericUpDown();
-        label321 = new Label();
-        S_BOSS四坐标Y = new NumericUpDown();
-        label322 = new Label();
-        label323 = new Label();
-        S_BOSS四地图编号 = new NumericUpDown();
-        label324 = new Label();
-        S_BOSS四时间 = new NumericUpDown();
-        label325 = new Label();
-        S_BOSS四坐标X = new NumericUpDown();
-        label326 = new Label();
-        S_BOSS名字四 = new TextBox();
-        label327 = new Label();
-        groupBox42 = new GroupBox();
-        label312 = new Label();
-        S_BOSS三地图名字 = new TextBox();
-        S_BOSS三分钟 = new NumericUpDown();
-        label313 = new Label();
-        S_BOSS三坐标Y = new NumericUpDown();
-        label314 = new Label();
-        label315 = new Label();
-        S_BOSS三地图编号 = new NumericUpDown();
-        label316 = new Label();
-        S_BOSS三时间 = new NumericUpDown();
-        label317 = new Label();
-        S_BOSS三坐标X = new NumericUpDown();
-        label318 = new Label();
-        S_BOSS名字三 = new TextBox();
-        label319 = new Label();
-        groupBox14 = new GroupBox();
-        label304 = new Label();
-        S_BOSS二地图名字 = new TextBox();
-        S_BOSS二分钟 = new NumericUpDown();
-        label305 = new Label();
-        S_BOSS二坐标Y = new NumericUpDown();
-        label306 = new Label();
-        label307 = new Label();
-        S_BOSS二地图编号 = new NumericUpDown();
-        label308 = new Label();
-        S_BOSS二时间 = new NumericUpDown();
-        label309 = new Label();
-        S_BOSS二坐标X = new NumericUpDown();
-        label310 = new Label();
-        S_BOSS名字二 = new TextBox();
-        label311 = new Label();
-        BOSS刷新一 = new GroupBox();
-        label280 = new Label();
-        S_BOSS一地图名字 = new TextBox();
-        S_BOSS一分钟 = new NumericUpDown();
-        label275 = new Label();
-        S_BOSS一坐标Y = new NumericUpDown();
-        label274 = new Label();
-        label256 = new Label();
-        S_BOSS一地图编号 = new NumericUpDown();
-        label276 = new Label();
-        S_BOSS一时间 = new NumericUpDown();
-        label277 = new Label();
-        S_BOSS一坐标X = new NumericUpDown();
-        label278 = new Label();
-        S_BOSS名字一 = new TextBox();
-        label279 = new Label();
-        tabPage56 = new TabPage();
-        tabPage57 = new TabPage();
-        label328 = new Label();
-        label329 = new Label();
         groupBox36 = new GroupBox();
         S_BOSS刷新提示开关 = new NumericUpDown();
         label286 = new Label();
@@ -2358,11 +2250,8 @@ public partial class SMain
         S_MaxUserLevel = new NumericUpDown();
         S_注意事项标签6 = new Label();
         S_网络设置分组 = new GroupBox();
-        label397 = new Label();
         S_自动保存日志 = new NumericUpDown();
         label396 = new Label();
-        label492 = new Label();
-        label491 = new Label();
         S_MaxUserConnections = new NumericUpDown();
         label165 = new Label();
         label35 = new Label();
@@ -3562,49 +3451,6 @@ public partial class SMain
         tabPage74.SuspendLayout();
         groupBox212.SuspendLayout();
         tabPage1.SuspendLayout();
-        tabControl15.SuspendLayout();
-        tabPage55.SuspendLayout();
-        BOSS刷新.SuspendLayout();
-        groupBox176.SuspendLayout();
-        ((ISupportInitialize)S_自动BOSS1界面5开关).BeginInit();
-        groupBox175.SuspendLayout();
-        ((ISupportInitialize)S_自动BOSS1界面4开关).BeginInit();
-        groupBox174.SuspendLayout();
-        ((ISupportInitialize)S_自动BOSS1界面3开关).BeginInit();
-        groupBox173.SuspendLayout();
-        ((ISupportInitialize)S_自动BOSS1界面2开关).BeginInit();
-        groupBox172.SuspendLayout();
-        ((ISupportInitialize)S_自动BOSS1界面1开关).BeginInit();
-        groupBox46.SuspendLayout();
-        ((ISupportInitialize)S_BOSS五分钟).BeginInit();
-        ((ISupportInitialize)S_BOSS五坐标Y).BeginInit();
-        ((ISupportInitialize)S_BOSS五地图编号).BeginInit();
-        ((ISupportInitialize)S_BOSS五时间).BeginInit();
-        ((ISupportInitialize)S_BOSS五坐标X).BeginInit();
-        groupBox45.SuspendLayout();
-        ((ISupportInitialize)S_BOSS四分钟).BeginInit();
-        ((ISupportInitialize)S_BOSS四坐标Y).BeginInit();
-        ((ISupportInitialize)S_BOSS四地图编号).BeginInit();
-        ((ISupportInitialize)S_BOSS四时间).BeginInit();
-        ((ISupportInitialize)S_BOSS四坐标X).BeginInit();
-        groupBox42.SuspendLayout();
-        ((ISupportInitialize)S_BOSS三分钟).BeginInit();
-        ((ISupportInitialize)S_BOSS三坐标Y).BeginInit();
-        ((ISupportInitialize)S_BOSS三地图编号).BeginInit();
-        ((ISupportInitialize)S_BOSS三时间).BeginInit();
-        ((ISupportInitialize)S_BOSS三坐标X).BeginInit();
-        groupBox14.SuspendLayout();
-        ((ISupportInitialize)S_BOSS二分钟).BeginInit();
-        ((ISupportInitialize)S_BOSS二坐标Y).BeginInit();
-        ((ISupportInitialize)S_BOSS二地图编号).BeginInit();
-        ((ISupportInitialize)S_BOSS二时间).BeginInit();
-        ((ISupportInitialize)S_BOSS二坐标X).BeginInit();
-        BOSS刷新一.SuspendLayout();
-        ((ISupportInitialize)S_BOSS一分钟).BeginInit();
-        ((ISupportInitialize)S_BOSS一坐标Y).BeginInit();
-        ((ISupportInitialize)S_BOSS一地图编号).BeginInit();
-        ((ISupportInitialize)S_BOSS一时间).BeginInit();
-        ((ISupportInitialize)S_BOSS一坐标X).BeginInit();
         groupBox36.SuspendLayout();
         ((ISupportInitialize)S_BOSS刷新提示开关).BeginInit();
         tabPage2.SuspendLayout();
@@ -18801,7 +18647,6 @@ public partial class SMain
         // 
         // groupBox216
         // 
-        groupBox216.Controls.Add(label793);
         groupBox216.Controls.Add(S_幸运额外5伤害);
         groupBox216.Controls.Add(groupBox217);
         groupBox216.Controls.Add(S_幸运额外4伤害);
@@ -18823,16 +18668,6 @@ public partial class SMain
         groupBox216.TabIndex = 47;
         groupBox216.TabStop = false;
         groupBox216.Text = "Lucky Expansion - Regular Edition";
-        // 
-        // label793
-        // 
-        label793.AutoSize = true;
-        label793.Location = new Point(21, 231);
-        label793.Margin = new Padding(4, 0, 4, 0);
-        label793.Name = "label793";
-        label793.Size = new Size(171, 30);
-        label793.TabIndex = 61;
-        label793.Text = "Acknowledgment: \r\nTengyun rides the fog Liulixian";
         // 
         // S_幸运额外5伤害
         // 
@@ -27044,9 +26879,6 @@ public partial class SMain
         // 
         // tabPage1
         // 
-        tabPage1.Controls.Add(tabControl15);
-        tabPage1.Controls.Add(label328);
-        tabPage1.Controls.Add(label329);
         tabPage1.Controls.Add(groupBox36);
         tabPage1.Location = new Point(4, 34);
         tabPage1.Margin = new Padding(4, 3, 4, 3);
@@ -27056,1347 +26888,6 @@ public partial class SMain
         tabPage1.TabIndex = 24;
         tabPage1.Text = "BOSS Reload";
         tabPage1.UseVisualStyleBackColor = true;
-        // 
-        // tabControl15
-        // 
-        tabControl15.AllowDrop = true;
-        tabControl15.Controls.Add(tabPage55);
-        tabControl15.Controls.Add(tabPage56);
-        tabControl15.Controls.Add(tabPage57);
-        tabControl15.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
-        tabControl15.ItemSize = new Size(100, 30);
-        tabControl15.Location = new Point(7, 7);
-        tabControl15.Margin = new Padding(4, 3, 4, 3);
-        tabControl15.Name = "tabControl15";
-        tabControl15.SelectedIndex = 0;
-        tabControl15.Size = new Size(1307, 567);
-        tabControl15.SizeMode = TabSizeMode.FillToRight;
-        tabControl15.TabIndex = 66;
-        tabControl15.TabStop = false;
-        // 
-        // tabPage55
-        // 
-        tabPage55.Controls.Add(BOSS刷新);
-        tabPage55.Location = new Point(4, 34);
-        tabPage55.Margin = new Padding(4, 3, 4, 3);
-        tabPage55.Name = "tabPage55";
-        tabPage55.Padding = new Padding(4, 3, 4, 3);
-        tabPage55.Size = new Size(1299, 529);
-        tabPage55.TabIndex = 19;
-        tabPage55.Text = "BOSS Refresh 1";
-        tabPage55.UseVisualStyleBackColor = true;
-        // 
-        // BOSS刷新
-        // 
-        BOSS刷新.Controls.Add(groupBox176);
-        BOSS刷新.Controls.Add(groupBox175);
-        BOSS刷新.Controls.Add(groupBox174);
-        BOSS刷新.Controls.Add(groupBox173);
-        BOSS刷新.Controls.Add(groupBox172);
-        BOSS刷新.Controls.Add(groupBox46);
-        BOSS刷新.Controls.Add(groupBox45);
-        BOSS刷新.Controls.Add(groupBox42);
-        BOSS刷新.Controls.Add(groupBox14);
-        BOSS刷新.Controls.Add(BOSS刷新一);
-        BOSS刷新.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
-        BOSS刷新.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
-        BOSS刷新.Location = new Point(4, 9);
-        BOSS刷新.Margin = new Padding(4, 3, 4, 3);
-        BOSS刷新.Name = "BOSS刷新";
-        BOSS刷新.Padding = new Padding(4, 3, 4, 3);
-        BOSS刷新.Size = new Size(1278, 503);
-        BOSS刷新.TabIndex = 6;
-        BOSS刷新.TabStop = false;
-        BOSS刷新.Text = "BOSS Refresh - Credit: 腾云驾雾琉璃仙 (Tengyun Riding Mist Liulixian)";
-        // 
-        // groupBox176
-        // 
-        groupBox176.Controls.Add(label714);
-        groupBox176.Controls.Add(label715);
-        groupBox176.Controls.Add(S_自动BOSS1界面5开关);
-        groupBox176.Location = new Point(640, 400);
-        groupBox176.Margin = new Padding(4, 3, 4, 3);
-        groupBox176.Name = "groupBox176";
-        groupBox176.Padding = new Padding(4, 3, 4, 3);
-        groupBox176.Size = new Size(130, 80);
-        groupBox176.TabIndex = 35;
-        groupBox176.TabStop = false;
-        groupBox176.Text = "BOSS5 - Switch";
-        // 
-        // label714
-        // 
-        label714.AutoSize = true;
-        label714.Location = new Point(9, 57);
-        label714.Margin = new Padding(4, 0, 4, 0);
-        label714.Name = "label714";
-        label714.Size = new Size(80, 15);
-        label714.TabIndex = 34;
-        label714.Text = "(1 ON, 0 OFF)";
-        // 
-        // label715
-        // 
-        label715.AutoSize = true;
-        label715.Location = new Point(5, 30);
-        label715.Margin = new Padding(4, 0, 4, 0);
-        label715.Name = "label715";
-        label715.Size = new Size(43, 15);
-        label715.TabIndex = 33;
-        label715.Text = "Switch";
-        // 
-        // S_自动BOSS1界面5开关
-        // 
-        S_自动BOSS1界面5开关.Location = new Point(77, 25);
-        S_自动BOSS1界面5开关.Margin = new Padding(4, 3, 4, 3);
-        S_自动BOSS1界面5开关.Maximum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_自动BOSS1界面5开关.Name = "S_自动BOSS1界面5开关";
-        S_自动BOSS1界面5开关.Size = new Size(47, 23);
-        S_自动BOSS1界面5开关.TabIndex = 32;
-        S_自动BOSS1界面5开关.TextAlign = HorizontalAlignment.Center;
-        S_自动BOSS1界面5开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // groupBox175
-        // 
-        groupBox175.Controls.Add(label712);
-        groupBox175.Controls.Add(label713);
-        groupBox175.Controls.Add(S_自动BOSS1界面4开关);
-        groupBox175.Location = new Point(479, 400);
-        groupBox175.Margin = new Padding(4, 3, 4, 3);
-        groupBox175.Name = "groupBox175";
-        groupBox175.Padding = new Padding(4, 3, 4, 3);
-        groupBox175.Size = new Size(130, 80);
-        groupBox175.TabIndex = 35;
-        groupBox175.TabStop = false;
-        groupBox175.Text = "BOSS4 - Switch";
-        // 
-        // label712
-        // 
-        label712.AutoSize = true;
-        label712.Location = new Point(9, 57);
-        label712.Margin = new Padding(4, 0, 4, 0);
-        label712.Name = "label712";
-        label712.Size = new Size(80, 15);
-        label712.TabIndex = 34;
-        label712.Text = "(1 ON, 0 OFF)";
-        // 
-        // label713
-        // 
-        label713.AutoSize = true;
-        label713.Location = new Point(5, 30);
-        label713.Margin = new Padding(4, 0, 4, 0);
-        label713.Name = "label713";
-        label713.Size = new Size(43, 15);
-        label713.TabIndex = 33;
-        label713.Text = "Switch";
-        // 
-        // S_自动BOSS1界面4开关
-        // 
-        S_自动BOSS1界面4开关.Location = new Point(77, 25);
-        S_自动BOSS1界面4开关.Margin = new Padding(4, 3, 4, 3);
-        S_自动BOSS1界面4开关.Maximum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_自动BOSS1界面4开关.Name = "S_自动BOSS1界面4开关";
-        S_自动BOSS1界面4开关.Size = new Size(47, 23);
-        S_自动BOSS1界面4开关.TabIndex = 32;
-        S_自动BOSS1界面4开关.TextAlign = HorizontalAlignment.Center;
-        S_自动BOSS1界面4开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // groupBox174
-        // 
-        groupBox174.Controls.Add(label710);
-        groupBox174.Controls.Add(label711);
-        groupBox174.Controls.Add(S_自动BOSS1界面3开关);
-        groupBox174.Location = new Point(320, 400);
-        groupBox174.Margin = new Padding(4, 3, 4, 3);
-        groupBox174.Name = "groupBox174";
-        groupBox174.Padding = new Padding(4, 3, 4, 3);
-        groupBox174.Size = new Size(130, 80);
-        groupBox174.TabIndex = 35;
-        groupBox174.TabStop = false;
-        groupBox174.Text = "BOSS3 - Switch";
-        // 
-        // label710
-        // 
-        label710.AutoSize = true;
-        label710.Location = new Point(9, 57);
-        label710.Margin = new Padding(4, 0, 4, 0);
-        label710.Name = "label710";
-        label710.Size = new Size(80, 15);
-        label710.TabIndex = 34;
-        label710.Text = "(1 ON, 0 OFF)";
-        // 
-        // label711
-        // 
-        label711.AutoSize = true;
-        label711.Location = new Point(5, 30);
-        label711.Margin = new Padding(4, 0, 4, 0);
-        label711.Name = "label711";
-        label711.Size = new Size(43, 15);
-        label711.TabIndex = 33;
-        label711.Text = "Switch";
-        // 
-        // S_自动BOSS1界面3开关
-        // 
-        S_自动BOSS1界面3开关.Location = new Point(77, 25);
-        S_自动BOSS1界面3开关.Margin = new Padding(4, 3, 4, 3);
-        S_自动BOSS1界面3开关.Maximum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_自动BOSS1界面3开关.Name = "S_自动BOSS1界面3开关";
-        S_自动BOSS1界面3开关.Size = new Size(47, 23);
-        S_自动BOSS1界面3开关.TabIndex = 32;
-        S_自动BOSS1界面3开关.TextAlign = HorizontalAlignment.Center;
-        S_自动BOSS1界面3开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // groupBox173
-        // 
-        groupBox173.Controls.Add(label708);
-        groupBox173.Controls.Add(label709);
-        groupBox173.Controls.Add(S_自动BOSS1界面2开关);
-        groupBox173.Location = new Point(163, 400);
-        groupBox173.Margin = new Padding(4, 3, 4, 3);
-        groupBox173.Name = "groupBox173";
-        groupBox173.Padding = new Padding(4, 3, 4, 3);
-        groupBox173.Size = new Size(130, 80);
-        groupBox173.TabIndex = 7;
-        groupBox173.TabStop = false;
-        groupBox173.Text = "BOSS2 - Switch";
-        // 
-        // label708
-        // 
-        label708.AutoSize = true;
-        label708.Location = new Point(9, 57);
-        label708.Margin = new Padding(4, 0, 4, 0);
-        label708.Name = "label708";
-        label708.Size = new Size(80, 15);
-        label708.TabIndex = 34;
-        label708.Text = "(1 ON, 0 OFF)";
-        // 
-        // label709
-        // 
-        label709.AutoSize = true;
-        label709.Location = new Point(5, 30);
-        label709.Margin = new Padding(4, 0, 4, 0);
-        label709.Name = "label709";
-        label709.Size = new Size(43, 15);
-        label709.TabIndex = 33;
-        label709.Text = "Switch";
-        // 
-        // S_自动BOSS1界面2开关
-        // 
-        S_自动BOSS1界面2开关.Location = new Point(77, 25);
-        S_自动BOSS1界面2开关.Margin = new Padding(4, 3, 4, 3);
-        S_自动BOSS1界面2开关.Maximum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_自动BOSS1界面2开关.Name = "S_自动BOSS1界面2开关";
-        S_自动BOSS1界面2开关.Size = new Size(47, 23);
-        S_自动BOSS1界面2开关.TabIndex = 32;
-        S_自动BOSS1界面2开关.TextAlign = HorizontalAlignment.Center;
-        S_自动BOSS1界面2开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // groupBox172
-        // 
-        groupBox172.Controls.Add(label707);
-        groupBox172.Controls.Add(label706);
-        groupBox172.Controls.Add(S_自动BOSS1界面1开关);
-        groupBox172.Location = new Point(7, 400);
-        groupBox172.Margin = new Padding(4, 3, 4, 3);
-        groupBox172.Name = "groupBox172";
-        groupBox172.Padding = new Padding(4, 3, 4, 3);
-        groupBox172.Size = new Size(130, 80);
-        groupBox172.TabIndex = 6;
-        groupBox172.TabStop = false;
-        groupBox172.Text = "BOSS1 - Switch";
-        // 
-        // label707
-        // 
-        label707.AutoSize = true;
-        label707.Location = new Point(9, 57);
-        label707.Margin = new Padding(4, 0, 4, 0);
-        label707.Name = "label707";
-        label707.Size = new Size(80, 15);
-        label707.TabIndex = 34;
-        label707.Text = "(1 ON, 0 OFF)";
-        // 
-        // label706
-        // 
-        label706.AutoSize = true;
-        label706.Location = new Point(5, 30);
-        label706.Margin = new Padding(4, 0, 4, 0);
-        label706.Name = "label706";
-        label706.Size = new Size(43, 15);
-        label706.TabIndex = 33;
-        label706.Text = "Switch";
-        // 
-        // S_自动BOSS1界面1开关
-        // 
-        S_自动BOSS1界面1开关.Location = new Point(77, 25);
-        S_自动BOSS1界面1开关.Margin = new Padding(4, 3, 4, 3);
-        S_自动BOSS1界面1开关.Maximum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_自动BOSS1界面1开关.Name = "S_自动BOSS1界面1开关";
-        S_自动BOSS1界面1开关.Size = new Size(47, 23);
-        S_自动BOSS1界面1开关.TabIndex = 32;
-        S_自动BOSS1界面1开关.TextAlign = HorizontalAlignment.Center;
-        S_自动BOSS1界面1开关.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // groupBox46
-        // 
-        groupBox46.Controls.Add(label330);
-        groupBox46.Controls.Add(S_BOSS五地图名字);
-        groupBox46.Controls.Add(S_BOSS五分钟);
-        groupBox46.Controls.Add(label331);
-        groupBox46.Controls.Add(S_BOSS五坐标Y);
-        groupBox46.Controls.Add(label332);
-        groupBox46.Controls.Add(label333);
-        groupBox46.Controls.Add(S_BOSS五地图编号);
-        groupBox46.Controls.Add(label334);
-        groupBox46.Controls.Add(S_BOSS五时间);
-        groupBox46.Controls.Add(label335);
-        groupBox46.Controls.Add(S_BOSS五坐标X);
-        groupBox46.Controls.Add(label336);
-        groupBox46.Controls.Add(S_BOSS名字五);
-        groupBox46.Controls.Add(label337);
-        groupBox46.Font = new Font("Calibri", 9F, FontStyle.Bold);
-        groupBox46.Location = new Point(7, 325);
-        groupBox46.Margin = new Padding(4, 3, 4, 3);
-        groupBox46.Name = "groupBox46";
-        groupBox46.Padding = new Padding(4, 3, 4, 3);
-        groupBox46.Size = new Size(1240, 68);
-        groupBox46.TabIndex = 5;
-        groupBox46.TabStop = false;
-        groupBox46.Text = "BOSS Refresh (5)";
-        // 
-        // label330
-        // 
-        label330.AutoSize = true;
-        label330.ForeColor = Color.Black;
-        label330.Location = new Point(875, 28);
-        label330.Margin = new Padding(4, 0, 4, 0);
-        label330.Name = "label330";
-        label330.Size = new Size(29, 14);
-        label330.TabIndex = 38;
-        label330.Text = "Map";
-        // 
-        // S_BOSS五地图名字
-        // 
-        S_BOSS五地图名字.BorderStyle = BorderStyle.FixedSingle;
-        S_BOSS五地图名字.ForeColor = Color.Blue;
-        S_BOSS五地图名字.Location = new Point(911, 21);
-        S_BOSS五地图名字.Margin = new Padding(4, 3, 4, 3);
-        S_BOSS五地图名字.Name = "S_BOSS五地图名字";
-        S_BOSS五地图名字.Size = new Size(116, 22);
-        S_BOSS五地图名字.TabIndex = 37;
-        S_BOSS五地图名字.Tag = "";
-        S_BOSS五地图名字.Text = "地图名称";
-        S_BOSS五地图名字.TextAlign = HorizontalAlignment.Center;
-        S_BOSS五地图名字.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
-        // 
-        // S_BOSS五分钟
-        // 
-        S_BOSS五分钟.Location = new Point(743, 24);
-        S_BOSS五分钟.Margin = new Padding(4, 3, 4, 3);
-        S_BOSS五分钟.Maximum = new decimal(new int[] { 60, 0, 0, 0 });
-        S_BOSS五分钟.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_BOSS五分钟.Name = "S_BOSS五分钟";
-        S_BOSS五分钟.Size = new Size(70, 22);
-        S_BOSS五分钟.TabIndex = 36;
-        S_BOSS五分钟.TextAlign = HorizontalAlignment.Center;
-        S_BOSS五分钟.Value = new decimal(new int[] { 30, 0, 0, 0 });
-        S_BOSS五分钟.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label331
-        // 
-        label331.AutoSize = true;
-        label331.ForeColor = Color.FromArgb((int)(byte)192, (int)(byte)0, (int)(byte)0);
-        label331.Location = new Point(545, 30);
-        label331.Margin = new Padding(4, 0, 4, 0);
-        label331.Name = "label331";
-        label331.Size = new Size(73, 14);
-        label331.TabIndex = 35;
-        label331.Text = "Refresh Time";
-        // 
-        // S_BOSS五坐标Y
-        // 
-        S_BOSS五坐标Y.Location = new Point(469, 25);
-        S_BOSS五坐标Y.Margin = new Padding(4, 3, 4, 3);
-        S_BOSS五坐标Y.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
-        S_BOSS五坐标Y.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_BOSS五坐标Y.Name = "S_BOSS五坐标Y";
-        S_BOSS五坐标Y.Size = new Size(58, 22);
-        S_BOSS五坐标Y.TabIndex = 34;
-        S_BOSS五坐标Y.TextAlign = HorizontalAlignment.Center;
-        S_BOSS五坐标Y.Value = new decimal(new int[] { 999, 0, 0, 0 });
-        S_BOSS五坐标Y.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label332
-        // 
-        label332.AutoSize = true;
-        label332.Location = new Point(455, 31);
-        label332.Margin = new Padding(4, 0, 4, 0);
-        label332.Name = "label332";
-        label332.Size = new Size(13, 14);
-        label332.TabIndex = 33;
-        label332.Text = "Y";
-        // 
-        // label333
-        // 
-        label333.AutoSize = true;
-        label333.Location = new Point(378, 31);
-        label333.Margin = new Padding(4, 0, 4, 0);
-        label333.Name = "label333";
-        label333.Size = new Size(14, 14);
-        label333.TabIndex = 32;
-        label333.Text = "X";
-        // 
-        // S_BOSS五地图编号
-        // 
-        S_BOSS五地图编号.Location = new Point(303, 25);
-        S_BOSS五地图编号.Margin = new Padding(4, 3, 4, 3);
-        S_BOSS五地图编号.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
-        S_BOSS五地图编号.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_BOSS五地图编号.Name = "S_BOSS五地图编号";
-        S_BOSS五地图编号.Size = new Size(70, 22);
-        S_BOSS五地图编号.TabIndex = 31;
-        S_BOSS五地图编号.TextAlign = HorizontalAlignment.Center;
-        S_BOSS五地图编号.Value = new decimal(new int[] { 147, 0, 0, 0 });
-        S_BOSS五地图编号.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label334
-        // 
-        label334.AutoSize = true;
-        label334.ForeColor = Color.FromArgb((int)(byte)192, (int)(byte)0, (int)(byte)0);
-        label334.Location = new Point(816, 30);
-        label334.Margin = new Padding(4, 0, 4, 0);
-        label334.Name = "label334";
-        label334.Size = new Size(20, 14);
-        label334.TabIndex = 30;
-        label334.Text = "分";
-        // 
-        // S_BOSS五时间
-        // 
-        S_BOSS五时间.Location = new Point(632, 24);
-        S_BOSS五时间.Margin = new Padding(4, 3, 4, 3);
-        S_BOSS五时间.Maximum = new decimal(new int[] { 24, 0, 0, 0 });
-        S_BOSS五时间.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_BOSS五时间.Name = "S_BOSS五时间";
-        S_BOSS五时间.Size = new Size(70, 22);
-        S_BOSS五时间.TabIndex = 29;
-        S_BOSS五时间.TextAlign = HorizontalAlignment.Center;
-        S_BOSS五时间.Value = new decimal(new int[] { 20, 0, 0, 0 });
-        S_BOSS五时间.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label335
-        // 
-        label335.AutoSize = true;
-        label335.ForeColor = Color.FromArgb((int)(byte)192, (int)(byte)0, (int)(byte)0);
-        label335.Location = new Point(705, 30);
-        label335.Margin = new Padding(4, 0, 4, 0);
-        label335.Name = "label335";
-        label335.Size = new Size(20, 14);
-        label335.TabIndex = 28;
-        label335.Text = "点";
-        // 
-        // S_BOSS五坐标X
-        // 
-        S_BOSS五坐标X.Location = new Point(394, 25);
-        S_BOSS五坐标X.Margin = new Padding(4, 3, 4, 3);
-        S_BOSS五坐标X.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
-        S_BOSS五坐标X.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_BOSS五坐标X.Name = "S_BOSS五坐标X";
-        S_BOSS五坐标X.Size = new Size(58, 22);
-        S_BOSS五坐标X.TabIndex = 27;
-        S_BOSS五坐标X.TextAlign = HorizontalAlignment.Center;
-        S_BOSS五坐标X.Value = new decimal(new int[] { 999, 0, 0, 0 });
-        S_BOSS五坐标X.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label336
-        // 
-        label336.AutoSize = true;
-        label336.Location = new Point(222, 31);
-        label336.Margin = new Padding(4, 0, 4, 0);
-        label336.Name = "label336";
-        label336.Size = new Size(70, 14);
-        label336.TabIndex = 2;
-        label336.Text = "Refresh Map";
-        // 
-        // S_BOSS名字五
-        // 
-        S_BOSS名字五.BorderStyle = BorderStyle.FixedSingle;
-        S_BOSS名字五.ForeColor = Color.Red;
-        S_BOSS名字五.Location = new Point(93, 24);
-        S_BOSS名字五.Margin = new Padding(4, 3, 4, 3);
-        S_BOSS名字五.Name = "S_BOSS名字五";
-        S_BOSS名字五.Size = new Size(116, 22);
-        S_BOSS名字五.TabIndex = 1;
-        S_BOSS名字五.Tag = "";
-        S_BOSS名字五.Text = "BOSS名称";
-        S_BOSS名字五.TextAlign = HorizontalAlignment.Center;
-        S_BOSS名字五.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
-        // 
-        // label337
-        // 
-        label337.AutoSize = true;
-        label337.Location = new Point(7, 31);
-        label337.Margin = new Padding(4, 0, 4, 0);
-        label337.Name = "label337";
-        label337.Size = new Size(67, 14);
-        label337.TabIndex = 1;
-        label337.Text = "BOSS Name";
-        // 
-        // groupBox45
-        // 
-        groupBox45.Controls.Add(label320);
-        groupBox45.Controls.Add(S_BOSS四地图名字);
-        groupBox45.Controls.Add(S_BOSS四分钟);
-        groupBox45.Controls.Add(label321);
-        groupBox45.Controls.Add(S_BOSS四坐标Y);
-        groupBox45.Controls.Add(label322);
-        groupBox45.Controls.Add(label323);
-        groupBox45.Controls.Add(S_BOSS四地图编号);
-        groupBox45.Controls.Add(label324);
-        groupBox45.Controls.Add(S_BOSS四时间);
-        groupBox45.Controls.Add(label325);
-        groupBox45.Controls.Add(S_BOSS四坐标X);
-        groupBox45.Controls.Add(label326);
-        groupBox45.Controls.Add(S_BOSS名字四);
-        groupBox45.Controls.Add(label327);
-        groupBox45.Font = new Font("Calibri", 9F, FontStyle.Bold);
-        groupBox45.Location = new Point(7, 250);
-        groupBox45.Margin = new Padding(4, 3, 4, 3);
-        groupBox45.Name = "groupBox45";
-        groupBox45.Padding = new Padding(4, 3, 4, 3);
-        groupBox45.Size = new Size(1240, 68);
-        groupBox45.TabIndex = 4;
-        groupBox45.TabStop = false;
-        groupBox45.Text = "BOSS Refresh (4)";
-        // 
-        // label320
-        // 
-        label320.AutoSize = true;
-        label320.ForeColor = Color.Black;
-        label320.Location = new Point(875, 29);
-        label320.Margin = new Padding(4, 0, 4, 0);
-        label320.Name = "label320";
-        label320.Size = new Size(29, 14);
-        label320.TabIndex = 38;
-        label320.Text = "Map";
-        // 
-        // S_BOSS四地图名字
-        // 
-        S_BOSS四地图名字.BorderStyle = BorderStyle.FixedSingle;
-        S_BOSS四地图名字.ForeColor = Color.Blue;
-        S_BOSS四地图名字.Location = new Point(911, 22);
-        S_BOSS四地图名字.Margin = new Padding(4, 3, 4, 3);
-        S_BOSS四地图名字.Name = "S_BOSS四地图名字";
-        S_BOSS四地图名字.Size = new Size(116, 22);
-        S_BOSS四地图名字.TabIndex = 37;
-        S_BOSS四地图名字.Tag = "";
-        S_BOSS四地图名字.Text = "地图名称";
-        S_BOSS四地图名字.TextAlign = HorizontalAlignment.Center;
-        S_BOSS四地图名字.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
-        // 
-        // S_BOSS四分钟
-        // 
-        S_BOSS四分钟.Location = new Point(743, 25);
-        S_BOSS四分钟.Margin = new Padding(4, 3, 4, 3);
-        S_BOSS四分钟.Maximum = new decimal(new int[] { 60, 0, 0, 0 });
-        S_BOSS四分钟.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_BOSS四分钟.Name = "S_BOSS四分钟";
-        S_BOSS四分钟.Size = new Size(70, 22);
-        S_BOSS四分钟.TabIndex = 36;
-        S_BOSS四分钟.TextAlign = HorizontalAlignment.Center;
-        S_BOSS四分钟.Value = new decimal(new int[] { 30, 0, 0, 0 });
-        S_BOSS四分钟.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label321
-        // 
-        label321.AutoSize = true;
-        label321.ForeColor = Color.FromArgb((int)(byte)192, (int)(byte)0, (int)(byte)0);
-        label321.Location = new Point(545, 31);
-        label321.Margin = new Padding(4, 0, 4, 0);
-        label321.Name = "label321";
-        label321.Size = new Size(73, 14);
-        label321.TabIndex = 35;
-        label321.Text = "Refresh Time";
-        // 
-        // S_BOSS四坐标Y
-        // 
-        S_BOSS四坐标Y.Location = new Point(469, 25);
-        S_BOSS四坐标Y.Margin = new Padding(4, 3, 4, 3);
-        S_BOSS四坐标Y.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
-        S_BOSS四坐标Y.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_BOSS四坐标Y.Name = "S_BOSS四坐标Y";
-        S_BOSS四坐标Y.Size = new Size(58, 22);
-        S_BOSS四坐标Y.TabIndex = 34;
-        S_BOSS四坐标Y.TextAlign = HorizontalAlignment.Center;
-        S_BOSS四坐标Y.Value = new decimal(new int[] { 999, 0, 0, 0 });
-        S_BOSS四坐标Y.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label322
-        // 
-        label322.AutoSize = true;
-        label322.Location = new Point(455, 31);
-        label322.Margin = new Padding(4, 0, 4, 0);
-        label322.Name = "label322";
-        label322.Size = new Size(13, 14);
-        label322.TabIndex = 33;
-        label322.Text = "Y";
-        // 
-        // label323
-        // 
-        label323.AutoSize = true;
-        label323.Location = new Point(378, 31);
-        label323.Margin = new Padding(4, 0, 4, 0);
-        label323.Name = "label323";
-        label323.Size = new Size(14, 14);
-        label323.TabIndex = 32;
-        label323.Text = "X";
-        // 
-        // S_BOSS四地图编号
-        // 
-        S_BOSS四地图编号.Location = new Point(303, 25);
-        S_BOSS四地图编号.Margin = new Padding(4, 3, 4, 3);
-        S_BOSS四地图编号.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
-        S_BOSS四地图编号.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_BOSS四地图编号.Name = "S_BOSS四地图编号";
-        S_BOSS四地图编号.Size = new Size(70, 22);
-        S_BOSS四地图编号.TabIndex = 31;
-        S_BOSS四地图编号.TextAlign = HorizontalAlignment.Center;
-        S_BOSS四地图编号.Value = new decimal(new int[] { 147, 0, 0, 0 });
-        S_BOSS四地图编号.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label324
-        // 
-        label324.AutoSize = true;
-        label324.ForeColor = Color.FromArgb((int)(byte)192, (int)(byte)0, (int)(byte)0);
-        label324.Location = new Point(816, 29);
-        label324.Margin = new Padding(4, 0, 4, 0);
-        label324.Name = "label324";
-        label324.Size = new Size(42, 14);
-        label324.TabIndex = 30;
-        label324.Text = "Minute";
-        // 
-        // S_BOSS四时间
-        // 
-        S_BOSS四时间.Location = new Point(632, 24);
-        S_BOSS四时间.Margin = new Padding(4, 3, 4, 3);
-        S_BOSS四时间.Maximum = new decimal(new int[] { 24, 0, 0, 0 });
-        S_BOSS四时间.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_BOSS四时间.Name = "S_BOSS四时间";
-        S_BOSS四时间.Size = new Size(70, 22);
-        S_BOSS四时间.TabIndex = 29;
-        S_BOSS四时间.TextAlign = HorizontalAlignment.Center;
-        S_BOSS四时间.Value = new decimal(new int[] { 20, 0, 0, 0 });
-        S_BOSS四时间.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label325
-        // 
-        label325.AutoSize = true;
-        label325.ForeColor = Color.FromArgb((int)(byte)192, (int)(byte)0, (int)(byte)0);
-        label325.Location = new Point(705, 30);
-        label325.Margin = new Padding(4, 0, 4, 0);
-        label325.Name = "label325";
-        label325.Size = new Size(31, 14);
-        label325.TabIndex = 28;
-        label325.Text = "Hour";
-        // 
-        // S_BOSS四坐标X
-        // 
-        S_BOSS四坐标X.Location = new Point(394, 25);
-        S_BOSS四坐标X.Margin = new Padding(4, 3, 4, 3);
-        S_BOSS四坐标X.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
-        S_BOSS四坐标X.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_BOSS四坐标X.Name = "S_BOSS四坐标X";
-        S_BOSS四坐标X.Size = new Size(58, 22);
-        S_BOSS四坐标X.TabIndex = 27;
-        S_BOSS四坐标X.TextAlign = HorizontalAlignment.Center;
-        S_BOSS四坐标X.Value = new decimal(new int[] { 999, 0, 0, 0 });
-        S_BOSS四坐标X.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label326
-        // 
-        label326.AutoSize = true;
-        label326.Location = new Point(222, 31);
-        label326.Margin = new Padding(4, 0, 4, 0);
-        label326.Name = "label326";
-        label326.Size = new Size(70, 14);
-        label326.TabIndex = 2;
-        label326.Text = "Refresh Map";
-        // 
-        // S_BOSS名字四
-        // 
-        S_BOSS名字四.BorderStyle = BorderStyle.FixedSingle;
-        S_BOSS名字四.ForeColor = Color.Red;
-        S_BOSS名字四.Location = new Point(93, 24);
-        S_BOSS名字四.Margin = new Padding(4, 3, 4, 3);
-        S_BOSS名字四.Name = "S_BOSS名字四";
-        S_BOSS名字四.Size = new Size(116, 22);
-        S_BOSS名字四.TabIndex = 1;
-        S_BOSS名字四.Tag = "";
-        S_BOSS名字四.Text = "BOSS名称";
-        S_BOSS名字四.TextAlign = HorizontalAlignment.Center;
-        S_BOSS名字四.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
-        // 
-        // label327
-        // 
-        label327.AutoSize = true;
-        label327.Location = new Point(7, 31);
-        label327.Margin = new Padding(4, 0, 4, 0);
-        label327.Name = "label327";
-        label327.Size = new Size(67, 14);
-        label327.TabIndex = 1;
-        label327.Text = "BOSS Name";
-        // 
-        // groupBox42
-        // 
-        groupBox42.Controls.Add(label312);
-        groupBox42.Controls.Add(S_BOSS三地图名字);
-        groupBox42.Controls.Add(S_BOSS三分钟);
-        groupBox42.Controls.Add(label313);
-        groupBox42.Controls.Add(S_BOSS三坐标Y);
-        groupBox42.Controls.Add(label314);
-        groupBox42.Controls.Add(label315);
-        groupBox42.Controls.Add(S_BOSS三地图编号);
-        groupBox42.Controls.Add(label316);
-        groupBox42.Controls.Add(S_BOSS三时间);
-        groupBox42.Controls.Add(label317);
-        groupBox42.Controls.Add(S_BOSS三坐标X);
-        groupBox42.Controls.Add(label318);
-        groupBox42.Controls.Add(S_BOSS名字三);
-        groupBox42.Controls.Add(label319);
-        groupBox42.Font = new Font("Calibri", 9F, FontStyle.Bold);
-        groupBox42.Location = new Point(7, 175);
-        groupBox42.Margin = new Padding(4, 3, 4, 3);
-        groupBox42.Name = "groupBox42";
-        groupBox42.Padding = new Padding(4, 3, 4, 3);
-        groupBox42.Size = new Size(1240, 68);
-        groupBox42.TabIndex = 3;
-        groupBox42.TabStop = false;
-        groupBox42.Text = "BOSS Refresh (3)";
-        // 
-        // label312
-        // 
-        label312.AutoSize = true;
-        label312.ForeColor = Color.Black;
-        label312.Location = new Point(875, 31);
-        label312.Margin = new Padding(4, 0, 4, 0);
-        label312.Name = "label312";
-        label312.Size = new Size(29, 14);
-        label312.TabIndex = 38;
-        label312.Text = "Map";
-        // 
-        // S_BOSS三地图名字
-        // 
-        S_BOSS三地图名字.BorderStyle = BorderStyle.FixedSingle;
-        S_BOSS三地图名字.ForeColor = Color.Blue;
-        S_BOSS三地图名字.Location = new Point(911, 24);
-        S_BOSS三地图名字.Margin = new Padding(4, 3, 4, 3);
-        S_BOSS三地图名字.Name = "S_BOSS三地图名字";
-        S_BOSS三地图名字.Size = new Size(116, 22);
-        S_BOSS三地图名字.TabIndex = 37;
-        S_BOSS三地图名字.Tag = "";
-        S_BOSS三地图名字.Text = "地图名称";
-        S_BOSS三地图名字.TextAlign = HorizontalAlignment.Center;
-        S_BOSS三地图名字.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
-        // 
-        // S_BOSS三分钟
-        // 
-        S_BOSS三分钟.Location = new Point(743, 25);
-        S_BOSS三分钟.Margin = new Padding(4, 3, 4, 3);
-        S_BOSS三分钟.Maximum = new decimal(new int[] { 60, 0, 0, 0 });
-        S_BOSS三分钟.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_BOSS三分钟.Name = "S_BOSS三分钟";
-        S_BOSS三分钟.Size = new Size(70, 22);
-        S_BOSS三分钟.TabIndex = 36;
-        S_BOSS三分钟.TextAlign = HorizontalAlignment.Center;
-        S_BOSS三分钟.Value = new decimal(new int[] { 30, 0, 0, 0 });
-        S_BOSS三分钟.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label313
-        // 
-        label313.AutoSize = true;
-        label313.ForeColor = Color.FromArgb((int)(byte)192, (int)(byte)0, (int)(byte)0);
-        label313.Location = new Point(545, 31);
-        label313.Margin = new Padding(4, 0, 4, 0);
-        label313.Name = "label313";
-        label313.Size = new Size(73, 14);
-        label313.TabIndex = 35;
-        label313.Text = "Refresh Time";
-        // 
-        // S_BOSS三坐标Y
-        // 
-        S_BOSS三坐标Y.Location = new Point(469, 25);
-        S_BOSS三坐标Y.Margin = new Padding(4, 3, 4, 3);
-        S_BOSS三坐标Y.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
-        S_BOSS三坐标Y.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_BOSS三坐标Y.Name = "S_BOSS三坐标Y";
-        S_BOSS三坐标Y.Size = new Size(58, 22);
-        S_BOSS三坐标Y.TabIndex = 34;
-        S_BOSS三坐标Y.TextAlign = HorizontalAlignment.Center;
-        S_BOSS三坐标Y.Value = new decimal(new int[] { 999, 0, 0, 0 });
-        S_BOSS三坐标Y.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label314
-        // 
-        label314.AutoSize = true;
-        label314.Location = new Point(455, 31);
-        label314.Margin = new Padding(4, 0, 4, 0);
-        label314.Name = "label314";
-        label314.Size = new Size(13, 14);
-        label314.TabIndex = 33;
-        label314.Text = "Y";
-        // 
-        // label315
-        // 
-        label315.AutoSize = true;
-        label315.Location = new Point(378, 31);
-        label315.Margin = new Padding(4, 0, 4, 0);
-        label315.Name = "label315";
-        label315.Size = new Size(14, 14);
-        label315.TabIndex = 32;
-        label315.Text = "X";
-        // 
-        // S_BOSS三地图编号
-        // 
-        S_BOSS三地图编号.Location = new Point(303, 25);
-        S_BOSS三地图编号.Margin = new Padding(4, 3, 4, 3);
-        S_BOSS三地图编号.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
-        S_BOSS三地图编号.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_BOSS三地图编号.Name = "S_BOSS三地图编号";
-        S_BOSS三地图编号.Size = new Size(70, 22);
-        S_BOSS三地图编号.TabIndex = 31;
-        S_BOSS三地图编号.TextAlign = HorizontalAlignment.Center;
-        S_BOSS三地图编号.Value = new decimal(new int[] { 147, 0, 0, 0 });
-        S_BOSS三地图编号.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label316
-        // 
-        label316.AutoSize = true;
-        label316.ForeColor = Color.FromArgb((int)(byte)192, (int)(byte)0, (int)(byte)0);
-        label316.Location = new Point(816, 31);
-        label316.Margin = new Padding(4, 0, 4, 0);
-        label316.Name = "label316";
-        label316.Size = new Size(42, 14);
-        label316.TabIndex = 30;
-        label316.Text = "Minute";
-        // 
-        // S_BOSS三时间
-        // 
-        S_BOSS三时间.Location = new Point(631, 25);
-        S_BOSS三时间.Margin = new Padding(4, 3, 4, 3);
-        S_BOSS三时间.Maximum = new decimal(new int[] { 24, 0, 0, 0 });
-        S_BOSS三时间.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_BOSS三时间.Name = "S_BOSS三时间";
-        S_BOSS三时间.Size = new Size(70, 22);
-        S_BOSS三时间.TabIndex = 29;
-        S_BOSS三时间.TextAlign = HorizontalAlignment.Center;
-        S_BOSS三时间.Value = new decimal(new int[] { 20, 0, 0, 0 });
-        S_BOSS三时间.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label317
-        // 
-        label317.AutoSize = true;
-        label317.ForeColor = Color.FromArgb((int)(byte)192, (int)(byte)0, (int)(byte)0);
-        label317.Location = new Point(704, 31);
-        label317.Margin = new Padding(4, 0, 4, 0);
-        label317.Name = "label317";
-        label317.Size = new Size(31, 14);
-        label317.TabIndex = 28;
-        label317.Text = "Hour";
-        // 
-        // S_BOSS三坐标X
-        // 
-        S_BOSS三坐标X.Location = new Point(394, 25);
-        S_BOSS三坐标X.Margin = new Padding(4, 3, 4, 3);
-        S_BOSS三坐标X.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
-        S_BOSS三坐标X.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_BOSS三坐标X.Name = "S_BOSS三坐标X";
-        S_BOSS三坐标X.Size = new Size(58, 22);
-        S_BOSS三坐标X.TabIndex = 27;
-        S_BOSS三坐标X.TextAlign = HorizontalAlignment.Center;
-        S_BOSS三坐标X.Value = new decimal(new int[] { 999, 0, 0, 0 });
-        S_BOSS三坐标X.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label318
-        // 
-        label318.AutoSize = true;
-        label318.Location = new Point(222, 31);
-        label318.Margin = new Padding(4, 0, 4, 0);
-        label318.Name = "label318";
-        label318.Size = new Size(70, 14);
-        label318.TabIndex = 2;
-        label318.Text = "Refresh Map";
-        // 
-        // S_BOSS名字三
-        // 
-        S_BOSS名字三.BorderStyle = BorderStyle.FixedSingle;
-        S_BOSS名字三.ForeColor = Color.Red;
-        S_BOSS名字三.Location = new Point(93, 24);
-        S_BOSS名字三.Margin = new Padding(4, 3, 4, 3);
-        S_BOSS名字三.Name = "S_BOSS名字三";
-        S_BOSS名字三.Size = new Size(116, 22);
-        S_BOSS名字三.TabIndex = 1;
-        S_BOSS名字三.Tag = "";
-        S_BOSS名字三.Text = "BOSS名称";
-        S_BOSS名字三.TextAlign = HorizontalAlignment.Center;
-        S_BOSS名字三.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
-        // 
-        // label319
-        // 
-        label319.AutoSize = true;
-        label319.Location = new Point(7, 31);
-        label319.Margin = new Padding(4, 0, 4, 0);
-        label319.Name = "label319";
-        label319.Size = new Size(67, 14);
-        label319.TabIndex = 1;
-        label319.Text = "BOSS Name";
-        // 
-        // groupBox14
-        // 
-        groupBox14.Controls.Add(label304);
-        groupBox14.Controls.Add(S_BOSS二地图名字);
-        groupBox14.Controls.Add(S_BOSS二分钟);
-        groupBox14.Controls.Add(label305);
-        groupBox14.Controls.Add(S_BOSS二坐标Y);
-        groupBox14.Controls.Add(label306);
-        groupBox14.Controls.Add(label307);
-        groupBox14.Controls.Add(S_BOSS二地图编号);
-        groupBox14.Controls.Add(label308);
-        groupBox14.Controls.Add(S_BOSS二时间);
-        groupBox14.Controls.Add(label309);
-        groupBox14.Controls.Add(S_BOSS二坐标X);
-        groupBox14.Controls.Add(label310);
-        groupBox14.Controls.Add(S_BOSS名字二);
-        groupBox14.Controls.Add(label311);
-        groupBox14.Font = new Font("Calibri", 9F, FontStyle.Bold);
-        groupBox14.Location = new Point(7, 100);
-        groupBox14.Margin = new Padding(4, 3, 4, 3);
-        groupBox14.Name = "groupBox14";
-        groupBox14.Padding = new Padding(4, 3, 4, 3);
-        groupBox14.Size = new Size(1240, 68);
-        groupBox14.TabIndex = 2;
-        groupBox14.TabStop = false;
-        groupBox14.Text = "BOSS Refresh (2)";
-        // 
-        // label304
-        // 
-        label304.AutoSize = true;
-        label304.ForeColor = Color.Black;
-        label304.Location = new Point(875, 30);
-        label304.Margin = new Padding(4, 0, 4, 0);
-        label304.Name = "label304";
-        label304.Size = new Size(29, 14);
-        label304.TabIndex = 38;
-        label304.Text = "Map";
-        // 
-        // S_BOSS二地图名字
-        // 
-        S_BOSS二地图名字.BorderStyle = BorderStyle.FixedSingle;
-        S_BOSS二地图名字.ForeColor = Color.Blue;
-        S_BOSS二地图名字.Location = new Point(911, 23);
-        S_BOSS二地图名字.Margin = new Padding(4, 3, 4, 3);
-        S_BOSS二地图名字.Name = "S_BOSS二地图名字";
-        S_BOSS二地图名字.Size = new Size(116, 22);
-        S_BOSS二地图名字.TabIndex = 37;
-        S_BOSS二地图名字.Tag = "";
-        S_BOSS二地图名字.Text = "地图名称";
-        S_BOSS二地图名字.TextAlign = HorizontalAlignment.Center;
-        S_BOSS二地图名字.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
-        // 
-        // S_BOSS二分钟
-        // 
-        S_BOSS二分钟.Location = new Point(743, 25);
-        S_BOSS二分钟.Margin = new Padding(4, 3, 4, 3);
-        S_BOSS二分钟.Maximum = new decimal(new int[] { 60, 0, 0, 0 });
-        S_BOSS二分钟.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_BOSS二分钟.Name = "S_BOSS二分钟";
-        S_BOSS二分钟.Size = new Size(70, 22);
-        S_BOSS二分钟.TabIndex = 36;
-        S_BOSS二分钟.TextAlign = HorizontalAlignment.Center;
-        S_BOSS二分钟.Value = new decimal(new int[] { 30, 0, 0, 0 });
-        S_BOSS二分钟.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label305
-        // 
-        label305.AutoSize = true;
-        label305.ForeColor = Color.FromArgb((int)(byte)192, (int)(byte)0, (int)(byte)0);
-        label305.Location = new Point(545, 31);
-        label305.Margin = new Padding(4, 0, 4, 0);
-        label305.Name = "label305";
-        label305.Size = new Size(73, 14);
-        label305.TabIndex = 35;
-        label305.Text = "Refresh Time";
-        // 
-        // S_BOSS二坐标Y
-        // 
-        S_BOSS二坐标Y.Location = new Point(469, 25);
-        S_BOSS二坐标Y.Margin = new Padding(4, 3, 4, 3);
-        S_BOSS二坐标Y.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
-        S_BOSS二坐标Y.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_BOSS二坐标Y.Name = "S_BOSS二坐标Y";
-        S_BOSS二坐标Y.Size = new Size(58, 22);
-        S_BOSS二坐标Y.TabIndex = 34;
-        S_BOSS二坐标Y.TextAlign = HorizontalAlignment.Center;
-        S_BOSS二坐标Y.Value = new decimal(new int[] { 999, 0, 0, 0 });
-        S_BOSS二坐标Y.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label306
-        // 
-        label306.AutoSize = true;
-        label306.Location = new Point(455, 31);
-        label306.Margin = new Padding(4, 0, 4, 0);
-        label306.Name = "label306";
-        label306.Size = new Size(13, 14);
-        label306.TabIndex = 33;
-        label306.Text = "Y";
-        // 
-        // label307
-        // 
-        label307.AutoSize = true;
-        label307.Location = new Point(378, 31);
-        label307.Margin = new Padding(4, 0, 4, 0);
-        label307.Name = "label307";
-        label307.Size = new Size(14, 14);
-        label307.TabIndex = 32;
-        label307.Text = "X";
-        // 
-        // S_BOSS二地图编号
-        // 
-        S_BOSS二地图编号.Location = new Point(303, 25);
-        S_BOSS二地图编号.Margin = new Padding(4, 3, 4, 3);
-        S_BOSS二地图编号.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
-        S_BOSS二地图编号.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_BOSS二地图编号.Name = "S_BOSS二地图编号";
-        S_BOSS二地图编号.Size = new Size(70, 22);
-        S_BOSS二地图编号.TabIndex = 31;
-        S_BOSS二地图编号.TextAlign = HorizontalAlignment.Center;
-        S_BOSS二地图编号.Value = new decimal(new int[] { 147, 0, 0, 0 });
-        S_BOSS二地图编号.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label308
-        // 
-        label308.AutoSize = true;
-        label308.ForeColor = Color.FromArgb((int)(byte)192, (int)(byte)0, (int)(byte)0);
-        label308.Location = new Point(816, 31);
-        label308.Margin = new Padding(4, 0, 4, 0);
-        label308.Name = "label308";
-        label308.Size = new Size(42, 14);
-        label308.TabIndex = 30;
-        label308.Text = "Minute";
-        // 
-        // S_BOSS二时间
-        // 
-        S_BOSS二时间.Location = new Point(631, 25);
-        S_BOSS二时间.Margin = new Padding(4, 3, 4, 3);
-        S_BOSS二时间.Maximum = new decimal(new int[] { 24, 0, 0, 0 });
-        S_BOSS二时间.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_BOSS二时间.Name = "S_BOSS二时间";
-        S_BOSS二时间.Size = new Size(70, 22);
-        S_BOSS二时间.TabIndex = 29;
-        S_BOSS二时间.TextAlign = HorizontalAlignment.Center;
-        S_BOSS二时间.Value = new decimal(new int[] { 20, 0, 0, 0 });
-        S_BOSS二时间.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label309
-        // 
-        label309.AutoSize = true;
-        label309.ForeColor = Color.FromArgb((int)(byte)192, (int)(byte)0, (int)(byte)0);
-        label309.Location = new Point(704, 31);
-        label309.Margin = new Padding(4, 0, 4, 0);
-        label309.Name = "label309";
-        label309.Size = new Size(31, 14);
-        label309.TabIndex = 28;
-        label309.Text = "Hour";
-        // 
-        // S_BOSS二坐标X
-        // 
-        S_BOSS二坐标X.Location = new Point(394, 25);
-        S_BOSS二坐标X.Margin = new Padding(4, 3, 4, 3);
-        S_BOSS二坐标X.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
-        S_BOSS二坐标X.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_BOSS二坐标X.Name = "S_BOSS二坐标X";
-        S_BOSS二坐标X.Size = new Size(58, 22);
-        S_BOSS二坐标X.TabIndex = 27;
-        S_BOSS二坐标X.TextAlign = HorizontalAlignment.Center;
-        S_BOSS二坐标X.Value = new decimal(new int[] { 999, 0, 0, 0 });
-        S_BOSS二坐标X.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label310
-        // 
-        label310.AutoSize = true;
-        label310.Location = new Point(222, 31);
-        label310.Margin = new Padding(4, 0, 4, 0);
-        label310.Name = "label310";
-        label310.Size = new Size(70, 14);
-        label310.TabIndex = 2;
-        label310.Text = "Refresh Map";
-        // 
-        // S_BOSS名字二
-        // 
-        S_BOSS名字二.BorderStyle = BorderStyle.FixedSingle;
-        S_BOSS名字二.ForeColor = Color.Red;
-        S_BOSS名字二.Location = new Point(93, 24);
-        S_BOSS名字二.Margin = new Padding(4, 3, 4, 3);
-        S_BOSS名字二.Name = "S_BOSS名字二";
-        S_BOSS名字二.Size = new Size(116, 22);
-        S_BOSS名字二.TabIndex = 1;
-        S_BOSS名字二.Tag = "";
-        S_BOSS名字二.Text = "BOSS名称";
-        S_BOSS名字二.TextAlign = HorizontalAlignment.Center;
-        S_BOSS名字二.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
-        // 
-        // label311
-        // 
-        label311.AutoSize = true;
-        label311.Location = new Point(7, 31);
-        label311.Margin = new Padding(4, 0, 4, 0);
-        label311.Name = "label311";
-        label311.Size = new Size(67, 14);
-        label311.TabIndex = 1;
-        label311.Text = "BOSS Name";
-        // 
-        // BOSS刷新一
-        // 
-        BOSS刷新一.Controls.Add(label280);
-        BOSS刷新一.Controls.Add(S_BOSS一地图名字);
-        BOSS刷新一.Controls.Add(S_BOSS一分钟);
-        BOSS刷新一.Controls.Add(label275);
-        BOSS刷新一.Controls.Add(S_BOSS一坐标Y);
-        BOSS刷新一.Controls.Add(label274);
-        BOSS刷新一.Controls.Add(label256);
-        BOSS刷新一.Controls.Add(S_BOSS一地图编号);
-        BOSS刷新一.Controls.Add(label276);
-        BOSS刷新一.Controls.Add(S_BOSS一时间);
-        BOSS刷新一.Controls.Add(label277);
-        BOSS刷新一.Controls.Add(S_BOSS一坐标X);
-        BOSS刷新一.Controls.Add(label278);
-        BOSS刷新一.Controls.Add(S_BOSS名字一);
-        BOSS刷新一.Controls.Add(label279);
-        BOSS刷新一.Font = new Font("Calibri", 9F, FontStyle.Bold);
-        BOSS刷新一.Location = new Point(7, 25);
-        BOSS刷新一.Margin = new Padding(4, 3, 4, 3);
-        BOSS刷新一.Name = "BOSS刷新一";
-        BOSS刷新一.Padding = new Padding(4, 3, 4, 3);
-        BOSS刷新一.Size = new Size(1240, 68);
-        BOSS刷新一.TabIndex = 1;
-        BOSS刷新一.TabStop = false;
-        BOSS刷新一.Text = "BOSS Refresh (1)";
-        // 
-        // label280
-        // 
-        label280.AutoSize = true;
-        label280.ForeColor = Color.Black;
-        label280.Location = new Point(875, 31);
-        label280.Margin = new Padding(4, 0, 4, 0);
-        label280.Name = "label280";
-        label280.Size = new Size(29, 14);
-        label280.TabIndex = 38;
-        label280.Text = "Map";
-        // 
-        // S_BOSS一地图名字
-        // 
-        S_BOSS一地图名字.BorderStyle = BorderStyle.FixedSingle;
-        S_BOSS一地图名字.ForeColor = Color.Blue;
-        S_BOSS一地图名字.Location = new Point(911, 24);
-        S_BOSS一地图名字.Margin = new Padding(4, 3, 4, 3);
-        S_BOSS一地图名字.Name = "S_BOSS一地图名字";
-        S_BOSS一地图名字.Size = new Size(116, 22);
-        S_BOSS一地图名字.TabIndex = 37;
-        S_BOSS一地图名字.Tag = "";
-        S_BOSS一地图名字.Text = "Map Name";
-        S_BOSS一地图名字.TextAlign = HorizontalAlignment.Center;
-        S_BOSS一地图名字.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
-        // 
-        // S_BOSS一分钟
-        // 
-        S_BOSS一分钟.Location = new Point(743, 25);
-        S_BOSS一分钟.Margin = new Padding(4, 3, 4, 3);
-        S_BOSS一分钟.Maximum = new decimal(new int[] { 60, 0, 0, 0 });
-        S_BOSS一分钟.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_BOSS一分钟.Name = "S_BOSS一分钟";
-        S_BOSS一分钟.Size = new Size(70, 22);
-        S_BOSS一分钟.TabIndex = 36;
-        S_BOSS一分钟.TextAlign = HorizontalAlignment.Center;
-        S_BOSS一分钟.Value = new decimal(new int[] { 30, 0, 0, 0 });
-        S_BOSS一分钟.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label275
-        // 
-        label275.AutoSize = true;
-        label275.ForeColor = Color.FromArgb((int)(byte)192, (int)(byte)0, (int)(byte)0);
-        label275.Location = new Point(545, 31);
-        label275.Margin = new Padding(4, 0, 4, 0);
-        label275.Name = "label275";
-        label275.Size = new Size(73, 14);
-        label275.TabIndex = 35;
-        label275.Text = "Refresh Time";
-        // 
-        // S_BOSS一坐标Y
-        // 
-        S_BOSS一坐标Y.Location = new Point(469, 25);
-        S_BOSS一坐标Y.Margin = new Padding(4, 3, 4, 3);
-        S_BOSS一坐标Y.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
-        S_BOSS一坐标Y.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_BOSS一坐标Y.Name = "S_BOSS一坐标Y";
-        S_BOSS一坐标Y.Size = new Size(58, 22);
-        S_BOSS一坐标Y.TabIndex = 34;
-        S_BOSS一坐标Y.TextAlign = HorizontalAlignment.Center;
-        S_BOSS一坐标Y.Value = new decimal(new int[] { 999, 0, 0, 0 });
-        S_BOSS一坐标Y.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label274
-        // 
-        label274.AutoSize = true;
-        label274.Location = new Point(455, 31);
-        label274.Margin = new Padding(4, 0, 4, 0);
-        label274.Name = "label274";
-        label274.Size = new Size(13, 14);
-        label274.TabIndex = 33;
-        label274.Text = "Y";
-        // 
-        // label256
-        // 
-        label256.AutoSize = true;
-        label256.Location = new Point(378, 31);
-        label256.Margin = new Padding(4, 0, 4, 0);
-        label256.Name = "label256";
-        label256.Size = new Size(14, 14);
-        label256.TabIndex = 32;
-        label256.Text = "X";
-        // 
-        // S_BOSS一地图编号
-        // 
-        S_BOSS一地图编号.Location = new Point(303, 25);
-        S_BOSS一地图编号.Margin = new Padding(4, 3, 4, 3);
-        S_BOSS一地图编号.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
-        S_BOSS一地图编号.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_BOSS一地图编号.Name = "S_BOSS一地图编号";
-        S_BOSS一地图编号.Size = new Size(70, 22);
-        S_BOSS一地图编号.TabIndex = 31;
-        S_BOSS一地图编号.TextAlign = HorizontalAlignment.Center;
-        S_BOSS一地图编号.Value = new decimal(new int[] { 147, 0, 0, 0 });
-        S_BOSS一地图编号.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label276
-        // 
-        label276.AutoSize = true;
-        label276.ForeColor = Color.FromArgb((int)(byte)192, (int)(byte)0, (int)(byte)0);
-        label276.Location = new Point(816, 31);
-        label276.Margin = new Padding(4, 0, 4, 0);
-        label276.Name = "label276";
-        label276.Size = new Size(42, 14);
-        label276.TabIndex = 30;
-        label276.Text = "Minute";
-        // 
-        // S_BOSS一时间
-        // 
-        S_BOSS一时间.Location = new Point(632, 25);
-        S_BOSS一时间.Margin = new Padding(4, 3, 4, 3);
-        S_BOSS一时间.Maximum = new decimal(new int[] { 24, 0, 0, 0 });
-        S_BOSS一时间.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_BOSS一时间.Name = "S_BOSS一时间";
-        S_BOSS一时间.Size = new Size(70, 22);
-        S_BOSS一时间.TabIndex = 29;
-        S_BOSS一时间.TextAlign = HorizontalAlignment.Center;
-        S_BOSS一时间.Value = new decimal(new int[] { 20, 0, 0, 0 });
-        S_BOSS一时间.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label277
-        // 
-        label277.AutoSize = true;
-        label277.ForeColor = Color.FromArgb((int)(byte)192, (int)(byte)0, (int)(byte)0);
-        label277.Location = new Point(705, 31);
-        label277.Margin = new Padding(4, 0, 4, 0);
-        label277.Name = "label277";
-        label277.Size = new Size(31, 14);
-        label277.TabIndex = 28;
-        label277.Text = "Hour";
-        // 
-        // S_BOSS一坐标X
-        // 
-        S_BOSS一坐标X.Location = new Point(394, 25);
-        S_BOSS一坐标X.Margin = new Padding(4, 3, 4, 3);
-        S_BOSS一坐标X.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
-        S_BOSS一坐标X.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_BOSS一坐标X.Name = "S_BOSS一坐标X";
-        S_BOSS一坐标X.Size = new Size(58, 22);
-        S_BOSS一坐标X.TabIndex = 27;
-        S_BOSS一坐标X.TextAlign = HorizontalAlignment.Center;
-        S_BOSS一坐标X.Value = new decimal(new int[] { 999, 0, 0, 0 });
-        S_BOSS一坐标X.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label278
-        // 
-        label278.AutoSize = true;
-        label278.Location = new Point(222, 31);
-        label278.Margin = new Padding(4, 0, 4, 0);
-        label278.Name = "label278";
-        label278.Size = new Size(70, 14);
-        label278.TabIndex = 2;
-        label278.Text = "Refresh Map";
-        // 
-        // S_BOSS名字一
-        // 
-        S_BOSS名字一.BorderStyle = BorderStyle.FixedSingle;
-        S_BOSS名字一.ForeColor = Color.Red;
-        S_BOSS名字一.Location = new Point(93, 24);
-        S_BOSS名字一.Margin = new Padding(4, 3, 4, 3);
-        S_BOSS名字一.Name = "S_BOSS名字一";
-        S_BOSS名字一.Size = new Size(116, 22);
-        S_BOSS名字一.TabIndex = 1;
-        S_BOSS名字一.Tag = "";
-        S_BOSS名字一.Text = "BOSS名称";
-        S_BOSS名字一.TextAlign = HorizontalAlignment.Center;
-        S_BOSS名字一.TextChanged += (this.UpdateTextSettingsValue_TextChanged);
-        // 
-        // label279
-        // 
-        label279.AutoSize = true;
-        label279.Location = new Point(7, 31);
-        label279.Margin = new Padding(4, 0, 4, 0);
-        label279.Name = "label279";
-        label279.Size = new Size(67, 14);
-        label279.TabIndex = 1;
-        label279.Text = "BOSS Name";
-        // 
-        // tabPage56
-        // 
-        tabPage56.Location = new Point(4, 34);
-        tabPage56.Margin = new Padding(4, 3, 4, 3);
-        tabPage56.Name = "tabPage56";
-        tabPage56.Padding = new Padding(4, 3, 4, 3);
-        tabPage56.Size = new Size(1299, 529);
-        tabPage56.TabIndex = 20;
-        tabPage56.Text = "BOSS Refresh 2";
-        tabPage56.UseVisualStyleBackColor = true;
-        // 
-        // tabPage57
-        // 
-        tabPage57.Location = new Point(4, 34);
-        tabPage57.Margin = new Padding(4, 3, 4, 3);
-        tabPage57.Name = "tabPage57";
-        tabPage57.Padding = new Padding(4, 3, 4, 3);
-        tabPage57.Size = new Size(1299, 529);
-        tabPage57.TabIndex = 21;
-        tabPage57.Text = "BOSS Refresh 3";
-        tabPage57.UseVisualStyleBackColor = true;
-        // 
-        // label328
-        // 
-        label328.AutoSize = true;
-        label328.ForeColor = Color.Red;
-        label328.Location = new Point(636, 616);
-        label328.Margin = new Padding(4, 0, 4, 0);
-        label328.Name = "label328";
-        label328.Size = new Size(413, 14);
-        label328.TabIndex = 22;
-        label328.Text = "It can be used as an active map to refresh BOSS: (up to 5 custom BOSS can be set)";
-        // 
-        // label329
-        // 
-        label329.AutoSize = true;
-        label329.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label329.Location = new Point(636, 590);
-        label329.Margin = new Padding(4, 0, 4, 0);
-        label329.Name = "label329";
-        label329.Size = new Size(282, 14);
-        label329.TabIndex = 23;
-        label329.Text = "If you don't want attributes, you can set the wrong map";
         // 
         // groupBox36
         // 
@@ -31732,104 +30223,88 @@ public partial class SMain
         // 
         拾取地图控制1.Location = new Point(20, 30);
         拾取地图控制1.Margin = new Padding(4, 3, 4, 3);
-        拾取地图控制1.Maximum = 999;
-        拾取地图控制1.Minimum = 0;
+        拾取地图控制1.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
         拾取地图控制1.Name = "拾取地图控制1";
         拾取地图控制1.Size = new Size(93, 23);
         拾取地图控制1.TabIndex = 69;
         拾取地图控制1.TextAlign = HorizontalAlignment.Center;
-        拾取地图控制1.Value = 0;
         拾取地图控制1.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 拾取地图控制6
         // 
         拾取地图控制6.Location = new Point(146, 63);
         拾取地图控制6.Margin = new Padding(4, 3, 4, 3);
-        拾取地图控制6.Maximum = 999;
-        拾取地图控制6.Minimum = 0;
+        拾取地图控制6.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
         拾取地图控制6.Name = "拾取地图控制6";
         拾取地图控制6.Size = new Size(93, 23);
         拾取地图控制6.TabIndex = 72;
         拾取地图控制6.TextAlign = HorizontalAlignment.Center;
-        拾取地图控制6.Value = 0;
         拾取地图控制6.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 拾取地图控制8
         // 
         拾取地图控制8.Location = new Point(146, 130);
         拾取地图控制8.Margin = new Padding(4, 3, 4, 3);
-        拾取地图控制8.Maximum = 999;
-        拾取地图控制8.Minimum = 0;
+        拾取地图控制8.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
         拾取地图控制8.Name = "拾取地图控制8";
         拾取地图控制8.Size = new Size(93, 23);
         拾取地图控制8.TabIndex = 76;
         拾取地图控制8.TextAlign = HorizontalAlignment.Center;
-        拾取地图控制8.Value = 0;
         拾取地图控制8.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 拾取地图控制5
         // 
         拾取地图控制5.Location = new Point(146, 30);
         拾取地图控制5.Margin = new Padding(4, 3, 4, 3);
-        拾取地图控制5.Maximum = 999;
-        拾取地图控制5.Minimum = 0;
+        拾取地图控制5.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
         拾取地图控制5.Name = "拾取地图控制5";
         拾取地图控制5.Size = new Size(93, 23);
         拾取地图控制5.TabIndex = 70;
         拾取地图控制5.TextAlign = HorizontalAlignment.Center;
-        拾取地图控制5.Value = 0;
         拾取地图控制5.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 拾取地图控制4
         // 
         拾取地图控制4.Location = new Point(20, 130);
         拾取地图控制4.Margin = new Padding(4, 3, 4, 3);
-        拾取地图控制4.Maximum = 999;
-        拾取地图控制4.Minimum = 0;
+        拾取地图控制4.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
         拾取地图控制4.Name = "拾取地图控制4";
         拾取地图控制4.Size = new Size(93, 23);
         拾取地图控制4.TabIndex = 75;
         拾取地图控制4.TextAlign = HorizontalAlignment.Center;
-        拾取地图控制4.Value = 0;
         拾取地图控制4.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 拾取地图控制2
         // 
         拾取地图控制2.Location = new Point(20, 63);
         拾取地图控制2.Margin = new Padding(4, 3, 4, 3);
-        拾取地图控制2.Maximum = 999;
-        拾取地图控制2.Minimum = 0;
+        拾取地图控制2.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
         拾取地图控制2.Name = "拾取地图控制2";
         拾取地图控制2.Size = new Size(93, 23);
         拾取地图控制2.TabIndex = 71;
         拾取地图控制2.TextAlign = HorizontalAlignment.Center;
-        拾取地图控制2.Value = 0;
         拾取地图控制2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 拾取地图控制7
         // 
         拾取地图控制7.Location = new Point(146, 97);
         拾取地图控制7.Margin = new Padding(4, 3, 4, 3);
-        拾取地图控制7.Maximum = 999;
-        拾取地图控制7.Minimum = 0;
+        拾取地图控制7.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
         拾取地图控制7.Name = "拾取地图控制7";
         拾取地图控制7.Size = new Size(93, 23);
         拾取地图控制7.TabIndex = 74;
         拾取地图控制7.TextAlign = HorizontalAlignment.Center;
-        拾取地图控制7.Value = 0;
         拾取地图控制7.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 拾取地图控制3
         // 
         拾取地图控制3.Location = new Point(20, 97);
         拾取地图控制3.Margin = new Padding(4, 3, 4, 3);
-        拾取地图控制3.Maximum = 999;
-        拾取地图控制3.Minimum = 0;
+        拾取地图控制3.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
         拾取地图控制3.Name = "拾取地图控制3";
         拾取地图控制3.Size = new Size(93, 23);
         拾取地图控制3.TabIndex = 73;
         拾取地图控制3.TextAlign = HorizontalAlignment.Center;
-        拾取地图控制3.Value = 0;
         拾取地图控制3.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label727
@@ -32440,14 +30915,14 @@ public partial class SMain
         S_游戏数据分组.Margin = new Padding(4, 3, 4, 3);
         S_游戏数据分组.Name = "S_游戏数据分组";
         S_游戏数据分组.Padding = new Padding(4, 3, 4, 3);
-        S_游戏数据分组.Size = new Size(566, 418);
+        S_游戏数据分组.Size = new Size(566, 345);
         S_游戏数据分组.TabIndex = 10;
         S_游戏数据分组.TabStop = false;
         S_游戏数据分组.Text = "Game Data";
         // 
         // S_重载客户数据
         // 
-        S_重载客户数据.Location = new Point(23, 307);
+        S_重载客户数据.Location = new Point(23, 283);
         S_重载客户数据.Margin = new Padding(4, 3, 4, 3);
         S_重载客户数据.Name = "S_重载客户数据";
         S_重载客户数据.Size = new Size(518, 29);
@@ -32458,7 +30933,7 @@ public partial class SMain
         // 
         // S_重载系统数据
         // 
-        S_重载系统数据.Location = new Point(23, 272);
+        S_重载系统数据.Location = new Point(23, 248);
         S_重载系统数据.Margin = new Padding(4, 3, 4, 3);
         S_重载系统数据.Name = "S_重载系统数据";
         S_重载系统数据.Size = new Size(518, 29);
@@ -32574,7 +31049,7 @@ public partial class SMain
         S_游戏设置分组.Margin = new Padding(4, 3, 4, 3);
         S_游戏设置分组.Name = "S_游戏设置分组";
         S_游戏设置分组.Padding = new Padding(4, 3, 4, 3);
-        S_游戏设置分组.Size = new Size(566, 420);
+        S_游戏设置分组.Size = new Size(566, 347);
         S_游戏设置分组.TabIndex = 8;
         S_游戏设置分组.TabStop = false;
         S_游戏设置分组.Text = "Game Settings";
@@ -32582,7 +31057,7 @@ public partial class SMain
         // S_新手扶持标签
         // 
         S_新手扶持标签.AutoSize = true;
-        S_新手扶持标签.Location = new Point(83, 74);
+        S_新手扶持标签.Location = new Point(115, 63);
         S_新手扶持标签.Margin = new Padding(4, 0, 4, 0);
         S_新手扶持标签.Name = "S_新手扶持标签";
         S_新手扶持标签.Size = new Size(116, 15);
@@ -32592,7 +31067,7 @@ public partial class SMain
         // S_NoobSupportLevel
         // 
         S_NoobSupportLevel.Font = new Font("SimSun", 10.5F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        S_NoobSupportLevel.Location = new Point(289, 69);
+        S_NoobSupportLevel.Location = new Point(289, 61);
         S_NoobSupportLevel.Margin = new Padding(4, 3, 4, 3);
         S_NoobSupportLevel.Name = "S_NoobSupportLevel";
         S_NoobSupportLevel.Size = new Size(127, 23);
@@ -32602,7 +31077,7 @@ public partial class SMain
         // S_物品归属标签
         // 
         S_物品归属标签.AutoSize = true;
-        S_物品归属标签.Location = new Point(83, 363);
+        S_物品归属标签.Location = new Point(105, 295);
         S_物品归属标签.Margin = new Padding(4, 0, 4, 0);
         S_物品归属标签.Name = "S_物品归属标签";
         S_物品归属标签.Size = new Size(126, 15);
@@ -32612,7 +31087,7 @@ public partial class SMain
         // S_物品归属时间
         // 
         S_物品归属时间.Font = new Font("SimSun", 10.5F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        S_物品归属时间.Location = new Point(288, 361);
+        S_物品归属时间.Location = new Point(288, 293);
         S_物品归属时间.Margin = new Padding(4, 3, 4, 3);
         S_物品归属时间.Name = "S_物品归属时间";
         S_物品归属时间.Size = new Size(127, 23);
@@ -32624,7 +31099,7 @@ public partial class SMain
         // S_物品清理标签
         // 
         S_物品清理标签.AutoSize = true;
-        S_物品清理标签.Location = new Point(83, 328);
+        S_物品清理标签.Location = new Point(136, 266);
         S_物品清理标签.Margin = new Padding(4, 0, 4, 0);
         S_物品清理标签.Name = "S_物品清理标签";
         S_物品清理标签.Size = new Size(95, 15);
@@ -32634,7 +31109,7 @@ public partial class SMain
         // S_ItemDisappearTime
         // 
         S_ItemDisappearTime.Font = new Font("SimSun", 10.5F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        S_ItemDisappearTime.Location = new Point(288, 325);
+        S_ItemDisappearTime.Location = new Point(288, 264);
         S_ItemDisappearTime.Margin = new Padding(4, 3, 4, 3);
         S_ItemDisappearTime.Name = "S_ItemDisappearTime";
         S_ItemDisappearTime.Size = new Size(127, 23);
@@ -32646,7 +31121,7 @@ public partial class SMain
         // S_诱惑时长标签
         // 
         S_诱惑时长标签.AutoSize = true;
-        S_诱惑时长标签.Location = new Point(83, 292);
+        S_诱惑时长标签.Location = new Point(142, 237);
         S_诱惑时长标签.Margin = new Padding(4, 0, 4, 0);
         S_诱惑时长标签.Name = "S_诱惑时长标签";
         S_诱惑时长标签.Size = new Size(89, 15);
@@ -32656,7 +31131,7 @@ public partial class SMain
         // S_怪物诱惑时长
         // 
         S_怪物诱惑时长.Font = new Font("SimSun", 10.5F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        S_怪物诱惑时长.Location = new Point(288, 290);
+        S_怪物诱惑时长.Location = new Point(288, 235);
         S_怪物诱惑时长.Margin = new Padding(4, 3, 4, 3);
         S_怪物诱惑时长.Maximum = new decimal(new int[] { 1200, 0, 0, 0 });
         S_怪物诱惑时长.Name = "S_怪物诱惑时长";
@@ -32669,7 +31144,7 @@ public partial class SMain
         // S_收益衰减标签
         // 
         S_收益衰减标签.AutoSize = true;
-        S_收益衰减标签.Location = new Point(83, 255);
+        S_收益衰减标签.Location = new Point(83, 208);
         S_收益衰减标签.Margin = new Padding(4, 0, 4, 0);
         S_收益衰减标签.Name = "S_收益衰减标签";
         S_收益衰减标签.Size = new Size(148, 15);
@@ -32680,7 +31155,7 @@ public partial class SMain
         // 
         S_收益减少比率.DecimalPlaces = 2;
         S_收益减少比率.Font = new Font("SimSun", 10.5F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        S_收益减少比率.Location = new Point(289, 253);
+        S_收益减少比率.Location = new Point(288, 206);
         S_收益减少比率.Margin = new Padding(4, 3, 4, 3);
         S_收益减少比率.Maximum = new decimal(new int[] { 1, 0, 0, 0 });
         S_收益减少比率.Name = "S_收益减少比率";
@@ -32693,7 +31168,7 @@ public partial class SMain
         // S_收益等级标签
         // 
         S_收益等级标签.AutoSize = true;
-        S_收益等级标签.Location = new Point(33, 219);
+        S_收益等级标签.Location = new Point(17, 179);
         S_收益等级标签.Margin = new Padding(4, 0, 4, 0);
         S_收益等级标签.Name = "S_收益等级标签";
         S_收益等级标签.Size = new Size(214, 15);
@@ -32703,7 +31178,7 @@ public partial class SMain
         // S_减收益等级差
         // 
         S_减收益等级差.Font = new Font("SimSun", 10.5F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        S_减收益等级差.Location = new Point(289, 217);
+        S_减收益等级差.Location = new Point(288, 177);
         S_减收益等级差.Margin = new Padding(4, 3, 4, 3);
         S_减收益等级差.Name = "S_减收益等级差";
         S_减收益等级差.Size = new Size(127, 23);
@@ -32715,7 +31190,7 @@ public partial class SMain
         // S_经验倍率标签
         // 
         S_经验倍率标签.AutoSize = true;
-        S_经验倍率标签.Location = new Point(83, 182);
+        S_经验倍率标签.Location = new Point(136, 150);
         S_经验倍率标签.Margin = new Padding(4, 0, 4, 0);
         S_经验倍率标签.Name = "S_经验倍率标签";
         S_经验倍率标签.Size = new Size(95, 15);
@@ -32727,7 +31202,7 @@ public partial class SMain
         S_MonsterExperienceMultiplier.DecimalPlaces = 2;
         S_MonsterExperienceMultiplier.Font = new Font("SimSun", 10.5F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
         S_MonsterExperienceMultiplier.Increment = new decimal(new int[] { 5, 0, 0, 65536 });
-        S_MonsterExperienceMultiplier.Location = new Point(288, 180);
+        S_MonsterExperienceMultiplier.Location = new Point(288, 148);
         S_MonsterExperienceMultiplier.Margin = new Padding(4, 3, 4, 3);
         S_MonsterExperienceMultiplier.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
         S_MonsterExperienceMultiplier.Name = "S_MonsterExperienceMultiplier";
@@ -32740,7 +31215,7 @@ public partial class SMain
         // S_特修折扣标签
         // 
         S_特修折扣标签.AutoSize = true;
-        S_特修折扣标签.Location = new Point(83, 111);
+        S_特修折扣标签.Location = new Point(99, 92);
         S_特修折扣标签.Margin = new Padding(4, 0, 4, 0);
         S_特修折扣标签.Name = "S_特修折扣标签";
         S_特修折扣标签.Size = new Size(132, 15);
@@ -32752,7 +31227,7 @@ public partial class SMain
         S_SpecialRepairDiscount.DecimalPlaces = 2;
         S_SpecialRepairDiscount.Font = new Font("SimSun", 10.5F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
         S_SpecialRepairDiscount.Increment = new decimal(new int[] { 1, 0, 0, 65536 });
-        S_SpecialRepairDiscount.Location = new Point(288, 105);
+        S_SpecialRepairDiscount.Location = new Point(288, 90);
         S_SpecialRepairDiscount.Margin = new Padding(4, 3, 4, 3);
         S_SpecialRepairDiscount.Maximum = new decimal(new int[] { 1, 0, 0, 0 });
         S_SpecialRepairDiscount.Name = "S_SpecialRepairDiscount";
@@ -32765,7 +31240,7 @@ public partial class SMain
         // S_怪物爆率标签
         // 
         S_怪物爆率标签.AutoSize = true;
-        S_怪物爆率标签.Location = new Point(83, 147);
+        S_怪物爆率标签.Location = new Point(138, 121);
         S_怪物爆率标签.Margin = new Padding(4, 0, 4, 0);
         S_怪物爆率标签.Name = "S_怪物爆率标签";
         S_怪物爆率标签.Size = new Size(93, 15);
@@ -32777,7 +31252,7 @@ public partial class SMain
         S_ItemDropRate.DecimalPlaces = 2;
         S_ItemDropRate.Font = new Font("SimSun", 10.5F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
         S_ItemDropRate.Increment = new decimal(new int[] { 5, 0, 0, 131072 });
-        S_ItemDropRate.Location = new Point(288, 142);
+        S_ItemDropRate.Location = new Point(288, 119);
         S_ItemDropRate.Margin = new Padding(4, 3, 4, 3);
         S_ItemDropRate.Maximum = new decimal(new int[] { 1, 0, 0, 0 });
         S_ItemDropRate.Name = "S_ItemDropRate";
@@ -32790,7 +31265,7 @@ public partial class SMain
         // S_开放等级标签
         // 
         S_开放等级标签.AutoSize = true;
-        S_开放等级标签.Location = new Point(83, 38);
+        S_开放等级标签.Location = new Point(133, 34);
         S_开放等级标签.Margin = new Padding(4, 0, 4, 0);
         S_开放等级标签.Name = "S_开放等级标签";
         S_开放等级标签.Size = new Size(98, 15);
@@ -32823,11 +31298,8 @@ public partial class SMain
         // 
         // S_网络设置分组
         // 
-        S_网络设置分组.Controls.Add(label397);
         S_网络设置分组.Controls.Add(S_自动保存日志);
         S_网络设置分组.Controls.Add(label396);
-        S_网络设置分组.Controls.Add(label492);
-        S_网络设置分组.Controls.Add(label491);
         S_网络设置分组.Controls.Add(S_MaxUserConnections);
         S_网络设置分组.Controls.Add(label165);
         S_网络设置分组.Controls.Add(label35);
@@ -32848,30 +31320,19 @@ public partial class SMain
         S_网络设置分组.Margin = new Padding(4, 3, 4, 3);
         S_网络设置分组.Name = "S_网络设置分组";
         S_网络设置分组.Padding = new Padding(4, 3, 4, 3);
-        S_网络设置分组.Size = new Size(329, 420);
+        S_网络设置分组.Size = new Size(329, 347);
         S_网络设置分组.TabIndex = 0;
         S_网络设置分组.TabStop = false;
         S_网络设置分组.Text = "Network Settings";
         // 
-        // label397
-        // 
-        label397.AutoSize = true;
-        label397.ForeColor = Color.Black;
-        label397.Location = new Point(255, 294);
-        label397.Margin = new Padding(4, 0, 4, 0);
-        label397.Name = "label397";
-        label397.Size = new Size(39, 15);
-        label397.TabIndex = 19;
-        label397.Text = "(min.)";
-        // 
         // S_自动保存日志
         // 
-        S_自动保存日志.Location = new Point(145, 286);
+        S_自动保存日志.Location = new Point(145, 238);
         S_自动保存日志.Margin = new Padding(4, 3, 4, 3);
         S_自动保存日志.Maximum = new decimal(new int[] { 60, 0, 0, 0 });
         S_自动保存日志.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
         S_自动保存日志.Name = "S_自动保存日志";
-        S_自动保存日志.Size = new Size(104, 23);
+        S_自动保存日志.Size = new Size(127, 23);
         S_自动保存日志.TabIndex = 18;
         S_自动保存日志.TextAlign = HorizontalAlignment.Center;
         S_自动保存日志.Value = new decimal(new int[] { 60, 0, 0, 0 });
@@ -32882,44 +31343,22 @@ public partial class SMain
         label396.AutoSize = true;
         label396.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
         label396.ForeColor = Color.Red;
-        label396.Location = new Point(31, 293);
+        label396.Location = new Point(16, 240);
         label396.Margin = new Padding(4, 0, 4, 0);
         label396.Name = "label396";
         label396.Size = new Size(85, 15);
         label396.TabIndex = 17;
         label396.Text = "Autosave Logs";
         // 
-        // label492
-        // 
-        label492.AutoSize = true;
-        label492.ForeColor = Color.Black;
-        label492.Location = new Point(255, 257);
-        label492.Margin = new Padding(4, 0, 4, 0);
-        label492.Name = "label492";
-        label492.Size = new Size(39, 15);
-        label492.TabIndex = 16;
-        label492.Text = "(min.)";
-        // 
-        // label491
-        // 
-        label491.AutoSize = true;
-        label491.ForeColor = Color.Black;
-        label491.Location = new Point(255, 223);
-        label491.Margin = new Padding(4, 0, 4, 0);
-        label491.Name = "label491";
-        label491.Size = new Size(32, 15);
-        label491.TabIndex = 15;
-        label491.Text = "(ppl)";
-        // 
         // S_MaxUserConnections
         // 
         S_MaxUserConnections.Font = new Font("SimSun", 10.5F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        S_MaxUserConnections.Location = new Point(145, 216);
+        S_MaxUserConnections.Location = new Point(145, 180);
         S_MaxUserConnections.Margin = new Padding(4, 3, 4, 3);
         S_MaxUserConnections.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
         S_MaxUserConnections.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
         S_MaxUserConnections.Name = "S_MaxUserConnections";
-        S_MaxUserConnections.Size = new Size(104, 23);
+        S_MaxUserConnections.Size = new Size(127, 23);
         S_MaxUserConnections.TabIndex = 14;
         S_MaxUserConnections.TextAlign = HorizontalAlignment.Center;
         S_MaxUserConnections.Value = new decimal(new int[] { 500, 0, 0, 0 });
@@ -32930,7 +31369,7 @@ public partial class SMain
         label165.AutoSize = true;
         label165.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
         label165.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
-        label165.Location = new Point(31, 223);
+        label165.Location = new Point(32, 182);
         label165.Margin = new Padding(4, 0, 4, 0);
         label165.Name = "label165";
         label165.Size = new Size(69, 15);
@@ -32942,7 +31381,7 @@ public partial class SMain
         label35.AutoSize = true;
         label35.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
         label35.ForeColor = Color.Red;
-        label35.Location = new Point(31, 257);
+        label35.Location = new Point(15, 211);
         label35.Margin = new Padding(4, 0, 4, 0);
         label35.Name = "label35";
         label35.Size = new Size(86, 15);
@@ -32951,12 +31390,12 @@ public partial class SMain
         // 
         // S_自动保存时间
         // 
-        S_自动保存时间.Location = new Point(145, 253);
+        S_自动保存时间.Location = new Point(145, 209);
         S_自动保存时间.Margin = new Padding(4, 3, 4, 3);
         S_自动保存时间.Maximum = new decimal(new int[] { 60, 0, 0, 0 });
         S_自动保存时间.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
         S_自动保存时间.Name = "S_自动保存时间";
-        S_自动保存时间.Size = new Size(104, 23);
+        S_自动保存时间.Size = new Size(127, 23);
         S_自动保存时间.TabIndex = 11;
         S_自动保存时间.TextAlign = HorizontalAlignment.Center;
         S_自动保存时间.Value = new decimal(new int[] { 30, 0, 0, 0 });
@@ -32967,7 +31406,7 @@ public partial class SMain
         S_掉线判定标签.AutoSize = true;
         S_掉线判定标签.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
         S_掉线判定标签.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
-        S_掉线判定标签.Location = new Point(31, 185);
+        S_掉线判定标签.Location = new Point(5, 153);
         S_掉线判定标签.Margin = new Padding(4, 0, 4, 0);
         S_掉线判定标签.Name = "S_掉线判定标签";
         S_掉线判定标签.Size = new Size(96, 15);
@@ -32977,7 +31416,7 @@ public partial class SMain
         // S_DisconnectTime
         // 
         S_DisconnectTime.Font = new Font("SimSun", 10.5F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        S_DisconnectTime.Location = new Point(145, 180);
+        S_DisconnectTime.Location = new Point(145, 151);
         S_DisconnectTime.Margin = new Padding(4, 3, 4, 3);
         S_DisconnectTime.Name = "S_DisconnectTime";
         S_DisconnectTime.Size = new Size(127, 23);
@@ -32991,7 +31430,7 @@ public partial class SMain
         S_限定封包标签.AutoSize = true;
         S_限定封包标签.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
         S_限定封包标签.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
-        S_限定封包标签.Location = new Point(31, 113);
+        S_限定封包标签.Location = new Point(27, 95);
         S_限定封包标签.Margin = new Padding(4, 0, 4, 0);
         S_限定封包标签.Name = "S_限定封包标签";
         S_限定封包标签.Size = new Size(74, 15);
@@ -33001,7 +31440,7 @@ public partial class SMain
         // S_PacketLimit
         // 
         S_PacketLimit.Font = new Font("SimSun", 10.5F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        S_PacketLimit.Location = new Point(145, 107);
+        S_PacketLimit.Location = new Point(145, 93);
         S_PacketLimit.Margin = new Padding(4, 3, 4, 3);
         S_PacketLimit.Maximum = new decimal(new int[] { 500, 0, 0, 0 });
         S_PacketLimit.Name = "S_PacketLimit";
@@ -33016,7 +31455,7 @@ public partial class SMain
         S_屏蔽时间标签.AutoSize = true;
         S_屏蔽时间标签.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
         S_屏蔽时间标签.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
-        S_屏蔽时间标签.Location = new Point(31, 149);
+        S_屏蔽时间标签.Location = new Point(36, 124);
         S_屏蔽时间标签.Margin = new Padding(4, 0, 4, 0);
         S_屏蔽时间标签.Name = "S_屏蔽时间标签";
         S_屏蔽时间标签.Size = new Size(65, 15);
@@ -33026,7 +31465,7 @@ public partial class SMain
         // S_AbnormalBlockTime
         // 
         S_AbnormalBlockTime.Font = new Font("SimSun", 10.5F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        S_AbnormalBlockTime.Location = new Point(145, 144);
+        S_AbnormalBlockTime.Location = new Point(145, 122);
         S_AbnormalBlockTime.Margin = new Padding(4, 3, 4, 3);
         S_AbnormalBlockTime.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
         S_AbnormalBlockTime.Name = "S_AbnormalBlockTime";
@@ -33041,7 +31480,7 @@ public partial class SMain
         S_接收端口标签.AutoSize = true;
         S_接收端口标签.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
         S_接收端口标签.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
-        S_接收端口标签.Location = new Point(31, 76);
+        S_接收端口标签.Location = new Point(55, 66);
         S_接收端口标签.Margin = new Padding(4, 0, 4, 0);
         S_接收端口标签.Name = "S_接收端口标签";
         S_接收端口标签.Size = new Size(46, 15);
@@ -33051,7 +31490,7 @@ public partial class SMain
         // S_TicketReceivePort
         // 
         S_TicketReceivePort.Font = new Font("SimSun", 10.5F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        S_TicketReceivePort.Location = new Point(145, 72);
+        S_TicketReceivePort.Location = new Point(145, 64);
         S_TicketReceivePort.Margin = new Padding(4, 3, 4, 3);
         S_TicketReceivePort.Maximum = new decimal(new int[] { 65535, 0, 0, 0 });
         S_TicketReceivePort.Name = "S_TicketReceivePort";
@@ -33066,7 +31505,7 @@ public partial class SMain
         S_监听端口标签.AutoSize = true;
         S_监听端口标签.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
         S_监听端口标签.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
-        S_监听端口标签.Location = new Point(31, 40);
+        S_监听端口标签.Location = new Point(31, 37);
         S_监听端口标签.Margin = new Padding(4, 0, 4, 0);
         S_监听端口标签.Name = "S_监听端口标签";
         S_监听端口标签.Size = new Size(70, 15);
@@ -33223,37 +31662,37 @@ public partial class SMain
         公告浏览表.AllowUserToResizeColumns = false;
         公告浏览表.AllowUserToResizeRows = false;
         公告浏览表.BackgroundColor = SystemColors.ControlLight;
-        dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle1.BackColor = SystemColors.Control;
-        dataGridViewCellStyle1.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-        dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-        dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-        公告浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+        dataGridViewCellStyle85.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle85.BackColor = SystemColors.Control;
+        dataGridViewCellStyle85.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
+        dataGridViewCellStyle85.ForeColor = SystemColors.WindowText;
+        dataGridViewCellStyle85.SelectionBackColor = SystemColors.Highlight;
+        dataGridViewCellStyle85.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle85.WrapMode = DataGridViewTriState.True;
+        公告浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle85;
         公告浏览表.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
         公告浏览表.Columns.AddRange(new DataGridViewColumn[] { 公告状态, 公告间隔, 公告次数, 剩余次数, 公告计时, 公告内容 });
-        dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle2.BackColor = Color.LightGray;
-        dataGridViewCellStyle2.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
-        dataGridViewCellStyle2.SelectionBackColor = SystemColors.ActiveBorder;
-        dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-        公告浏览表.DefaultCellStyle = dataGridViewCellStyle2;
+        dataGridViewCellStyle86.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle86.BackColor = Color.LightGray;
+        dataGridViewCellStyle86.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
+        dataGridViewCellStyle86.ForeColor = SystemColors.ControlText;
+        dataGridViewCellStyle86.SelectionBackColor = SystemColors.ActiveBorder;
+        dataGridViewCellStyle86.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle86.WrapMode = DataGridViewTriState.False;
+        公告浏览表.DefaultCellStyle = dataGridViewCellStyle86;
         公告浏览表.EditMode = DataGridViewEditMode.EditOnEnter;
         公告浏览表.Location = new Point(6, 3);
         公告浏览表.Margin = new Padding(4, 3, 4, 3);
         公告浏览表.MultiSelect = false;
         公告浏览表.Name = "公告浏览表";
-        dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.BottomCenter;
-        dataGridViewCellStyle3.BackColor = SystemColors.Control;
-        dataGridViewCellStyle3.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        dataGridViewCellStyle3.ForeColor = SystemColors.WindowText;
-        dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
-        dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
-        公告浏览表.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+        dataGridViewCellStyle87.Alignment = DataGridViewContentAlignment.BottomCenter;
+        dataGridViewCellStyle87.BackColor = SystemColors.Control;
+        dataGridViewCellStyle87.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
+        dataGridViewCellStyle87.ForeColor = SystemColors.WindowText;
+        dataGridViewCellStyle87.SelectionBackColor = SystemColors.Highlight;
+        dataGridViewCellStyle87.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle87.WrapMode = DataGridViewTriState.True;
+        公告浏览表.RowHeadersDefaultCellStyle = dataGridViewCellStyle87;
         公告浏览表.RowHeadersVisible = false;
         公告浏览表.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
         公告浏览表.RowTemplate.Height = 23;
@@ -33330,29 +31769,29 @@ public partial class SMain
         封禁浏览表.AllowUserToAddRows = false;
         封禁浏览表.AllowUserToDeleteRows = false;
         封禁浏览表.AllowUserToResizeRows = false;
-        dataGridViewCellStyle4.BackColor = Color.FromArgb((int)(byte)224, (int)(byte)224, (int)(byte)224);
-        封禁浏览表.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
+        dataGridViewCellStyle115.BackColor = Color.FromArgb((int)(byte)224, (int)(byte)224, (int)(byte)224);
+        封禁浏览表.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle115;
         封禁浏览表.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         封禁浏览表.BackgroundColor = Color.LightGray;
         封禁浏览表.BorderStyle = BorderStyle.Fixed3D;
         封禁浏览表.CellBorderStyle = DataGridViewCellBorderStyle.Raised;
-        dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle5.BackColor = SystemColors.Control;
-        dataGridViewCellStyle5.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
-        dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
-        dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-        封禁浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+        dataGridViewCellStyle116.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle116.BackColor = SystemColors.Control;
+        dataGridViewCellStyle116.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
+        dataGridViewCellStyle116.ForeColor = SystemColors.WindowText;
+        dataGridViewCellStyle116.SelectionBackColor = SystemColors.Highlight;
+        dataGridViewCellStyle116.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle116.WrapMode = DataGridViewTriState.True;
+        封禁浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle116;
         封禁浏览表.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-        dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle6.BackColor = SystemColors.Control;
-        dataGridViewCellStyle6.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        dataGridViewCellStyle6.ForeColor = SystemColors.ControlText;
-        dataGridViewCellStyle6.SelectionBackColor = SystemColors.ButtonShadow;
-        dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
-        封禁浏览表.DefaultCellStyle = dataGridViewCellStyle6;
+        dataGridViewCellStyle117.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle117.BackColor = SystemColors.Control;
+        dataGridViewCellStyle117.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
+        dataGridViewCellStyle117.ForeColor = SystemColors.ControlText;
+        dataGridViewCellStyle117.SelectionBackColor = SystemColors.ButtonShadow;
+        dataGridViewCellStyle117.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle117.WrapMode = DataGridViewTriState.False;
+        封禁浏览表.DefaultCellStyle = dataGridViewCellStyle117;
         封禁浏览表.GridColor = SystemColors.ActiveCaption;
         封禁浏览表.Location = new Point(147, 3);
         封禁浏览表.Margin = new Padding(4, 3, 4, 3);
@@ -33384,29 +31823,29 @@ public partial class SMain
         掉落浏览表.AllowUserToAddRows = false;
         掉落浏览表.AllowUserToDeleteRows = false;
         掉落浏览表.AllowUserToResizeRows = false;
-        dataGridViewCellStyle7.BackColor = Color.FromArgb((int)(byte)224, (int)(byte)224, (int)(byte)224);
-        掉落浏览表.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle7;
+        dataGridViewCellStyle118.BackColor = Color.FromArgb((int)(byte)224, (int)(byte)224, (int)(byte)224);
+        掉落浏览表.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle118;
         掉落浏览表.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         掉落浏览表.BackgroundColor = Color.LightGray;
         掉落浏览表.BorderStyle = BorderStyle.Fixed3D;
         掉落浏览表.CellBorderStyle = DataGridViewCellBorderStyle.Raised;
-        dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle8.BackColor = SystemColors.Control;
-        dataGridViewCellStyle8.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        dataGridViewCellStyle8.ForeColor = SystemColors.WindowText;
-        dataGridViewCellStyle8.SelectionBackColor = SystemColors.Highlight;
-        dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle8.WrapMode = DataGridViewTriState.True;
-        掉落浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
+        dataGridViewCellStyle119.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle119.BackColor = SystemColors.Control;
+        dataGridViewCellStyle119.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
+        dataGridViewCellStyle119.ForeColor = SystemColors.WindowText;
+        dataGridViewCellStyle119.SelectionBackColor = SystemColors.Highlight;
+        dataGridViewCellStyle119.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle119.WrapMode = DataGridViewTriState.True;
+        掉落浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle119;
         掉落浏览表.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-        dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle9.BackColor = SystemColors.Control;
-        dataGridViewCellStyle9.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        dataGridViewCellStyle9.ForeColor = SystemColors.ControlText;
-        dataGridViewCellStyle9.SelectionBackColor = SystemColors.ButtonShadow;
-        dataGridViewCellStyle9.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle9.WrapMode = DataGridViewTriState.False;
-        掉落浏览表.DefaultCellStyle = dataGridViewCellStyle9;
+        dataGridViewCellStyle120.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle120.BackColor = SystemColors.Control;
+        dataGridViewCellStyle120.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
+        dataGridViewCellStyle120.ForeColor = SystemColors.ControlText;
+        dataGridViewCellStyle120.SelectionBackColor = SystemColors.ButtonShadow;
+        dataGridViewCellStyle120.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle120.WrapMode = DataGridViewTriState.False;
+        掉落浏览表.DefaultCellStyle = dataGridViewCellStyle120;
         掉落浏览表.GridColor = SystemColors.ActiveCaption;
         掉落浏览表.Location = new Point(1052, 3);
         掉落浏览表.Margin = new Padding(4, 3, 4, 3);
@@ -33424,29 +31863,29 @@ public partial class SMain
         怪物浏览表.AllowUserToAddRows = false;
         怪物浏览表.AllowUserToDeleteRows = false;
         怪物浏览表.AllowUserToResizeRows = false;
-        dataGridViewCellStyle10.BackColor = Color.FromArgb((int)(byte)224, (int)(byte)224, (int)(byte)224);
-        怪物浏览表.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle10;
+        dataGridViewCellStyle121.BackColor = Color.FromArgb((int)(byte)224, (int)(byte)224, (int)(byte)224);
+        怪物浏览表.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle121;
         怪物浏览表.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         怪物浏览表.BackgroundColor = Color.LightGray;
         怪物浏览表.BorderStyle = BorderStyle.Fixed3D;
         怪物浏览表.CellBorderStyle = DataGridViewCellBorderStyle.Raised;
-        dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle11.BackColor = SystemColors.Control;
-        dataGridViewCellStyle11.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        dataGridViewCellStyle11.ForeColor = SystemColors.WindowText;
-        dataGridViewCellStyle11.SelectionBackColor = SystemColors.Highlight;
-        dataGridViewCellStyle11.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle11.WrapMode = DataGridViewTriState.True;
-        怪物浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
+        dataGridViewCellStyle122.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle122.BackColor = SystemColors.Control;
+        dataGridViewCellStyle122.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
+        dataGridViewCellStyle122.ForeColor = SystemColors.WindowText;
+        dataGridViewCellStyle122.SelectionBackColor = SystemColors.Highlight;
+        dataGridViewCellStyle122.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle122.WrapMode = DataGridViewTriState.True;
+        怪物浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle122;
         怪物浏览表.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-        dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle12.BackColor = SystemColors.Control;
-        dataGridViewCellStyle12.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        dataGridViewCellStyle12.ForeColor = SystemColors.ControlText;
-        dataGridViewCellStyle12.SelectionBackColor = SystemColors.ButtonShadow;
-        dataGridViewCellStyle12.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle12.WrapMode = DataGridViewTriState.False;
-        怪物浏览表.DefaultCellStyle = dataGridViewCellStyle12;
+        dataGridViewCellStyle123.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle123.BackColor = SystemColors.Control;
+        dataGridViewCellStyle123.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
+        dataGridViewCellStyle123.ForeColor = SystemColors.ControlText;
+        dataGridViewCellStyle123.SelectionBackColor = SystemColors.ButtonShadow;
+        dataGridViewCellStyle123.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle123.WrapMode = DataGridViewTriState.False;
+        怪物浏览表.DefaultCellStyle = dataGridViewCellStyle123;
         怪物浏览表.GridColor = SystemColors.ActiveCaption;
         怪物浏览表.Location = new Point(0, 3);
         怪物浏览表.Margin = new Padding(4, 3, 4, 3);
@@ -33478,29 +31917,29 @@ public partial class SMain
         地图浏览表.AllowUserToAddRows = false;
         地图浏览表.AllowUserToDeleteRows = false;
         地图浏览表.AllowUserToResizeRows = false;
-        dataGridViewCellStyle13.BackColor = Color.FromArgb((int)(byte)224, (int)(byte)224, (int)(byte)224);
-        地图浏览表.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle13;
+        dataGridViewCellStyle124.BackColor = Color.FromArgb((int)(byte)224, (int)(byte)224, (int)(byte)224);
+        地图浏览表.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle124;
         地图浏览表.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         地图浏览表.BackgroundColor = Color.LightGray;
         地图浏览表.BorderStyle = BorderStyle.Fixed3D;
         地图浏览表.CellBorderStyle = DataGridViewCellBorderStyle.Raised;
-        dataGridViewCellStyle14.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle14.BackColor = SystemColors.Control;
-        dataGridViewCellStyle14.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        dataGridViewCellStyle14.ForeColor = SystemColors.WindowText;
-        dataGridViewCellStyle14.SelectionBackColor = SystemColors.Highlight;
-        dataGridViewCellStyle14.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle14.WrapMode = DataGridViewTriState.True;
-        地图浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle14;
+        dataGridViewCellStyle125.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle125.BackColor = SystemColors.Control;
+        dataGridViewCellStyle125.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
+        dataGridViewCellStyle125.ForeColor = SystemColors.WindowText;
+        dataGridViewCellStyle125.SelectionBackColor = SystemColors.Highlight;
+        dataGridViewCellStyle125.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle125.WrapMode = DataGridViewTriState.True;
+        地图浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle125;
         地图浏览表.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-        dataGridViewCellStyle15.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle15.BackColor = SystemColors.Control;
-        dataGridViewCellStyle15.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        dataGridViewCellStyle15.ForeColor = SystemColors.ControlText;
-        dataGridViewCellStyle15.SelectionBackColor = SystemColors.ButtonShadow;
-        dataGridViewCellStyle15.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle15.WrapMode = DataGridViewTriState.False;
-        地图浏览表.DefaultCellStyle = dataGridViewCellStyle15;
+        dataGridViewCellStyle126.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle126.BackColor = SystemColors.Control;
+        dataGridViewCellStyle126.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
+        dataGridViewCellStyle126.ForeColor = SystemColors.ControlText;
+        dataGridViewCellStyle126.SelectionBackColor = SystemColors.ButtonShadow;
+        dataGridViewCellStyle126.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle126.WrapMode = DataGridViewTriState.False;
+        地图浏览表.DefaultCellStyle = dataGridViewCellStyle126;
         地图浏览表.GridColor = SystemColors.ActiveCaption;
         地图浏览表.Location = new Point(0, 3);
         地图浏览表.Margin = new Padding(4, 3, 4, 3);
@@ -33561,29 +32000,29 @@ public partial class SMain
         技能浏览表.AllowUserToAddRows = false;
         技能浏览表.AllowUserToDeleteRows = false;
         技能浏览表.AllowUserToResizeRows = false;
-        dataGridViewCellStyle16.BackColor = Color.FromArgb((int)(byte)224, (int)(byte)224, (int)(byte)224);
-        技能浏览表.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle16;
+        dataGridViewCellStyle127.BackColor = Color.FromArgb((int)(byte)224, (int)(byte)224, (int)(byte)224);
+        技能浏览表.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle127;
         技能浏览表.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         技能浏览表.BackgroundColor = Color.LightGray;
         技能浏览表.BorderStyle = BorderStyle.Fixed3D;
         技能浏览表.CellBorderStyle = DataGridViewCellBorderStyle.Raised;
-        dataGridViewCellStyle17.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle17.BackColor = SystemColors.Control;
-        dataGridViewCellStyle17.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
-        dataGridViewCellStyle17.ForeColor = SystemColors.WindowText;
-        dataGridViewCellStyle17.SelectionBackColor = SystemColors.Highlight;
-        dataGridViewCellStyle17.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle17.WrapMode = DataGridViewTriState.True;
-        技能浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle17;
+        dataGridViewCellStyle128.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle128.BackColor = SystemColors.Control;
+        dataGridViewCellStyle128.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
+        dataGridViewCellStyle128.ForeColor = SystemColors.WindowText;
+        dataGridViewCellStyle128.SelectionBackColor = SystemColors.Highlight;
+        dataGridViewCellStyle128.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle128.WrapMode = DataGridViewTriState.True;
+        技能浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle128;
         技能浏览表.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-        dataGridViewCellStyle18.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle18.BackColor = SystemColors.Control;
-        dataGridViewCellStyle18.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
-        dataGridViewCellStyle18.ForeColor = SystemColors.ControlText;
-        dataGridViewCellStyle18.SelectionBackColor = SystemColors.ButtonShadow;
-        dataGridViewCellStyle18.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle18.WrapMode = DataGridViewTriState.False;
-        技能浏览表.DefaultCellStyle = dataGridViewCellStyle18;
+        dataGridViewCellStyle129.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle129.BackColor = SystemColors.Control;
+        dataGridViewCellStyle129.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
+        dataGridViewCellStyle129.ForeColor = SystemColors.ControlText;
+        dataGridViewCellStyle129.SelectionBackColor = SystemColors.ButtonShadow;
+        dataGridViewCellStyle129.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle129.WrapMode = DataGridViewTriState.False;
+        技能浏览表.DefaultCellStyle = dataGridViewCellStyle129;
         技能浏览表.GridColor = SystemColors.ActiveCaption;
         技能浏览表.Location = new Point(0, 0);
         技能浏览表.Margin = new Padding(4, 3, 4, 3);
@@ -33613,29 +32052,29 @@ public partial class SMain
         装备浏览表.AllowUserToAddRows = false;
         装备浏览表.AllowUserToDeleteRows = false;
         装备浏览表.AllowUserToResizeRows = false;
-        dataGridViewCellStyle19.BackColor = Color.FromArgb((int)(byte)224, (int)(byte)224, (int)(byte)224);
-        装备浏览表.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle19;
+        dataGridViewCellStyle130.BackColor = Color.FromArgb((int)(byte)224, (int)(byte)224, (int)(byte)224);
+        装备浏览表.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle130;
         装备浏览表.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         装备浏览表.BackgroundColor = Color.LightGray;
         装备浏览表.BorderStyle = BorderStyle.Fixed3D;
         装备浏览表.CellBorderStyle = DataGridViewCellBorderStyle.Raised;
-        dataGridViewCellStyle20.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle20.BackColor = SystemColors.Control;
-        dataGridViewCellStyle20.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
-        dataGridViewCellStyle20.ForeColor = SystemColors.WindowText;
-        dataGridViewCellStyle20.SelectionBackColor = SystemColors.Highlight;
-        dataGridViewCellStyle20.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle20.WrapMode = DataGridViewTriState.True;
-        装备浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle20;
+        dataGridViewCellStyle131.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle131.BackColor = SystemColors.Control;
+        dataGridViewCellStyle131.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
+        dataGridViewCellStyle131.ForeColor = SystemColors.WindowText;
+        dataGridViewCellStyle131.SelectionBackColor = SystemColors.Highlight;
+        dataGridViewCellStyle131.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle131.WrapMode = DataGridViewTriState.True;
+        装备浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle131;
         装备浏览表.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-        dataGridViewCellStyle21.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle21.BackColor = SystemColors.Control;
-        dataGridViewCellStyle21.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
-        dataGridViewCellStyle21.ForeColor = SystemColors.ControlText;
-        dataGridViewCellStyle21.SelectionBackColor = SystemColors.ButtonShadow;
-        dataGridViewCellStyle21.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle21.WrapMode = DataGridViewTriState.False;
-        装备浏览表.DefaultCellStyle = dataGridViewCellStyle21;
+        dataGridViewCellStyle132.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle132.BackColor = SystemColors.Control;
+        dataGridViewCellStyle132.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
+        dataGridViewCellStyle132.ForeColor = SystemColors.ControlText;
+        dataGridViewCellStyle132.SelectionBackColor = SystemColors.ButtonShadow;
+        dataGridViewCellStyle132.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle132.WrapMode = DataGridViewTriState.False;
+        装备浏览表.DefaultCellStyle = dataGridViewCellStyle132;
         装备浏览表.GridColor = SystemColors.ActiveCaption;
         装备浏览表.Location = new Point(0, 0);
         装备浏览表.Margin = new Padding(4, 3, 4, 3);
@@ -33664,29 +32103,29 @@ public partial class SMain
         背包浏览表.AllowUserToAddRows = false;
         背包浏览表.AllowUserToDeleteRows = false;
         背包浏览表.AllowUserToResizeRows = false;
-        dataGridViewCellStyle22.BackColor = Color.FromArgb((int)(byte)224, (int)(byte)224, (int)(byte)224);
-        背包浏览表.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle22;
+        dataGridViewCellStyle133.BackColor = Color.FromArgb((int)(byte)224, (int)(byte)224, (int)(byte)224);
+        背包浏览表.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle133;
         背包浏览表.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         背包浏览表.BackgroundColor = Color.LightGray;
         背包浏览表.BorderStyle = BorderStyle.Fixed3D;
         背包浏览表.CellBorderStyle = DataGridViewCellBorderStyle.Raised;
-        dataGridViewCellStyle23.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle23.BackColor = SystemColors.Control;
-        dataGridViewCellStyle23.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
-        dataGridViewCellStyle23.ForeColor = SystemColors.WindowText;
-        dataGridViewCellStyle23.SelectionBackColor = SystemColors.Highlight;
-        dataGridViewCellStyle23.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle23.WrapMode = DataGridViewTriState.True;
-        背包浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle23;
+        dataGridViewCellStyle134.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle134.BackColor = SystemColors.Control;
+        dataGridViewCellStyle134.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
+        dataGridViewCellStyle134.ForeColor = SystemColors.WindowText;
+        dataGridViewCellStyle134.SelectionBackColor = SystemColors.Highlight;
+        dataGridViewCellStyle134.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle134.WrapMode = DataGridViewTriState.True;
+        背包浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle134;
         背包浏览表.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-        dataGridViewCellStyle24.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle24.BackColor = SystemColors.Control;
-        dataGridViewCellStyle24.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
-        dataGridViewCellStyle24.ForeColor = SystemColors.ControlText;
-        dataGridViewCellStyle24.SelectionBackColor = SystemColors.ButtonShadow;
-        dataGridViewCellStyle24.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle24.WrapMode = DataGridViewTriState.False;
-        背包浏览表.DefaultCellStyle = dataGridViewCellStyle24;
+        dataGridViewCellStyle135.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle135.BackColor = SystemColors.Control;
+        dataGridViewCellStyle135.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
+        dataGridViewCellStyle135.ForeColor = SystemColors.ControlText;
+        dataGridViewCellStyle135.SelectionBackColor = SystemColors.ButtonShadow;
+        dataGridViewCellStyle135.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle135.WrapMode = DataGridViewTriState.False;
+        背包浏览表.DefaultCellStyle = dataGridViewCellStyle135;
         背包浏览表.GridColor = SystemColors.ActiveCaption;
         背包浏览表.Location = new Point(0, 0);
         背包浏览表.Margin = new Padding(4, 3, 4, 3);
@@ -33715,29 +32154,29 @@ public partial class SMain
         仓库浏览表.AllowUserToAddRows = false;
         仓库浏览表.AllowUserToDeleteRows = false;
         仓库浏览表.AllowUserToResizeRows = false;
-        dataGridViewCellStyle25.BackColor = Color.FromArgb((int)(byte)224, (int)(byte)224, (int)(byte)224);
-        仓库浏览表.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle25;
+        dataGridViewCellStyle136.BackColor = Color.FromArgb((int)(byte)224, (int)(byte)224, (int)(byte)224);
+        仓库浏览表.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle136;
         仓库浏览表.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         仓库浏览表.BackgroundColor = Color.LightGray;
         仓库浏览表.BorderStyle = BorderStyle.Fixed3D;
         仓库浏览表.CellBorderStyle = DataGridViewCellBorderStyle.Raised;
-        dataGridViewCellStyle26.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle26.BackColor = SystemColors.Control;
-        dataGridViewCellStyle26.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
-        dataGridViewCellStyle26.ForeColor = SystemColors.WindowText;
-        dataGridViewCellStyle26.SelectionBackColor = SystemColors.Highlight;
-        dataGridViewCellStyle26.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle26.WrapMode = DataGridViewTriState.True;
-        仓库浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle26;
+        dataGridViewCellStyle137.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle137.BackColor = SystemColors.Control;
+        dataGridViewCellStyle137.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
+        dataGridViewCellStyle137.ForeColor = SystemColors.WindowText;
+        dataGridViewCellStyle137.SelectionBackColor = SystemColors.Highlight;
+        dataGridViewCellStyle137.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle137.WrapMode = DataGridViewTriState.True;
+        仓库浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle137;
         仓库浏览表.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-        dataGridViewCellStyle27.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle27.BackColor = SystemColors.Control;
-        dataGridViewCellStyle27.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
-        dataGridViewCellStyle27.ForeColor = SystemColors.ControlText;
-        dataGridViewCellStyle27.SelectionBackColor = SystemColors.ButtonShadow;
-        dataGridViewCellStyle27.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle27.WrapMode = DataGridViewTriState.False;
-        仓库浏览表.DefaultCellStyle = dataGridViewCellStyle27;
+        dataGridViewCellStyle138.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle138.BackColor = SystemColors.Control;
+        dataGridViewCellStyle138.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
+        dataGridViewCellStyle138.ForeColor = SystemColors.ControlText;
+        dataGridViewCellStyle138.SelectionBackColor = SystemColors.ButtonShadow;
+        dataGridViewCellStyle138.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle138.WrapMode = DataGridViewTriState.False;
+        仓库浏览表.DefaultCellStyle = dataGridViewCellStyle138;
         仓库浏览表.GridColor = SystemColors.ActiveCaption;
         仓库浏览表.Location = new Point(0, 0);
         仓库浏览表.Margin = new Padding(4, 3, 4, 3);
@@ -33755,29 +32194,29 @@ public partial class SMain
         角色浏览表.AllowUserToAddRows = false;
         角色浏览表.AllowUserToDeleteRows = false;
         角色浏览表.AllowUserToResizeRows = false;
-        dataGridViewCellStyle28.BackColor = Color.FromArgb((int)(byte)224, (int)(byte)224, (int)(byte)224);
-        角色浏览表.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle28;
+        dataGridViewCellStyle139.BackColor = Color.FromArgb((int)(byte)224, (int)(byte)224, (int)(byte)224);
+        角色浏览表.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle139;
         角色浏览表.BackgroundColor = Color.LightGray;
         角色浏览表.BorderStyle = BorderStyle.Fixed3D;
         角色浏览表.CellBorderStyle = DataGridViewCellBorderStyle.Raised;
-        dataGridViewCellStyle29.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle29.BackColor = SystemColors.Control;
-        dataGridViewCellStyle29.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        dataGridViewCellStyle29.ForeColor = SystemColors.WindowText;
-        dataGridViewCellStyle29.SelectionBackColor = SystemColors.Highlight;
-        dataGridViewCellStyle29.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle29.WrapMode = DataGridViewTriState.True;
-        角色浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle29;
+        dataGridViewCellStyle140.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle140.BackColor = SystemColors.Control;
+        dataGridViewCellStyle140.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
+        dataGridViewCellStyle140.ForeColor = SystemColors.WindowText;
+        dataGridViewCellStyle140.SelectionBackColor = SystemColors.Highlight;
+        dataGridViewCellStyle140.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle140.WrapMode = DataGridViewTriState.True;
+        角色浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle140;
         角色浏览表.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
         角色浏览表.ContextMenuStrip = 角色右键菜单;
-        dataGridViewCellStyle30.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle30.BackColor = SystemColors.Control;
-        dataGridViewCellStyle30.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        dataGridViewCellStyle30.ForeColor = SystemColors.ControlText;
-        dataGridViewCellStyle30.SelectionBackColor = SystemColors.ButtonShadow;
-        dataGridViewCellStyle30.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle30.WrapMode = DataGridViewTriState.False;
-        角色浏览表.DefaultCellStyle = dataGridViewCellStyle30;
+        dataGridViewCellStyle141.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle141.BackColor = SystemColors.Control;
+        dataGridViewCellStyle141.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
+        dataGridViewCellStyle141.ForeColor = SystemColors.ControlText;
+        dataGridViewCellStyle141.SelectionBackColor = SystemColors.ButtonShadow;
+        dataGridViewCellStyle141.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle141.WrapMode = DataGridViewTriState.False;
+        角色浏览表.DefaultCellStyle = dataGridViewCellStyle141;
         角色浏览表.GridColor = SystemColors.ActiveCaption;
         角色浏览表.Location = new Point(0, 3);
         角色浏览表.Margin = new Padding(4, 3, 4, 3);
@@ -36107,60 +34546,6 @@ public partial class SMain
         tabPage74.ResumeLayout(false);
         groupBox212.ResumeLayout(false);
         tabPage1.ResumeLayout(false);
-        tabPage1.PerformLayout();
-        tabControl15.ResumeLayout(false);
-        tabPage55.ResumeLayout(false);
-        BOSS刷新.ResumeLayout(false);
-        groupBox176.ResumeLayout(false);
-        groupBox176.PerformLayout();
-        ((ISupportInitialize)S_自动BOSS1界面5开关).EndInit();
-        groupBox175.ResumeLayout(false);
-        groupBox175.PerformLayout();
-        ((ISupportInitialize)S_自动BOSS1界面4开关).EndInit();
-        groupBox174.ResumeLayout(false);
-        groupBox174.PerformLayout();
-        ((ISupportInitialize)S_自动BOSS1界面3开关).EndInit();
-        groupBox173.ResumeLayout(false);
-        groupBox173.PerformLayout();
-        ((ISupportInitialize)S_自动BOSS1界面2开关).EndInit();
-        groupBox172.ResumeLayout(false);
-        groupBox172.PerformLayout();
-        ((ISupportInitialize)S_自动BOSS1界面1开关).EndInit();
-        groupBox46.ResumeLayout(false);
-        groupBox46.PerformLayout();
-        ((ISupportInitialize)S_BOSS五分钟).EndInit();
-        ((ISupportInitialize)S_BOSS五坐标Y).EndInit();
-        ((ISupportInitialize)S_BOSS五地图编号).EndInit();
-        ((ISupportInitialize)S_BOSS五时间).EndInit();
-        ((ISupportInitialize)S_BOSS五坐标X).EndInit();
-        groupBox45.ResumeLayout(false);
-        groupBox45.PerformLayout();
-        ((ISupportInitialize)S_BOSS四分钟).EndInit();
-        ((ISupportInitialize)S_BOSS四坐标Y).EndInit();
-        ((ISupportInitialize)S_BOSS四地图编号).EndInit();
-        ((ISupportInitialize)S_BOSS四时间).EndInit();
-        ((ISupportInitialize)S_BOSS四坐标X).EndInit();
-        groupBox42.ResumeLayout(false);
-        groupBox42.PerformLayout();
-        ((ISupportInitialize)S_BOSS三分钟).EndInit();
-        ((ISupportInitialize)S_BOSS三坐标Y).EndInit();
-        ((ISupportInitialize)S_BOSS三地图编号).EndInit();
-        ((ISupportInitialize)S_BOSS三时间).EndInit();
-        ((ISupportInitialize)S_BOSS三坐标X).EndInit();
-        groupBox14.ResumeLayout(false);
-        groupBox14.PerformLayout();
-        ((ISupportInitialize)S_BOSS二分钟).EndInit();
-        ((ISupportInitialize)S_BOSS二坐标Y).EndInit();
-        ((ISupportInitialize)S_BOSS二地图编号).EndInit();
-        ((ISupportInitialize)S_BOSS二时间).EndInit();
-        ((ISupportInitialize)S_BOSS二坐标X).EndInit();
-        BOSS刷新一.ResumeLayout(false);
-        BOSS刷新一.PerformLayout();
-        ((ISupportInitialize)S_BOSS一分钟).EndInit();
-        ((ISupportInitialize)S_BOSS一坐标Y).EndInit();
-        ((ISupportInitialize)S_BOSS一地图编号).EndInit();
-        ((ISupportInitialize)S_BOSS一时间).EndInit();
-        ((ISupportInitialize)S_BOSS一坐标X).EndInit();
         groupBox36.ResumeLayout(false);
         groupBox36.PerformLayout();
         ((ISupportInitialize)S_BOSS刷新提示开关).EndInit();
@@ -37584,40 +35969,6 @@ public partial class SMain
 
     private TabPage tabPage1;
 
-    private GroupBox BOSS刷新;
-
-    private GroupBox BOSS刷新一;
-
-    private NumericUpDown S_BOSS一分钟;
-
-    private Label label275;
-
-    private NumericUpDown S_BOSS一坐标Y;
-
-    private Label label274;
-
-    private Label label256;
-
-    private NumericUpDown S_BOSS一地图编号;
-
-    private Label label276;
-
-    private NumericUpDown S_BOSS一时间;
-
-    private Label label277;
-
-    private NumericUpDown S_BOSS一坐标X;
-
-    private Label label278;
-
-    private TextBox S_BOSS名字一;
-
-    private Label label279;
-
-    private Label label280;
-
-    private TextBox S_BOSS一地图名字;
-
     private Label label282;
 
     private NumericUpDown S_屠魔爆率开关;
@@ -37753,138 +36104,6 @@ public partial class SMain
     private NumericUpDown S_沙城快捷等级一;
 
     private NumericUpDown S_沙城快捷货币一;
-
-    private Label label328;
-
-    private GroupBox groupBox45;
-
-    private Label label320;
-
-    private TextBox S_BOSS四地图名字;
-
-    private NumericUpDown S_BOSS四分钟;
-
-    private Label label321;
-
-    private NumericUpDown S_BOSS四坐标Y;
-
-    private Label label322;
-
-    private Label label323;
-
-    private NumericUpDown S_BOSS四地图编号;
-
-    private Label label324;
-
-    private NumericUpDown S_BOSS四时间;
-
-    private Label label325;
-
-    private NumericUpDown S_BOSS四坐标X;
-
-    private Label label326;
-
-    private TextBox S_BOSS名字四;
-
-    private Label label327;
-
-    private GroupBox groupBox42;
-
-    private Label label312;
-
-    private TextBox S_BOSS三地图名字;
-
-    private NumericUpDown S_BOSS三分钟;
-
-    private Label label313;
-
-    private NumericUpDown S_BOSS三坐标Y;
-
-    private Label label314;
-
-    private Label label315;
-
-    private NumericUpDown S_BOSS三地图编号;
-
-    private Label label316;
-
-    private NumericUpDown S_BOSS三时间;
-
-    private Label label317;
-
-    private NumericUpDown S_BOSS三坐标X;
-
-    private Label label318;
-
-    private TextBox S_BOSS名字三;
-
-    private Label label319;
-
-    private GroupBox groupBox14;
-
-    private Label label304;
-
-    private TextBox S_BOSS二地图名字;
-
-    private NumericUpDown S_BOSS二分钟;
-
-    private Label label305;
-
-    private NumericUpDown S_BOSS二坐标Y;
-
-    private Label label306;
-
-    private Label label307;
-
-    private NumericUpDown S_BOSS二地图编号;
-
-    private Label label308;
-
-    private NumericUpDown S_BOSS二时间;
-
-    private Label label309;
-
-    private NumericUpDown S_BOSS二坐标X;
-
-    private Label label310;
-
-    private TextBox S_BOSS名字二;
-
-    private Label label311;
-
-    private Label label329;
-
-    private GroupBox groupBox46;
-
-    private Label label330;
-
-    private TextBox S_BOSS五地图名字;
-
-    private NumericUpDown S_BOSS五分钟;
-
-    private Label label331;
-
-    private NumericUpDown S_BOSS五坐标Y;
-
-    private Label label332;
-
-    private Label label333;
-
-    private NumericUpDown S_BOSS五地图编号;
-
-    private Label label334;
-
-    private NumericUpDown S_BOSS五时间;
-
-    private Label label335;
-
-    private NumericUpDown S_BOSS五坐标X;
-
-    private Label label336;
-
-    private TextBox S_BOSS名字五;
-
-    private Label label337;
 
     private GroupBox groupBox47;
 
@@ -38567,10 +36786,6 @@ public partial class SMain
     private Label label486;
 
     private Label label485;
-
-    private Label label492;
-
-    private Label label491;
 
     private NumericUpDown S_MaxUserConnections;
 
@@ -39406,14 +37621,6 @@ public partial class SMain
 
     private TabPage tabPage54;
 
-    public TabControl tabControl15;
-
-    private TabPage tabPage55;
-
-    private TabPage tabPage56;
-
-    private TabPage tabPage57;
-
     private Label label392;
 
     private NumericUpDown S_屠魔令回收数量;
@@ -39537,8 +37744,6 @@ public partial class SMain
     private NumericUpDown numericUpDown3;
 
     private NumericUpDown numericUpDown5;
-
-    private Label label397;
 
     private NumericUpDown S_自动保存日志;
 
@@ -39667,46 +37872,6 @@ public partial class SMain
     private NumericUpDown S_元宝袋新创数量1;
 
     private Label label702;
-
-    private GroupBox groupBox176;
-
-    private Label label714;
-
-    private Label label715;
-
-    private NumericUpDown S_自动BOSS1界面5开关;
-
-    private GroupBox groupBox175;
-
-    private Label label712;
-
-    private Label label713;
-
-    private NumericUpDown S_自动BOSS1界面4开关;
-
-    private GroupBox groupBox174;
-
-    private Label label710;
-
-    private Label label711;
-
-    private NumericUpDown S_自动BOSS1界面3开关;
-
-    private GroupBox groupBox173;
-
-    private Label label708;
-
-    private Label label709;
-
-    private NumericUpDown S_自动BOSS1界面2开关;
-
-    private GroupBox groupBox172;
-
-    private Label label707;
-
-    private Label label706;
-
-    private NumericUpDown S_自动BOSS1界面1开关;
 
     private GroupBox groupBox179;
 
@@ -40369,8 +38534,6 @@ public partial class SMain
     private Label label794;
 
     private GroupBox groupBox216;
-
-    private Label label793;
 
     private NumericUpDown S_幸运额外5伤害;
 

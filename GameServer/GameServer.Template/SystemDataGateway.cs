@@ -65,7 +65,9 @@ public static class SystemDataGateway
     public static void LoadTeleportGates() => ReloadDataType(typeof(TeleportGate));
     
     public static void LoadMonsterSpawns() => ReloadDataType(typeof(MonsterSpawn));
-    
+
+    public static void LoadMonsterBossTimedZen() => ReloadDataType(typeof(MonsterBossTimedZen));
+
     public static void LoadMapGuards() => ReloadDataType(typeof(MapGuard));
     
     public static void LoadGameItems() => ReloadDataType(typeof(GameItem));
@@ -112,6 +114,7 @@ public static class SystemDataGateway
             typeof(MapArea),
             typeof(TeleportGate),
             typeof(MonsterSpawn),
+            typeof(MonsterBossTimedZen),
             typeof(MapGuard),
             typeof(GameItem),
             typeof(RandomStats),
@@ -150,6 +153,7 @@ public static class SystemDataGateway
             typeof(MapArea),
             typeof(TeleportGate),
             typeof(MonsterSpawn),
+            typeof(MonsterBossTimedZen),
             typeof(MapGuard),
             typeof(GameItem),
             typeof(RandomStats),

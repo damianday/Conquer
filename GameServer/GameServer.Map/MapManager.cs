@@ -69,20 +69,6 @@ public static class MapManager
     public static MonsterObject 魔火龙;
     public static Map 世界BOSS地图;
 
-    public static MonsterObject BOSS名字二;
-    public static Map BOSS二地图编号;
-
-    public static MonsterObject BOSS名字三;
-    public static Map BOSS三地图编号;
-
-    public static MonsterObject BOSS名字四;
-    public static Map BOSS四地图编号;
-
-    public static MonsterObject BOSS名字五;
-    public static Map BOSS五地图编号;
-
-    public static MonsterObject BOSS名字一;
-    public static Map BOSS一地图编号;
     public static Map SandCityMap;
 
     public static MonsterObject 沙城城门;
@@ -109,12 +95,8 @@ public static class MapManager
     public static byte SandCityStage;
 
     private static DateTime NotificationTime;
-    private static DateTime NotificationTime2;
-    private static DateTime NotificationTime3;
-    private static DateTime NotificationTime4;
-    private static DateTime NotificationTime5;
-    private static DateTime NotificationTime6;
-    private static DateTime NotificationTime7;
+    private static DateTime MonsterWorldBossZenTime;
+    private static DateTime MonsterBossZenTime;
 
     public static HashSet<GuildInfo> SiegeGuilds;
 
@@ -461,9 +443,33 @@ public static class MapManager
                 }
                 NotificationTime = SEngine.CurrentTime;
             }
-            if (Config.CurrentVersion >= 3 && SEngine.CurrentTime.Minute == Config.世界BOSS分钟 && SEngine.CurrentTime.Hour != NotificationTime3.Hour && SEngine.CurrentTime.Second == 1)
+
+            if (SEngine.CurrentTime > MonsterBossZenTime)
             {
-                if (SEngine.CurrentTime.Hour == Config.世界BOSS时间 && MonsterInfo.DataSheet.TryGetValue(Config.世界BOSS名字, out var value))
+                foreach (var spawn in MonsterBossTimedZen.DataSheet)
+                {
+                    if (SEngine.CurrentTime.Minute == spawn.Minute && SEngine.CurrentTime.Hour == spawn.Hour)
+                    {
+                        if (MonsterInfo.DataSheet.TryGetValue(spawn.MonsterName, out var moni))
+                        {
+                            var map = GetMap(spawn.MapID);
+                            var mon = new MonsterObject(moni, map, int.MaxValue, spawn.Coordinates, 1, true, true)
+                            {
+                                CurrentDirection = GameDirection.UpRight,
+                                SurvivalTime = SEngine.CurrentTime.AddMinutes(spawn.SurvivalTime)
+                            };
+                            NetworkManager.SendAnnouncement("World Boss [ " + moni.MonsterName + " ] is here. " + map.MapInfo.MapName + ", Players who wish to participate should prepare themselves.", rolling: true);
+                        }
+                    }
+                }
+
+                MonsterBossZenTime = SEngine.CurrentTime.AddSeconds(15.0);
+            }
+
+            
+            if (Config.CurrentVersion >= 3 && SEngine.CurrentTime.Minute == Config.WorldBossTimeMinute && SEngine.CurrentTime.Hour != MonsterWorldBossZenTime.Hour && SEngine.CurrentTime.Second == 1)
+            {
+                if (SEngine.CurrentTime.Hour == Config.WorldBossTimeHour && MonsterInfo.DataSheet.TryGetValue(Config.WorldBossName, out var value))
                 {
                     Map map = GetMap(74);
                     魔火龙 = new MonsterObject(value, map, int.MaxValue, new Point(1043, 176), 1,
@@ -472,84 +478,9 @@ public static class MapManager
                         CurrentDirection = GameDirection.UpRight,
                         SurvivalTime = DateTime.MaxValue
                     };
-                    NetworkManager.SendAnnouncement("世界BOSS[ " + Config.世界BOSS名字 + " ]已经降临秘宝广场, 想要参加的勇士请做好准备", rolling: true);
+                    NetworkManager.SendAnnouncement("世界BOSS[ " + Config.WorldBossName + " ]已经降临秘宝广场, 想要参加的勇士请做好准备", rolling: true);
                 }
-                NotificationTime3 = SEngine.CurrentTime;
-            }
-            if (Config.CurrentVersion >= 1 && SEngine.CurrentTime.Minute == Config.BOSS一分钟 && SEngine.CurrentTime.Hour != NotificationTime2.Hour && SEngine.CurrentTime.Second == 1 && Config.自动BOSS1界面1开关 == 1)
-            {
-                if (SEngine.CurrentTime.Hour == Config.BOSS一时间 && MonsterInfo.DataSheet.TryGetValue(Config.BOSS名字一, out var value2))
-                {
-                    Map 出生地图2 = GetMap(Config.BOSS一地图编号);
-                    BOSS名字一 = new MonsterObject(value2, 出生地图2, int.MaxValue, new Point(Config.BOSS一坐标X, Config.BOSS一坐标Y), 1,
-                        forbidResurrection: true, 立即刷新: true)
-                    {
-                        CurrentDirection = GameDirection.UpRight,
-                        SurvivalTime = DateTime.MaxValue
-                    };
-                    NetworkManager.SendAnnouncement("世界BOSS[ " + Config.BOSS名字一 + " ]已经降临" + Config.BOSS一地图名字 + ", 想要参加的勇士请做好准备", rolling: true);
-                }
-                NotificationTime2 = SEngine.CurrentTime;
-            }
-            if (Config.CurrentVersion >= 1 && SEngine.CurrentTime.Minute == Config.BOSS二分钟 && SEngine.CurrentTime.Hour != NotificationTime4.Hour && SEngine.CurrentTime.Second == 1 && Config.自动BOSS1界面2开关 == 1)
-            {
-                if (SEngine.CurrentTime.Hour == Config.BOSS二时间 && MonsterInfo.DataSheet.TryGetValue(Config.BOSS名字二, out var value3))
-                {
-                    Map 出生地图3 = GetMap(Config.BOSS二地图编号);
-                    BOSS名字二 = new MonsterObject(value3, 出生地图3, int.MaxValue, new Point(Config.BOSS二坐标X, Config.BOSS二坐标Y), 1,
-                        forbidResurrection: true, 立即刷新: true)
-                    {
-                        CurrentDirection = GameDirection.UpRight,
-                        SurvivalTime = DateTime.MaxValue
-                    };
-                    NetworkManager.SendAnnouncement("世界BOSS[ " + Config.BOSS名字二 + " ]已经降临" + Config.BOSS二地图名字 + ", 想要参加的勇士请做好准备", rolling: true);
-                }
-                NotificationTime4 = SEngine.CurrentTime;
-            }
-            if (Config.CurrentVersion >= 1 && SEngine.CurrentTime.Minute == Config.BOSS三分钟 && SEngine.CurrentTime.Hour != NotificationTime5.Hour && SEngine.CurrentTime.Second == 1 && Config.自动BOSS1界面3开关 == 1)
-            {
-                if (SEngine.CurrentTime.Hour == Config.BOSS三时间 && MonsterInfo.DataSheet.TryGetValue(Config.BOSS名字三, out var value4))
-                {
-                    Map 出生地图4 = GetMap(Config.BOSS三地图编号);
-                    BOSS名字三 = new MonsterObject(value4, 出生地图4, int.MaxValue, new Point(Config.BOSS三坐标X, Config.BOSS三坐标Y), 1,
-                        forbidResurrection: true, 立即刷新: true)
-                    {
-                        CurrentDirection = GameDirection.UpRight,
-                        SurvivalTime = DateTime.MaxValue
-                    };
-                    NetworkManager.SendAnnouncement("世界BOSS[ " + Config.BOSS名字三 + " ]已经降临" + Config.BOSS三地图名字 + ", 想要参加的勇士请做好准备", rolling: true);
-                }
-                NotificationTime5 = SEngine.CurrentTime;
-            }
-            if (Config.CurrentVersion >= 1 && SEngine.CurrentTime.Minute == Config.BOSS四分钟 && SEngine.CurrentTime.Hour != NotificationTime6.Hour && SEngine.CurrentTime.Second == 1 && Config.自动BOSS1界面4开关 == 1)
-            {
-                if (SEngine.CurrentTime.Hour == Config.BOSS四时间 && MonsterInfo.DataSheet.TryGetValue(Config.BOSS名字四, out var value5))
-                {
-                    Map 出生地图5 = GetMap(Config.BOSS四地图编号);
-                    BOSS名字四 = new MonsterObject(value5, 出生地图5, int.MaxValue, new Point(Config.BOSS四坐标X, Config.BOSS四坐标Y), 1,
-                        forbidResurrection: true, 立即刷新: true)
-                    {
-                        CurrentDirection = GameDirection.UpRight,
-                        SurvivalTime = DateTime.MaxValue
-                    };
-                    NetworkManager.SendAnnouncement("世界BOSS[ " + Config.BOSS名字四 + " ]已经降临" + Config.BOSS四地图名字 + ", 想要参加的勇士请做好准备", rolling: true);
-                }
-                NotificationTime6 = SEngine.CurrentTime;
-            }
-            if (Config.CurrentVersion >= 1 && SEngine.CurrentTime.Minute == Config.BOSS五分钟 && SEngine.CurrentTime.Hour != NotificationTime7.Hour && SEngine.CurrentTime.Second == 1 && Config.自动BOSS1界面5开关 == 1)
-            {
-                if (SEngine.CurrentTime.Hour == Config.BOSS五时间 && MonsterInfo.DataSheet.TryGetValue(Config.BOSS名字五, out var value6))
-                {
-                    Map 出生地图6 = GetMap(Config.BOSS五地图编号);
-                    BOSS名字五 = new MonsterObject(value6, 出生地图6, int.MaxValue, new Point(Config.BOSS五坐标X, Config.BOSS五坐标Y), 1,
-                        forbidResurrection: true, 立即刷新: true)
-                    {
-                        CurrentDirection = GameDirection.UpRight,
-                        SurvivalTime = DateTime.MaxValue
-                    };
-                    NetworkManager.SendAnnouncement("世界BOSS[ " + Config.BOSS名字五 + " ]已经降临" + Config.BOSS五地图名字 + ", 想要参加的勇士请做好准备", rolling: true);
-                }
-                NotificationTime7 = SEngine.CurrentTime;
+                MonsterWorldBossZenTime = SEngine.CurrentTime;
             }
 
             foreach (Map map in ReplicaMaps)
@@ -591,6 +522,8 @@ public static class MapManager
         Guards = new Dictionary<int, GuardObject>();
         Items = new Dictionary<int, ItemObject>();
         Traps = new Dictionary<int, TrapObject>();
+
+        MonsterBossZenTime = SEngine.CurrentTime;
 
         foreach (GameMap map in GameMap.DataSheet.Values)
         {

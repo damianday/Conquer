@@ -14038,12 +14038,12 @@ public sealed class PlayerObject : MapObject
                             Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{Config.秘宝广场元宝 / 10}>")
                         });
                     }
-                    if (SEngine.CurrentTime.Hour == Config.世界BOSS时间 && Ingot >= Config.秘宝广场元宝)
+                    if (SEngine.CurrentTime.Hour == Config.WorldBossTimeHour && Ingot >= Config.秘宝广场元宝)
                     {
                         Ingot -= Config.秘宝广场元宝;
                         Teleport((CurrentMap.MapID == 74) ? CurrentMap : MapManager.GetMap(74), AreaType.Teleportation);
                     }
-                    if (SEngine.CurrentTime.Hour + 1 == Config.世界BOSS时间)
+                    if (SEngine.CurrentTime.Hour + 1 == Config.WorldBossTimeHour)
                     {
                         if (Ingot >= Config.秘宝广场元宝)
                         {
@@ -14057,7 +14057,7 @@ public sealed class PlayerObject : MapObject
                         Enqueue(new 同步交互结果
                         {
                             ObjectID = CurrentNPC.ObjectID,
-                            Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{Config.世界BOSS时间}>")
+                            Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{Config.WorldBossTimeHour}>")
                         });
                     }
                     break;

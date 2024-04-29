@@ -241,7 +241,8 @@ public class Config
     public static int 快捷传送六编号2 = 101;
     public static int 快捷传送六货币2 = 100_000;
     public static int 快捷传送六等级2 = 1;
-    public static string BOSS名字一 = "BOSS名称";
+    
+    /*public static string BOSS名字一 = "BOSS名称";
     public static byte BOSS一时间 = 20;
     public static byte BOSS一分钟 = 30;
     public static int BOSS一地图编号 = 147;
@@ -276,6 +277,7 @@ public class Config
     public static string BOSS五地图名字 = "地图名称";
     public static int BOSS五坐标X = 999;
     public static int BOSS五坐标Y = 999;
+    */
     public static int 未知暗点副本价格 = 100_000;
     public static int 未知暗点副本等级 = 45;
     public static int 未知暗点二层价格 = 100_000;
@@ -662,11 +664,6 @@ public class Config
     public static int 高级赞助礼包7 = 0;
     public static int 高级赞助礼包8 = 0;
     public static int 高级赞助称号1 = 147;
-    public static int 自动BOSS1界面1开关 = 0;
-    public static int 自动BOSS1界面2开关 = 0;
-    public static int 自动BOSS1界面3开关 = 0;
-    public static int 自动BOSS1界面4开关 = 0;
-    public static int 自动BOSS1界面5开关 = 0;
     public static int 平台开关模式 = 0;
     public static int 平台元宝充值模块 = 100;
     public static int 平台金币充值模块 = 10000;
@@ -1011,10 +1008,10 @@ public class Config
     public static bool 武斗场杀人开关 = false;
     public static int 武斗场杀人经验 = 100000;
     public static int MaxUserConnections = 500;
-    public static byte 世界BOSS时间 = 19;
-    public static byte 世界BOSS分钟 = 30;
+    public static byte WorldBossTimeHour = 19;
+    public static byte WorldBossTimeMinute = 30;
     public static int 秘宝广场元宝 = 20000;
-    public static string 世界BOSS名字 = "魔火龙";
+    public static string WorldBossName = "魔火龙";
     public static string 战将特权礼包 = "战将特权礼包";
     public static string 豪杰特权礼包 = "豪杰特权礼包";
     public static int 每周特惠礼包一元宝 = 600;
