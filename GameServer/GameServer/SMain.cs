@@ -1775,6 +1775,15 @@ public partial class SMain : Form
             return;
         }
 
+        if (!control.Visible) return;
+
+        if (control.Tag is decimal oldValue)
+        {
+            if (oldValue == control.Value)
+                return;
+            control.Tag = oldValue;
+        }
+
         switch (control.Name)
         {
             case nameof(S_收益减少比率): Config.收益减少比率 = control.Value; break;
@@ -2666,6 +2675,15 @@ public partial class SMain : Form
             return;
         }
 
+        if (!control.Visible) return;
+
+        if (control.Tag is bool oldValue)
+        {
+            if (oldValue == control.Checked)
+                return;
+            control.Tag = oldValue;
+        }
+
         switch (control.Name)
         {
             case nameof(自动回收设置): Config.自动回收设置 = control.Checked; break;
@@ -2690,6 +2708,15 @@ public partial class SMain : Form
         {
             MessageBox.Show($"TextChanged raised on invalid control {sender.GetType()}");
             return;
+        }
+
+        if (!control.Visible) return;
+
+        if (control.Tag is string oldValue)
+        {
+            if (oldValue == control.Text)
+                return;
+            control.Tag = oldValue;
         }
 
         switch (control.Name)
