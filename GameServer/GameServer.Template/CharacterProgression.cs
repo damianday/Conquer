@@ -287,6 +287,7 @@ public sealed class CharacterProgression
 
     public static Stats GetData(GameObjectRace job, byte level)
     {
-        return DataSheet[(byte)job * 256 + level];
+        var key = (byte)job * 256 + level;
+        return DataSheet.TryGetValue(key, out var value) ? value : null;
     }
 }
