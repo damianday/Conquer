@@ -1527,11 +1527,11 @@ public abstract class MapObject
                     }
                 }
             }
-            if (SEngine.CurrentTime > 玩家实例6.战具计时 && !玩家实例6.Dead && 玩家实例6.CurrentHP < 玩家实例6[Stat.MaxHP] && 玩家实例6.Equipment.TryGetValue(15, out var v2) && v2.Dura.V > 0 && (v2.ID == 99999106 || v2.ID == 99999107))
+            if (SEngine.CurrentTime > 玩家实例6.BattleEquipmentTime && !玩家实例6.Dead && 玩家实例6.CurrentHP < 玩家实例6[Stat.MaxHP] && 玩家实例6.Equipment.TryGetValue(15, out var v2) && v2.Dura.V > 0 && (v2.ID == 99999106 || v2.ID == 99999107))
             {
                 玩家实例6.CurrentHP += ((this is MonsterObject) ? 20 : 10);
                 玩家实例6.DamageCombatEquipment(1);
-                玩家实例6.战具计时 = SEngine.CurrentTime.AddMilliseconds(1000.0);
+                玩家实例6.BattleEquipmentTime = SEngine.CurrentTime.AddMilliseconds(1000.0);
             }
         }
         if (this is PlayerObject 玩家实例7 && 玩家实例7.HasProtectionRing)
