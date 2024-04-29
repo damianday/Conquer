@@ -12,7 +12,7 @@ public class SMS
 
 	public static Client CreateClient(string accessKeyId, string accessKeySecret)
 	{
-		Config config = new Config
+		var config = new Config
 		{
 			AccessKeyId = accessKeyId,
 			AccessKeySecret = accessKeySecret
@@ -23,7 +23,7 @@ public class SMS
 
 	public static Client CreateClientWithSTS(string accessKeyId, string accessKeySecret, string securityToken)
 	{
-		Config config = new Config
+		var config = new Config
 		{
 			AccessKeyId = accessKeyId,
 			AccessKeySecret = accessKeySecret,

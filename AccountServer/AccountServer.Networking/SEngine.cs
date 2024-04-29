@@ -6,30 +6,29 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Properties;
 
 namespace AccountServer.Networking;
 
 public static class SEngine
 {
-    public static DateTime CurrentTime;
-    private static DateTime StatsTime;
+	public static DateTime CurrentTime;
+	private static DateTime StatsTime;
 
-    private static TcpListener Listener;
-    private static UdpClient TicketSender;
+	private static TcpListener Listener;
+	private static UdpClient TicketSender;
 
-    public static bool Running;
+	public static bool Running;
 
 	public static uint 已登录连接数;
 	public static uint 已上线连接数;
 	public static long TotalBytesSent;
 	public static long TotalBytesReceived;
 
-    private static HashSet<SConnection> Connections = new HashSet<SConnection>();
-    private static ConcurrentQueue<SConnection> RemovingConnections = new ConcurrentQueue<SConnection>();
-    private static ConcurrentQueue<SConnection> AddingConnections = new ConcurrentQueue<SConnection>();
+	private static HashSet<SConnection> Connections = new HashSet<SConnection>();
+	private static ConcurrentQueue<SConnection> RemovingConnections = new ConcurrentQueue<SConnection>();
+	private static ConcurrentQueue<SConnection> AddingConnections = new ConcurrentQueue<SConnection>();
 
-    public static bool StartService()
+	public static bool StartService()
 	{
 		Running = true;
 
@@ -37,16 +36,16 @@ public static class SEngine
 		RemovingConnections.Clear();
 		AddingConnections.Clear();
 
-        try
+		try
 		{
-			Listener = new TcpListener(IPAddress.Any, Settings.Default.LocalListeningPort);
+			Listener = new TcpListener(IPAddress.Any, Settings.LocalListeningPort);
 			Listener.Start();
 			Listener.BeginAcceptTcpClient(Connection, null);
 
 			TicketSender = new UdpClient();
-            //_ticketClient = new UdpClient(new IPEndPoint(IPAddress.Any, (ushort)MainForm.Instance.LocalListeningPortEdit.Value));
+			//_ticketClient = new UdpClient(new IPEndPoint(IPAddress.Any, (ushort)MainForm.Instance.LocalListeningPortEdit.Value));
 
-            Task.Run(delegate
+			Task.Run(delegate
 			{
 				while (Running)
 				{
@@ -61,13 +60,13 @@ public static class SEngine
 		{
 			SMain.AddLogMessage(ex.Message);
 
-            Listener?.Stop();
-            Listener = null;
+			Listener?.Stop();
+			Listener = null;
 
-            TicketSender?.Close();
-            TicketSender = null;
+			TicketSender?.Close();
+			TicketSender = null;
 
-            return false;
+			return false;
 		}
 	}
 
@@ -78,15 +77,15 @@ public static class SEngine
 		Listener?.Stop();
 		Listener = null;
 
-        TicketSender?.Close();
-        TicketSender = null;
-    }
+		TicketSender?.Close();
+		TicketSender = null;
+	}
 
 	public static void Process()
 	{
-        CurrentTime = DateTime.Now;
+		CurrentTime = DateTime.Now;
 
-        foreach (var conn in Connections)
+		foreach (var conn in Connections)
 			conn.Process();
 
 		while (!RemovingConnections.IsEmpty)
@@ -100,12 +99,12 @@ public static class SEngine
 				Connections.Add(conn);
 		}
 
-        if (CurrentTime > StatsTime)
+		if (CurrentTime > StatsTime)
 		{
-            SMain.UpdateServerStats();
+			SMain.UpdateServerStats();
 			StatsTime = CurrentTime.AddSeconds(1);
-        }
-    }
+		}
+	}
 
 	public static void Connection(IAsyncResult result)
 	{
@@ -137,51 +136,51 @@ public static class SEngine
 			RemovingConnections.Enqueue(conn);
 	}
 
-    public static bool SendData(IPEndPoint address, byte[] datagram)
-    {
-        if (TicketSender == null || datagram == null) return false;
+	public static bool SendData(IPEndPoint address, byte[] datagram)
+	{
+		if (TicketSender == null || datagram == null) return false;
 
-        try
-        {
-            var ar = TicketSender.BeginSend(datagram, datagram.Length, address, SendComplete, null);
+		try
+		{
+			var ar = TicketSender.BeginSend(datagram, datagram.Length, address, SendComplete, null);
 			return true;
-        }
-        catch (Exception ex)
-        {
-            SMain.AddLogMessage("Data was sent incorrectly: " + ex.Message);
-        }
-        return false;
-    }
+		}
+		catch (Exception ex)
+		{
+			SMain.AddLogMessage("Data was sent incorrectly: " + ex.Message);
+		}
+		return false;
+	}
 
-    private static void SendComplete(IAsyncResult result)
-    {
-        try
-        {
-            var dataSent = TicketSender.EndSend(result);
-            if (dataSent == 0)
-            {
-                SMain.AddLogMessage("Sending Callback Error!");
-            }
-        }
-        catch (Exception ex)
-        {
-            SMain.AddLogMessage("Sending Callback Error: " + ex.Message);
-        }
-    }
+	private static void SendComplete(IAsyncResult result)
+	{
+		try
+		{
+			var dataSent = TicketSender.EndSend(result);
+			if (dataSent == 0)
+			{
+				SMain.AddLogMessage("Sending Callback Error!");
+			}
+		}
+		catch (Exception ex)
+		{
+			SMain.AddLogMessage("Sending Callback Error: " + ex.Message);
+		}
+	}
 
-    public static void SendTicketToServer(IPEndPoint address, string ticket, string account, string promoCode, string referralCode)
-    {
-        try
-        {
-            var data = Encoding.UTF8.GetBytes(ticket + ";" + account + ";" + promoCode + ";" + referralCode);
+	public static void SendTicketToServer(IPEndPoint address, string ticket, string account, string promoCode, string referralCode)
+	{
+		try
+		{
+			var data = Encoding.UTF8.GetBytes(ticket + ";" + account + ";" + promoCode + ";" + referralCode);
 			if (SendData(address, data))
 				SMain.TotalTickets++;
 			else
-                SMain.AddLogMessage("Ticket delivery failed.");
-        }
-        catch (Exception ex)
-        {
-            SMain.AddLogMessage("Failed to send tickets: " + ex.Message);
-        }
-    }
+				SMain.AddLogMessage("Ticket delivery failed.");
+		}
+		catch (Exception ex)
+		{
+			SMain.AddLogMessage("Failed to send tickets: " + ex.Message);
+		}
+	}
 }
