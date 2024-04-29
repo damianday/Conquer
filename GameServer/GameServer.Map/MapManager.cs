@@ -66,8 +66,7 @@ public static class MapManager
     public static Point 八卦坛坐标右;
     public static Point 八卦坛坐标中;
 
-    public static MonsterObject 魔火龙;
-    public static Map 世界BOSS地图;
+    public static MonsterObject WorldBoss; // Conqueror's Dragon
 
     public static Map SandCityMap;
 
@@ -466,13 +465,12 @@ public static class MapManager
                 MonsterBossZenTime = SEngine.CurrentTime.AddSeconds(15.0);
             }
 
-            
             if (Config.CurrentVersion >= 3 && SEngine.CurrentTime.Minute == Config.WorldBossTimeMinute && SEngine.CurrentTime.Hour != MonsterWorldBossZenTime.Hour && SEngine.CurrentTime.Second == 1)
             {
                 if (SEngine.CurrentTime.Hour == Config.WorldBossTimeHour && MonsterInfo.DataSheet.TryGetValue(Config.WorldBossName, out var value))
                 {
-                    Map map = GetMap(74);
-                    魔火龙 = new MonsterObject(value, map, int.MaxValue, new Point(1043, 176), 1,
+                    Map map = GetMap(Config.WorldBossMapID);
+                    WorldBoss = new MonsterObject(value, map, int.MaxValue, new Point(Config.WorldBossMapPosX, Config.WorldBossMapPosY), 1,
                         forbidResurrection: true, 立即刷新: true)
                     {
                         CurrentDirection = GameDirection.UpRight,

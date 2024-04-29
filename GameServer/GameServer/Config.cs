@@ -1008,6 +1008,9 @@ public class Config
     public static bool 武斗场杀人开关 = false;
     public static int 武斗场杀人经验 = 100000;
     public static int MaxUserConnections = 500;
+    public static int WorldBossMapID = 74;
+    public static int WorldBossMapPosX = 1043;
+    public static int WorldBossMapPosY = 176;
     public static byte WorldBossTimeHour = 19;
     public static byte WorldBossTimeMinute = 30;
     public static int 秘宝广场元宝 = 20000;
