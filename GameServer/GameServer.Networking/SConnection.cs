@@ -328,7 +328,7 @@ public sealed class SConnection
             return;
         }
         Player.RemoveBuffEx(2555);
-        Player.玩家选中坐骑(P.编号);
+        Player.UserSelectMount(P.MountID);
     }
 
     public void Process(上传游戏设置 P)
@@ -714,7 +714,7 @@ public sealed class SConnection
     {
         if (Stage == GameStage.Game)
         {
-            Player.请求商店数据(P.版本编号);
+            Player.RequestStoreInfo(P.Version);
         }
         else
         {
@@ -1051,7 +1051,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.开始Npcc对话(P.ObjectID);
+            Player.UserOpenNpcDialogue(P.ObjectID);
         }
     }
 
@@ -2673,6 +2673,17 @@ public sealed class SConnection
         }
     }
 
+    public void Process(玩家开始挖矿 P)
+    {
+        if (Stage != GameStage.Game)
+        {
+            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            return;
+        }
+
+        Player.UserTryDigMine(P.Position);
+    }
+
 
     #region Missing Functions
     public void Process(传奇之力激活 P) { }
@@ -2694,19 +2705,6 @@ public sealed class SConnection
 
     public void Process(内挂物品过滤 P) { }
 
-    public void Process(玩家开始挖矿 P)
-    {
-        // TODO:
-        // Start Mining..
-        if (Stage != GameStage.Game)
-        {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
-            return;
-        }
-
-        Player.UserTryDigMine(P.Position);
-    }
-
     public void Process(请求悬赏剩余 P) { }
 
     public void Process(预留封包零一 P) { }
@@ -2714,5 +2712,7 @@ public sealed class SConnection
     public void Process(预留封包零二 P) { }
 
     public void Process(请求七天详情 P) { }
+
+    public void Process(请求战功信息 P) { }
     #endregion
 }
