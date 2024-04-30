@@ -327,11 +327,17 @@ public class SystemInfo : DBObject
 
     private static int BinarySearch(ListMonitor<CharacterInfo> list, CharacterInfo value, IComparer<CharacterInfo> comparer, int index, int length)
     {
+        if (length < 0) return 0;
+        if (index >= list.Count) return list.Count;
+        
         return list.IList.BinarySearch(index, length, value, comparer);
     }
 
     private static int BinarySearch(ListMonitor<GuildInfo> list, GuildInfo value, IComparer<GuildInfo> comparer, int index, int length)
     {
+        if (length < 0) return 0;
+        if (index >= list.Count) return list.Count;
+
         return list.IList.BinarySearch(index, length, value, comparer);
     }
 
