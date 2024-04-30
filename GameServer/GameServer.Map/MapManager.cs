@@ -270,29 +270,36 @@ public static class MapManager
         if (SandCityStage == 1)
         {
             SandCityStage = 2;
-            MonsterInfo.DataSheet.TryGetValue("沙巴克城门", out var value);
-            沙城城门 = new MonsterObject(value, map, int.MaxValue, 沙城城门坐标, 1, true, true);
-            沙城城门.CurrentDirection = GameDirection.UpRight;
-            沙城城门.SurvivalTime = DateTime.MaxValue;
 
-            MonsterInfo.DataSheet.TryGetValue("沙巴克宫门", out var value2);
-            上方宫门 = new MonsterObject(value2, map, int.MaxValue, 皇宫上门坐标, 1, true, true);
-            上方宫门.CurrentDirection = GameDirection.DownRight;
-            上方宫门.SurvivalTime = DateTime.MaxValue;
+            if (MonsterInfo.DataSheet.TryGetValue("沙巴克城门", out var value))
+            {
+                沙城城门 = new MonsterObject(value, map, int.MaxValue, 沙城城门坐标, 1, true, true);
+                沙城城门.CurrentDirection = GameDirection.UpRight;
+                沙城城门.SurvivalTime = DateTime.MaxValue;
+            }
 
-            下方宫门 = new MonsterObject(value2, map, int.MaxValue, 皇宫下门坐标, 1, true, true);
-            下方宫门.CurrentDirection = GameDirection.DownRight;
-            下方宫门.SurvivalTime = DateTime.MaxValue;
+            if (MonsterInfo.DataSheet.TryGetValue("沙巴克宫门", out var value2))
+            {
+                上方宫门 = new MonsterObject(value2, map, int.MaxValue, 皇宫上门坐标, 1, true, true);
+                上方宫门.CurrentDirection = GameDirection.DownRight;
+                上方宫门.SurvivalTime = DateTime.MaxValue;
 
-            左方宫门 = new MonsterObject(value2, map, int.MaxValue, 皇宫左门坐标, 1, true, true);
-            左方宫门.CurrentDirection = GameDirection.DownLeft;
-            左方宫门.SurvivalTime = DateTime.MaxValue;
+                下方宫门 = new MonsterObject(value2, map, int.MaxValue, 皇宫下门坐标, 1, true, true);
+                下方宫门.CurrentDirection = GameDirection.DownRight;
+                下方宫门.SurvivalTime = DateTime.MaxValue;
 
-            GameBuff.DataSheet.TryGetValue(22300, out var value3);
-            沙城城门.AddBuff(value3.ID, 沙城城门);
-            上方宫门.AddBuff(value3.ID, 上方宫门);
-            下方宫门.AddBuff(value3.ID, 下方宫门);
-            左方宫门.AddBuff(value3.ID, 左方宫门);
+                左方宫门 = new MonsterObject(value2, map, int.MaxValue, 皇宫左门坐标, 1, true, true);
+                左方宫门.CurrentDirection = GameDirection.DownLeft;
+                左方宫门.SurvivalTime = DateTime.MaxValue;
+            }
+
+            if (GameBuff.DataSheet.TryGetValue(22300, out var buff))
+            {
+                if (沙城城门 != null) 沙城城门.AddBuff(buff.ID, 沙城城门);
+                if (上方宫门 != null) 上方宫门.AddBuff(buff.ID, 上方宫门);
+                if (下方宫门 != null) 下方宫门.AddBuff(buff.ID, 下方宫门);
+                if (左方宫门 != null) 左方宫门.AddBuff(buff.ID, 左方宫门);
+            }
         }
 
         if (SEngine.CurrentTime.Hour == Config.沙巴克开启 && SandCityStage == 2)
