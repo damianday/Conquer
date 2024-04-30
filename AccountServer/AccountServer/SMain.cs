@@ -251,6 +251,8 @@ public partial class SMain : Form
             LocalListeningPortEdit.Enabled = false;
             TicketSendingPortEdit.Enabled = false;
         }
+
+        LoadAccountsView();
     }
 
     private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -380,5 +382,25 @@ public partial class SMain : Form
     private void LoadUpdateConfiguration(object sender, EventArgs e)
     {
         ReadPatchFile();
+    }
+
+    private void LoadAccountsView()
+    {
+        string[] accountFiles = Directory.GetFiles(AccountDirectory, "*.txt");
+        foreach (string file in accountFiles)
+        {
+            string jsonContent = File.ReadAllText(file);
+
+            AccountInfo accountInfo = JsonConvert.DeserializeObject<AccountInfo>(jsonContent);
+
+            ListViewItem item = new ListViewItem(accountInfo.AccountName);
+            item.SubItems.Add(accountInfo.Password);
+            item.SubItems.Add(accountInfo.SecurityQuestion);
+            item.SubItems.Add(accountInfo.SecurityAnswer);
+            item.SubItems.Add(accountInfo.CreationDate.ToString("yyyy-MM-dd"));
+            item.SubItems.Add(accountInfo.PromoCode);
+            item.SubItems.Add(accountInfo.ReferrerCode);
+            AccountsListView.Items.Add(item);
+        }
     }
 }
