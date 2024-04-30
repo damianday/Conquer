@@ -6453,13 +6453,13 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 扣除护盾时间(int 技能伤害)
+    public void DamageShield(int damage)
     {
         foreach (BuffInfo item in Buffs.Values.ToList())
         {
             if (item.Buff分组 == 2535)
             {
-                if ((item.RemainingTime.V -= TimeSpan.FromSeconds(Math.Min(15f, (float)技能伤害 * 15f / 50f))) < TimeSpan.Zero)
+                if ((item.RemainingTime.V -= TimeSpan.FromSeconds(Math.Min(15f, (float)damage * 15f / 50f))) < TimeSpan.Zero)
                 {
                     RemoveBuff(item.ID.V);
                     continue;

@@ -147,7 +147,7 @@ public sealed class BuffInfo : DBObject
                 case SkillDamageType.Toxicity:
                     damage = caster[Stat.MaxSC];
                     break;
-                case SkillDamageType.Sacred:
+                case SkillDamageType.Holy:
                     damage = Compute.CalculateAttack(caster[Stat.MinHC], caster[Stat.MaxHC], 0);
                     break;
             }

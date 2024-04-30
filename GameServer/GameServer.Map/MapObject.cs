@@ -1171,11 +1171,13 @@ public abstract class MapObject
         {
             AddBuff(49160, 玩家实例2);
         }
+
         MapObject caster = ((skill.Caster is TrapObject trap) ? trap.Caster : skill.Caster);
         if (caster.Buffs.TryGetValue(2555, out var v))
         {
             caster.RemoveBuffEx(v.ID.V);
         }
+
         if (Dead)
         {
             详情.SkillFeedback = SkillHitFeedback.Lose;
@@ -1196,9 +1198,10 @@ public abstract class MapObject
         {
             return;
         }
+
         if ((详情.SkillFeedback & SkillHitFeedback.Miss) == 0)
         {
-            if (参数.技能斩杀类型 != 0 && Compute.CalculateProbability(参数.技能斩杀概率) && IsValidTarget(caster, 参数.技能斩杀类型))
+            if (参数.技能斩杀类型 != SpecifyTargetType.None && Compute.CalculateProbability(参数.技能斩杀概率) && IsValidTarget(caster, 参数.技能斩杀类型))
             {
                 详情.SkillDamage = CurrentHP;
             }
@@ -1212,7 +1215,7 @@ public abstract class MapObject
                 }
                 int num3 = 0;
                 float num4 = 0f;
-                if (参数.技能增伤类型 != 0 && IsValidTarget(caster, 参数.技能增伤类型))
+                if (参数.技能增伤类型 != SpecifyTargetType.None && IsValidTarget(caster, 参数.技能增伤类型))
                 {
                     num3 = 参数.技能增伤基数;
                     num4 = 参数.技能增伤系数;
@@ -1251,7 +1254,7 @@ public abstract class MapObject
                     case SkillDamageType.Toxicity:
                         num7 = caster[Stat.MaxSC];
                         break;
-                    case SkillDamageType.Sacred:
+                    case SkillDamageType.Holy:
                         num7 = Compute.CalculateAttack(caster[Stat.MinHC], caster[Stat.MaxHC], caster[Stat.Luck]);
                         break;
                 }
@@ -1299,7 +1302,7 @@ public abstract class MapObject
                             }
                             break;
                         case SkillDamageType.Toxicity:
-                        case SkillDamageType.Sacred:
+                        case SkillDamageType.Holy:
                         case SkillDamageType.Burn:
                         case SkillDamageType.Tear:
                             if (item.Template.EffectJudgeType == BuffDeterminationType.AllSpecificDamage)
@@ -1383,7 +1386,7 @@ public abstract class MapObject
                             }
                             break;
                         case SkillDamageType.Toxicity:
-                        case SkillDamageType.Sacred:
+                        case SkillDamageType.Holy:
                         case SkillDamageType.Burn:
                         case SkillDamageType.Tear:
                             switch (item2.Template.EffectJudgeType)
@@ -1431,6 +1434,7 @@ public abstract class MapObject
                 int num17 = (详情.SkillDamage = (int)Math.Min(num11, Math.Max(0f, val2)));
             }
         }
+
         AttackStopTime = SEngine.CurrentTime.AddSeconds(10.0);
         caster.AttackStopTime = SEngine.CurrentTime.AddSeconds(10.0);
         if ((详情.SkillFeedback & SkillHitFeedback.Miss) == 0)
@@ -1443,6 +1447,7 @@ public abstract class MapObject
                 }
             }
         }
+
         if (this is MonsterObject 怪物实例3)
         {
             怪物实例3.HardStunTime = SEngine.CurrentTime.AddMilliseconds(参数.目标硬直时间);
@@ -1459,7 +1464,7 @@ public abstract class MapObject
             }
             if (详情.SkillDamage > 0)
             {
-                玩家实例3.扣除护盾时间(详情.SkillDamage);
+                玩家实例3.DamageShield(详情.SkillDamage);
             }
             if (玩家实例3.GetRelationship(caster) == GameObjectRelationship.Hostile)
             {
@@ -1515,6 +1520,7 @@ public abstract class MapObject
         {
             守卫实例2.Target.Add(caster, default(DateTime), 0);
         }
+
         if (caster is PlayerObject 玩家实例6)
         {
             if (玩家实例6.GetRelationship(this) == GameObjectRelationship.Hostile && !CheckStatus(GameObjectState.Invisible | GameObjectState.Stealth))
@@ -1534,34 +1540,44 @@ public abstract class MapObject
                 玩家实例6.BattleEquipmentTime = SEngine.CurrentTime.AddMilliseconds(1000.0);
             }
         }
+
         if (this is PlayerObject 玩家实例7 && 玩家实例7.HasProtectionRing)
         {
             if (Config.CurrentVersion >= 1)
             {
-                int num19 = (CurrentMP = Math.Max(0, CurrentMP - 详情.SkillDamage));
-                if (num19 == 0 && (CurrentHP = Math.Max(0, CurrentHP - 详情.SkillDamage)) == 0)
+                CurrentMP = Math.Max(0, CurrentMP - 详情.SkillDamage);
+                CurrentHP = Math.Max(0, CurrentHP - 详情.SkillDamage);
+                if (CurrentMP == 0 && CurrentHP == 0)
                 {
                     详情.SkillFeedback |= SkillHitFeedback.Death;
                     Die(caster, skillDeath: true);
                 }
             }
-            else if ((CurrentHP = Math.Max(0, CurrentHP - 详情.SkillDamage)) == 0)
+            else 
             {
-                详情.SkillFeedback |= SkillHitFeedback.Death;
-                Die(caster, skillDeath: true);
+                CurrentHP = Math.Max(0, CurrentHP - 详情.SkillDamage);
+                if (CurrentHP == 0)
+                {
+                    详情.SkillFeedback |= SkillHitFeedback.Death;
+                    Die(caster, skillDeath: true);
+                }
             }
             return;
         }
-        if ((CurrentHP = Math.Max(0, CurrentHP - 详情.SkillDamage)) == 0)
+
+        CurrentHP = Math.Max(0, CurrentHP - 详情.SkillDamage);
+        if (CurrentHP == 0)
         {
             详情.SkillFeedback |= SkillHitFeedback.Death;
             Die(caster, skillDeath: true);
         }
+
         if (caster is PlayerObject 玩家实例8 && 玩家实例8.Character.当前角色魔法回击.V > 0 && SEngine.CurrentTime > 玩家实例8.回击计时 && 玩家实例8.Character.当前角色魔法回击.V > 0)
         {
             玩家实例8.CurrentHP += (int)((double)((float)玩家实例8[Stat.MaxHP] * (float)(玩家实例8.Character.当前角色魔法回击.V / 48)) * 2.2) / 100;
             玩家实例8.回击计时 = SEngine.CurrentTime.AddMilliseconds(1000.0);
         }
+
         if (caster is PlayerObject 玩家实例9 && 玩家实例9.Character.当前角色物理回击.V > 0 && SEngine.CurrentTime > 玩家实例9.回击计时 && 玩家实例9.Character.当前角色物理回击.V > 0)
         {
             玩家实例9.CurrentHP += (int)((double)((float)玩家实例9[Stat.MaxHP] * (float)(玩家实例9.Character.当前角色物理回击.V / 48)) * 2.2) / 100;

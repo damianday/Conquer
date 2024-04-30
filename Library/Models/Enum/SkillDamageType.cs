@@ -6,7 +6,7 @@ public enum SkillDamageType
     Piercing,   // 刺术
     Archery,    // 弓术
     Toxicity,   // 毒性
-    Sacred,     // 神圣
+    Holy,       // 神圣
     Burn,       // 灼烧
     Tear        // 撕裂
 }
