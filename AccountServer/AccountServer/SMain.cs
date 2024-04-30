@@ -285,21 +285,31 @@ public partial class SMain : Form
 
         ServerTable.Clear();
 
-        var json = File.ReadAllText(ServerConfigFile, Encoding.UTF8);
-        var settings = new JsonSerializerSettings
+        try
         {
-            DefaultValueHandling = DefaultValueHandling.Ignore,
-            NullValueHandling = NullValueHandling.Ignore,
-            TypeNameHandling = TypeNameHandling.Auto,
-            Formatting = Formatting.Indented
-        };
+            var json = File.ReadAllText(ServerConfigFile, Encoding.UTF8);
+            var settings = new JsonSerializerSettings
+            {
+                DefaultValueHandling = DefaultValueHandling.Ignore,
+                NullValueHandling = NullValueHandling.Ignore,
+                TypeNameHandling = TypeNameHandling.Auto,
+                Formatting = Formatting.Indented
+            };
 
-        ServerTable = JsonConvert.DeserializeObject<Dictionary<string, GameServerInfo>>(json, settings);
-        foreach (var kvp in ServerTable)
+            ServerTable = JsonConvert.DeserializeObject<Dictionary<string, GameServerInfo>>(json, settings);
+            foreach (var kvp in ServerTable)
+            {
+                var server = kvp.Value;
+                server.TicketAddress = new IPEndPoint(IPAddress.Loopback, server.TicketAddressPort);
+                server.PublicAddress = new IPEndPoint(IPAddress.Parse(server.PublicAddressIP), server.PublicAddressPort);
+            }
+
+            throw new Exception("gasy");
+        }
+        catch (Exception ex)
         {
-            var server = kvp.Value;
-            server.TicketAddress = new IPEndPoint(IPAddress.Loopback, server.TicketAddressPort);
-            server.PublicAddress = new IPEndPoint(IPAddress.Parse(server.PublicAddressIP), server.PublicAddressPort);
+            MessageBox.Show("Server configuration error, parsing failed. \n\n" + ex.ToString());
+            Environment.Exit(0);
         }
         
         //AddLogMessage("The network configuration is loaded, and the current configuration order\r\n" + 游戏区服);
