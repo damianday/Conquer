@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -8,10 +7,8 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using Launcher.Properties;
 
 using GamePackets.Client;
-using GamePackets;
 
 namespace Launcher
 {
@@ -57,29 +54,17 @@ namespace Launcher
                 uiCheckBox1.Checked = true;
             }
 
-            start_selected_zone.Text = Settings.Default.SaveArea;
-            AccountTextBox.Text = Settings.Default.SaveAccountName;
+            start_selected_zone.Text = Settings.SaveArea;
+            AccountTextBox.Text = Settings.SaveAccountName;
 
             ConnectionStatusLabel.Text = "Attempting to connect to the server.";
             Network.Instance.Connect();
         }
+
         private void LoadConfig()
         {
-            /*bool ServerCfgFound = File.Exists("./ServerCfg.txt");
-            if (!ServerCfgFound)
-            {
-                MessageBox.Show("ServerCfg.txt Cannot Be Found!\r\nPlease Read The README.txt");
-                Environment.Exit(0);
-            }
-            string[] strArray = File.ReadAllText("./ServerCfg.txt").Trim('\r', '\n', '\t', ' ').Split(':');
-            if (strArray.Length != 2)
-            {
-                MessageBox.Show("ServerCfg.txt Configuration Error!\r\nPlease Read The README.txt");
-                Environment.Exit(0);
-            }
-            Network.ASAddress = new IPEndPoint(IPAddress.Parse(strArray[0]), Convert.ToInt32(strArray[1]));*/
-
-            Network.Instance.ASAddress = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 7_000);
+            Settings.Load();
+            Network.Instance.ASAddress = new IPEndPoint(IPAddress.Parse(Settings.AccountServerAddressIP), Settings.AccountServerAddressPort);
         }
         private void PreLaunchChecks()
         {
@@ -99,7 +84,6 @@ namespace Launcher
             RegistrationErrorLabel.Visible = false;
             Modify_ErrorLabel.Visible = false;
         }
-
         public void PacketProcess(object sender, EventArgs e)
         {
             Network.Instance.Process();
@@ -109,7 +93,6 @@ namespace Launcher
             else
                 ConnectionStatusLabel.Text = $"Attempting to connect to the server. Attempt: {Network.Instance.ConnectAttempt}";
         }
-
         public void AccountRegisterSuccessUpdate()
         {
             BeginInvoke((MethodInvoker)delegate
@@ -196,8 +179,8 @@ namespace Launcher
                     GameServerList.Items.Add(name);
                 }
                 MainTab.SelectedIndex = 3;
-                Settings.Default.SaveAccountName = LoginAccount;
-                Settings.Default.Save();
+                Settings.SaveAccountName = LoginAccount;
+                Settings.Save();
             });
         }
         public void AccountLogInFailUpdate(string message)
@@ -242,8 +225,8 @@ namespace Launcher
                         "/ticket:" + ticket + 
                         " /AreaName:" + start_selected_zone.Text;
 
-                    Settings.Default.SaveArea = start_selected_zone.Text;
-                    Settings.Default.Save();
+                    Settings.SaveArea = start_selected_zone.Text;
+                    Settings.Save();
                     GameProgress = new Process();
 
                     if (Is32Bit && Is64Bit || !Is32Bit && !Is64Bit)
