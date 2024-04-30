@@ -191,19 +191,19 @@ public partial class SMain
         TrayContextMenu.ImageScalingSize = new Size(20, 20);
         TrayContextMenu.Items.AddRange(new ToolStripItem[] { OpenToolStripMenuItem, QuitToolStripMenuItem });
         TrayContextMenu.Name = "TrayContextMenu";
-        TrayContextMenu.Size = new Size(99, 48);
+        TrayContextMenu.Size = new Size(104, 48);
         // 
         // OpenToolStripMenuItem
         // 
         OpenToolStripMenuItem.Name = "OpenToolStripMenuItem";
-        OpenToolStripMenuItem.Size = new Size(98, 22);
+        OpenToolStripMenuItem.Size = new Size(103, 22);
         OpenToolStripMenuItem.Text = "Open";
         OpenToolStripMenuItem.Click += RestoreWindowMenuItem_Click;
         // 
         // QuitToolStripMenuItem
         // 
         QuitToolStripMenuItem.Name = "QuitToolStripMenuItem";
-        QuitToolStripMenuItem.Size = new Size(98, 22);
+        QuitToolStripMenuItem.Size = new Size(103, 22);
         QuitToolStripMenuItem.Text = "Quit";
         QuitToolStripMenuItem.Click += EndProcessMenuItem_Click;
         // 
@@ -226,56 +226,56 @@ public partial class SMain
         // startServiceToolStripMenuItem
         // 
         startServiceToolStripMenuItem.Name = "startServiceToolStripMenuItem";
-        startServiceToolStripMenuItem.Size = new Size(138, 22);
+        startServiceToolStripMenuItem.Size = new Size(180, 22);
         startServiceToolStripMenuItem.Text = "Start Service";
         startServiceToolStripMenuItem.Click += startServiceToolStripMenuItem_Click;
         // 
         // stopServiceToolStripMenuItem
         // 
         stopServiceToolStripMenuItem.Name = "stopServiceToolStripMenuItem";
-        stopServiceToolStripMenuItem.Size = new Size(138, 22);
+        stopServiceToolStripMenuItem.Size = new Size(180, 22);
         stopServiceToolStripMenuItem.Text = "Stop Service";
         stopServiceToolStripMenuItem.Click += stopServiceToolStripMenuItem_Click;
         // 
         // toolStripMenuItem2
         // 
         toolStripMenuItem2.Name = "toolStripMenuItem2";
-        toolStripMenuItem2.Size = new Size(135, 6);
+        toolStripMenuItem2.Size = new Size(177, 6);
         // 
         // reloadToolStripMenuItem
         // 
         reloadToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { loadConfigurationToolStripMenuItem, loadAccountsToolStripMenuItem, LoadUpdateConfigurationToolStripMenuItem });
         reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
-        reloadToolStripMenuItem.Size = new Size(138, 22);
+        reloadToolStripMenuItem.Size = new Size(180, 22);
         reloadToolStripMenuItem.Text = "&Reload";
         // 
         // loadConfigurationToolStripMenuItem
         // 
         loadConfigurationToolStripMenuItem.Name = "loadConfigurationToolStripMenuItem";
-        loadConfigurationToolStripMenuItem.Size = new Size(218, 22);
-        loadConfigurationToolStripMenuItem.Text = "Load Configuration";
+        loadConfigurationToolStripMenuItem.Size = new Size(189, 22);
+        loadConfigurationToolStripMenuItem.Text = "Configuration";
         // 
         // loadAccountsToolStripMenuItem
         // 
         loadAccountsToolStripMenuItem.Name = "loadAccountsToolStripMenuItem";
-        loadAccountsToolStripMenuItem.Size = new Size(218, 22);
-        loadAccountsToolStripMenuItem.Text = "Load Accounts";
+        loadAccountsToolStripMenuItem.Size = new Size(189, 22);
+        loadAccountsToolStripMenuItem.Text = "Accounts";
         // 
         // LoadUpdateConfigurationToolStripMenuItem
         // 
         LoadUpdateConfigurationToolStripMenuItem.Name = "LoadUpdateConfigurationToolStripMenuItem";
-        LoadUpdateConfigurationToolStripMenuItem.Size = new Size(218, 22);
-        LoadUpdateConfigurationToolStripMenuItem.Text = "Load Update Configuration";
+        LoadUpdateConfigurationToolStripMenuItem.Size = new Size(189, 22);
+        LoadUpdateConfigurationToolStripMenuItem.Text = "Update Configuration";
         // 
         // toolStripMenuItem1
         // 
         toolStripMenuItem1.Name = "toolStripMenuItem1";
-        toolStripMenuItem1.Size = new Size(135, 6);
+        toolStripMenuItem1.Size = new Size(177, 6);
         // 
         // exitToolStripMenuItem
         // 
         exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-        exitToolStripMenuItem.Size = new Size(138, 22);
+        exitToolStripMenuItem.Size = new Size(180, 22);
         exitToolStripMenuItem.Text = "E&xit";
         exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
         // 
