@@ -8,6 +8,18 @@ using GameServer.Networking;
 
 namespace GameServer;
 
+
+public sealed class SEngineStats
+{
+    public uint Connections;
+    public uint ActiveConnections;
+    public uint ConnectionsOnline, ConnectionsOnline1, ConnectionsOnline2;
+    public long TotalSentBytes;
+    public long TotalReceivedBytes;
+    public int ActiveObjects, SecondaryObjects, Objects;
+    public uint CycleCount;
+}
+
 public static class SEngine
 {
     public static DateTime CurrentTime;
