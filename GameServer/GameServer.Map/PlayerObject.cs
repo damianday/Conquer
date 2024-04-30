@@ -1170,11 +1170,11 @@ public sealed class PlayerObject : MapObject
         {
             if (SystemInfo.Info.OccupyGuild.V != Guild && character.Titles.ContainsKey(Config.沙巴克成员称号))
             {
-                玩家称号到期(Config.沙巴克成员称号);
+                ExpireTitle(Config.沙巴克成员称号);
             }
             if (SystemInfo.Info.OccupyGuild.V != Guild && character.Titles.ContainsKey(Config.沙巴克城主称号))
             {
-                玩家称号到期(Config.沙巴克城主称号);
+                ExpireTitle(Config.沙巴克城主称号);
             }
         }
 
@@ -1481,7 +1481,7 @@ public sealed class PlayerObject : MapObject
                 {
                     if (SEngine.CurrentTime >= title.Value)
                     {
-                        玩家称号到期(title.Key);
+                        ExpireTitle(title.Key);
                     }
                     else if (title.Value < dateTime)
                     {
@@ -1708,7 +1708,7 @@ public sealed class PlayerObject : MapObject
 
         if (Config.狂暴货币格式 == 1 && 玩家实例2 != null && Titles.ContainsKey(Config.狂暴称号格式) && GameTitle.DataSheet.TryGetValue(Config.狂暴称号格式, out var value))
         {
-            玩家称号到期(Config.狂暴称号格式);
+            ExpireTitle(Config.狂暴称号格式);
             BonusStats.Remove(value);
             CombatPowerBonus.Remove(value);
             RefreshStats();
@@ -1805,7 +1805,7 @@ public sealed class PlayerObject : MapObject
         {
             if (Titles.ContainsKey(Config.狂暴称号格式) && GameTitle.DataSheet.TryGetValue(Config.狂暴称号格式, out var value2))
             {
-                玩家称号到期(Config.狂暴称号格式);
+                ExpireTitle(Config.狂暴称号格式);
                 BonusStats.Remove(value2);
                 CombatPowerBonus.Remove(value2);
                 RefreshStats();
@@ -1897,7 +1897,7 @@ public sealed class PlayerObject : MapObject
 
         if (Config.狂暴货币格式 == 2 && 玩家实例2 != null && Titles.ContainsKey(Config.狂暴称号格式) && GameTitle.DataSheet.TryGetValue(Config.狂暴称号格式, out var value3))
         {
-            玩家称号到期(Config.狂暴称号格式);
+            ExpireTitle(Config.狂暴称号格式);
             BonusStats.Remove(value3);
             CombatPowerBonus.Remove(value3);
             RefreshStats();
@@ -6560,15 +6560,15 @@ public sealed class PlayerObject : MapObject
     {
         if (CurrentPrivilege == 3)
         {
-            玩家称号到期(61);
+            ExpireTitle(61);
         }
         else if (CurrentPrivilege == 4)
         {
-            玩家称号到期(124);
+            ExpireTitle(124);
         }
         else if (CurrentPrivilege == 5)
         {
-            玩家称号到期(131);
+            ExpireTitle(131);
         }
         PreviousPrivilege = CurrentPrivilege;
         上期记录 = 本期记录;
@@ -6594,7 +6594,7 @@ public sealed class PlayerObject : MapObject
         PrivilegeTime = 本期日期.AddDays(30.0);
     }
 
-    public void 玩家称号到期(byte id)
+    public void ExpireTitle(byte id)
     {
         if (Titles.Remove(id))
         {
