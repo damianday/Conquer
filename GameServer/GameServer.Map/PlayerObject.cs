@@ -275,17 +275,19 @@ public sealed class PlayerObject : MapObject
         get { return Character.CurrentHP.V; }
         set
         {
-            value = Math.Min(this[Stat.MaxHP], Math.Max(0, value));
-            if (CurrentHP != value)
+            value = Math.Clamp(value, 0, this[Stat.MaxHP]);
+            value = GMNeverDie ? this[Stat.MaxHP] : value;
+
+            if (CurrentHP == value)
+                return;
+
+            Character.CurrentHP.V = value;
+            SendPacket(new SyncObjectHP
             {
-                Character.CurrentHP.V = value;
-                SendPacket(new SyncObjectHP
-                {
-                    ObjectID = ObjectID,
-                    CurrentHP = CurrentHP,
-                    MaxHP = this[Stat.MaxHP]
-                });
-            }
+                ObjectID = ObjectID,
+                CurrentHP = CurrentHP,
+                MaxHP = this[Stat.MaxHP]
+            });
         }
     }
 
@@ -294,15 +296,17 @@ public sealed class PlayerObject : MapObject
         get { return Character.CurrentMP.V; }
         set
         {
-            value = Math.Min(this[Stat.MaxMP], Math.Max(0, value));
-            if (CurrentMP != value)
+            value = Math.Clamp(value, 0, this[Stat.MaxMP]);
+            value = GMNeverDie ? this[Stat.MaxMP] : value;
+
+            if (CurrentMP == value)
+                return;
+
+            Character.CurrentMP.V = value;
+            Enqueue(new SyncManaPacket
             {
-                Character.CurrentMP.V = Math.Max(0, value);
-                Enqueue(new SyncManaPacket
-                {
-                    CurrentMP = CurrentMP
-                });
-            }
+                CurrentMP = CurrentMP
+            });
         }
     }
 
@@ -1020,6 +1024,8 @@ public sealed class PlayerObject : MapObject
     public Point 拾取时坐标 { get; set; }
 
     public int 拾取停止次数 { get; set; }
+
+    public bool GMNeverDie;
 
     public PlayerObject(CharacterInfo character, SConnection conn)
     {
