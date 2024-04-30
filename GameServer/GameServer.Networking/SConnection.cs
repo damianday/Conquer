@@ -206,7 +206,7 @@ public sealed class SConnection
         }
         catch (Exception ex)
         {
-            Disconnect(new Exception("Asynchronous receive error : " + ex.Message));
+            Disconnect(new Exception("Asynchronous receive error: " + ex.Message));
         }
     }
 
@@ -254,7 +254,7 @@ public sealed class SConnection
         }
         catch (Exception ex)
         {
-            Disconnect(new Exception("封包构建错误,错误提示:" + ex.Message));
+            Disconnect(new Exception("ReceiveData error :" + ex.Message));
         }
     }
 
@@ -269,7 +269,7 @@ public sealed class SConnection
         {
             Sending = false;
             SendPackets.Clear();
-            Disconnect(new Exception("Asynchronous send error : " + ex.Message));
+            Disconnect(new Exception("Asynchronous send error: " + ex.Message));
         }
     }
 
