@@ -47,7 +47,6 @@ bin/
 /Build
 .vs/
 /packages
-Release
 Debug
 obj
 
