@@ -438,7 +438,7 @@ public sealed class SConnection
 			string ticket = AccountInfo.GenerateTicket();
 			if (SMain.Accounts.TryGetValue(AccountName, out var account))
 			{
-				SEngine.SendTicketToServer(server.InternalAddress, ticket, AccountName, account.PromoCode, account.ReferrerCode);
+				SEngine.SendTicketToServer(server.TicketAddress, ticket, AccountName, account.PromoCode, account.ReferrerCode);
 
 				SendPacket(new AccountStartGameSuccessPacket
 				{

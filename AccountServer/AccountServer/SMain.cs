@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -10,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using Ionic.Zlib;
-using Properties;
+using Newtonsoft.Json;
 
 using AccountServer.Networking;
 
@@ -21,8 +19,17 @@ public partial class SMain : Form
     public sealed class GameServerInfo
     {
         public string ServerName { get; set; }
-        public IPEndPoint InternalAddress { get; set; }
-        public IPEndPoint PublicAddress { get; set; }
+
+        public string TicketAddressIP { get; set; }
+        public ushort TicketAddressPort { get; set; }
+        public string PublicAddressIP { get; set; }
+        public ushort PublicAddressPort { get; set; }
+
+        [JsonIgnore]
+        public IPEndPoint TicketAddress;
+
+        [JsonIgnore]
+        public IPEndPoint PublicAddress;
     }
 
     public static uint CreatedAccounts;
@@ -45,7 +52,7 @@ public partial class SMain : Form
     public static ulong PatchChecksum;
     public static int PatchChunks;
 
-    public static string PublicServerInfo => string.Join("\n", ServerTable.Values.Select(x => $"{x.PublicAddress.Address}:{x.PublicAddress.Port}/{x.ServerName}"));
+    public static string PublicServerInfo => string.Join("\n", ServerTable.Values.Select(x => $"{x.PublicAddressIP}:{x.PublicAddressPort}/{x.ServerName}"));
 
     private static char[] RandomChars = new char[36]
     {
@@ -278,39 +285,23 @@ public partial class SMain : Form
 
         ServerTable.Clear();
 
-        var text = File.ReadAllText(ServerConfigFile, Encoding.Unicode).Trim('\r', '\n', ' ');
-        string[] lines = text.Split(new char[2] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-
-        foreach (string line in lines)
+        var json = File.ReadAllText(ServerConfigFile, Encoding.UTF8);
+        var settings = new JsonSerializerSettings
         {
-            var arr = line.Split(new char[] { ':', ',', '/' }, StringSplitOptions.RemoveEmptyEntries);
-            if (arr.Length != 4)
-            {
-                MessageBox.Show("Server configuration error, parsing failed. Row: " + line);
-                Environment.Exit(0);
-            }
+            DefaultValueHandling = DefaultValueHandling.Ignore,
+            NullValueHandling = NullValueHandling.Ignore,
+            TypeNameHandling = TypeNameHandling.Auto,
+            Formatting = Formatting.Indented
+        };
 
-            var ip = arr[0];
-            var port = -1;
-            var tport = -1;
-            var name = arr[3];
-
-            if (!int.TryParse(arr[1], out port) || !int.TryParse(arr[2], out tport) ||
-                string.IsNullOrEmpty(ip) || string.IsNullOrEmpty(name))
-            {
-                MessageBox.Show("Server configuration error, parsing failed. Row: " + line);
-                Environment.Exit(0);
-            }
-
-            ServerTable.Add(name, new GameServerInfo
-            {
-                InternalAddress = new IPEndPoint(IPAddress.Loopback, tport),
-                //InternalAddress = new IPEndPoint(IPAddress.Parse(ip), port),
-                PublicAddress = new IPEndPoint(IPAddress.Parse(ip), port),
-                ServerName = name
-            });
+        ServerTable = JsonConvert.DeserializeObject<Dictionary<string, GameServerInfo>>(json, settings);
+        foreach (var kvp in ServerTable)
+        {
+            var server = kvp.Value;
+            server.TicketAddress = new IPEndPoint(IPAddress.Loopback, server.TicketAddressPort);
+            server.PublicAddress = new IPEndPoint(IPAddress.Parse(server.PublicAddressIP), server.PublicAddressPort);
         }
-
+        
         //AddLogMessage("The network configuration is loaded, and the current configuration order\r\n" + 游戏区服);
     }
 
