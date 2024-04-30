@@ -242,17 +242,17 @@ public static class Compute
         return new Point((int)Math.Round((location.X + 16f) / 32f), (int)Math.Round((location.Y + 16f) / 32f));
     }
 
-    public static Point 游戏坐标转点阵坐标(PointF 游戏坐标)
+    public static Point 游戏坐标转点阵坐标(PointF location)
     {
         PointF pointF = default(PointF);
-        pointF.Y = (游戏坐标.X + 游戏坐标.Y) / 0.707107f / 0.000976562f / 2f / 4096f;
-        pointF.X = (游戏坐标.X / 0.707107f / 0.000976562f + 134217728f) / 4096f - pointF.Y;
+        pointF.Y = (location.X + location.Y) / 0.707107f / 0.000976562f / 2f / 4096f;
+        pointF.X = (location.X / 0.707107f / 0.000976562f + 134217728f) / 4096f - pointF.Y;
         return new Point((int)((double)(pointF.X / 32f) + 0.5), (int)((double)(pointF.Y / 32f) + 0.5));
     }
 
-    public static PointF 点阵坐标转游戏坐标(Point 点阵坐标)
+    public static PointF 点阵坐标转游戏坐标(Point location)
     {
-        PointF pointF = new PointF(((float)点阵坐标.X - 0.5f) * 32f, ((float)点阵坐标.Y - 0.5f) * 32f);
+        PointF pointF = new PointF(((float)location.X - 0.5f) * 32f, ((float)location.Y - 0.5f) * 32f);
         PointF result = default(PointF);
         result.X = ((pointF.Y + pointF.X) * 4096f - 134217728f) * 0.707107f * 0.000976562f;
         result.Y = ((pointF.Y - pointF.X) * 4096f + 134217728f) * 0.707107f * 0.000976562f;
@@ -319,23 +319,22 @@ public static class Compute
         return Random.Shared.Next(Math.Min(min, max), Math.Max(min, max) + 1);
     }
 
-    public static int CalculateDefence(int 下限, int 上限)
+    public static int CalculateDefence(int min, int max)
     {
-        if (上限 >= 下限)
-        {
-            return Random.Shared.Next(下限, 上限 + 1);
-        }
-        return Random.Shared.Next(上限, 下限 + 1);
+        if (max >= min)
+            return Random.Shared.Next(min, max + 1);
+
+        return Random.Shared.Next(max, min + 1);
     }
 
-    public static bool 直线方向(Point 原点, Point 锚点)
+    public static bool 直线方向(Point start, Point end)
     {
-        int num = 原点.X - 锚点.X;
-        int num2 = 原点.Y - 锚点.Y;
-        if (num != 0 && num2 != 0)
-        {
-            return Math.Abs(num) == Math.Abs(num2);
-        }
+        int distX = start.X - end.X;
+        int distY = start.Y - end.Y;
+
+        if (distX != 0 && distY != 0)
+            return Math.Abs(distX) == Math.Abs(distY);
+
         return true;
     }
 
