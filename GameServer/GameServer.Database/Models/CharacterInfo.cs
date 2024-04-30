@@ -26,10 +26,10 @@ public sealed class CharacterInfo : DBObject
     public readonly DataMonitor<DateTime> FrozenDate;
     public readonly DataMonitor<DateTime> DeletetionDate;
     public readonly DataMonitor<DateTime> DisconnectDate;
-    public readonly DataMonitor<DateTime> 监禁日期;
+    public readonly DataMonitor<DateTime> PrisonTime;
     public readonly DataMonitor<DateTime> BlockDate;
     public readonly DataMonitor<TimeSpan> GreyTime;
-    public readonly DataMonitor<TimeSpan> 减PK时间;
+    public readonly DataMonitor<TimeSpan> PKTime;
     public readonly DataMonitor<DateTime> 武斗日期;
     public readonly DataMonitor<DateTime> 攻沙日期;
     public readonly DataMonitor<DateTime> 领奖日期;
@@ -85,13 +85,12 @@ public sealed class CharacterInfo : DBObject
 
     public readonly DataMonitor<byte> CurrentTitle;
 
-    public readonly DataMonitor<ushort> 坐骑编号;
+    public readonly DataMonitor<ushort> MountID;
 
     public readonly DataMonitor<ushort> 装备套装编号;
 
     public readonly DictionaryMonitor<byte, int> 历史排名;
-
-    public readonly DictionaryMonitor<byte, int> 当前排名;
+    public readonly DictionaryMonitor<byte, int> CurrentRanking;
 
     public readonly DictionaryMonitor<byte, DateTime> Titles;
 
@@ -129,7 +128,7 @@ public sealed class CharacterInfo : DBObject
 
     public readonly DataMonitor<DateTime> 战备日期;
 
-    public readonly DictionaryMonitor<byte, int> 剩余特权;
+    public readonly DictionaryMonitor<byte, int> RemainingPrivileges;
 
     public readonly DataMonitor<AccountInfo> Account;
     public readonly DataMonitor<TeamInfo> Team;
@@ -141,7 +140,7 @@ public sealed class CharacterInfo : DBObject
     public readonly HashMonitor<CharacterInfo> 粉丝列表;
     public readonly HashMonitor<CharacterInfo> 仇人列表;
     public readonly HashMonitor<CharacterInfo> 仇恨列表;
-    public readonly HashMonitor<CharacterInfo> 黑名单表;
+    public readonly HashMonitor<CharacterInfo> BlackList;
 
     public readonly DataMonitor<uint> CurrentMount;
 
@@ -662,79 +661,43 @@ public sealed class CharacterInfo : DBObject
 
     public void Disconnect()
     {
-        if (地图分配线路.V == 1 && NetworkManager.ConnectionsOnline != 0)
-        {
-            Connection.Player = null;
-            Connection = null;
+        if (地图分配线路.V == 1 && NetworkManager.ConnectionsOnline > 0)
             NetworkManager.ConnectionsOnline--;
-            DisconnectDate.V = SEngine.CurrentTime;
-            SMain.UpdateCharacter(this, "离线日期", DisconnectDate);
-        }
-        else if (地图分配线路.V == 2 && NetworkManager.ConnectionsOnline1 != 0)
-        {
-            Connection.Player = null;
-            Connection = null;
+        else if (地图分配线路.V == 2 && NetworkManager.ConnectionsOnline1 > 0)
             NetworkManager.ConnectionsOnline1--;
-            DisconnectDate.V = SEngine.CurrentTime;
-            SMain.UpdateCharacter(this, "离线日期", DisconnectDate);
-        }
-        else if (地图分配线路.V == 3 && NetworkManager.ConnectionsOnline2 != 0)
-        {
-            Connection.Player = null;
-            Connection = null;
+        else if (地图分配线路.V == 3 && NetworkManager.ConnectionsOnline2 > 0)
             NetworkManager.ConnectionsOnline2--;
-            DisconnectDate.V = SEngine.CurrentTime;
-            SMain.UpdateCharacter(this, "离线日期", DisconnectDate);
-        }
         else
         {
-            Connection.Player = null;
-            Connection = null;
-            NetworkManager.ConnectionsOnline--;
-            DisconnectDate.V = SEngine.CurrentTime;
-            SMain.UpdateCharacter(this, "离线日期", DisconnectDate);
+            if (NetworkManager.ConnectionsOnline > 0)
+                NetworkManager.ConnectionsOnline--;
         }
+
+        Connection.Player = null;
+        Connection = null;
+        DisconnectDate.V = SEngine.CurrentTime;
+        SMain.UpdateCharacter(this, "离线日期", DisconnectDate);
     }
 
     public void Connect(SConnection conn)
     {
         int r = SEngine.Random.Next(1, 3);
         地图分配线路.V = r;
-        switch (r)
-        {
-            case 1:
-                Connection = conn;
-                NetworkManager.ConnectionsOnline++;
-                MACAddress.V = conn.MACAddress;
-                IPAddress.V = conn.IPAddress;
-                SMain.UpdateCharacter(this, "离线日期", null);
-                SMain.AddSystemLog($"Player [{UserName}][Lvl.{Level} entered game (独立线程1线)");
-                break;
-            case 2:
-                Connection = conn;
-                NetworkManager.ConnectionsOnline1++;
-                MACAddress.V = conn.MACAddress;
-                IPAddress.V = conn.IPAddress;
-                SMain.UpdateCharacter(this, "离线日期", null);
-                SMain.AddSystemLog($"Player [{UserName}][Lvl.{Level} entered game (独立线程2线)");
-                break;
-            case 3:
-                Connection = conn;
-                NetworkManager.ConnectionsOnline2++;
-                MACAddress.V = conn.MACAddress;
-                IPAddress.V = conn.IPAddress;
-                SMain.UpdateCharacter(this, "离线日期", null);
-                SMain.AddSystemLog($"Player [{UserName}][Lvl.{Level} entered game (独立线程3线)");
-                break;
-            default:
-                Connection = conn;
-                NetworkManager.ConnectionsOnline++;
-                MACAddress.V = conn.MACAddress;
-                IPAddress.V = conn.IPAddress;
-                SMain.UpdateCharacter(this, "离线日期", null);
-                SMain.AddSystemLog($"Player [{UserName}][Lvl.{Level} entered game (独立线程1线)");
-                break;
-        }
+
+        if (地图分配线路.V == 1)
+            NetworkManager.ConnectionsOnline++;
+        else if (地图分配线路.V == 2)
+            NetworkManager.ConnectionsOnline1++;
+        else if (地图分配线路.V == 3)
+            NetworkManager.ConnectionsOnline2++;
+        else
+            NetworkManager.ConnectionsOnline++;
+
+        Connection = conn;
+        MACAddress.V = conn.MACAddress;
+        IPAddress.V = conn.IPAddress;
+        SMain.UpdateCharacter(this, "离线日期", null);
+        SMain.AddSystemLog($"Player [{UserName}][Lvl.{Level}] entered game (Thread: {地图分配线路.V})");
     }
 
     public void SendMail(MailInfo mail)
@@ -880,7 +843,7 @@ public sealed class CharacterInfo : DBObject
         return UserName?.V;
     }
 
-    public void 订阅事件()
+    public void SubscribeToEvents()
     {
         Account.Changed += delegate (AccountInfo O)
         {
@@ -967,7 +930,7 @@ public sealed class CharacterInfo : DBObject
         {
             SMain.UpdateCharacter(this, "上期日期", O);
         };
-        剩余特权.Changed += delegate (List<KeyValuePair<byte, int>> O)
+        RemainingPrivileges.Changed += delegate (List<KeyValuePair<byte, int>> O)
         {
             SMain.UpdateCharacter(this, "剩余特权", O.Sum((KeyValuePair<byte, int> X) => X.Value));
         };
@@ -1019,7 +982,7 @@ public sealed class CharacterInfo : DBObject
 
     public override void OnLoaded()
     {
-        订阅事件();
+        SubscribeToEvents();
         SMain.添加角色数据(this);
         SMain.更新角色技能(this, Skills.ToList());
         SMain.更新角色装备(this, Equipment.ToList());
@@ -1084,17 +1047,17 @@ public sealed class CharacterInfo : DBObject
             Guild.V.Members.Remove(this);
             Guild.V.BannedMembers.Remove(this);
         }
-        foreach (CharacterInfo item8 in FriendList)
+        foreach (CharacterInfo character in FriendList)
         {
-            item8.FriendList.Remove(this);
+            character.FriendList.Remove(this);
         }
-        foreach (CharacterInfo item9 in 粉丝列表)
+        foreach (CharacterInfo character in 粉丝列表)
         {
-            item9.偶像列表.Remove(this);
+            character.偶像列表.Remove(this);
         }
-        foreach (CharacterInfo item10 in 仇恨列表)
+        foreach (CharacterInfo character in 仇恨列表)
         {
-            item10.仇人列表.Remove(this);
+            character.仇人列表.Remove(this);
         }
         base.Remove();
     }

@@ -669,18 +669,13 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public ushort 坐骑编号
+    public ushort MountID
     {
-        get
-        {
-            return Character.坐骑编号.V;
-        }
+        get { return Character.MountID.V; }
         set
         {
-            if (Character.坐骑编号.V != value)
-            {
-                Character.坐骑编号.V = value;
-            }
+            if (Character.MountID.V != value)
+                Character.MountID.V = value;
         }
     }
 
@@ -835,18 +830,18 @@ public sealed class PlayerObject : MapObject
     {
         get
         {
-            return Character.减PK时间.V;
+            return Character.PKTime.V;
         }
         set
         {
-            if (Character.减PK时间.V > TimeSpan.Zero && value <= TimeSpan.Zero)
+            if (Character.PKTime.V > TimeSpan.Zero && value <= TimeSpan.Zero)
             {
                 PKPoint--;
-                Character.减PK时间.V = TimeSpan.FromMinutes(1.0);
+                Character.PKTime.V = TimeSpan.FromMinutes(1.0);
             }
-            else if (Character.减PK时间.V != value)
+            else if (Character.PKTime.V != value)
             {
-                Character.减PK时间.V = value;
+                Character.PKTime.V = value;
             }
         }
     }
@@ -997,9 +992,9 @@ public sealed class PlayerObject : MapObject
     public HashMonitor<CharacterInfo> 偶像列表 => Character.偶像列表;
     public HashMonitor<CharacterInfo> 仇人列表 => Character.仇人列表;
     public HashMonitor<CharacterInfo> 仇恨列表 => Character.仇恨列表;
-    public HashMonitor<CharacterInfo> 黑名单表 => Character.黑名单表;
+    public HashMonitor<CharacterInfo> BlackList => Character.BlackList;
 
-    public DictionaryMonitor<byte, int> 剩余特权 => Character.剩余特权;
+    public DictionaryMonitor<byte, int> RemainingPrivileges => Character.RemainingPrivileges;
 
     public DictionaryMonitor<byte, SkillInfo> HotKeys => Character.HotKeys;
 
@@ -1367,7 +1362,7 @@ public sealed class PlayerObject : MapObject
                 Description = 社交列表描述()
             });
         }
-        if (黑名单表.Count != 0)
+        if (BlackList.Count != 0)
         {
             Enqueue(new 同步黑名单表
             {
@@ -1500,10 +1495,10 @@ public sealed class PlayerObject : MapObject
             if (SEngine.CurrentTime >= PrivilegeTime)
             {
                 ExpirePrivilege();
-                if (剩余特权.TryGetValue(预定特权, out var v) && v >= 30)
+                if (RemainingPrivileges.TryGetValue(预定特权, out var v) && v >= 30)
                 {
                     ChangePrivilege(预定特权);
-                    if ((剩余特权[预定特权] -= 30) <= 0)
+                    if ((RemainingPrivileges[预定特权] -= 30) <= 0)
                     {
                         预定特权 = 0;
                     }
@@ -13419,7 +13414,7 @@ public sealed class PlayerObject : MapObject
                                 ErrorCode = 8965
                             });
                         }
-                        else if (SystemInfo.Info.申请行会.Values.FirstOrDefault((GuildInfo O) => O == Guild) != null)
+                        else if (SystemInfo.Info.GuildApplications.Values.FirstOrDefault((GuildInfo O) => O == Guild) != null)
                         {
                             Enqueue(new SocialErrorPacket
                             {
@@ -13437,7 +13432,7 @@ public sealed class PlayerObject : MapObject
                         {
                             Gold -= 1000000;
                             ConsumeItem(1, 物品);
-                            SystemInfo.Info.申请行会.Add(SEngine.CurrentTime, Character.Guild.V);
+                            SystemInfo.Info.GuildApplications.Add(SEngine.CurrentTime, Character.Guild.V);
                             NetworkManager.SendAnnouncement($"战报{SEngine.CurrentTime},[{Guild}]行会已经报名参加今日的沙巴克争夺战", rolling: true);
                             Enqueue(new 同步货币数量
                             {
@@ -15356,7 +15351,7 @@ public sealed class PlayerObject : MapObject
             Character.消耗元宝.V += num;
             if (CurrentPrivilege != 0)
             {
-                剩余特权[特权类型] += 30;
+                RemainingPrivileges[特权类型] += 30;
             }
             else
             {
@@ -15413,7 +15408,7 @@ public sealed class PlayerObject : MapObject
         Character.消耗元宝.V += num2;
         if (CurrentPrivilege != 0)
         {
-            剩余特权[特权类型] += 30;
+            RemainingPrivileges[特权类型] += 30;
         }
         else
         {
@@ -15444,14 +15439,14 @@ public sealed class PlayerObject : MapObject
 
     public void 预定玛法特权(byte 特权类型)
     {
-        if (剩余特权[特权类型] <= 0)
+        if (RemainingPrivileges[特权类型] <= 0)
         {
             return;
         }
         if (CurrentPrivilege == 0)
         {
             ChangePrivilege(特权类型);
-            if ((剩余特权[特权类型] -= 30) <= 0)
+            if ((RemainingPrivileges[特权类型] -= 30) <= 0)
             {
                 预定特权 = 0;
             }
@@ -25205,7 +25200,7 @@ public sealed class PlayerObject : MapObject
                 {
                     if (Session.CharacterInfoTable.DataSheet.TryGetValue(param2, out var value) && value is CharacterInfo character)
                     {
-                        if (ObjectID == character.ID || this.Character.黑名单表.Contains(this.Character) || !character.Online)
+                        if (ObjectID == character.ID || this.Character.BlackList.Contains(this.Character) || !character.Online)
                         {
                             break;
                         }
@@ -25314,7 +25309,7 @@ public sealed class PlayerObject : MapObject
                     Enqueue(new SocialErrorPacket { ErrorCode = 5122 });
                     return;
                 }
-                if (黑名单表.Contains(character))
+                if (BlackList.Contains(character))
                 {
                     玩家解除屏蔽(character.ID);
                 }
@@ -25367,7 +25362,7 @@ public sealed class PlayerObject : MapObject
                 });
                 return;
             }
-            if (黑名单表.Contains(角色数据2))
+            if (BlackList.Contains(角色数据2))
             {
                 玩家解除屏蔽(角色数据2.ID);
             }
@@ -25525,7 +25520,7 @@ public sealed class PlayerObject : MapObject
     {
         if (Session.CharacterInfoTable.DataSheet.TryGetValue(对象编号, out var value) && value is CharacterInfo 角色数据)
         {
-            if (黑名单表.Count >= 100)
+            if (BlackList.Count >= 100)
             {
                 Enqueue(new SocialErrorPacket
                 {
@@ -25533,7 +25528,7 @@ public sealed class PlayerObject : MapObject
                 });
                 return;
             }
-            if (黑名单表.Contains(角色数据))
+            if (BlackList.Contains(角色数据))
             {
                 Enqueue(new SocialErrorPacket
                 {
@@ -25553,8 +25548,8 @@ public sealed class PlayerObject : MapObject
             {
                 玩家取消关注(角色数据.ID);
             }
-            黑名单表.Add(角色数据);
-            角色数据.黑名单表.Add(this.Character);
+            BlackList.Add(角色数据);
+            角色数据.BlackList.Add(this.Character);
             Enqueue(new 玩家屏蔽目标
             {
                 对象编号 = 角色数据.Index.V,
@@ -25574,7 +25569,7 @@ public sealed class PlayerObject : MapObject
     {
         if (Session.CharacterInfoTable.DataSheet.TryGetValue(对象编号, out var value) && value is CharacterInfo 角色数据)
         {
-            if (!黑名单表.Contains(角色数据))
+            if (!BlackList.Contains(角色数据))
             {
                 Enqueue(new SocialErrorPacket
                 {
@@ -25582,8 +25577,8 @@ public sealed class PlayerObject : MapObject
                 });
                 return;
             }
-            黑名单表.Remove(角色数据);
-            角色数据.黑名单表.Remove(this.Character);
+            BlackList.Remove(角色数据);
+            角色数据.BlackList.Remove(this.Character);
             Enqueue(new 解除玩家屏蔽
             {
                 对象编号 = 角色数据.Index.V
@@ -25782,67 +25777,67 @@ public sealed class PlayerObject : MapObject
         switch (榜单类型)
         {
             case 37:
-                列表监视器 = SystemInfo.Info.龙枪战力排名;
+                列表监视器 = SystemInfo.Info.DragonLanceBattleRanking;
                 num = 1;
                 break;
             case 36:
-                列表监视器 = SystemInfo.Info.龙枪等级排名;
+                列表监视器 = SystemInfo.Info.DragonLanceRanking;
                 num = 0;
                 break;
             case 0:
-                列表监视器 = SystemInfo.Info.个人等级排名;
+                列表监视器 = SystemInfo.Info.IndividualRanking;
                 num = 0;
                 break;
             case 1:
-                列表监视器 = SystemInfo.Info.战士等级排名;
+                列表监视器 = SystemInfo.Info.WarriorRanking;
                 num = 0;
                 break;
             case 2:
-                列表监视器 = SystemInfo.Info.法师等级排名;
+                列表监视器 = SystemInfo.Info.WizardRanking;
                 num = 0;
                 break;
             case 3:
-                列表监视器 = SystemInfo.Info.道士等级排名;
+                列表监视器 = SystemInfo.Info.TaoistRanking;
                 num = 0;
                 break;
             case 4:
-                列表监视器 = SystemInfo.Info.刺客等级排名;
+                列表监视器 = SystemInfo.Info.AssassinRanking;
                 num = 0;
                 break;
             case 5:
-                列表监视器 = SystemInfo.Info.弓手等级排名;
+                列表监视器 = SystemInfo.Info.ArcherRanking;
                 num = 0;
                 break;
             case 6:
-                列表监视器 = SystemInfo.Info.个人战力排名;
+                列表监视器 = SystemInfo.Info.IndividualBattleRanking;
                 num = 1;
                 break;
             case 7:
-                列表监视器 = SystemInfo.Info.战士战力排名;
+                列表监视器 = SystemInfo.Info.WarriorBattleRanking;
                 num = 1;
                 break;
             case 8:
-                列表监视器 = SystemInfo.Info.法师战力排名;
+                列表监视器 = SystemInfo.Info.WizardBattleRanking;
                 num = 1;
                 break;
             case 9:
-                列表监视器 = SystemInfo.Info.道士战力排名;
+                列表监视器 = SystemInfo.Info.TaoistBattleRanking;
                 num = 1;
                 break;
             case 10:
-                列表监视器 = SystemInfo.Info.刺客战力排名;
+                列表监视器 = SystemInfo.Info.AssassinBattleRanking;
                 num = 1;
                 break;
             case 11:
-                列表监视器 = SystemInfo.Info.弓手战力排名;
+                列表监视器 = SystemInfo.Info.ArcherBattleRanking;
                 num = 1;
                 break;
             case 14:
-                列表监视器 = SystemInfo.Info.个人声望排名;
+                列表监视器 = SystemInfo.Info.IndividualPrestigeRanking;
                 num = 2;
                 break;
             case 15:
-                列表监视器 = SystemInfo.Info.个人PK值排名;
+                列表监视器 = SystemInfo.Info.IndividualPKRanking;
                 num = 3;
                 break;
         }
@@ -25853,7 +25848,7 @@ public sealed class PlayerObject : MapObject
         using MemoryStream memoryStream = new MemoryStream(new byte[189]);
         using BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
         binaryWriter.Write(b);
-        binaryWriter.Write((ushort)Character.当前排名[b]);
+        binaryWriter.Write((ushort)Character.CurrentRanking[b]);
         binaryWriter.Write((ushort)Character.历史排名[b]);
         binaryWriter.Write(列表监视器.Count);
         for (int i = num2; i < num3; i++)
@@ -26483,10 +26478,10 @@ public sealed class PlayerObject : MapObject
         int val = ((Session.GuildInfoTable.DataSheet.TryGetValue(id, out value) && value is GuildInfo guild) ? (guild.行会排名.V - 1) : 0);
         int num = Math.Max(0, val);
         int num2 = ((查看方式 == 2) ? Math.Max(0, num) : Math.Max(0, num - 11));
-        int num3 = Math.Min(12, SystemInfo.Info.行会人数排名.Count - num2);
+        int num3 = Math.Min(12, SystemInfo.Info.GuildRanking.Count - num2);
         if (num3 > 0)
         {
-            List<GuildInfo> range = SystemInfo.Info.行会人数排名.GetRange(num2, num3);
+            List<GuildInfo> range = SystemInfo.Info.GuildRanking.GetRange(num2, num3);
             using MemoryStream memoryStream = new MemoryStream();
             using BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
             binaryWriter.Write(查看方式);
@@ -30168,7 +30163,7 @@ public sealed class PlayerObject : MapObject
         for (byte b = 1; b <= 5; b = (byte)(b + 1))
         {
             binaryWriter.Write(b);
-            binaryWriter.Write(剩余特权.TryGetValue(b, out var v) ? v : 0);
+            binaryWriter.Write(RemainingPrivileges.TryGetValue(b, out var v) ? v : 0);
         }
         return memoryStream.ToArray();
     }
@@ -30214,8 +30209,8 @@ public sealed class PlayerObject : MapObject
     {
         using MemoryStream memoryStream = new MemoryStream();
         using BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
-        binaryWriter.Write((byte)黑名单表.Count);
-        foreach (CharacterInfo item in 黑名单表)
+        binaryWriter.Write((byte)BlackList.Count);
+        foreach (CharacterInfo item in BlackList)
         {
             binaryWriter.Write(item.Index.V);
         }

@@ -99,7 +99,7 @@ public sealed class GuildInfo : DBObject
         铁矿数量.V = 1000000;
         CreatedDate.V = SEngine.CurrentTime;
         Session.GuildInfoTable.Add(this, indexed: true);
-        SystemInfo.Info.更新行会(this);
+        SystemInfo.Info.UpdateGuildRanks(this);
     }
 
     public void Process()
@@ -177,11 +177,11 @@ public sealed class GuildInfo : DBObject
 
     public void BreakGuild()
     {
-        foreach (KeyValuePair<DateTime, GuildInfo> item in SystemInfo.Info.申请行会.ToList())
+        foreach (KeyValuePair<DateTime, GuildInfo> item in SystemInfo.Info.GuildApplications.ToList())
         {
             if (item.Value == this)
             {
-                SystemInfo.Info.申请行会.Remove(item.Key);
+                SystemInfo.Info.GuildApplications.Remove(item.Key);
             }
         }
         Broadcast(new 脱离行会应答
@@ -198,10 +198,10 @@ public sealed class GuildInfo : DBObject
         }
         if (行会排名.V > 0)
         {
-            SystemInfo.Info.行会人数排名.RemoveAt(行会排名.V - 1);
-            for (int i = 行会排名.V - 1; i < SystemInfo.Info.行会人数排名.Count; i++)
+            SystemInfo.Info.GuildRanking.RemoveAt(行会排名.V - 1);
+            for (int i = 行会排名.V - 1; i < SystemInfo.Info.GuildRanking.Count; i++)
             {
-                SystemInfo.Info.行会人数排名[i].行会排名.V = i + 1;
+                SystemInfo.Info.GuildRanking[i].行会排名.V = i + 1;
             }
         }
         Members.Clear();
@@ -256,7 +256,7 @@ public sealed class GuildInfo : DBObject
                 行会编号 = ID
             });
         }
-        SystemInfo.Info.更新行会(this);
+        SystemInfo.Info.UpdateGuildRanks(this);
     }
 
     public void RemoveMember(CharacterInfo member)
@@ -285,7 +285,7 @@ public sealed class GuildInfo : DBObject
                 对象编号 = member.ID
             });
         }
-        SystemInfo.Info.更新行会(this);
+        SystemInfo.Info.UpdateGuildRanks(this);
     }
 
     public void KickMember(CharacterInfo principal, CharacterInfo member)
@@ -316,7 +316,7 @@ public sealed class GuildInfo : DBObject
                     对象编号 = member.ID
                 });
             }
-            SystemInfo.Info.更新行会(this);
+            SystemInfo.Info.UpdateGuildRanks(this);
         }
     }
 

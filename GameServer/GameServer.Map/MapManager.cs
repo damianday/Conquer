@@ -302,11 +302,11 @@ public static class MapManager
                 SiegeGuilds.Add(SystemInfo.Info.OccupyGuild.V);
                 NetworkManager.SendAnnouncement($"Gain the qualification guild to capture Sabak【{SystemInfo.Info.OccupyGuild.V}】", true);
             }
-            foreach (KeyValuePair<DateTime, GuildInfo> item12 in SystemInfo.Info.申请行会.ToList())
+            foreach (KeyValuePair<DateTime, GuildInfo> item12 in SystemInfo.Info.GuildApplications.ToList())
             {
                 SiegeGuilds.Add(SystemInfo.Info.OccupyGuild.V);
                 SiegeGuilds.Add(item12.Value);
-                SystemInfo.Info.申请行会.Remove(item12.Key);
+                SystemInfo.Info.GuildApplications.Remove(item12.Key);
                 NetworkManager.SendAnnouncement($"Gain the qualification guild to capture Sabak【{item12.Value}】", true);
             }
             if (SiegeGuilds.Count == 1 && SystemInfo.Info.OccupyGuild.V != null)

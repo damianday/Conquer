@@ -323,7 +323,7 @@ public partial class SMain : Form
                 dataRow["本期日期"] = character.本期日期;
                 dataRow["上期特权"] = character.上期特权;
                 dataRow["上期日期"] = character.上期日期;
-                dataRow["剩余特权"] = character.剩余特权;
+                dataRow["剩余特权"] = character.RemainingPrivileges;
                 dataRow["当前等级"] = character.Level;
                 dataRow["当前经验"] = character.Experience;
                 dataRow["双倍经验"] = character.ExperienceRate;

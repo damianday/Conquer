@@ -296,7 +296,7 @@ public static class Session
         {
             if (item is CharacterInfo character && character.Level.V < 限制等级 && !(character.DisconnectDate.V > dateTime))
             {
-                if (character.当前排名.Count > 0)
+                if (character.CurrentRanking.Count > 0)
                 {
                     SMain.AddCommandLog($"[{character}]({character.Level}/{(int)(DateTime.Now - character.DisconnectDate.V).TotalDays}) 在排行榜单上, 已跳过清理");
                     continue;
@@ -492,7 +492,7 @@ public static class Session
             foreach (KeyValuePair<int, DBObject> item11 in dictionary[typeof(CharacterInfo)].DataSheet)
             {
                 ((CharacterInfo)item11.Value).历史排名.Clear();
-                ((CharacterInfo)item11.Value).当前排名.Clear();
+                ((CharacterInfo)item11.Value).CurrentRanking.Clear();
             }
 
             Tables = dictionary;
