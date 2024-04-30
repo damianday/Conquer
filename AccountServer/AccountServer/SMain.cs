@@ -48,6 +48,7 @@ public partial class SMain : Form
     public static Dictionary<string, AccountInfo> AccountRefferalCodes;
     public static Dictionary<string, GameServerInfo> ServerTable = new Dictionary<string, GameServerInfo>();
 
+    public static string PatchFile = ".\\GameLogin.exe";
     public static byte[] PatchData;
     public static ulong PatchChecksum;
     public static int PatchChunks;
@@ -205,16 +206,16 @@ public partial class SMain : Form
 
     private void ReadPatchFile()
     {
-        if (!File.Exists(".\\GameLogin.exe")) return;
+        if (!File.Exists(PatchFile)) return;
 
-        var buffer = File.ReadAllBytes(".\\GameLogin.exe");
+        var buffer = File.ReadAllBytes(PatchFile);
         using var ms = new MemoryStream();
         using var writer = new DeflateStream(ms, CompressionMode.Decompress);
         writer.Write(buffer, 0, buffer.Length);
         writer.Close();
 
         PatchData = ms.ToArray();
-        PatchChecksum = CalcFileChecksum(File.ReadAllBytes(".\\GameLogin.exe"));
+        PatchChecksum = CalcFileChecksum(File.ReadAllBytes(PatchFile));
         PatchChunks = (int)Math.Ceiling((float)PatchData.Length / 40960f);
 
         AddLogMessage($"{PatchData.Length} {PatchChecksum}");
