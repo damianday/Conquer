@@ -1445,25 +1445,25 @@ public sealed class PlayerObject : MapObject
                 {
                     continue;
                 }
-                if (item.计数时间 == default(DateTime))
+                if (item.CooldownTime == default(DateTime))
                 {
-                    item.计数时间 = SEngine.CurrentTime.AddMilliseconds((int)item.PeriodCount);
+                    item.CooldownTime = SEngine.CurrentTime.AddMilliseconds((int)item.PeriodCount);
                 }
-                else if (SEngine.CurrentTime > item.计数时间)
+                else if (SEngine.CurrentTime > item.CooldownTime)
                 {
                     if (++item.RemainingCount.V >= item.SkillCount)
                     {
-                        item.计数时间 = default(DateTime);
+                        item.CooldownTime = default(DateTime);
                     }
                     else
                     {
-                        item.计数时间 = SEngine.CurrentTime.AddMilliseconds((int)item.PeriodCount);
+                        item.CooldownTime = SEngine.CurrentTime.AddMilliseconds((int)item.PeriodCount);
                     }
                     Enqueue(new 同步技能计数
                     {
-                        技能编号 = item.ID.V,
-                        技能计数 = item.RemainingCount.V,
-                        技能冷却 = item.PeriodCount
+                        SkillID = item.ID.V,
+                        SkillCount = item.RemainingCount.V,
+                        SkillCooldown = item.PeriodCount
                     });
                 }
             }
@@ -3475,7 +3475,7 @@ public sealed class PlayerObject : MapObject
             ObjectID = ObjectID,
             SkillID = skillID
         });
-        if (Skills[skillID].自动装配)
+        if (Skills[skillID].IsPassive)
         {
             byte b = 0;
             while (b < 8)
@@ -3583,13 +3583,13 @@ public sealed class PlayerObject : MapObject
         if (skill.SkillCount != 0)
         {
             skill.RemainingCount.V = 0;
-            skill.计数时间 = SEngine.CurrentTime.AddMilliseconds((int)skill.PeriodCount);
+            skill.CooldownTime = SEngine.CurrentTime.AddMilliseconds((int)skill.PeriodCount);
             Cooldowns[skillID | 0x1000000] = SEngine.CurrentTime.AddMilliseconds((int)skill.PeriodCount);
             Enqueue(new 同步技能计数
             {
-                技能编号 = skill.ID.V,
-                技能计数 = skill.RemainingCount.V,
-                技能冷却 = skill.PeriodCount
+                SkillID = skill.ID.V,
+                SkillCount = skill.RemainingCount.V,
+                SkillCooldown = skill.PeriodCount
             });
         }
         CombatPowerBonus[skill] = skill.CombatBonus;
@@ -7447,33 +7447,32 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 玩家拖动技能(byte 技能栏位, ushort 技能编号)
+    public void ChangeHotKey(byte key, ushort id)
     {
-        if (技能栏位 <= 7 || 技能栏位 >= 32)
-        {
+        if (key <= 7 || key >= 32)
             return;
-        }
-        if (!Skills.TryGetValue(技能编号, out var v))
+        
+        if (!Skills.TryGetValue(id, out var v))
         {
-            if (HotKeys.TryGetValue(技能栏位, out var v2))
+            if (HotKeys.TryGetValue(key, out var v2))
             {
-                HotKeys.Remove(技能栏位);
+                HotKeys.Remove(key);
                 v2.Shortcut.V = 100;
             }
         }
-        else if (!v.自动装配 && v.Shortcut.V != 技能栏位)
+        else if (!v.IsPassive && v.Shortcut.V != key)
         {
             HotKeys.Remove(v.Shortcut.V);
             v.Shortcut.V = 100;
-            if (HotKeys.TryGetValue(技能栏位, out var v3) && v3 != null)
+            if (HotKeys.TryGetValue(key, out var v3) && v3 != null)
             {
                 v3.Shortcut.V = 100;
             }
-            HotKeys[技能栏位] = v;
-            v.Shortcut.V = 技能栏位;
+            HotKeys[key] = v;
+            v.Shortcut.V = key;
             Enqueue(new 角色拖动技能
             {
-                技能栏位 = 技能栏位,
+                技能栏位 = key,
                 铭文编号 = v.InscriptionID,
                 技能编号 = v.ID.V,
                 技能等级 = v.Level.V

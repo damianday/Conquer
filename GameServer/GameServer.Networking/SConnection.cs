@@ -545,7 +545,7 @@ public sealed class SConnection
         }
         else if (P.技能栏位 < 32)
         {
-            Player.玩家拖动技能(P.技能栏位, P.技能编号);
+            Player.ChangeHotKey(P.技能栏位, P.技能编号);
         }
         else
         {

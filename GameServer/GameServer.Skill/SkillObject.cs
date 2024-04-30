@@ -507,13 +507,13 @@ public class SkillObject
             {
                 if (--Skill.RemainingCount.V <= 0)
                 {
-                    Caster.Cooldowns[SkillID | 0x1000000] = ReleaseTime.AddMilliseconds((Skill.计数时间 - SEngine.CurrentTime).TotalMilliseconds);
+                    Caster.Cooldowns[SkillID | 0x1000000] = ReleaseTime.AddMilliseconds((Skill.CooldownTime - SEngine.CurrentTime).TotalMilliseconds);
                 }
                 玩家实例4.Enqueue(new 同步技能计数
                 {
-                    技能编号 = Skill.ID.V,
-                    技能计数 = Skill.RemainingCount.V,
-                    技能冷却 = (int)(Skill.计数时间 - SEngine.CurrentTime).TotalMilliseconds
+                    SkillID = Skill.ID.V,
+                    SkillCount = Skill.RemainingCount.V,
+                    SkillCooldown = (int)(Skill.CooldownTime - SEngine.CurrentTime).TotalMilliseconds
                 });
             }
             else if (task.SelfCooldown > 0 || task.Buff增加冷却)
