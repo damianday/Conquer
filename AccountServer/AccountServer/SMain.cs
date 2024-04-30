@@ -311,7 +311,7 @@ public partial class SMain : Form
             Environment.Exit(0);
         }
         
-        //AddLogMessage("The network configuration is loaded, and the current configuration order\r\n" + 游戏区服);
+        AddLogMessage($"The network configuration loaded {ServerTable.Count}.");
     }
 
     private void openAccountDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
