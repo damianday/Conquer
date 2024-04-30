@@ -1,0 +1,9 @@
+{
+  "Dragon": {
+    "ServerName": "Dragon",
+    "TicketAddressIP": "127.0.0.1",
+    "TicketAddressPort": 6678,
+    "PublicAddressIP": "127.0.0.1",
+    "PublicAddressPort": 8701
+  }
+}
