@@ -140,14 +140,9 @@ public static class Compute
         return true;
     }
 
-    public static float CalculateLevelRatio(int 玩家等级, int 怪物等级)
+    public static float CalculateLevelRatio(int playerLevel, int monsterLevel, ushort 减收益等级差 = 0, decimal 收益减少比率 = 1)
     {
-        // TODO: Config..
-        //decimal val = (decimal)Math.Max(0, 玩家等级 - 怪物等级 - Config.减收益等级差) * Config.收益减少比率;
-        //return (float)Math.Max(0m, val);
-        //return 0;
-
-        decimal val = (decimal)Math.Max(0, 玩家等级 - 怪物等级);
+        decimal val = (decimal)Math.Max(0, playerLevel - monsterLevel - 减收益等级差) * 收益减少比率;
         return (float)Math.Max(0m, val);
     }
 

@@ -3271,7 +3271,8 @@ public sealed class PlayerObject : MapObject
             int rate = 0;
             if (mon != null)
             {
-                exp = (int)Math.Max(0.0, (double)exp - Math.Round((float)exp * Compute.CalculateLevelRatio(CurrentLevel, mon.CurrentLevel)));
+                var ratio = Compute.CalculateLevelRatio(CurrentLevel, mon.CurrentLevel, Config.减收益等级差, Config.收益减少比率);
+                exp = (int)Math.Max(0.0, (double)exp - Math.Round((float)exp * ratio));
                 exp = (int)((decimal)exp * Config.MonsterExperienceMultiplier);
                 if (CurrentLevel <= Config.NoobSupportLevel)
                 {

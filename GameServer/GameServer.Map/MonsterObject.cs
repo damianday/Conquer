@@ -620,7 +620,7 @@ public sealed class MonsterObject : MapObject
             members.Add(hitter.Character);
         }
 
-        float ratio = Compute.CalculateLevelRatio(hitter.CurrentLevel, CurrentLevel);
+        float ratio = Compute.CalculateLevelRatio(hitter.CurrentLevel, CurrentLevel, Config.减收益等级差, Config.收益减少比率);
         int goldCount = 0;
         int itemCount = 0;
         if (ratio < 1f && Config.DropRateModifier == 0)
