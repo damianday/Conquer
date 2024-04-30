@@ -7,7 +7,7 @@ namespace GameServer.Database;
 public sealed class SkillInfo : DBObject
 {
     public byte InscriptionID;
-    public DateTime 计数时间;
+    public DateTime CooldownTime;
 
     public readonly DataMonitor<ushort> ID;
     public readonly DataMonitor<ushort> Experience;
@@ -17,7 +17,7 @@ public sealed class SkillInfo : DBObject
 
     public int SkillIndex => ID.V * 100 + InscriptionID * 10 + Level.V;
     public InscriptionSkill Inscription => InscriptionSkill.DataSheet[InscriptionIndex];
-    public bool 自动装配 => Inscription.PassiveSkill;
+    public bool IsPassive => Inscription.PassiveSkill;
 
     public byte RequiredLevel
     {
@@ -74,8 +74,5 @@ public sealed class SkillInfo : DBObject
         Session.SkillInfoTable.Add(this, true);
     }
 
-    public override string ToString()
-    {
-        return Inscription?.SkillName;
-    }
+    public override string ToString() => Inscription?.SkillName;
 }
