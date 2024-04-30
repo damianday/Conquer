@@ -4,11 +4,11 @@ namespace GamePackets.Server;
 public sealed class 同步技能计数 : GamePacket
 {
     [FieldAttribute(Position = 2, Length = 2)]
-    public ushort 技能编号;
+    public ushort SkillID;
 
     [FieldAttribute(Position = 6, Length = 1)]
-    public byte 技能计数;
+    public byte SkillCount;
 
     [FieldAttribute(Position = 10, Length = 4)]
-    public int 技能冷却;
+    public int SkillCooldown;
 }
