@@ -178,7 +178,7 @@ public partial class SMain : Form
         TrayIcon.ShowBalloonTip(1000, "", "The server has been turned to run in the background.", ToolTipIcon.Info);
     }
 
-    private void 恢复窗口_Click(object sender, MouseEventArgs e)
+    private void RestoreWindow_Click(object sender, MouseEventArgs e)
     {
         if (e.Button == MouseButtons.Left)
         {
@@ -187,13 +187,13 @@ public partial class SMain : Form
         }
     }
 
-    private void 恢复窗口_Click(object sender, EventArgs e)
+    private void RestoreWindowMenuItem_Click(object sender, EventArgs e)
     {
         base.Visible = true;
         TrayIcon.Visible = false;
     }
 
-    private void 结束进程_Click(object sender, EventArgs e)
+    private void EndProcessMenuItem_Click(object sender, EventArgs e)
     {
         if (MessageBox.Show("Are you sure to shut down the server?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
         {

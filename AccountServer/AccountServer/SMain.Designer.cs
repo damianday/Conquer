@@ -34,6 +34,7 @@ public partial class SMain
     private void InitializeComponent()
     {
         components = new Container();
+        ComponentResourceManager resources = new ComponentResourceManager(typeof(SMain));
         MainTabControl = new TabControl();
         LogsTabPage = new TabPage();
         LogTextBox = new RichTextBox();
@@ -44,13 +45,18 @@ public partial class SMain
         TicketSendingPortLabel = new Label();
         TicketSendingPortEdit = new NumericUpDown();
         TrayIcon = new NotifyIcon(components);
-        托盘右键菜单 = new ContextMenuStrip(components);
-        打开ToolStripMenuItem = new ToolStripMenuItem();
-        退出ToolStripMenuItem = new ToolStripMenuItem();
+        TrayContextMenu = new ContextMenuStrip(components);
+        OpenToolStripMenuItem = new ToolStripMenuItem();
+        QuitToolStripMenuItem = new ToolStripMenuItem();
         menuStrip1 = new MenuStrip();
         serviceToolStripMenuItem = new ToolStripMenuItem();
         startServiceToolStripMenuItem = new ToolStripMenuItem();
         stopServiceToolStripMenuItem = new ToolStripMenuItem();
+        toolStripMenuItem2 = new ToolStripSeparator();
+        reloadToolStripMenuItem = new ToolStripMenuItem();
+        loadConfigurationToolStripMenuItem = new ToolStripMenuItem();
+        loadAccountsToolStripMenuItem = new ToolStripMenuItem();
+        LoadUpdateConfigurationToolStripMenuItem = new ToolStripMenuItem();
         toolStripMenuItem1 = new ToolStripSeparator();
         exitToolStripMenuItem = new ToolStripMenuItem();
         optionsToolStripMenuItem = new ToolStripMenuItem();
@@ -62,16 +68,11 @@ public partial class SMain
         TicketsGeneratedLabel = new Label();
         NewAccountsLabel = new Label();
         ExistingAccountsLabel = new Label();
-        reloadToolStripMenuItem = new ToolStripMenuItem();
-        toolStripMenuItem2 = new ToolStripSeparator();
-        loadConfigurationToolStripMenuItem = new ToolStripMenuItem();
-        loadAccountsToolStripMenuItem = new ToolStripMenuItem();
-        LoadUpdateConfigurationToolStripMenuItem = new ToolStripMenuItem();
         MainTabControl.SuspendLayout();
         LogsTabPage.SuspendLayout();
         ((ISupportInitialize)LocalListeningPortEdit).BeginInit();
         ((ISupportInitialize)TicketSendingPortEdit).BeginInit();
-        托盘右键菜单.SuspendLayout();
+        TrayContextMenu.SuspendLayout();
         menuStrip1.SuspendLayout();
         groupBox1.SuspendLayout();
         SuspendLayout();
@@ -181,30 +182,30 @@ public partial class SMain
         // 
         // TrayIcon
         // 
-        TrayIcon.ContextMenuStrip = 托盘右键菜单;
-        TrayIcon.Text = "账号服务器";
-        TrayIcon.MouseClick += 恢复窗口_Click;
+        TrayIcon.ContextMenuStrip = TrayContextMenu;
+        TrayIcon.Text = "Account Server";
+        TrayIcon.MouseClick += RestoreWindow_Click;
         // 
-        // 托盘右键菜单
+        // TrayContextMenu
         // 
-        托盘右键菜单.ImageScalingSize = new Size(20, 20);
-        托盘右键菜单.Items.AddRange(new ToolStripItem[] { 打开ToolStripMenuItem, 退出ToolStripMenuItem });
-        托盘右键菜单.Name = "托盘右键菜单";
-        托盘右键菜单.Size = new Size(99, 48);
+        TrayContextMenu.ImageScalingSize = new Size(20, 20);
+        TrayContextMenu.Items.AddRange(new ToolStripItem[] { OpenToolStripMenuItem, QuitToolStripMenuItem });
+        TrayContextMenu.Name = "TrayContextMenu";
+        TrayContextMenu.Size = new Size(99, 48);
         // 
-        // 打开ToolStripMenuItem
+        // OpenToolStripMenuItem
         // 
-        打开ToolStripMenuItem.Name = "打开ToolStripMenuItem";
-        打开ToolStripMenuItem.Size = new Size(98, 22);
-        打开ToolStripMenuItem.Text = "打开";
-        打开ToolStripMenuItem.Click += 恢复窗口_Click;
+        OpenToolStripMenuItem.Name = "OpenToolStripMenuItem";
+        OpenToolStripMenuItem.Size = new Size(98, 22);
+        OpenToolStripMenuItem.Text = "Open";
+        OpenToolStripMenuItem.Click += RestoreWindowMenuItem_Click;
         // 
-        // 退出ToolStripMenuItem
+        // QuitToolStripMenuItem
         // 
-        退出ToolStripMenuItem.Name = "退出ToolStripMenuItem";
-        退出ToolStripMenuItem.Size = new Size(98, 22);
-        退出ToolStripMenuItem.Text = "退出";
-        退出ToolStripMenuItem.Click += 结束进程_Click;
+        QuitToolStripMenuItem.Name = "QuitToolStripMenuItem";
+        QuitToolStripMenuItem.Size = new Size(98, 22);
+        QuitToolStripMenuItem.Text = "Quit";
+        QuitToolStripMenuItem.Click += EndProcessMenuItem_Click;
         // 
         // menuStrip1
         // 
@@ -235,6 +236,36 @@ public partial class SMain
         stopServiceToolStripMenuItem.Size = new Size(138, 22);
         stopServiceToolStripMenuItem.Text = "Stop Service";
         stopServiceToolStripMenuItem.Click += stopServiceToolStripMenuItem_Click;
+        // 
+        // toolStripMenuItem2
+        // 
+        toolStripMenuItem2.Name = "toolStripMenuItem2";
+        toolStripMenuItem2.Size = new Size(135, 6);
+        // 
+        // reloadToolStripMenuItem
+        // 
+        reloadToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { loadConfigurationToolStripMenuItem, loadAccountsToolStripMenuItem, LoadUpdateConfigurationToolStripMenuItem });
+        reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
+        reloadToolStripMenuItem.Size = new Size(138, 22);
+        reloadToolStripMenuItem.Text = "&Reload";
+        // 
+        // loadConfigurationToolStripMenuItem
+        // 
+        loadConfigurationToolStripMenuItem.Name = "loadConfigurationToolStripMenuItem";
+        loadConfigurationToolStripMenuItem.Size = new Size(218, 22);
+        loadConfigurationToolStripMenuItem.Text = "Load Configuration";
+        // 
+        // loadAccountsToolStripMenuItem
+        // 
+        loadAccountsToolStripMenuItem.Name = "loadAccountsToolStripMenuItem";
+        loadAccountsToolStripMenuItem.Size = new Size(218, 22);
+        loadAccountsToolStripMenuItem.Text = "Load Accounts";
+        // 
+        // LoadUpdateConfigurationToolStripMenuItem
+        // 
+        LoadUpdateConfigurationToolStripMenuItem.Name = "LoadUpdateConfigurationToolStripMenuItem";
+        LoadUpdateConfigurationToolStripMenuItem.Size = new Size(218, 22);
+        LoadUpdateConfigurationToolStripMenuItem.Text = "Load Update Configuration";
         // 
         // toolStripMenuItem1
         // 
@@ -331,36 +362,6 @@ public partial class SMain
         ExistingAccountsLabel.TabIndex = 6;
         ExistingAccountsLabel.Text = "Accounts: 0";
         // 
-        // reloadToolStripMenuItem
-        // 
-        reloadToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { loadConfigurationToolStripMenuItem, loadAccountsToolStripMenuItem, LoadUpdateConfigurationToolStripMenuItem });
-        reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
-        reloadToolStripMenuItem.Size = new Size(138, 22);
-        reloadToolStripMenuItem.Text = "&Reload";
-        // 
-        // toolStripMenuItem2
-        // 
-        toolStripMenuItem2.Name = "toolStripMenuItem2";
-        toolStripMenuItem2.Size = new Size(135, 6);
-        // 
-        // loadConfigurationToolStripMenuItem
-        // 
-        loadConfigurationToolStripMenuItem.Name = "loadConfigurationToolStripMenuItem";
-        loadConfigurationToolStripMenuItem.Size = new Size(218, 22);
-        loadConfigurationToolStripMenuItem.Text = "Load Configuration";
-        // 
-        // loadAccountsToolStripMenuItem
-        // 
-        loadAccountsToolStripMenuItem.Name = "loadAccountsToolStripMenuItem";
-        loadAccountsToolStripMenuItem.Size = new Size(218, 22);
-        loadAccountsToolStripMenuItem.Text = "Load Accounts";
-        // 
-        // LoadUpdateConfigurationToolStripMenuItem
-        // 
-        LoadUpdateConfigurationToolStripMenuItem.Name = "LoadUpdateConfigurationToolStripMenuItem";
-        LoadUpdateConfigurationToolStripMenuItem.Size = new Size(218, 22);
-        LoadUpdateConfigurationToolStripMenuItem.Text = "Load Update Configuration";
-        // 
         // SMain
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
@@ -374,6 +375,7 @@ public partial class SMain
         Controls.Add(LocalListeningPortEdit);
         Controls.Add(MainTabControl);
         FormBorderStyle = FormBorderStyle.FixedSingle;
+        Icon = (Icon)resources.GetObject("$this.Icon");
         MainMenuStrip = menuStrip1;
         Margin = new Padding(4, 2, 4, 2);
         MaximizeBox = false;
@@ -385,7 +387,7 @@ public partial class SMain
         LogsTabPage.ResumeLayout(false);
         ((ISupportInitialize)LocalListeningPortEdit).EndInit();
         ((ISupportInitialize)TicketSendingPortEdit).EndInit();
-        托盘右键菜单.ResumeLayout(false);
+        TrayContextMenu.ResumeLayout(false);
         menuStrip1.ResumeLayout(false);
         menuStrip1.PerformLayout();
         groupBox1.ResumeLayout(false);
@@ -405,9 +407,9 @@ public partial class SMain
     private Label TicketSendingPortLabel;
     private NumericUpDown LocalListeningPortEdit;
     private NumericUpDown TicketSendingPortEdit;
-    private ContextMenuStrip 托盘右键菜单;
-    private ToolStripMenuItem 打开ToolStripMenuItem;
-    private ToolStripMenuItem 退出ToolStripMenuItem;
+    private ContextMenuStrip TrayContextMenu;
+    private ToolStripMenuItem OpenToolStripMenuItem;
+    private ToolStripMenuItem QuitToolStripMenuItem;
     private NotifyIcon TrayIcon;
     private MenuStrip menuStrip1;
     private ToolStripMenuItem serviceToolStripMenuItem;
