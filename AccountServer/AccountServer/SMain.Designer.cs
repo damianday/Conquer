@@ -38,6 +38,15 @@ public partial class SMain
         MainTabControl = new TabControl();
         LogsTabPage = new TabPage();
         LogTextBox = new RichTextBox();
+        AccountsTabPage = new TabPage();
+        AccountsListView = new ListView();
+        NameHeader = new ColumnHeader();
+        PasswordHeader = new ColumnHeader();
+        QuestionHeader = new ColumnHeader();
+        AnswerHeader = new ColumnHeader();
+        DateHeader = new ColumnHeader();
+        PromoHeader = new ColumnHeader();
+        ReferrerHeader = new ColumnHeader();
         BytesSentLabel = new Label();
         BytesReceivedLabel = new Label();
         LocalListeningPortEdit = new NumericUpDown();
@@ -70,6 +79,7 @@ public partial class SMain
         ExistingAccountsLabel = new Label();
         MainTabControl.SuspendLayout();
         LogsTabPage.SuspendLayout();
+        AccountsTabPage.SuspendLayout();
         ((ISupportInitialize)LocalListeningPortEdit).BeginInit();
         ((ISupportInitialize)TicketSendingPortEdit).BeginInit();
         TrayContextMenu.SuspendLayout();
@@ -80,6 +90,7 @@ public partial class SMain
         // MainTabControl
         // 
         MainTabControl.Controls.Add(LogsTabPage);
+        MainTabControl.Controls.Add(AccountsTabPage);
         MainTabControl.ItemSize = new Size(60, 22);
         MainTabControl.Location = new Point(12, 172);
         MainTabControl.Margin = new Padding(4, 2, 4, 2);
@@ -113,6 +124,63 @@ public partial class SMain
         LogTextBox.Size = new Size(499, 382);
         LogTextBox.TabIndex = 0;
         LogTextBox.Text = "";
+        // 
+        // AccountsTabPage
+        // 
+        AccountsTabPage.Controls.Add(AccountsListView);
+        AccountsTabPage.Location = new Point(4, 26);
+        AccountsTabPage.Name = "AccountsTabPage";
+        AccountsTabPage.Padding = new Padding(3);
+        AccountsTabPage.Size = new Size(511, 390);
+        AccountsTabPage.TabIndex = 1;
+        AccountsTabPage.Text = "Accounts";
+        AccountsTabPage.UseVisualStyleBackColor = true;
+        // 
+        // AccountsListView
+        // 
+        AccountsListView.Columns.AddRange(new ColumnHeader[] { NameHeader, PasswordHeader, QuestionHeader, AnswerHeader, DateHeader, PromoHeader, ReferrerHeader });
+        AccountsListView.Dock = DockStyle.Fill;
+        AccountsListView.FullRowSelect = true;
+        AccountsListView.GridLines = true;
+        AccountsListView.Location = new Point(3, 3);
+        AccountsListView.Name = "AccountsListView";
+        AccountsListView.Size = new Size(505, 384);
+        AccountsListView.TabIndex = 0;
+        AccountsListView.UseCompatibleStateImageBehavior = false;
+        AccountsListView.View = View.Details;
+        // 
+        // NameHeader
+        // 
+        NameHeader.Text = "Account Name";
+        NameHeader.Width = 100;
+        // 
+        // PasswordHeader
+        // 
+        PasswordHeader.Text = "Password";
+        PasswordHeader.Width = 120;
+        // 
+        // QuestionHeader
+        // 
+        QuestionHeader.Text = "Question";
+        QuestionHeader.Width = 100;
+        // 
+        // AnswerHeader
+        // 
+        AnswerHeader.Text = "Answer";
+        AnswerHeader.Width = 100;
+        // 
+        // DateHeader
+        // 
+        DateHeader.Text = "Creation Date";
+        DateHeader.Width = 140;
+        // 
+        // PromoHeader
+        // 
+        PromoHeader.Text = "PromoCode";
+        // 
+        // ReferrerHeader
+        // 
+        ReferrerHeader.Text = "ReferrerCode";
         // 
         // BytesSentLabel
         // 
@@ -226,27 +294,27 @@ public partial class SMain
         // startServiceToolStripMenuItem
         // 
         startServiceToolStripMenuItem.Name = "startServiceToolStripMenuItem";
-        startServiceToolStripMenuItem.Size = new Size(180, 22);
+        startServiceToolStripMenuItem.Size = new Size(138, 22);
         startServiceToolStripMenuItem.Text = "Start Service";
         startServiceToolStripMenuItem.Click += startServiceToolStripMenuItem_Click;
         // 
         // stopServiceToolStripMenuItem
         // 
         stopServiceToolStripMenuItem.Name = "stopServiceToolStripMenuItem";
-        stopServiceToolStripMenuItem.Size = new Size(180, 22);
+        stopServiceToolStripMenuItem.Size = new Size(138, 22);
         stopServiceToolStripMenuItem.Text = "Stop Service";
         stopServiceToolStripMenuItem.Click += stopServiceToolStripMenuItem_Click;
         // 
         // toolStripMenuItem2
         // 
         toolStripMenuItem2.Name = "toolStripMenuItem2";
-        toolStripMenuItem2.Size = new Size(177, 6);
+        toolStripMenuItem2.Size = new Size(135, 6);
         // 
         // reloadToolStripMenuItem
         // 
         reloadToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { loadConfigurationToolStripMenuItem, loadAccountsToolStripMenuItem, LoadUpdateConfigurationToolStripMenuItem });
         reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
-        reloadToolStripMenuItem.Size = new Size(180, 22);
+        reloadToolStripMenuItem.Size = new Size(138, 22);
         reloadToolStripMenuItem.Text = "&Reload";
         // 
         // loadConfigurationToolStripMenuItem
@@ -270,12 +338,12 @@ public partial class SMain
         // toolStripMenuItem1
         // 
         toolStripMenuItem1.Name = "toolStripMenuItem1";
-        toolStripMenuItem1.Size = new Size(177, 6);
+        toolStripMenuItem1.Size = new Size(135, 6);
         // 
         // exitToolStripMenuItem
         // 
         exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-        exitToolStripMenuItem.Size = new Size(180, 22);
+        exitToolStripMenuItem.Size = new Size(138, 22);
         exitToolStripMenuItem.Text = "E&xit";
         exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
         // 
@@ -385,6 +453,7 @@ public partial class SMain
         FormClosing += FormClosing_Click;
         MainTabControl.ResumeLayout(false);
         LogsTabPage.ResumeLayout(false);
+        AccountsTabPage.ResumeLayout(false);
         ((ISupportInitialize)LocalListeningPortEdit).EndInit();
         ((ISupportInitialize)TicketSendingPortEdit).EndInit();
         TrayContextMenu.ResumeLayout(false);
@@ -431,4 +500,13 @@ public partial class SMain
     private ToolStripMenuItem loadConfigurationToolStripMenuItem;
     private ToolStripMenuItem loadAccountsToolStripMenuItem;
     private ToolStripMenuItem LoadUpdateConfigurationToolStripMenuItem;
+    private TabPage AccountsTabPage;
+    private ListView AccountsListView;
+    private ColumnHeader NameHeader;
+    private ColumnHeader PasswordHeader;
+    private ColumnHeader QuestionHeader;
+    private ColumnHeader AnswerHeader;
+    private ColumnHeader DateHeader;
+    private ColumnHeader PromoHeader;
+    private ColumnHeader ReferrerHeader;
 }
