@@ -304,8 +304,6 @@ public partial class SMain : Form
                 server.TicketAddress = new IPEndPoint(IPAddress.Loopback, server.TicketAddressPort);
                 server.PublicAddress = new IPEndPoint(IPAddress.Parse(server.PublicAddressIP), server.PublicAddressPort);
             }
-
-            throw new Exception("gasy");
         }
         catch (Exception ex)
         {
