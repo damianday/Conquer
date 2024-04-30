@@ -339,26 +339,24 @@ public static class Compute
         return true;
     }
 
-    public static bool 计算命中(float 命中基数, float 闪避基数, float 命中系数, float 闪避系数)
+    public static bool CalculateHit(float accuracy, float agility, float hit, float evade)
     {
-        float 概率 = ((闪避基数 == 0f) ? 1f : (命中基数 / 闪避基数));
-        float num = 命中系数 - 闪避系数;
-        if (num == 0f)
+        float probability = ((agility == 0f) ? 1f : (accuracy / agility));
+        float n = hit - evade;
+
+        if (n == 0f)
+            return CalculateProbability(probability);
+        
+        if (n >= 0f)
         {
-            return CalculateProbability(概率);
-        }
-        if (num >= 0f)
-        {
-            if (!CalculateProbability(概率))
-            {
-                return CalculateProbability(num);
-            }
+            if (!CalculateProbability(probability))
+                return CalculateProbability(n);
             return true;
         }
-        if (CalculateProbability(概率))
-        {
-            return !CalculateProbability(0f - num);
-        }
+
+        if (CalculateProbability(probability))
+            return !CalculateProbability(0f - n);
+
         return false;
     }
 

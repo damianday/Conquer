@@ -1108,54 +1108,54 @@ public abstract class MapObject
         {
             return;
         }
-        int num = 0;
-        float num2 = 0f;
-        int num3 = 0;
-        float num4 = 0f;
+        int accuracy = 0;
+        float hit = 0f;
+        int agility = 0;
+        float evade = 0f;
         switch (参数.SkillEvasion)
         {
             case SkillEvasionType.SkillCannotBeEvaded:
-                num = 1;
+                accuracy = 1;
                 break;
             case SkillEvasionType.CanBePhsyicallyEvaded:
-                num3 = this[Stat.PhysicalAgility];
-                num = caster[Stat.PhysicalAccuracy];
+                agility = this[Stat.PhysicalAgility];
+                accuracy = caster[Stat.PhysicalAccuracy];
                 if (this is MonsterObject)
                 {
-                    num2 += (float)caster[Stat.怪物命中] / 10000f;
+                    hit += (float)caster[Stat.怪物命中] / 10000f;
                 }
                 if (caster is MonsterObject)
                 {
-                    num4 += (float)this[Stat.怪物闪避] / 10000f;
+                    evade += (float)this[Stat.怪物闪避] / 10000f;
                 }
                 break;
             case SkillEvasionType.CanBeMagicEvaded:
-                num4 = (float)this[Stat.MagicEvade] / 10000f;
+                evade = (float)this[Stat.MagicEvade] / 10000f;
                 if (this is MonsterObject)
                 {
-                    num2 += (float)caster[Stat.怪物命中] / 10000f;
+                    hit += (float)caster[Stat.怪物命中] / 10000f;
                 }
                 if (caster is MonsterObject)
                 {
-                    num4 += (float)this[Stat.怪物闪避] / 10000f;
+                    evade += (float)this[Stat.怪物闪避] / 10000f;
                 }
                 break;
             case SkillEvasionType.CanBePoisonEvaded:
-                num4 = (float)this[Stat.PoisonEvade] / 10000f;
+                evade = (float)this[Stat.PoisonEvade] / 10000f;
                 break;
             case SkillEvasionType.NonMonstersCanEvade:
                 if (this is MonsterObject)
                 {
-                    num = 1;
+                    accuracy = 1;
                     break;
                 }
-                num3 = this[Stat.PhysicalAgility];
-                num = caster[Stat.PhysicalAccuracy];
+                agility = this[Stat.PhysicalAgility];
+                accuracy = caster[Stat.PhysicalAccuracy];
                 break;
         }
         HitInfo value = new HitInfo(this)
         {
-            SkillFeedback = (Compute.计算命中(num, num3, num2, num4) ? 参数.SkillHitFeedback : SkillHitFeedback.Miss)
+            SkillFeedback = (Compute.CalculateHit(accuracy, agility, hit, evade) ? 参数.SkillHitFeedback : SkillHitFeedback.Miss)
         };
         skill.HitList.Add(ObjectID, value);
         int num5 = SEngine.Random.Next(100);
