@@ -242,7 +242,15 @@ public sealed class SConnection
         string[] array = Encoding.UTF8.GetString(P.RegistrationInformation).Split('/');
 		if (array.Length == 5)
 		{
-			if (array[0].Length <= 5 || array[0].Length > 12)
+			string name, password, question, answer, referrerCode;
+
+            name = array[0];
+            password = array[1];
+            question = array[2];
+            answer = array[3];
+            referrerCode = array[4];
+
+            if (name.Length <= 5 || name.Length > 12)
 			{
 				SendPacket(new AccountRegisterFailPacket
 				{
@@ -250,7 +258,7 @@ public sealed class SConnection
 				});
 				return;
 			}
-			if (array[1].Length <= 5 || array[1].Length > 18)
+			if (password.Length <= 5 || password.Length > 18)
 			{
 				SendPacket(new AccountRegisterFailPacket
 				{
@@ -258,15 +266,15 @@ public sealed class SConnection
 				});
 				return;
 			}
-			if (array[2].Length <= 1 || array[2].Length > 18)
+			if (question.Length <= 1 || question.Length > 18)
 			{
 				SendPacket(new AccountRegisterFailPacket
 				{
-					ErrorMessage = Encoding.UTF8.GetBytes("The security issue length is incorrect")
+					ErrorMessage = Encoding.UTF8.GetBytes("The security question length is incorrect")
 				});
 				return;
 			}
-			if (array[3].Length <= 1 || array[3].Length > 18)
+			if (answer.Length <= 1 || answer.Length > 18)
 			{
 				SendPacket(new AccountRegisterFailPacket
 				{
@@ -274,7 +282,7 @@ public sealed class SConnection
 				});
 				return;
 			}
-			if (array[4].Length > 4 || (array[4] != string.Empty && !SMain.AccountRefferalCodes.ContainsKey(array[4])))
+			if (referrerCode.Length > 4 || (referrerCode != string.Empty && !SMain.AccountRefferalCodes.ContainsKey(array[4])))
 			{
 				SendPacket(new AccountRegisterFailPacket
 				{
@@ -282,7 +290,7 @@ public sealed class SConnection
 				});
 				return;
 			}
-			if (!Regex.IsMatch(array[0], "^[a-zA-Z]+.*$"))
+			if (!Regex.IsMatch(name, "^[a-zA-Z]+.*$"))
 			{
 				SendPacket(new AccountRegisterFailPacket
 				{
@@ -290,7 +298,7 @@ public sealed class SConnection
 				});
 				return;
 			}
-			if (!Regex.IsMatch(array[0], "^[a-zA-Z_][A-Za-z0-9_]*$"))
+			if (!Regex.IsMatch(name, "^[a-zA-Z_][A-Za-z0-9_]*$"))
 			{
 				SendPacket(new AccountRegisterFailPacket
 				{
@@ -298,7 +306,7 @@ public sealed class SConnection
 				});
 				return;
 			}
-			if (SMain.Accounts.ContainsKey(array[0]))
+			if (SMain.Accounts.ContainsKey(name))
 			{
 				SendPacket(new AccountRegisterFailPacket
 				{
@@ -306,9 +314,9 @@ public sealed class SConnection
 				});
 				return;
 			}
-			SMain.AddAccount(new AccountInfo(array[0], array[1], array[2], array[3], array[4]));
+			SMain.AddAccount(new AccountInfo(name, password, question, answer, referrerCode));
 			SendPacket(new AccountRegisterSuccessPacket());
-			SMain.AddLogMessage("Account registration is successful! Account: " + array[2]);
+			SMain.AddLogMessage("Account registration is successful! Account: " + name);
 			SMain.CreatedAccounts++;
 		}
 	}
