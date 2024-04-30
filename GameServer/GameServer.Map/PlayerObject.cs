@@ -26293,6 +26293,7 @@ public sealed class PlayerObject : MapObject
     {
         Enqueue(new 同步邮箱内容
         {
+            MailCount = (ushort)Mail.Count,
             Description = 全部邮件描述()
         });
     }
@@ -30096,14 +30097,13 @@ public sealed class PlayerObject : MapObject
 
     public byte[] 全部邮件描述()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
-        binaryWriter.Write((ushort)Mail.Count);
-        foreach (MailInfo item in Mail)
+        using var ms = new MemoryStream();
+        using var writer = new BinaryWriter(ms);
+        foreach (var mail in Mail)
         {
-            binaryWriter.Write(item.MailMessageDescription());
+            writer.Write(mail.MailMessageDescription());
         }
-        return memoryStream.ToArray();
+        return ms.ToArray();
     }
 
     public byte[] 背包物品描述()
