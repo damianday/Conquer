@@ -7553,7 +7553,7 @@ public sealed class PlayerObject : MapObject
         });
     }
 
-    public void 删除守卫()
+    public void RemoveGuard()
     {
         if (CurrentNPC == null) return;
 
@@ -9871,7 +9871,7 @@ public sealed class PlayerObject : MapObject
                                         mon.SurvivalTime = SEngine.CurrentTime.AddMinutes(30.0);
                                         九层妖塔BOSS1 = mon;
                                     }
-                                    删除守卫();
+                                    RemoveGuard();
                                 }
                                 break;
                             }
@@ -9898,7 +9898,7 @@ public sealed class PlayerObject : MapObject
                                         mon.SurvivalTime = SEngine.CurrentTime.AddMinutes(30.0);
                                         九层妖塔BOSS1 = mon;
                                     }
-                                    删除守卫();
+                                    RemoveGuard();
                                 }
                                 break;
                             }
@@ -9925,7 +9925,7 @@ public sealed class PlayerObject : MapObject
                                         mon.SurvivalTime = SEngine.CurrentTime.AddMinutes(30.0);
                                         九层妖塔BOSS1 = mon;
                                     }
-                                    删除守卫();
+                                    RemoveGuard();
                                 }
                                 break;
                             }
@@ -9952,7 +9952,7 @@ public sealed class PlayerObject : MapObject
                                         mon.SurvivalTime = SEngine.CurrentTime.AddMinutes(30.0);
                                         九层妖塔BOSS1 = mon;
                                     }
-                                    删除守卫();
+                                    RemoveGuard();
                                 }
                                 break;
                             }
