@@ -30,6 +30,7 @@ public static class SEngine
 
     public static ConcurrentQueue<GMCommand> ExternalCommands;
 
+    public static SEngineStats Stats;
     public static uint CycleCount;
     public static bool Running;
     public static bool Saving;
@@ -45,6 +46,16 @@ public static class SEngine
         CurrentTime = DateTime.UtcNow;
         OneSecondTime = CurrentTime.AddSeconds(1.0);
         NextSaveDataTime = CurrentTime.AddMinutes(Config.AutoSaveInterval);
+
+        ExternalCommands = new ConcurrentQueue<GMCommand>();
+
+        Stats = new SEngineStats();
+        CycleCount = 0;
+        Running = false;
+        Saving = false;
+
+        MainThread = null;
+
         Random = new Random();
         Abuse = new MsgFilter();
     }
@@ -132,7 +143,7 @@ public static class SEngine
     {
         try
         {
-            ExternalCommands = new ConcurrentQueue<GMCommand>();
+            ExternalCommands.Clear();
 
             SMain.AddSystemLog("Loading Abuse...");
             if (Abuse.Load("!Abuse.txt"))
@@ -154,13 +165,18 @@ public static class SEngine
                 {
                     ProcessSaveData();
 
-                    SMain.更新连接总数((uint)NetworkManager.Connections.Count);
-                    SMain.更新已经登录(NetworkManager.ActiveConnections);
-                    SMain.更新已经上线(NetworkManager.已上线连接数, NetworkManager.已上线连接数1, NetworkManager.已上线连接数2);
-                    SMain.更新发送字节(NetworkManager.TotalSentBytes);
-                    SMain.更新接收字节(NetworkManager.TotalReceivedBytes);
-                    SMain.更新对象统计(MapManager.ActiveObjects.Count, MapManager.SecondaryObjects.Count, MapManager.Objects.Count);
-                    SMain.UpdateCycleCount(CycleCount);
+                    Stats.Connections = (uint)NetworkManager.Connections.Count;
+                    Stats.ActiveConnections = NetworkManager.ActiveConnections;
+                    Stats.ConnectionsOnline = NetworkManager.ConnectionsOnline;
+                    Stats.ConnectionsOnline = NetworkManager.ConnectionsOnline1;
+                    Stats.ConnectionsOnline = NetworkManager.ConnectionsOnline2;
+                    Stats.TotalSentBytes = NetworkManager.TotalReceivedBytes;
+                    Stats.TotalReceivedBytes = NetworkManager.TotalReceivedBytes;
+                    Stats.ActiveObjects = MapManager.ActiveObjects.Count;
+                    Stats.SecondaryObjects = MapManager.SecondaryObjects.Count;
+                    Stats.Objects = MapManager.Objects.Count;
+                    Stats.CycleCount = CycleCount;
+                    SMain.UpdateStats(Stats);
 
                     CycleCount = 0;
                     OneSecondTime = CurrentTime.AddSeconds(1.0);

@@ -662,27 +662,27 @@ public sealed class CharacterInfo : DBObject
 
     public void Disconnect()
     {
-        if (地图分配线路.V == 1 && NetworkManager.已上线连接数 != 0)
+        if (地图分配线路.V == 1 && NetworkManager.ConnectionsOnline != 0)
         {
             Connection.Player = null;
             Connection = null;
-            NetworkManager.已上线连接数--;
+            NetworkManager.ConnectionsOnline--;
             DisconnectDate.V = SEngine.CurrentTime;
             SMain.UpdateCharacter(this, "离线日期", DisconnectDate);
         }
-        else if (地图分配线路.V == 2 && NetworkManager.已上线连接数1 != 0)
+        else if (地图分配线路.V == 2 && NetworkManager.ConnectionsOnline1 != 0)
         {
             Connection.Player = null;
             Connection = null;
-            NetworkManager.已上线连接数1--;
+            NetworkManager.ConnectionsOnline1--;
             DisconnectDate.V = SEngine.CurrentTime;
             SMain.UpdateCharacter(this, "离线日期", DisconnectDate);
         }
-        else if (地图分配线路.V == 3 && NetworkManager.已上线连接数2 != 0)
+        else if (地图分配线路.V == 3 && NetworkManager.ConnectionsOnline2 != 0)
         {
             Connection.Player = null;
             Connection = null;
-            NetworkManager.已上线连接数2--;
+            NetworkManager.ConnectionsOnline2--;
             DisconnectDate.V = SEngine.CurrentTime;
             SMain.UpdateCharacter(this, "离线日期", DisconnectDate);
         }
@@ -690,7 +690,7 @@ public sealed class CharacterInfo : DBObject
         {
             Connection.Player = null;
             Connection = null;
-            NetworkManager.已上线连接数--;
+            NetworkManager.ConnectionsOnline--;
             DisconnectDate.V = SEngine.CurrentTime;
             SMain.UpdateCharacter(this, "离线日期", DisconnectDate);
         }
@@ -704,7 +704,7 @@ public sealed class CharacterInfo : DBObject
         {
             case 1:
                 Connection = conn;
-                NetworkManager.已上线连接数++;
+                NetworkManager.ConnectionsOnline++;
                 MACAddress.V = conn.MACAddress;
                 IPAddress.V = conn.IPAddress;
                 SMain.UpdateCharacter(this, "离线日期", null);
@@ -712,7 +712,7 @@ public sealed class CharacterInfo : DBObject
                 break;
             case 2:
                 Connection = conn;
-                NetworkManager.已上线连接数1++;
+                NetworkManager.ConnectionsOnline1++;
                 MACAddress.V = conn.MACAddress;
                 IPAddress.V = conn.IPAddress;
                 SMain.UpdateCharacter(this, "离线日期", null);
@@ -720,7 +720,7 @@ public sealed class CharacterInfo : DBObject
                 break;
             case 3:
                 Connection = conn;
-                NetworkManager.已上线连接数2++;
+                NetworkManager.ConnectionsOnline2++;
                 MACAddress.V = conn.MACAddress;
                 IPAddress.V = conn.IPAddress;
                 SMain.UpdateCharacter(this, "离线日期", null);
@@ -728,7 +728,7 @@ public sealed class CharacterInfo : DBObject
                 break;
             default:
                 Connection = conn;
-                NetworkManager.已上线连接数++;
+                NetworkManager.ConnectionsOnline++;
                 MACAddress.V = conn.MACAddress;
                 IPAddress.V = conn.IPAddress;
                 SMain.UpdateCharacter(this, "离线日期", null);

@@ -261,73 +261,17 @@ public partial class SMain : Form
         });
     }
 
-    public static void UpdateStats()
+    public static void UpdateStats(SEngineStats stats)
     {
         Main?.BeginInvoke(() =>
         {
-            Main.StatTotalConnections.Text = $"Total Connections: {NetworkManager.Connections.Count}";
-            Main.StatLoggedInConnections.Text = $"Already Logged in: {NetworkManager.ActiveConnections}";
-            Main.StatLiveConnections.Text = $"Now Online: {NetworkManager.已上线连接数}/{NetworkManager.已上线连接数1}/{NetworkManager.已上线连接数2}";
-            Main.CycleCountLabel.Text = $"Cycle Count: {SEngine.CycleCount}";
-            Main.StatSent.Text = $"Sent: {NetworkManager.TotalSentBytes}";
-            Main.StatReceived.Text = $"Received: {NetworkManager.TotalReceivedBytes}";
-            Main.StatObjectsStatistics.Text = $"Objects Statistics: {MapManager.ActiveObjects.Count} / {MapManager.SecondaryObjects.Count} / {MapManager.Objects.Count}";
-        });
-    }
-
-    public static void 更新连接总数(uint count)
-    {
-        Main?.BeginInvoke(() =>
-        {
-            Main.StatTotalConnections.Text = $"Total Connections: {count}";
-        });
-    }
-
-    public static void 更新已经登录(uint count)
-    {
-        Main?.BeginInvoke(() =>
-        {
-            Main.StatLoggedInConnections.Text = $"Already Logged in: {count}";
-        });
-    }
-
-    public static void 更新已经上线(uint 内容, uint 内容1, uint 内容2)
-    {
-        Main?.BeginInvoke(() =>
-        {
-            Main.StatLiveConnections.Text = $"Now Online: {内容}/{内容1}/{内容2}";
-        });
-    }
-
-    public static void UpdateCycleCount(uint count)
-    {
-        Main?.BeginInvoke(() =>
-        {
-            Main.CycleCountLabel.Text = $"Cycle Count: {count}";
-        });
-    }
-
-    public static void 更新接收字节(long 内容)
-    {
-        Main?.BeginInvoke(() =>
-        {
-            Main.StatReceived.Text = $"Received: {内容}";
-        });
-    }
-
-    public static void 更新发送字节(long 内容)
-    {
-        Main?.BeginInvoke(() =>
-        {
-            Main.StatSent.Text = $"Sent: {内容}";
-        });
-    }
-
-    public static void 更新对象统计(int 激活对象, int 次要对象, int 对象总数)
-    {
-        Main?.BeginInvoke(() =>
-        {
-            Main.StatObjectsStatistics.Text = $"Objects Statistics: {激活对象} / {次要对象} / {对象总数}";
+            Main.PortStatusLabel.Text = Config.UserConnectionPort.ToString();
+            Main.ConnectionsStatusLabel.Text = $"Connections: {stats.ActiveConnections}/{stats.Connections}";
+            Main.OnlineStatusLabel.Text = $"Online: {stats.ConnectionsOnline}/{stats.ConnectionsOnline1}/{stats.ConnectionsOnline2}";
+            Main.ObjectsStatusLabel.Text = $"Objects: {stats.ActiveObjects}/{stats.SecondaryObjects}/{stats.Objects}";
+            Main.CycleStatusLabel.Text = $"Cycles: {stats.CycleCount}";
+            Main.DataSentStatusLabel.Text = $"Sent: {Compute.GetBytesReadable(stats.TotalSentBytes)}";
+            Main.DataReceivedStatusLabel.Text = $"Received: {Compute.GetBytesReadable(stats.TotalReceivedBytes)}";
         });
     }
 

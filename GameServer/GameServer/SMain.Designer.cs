@@ -2303,7 +2303,6 @@ public partial class SMain
         角色浏览表 = new DataGridView();
         主选项卡 = new TabControl();
         日志页面 = new TabPage();
-        StatObjectsStatistics = new Label();
         LoggingTab = new TabControl();
         系统日志页面 = new TabPage();
         SystemLogsTextBox = new RichTextBox();
@@ -2311,12 +2310,6 @@ public partial class SMain
         ChatLogsTextBox = new RichTextBox();
         命令日志页面 = new TabPage();
         CommandLogsTextBox = new RichTextBox();
-        StatLoggedInConnections = new Label();
-        StatLiveConnections = new Label();
-        StatTotalConnections = new Label();
-        StatSent = new Label();
-        StatReceived = new Label();
-        CycleCountLabel = new Label();
         定制模块 = new TabPage();
         tabControl1 = new TabControl();
         tabPage12 = new TabPage();
@@ -2415,6 +2408,13 @@ public partial class SMain
         toolStripMenuItem4 = new ToolStripSeparator();
         exitToolStripMenuItem = new ToolStripMenuItem();
         statusStrip1 = new StatusStrip();
+        PortStatusLabel = new ToolStripStatusLabel();
+        ConnectionsStatusLabel = new ToolStripStatusLabel();
+        OnlineStatusLabel = new ToolStripStatusLabel();
+        ObjectsStatusLabel = new ToolStripStatusLabel();
+        CycleStatusLabel = new ToolStripStatusLabel();
+        DataReceivedStatusLabel = new ToolStripStatusLabel();
+        DataSentStatusLabel = new ToolStripStatusLabel();
         角色右键菜单.SuspendLayout();
         下方控件页.SuspendLayout();
         功能模块1.SuspendLayout();
@@ -3693,6 +3693,7 @@ public partial class SMain
         ((ISupportInitialize)S_世界BOSS分钟).BeginInit();
         ((ISupportInitialize)S_世界BOSS时间).BeginInit();
         menuStrip1.SuspendLayout();
+        statusStrip1.SuspendLayout();
         this.SuspendLayout();
         // 
         // 角色右键菜单
@@ -32255,14 +32256,7 @@ public partial class SMain
         // 
         日志页面.BackColor = Color.Transparent;
         日志页面.BorderStyle = BorderStyle.Fixed3D;
-        日志页面.Controls.Add(StatObjectsStatistics);
         日志页面.Controls.Add(LoggingTab);
-        日志页面.Controls.Add(StatLoggedInConnections);
-        日志页面.Controls.Add(StatLiveConnections);
-        日志页面.Controls.Add(StatTotalConnections);
-        日志页面.Controls.Add(StatSent);
-        日志页面.Controls.Add(StatReceived);
-        日志页面.Controls.Add(CycleCountLabel);
         日志页面.Font = new Font("NSimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
         日志页面.Location = new Point(4, 34);
         日志页面.Margin = new Padding(4, 3, 4, 3);
@@ -32271,18 +32265,6 @@ public partial class SMain
         日志页面.Size = new Size(1595, 712);
         日志页面.TabIndex = 0;
         日志页面.Text = "Log";
-        // 
-        // StatObjectsStatistics
-        // 
-        StatObjectsStatistics.AutoSize = true;
-        StatObjectsStatistics.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
-        StatObjectsStatistics.ForeColor = Color.Maroon;
-        StatObjectsStatistics.Location = new Point(850, 128);
-        StatObjectsStatistics.Margin = new Padding(4, 0, 4, 0);
-        StatObjectsStatistics.Name = "StatObjectsStatistics";
-        StatObjectsStatistics.Size = new Size(117, 17);
-        StatObjectsStatistics.TabIndex = 17;
-        StatObjectsStatistics.Text = "Objects Statistics:";
         // 
         // LoggingTab
         // 
@@ -32375,78 +32357,6 @@ public partial class SMain
         CommandLogsTextBox.Size = new Size(835, 651);
         CommandLogsTextBox.TabIndex = 2;
         CommandLogsTextBox.Text = "";
-        // 
-        // StatLoggedInConnections
-        // 
-        StatLoggedInConnections.AutoSize = true;
-        StatLoggedInConnections.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
-        StatLoggedInConnections.ForeColor = Color.Purple;
-        StatLoggedInConnections.Location = new Point(850, 43);
-        StatLoggedInConnections.Margin = new Padding(4, 0, 4, 0);
-        StatLoggedInConnections.Name = "StatLoggedInConnections";
-        StatLoggedInConnections.Size = new Size(125, 17);
-        StatLoggedInConnections.TabIndex = 13;
-        StatLoggedInConnections.Text = "Already Logged in:";
-        // 
-        // StatLiveConnections
-        // 
-        StatLiveConnections.AutoSize = true;
-        StatLiveConnections.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
-        StatLiveConnections.ForeColor = Color.Purple;
-        StatLiveConnections.Location = new Point(850, 60);
-        StatLiveConnections.Margin = new Padding(4, 0, 4, 0);
-        StatLiveConnections.Name = "StatLiveConnections";
-        StatLiveConnections.Size = new Size(85, 17);
-        StatLiveConnections.TabIndex = 12;
-        StatLiveConnections.Text = "Now Online:";
-        // 
-        // StatTotalConnections
-        // 
-        StatTotalConnections.AutoSize = true;
-        StatTotalConnections.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, (byte)0);
-        StatTotalConnections.ForeColor = Color.Purple;
-        StatTotalConnections.Location = new Point(850, 26);
-        StatTotalConnections.Margin = new Padding(4, 0, 4, 0);
-        StatTotalConnections.Name = "StatTotalConnections";
-        StatTotalConnections.Size = new Size(123, 17);
-        StatTotalConnections.TabIndex = 11;
-        StatTotalConnections.Text = "Total Connections:";
-        // 
-        // StatSent
-        // 
-        StatSent.AutoSize = true;
-        StatSent.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
-        StatSent.ForeColor = Color.Teal;
-        StatSent.Location = new Point(850, 111);
-        StatSent.Margin = new Padding(4, 0, 4, 0);
-        StatSent.Name = "StatSent";
-        StatSent.Size = new Size(39, 17);
-        StatSent.TabIndex = 10;
-        StatSent.Text = "Sent:";
-        // 
-        // StatReceived
-        // 
-        StatReceived.AutoSize = true;
-        StatReceived.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
-        StatReceived.ForeColor = Color.Teal;
-        StatReceived.Location = new Point(850, 94);
-        StatReceived.Margin = new Padding(4, 0, 4, 0);
-        StatReceived.Name = "StatReceived";
-        StatReceived.Size = new Size(66, 17);
-        StatReceived.TabIndex = 9;
-        StatReceived.Text = "Received:";
-        // 
-        // CycleCountLabel
-        // 
-        CycleCountLabel.AutoSize = true;
-        CycleCountLabel.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
-        CycleCountLabel.ForeColor = Color.Blue;
-        CycleCountLabel.Location = new Point(850, 77);
-        CycleCountLabel.Margin = new Padding(4, 0, 4, 0);
-        CycleCountLabel.Name = "CycleCountLabel";
-        CycleCountLabel.Size = new Size(85, 17);
-        CycleCountLabel.TabIndex = 1;
-        CycleCountLabel.Text = "Cycle Count:";
         // 
         // 定制模块
         // 
@@ -33348,11 +33258,70 @@ public partial class SMain
         // 
         // statusStrip1
         // 
-        statusStrip1.Location = new Point(0, 872);
+        statusStrip1.Items.AddRange(new ToolStripItem[] { PortStatusLabel, ConnectionsStatusLabel, OnlineStatusLabel, ObjectsStatusLabel, CycleStatusLabel, DataReceivedStatusLabel, DataSentStatusLabel });
+        statusStrip1.Location = new Point(0, 870);
         statusStrip1.Name = "statusStrip1";
-        statusStrip1.Size = new Size(1620, 22);
+        statusStrip1.Size = new Size(1620, 24);
+        statusStrip1.SizingGrip = false;
         statusStrip1.TabIndex = 8;
         statusStrip1.Text = "statusStrip1";
+        // 
+        // PortStatusLabel
+        // 
+        PortStatusLabel.AutoSize = false;
+        PortStatusLabel.BorderSides = (ToolStripStatusLabelBorderSides)(((ToolStripStatusLabelBorderSides.Left) | (ToolStripStatusLabelBorderSides.Top)) | (ToolStripStatusLabelBorderSides.Right)) | (ToolStripStatusLabelBorderSides.Bottom);
+        PortStatusLabel.BorderStyle = Border3DStyle.SunkenInner;
+        PortStatusLabel.Name = "PortStatusLabel";
+        PortStatusLabel.Size = new Size(50, 19);
+        PortStatusLabel.Text = "----";
+        // 
+        // ConnectionsStatusLabel
+        // 
+        ConnectionsStatusLabel.BorderSides = (ToolStripStatusLabelBorderSides)(((ToolStripStatusLabelBorderSides.Left) | (ToolStripStatusLabelBorderSides.Top)) | (ToolStripStatusLabelBorderSides.Right)) | (ToolStripStatusLabelBorderSides.Bottom);
+        ConnectionsStatusLabel.BorderStyle = Border3DStyle.SunkenInner;
+        ConnectionsStatusLabel.Name = "ConnectionsStatusLabel";
+        ConnectionsStatusLabel.Size = new Size(94, 19);
+        ConnectionsStatusLabel.Text = "Connections: ??";
+        // 
+        // OnlineStatusLabel
+        // 
+        OnlineStatusLabel.BorderSides = (ToolStripStatusLabelBorderSides)(((ToolStripStatusLabelBorderSides.Left) | (ToolStripStatusLabelBorderSides.Top)) | (ToolStripStatusLabelBorderSides.Right)) | (ToolStripStatusLabelBorderSides.Bottom);
+        OnlineStatusLabel.BorderStyle = Border3DStyle.SunkenInner;
+        OnlineStatusLabel.Name = "OnlineStatusLabel";
+        OnlineStatusLabel.Size = new Size(64, 19);
+        OnlineStatusLabel.Text = "Players: ??";
+        // 
+        // ObjectsStatusLabel
+        // 
+        ObjectsStatusLabel.BorderSides = (ToolStripStatusLabelBorderSides)(((ToolStripStatusLabelBorderSides.Left) | (ToolStripStatusLabelBorderSides.Top)) | (ToolStripStatusLabelBorderSides.Right)) | (ToolStripStatusLabelBorderSides.Bottom);
+        ObjectsStatusLabel.BorderStyle = Border3DStyle.SunkenInner;
+        ObjectsStatusLabel.Name = "ObjectsStatusLabel";
+        ObjectsStatusLabel.Size = new Size(67, 19);
+        ObjectsStatusLabel.Text = "Objects: ??";
+        // 
+        // CycleStatusLabel
+        // 
+        CycleStatusLabel.BorderSides = (ToolStripStatusLabelBorderSides)(((ToolStripStatusLabelBorderSides.Left) | (ToolStripStatusLabelBorderSides.Top)) | (ToolStripStatusLabelBorderSides.Right)) | (ToolStripStatusLabelBorderSides.Bottom);
+        CycleStatusLabel.BorderStyle = Border3DStyle.SunkenInner;
+        CycleStatusLabel.Name = "CycleStatusLabel";
+        CycleStatusLabel.Size = new Size(61, 19);
+        CycleStatusLabel.Text = "Cycles: ??";
+        // 
+        // DataReceivedStatusLabel
+        // 
+        DataReceivedStatusLabel.BorderSides = (ToolStripStatusLabelBorderSides)(((ToolStripStatusLabelBorderSides.Left) | (ToolStripStatusLabelBorderSides.Top)) | (ToolStripStatusLabelBorderSides.Right)) | (ToolStripStatusLabelBorderSides.Bottom);
+        DataReceivedStatusLabel.BorderStyle = Border3DStyle.SunkenInner;
+        DataReceivedStatusLabel.Name = "DataReceivedStatusLabel";
+        DataReceivedStatusLabel.Size = new Size(74, 19);
+        DataReceivedStatusLabel.Text = "Received: ??";
+        // 
+        // DataSentStatusLabel
+        // 
+        DataSentStatusLabel.BorderSides = (ToolStripStatusLabelBorderSides)(((ToolStripStatusLabelBorderSides.Left) | (ToolStripStatusLabelBorderSides.Top)) | (ToolStripStatusLabelBorderSides.Right)) | (ToolStripStatusLabelBorderSides.Bottom);
+        DataSentStatusLabel.BorderStyle = Border3DStyle.SunkenInner;
+        DataSentStatusLabel.Name = "DataSentStatusLabel";
+        DataSentStatusLabel.Size = new Size(50, 19);
+        DataSentStatusLabel.Text = "Sent: ??";
         // 
         // SMain
         // 
@@ -34839,7 +34808,6 @@ public partial class SMain
         ((ISupportInitialize)角色浏览表).EndInit();
         主选项卡.ResumeLayout(false);
         日志页面.ResumeLayout(false);
-        日志页面.PerformLayout();
         LoggingTab.ResumeLayout(false);
         系统日志页面.ResumeLayout(false);
         聊天日志页面.ResumeLayout(false);
@@ -34879,6 +34847,8 @@ public partial class SMain
         ((ISupportInitialize)S_世界BOSS时间).EndInit();
         menuStrip1.ResumeLayout(false);
         menuStrip1.PerformLayout();
+        statusStrip1.ResumeLayout(false);
+        statusStrip1.PerformLayout();
         this.ResumeLayout(false);
         this.PerformLayout();
     }
@@ -36000,15 +35970,9 @@ public partial class SMain
 
     private RichTextBox CommandLogsTextBox;
 
-    private Label StatLoggedInConnections;
-
     private Label StatLiveConnections;
 
     private Label StatTotalConnections;
-
-    private Label StatSent;
-
-    private Label StatReceived;
 
     private Label CycleCountLabel;
 
@@ -39495,4 +39459,11 @@ public partial class SMain
     private ToolStripMenuItem gameMountToolStripMenuItem;
     private ToolStripMenuItem mountRoyalBeastToolStripMenuItem;
     private ToolStripMenuItem vIPDataToolStripMenuItem;
+    private ToolStripStatusLabel ConnectionsStatusLabel;
+    private ToolStripStatusLabel ObjectsStatusLabel;
+    private ToolStripStatusLabel CycleStatusLabel;
+    private ToolStripStatusLabel DataReceivedStatusLabel;
+    private ToolStripStatusLabel DataSentStatusLabel;
+    private ToolStripStatusLabel OnlineStatusLabel;
+    private ToolStripStatusLabel PortStatusLabel;
 }

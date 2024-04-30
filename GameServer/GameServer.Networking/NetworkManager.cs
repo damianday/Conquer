@@ -25,9 +25,9 @@ public static class NetworkManager
     public static bool Stopped;
 
     public static uint ActiveConnections;
-    public static uint 已上线连接数;
-    public static uint 已上线连接数1;
-    public static uint 已上线连接数2;
+    public static uint ConnectionsOnline;
+    public static uint ConnectionsOnline1;
+    public static uint ConnectionsOnline2;
 
     public static long TotalSentBytes;
     public static long TotalReceivedBytes;
