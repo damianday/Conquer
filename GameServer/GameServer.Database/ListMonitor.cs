@@ -40,7 +40,7 @@ public sealed class ListMonitor<T> : IEnumerable<T>, IEnumerable
         }
     }
 
-    public List<T> IList => m_Value;
+    public IList<T> IList => m_Value;
     public int Count => m_Value.Count;
     public event ChangedDelegate Changed;
 

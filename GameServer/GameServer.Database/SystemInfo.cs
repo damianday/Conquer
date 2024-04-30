@@ -328,17 +328,71 @@ public class SystemInfo : DBObject
     private static int BinarySearch(ListMonitor<CharacterInfo> list, CharacterInfo value, IComparer<CharacterInfo> comparer, int index, int length)
     {
         if (length < 0) return 0;
+        if (list.Count == 0) return 0;
         if (index >= list.Count) return list.Count;
-        
-        return list.IList.BinarySearch(index, length, value, comparer);
+
+        int n = (index + length) / 2;
+        int cmp = comparer.Compare(list[n], (CharacterInfo)value);
+        if (cmp == 0)
+        {
+            return n;
+        }
+        if (cmp > 0)
+        {
+            if (n + 1 >= list.Count)
+            {
+                return list.Count;
+            }
+            if (comparer.Compare(list[n + 1], value) <= 0)
+            {
+                return n + 1;
+            }
+            return BinarySearch(list, value, comparer, n + 1, length);
+        }
+        if (n - 1 < 0)
+        {
+            return 0;
+        }
+        if (comparer.Compare(list[n - 1], value) >= 0)
+        {
+            return n;
+        }
+        return BinarySearch(list, value, comparer, index, n - 1);
     }
 
     private static int BinarySearch(ListMonitor<GuildInfo> list, GuildInfo value, IComparer<GuildInfo> comparer, int index, int length)
     {
         if (length < 0) return 0;
+        if (list.Count == 0) return 0;
         if (index >= list.Count) return list.Count;
 
-        return list.IList.BinarySearch(index, length, value, comparer);
+        int n = (index + length) / 2;
+        int cmp = comparer.Compare(list[n], value);
+        if (cmp == 0)
+        {
+            return n;
+        }
+        if (cmp > 0)
+        {
+            if (n + 1 >= list.Count)
+            {
+                return list.Count;
+            }
+            if (comparer.Compare(list[n + 1], value) <= 0)
+            {
+                return n + 1;
+            }
+            return BinarySearch(list, value, comparer, n + 1, length);
+        }
+        if (n - 1 < 0)
+        {
+            return 0;
+        }
+        if (comparer.Compare(list[n - 1], value) >= 0)
+        {
+            return n;
+        }
+        return BinarySearch(list, value, comparer, index, n - 1);
     }
 
     static SystemInfo()
