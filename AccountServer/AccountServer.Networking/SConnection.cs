@@ -16,8 +16,8 @@ namespace AccountServer.Networking;
 public sealed class SConnection
 {
 	private byte[] _rawData = new byte[0];
-    private readonly byte[] _rawBytes = new byte[8 * 1024];
-    private ConcurrentQueue<GamePacket> ReceivedPackets = new ConcurrentQueue<GamePacket>();
+	private readonly byte[] _rawBytes = new byte[8 * 1024];
+	private ConcurrentQueue<GamePacket> ReceivedPackets = new ConcurrentQueue<GamePacket>();
 	private ConcurrentQueue<GamePacket> SendPackets = new ConcurrentQueue<GamePacket>();
 
 	public readonly DateTime ConnectionTime;
@@ -37,7 +37,7 @@ public sealed class SConnection
 		LoggedIn = false;
 		AccountName = string.Empty;
 
-        BeginReceive();
+		BeginReceive();
 	}
 
 	public void Process()
@@ -57,7 +57,7 @@ public sealed class SConnection
 	public void SendPacket(GamePacket packet)
 	{
 		if (packet != null)
-            SendPackets.Enqueue(packet);
+			SendPackets.Enqueue(packet);
 	}
 
 	private void ProcessReceivedPackets()
@@ -90,9 +90,9 @@ public sealed class SConnection
 
 	private void BeginReceive()
 	{
-        if (Connection == null || !Connection.Connected) return;
+		if (Connection == null || !Connection.Connected) return;
 
-        try
+		try
 		{
 			Connection.Client.BeginReceive(_rawBytes, 0, _rawBytes.Length, SocketFlags.None, ReceiveData, _rawBytes);
 		}
@@ -160,8 +160,8 @@ public sealed class SConnection
 		{
 			var dataSent = Connection.Client.EndSend(result);
 
-            SEngine.TotalBytesSent += dataSent;
-            if (dataSent == 0)
+			SEngine.TotalBytesSent += dataSent;
+			if (dataSent == 0)
 			{
 				SendPackets = new ConcurrentQueue<GamePacket>();
 				Disconnect(new Exception("Sending Callback Error!"));
@@ -198,7 +198,12 @@ public sealed class SConnection
 		string[] array = Encoding.UTF8.GetString(P.AccountInformation).Split('/');
 		if (array.Length == 4)
 		{
-			if (array[1].Length <= 1 || array[1].Length > 18)
+			var name = array[0];
+			var password = array[1];
+			var question = array[2];
+			var answer = array[3];
+
+			if (password.Length <= 1 || password.Length > 18)
 			{
 				SendPacket(new AccountChangePasswordFailPacket
 				{
@@ -206,7 +211,9 @@ public sealed class SConnection
 				});
 				return;
 			}
-			if (!SMain.Accounts.TryGetValue(array[0], out var value))
+
+			var account = SAccounts.Find(name);
+			if (account == null)
 			{
 				SendPacket(new AccountChangePasswordFailPacket
 				{
@@ -214,7 +221,7 @@ public sealed class SConnection
 				});
 				return;
 			}
-			if (array[2] != value.SecurityQuestion)
+			if (question != account.SecurityQuestion)
 			{
 				SendPacket(new AccountChangePasswordFailPacket
 				{
@@ -222,7 +229,7 @@ public sealed class SConnection
 				});
 				return;
 			}
-			if (array[3] != value.SecurityAnswer)
+			if (answer != account.SecurityAnswer)
 			{
 				SendPacket(new AccountChangePasswordFailPacket
 				{
@@ -230,27 +237,27 @@ public sealed class SConnection
 				});
 				return;
 			}
-			value.Password = array[1];
-			SMain.SaveAccount(value);
+			account.Password = password;
+			SAccounts.SaveAccount(account);
 			SendPacket(new AccountChangePasswordSuccessPacket());
-			SMain.AddLogMessage("Password change successful! Account: " + array[1]);
+			SMain.AddLogMessage("Password change successful! Account: " + name);
 		}
 	}
 
 	public void Process(AccountRegisterPacket P)
 	{
-        string[] array = Encoding.UTF8.GetString(P.RegistrationInformation).Split('/');
+		string[] array = Encoding.UTF8.GetString(P.RegistrationInformation).Split('/');
 		if (array.Length == 5)
 		{
 			string name, password, question, answer, referrerCode;
 
-            name = array[0];
-            password = array[1];
-            question = array[2];
-            answer = array[3];
-            referrerCode = array[4];
+			name = array[0];
+			password = array[1];
+			question = array[2];
+			answer = array[3];
+			referrerCode = array[4];
 
-            if (name.Length <= 5 || name.Length > 12)
+			if (name.Length <= 5 || name.Length > 12)
 			{
 				SendPacket(new AccountRegisterFailPacket
 				{
@@ -282,7 +289,7 @@ public sealed class SConnection
 				});
 				return;
 			}
-			if (referrerCode.Length > 4 || (referrerCode != string.Empty && !SMain.AccountRefferalCodes.ContainsKey(array[4])))
+			if (!string.IsNullOrEmpty(referrerCode) && (referrerCode.Length > 4 || !SAccounts.ReferrerExists(referrerCode)))
 			{
 				SendPacket(new AccountRegisterFailPacket
 				{
@@ -306,7 +313,7 @@ public sealed class SConnection
 				});
 				return;
 			}
-			if (SMain.Accounts.ContainsKey(name))
+			if (SAccounts.AccountExists(name))
 			{
 				SendPacket(new AccountRegisterFailPacket
 				{
@@ -314,7 +321,7 @@ public sealed class SConnection
 				});
 				return;
 			}
-			SMain.AddAccount(new AccountInfo(name, password, question, answer, referrerCode));
+			SAccounts.AddAccount(new AccountInfo(name, password, question, answer, referrerCode));
 			SendPacket(new AccountRegisterSuccessPacket());
 			SMain.AddLogMessage("Account registration is successful! Account: " + name);
 			SMain.CreatedAccounts++;
@@ -346,7 +353,11 @@ public sealed class SConnection
 		string[] array = Encoding.UTF8.GetString(P.LoginInformation).Split('/');
 		if (array.Length == 2)
 		{
-			if (!SMain.Accounts.TryGetValue(array[0], out var account) || array[1] != account.Password)
+			var name = array[0];
+			var password = array[1];
+
+			var account = SAccounts.Find(name);
+			if (account == null || password != account.Password)
 			{
 				SendPacket(new AccountLogInFailPacket
 				{
@@ -354,13 +365,13 @@ public sealed class SConnection
 				});
 				return;
 			}
-            LoggedIn = true;
-			AccountName = array[0];
+			LoggedIn = true;
+			AccountName = name;
 			SendPacket(new AccountLogInSuccessPacket
 			{
 				ServerListInformation = Encoding.UTF8.GetBytes(SMain.PublicServerInfo)
 			});
-			SMain.AddLogMessage("Account login successful! Account: " + array[0]);
+			SMain.AddLogMessage("Account login successful! Account: " + name);
 		}
 	}
 
@@ -389,7 +400,7 @@ public sealed class SConnection
 		Task.Run(delegate
 		{
 			var data = SMS.Send(phone, code);
-            SendPacket(new AccountRegisterFailPacket
+			SendPacket(new AccountRegisterFailPacket
 			{
 				ErrorMessage = Encoding.UTF8.GetBytes(data)
 			});
@@ -401,14 +412,14 @@ public sealed class SConnection
 		string[] array = Encoding.UTF8.GetString(P.UpdateInformation).Split('/');
 		string value = array[1];
 
-        if (!ulong.TryParse(value, out var number))
+		if (!ulong.TryParse(value, out var number))
 		{
-            SendPacket(new AccountSendUpdateInfoFailPacket
-            {
-                HintCode = -1
-            });
-            return;
-        }
+			SendPacket(new AccountSendUpdateInfoFailPacket
+			{
+				HintCode = -1
+			});
+			return;
+		}
 
 		if (number != SMain.PatchChecksum)
 		{
@@ -433,10 +444,10 @@ public sealed class SConnection
 		var array = Encoding.UTF8.GetString(P.LoginInformation).Split('/');
 		if (LoggedIn && array.Length == 2)
 		{
-            var svname = array[1];
+			var svname = array[1];
 			var server = SMain.ServerList.Find(x => x.ServerName == svname);
 
-            if (server == null)
+			if (server == null)
 			{
 				SendPacket(new AccountStartGameFailPacket
 				{
@@ -445,8 +456,9 @@ public sealed class SConnection
 				return;
 			}
 
-			string ticket = AccountInfo.GenerateTicket();
-			if (SMain.Accounts.TryGetValue(AccountName, out var account))
+			string ticket = SAccounts.GenerateTicket();
+			var account = SAccounts.Find(AccountName);
+			if (account != null)
 			{
 				SEngine.SendTicketToServer(server.TicketAddress, ticket, AccountName, account.PromoCode, account.ReferrerCode);
 

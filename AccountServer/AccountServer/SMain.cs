@@ -39,13 +39,11 @@ public partial class SMain : Form
 
     public static SMain Instance;
 
-    public static string AccountDirectory = ".\\Accounts";
     public static string PatchDirectory = ".\\Patches";
     public static string ServerConfigFile = ".\\!ServerInfo.txt";
     public static string PatchConfigFile = ".\\!Patch.txt";
 
-    public static Dictionary<string, AccountInfo> Accounts;
-    public static Dictionary<string, AccountInfo> AccountRefferalCodes;
+    
     public static List<GameServerInfo> ServerList = new List<GameServerInfo>();
 
     public static string PatchFile = ".\\GameLogin.exe";
@@ -54,14 +52,6 @@ public partial class SMain : Form
     public static int PatchChunks;
 
     public static string PublicServerInfo => string.Join("\n", ServerList.Select(x => $"{x.PublicAddressIP}:{x.PublicAddressPort}/{x.ServerName}"));
-
-    private static char[] RandomChars = new char[36]
-    {
-        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-        'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
-        'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
-        'u', 'v', 'w', 'x', 'y', 'z'
-    };
 
     public static char[] RandomNumberChars = new char[10] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
 
@@ -79,7 +69,7 @@ public partial class SMain : Form
         {
             LogTextBox.AppendText("The server profile was not found, note the configuration\r\n");
         }
-        if (!Directory.Exists(AccountDirectory))
+        if (!Directory.Exists(SAccounts.AccountDirectory))
         {
             LogTextBox.AppendText("The account configuration folder could not be found, please note the guide\r\n");
         }
@@ -97,7 +87,7 @@ public partial class SMain : Form
     {
         Instance?.BeginInvoke((MethodInvoker)delegate
         {
-            Instance.ExistingAccountsLabel.Text = $"Accounts: {Accounts.Count}";
+            Instance.ExistingAccountsLabel.Text = $"Accounts: {SAccounts.AccountCount}";
             Instance.NewAccountsLabel.Text = $"New Accounts: {CreatedAccounts}";
             Instance.TicketsGeneratedLabel.Text = $"Tickets: {TotalTickets}";
             Instance.BytesReceivedLabel.Text = $"Bytes Received: {TotalBytesReceived}";
@@ -114,33 +104,6 @@ public partial class SMain : Form
         });
     }
 
-    public static void AddAccount(AccountInfo account)
-    {
-        if (!Accounts.ContainsKey(account.AccountName))
-        {
-            account.PromoCode = CreatePromoCode();
-
-            AccountRefferalCodes[account.PromoCode] = account;
-            Accounts[account.AccountName] = account;
-            SaveAccount(account);
-        }
-    }
-
-    public static string CreatePromoCode()
-    {
-        string code;
-        do
-        {
-            code = "";
-            for (int i = 0; i < 4; i++)
-            {
-                code += RandomChars[Random.Shared.Next(RandomChars.Length)];
-            }
-        }
-        while (AccountRefferalCodes.ContainsKey(code));
-        return code;
-    }
-
     public static string CreateVerificationCode()
     {
         string text = "";
@@ -149,11 +112,6 @@ public partial class SMain : Form
             text += RandomNumberChars[Random.Shared.Next(RandomNumberChars.Length)];
         }
         return text;
-    }
-
-    public static void SaveAccount(AccountInfo account)
-    {
-        File.WriteAllText(AccountDirectory + "\\" + account.AccountName + ".txt", Serializer.Serialize(account));
     }
 
     public static ulong CalcFileChecksum(byte[] buffer)
@@ -183,14 +141,14 @@ public partial class SMain : Form
     {
         if (e.Button == MouseButtons.Left)
         {
-            base.Visible = true;
+            Visible = true;
             TrayIcon.Visible = false;
         }
     }
 
     private void RestoreWindowMenuItem_Click(object sender, EventArgs e)
     {
-        base.Visible = true;
+        Visible = true;
         TrayIcon.Visible = false;
     }
 
@@ -232,7 +190,7 @@ public partial class SMain : Form
             AddLogMessage("The server configuration is empty and the startup fails");
             return;
         }
-        if (Accounts == null || Accounts.Count == 0)
+        if (SAccounts.AccountCount == 0)
         {
             loadAccountsToolStripMenuItem_Click(sender, e);
         }
@@ -316,42 +274,29 @@ public partial class SMain : Form
 
     private void openAccountDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        if (!Directory.Exists(AccountDirectory))
+        if (!Directory.Exists(SAccounts.AccountDirectory))
         {
             AddLogMessage("The account directory does not exist and is automatically created");
-            Directory.CreateDirectory(AccountDirectory);
+            Directory.CreateDirectory(SAccounts.AccountDirectory);
+            return;
         }
-        else
-        {
-            Process.Start("explorer.exe", AccountDirectory);
-        }
+        
+        Process.Start("explorer.exe", SAccounts.AccountDirectory);
     }
 
     private void loadAccountsToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        Accounts = new Dictionary<string, AccountInfo>();
-        AccountRefferalCodes = new Dictionary<string, AccountInfo>();
-        if (!Directory.Exists(AccountDirectory))
+        if (!Directory.Exists(SAccounts.AccountDirectory))
         {
             AddLogMessage("The account directory does not exist and is automatically created");
-            Directory.CreateDirectory(AccountDirectory);
+            Directory.CreateDirectory(SAccounts.AccountDirectory);
             return;
         }
 
-        var array = Serializer.Deserialize<AccountInfo>(AccountDirectory);
-        foreach (var account in array)
-        {
-            if (account.PromoCode == null || account.PromoCode == string.Empty)
-            {
-                account.PromoCode = CreatePromoCode();
-                SaveAccount(account);
-            }
-            Accounts[account.AccountName] = account;
-            AccountRefferalCodes[account.PromoCode] = account;
-        }
+        SAccounts.LoadAccounts();
 
-        AddLogMessage($"Account data loaded, the current number of accounts: {Accounts.Count}");
-        ExistingAccountsLabel.Text = $"Accounts: {Accounts.Count}";
+        AddLogMessage($"Account data loaded, the current number of accounts: {SAccounts.Accounts.Count}");
+        ExistingAccountsLabel.Text = $"Accounts: {SAccounts.Accounts.Count}";
     }
 
     private void OpenUpdateConfigurationToolStripMenuItem_Click(object sender, EventArgs e)
@@ -384,14 +329,9 @@ public partial class SMain : Form
 
     private void LoadAccountsView()
     {
-        string[] accountFiles = Directory.GetFiles(AccountDirectory, "*.txt");
-        foreach (string file in accountFiles)
+        foreach (var accountInfo in SAccounts.Accounts.Values)
         {
-            string jsonContent = File.ReadAllText(file);
-
-            AccountInfo accountInfo = JsonConvert.DeserializeObject<AccountInfo>(jsonContent);
-
-            ListViewItem item = new ListViewItem(accountInfo.AccountName);
+            var item = new ListViewItem(accountInfo.AccountName);
             item.SubItems.Add(accountInfo.Password);
             item.SubItems.Add(accountInfo.SecurityQuestion);
             item.SubItems.Add(accountInfo.SecurityAnswer);
