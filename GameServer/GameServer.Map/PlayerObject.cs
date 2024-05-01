@@ -7239,7 +7239,7 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void AttackWithSkill(ushort skillID, byte actionID, int targetID, Point location)
+    public void UserDoSkill(ushort skillID, byte actionID, int targetID, Point location)
     {
         if (Dead || StallState > 0 || TradeState >= 3)
             return;
@@ -29432,36 +29432,36 @@ public sealed class PlayerObject : MapObject
                         {
                             if (Pets.Count == 0)
                             {
-                                AttackWithSkill((ushort)挂机技能框架[挂机技能序列.道士召唤三], base.ActionID++, 0, CurrentPosition);
+                                UserDoSkill((ushort)挂机技能框架[挂机技能序列.道士召唤三], base.ActionID++, 0, CurrentPosition);
                             }
                         }
                         else if (挂机技能框架.ContainsKey(挂机技能序列.道士召唤二))
                         {
                             if (Pets.Count == 0)
                             {
-                                AttackWithSkill((ushort)挂机技能框架[挂机技能序列.道士召唤二], base.ActionID++, 0, CurrentPosition);
+                                UserDoSkill((ushort)挂机技能框架[挂机技能序列.道士召唤二], base.ActionID++, 0, CurrentPosition);
                             }
                         }
                         else if (挂机技能框架.ContainsKey(挂机技能序列.道士召唤一) && Pets.Count == 0)
                         {
-                            AttackWithSkill((ushort)挂机技能框架[挂机技能序列.道士召唤一], base.ActionID++, 0, CurrentPosition);
+                            UserDoSkill((ushort)挂机技能框架[挂机技能序列.道士召唤一], base.ActionID++, 0, CurrentPosition);
                         }
                     }
                     if (Job == GameObjectRace.Warrior)
                     {
                         if (!Skills.ContainsKey(1034) && 玩家自动攻击次数 == 0)
                         {
-                            AttackWithSkill((ushort)挂机技能框架[挂机技能序列.默认技能], base.ActionID++, 挂机参数[挂机特殊分类.待攻击怪物].ObjectID, 挂机参数[挂机特殊分类.待攻击怪物].CurrentPosition);
+                            UserDoSkill((ushort)挂机技能框架[挂机技能序列.默认技能], base.ActionID++, 挂机参数[挂机特殊分类.待攻击怪物].ObjectID, 挂机参数[挂机特殊分类.待攻击怪物].CurrentPosition);
                         }
                         else if (Skills.ContainsKey(1034) && 玩家自动攻击次数 == 0)
                         {
                             玩家自动攻击次数++;
-                            AttackWithSkill(1432, base.ActionID++, 挂机参数[挂机特殊分类.待攻击怪物].ObjectID, 挂机参数[挂机特殊分类.待攻击怪物].CurrentPosition);
+                            UserDoSkill(1432, base.ActionID++, 挂机参数[挂机特殊分类.待攻击怪物].ObjectID, 挂机参数[挂机特殊分类.待攻击怪物].CurrentPosition);
                         }
                         else if (Skills.ContainsKey(1033) && 玩家自动攻击次数 == 1)
                         {
                             玩家自动攻击次数++;
-                            AttackWithSkill(1431, base.ActionID++, 挂机参数[挂机特殊分类.待攻击怪物].ObjectID, 挂机参数[挂机特殊分类.待攻击怪物].CurrentPosition);
+                            UserDoSkill(1431, base.ActionID++, 挂机参数[挂机特殊分类.待攻击怪物].ObjectID, 挂机参数[挂机特殊分类.待攻击怪物].CurrentPosition);
                         }
                         else
                         {
@@ -29472,54 +29472,54 @@ public sealed class PlayerObject : MapObject
                     {
                         if (!Skills.ContainsKey(1203) && 玩家自动攻击次数 == 0)
                         {
-                            AttackWithSkill((ushort)挂机技能框架[挂机技能序列.默认技能], base.ActionID++, 挂机参数[挂机特殊分类.待攻击怪物].ObjectID, 挂机参数[挂机特殊分类.待攻击怪物].CurrentPosition);
+                            UserDoSkill((ushort)挂机技能框架[挂机技能序列.默认技能], base.ActionID++, 挂机参数[挂机特殊分类.待攻击怪物].ObjectID, 挂机参数[挂机特殊分类.待攻击怪物].CurrentPosition);
                         }
                         else if (Skills.ContainsKey(1203) && 玩家自动攻击次数 == 0)
                         {
-                            AttackWithSkill(1600, base.ActionID++, 挂机参数[挂机特殊分类.待攻击怪物].ObjectID, 挂机参数[挂机特殊分类.待攻击怪物].CurrentPosition);
+                            UserDoSkill(1600, base.ActionID++, 挂机参数[挂机特殊分类.待攻击怪物].ObjectID, 挂机参数[挂机特殊分类.待攻击怪物].CurrentPosition);
                             玩家自动攻击次数++;
                         }
                         else if (Skills.ContainsKey(1208) && 玩家自动攻击次数 == 1)
                         {
-                            AttackWithSkill(1602, base.ActionID++, 挂机参数[挂机特殊分类.待攻击怪物].ObjectID, 挂机参数[挂机特殊分类.待攻击怪物].CurrentPosition);
+                            UserDoSkill(1602, base.ActionID++, 挂机参数[挂机特殊分类.待攻击怪物].ObjectID, 挂机参数[挂机特殊分类.待攻击怪物].CurrentPosition);
                             玩家自动攻击次数 = 0;
                         }
                         else
                         {
                             玩家自动攻击次数 = 0;
-                            AttackWithSkill((ushort)挂机技能框架[挂机技能序列.默认技能], base.ActionID++, 挂机参数[挂机特殊分类.待攻击怪物].ObjectID, 挂机参数[挂机特殊分类.待攻击怪物].CurrentPosition);
+                            UserDoSkill((ushort)挂机技能框架[挂机技能序列.默认技能], base.ActionID++, 挂机参数[挂机特殊分类.待攻击怪物].ObjectID, 挂机参数[挂机特殊分类.待攻击怪物].CurrentPosition);
                         }
                     }
                     if (Job == GameObjectRace.Assassin)
                     {
                         if (!Skills.ContainsKey(1535) && 玩家自动攻击次数 == 0)
                         {
-                            AttackWithSkill((ushort)挂机技能框架[挂机技能序列.默认技能], base.ActionID++, 挂机参数[挂机特殊分类.待攻击怪物].ObjectID, 挂机参数[挂机特殊分类.待攻击怪物].CurrentPosition);
+                            UserDoSkill((ushort)挂机技能框架[挂机技能序列.默认技能], base.ActionID++, 挂机参数[挂机特殊分类.待攻击怪物].ObjectID, 挂机参数[挂机特殊分类.待攻击怪物].CurrentPosition);
                         }
                         else if (Skills.ContainsKey(1531) && 玩家自动攻击次数 == 2)
                         {
-                            AttackWithSkill(1930, base.ActionID++, 挂机参数[挂机特殊分类.待攻击怪物].ObjectID, 挂机参数[挂机特殊分类.待攻击怪物].CurrentPosition);
+                            UserDoSkill(1930, base.ActionID++, 挂机参数[挂机特殊分类.待攻击怪物].ObjectID, 挂机参数[挂机特殊分类.待攻击怪物].CurrentPosition);
                             玩家自动攻击次数 = 0;
                         }
                         else if (Skills.ContainsKey(1535) && 玩家自动攻击次数 == 0)
                         {
-                            AttackWithSkill(1931, base.ActionID++, 挂机参数[挂机特殊分类.待攻击怪物].ObjectID, 挂机参数[挂机特殊分类.待攻击怪物].CurrentPosition);
+                            UserDoSkill(1931, base.ActionID++, 挂机参数[挂机特殊分类.待攻击怪物].ObjectID, 挂机参数[挂机特殊分类.待攻击怪物].CurrentPosition);
                             玩家自动攻击次数++;
                         }
                         else if (Skills.ContainsKey(1539) && 玩家自动攻击次数 == 1)
                         {
-                            AttackWithSkill(1932, base.ActionID++, 挂机参数[挂机特殊分类.待攻击怪物].ObjectID, 挂机参数[挂机特殊分类.待攻击怪物].CurrentPosition);
+                            UserDoSkill(1932, base.ActionID++, 挂机参数[挂机特殊分类.待攻击怪物].ObjectID, 挂机参数[挂机特殊分类.待攻击怪物].CurrentPosition);
                             玩家自动攻击次数++;
                         }
                         else
                         {
                             玩家自动攻击次数 = 0;
-                            AttackWithSkill((ushort)挂机技能框架[挂机技能序列.默认技能], base.ActionID++, 挂机参数[挂机特殊分类.待攻击怪物].ObjectID, 挂机参数[挂机特殊分类.待攻击怪物].CurrentPosition);
+                            UserDoSkill((ushort)挂机技能框架[挂机技能序列.默认技能], base.ActionID++, 挂机参数[挂机特殊分类.待攻击怪物].ObjectID, 挂机参数[挂机特殊分类.待攻击怪物].CurrentPosition);
                         }
                     }
                     else
                     {
-                        AttackWithSkill((ushort)挂机技能框架[挂机技能序列.默认技能], base.ActionID++, 挂机参数[挂机特殊分类.待攻击怪物].ObjectID, 挂机参数[挂机特殊分类.待攻击怪物].CurrentPosition);
+                        UserDoSkill((ushort)挂机技能框架[挂机技能序列.默认技能], base.ActionID++, 挂机参数[挂机特殊分类.待攻击怪物].ObjectID, 挂机参数[挂机特殊分类.待攻击怪物].CurrentPosition);
                     }
                     CurrentAutoState = AutoSystem.判断距离;
                 }

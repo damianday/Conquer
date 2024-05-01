@@ -561,7 +561,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.AttackWithSkill(P.SkillID, P.ActionID, P.TargetID, P.Location);
+            Player.UserDoSkill(P.SkillID, P.ActionID, P.TargetID, P.Location);
         }
     }
 
