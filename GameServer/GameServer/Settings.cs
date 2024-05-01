@@ -14,7 +14,7 @@ public class Settings
 
 
     [JsonIgnore]
-    public const string SettingFile = "!Settings.Default.txt";
+    public const string SettingFile = "!Settings.txt";
 
     [JsonIgnore]
     public int CurrentVersion = 10;
