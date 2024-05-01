@@ -199,7 +199,7 @@ public static class SEngine
             Session.SaveUsers();
             SMain.AddSystemLog("Server is out of service");
             SMain.OnStopServiceCompleted();
-            SMain.AddSystemLog("Server is out of service");
+            SMain.AddSystemLog("Server thread shut down");
             MainThread = null;
             SMain.AddSystemLog("Server has been shut down successfully");
         }
