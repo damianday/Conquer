@@ -2714,5 +2714,7 @@ public sealed class SConnection
     public void Process(请求七天详情 P) { }
 
     public void Process(请求战功信息 P) { }
+
+    public void Process(请求战功任务 P) { }
     #endregion
 }
