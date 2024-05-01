@@ -261,11 +261,12 @@ public partial class SMain : Form
         });
     }
 
-    public static void UpdateStats(SEngineStats stats)
+    public static void UpdateStats(SystemStatsState stats)
     {
         Main?.BeginInvoke(() =>
         {
             Main.PortStatusLabel.Text = Config.UserConnectionPort.ToString();
+            Main.RunTimeStatusLabel.Text = $"RunTime: {stats.RunTime:dd\\:hh\\:mm\\:ss}";
             Main.ConnectionsStatusLabel.Text = $"Connections: {stats.ActiveConnections}/{stats.Connections}";
             Main.OnlineStatusLabel.Text = $"Online: {stats.ConnectionsOnline}/{stats.ConnectionsOnline1}/{stats.ConnectionsOnline2}";
             Main.ObjectsStatusLabel.Text = $"Objects: {stats.ActiveObjects}/{stats.SecondaryObjects}/{stats.Objects}";
@@ -1641,14 +1642,8 @@ public partial class SMain : Form
     {
         if (savaDatabaseToolStripMenuItem.Enabled && Session.Modified)
         {
-            if (savaDatabaseToolStripMenuItem.BackColor == Color.LightSteelBlue)
-            {
-                savaDatabaseToolStripMenuItem.BackColor = Color.PaleVioletRed;
-            }
-            else
-            {
-                savaDatabaseToolStripMenuItem.BackColor = Color.LightSteelBlue;
-            }
+            savaDatabaseToolStripMenuItem.BackColor = (savaDatabaseToolStripMenuItem.BackColor == Color.LightSteelBlue) ?
+                Color.PaleVioletRed : Color.LightSteelBlue;
         }
     }
 

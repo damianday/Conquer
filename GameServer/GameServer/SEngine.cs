@@ -9,7 +9,7 @@ using GameServer.Networking;
 namespace GameServer;
 
 
-public sealed class SEngineStats
+public sealed class SystemStatsState
 {
     public uint Connections;
     public uint ActiveConnections;
@@ -18,10 +18,12 @@ public sealed class SEngineStats
     public long TotalReceivedBytes;
     public int ActiveObjects, SecondaryObjects, Objects;
     public uint CycleCount;
+    public TimeSpan RunTime;
 }
 
 public static class SEngine
 {
+    public static DateTime StartTime;
     public static DateTime CurrentTime;
     public static DateTime OneSecondTime;
     public static DateTime NextSaveDataTime;
@@ -30,7 +32,7 @@ public static class SEngine
 
     public static ConcurrentQueue<GMCommand> ExternalCommands;
 
-    public static SEngineStats Stats;
+    public static SystemStatsState Stats;
     public static uint CycleCount;
     public static bool Running;
     public static bool Saving;
@@ -43,13 +45,14 @@ public static class SEngine
 
     static SEngine()
     {
-        CurrentTime = DateTime.UtcNow;
+        StartTime = DateTime.UtcNow;
+        CurrentTime = StartTime;
         OneSecondTime = CurrentTime.AddSeconds(1.0);
         NextSaveDataTime = CurrentTime.AddMinutes(Config.AutoSaveInterval);
 
         ExternalCommands = new ConcurrentQueue<GMCommand>();
 
-        Stats = new SEngineStats();
+        Stats = new SystemStatsState();
         CycleCount = 0;
         Running = false;
         Saving = false;
@@ -171,6 +174,7 @@ public static class SEngine
                     Stats.SecondaryObjects = MapManager.SecondaryObjects.Count;
                     Stats.Objects = MapManager.Objects.Count;
                     Stats.CycleCount = CycleCount;
+                    Stats.RunTime = CurrentTime - StartTime;
                     SMain.UpdateStats(Stats);
 
                     CycleCount = 0;

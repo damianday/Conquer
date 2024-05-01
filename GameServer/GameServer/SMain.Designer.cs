@@ -2415,6 +2415,7 @@ public partial class SMain
         CycleStatusLabel = new ToolStripStatusLabel();
         DataReceivedStatusLabel = new ToolStripStatusLabel();
         DataSentStatusLabel = new ToolStripStatusLabel();
+        RunTimeStatusLabel = new ToolStripStatusLabel();
         角色右键菜单.SuspendLayout();
         下方控件页.SuspendLayout();
         功能模块1.SuspendLayout();
@@ -32986,6 +32987,7 @@ public partial class SMain
         // 
         // stopServerToolStripMenuItem
         // 
+        stopServerToolStripMenuItem.Enabled = false;
         stopServerToolStripMenuItem.ForeColor = Color.Maroon;
         stopServerToolStripMenuItem.Name = "stopServerToolStripMenuItem";
         stopServerToolStripMenuItem.Size = new Size(149, 22);
@@ -33258,7 +33260,7 @@ public partial class SMain
         // 
         // statusStrip1
         // 
-        statusStrip1.Items.AddRange(new ToolStripItem[] { PortStatusLabel, ConnectionsStatusLabel, OnlineStatusLabel, ObjectsStatusLabel, CycleStatusLabel, DataReceivedStatusLabel, DataSentStatusLabel });
+        statusStrip1.Items.AddRange(new ToolStripItem[] { PortStatusLabel, RunTimeStatusLabel, ConnectionsStatusLabel, OnlineStatusLabel, ObjectsStatusLabel, CycleStatusLabel, DataReceivedStatusLabel, DataSentStatusLabel });
         statusStrip1.Location = new Point(0, 870);
         statusStrip1.Name = "statusStrip1";
         statusStrip1.Size = new Size(1620, 24);
@@ -33322,6 +33324,14 @@ public partial class SMain
         DataSentStatusLabel.Name = "DataSentStatusLabel";
         DataSentStatusLabel.Size = new Size(50, 19);
         DataSentStatusLabel.Text = "Sent: ??";
+        // 
+        // RunTimeStatusLabel
+        // 
+        RunTimeStatusLabel.BorderSides = (ToolStripStatusLabelBorderSides)(((ToolStripStatusLabelBorderSides.Left) | (ToolStripStatusLabelBorderSides.Top)) | (ToolStripStatusLabelBorderSides.Right)) | (ToolStripStatusLabelBorderSides.Bottom);
+        RunTimeStatusLabel.BorderStyle = Border3DStyle.SunkenInner;
+        RunTimeStatusLabel.Name = "RunTimeStatusLabel";
+        RunTimeStatusLabel.Size = new Size(74, 19);
+        RunTimeStatusLabel.Text = "RunTime: ??";
         // 
         // SMain
         // 
@@ -39466,4 +39476,5 @@ public partial class SMain
     private ToolStripStatusLabel DataSentStatusLabel;
     private ToolStripStatusLabel OnlineStatusLabel;
     private ToolStripStatusLabel PortStatusLabel;
+    private ToolStripStatusLabel RunTimeStatusLabel;
 }
