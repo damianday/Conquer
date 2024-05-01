@@ -192,16 +192,16 @@ public static class SEngine
                 NetworkManager.Process();
                 MapManager.Process();
             }
-            SMain.AddSystemLog("正在清理物品数据...");
+            SMain.AddSystemLog("Cleaning item data...");
             MapManager.RemoveItems();
-            SMain.AddSystemLog("正在保存客户数据...");
+            SMain.AddSystemLog("Saving customer data...");
             Session.Save();
             Session.SaveUsers();
-            SMain.AddSystemLog("服务器停止使用");
+            SMain.AddSystemLog("Server is out of service");
             SMain.OnStopServiceCompleted();
-            SMain.AddSystemLog("服务器线程关闭");
+            SMain.AddSystemLog("Server thread shut down");
             MainThread = null;
-            SMain.AddSystemLog("服务器已成功关闭");
+            SMain.AddSystemLog("Server has been shut down successfully");
         }
         catch (Exception ex)
         {
