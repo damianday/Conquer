@@ -24,9 +24,9 @@ public sealed class GameMap
     {
         DataSheet = new Dictionary<byte, GameMap>();
 
-        if (Config.DBMethod == 0)
+        if (Settings.DBMethod == 0)
         {
-            var path = Config.GameDataPath + "\\System\\GameMap\\Maps";
+            var path = Settings.GameDataPath + "\\System\\GameMap\\Maps";
             if (!Directory.Exists(path))
                 return;
 
@@ -35,7 +35,7 @@ public sealed class GameMap
                 DataSheet.Add(obj.MapID, obj);
         }
 
-        if (Config.DBMethod == 1)
+        if (Settings.DBMethod == 1)
         {
             if (!DBAgent.X.Connected)
                 return;

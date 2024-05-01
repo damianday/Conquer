@@ -11,17 +11,17 @@ public sealed class ChangeMaxLevel : GMCommand
 
     public override void ExecuteCommand()
     {
-        if (MaxLevel <= Config.MaxUserLevel)
+        if (MaxLevel <= Settings.MaxUserLevel)
         {
             SMain.AddCommandLog("<= @" + GetType().Name + " The command execution failed, and the level is lower than the current max level");
             return;
         }
-        Config.MaxUserLevel = MaxLevel;
-        Config.Save();
+        Settings.MaxUserLevel = MaxLevel;
+        Settings.Save();
         SMain.Main.BeginInvoke(() =>
         {
             SMain.Main.S_MaxUserLevel.Value = MaxLevel;
         });
-        SMain.AddCommandLog($"<= @{GetType().Name} The command has been executed, and the current max level is open: {Config.MaxUserLevel}");
+        SMain.AddCommandLog($"<= @{GetType().Name} The command has been executed, and the current max level is open: {Settings.MaxUserLevel}");
     }
 }

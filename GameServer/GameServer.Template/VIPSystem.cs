@@ -27,7 +27,7 @@ public sealed class VIPSystem
     {
         DataSheet = new Dictionary<int, VIPSystem>();
 
-        if (Config.DBMethod == 1)
+        if (Settings.DBMethod == 1)
         {
             if (!DBAgent.X.Connected)
                 return;
@@ -69,9 +69,9 @@ public sealed class VIPSystem
             }
         }
 
-        if (Config.DBMethod == 2)
+        if (Settings.DBMethod == 2)
         {
-            var path = Config.GameDataPath + "\\System\\VIPSystem";
+            var path = Settings.GameDataPath + "\\System\\VIPSystem";
             if (!Directory.Exists(path))
                 return;
 

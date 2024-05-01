@@ -22,9 +22,9 @@ public class MonsterBossTimedZen
     {
         DataSheet = new HashSet<MonsterBossTimedZen>();
 
-        if (Config.DBMethod == 0)
+        if (Settings.DBMethod == 0)
         {
-            var path = Config.GameDataPath + "\\System\\GameMap\\MonsterBossTimed\\";
+            var path = Settings.GameDataPath + "\\System\\GameMap\\MonsterBossTimed\\";
             if (!Directory.Exists(path))
                 return;
 
@@ -33,7 +33,7 @@ public class MonsterBossTimedZen
                 DataSheet.Add(obj);
         }
 
-        if (Config.DBMethod == 1)
+        if (Settings.DBMethod == 1)
         {
             if (!DBAgent.X.Connected)
                 return;

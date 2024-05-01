@@ -17,7 +17,7 @@ public sealed class RandomStats
     {
         DataSheet = new Dictionary<int, RandomStats>();
 
-        var path = Config.GameDataPath + "\\System\\Items\\RandomStats\\";
+        var path = Settings.GameDataPath + "\\System\\Items\\RandomStats\\";
         if (!Directory.Exists(path))
             return;
 

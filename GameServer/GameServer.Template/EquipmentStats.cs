@@ -31,12 +31,12 @@ public sealed class EquipmentStats
             for (int i = 0; i < num2; i++)
             {
                 RandomStats 随机属性2 = value2[SEngine.Random.Next(value2.Length)];
-                if (!dictionary.ContainsKey(随机属性2.Stat) && value.ItemType == ItemType.Necklace && Config.幸运保底开关)
+                if (!dictionary.ContainsKey(随机属性2.Stat) && value.ItemType == ItemType.Necklace && Settings.幸运保底开关)
                 {
                     dictionary[随机属性2.Stat] = 随机属性2;
                     continue;
                 }
-                if (!dictionary.ContainsKey(随机属性2.Stat) && !Config.幸运保底开关)
+                if (!dictionary.ContainsKey(随机属性2.Stat) && !Settings.幸运保底开关)
                 {
                     dictionary[随机属性2.Stat] = 随机属性2;
                     continue;
@@ -100,7 +100,7 @@ public sealed class EquipmentStats
             ProbabilityTable.TryGetValue((byte)部位, out var value2) && 
             value2.Length != 0 && 
             (重铸装备 || Compute.CalculateProbability(value.MaxProbability)) && 
-            value.ItemType == ItemType.Necklace && Config.幸运保底开关)
+            value.ItemType == ItemType.Necklace && Settings.幸运保底开关)
         {
             int num = SEngine.Random.Next(100);
             Dictionary<Stat, RandomStats> dictionary = new Dictionary<Stat, RandomStats>();
@@ -110,23 +110,23 @@ public sealed class EquipmentStats
                 RandomStats 随机属性2 = value2[SEngine.Random.Next(value2.Length)];
                 if (!dictionary.ContainsKey(随机属性2.Stat))
                 {
-                    if (Config.幸运洗练点数 == 1)
+                    if (Settings.幸运洗练点数 == 1)
                     {
-                        随机属性2.Value = Config.幸运洗练点数;
+                        随机属性2.Value = Settings.幸运洗练点数;
                         随机属性2.Stat = Stat.Luck;
                         随机属性2.StatID = 32001;
                         随机属性2.StatDescription = "幸运等级+1";
                     }
-                    if (Config.幸运洗练点数 == 2)
+                    if (Settings.幸运洗练点数 == 2)
                     {
-                        随机属性2.Value = Config.幸运洗练点数;
+                        随机属性2.Value = Settings.幸运洗练点数;
                         随机属性2.Stat = Stat.Luck;
                         随机属性2.StatID = 32041;
                         随机属性2.StatDescription = "幸运等级+2";
                     }
-                    if (Config.幸运洗练点数 == 3)
+                    if (Settings.幸运洗练点数 == 3)
                     {
-                        随机属性2.Value = Config.幸运洗练点数;
+                        随机属性2.Value = Settings.幸运洗练点数;
                         随机属性2.Stat = Stat.Luck;
                         随机属性2.StatID = 32042;
                         随机属性2.StatDescription = "幸运等级+3";
@@ -143,7 +143,7 @@ public sealed class EquipmentStats
     {
         DataSheet = new Dictionary<byte, EquipmentStats>();
 
-        var path = Config.GameDataPath + "\\System\\Items\\EquipmentStats\\";
+        var path = Settings.GameDataPath + "\\System\\Items\\EquipmentStats\\";
         if (Directory.Exists(path))
         {
             var array = Serializer.Deserialize<EquipmentStats>(path);

@@ -44,7 +44,7 @@ public sealed class SkillTrap
     {
         DataSheet = new Dictionary<string, SkillTrap>();
 
-        var path = Config.GameDataPath + "\\System\\Skills\\Traps\\";
+        var path = Settings.GameDataPath + "\\System\\Skills\\Traps\\";
         if (!Directory.Exists(path))
             return;
 

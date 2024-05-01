@@ -25,9 +25,9 @@ public sealed class GuardInfo
     {
         DataSheet = new Dictionary<ushort, GuardInfo>();
 
-        if (Config.DBMethod == 0)
+        if (Settings.DBMethod == 0)
         {
-            var path = Config.GameDataPath + "\\System\\Npc\\Guards\\";
+            var path = Settings.GameDataPath + "\\System\\Npc\\Guards\\";
             if (!Directory.Exists(path))
                 return;
 
@@ -36,7 +36,7 @@ public sealed class GuardInfo
                 DataSheet.Add(obj.GuardID, obj);
         }
 
-        if (Config.DBMethod == 1)
+        if (Settings.DBMethod == 1)
         {
             if (!DBAgent.X.Connected)
                 return;

@@ -34,9 +34,9 @@ public sealed class GameStore
     {
         DataSheet = new Dictionary<int, GameStore>();
 
-        if (Config.DBMethod == 0)
+        if (Settings.DBMethod == 0)
         {
-            var path = Config.GameDataPath + "\\System\\Items\\GameStore\\"; // "\\System\\物品数据\\游戏商店\\"
+            var path = Settings.GameDataPath + "\\System\\Items\\GameStore\\"; // "\\System\\物品数据\\游戏商店\\"
             if (!Directory.Exists(path))
                 return;
 
@@ -45,7 +45,7 @@ public sealed class GameStore
                 DataSheet.Add(obj.StoreID, obj);
         }
 
-        if (Config.DBMethod == 1)
+        if (Settings.DBMethod == 1)
         {
             if (!DBAgent.X.Connected)
                 return;

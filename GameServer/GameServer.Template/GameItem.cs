@@ -71,7 +71,7 @@ public class GameItem
         DataSheet = new Dictionary<int, GameItem>();
         DataSheetByName = new Dictionary<string, GameItem>();
 
-        var path = Config.GameDataPath + "\\System\\Items\\Common\\";
+        var path = Settings.GameDataPath + "\\System\\Items\\Common\\";
         if (Directory.Exists(path))
         {
             var array = Serializer.Deserialize<GameItem>(path);
@@ -82,7 +82,7 @@ public class GameItem
             }
         }
 
-        path = Config.GameDataPath + "\\System\\Items\\Equipment\\";
+        path = Settings.GameDataPath + "\\System\\Items\\Equipment\\";
         if (Directory.Exists(path))
         {
             var array = Serializer.Deserialize<EquipmentItem>(path);

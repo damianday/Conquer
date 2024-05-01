@@ -54,7 +54,7 @@ public sealed class GameSkill
     {
         DataSheet = new Dictionary<string, GameSkill>();
 
-        var path = Config.GameDataPath + "\\System\\Skills\\Skills\\";
+        var path = Settings.GameDataPath + "\\System\\Skills\\Skills\\";
         if (!Directory.Exists(path))
             return;
 

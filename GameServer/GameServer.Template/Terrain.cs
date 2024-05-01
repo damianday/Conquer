@@ -54,7 +54,7 @@ public sealed class Terrain
     {
         DataSheet = new Dictionary<byte, Terrain>();
 
-        var path = Config.GameDataPath + "\\System\\GameMap\\Terrains\\";
+        var path = Settings.GameDataPath + "\\System\\GameMap\\Terrains\\";
         if (!Directory.Exists(path))
             return;
 

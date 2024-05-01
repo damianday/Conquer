@@ -24,9 +24,9 @@ public class TeleportGate
     {
         DataSheet = new List<TeleportGate>();
 
-        if (Config.DBMethod == 0)
+        if (Settings.DBMethod == 0)
         {
-            var path = Config.GameDataPath + "\\System\\GameMap\\TeleportGates\\";
+            var path = Settings.GameDataPath + "\\System\\GameMap\\TeleportGates\\";
             if (!Directory.Exists(path))
                 return;
 
@@ -35,7 +35,7 @@ public class TeleportGate
                 DataSheet.Add(obj);
         }
 
-        if (Config.DBMethod == 1)
+        if (Settings.DBMethod == 1)
         {
             if (!DBAgent.X.Connected)
                 return;

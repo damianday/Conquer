@@ -103,8 +103,8 @@ public sealed class ItemObject : MapObject
             }
         }
         CurrentPosition = point;
-        DisappearTime = SEngine.CurrentTime.AddMinutes(Config.ItemDisappearTime);
-        归属时间 = SEngine.CurrentTime.AddMinutes((int)Config.物品归属时间);
+        DisappearTime = SEngine.CurrentTime.AddMinutes(Settings.ItemDisappearTime);
+        归属时间 = SEngine.CurrentTime.AddMinutes((int)Settings.物品归属时间);
         ObjectID = ++MapManager.ItemObjectID;
 
         BindGrid();

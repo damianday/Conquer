@@ -571,7 +571,7 @@ public sealed class PlayerObject : MapObject
 
             if (Character.PKPoint != value)
             {
-                if (Character.PKPoint < Config.PKRedNamePoint && value >= Config.PKRedNamePoint)
+                if (Character.PKPoint < Settings.PKRedNamePoint && value >= Settings.PKRedNamePoint)
                     GreyTime = TimeSpan.Zero;
                 Character.PKPoint = value;
                 SyncPKPointPacket packet = new SyncPKPointPacket
@@ -599,7 +599,7 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public bool RedName => PKPoint >= Config.PKRedNamePoint;
+    public bool RedName => PKPoint >= Settings.PKRedNamePoint;
 
     public bool GreyName => GreyTime > TimeSpan.Zero;
 
@@ -972,11 +972,11 @@ public sealed class PlayerObject : MapObject
         {
             if (Character.GreyTime.V > TimeSpan.Zero)
                 return ObjectNameColor.Gray;
-            if (Character.PKPoint >= Config.PKCrimsonNamePoint)
+            if (Character.PKPoint >= Settings.PKCrimsonNamePoint)
                 return ObjectNameColor.Crimson;
-            if (Character.PKPoint >= Config.PKRedNamePoint)
+            if (Character.PKPoint >= Settings.PKRedNamePoint)
                 return ObjectNameColor.Red;
-            if (Character.PKPoint >= Config.PKYellowNamePoint)
+            if (Character.PKPoint >= Settings.PKYellowNamePoint)
                 return ObjectNameColor.Yellow;
             return ObjectNameColor.White;
         }
@@ -1093,35 +1093,35 @@ public sealed class PlayerObject : MapObject
                 TitleTime = item2.Value;
             }
         }
-        if (CurrentTitle > 0 && GameTitle.DataSheet.TryGetValue(CurrentTitle, out var value) && Config.称号叠加开关 == 0)
+        if (CurrentTitle > 0 && GameTitle.DataSheet.TryGetValue(CurrentTitle, out var value) && Settings.称号叠加开关 == 0)
         {
             CombatPowerBonus[CurrentTitle] = value.CombatPower;
             BonusStats[CurrentTitle] = value.Stats;
         }
-        if (Config.新手上线赠送称号1 != 999 && !character.Titles.ContainsKey((byte)Config.新手上线赠送称号1) && GameTitle.DataSheet.TryGetValue((byte)Config.新手上线赠送称号1, out var _))
+        if (Settings.新手上线赠送称号1 != 999 && !character.Titles.ContainsKey((byte)Settings.新手上线赠送称号1) && GameTitle.DataSheet.TryGetValue((byte)Settings.新手上线赠送称号1, out var _))
         {
-            AddTitle((byte)Config.新手上线赠送称号1);
+            AddTitle((byte)Settings.新手上线赠送称号1);
         }
-        if (Config.CurrentVersion >= 1 && Config.称号叠加开关 == 1)
+        if (Settings.CurrentVersion >= 1 && Settings.称号叠加开关 == 1)
         {
             byte[] titles =
             { 
-                Config.称号叠加模块一,
-                Config.称号叠加模块二,
-                Config.称号叠加模块三,
-                Config.称号叠加模块四,
-                Config.称号叠加模块五,
-                Config.称号叠加模块六,
-                Config.称号叠加模块七,
-                Config.称号叠加模块八,
-                Config.称号叠加模块9,
-                Config.称号叠加模块10,
-                Config.称号叠加模块11,
-                Config.称号叠加模块12,
-                Config.称号叠加模块13,
-                Config.称号叠加模块14,
-                Config.称号叠加模块15,
-                Config.称号叠加模块16
+                Settings.称号叠加模块一,
+                Settings.称号叠加模块二,
+                Settings.称号叠加模块三,
+                Settings.称号叠加模块四,
+                Settings.称号叠加模块五,
+                Settings.称号叠加模块六,
+                Settings.称号叠加模块七,
+                Settings.称号叠加模块八,
+                Settings.称号叠加模块9,
+                Settings.称号叠加模块10,
+                Settings.称号叠加模块11,
+                Settings.称号叠加模块12,
+                Settings.称号叠加模块13,
+                Settings.称号叠加模块14,
+                Settings.称号叠加模块15,
+                Settings.称号叠加模块16
             };
 
             foreach (var id in titles)
@@ -1133,9 +1133,9 @@ public sealed class PlayerObject : MapObject
                 }
             }
         }
-        if (Config.CurrentVersion >= 1)
+        if (Settings.CurrentVersion >= 1)
         {
-            if (Config.御兽切换开关 == 1 && Config.御兽属性开启 == 1)
+            if (Settings.御兽切换开关 == 1 && Settings.御兽属性开启 == 1)
             {
                 uint[] bonuses = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21 };
 
@@ -1150,7 +1150,7 @@ public sealed class PlayerObject : MapObject
                     }
                 }
             }
-            if (Config.御兽切换开关 == 0 && Config.御兽属性开启 == 1)
+            if (Settings.御兽切换开关 == 0 && Settings.御兽属性开启 == 1)
             {
                 uint[] bonuses = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 19, 20, 21 }; // Missing 17
 
@@ -1167,15 +1167,15 @@ public sealed class PlayerObject : MapObject
             }
         }
 
-        if (Config.CurrentVersion >= 2)
+        if (Settings.CurrentVersion >= 2)
         {
-            if (SystemInfo.Info.OccupyGuild.V != Guild && character.Titles.ContainsKey(Config.沙巴克成员称号))
+            if (SystemInfo.Info.OccupyGuild.V != Guild && character.Titles.ContainsKey(Settings.沙巴克成员称号))
             {
-                ExpireTitle(Config.沙巴克成员称号);
+                ExpireTitle(Settings.沙巴克成员称号);
             }
-            if (SystemInfo.Info.OccupyGuild.V != Guild && character.Titles.ContainsKey(Config.沙巴克城主称号))
+            if (SystemInfo.Info.OccupyGuild.V != Guild && character.Titles.ContainsKey(Settings.沙巴克城主称号))
             {
-                ExpireTitle(Config.沙巴克城主称号);
+                ExpireTitle(Settings.沙巴克城主称号);
             }
         }
 
@@ -1245,11 +1245,11 @@ public sealed class PlayerObject : MapObject
             Level = CurrentLevel,
             AttackMode = (byte)AttackMode,
             AwakeningExp = character.AwakeningExp.V,
-            MaxAwakeningExp = Config.MaxAwakeningExp,
+            MaxAwakeningExp = Settings.MaxAwakeningExp,
             CurrentTime = Compute.TimeSeconds(SEngine.CurrentTime),
             //AutoBattleMode = 2,
-            MaxLevel = Config.MaxUserLevel,
-            SpecialRepairDiscount = (ushort)(Config.SpecialRepairDiscount * 10000m)
+            MaxLevel = Settings.MaxUserLevel,
+            SpecialRepairDiscount = (ushort)(Settings.SpecialRepairDiscount * 10000m)
         });
         /*Enqueue(new 同步补充变量
         {
@@ -1596,7 +1596,7 @@ public sealed class PlayerObject : MapObject
                     BattleEquipmentTime = SEngine.CurrentTime.AddMilliseconds(1000.0);
                 }
             }
-            if (Character.屠魔兑换.V.Date != SEngine.CurrentTime.Date && SEngine.CurrentTime.Hour >= Config.重置屠魔副本时间)
+            if (Character.屠魔兑换.V.Date != SEngine.CurrentTime.Date && SEngine.CurrentTime.Hour >= Settings.重置屠魔副本时间)
             {
                 Character.屠魔兑换.V = SEngine.CurrentTime;
                 Character.屠魔次数.V = 0;
@@ -1629,7 +1629,7 @@ public sealed class PlayerObject : MapObject
             if (CurrentMap.MapID == 183 && SEngine.CurrentTime > ExperienceTime)
             {
                 ExperienceTime = SEngine.CurrentTime.AddSeconds(5.0);
-                GainExperience(null, (CurrentMap[CurrentPosition].FirstOrDefault((MapObject O) => O is GuardObject guard && guard.GuardID == 6121) == null) ? Config.武斗场经验小 : Config.武斗场经验大);
+                GainExperience(null, (CurrentMap[CurrentPosition].FirstOrDefault((MapObject O) => O is GuardObject guard && guard.GuardID == 6121) == null) ? Settings.武斗场经验小 : Settings.武斗场经验大);
             }
 
             Guild?.Process();
@@ -1679,10 +1679,10 @@ public sealed class PlayerObject : MapObject
             玩家实例2 = caster;
         }
 
-        if (玩家实例2 != null && !CurrentMap.自由区内(CurrentPosition) && !GreyName && !RedName && (MapManager.SandCityStage < 2 || (CurrentMap.MapID != 152 && CurrentMap.MapID != 178)) && Config.杀人PK红名开关 == 0)
+        if (玩家实例2 != null && !CurrentMap.自由区内(CurrentPosition) && !GreyName && !RedName && (MapManager.SandCityStage < 2 || (CurrentMap.MapID != 152 && CurrentMap.MapID != 178)) && Settings.杀人PK红名开关 == 0)
         {
             玩家实例2.PKPoint += 50;
-            if (skillDeath && Config.PK死亡幸运开关 == 1)
+            if (skillDeath && Settings.PK死亡幸运开关 == 1)
             {
                 玩家实例2.DecreaseWeaponLuck();
             }
@@ -1707,198 +1707,198 @@ public sealed class PlayerObject : MapObject
             NetworkManager.SendAnnouncement($"{text}[{this}]在{CurrentMap}被{text2}[{玩家实例2}]击杀");
         }
 
-        if (Config.狂暴货币格式 == 1 && 玩家实例2 != null && Titles.ContainsKey(Config.狂暴称号格式) && GameTitle.DataSheet.TryGetValue(Config.狂暴称号格式, out var value))
+        if (Settings.狂暴货币格式 == 1 && 玩家实例2 != null && Titles.ContainsKey(Settings.狂暴称号格式) && GameTitle.DataSheet.TryGetValue(Settings.狂暴称号格式, out var value))
         {
-            ExpireTitle(Config.狂暴称号格式);
+            ExpireTitle(Settings.狂暴称号格式);
             BonusStats.Remove(value);
             CombatPowerBonus.Remove(value);
             RefreshStats();
             UpdateCombatPower();
-            玩家实例2.Ingot += Config.狂暴杀死元宝数量;
+            玩家实例2.Ingot += Settings.狂暴杀死元宝数量;
             玩家实例2.Enqueue(new SyncIngotsPacket
             {
                 Amount = 玩家实例2.Character.Ingot
             });
-            if (Config.CurrentVersion >= 2)
+            if (Settings.CurrentVersion >= 2)
             {
                 string text3 = null;
                 string text4 = null;
-                if (Config.狂暴击杀玩家颜色 == 0)
+                if (Settings.狂暴击杀玩家颜色 == 0)
                 {
                     text3 = "#f9e01d";
                 }
-                else if (Config.狂暴击杀玩家颜色 == 1)
+                else if (Settings.狂暴击杀玩家颜色 == 1)
                 {
                     text3 = "#7dea00";
                 }
-                else if (Config.狂暴击杀玩家颜色 == 2)
+                else if (Settings.狂暴击杀玩家颜色 == 2)
                 {
                     text3 = "#EA0000";
                 }
-                else if (Config.狂暴击杀玩家颜色 == 3)
+                else if (Settings.狂暴击杀玩家颜色 == 3)
                 {
                     text3 = "#0003ea";
                 }
-                else if (Config.狂暴击杀玩家颜色 == 4)
+                else if (Settings.狂暴击杀玩家颜色 == 4)
                 {
                     text3 = "#ff4aea";
                 }
-                else if (Config.狂暴击杀玩家颜色 == 5)
+                else if (Settings.狂暴击杀玩家颜色 == 5)
                 {
                     text3 = "#ffad4a";
                 }
-                else if (Config.狂暴击杀玩家颜色 == 6)
+                else if (Settings.狂暴击杀玩家颜色 == 6)
                 {
                     text3 = "#6bcbd2";
                 }
-                else if (Config.狂暴击杀玩家颜色 == 7)
+                else if (Settings.狂暴击杀玩家颜色 == 7)
                 {
                     text3 = "#ff4abf";
                 }
-                else if (Config.狂暴击杀玩家颜色 == 8)
+                else if (Settings.狂暴击杀玩家颜色 == 8)
                 {
                     text3 = "#fbf1f7";
                 }
-                if (Config.狂暴被杀玩家颜色 == 0)
+                if (Settings.狂暴被杀玩家颜色 == 0)
                 {
                     text4 = "#f9e01d";
                 }
-                else if (Config.狂暴被杀玩家颜色 == 1)
+                else if (Settings.狂暴被杀玩家颜色 == 1)
                 {
                     text4 = "#7dea00";
                 }
-                else if (Config.狂暴被杀玩家颜色 == 2)
+                else if (Settings.狂暴被杀玩家颜色 == 2)
                 {
                     text4 = "#EA0000";
                 }
-                else if (Config.狂暴被杀玩家颜色 == 3)
+                else if (Settings.狂暴被杀玩家颜色 == 3)
                 {
                     text4 = "#0003ea";
                 }
-                else if (Config.狂暴被杀玩家颜色 == 4)
+                else if (Settings.狂暴被杀玩家颜色 == 4)
                 {
                     text4 = "#ff4aea";
                 }
-                else if (Config.狂暴被杀玩家颜色 == 5)
+                else if (Settings.狂暴被杀玩家颜色 == 5)
                 {
                     text4 = "#ffad4a";
                 }
-                else if (Config.狂暴被杀玩家颜色 == 6)
+                else if (Settings.狂暴被杀玩家颜色 == 6)
                 {
                     text4 = "#6bcbd2";
                 }
-                else if (Config.狂暴被杀玩家颜色 == 7)
+                else if (Settings.狂暴被杀玩家颜色 == 7)
                 {
                     text4 = "#ff4abf";
                 }
-                else if (Config.狂暴被杀玩家颜色 == 8)
+                else if (Settings.狂暴被杀玩家颜色 == 8)
                 {
                     text4 = "#fbf1f7";
                 }
-                if (Config.CurrentVersion >= 2)
+                if (Settings.CurrentVersion >= 2)
                 {
                     NetworkManager.SendAnnouncement("拥有狂暴之体的<font color = '" + text4 + "'>[" + this?.ToString() + "]</font>在" + CurrentMap?.ToString() + "被<font color = '" + text3 + "'>[ " + 玩家实例2?.ToString() + "]</font>击杀");
                 }
             }
         }
 
-        if (Config.狂暴货币格式 == 0 && 玩家实例2 != null)
+        if (Settings.狂暴货币格式 == 0 && 玩家实例2 != null)
         {
-            if (Titles.ContainsKey(Config.狂暴称号格式) && GameTitle.DataSheet.TryGetValue(Config.狂暴称号格式, out var value2))
+            if (Titles.ContainsKey(Settings.狂暴称号格式) && GameTitle.DataSheet.TryGetValue(Settings.狂暴称号格式, out var value2))
             {
-                ExpireTitle(Config.狂暴称号格式);
+                ExpireTitle(Settings.狂暴称号格式);
                 BonusStats.Remove(value2);
                 CombatPowerBonus.Remove(value2);
                 RefreshStats();
                 UpdateCombatPower();
-                玩家实例2.Gold += Config.狂暴杀死金币数量;
+                玩家实例2.Gold += Settings.狂暴杀死金币数量;
             }
-            if (Config.CurrentVersion >= 2)
+            if (Settings.CurrentVersion >= 2)
             {
                 string text5 = null;
                 string text6 = null;
-                if (Config.狂暴击杀玩家颜色 == 0)
+                if (Settings.狂暴击杀玩家颜色 == 0)
                 {
                     text5 = "#f9e01d";
                 }
-                else if (Config.狂暴击杀玩家颜色 == 1)
+                else if (Settings.狂暴击杀玩家颜色 == 1)
                 {
                     text5 = "#7dea00";
                 }
-                else if (Config.狂暴击杀玩家颜色 == 2)
+                else if (Settings.狂暴击杀玩家颜色 == 2)
                 {
                     text5 = "#EA0000";
                 }
-                else if (Config.狂暴击杀玩家颜色 == 3)
+                else if (Settings.狂暴击杀玩家颜色 == 3)
                 {
                     text5 = "#0003ea";
                 }
-                else if (Config.狂暴击杀玩家颜色 == 4)
+                else if (Settings.狂暴击杀玩家颜色 == 4)
                 {
                     text5 = "#ff4aea";
                 }
-                else if (Config.狂暴击杀玩家颜色 == 5)
+                else if (Settings.狂暴击杀玩家颜色 == 5)
                 {
                     text5 = "#ffad4a";
                 }
-                else if (Config.狂暴击杀玩家颜色 == 6)
+                else if (Settings.狂暴击杀玩家颜色 == 6)
                 {
                     text5 = "#6bcbd2";
                 }
-                else if (Config.狂暴击杀玩家颜色 == 7)
+                else if (Settings.狂暴击杀玩家颜色 == 7)
                 {
                     text5 = "#ff4abf";
                 }
-                else if (Config.狂暴击杀玩家颜色 == 8)
+                else if (Settings.狂暴击杀玩家颜色 == 8)
                 {
                     text5 = "#fbf1f7";
                 }
-                if (Config.狂暴被杀玩家颜色 == 0)
+                if (Settings.狂暴被杀玩家颜色 == 0)
                 {
                     text6 = "#f9e01d";
                 }
-                else if (Config.狂暴被杀玩家颜色 == 1)
+                else if (Settings.狂暴被杀玩家颜色 == 1)
                 {
                     text6 = "#7dea00";
                 }
-                else if (Config.狂暴被杀玩家颜色 == 2)
+                else if (Settings.狂暴被杀玩家颜色 == 2)
                 {
                     text6 = "#EA0000";
                 }
-                else if (Config.狂暴被杀玩家颜色 == 3)
+                else if (Settings.狂暴被杀玩家颜色 == 3)
                 {
                     text6 = "#0003ea";
                 }
-                else if (Config.狂暴被杀玩家颜色 == 4)
+                else if (Settings.狂暴被杀玩家颜色 == 4)
                 {
                     text6 = "#ff4aea";
                 }
-                else if (Config.狂暴被杀玩家颜色 == 5)
+                else if (Settings.狂暴被杀玩家颜色 == 5)
                 {
                     text6 = "#ffad4a";
                 }
-                else if (Config.狂暴被杀玩家颜色 == 6)
+                else if (Settings.狂暴被杀玩家颜色 == 6)
                 {
                     text6 = "#6bcbd2";
                 }
-                else if (Config.狂暴被杀玩家颜色 == 7)
+                else if (Settings.狂暴被杀玩家颜色 == 7)
                 {
                     text6 = "#ff4abf";
                 }
-                else if (Config.狂暴被杀玩家颜色 == 8)
+                else if (Settings.狂暴被杀玩家颜色 == 8)
                 {
                     text6 = "#fbf1f7";
                 }
-                if (Config.CurrentVersion >= 2)
+                if (Settings.CurrentVersion >= 2)
                 {
                     NetworkManager.SendAnnouncement("拥有狂暴之体的<font color = '" + text6 + "'>[" + this?.ToString() + "]</font>在" + CurrentMap?.ToString() + "被<font color = '" + text5 + "'>[ " + 玩家实例2?.ToString() + "]</font>击杀");
                 }
             }
         }
 
-        if (Config.狂暴货币格式 == 2 && 玩家实例2 != null && Titles.ContainsKey(Config.狂暴称号格式) && GameTitle.DataSheet.TryGetValue(Config.狂暴称号格式, out var value3))
+        if (Settings.狂暴货币格式 == 2 && 玩家实例2 != null && Titles.ContainsKey(Settings.狂暴称号格式) && GameTitle.DataSheet.TryGetValue(Settings.狂暴称号格式, out var value3))
         {
-            ExpireTitle(Config.狂暴称号格式);
+            ExpireTitle(Settings.狂暴称号格式);
             BonusStats.Remove(value3);
             CombatPowerBonus.Remove(value3);
             RefreshStats();
@@ -1906,90 +1906,90 @@ public sealed class PlayerObject : MapObject
             byte b = 玩家实例2.FindEmptyInventoryIndex();
  
             GameItem value4 = null;
-            GameItem.DataSheetByName.TryGetValue(Config.狂暴名称, out value4);
+            GameItem.DataSheetByName.TryGetValue(Settings.狂暴名称, out value4);
             玩家实例2.Character.Inventory[b] = new ItemInfo(value4, 玩家实例2.Character, 1, b, 1);
-            玩家实例2.Character.Inventory[b].Dura.V = Config.狂暴杀死物品数量;
+            玩家实例2.Character.Inventory[b].Dura.V = Settings.狂暴杀死物品数量;
             玩家实例2.Enqueue(new SyncItemPacket
             {
                 Description = 玩家实例2.Character.Inventory[b].ToArray()
             });
-            if (Config.CurrentVersion >= 2)
+            if (Settings.CurrentVersion >= 2)
             {
                 string text7 = null;
                 string text8 = null;
-                if (Config.狂暴击杀玩家颜色 == 0)
+                if (Settings.狂暴击杀玩家颜色 == 0)
                 {
                     text7 = "#f9e01d";
                 }
-                else if (Config.狂暴击杀玩家颜色 == 1)
+                else if (Settings.狂暴击杀玩家颜色 == 1)
                 {
                     text7 = "#7dea00";
                 }
-                else if (Config.狂暴击杀玩家颜色 == 2)
+                else if (Settings.狂暴击杀玩家颜色 == 2)
                 {
                     text7 = "#EA0000";
                 }
-                else if (Config.狂暴击杀玩家颜色 == 3)
+                else if (Settings.狂暴击杀玩家颜色 == 3)
                 {
                     text7 = "#0003ea";
                 }
-                else if (Config.狂暴击杀玩家颜色 == 4)
+                else if (Settings.狂暴击杀玩家颜色 == 4)
                 {
                     text7 = "#ff4aea";
                 }
-                else if (Config.狂暴击杀玩家颜色 == 5)
+                else if (Settings.狂暴击杀玩家颜色 == 5)
                 {
                     text7 = "#ffad4a";
                 }
-                else if (Config.狂暴击杀玩家颜色 == 6)
+                else if (Settings.狂暴击杀玩家颜色 == 6)
                 {
                     text7 = "#6bcbd2";
                 }
-                else if (Config.狂暴击杀玩家颜色 == 7)
+                else if (Settings.狂暴击杀玩家颜色 == 7)
                 {
                     text7 = "#ff4abf";
                 }
-                else if (Config.狂暴击杀玩家颜色 == 8)
+                else if (Settings.狂暴击杀玩家颜色 == 8)
                 {
                     text7 = "#fbf1f7";
                 }
-                if (Config.狂暴被杀玩家颜色 == 0)
+                if (Settings.狂暴被杀玩家颜色 == 0)
                 {
                     text8 = "#f9e01d";
                 }
-                else if (Config.狂暴被杀玩家颜色 == 1)
+                else if (Settings.狂暴被杀玩家颜色 == 1)
                 {
                     text8 = "#7dea00";
                 }
-                else if (Config.狂暴被杀玩家颜色 == 2)
+                else if (Settings.狂暴被杀玩家颜色 == 2)
                 {
                     text8 = "#EA0000";
                 }
-                else if (Config.狂暴被杀玩家颜色 == 3)
+                else if (Settings.狂暴被杀玩家颜色 == 3)
                 {
                     text8 = "#0003ea";
                 }
-                else if (Config.狂暴被杀玩家颜色 == 4)
+                else if (Settings.狂暴被杀玩家颜色 == 4)
                 {
                     text8 = "#ff4aea";
                 }
-                else if (Config.狂暴被杀玩家颜色 == 5)
+                else if (Settings.狂暴被杀玩家颜色 == 5)
                 {
                     text8 = "#ffad4a";
                 }
-                else if (Config.狂暴被杀玩家颜色 == 6)
+                else if (Settings.狂暴被杀玩家颜色 == 6)
                 {
                     text8 = "#6bcbd2";
                 }
-                else if (Config.狂暴被杀玩家颜色 == 7)
+                else if (Settings.狂暴被杀玩家颜色 == 7)
                 {
                     text8 = "#ff4abf";
                 }
-                else if (Config.狂暴被杀玩家颜色 == 8)
+                else if (Settings.狂暴被杀玩家颜色 == 8)
                 {
                     text8 = "#fbf1f7";
                 }
-                if (Config.CurrentVersion >= 2)
+                if (Settings.CurrentVersion >= 2)
                 {
                     NetworkManager.SendAnnouncement("拥有狂暴之体的<font color = '" + text8 + "'>[" + this?.ToString() + "]</font>在" + CurrentMap?.ToString() + "被<font color = '" + text7 + "'>[ " + 玩家实例2?.ToString() + "]</font>击杀");
                 }
@@ -2003,7 +2003,7 @@ public sealed class PlayerObject : MapObject
 
         foreach (EquipmentInfo item3 in Equipment.Values.ToList())
         {
-            if (item3.CanDrop && Compute.CalculateProbability(Config.死亡掉落身上几率) && !HasResurrectionRing && ResurrectionRingReady)
+            if (item3.CanDrop && Compute.CalculateProbability(Settings.死亡掉落身上几率) && !HasResurrectionRing && ResurrectionRingReady)
             {
                 new ItemObject(item3.Info, item3, CurrentMap, CurrentPosition, new HashSet<CharacterInfo>());
                 Equipment.Remove(item3.Position);
@@ -2022,7 +2022,7 @@ public sealed class PlayerObject : MapObject
 
         foreach (ItemInfo item4 in Inventory.Values.ToList())
         {
-            if (item4.CanDrop && Compute.CalculateProbability(Config.死亡掉落背包几率) && !HasResurrectionRing && ResurrectionRingReady)
+            if (item4.CanDrop && Compute.CalculateProbability(Settings.死亡掉落背包几率) && !HasResurrectionRing && ResurrectionRingReady)
             {
                 if (item4.PersistType == PersistentItemType.Stack && item4.Dura.V > 1)
                 {
@@ -2054,9 +2054,9 @@ public sealed class PlayerObject : MapObject
             }
         }
 
-        if (CurrentMap.MapID == 183 && Config.武斗场杀人开关)
+        if (CurrentMap.MapID == 183 && Settings.武斗场杀人开关)
         {
-            GainExperience(null, Config.武斗场杀人经验);
+            GainExperience(null, Settings.武斗场杀人经验);
         }
     }
 
@@ -2068,7 +2068,7 @@ public sealed class PlayerObject : MapObject
             RemoveBuffEx(47391);
         }
 
-        if (CurrentMap.MapID == 183 && SEngine.CurrentTime.Hour != Config.武斗场时间一 && SEngine.CurrentTime.Hour != Config.武斗场时间二)
+        if (CurrentMap.MapID == 183 && SEngine.CurrentTime.Hour != Settings.武斗场时间一 && SEngine.CurrentTime.Hour != Settings.武斗场时间二)
         {
             if (Dead)
                 Resurrect();
@@ -2078,7 +2078,7 @@ public sealed class PlayerObject : MapObject
             return;
         }
 
-        if (CurrentMap.MapID == 152 && CurrentLevel <= Config.沙城地图保护)
+        if (CurrentMap.MapID == 152 && CurrentLevel <= Settings.沙城地图保护)
         {
             Teleport((CurrentMap.MapID == 147) ? CurrentMap : MapManager.GetMap(147), AreaType.Teleportation);
         }
@@ -2140,17 +2140,17 @@ public sealed class PlayerObject : MapObject
             }
         }
         
-        if (Config.泡点等级开关 == 1 && CurrentMap.IsSafeArea(CurrentPosition) && SEngine.CurrentTime > ExperienceTime && Character.CurrentMap.V != 179 && CurrentLevel <= Config.泡点限制等级)
+        if (Settings.泡点等级开关 == 1 && CurrentMap.IsSafeArea(CurrentPosition) && SEngine.CurrentTime > ExperienceTime && Character.CurrentMap.V != 179 && CurrentLevel <= Settings.泡点限制等级)
         {
-            ExperienceTime = SEngine.CurrentTime.AddSeconds(Config.泡点秒数控制);
-            GainExperience(null, Config.泡点当前经验);
+            ExperienceTime = SEngine.CurrentTime.AddSeconds(Settings.泡点秒数控制);
+            GainExperience(null, Settings.泡点当前经验);
         }
 
-        if (SEngine.CurrentTime > 自动刷新背包时间 && Config.自动整理背包开关 == 1 && Character.CurrentTitle.V == Config.称号范围拾取判断)
+        if (SEngine.CurrentTime > 自动刷新背包时间 && Settings.自动整理背包开关 == 1 && Character.CurrentTitle.V == Settings.称号范围拾取判断)
         {
             byte 背包类型 = 1;
             自动整理背包(背包类型);
-            自动刷新背包时间 = SEngine.CurrentTime.AddMinutes(Config.自动整理背包计时);
+            自动刷新背包时间 = SEngine.CurrentTime.AddMinutes(Settings.自动整理背包计时);
         }
 
         if (SEngine.CurrentTime > PickUpTime)
@@ -2178,33 +2178,33 @@ public sealed class PlayerObject : MapObject
 
             if (Character.AutoPickUpAllVisible.V == false)
             {
-                if (Character.CurrentTitle.V == Config.称号范围拾取判断 || Character.CurrentTitle.V == Config.称号范围拾取判断1)
+                if (Character.CurrentTitle.V == Settings.称号范围拾取判断 || Character.CurrentTitle.V == Settings.称号范围拾取判断1)
                 {
-                    if (CurrentMap.MapID == Config.AutoPickUpMap1 || 
-                        CurrentMap.MapID == Config.AutoPickUpMap2 || 
-                        CurrentMap.MapID == Config.AutoPickUpMap3 || 
-                        CurrentMap.MapID == Config.AutoPickUpMap4 || 
-                        CurrentMap.MapID == Config.AutoPickUpMap5 || 
-                        CurrentMap.MapID == Config.AutoPickUpMap6 || 
-                        CurrentMap.MapID == Config.AutoPickUpMap7 || 
-                        CurrentMap.MapID == Config.AutoPickUpMap8)
+                    if (CurrentMap.MapID == Settings.AutoPickUpMap1 || 
+                        CurrentMap.MapID == Settings.AutoPickUpMap2 || 
+                        CurrentMap.MapID == Settings.AutoPickUpMap3 || 
+                        CurrentMap.MapID == Settings.AutoPickUpMap4 || 
+                        CurrentMap.MapID == Settings.AutoPickUpMap5 || 
+                        CurrentMap.MapID == Settings.AutoPickUpMap6 || 
+                        CurrentMap.MapID == Settings.AutoPickUpMap7 || 
+                        CurrentMap.MapID == Settings.AutoPickUpMap8)
                     {
                         PickUpOne(CurrentPosition);
                         PickUpTime = SEngine.CurrentTime.AddMilliseconds(300.0);
                     }
-                    else if (RemainingInventorySpace >= Config.AutoPickUpInventorySpace && Config.TitleRangePickUpDistance >= 10)
+                    else if (RemainingInventorySpace >= Settings.AutoPickUpInventorySpace && Settings.TitleRangePickUpDistance >= 10)
                     {
                         PickUpGrid(ObjectSize.Spiral15x15);
                         PickUpOne(CurrentPosition);
                         PickUpTime = SEngine.CurrentTime.AddMilliseconds(300.0);
                     }
-                    else if (RemainingInventorySpace >= Config.AutoPickUpInventorySpace && Config.TitleRangePickUpDistance <= 4 && Config.TitleRangePickUpDistance >= 1)
+                    else if (RemainingInventorySpace >= Settings.AutoPickUpInventorySpace && Settings.TitleRangePickUpDistance <= 4 && Settings.TitleRangePickUpDistance >= 1)
                     {
                         PickUpGrid(ObjectSize.Solid3x3);
                         PickUpOne(CurrentPosition);
                         PickUpTime = SEngine.CurrentTime.AddMilliseconds(300.0);
                     }
-                    else if (RemainingInventorySpace >= Config.AutoPickUpInventorySpace && Config.TitleRangePickUpDistance <= 9 && Config.TitleRangePickUpDistance >= 5)
+                    else if (RemainingInventorySpace >= Settings.AutoPickUpInventorySpace && Settings.TitleRangePickUpDistance <= 9 && Settings.TitleRangePickUpDistance >= 5)
                     {
                         PickUpGrid(ObjectSize.Spiral7x7);
                         PickUpOne(CurrentPosition);
@@ -2216,7 +2216,7 @@ public sealed class PlayerObject : MapObject
                         PickUpTime = SEngine.CurrentTime.AddMilliseconds(300.0);
                     }
                 }
-                else if (Config.称号范围拾取判断 == 999 || Config.称号范围拾取判断1 == 999)
+                else if (Settings.称号范围拾取判断 == 999 || Settings.称号范围拾取判断1 == 999)
                 {
                     PickUpOne(CurrentPosition);
                     PickUpTime = SEngine.CurrentTime.AddMilliseconds(300.0);
@@ -2229,31 +2229,31 @@ public sealed class PlayerObject : MapObject
             }
             else if (Character.AutoPickUpAllVisible.V == true)
             {
-                if (CurrentMap.MapID == Config.AutoPickUpMap1 || 
-                    CurrentMap.MapID == Config.AutoPickUpMap2 || 
-                    CurrentMap.MapID == Config.AutoPickUpMap3 || 
-                    CurrentMap.MapID == Config.AutoPickUpMap4 || 
-                    CurrentMap.MapID == Config.AutoPickUpMap5 || 
-                    CurrentMap.MapID == Config.AutoPickUpMap6 || 
-                    CurrentMap.MapID == Config.AutoPickUpMap7 || 
-                    CurrentMap.MapID == Config.AutoPickUpMap8)
+                if (CurrentMap.MapID == Settings.AutoPickUpMap1 || 
+                    CurrentMap.MapID == Settings.AutoPickUpMap2 || 
+                    CurrentMap.MapID == Settings.AutoPickUpMap3 || 
+                    CurrentMap.MapID == Settings.AutoPickUpMap4 || 
+                    CurrentMap.MapID == Settings.AutoPickUpMap5 || 
+                    CurrentMap.MapID == Settings.AutoPickUpMap6 || 
+                    CurrentMap.MapID == Settings.AutoPickUpMap7 || 
+                    CurrentMap.MapID == Settings.AutoPickUpMap8)
                 {
                     PickUpOne(CurrentPosition);
                     PickUpTime = SEngine.CurrentTime.AddMilliseconds(300.0);
                 }
-                else if (RemainingInventorySpace >= Config.AutoPickUpInventorySpace && Config.TitleRangePickUpDistance >= 10)
+                else if (RemainingInventorySpace >= Settings.AutoPickUpInventorySpace && Settings.TitleRangePickUpDistance >= 10)
                 {
                     PickUpGrid(ObjectSize.Spiral15x15);
                     PickUpOne(CurrentPosition);
                     PickUpTime = SEngine.CurrentTime.AddMilliseconds(300.0);
                 }
-                else if (RemainingInventorySpace >= Config.AutoPickUpInventorySpace && Config.TitleRangePickUpDistance <= 4 && Config.TitleRangePickUpDistance >= 1)
+                else if (RemainingInventorySpace >= Settings.AutoPickUpInventorySpace && Settings.TitleRangePickUpDistance <= 4 && Settings.TitleRangePickUpDistance >= 1)
                 {
                     PickUpGrid(ObjectSize.Solid3x3);
                     PickUpOne(CurrentPosition);
                     PickUpTime = SEngine.CurrentTime.AddMilliseconds(300.0);
                 }
-                else if (RemainingInventorySpace >= Config.AutoPickUpInventorySpace && Config.TitleRangePickUpDistance <= 9 && Config.TitleRangePickUpDistance >= 5)
+                else if (RemainingInventorySpace >= Settings.AutoPickUpInventorySpace && Settings.TitleRangePickUpDistance <= 9 && Settings.TitleRangePickUpDistance >= 5)
                 {
                     PickUpGrid(ObjectSize.Spiral7x7);
                     PickUpOne(CurrentPosition);
@@ -2272,263 +2272,263 @@ public sealed class PlayerObject : MapObject
             }
         }
 
-        if (Config.CurrentVersion >= 2 && Config.充值平台切换 == 1 && SEngine.CurrentTime > 充值发放)
+        if (Settings.CurrentVersion >= 2 && Settings.充值平台切换 == 1 && SEngine.CurrentTime > 充值发放)
         {
-            if (Config.CurrentVersion >= 1 && Config.充值模块格式 == 0)
+            if (Settings.CurrentVersion >= 1 && Settings.充值模块格式 == 0)
             {
-                FileOperation.Path = Config.平台接入目录 + "\\1.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\1.txt";
                 bool flag = FileOperation.Read1(Character.Account.V.ToString());
                 if (flag)
                 {
                     int 充值价值 = 1;
                     玩家充值模块(flag, 充值价值);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\2.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\2.txt";
                 bool flag2 = FileOperation.Read2(Character.Account.V.ToString());
                 if (flag2)
                 {
                     int 充值价值2 = 2;
                     玩家充值模块(flag2, 充值价值2);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\3.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\3.txt";
                 bool flag3 = FileOperation.Read3(Character.Account.V.ToString());
                 if (flag3)
                 {
                     int 充值价值3 = 3;
                     玩家充值模块(flag3, 充值价值3);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\4.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\4.txt";
                 bool flag4 = FileOperation.Read4(Character.Account.V.ToString());
                 if (flag4)
                 {
                     int 充值价值4 = 4;
                     玩家充值模块(flag4, 充值价值4);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\5.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\5.txt";
                 bool flag5 = FileOperation.Read5(Character.Account.V.ToString());
                 if (flag5)
                 {
                     int 充值价值5 = 5;
                     玩家充值模块(flag5, 充值价值5);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\6.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\6.txt";
                 bool flag6 = FileOperation.Read6(Character.Account.V.ToString());
                 if (flag6)
                 {
                     int 充值价值6 = 6;
                     玩家充值模块(flag6, 充值价值6);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\7.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\7.txt";
                 bool flag7 = FileOperation.Read7(Character.Account.V.ToString());
                 if (flag7)
                 {
                     int 充值价值7 = 7;
                     玩家充值模块(flag7, 充值价值7);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\8.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\8.txt";
                 bool flag8 = FileOperation.Read8(Character.Account.V.ToString());
                 if (flag8)
                 {
                     int 充值价值8 = 8;
                     玩家充值模块(flag8, 充值价值8);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\9.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\9.txt";
                 bool flag9 = FileOperation.Read9(Character.Account.V.ToString());
                 if (flag9)
                 {
                     int 充值价值9 = 9;
                     玩家充值模块(flag9, 充值价值9);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\10.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\10.txt";
                 bool flag10 = FileOperation.Read10(Character.Account.V.ToString());
                 if (flag10)
                 {
                     int 充值价值10 = 10;
                     玩家充值模块(flag10, 充值价值10);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\20.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\20.txt";
                 bool flag11 = FileOperation.Read20(Character.Account.V.ToString());
                 if (flag11)
                 {
                     int 充值价值11 = 20;
                     玩家充值模块(flag11, 充值价值11);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\30.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\30.txt";
                 bool flag12 = FileOperation.Read30(Character.Account.V.ToString());
                 if (flag12)
                 {
                     int 充值价值12 = 30;
                     玩家充值模块(flag12, 充值价值12);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\40.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\40.txt";
                 bool flag13 = FileOperation.Read40(Character.Account.V.ToString());
                 if (flag13)
                 {
                     int 充值价值13 = 40;
                     玩家充值模块(flag13, 充值价值13);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\50.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\50.txt";
                 bool flag14 = FileOperation.Read50(Character.Account.V.ToString());
                 if (flag14)
                 {
                     int 充值价值14 = 50;
                     玩家充值模块(flag14, 充值价值14);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\60.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\60.txt";
                 bool flag15 = FileOperation.Read60(Character.Account.V.ToString());
                 if (flag15)
                 {
                     int 充值价值15 = 60;
                     玩家充值模块(flag15, 充值价值15);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\70.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\70.txt";
                 bool flag16 = FileOperation.Read70(Character.Account.V.ToString());
                 if (flag16)
                 {
                     int 充值价值16 = 70;
                     玩家充值模块(flag16, 充值价值16);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\80.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\80.txt";
                 bool flag17 = FileOperation.Read80(Character.Account.V.ToString());
                 if (flag17)
                 {
                     int 充值价值17 = 80;
                     玩家充值模块(flag17, 充值价值17);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\90.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\90.txt";
                 bool flag18 = FileOperation.Read90(Character.Account.V.ToString());
                 if (flag18)
                 {
                     int 充值价值18 = 90;
                     玩家充值模块(flag18, 充值价值18);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\100.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\100.txt";
                 bool flag19 = FileOperation.Read100(Character.Account.V.ToString());
                 if (flag19)
                 {
                     int 充值价值19 = 100;
                     玩家充值模块(flag19, 充值价值19);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\200.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\200.txt";
                 bool flag20 = FileOperation.Read200(Character.Account.V.ToString());
                 if (flag20)
                 {
                     int 充值价值20 = 200;
                     玩家充值模块(flag20, 充值价值20);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\300.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\300.txt";
                 bool flag21 = FileOperation.Read300(Character.Account.V.ToString());
                 if (flag21)
                 {
                     int 充值价值21 = 300;
                     玩家充值模块(flag21, 充值价值21);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\400.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\400.txt";
                 bool flag22 = FileOperation.Read400(Character.Account.V.ToString());
                 if (flag22)
                 {
                     int 充值价值22 = 400;
                     玩家充值模块(flag22, 充值价值22);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\500.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\500.txt";
                 bool flag23 = FileOperation.Read500(Character.Account.V.ToString());
                 if (flag23)
                 {
                     int 充值价值23 = 500;
                     玩家充值模块(flag23, 充值价值23);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\600.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\600.txt";
                 bool flag24 = FileOperation.Read600(Character.Account.V.ToString());
                 if (flag24)
                 {
                     int 充值价值24 = 600;
                     玩家充值模块(flag24, 充值价值24);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\700.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\700.txt";
                 bool flag25 = FileOperation.Read700(Character.Account.V.ToString());
                 if (flag25)
                 {
                     int 充值价值25 = 700;
                     玩家充值模块(flag25, 充值价值25);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\800.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\800.txt";
                 bool flag26 = FileOperation.Read800(Character.Account.V.ToString());
                 if (flag26)
                 {
                     int 充值价值26 = 800;
                     玩家充值模块(flag26, 充值价值26);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\900.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\900.txt";
                 bool flag27 = FileOperation.Read900(Character.Account.V.ToString());
                 if (flag27)
                 {
                     int 充值价值27 = 900;
                     玩家充值模块(flag27, 充值价值27);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\1000.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\1000.txt";
                 bool flag28 = FileOperation.Read1000(Character.Account.V.ToString());
                 if (flag28)
                 {
                     int 充值价值28 = 1000;
                     玩家充值模块(flag28, 充值价值28);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\2000.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\2000.txt";
                 bool flag29 = FileOperation.Read2000(Character.Account.V.ToString());
                 if (flag29)
                 {
                     int 充值价值29 = 2000;
                     玩家充值模块(flag29, 充值价值29);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\3000.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\3000.txt";
                 bool flag30 = FileOperation.Read3000(Character.Account.V.ToString());
                 if (flag30)
                 {
                     int 充值价值30 = 3000;
                     玩家充值模块(flag30, 充值价值30);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\4000.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\4000.txt";
                 bool flag31 = FileOperation.Read4000(Character.Account.V.ToString());
                 if (flag31)
                 {
                     int 充值价值31 = 4000;
                     玩家充值模块(flag31, 充值价值31);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\5000.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\5000.txt";
                 bool flag32 = FileOperation.Read5000(Character.Account.V.ToString());
                 if (flag32)
                 {
                     int 充值价值32 = 5000;
                     玩家充值模块(flag32, 充值价值32);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\6000.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\6000.txt";
                 bool flag33 = FileOperation.Read6000(Character.Account.V.ToString());
                 if (flag33)
                 {
                     int 充值价值33 = 6000;
                     玩家充值模块(flag33, 充值价值33);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\7000.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\7000.txt";
                 bool flag34 = FileOperation.Read7000(Character.Account.V.ToString());
                 if (flag34)
                 {
                     int 充值价值34 = 7000;
                     玩家充值模块(flag34, 充值价值34);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\8000.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\8000.txt";
                 bool flag35 = FileOperation.Read8000(Character.Account.V.ToString());
                 if (flag35)
                 {
                     int 充值价值35 = 8000;
                     玩家充值模块(flag35, 充值价值35);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\9000.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\9000.txt";
                 bool flag36 = FileOperation.Read9000(Character.Account.V.ToString());
                 if (flag36)
                 {
                     int 充值价值36 = 9000;
                     玩家充值模块(flag36, 充值价值36);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\10000.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\10000.txt";
                 bool flag37 = FileOperation.Read10000(Character.Account.V.ToString());
                 if (flag37)
                 {
@@ -2536,261 +2536,261 @@ public sealed class PlayerObject : MapObject
                     玩家充值模块(flag37, 充值价值37);
                 }
             }
-            if (Config.CurrentVersion >= 1 && Config.充值模块格式 == 1)
+            if (Settings.CurrentVersion >= 1 && Settings.充值模块格式 == 1)
             {
-                FileOperation.Path = Config.平台接入目录 + "\\yb1.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\yb1.txt";
                 bool flag38 = FileOperation.Read1(Character.Account.V.ToString());
                 if (flag38)
                 {
                     int 充值价值38 = 1;
                     玩家充值模块(flag38, 充值价值38);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\yb2.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\yb2.txt";
                 bool flag39 = FileOperation.Read2(Character.Account.V.ToString());
                 if (flag39)
                 {
                     int 充值价值39 = 2;
                     玩家充值模块(flag39, 充值价值39);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\yb3.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\yb3.txt";
                 bool flag40 = FileOperation.Read3(Character.Account.V.ToString());
                 if (flag40)
                 {
                     int 充值价值40 = 3;
                     玩家充值模块(flag40, 充值价值40);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\yb4.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\yb4.txt";
                 bool flag41 = FileOperation.Read4(Character.Account.V.ToString());
                 if (flag41)
                 {
                     int 充值价值41 = 4;
                     玩家充值模块(flag41, 充值价值41);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\yb5.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\yb5.txt";
                 bool flag42 = FileOperation.Read5(Character.Account.V.ToString());
                 if (flag42)
                 {
                     int 充值价值42 = 5;
                     玩家充值模块(flag42, 充值价值42);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\yb6.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\yb6.txt";
                 bool flag43 = FileOperation.Read6(Character.Account.V.ToString());
                 if (flag43)
                 {
                     int 充值价值43 = 6;
                     玩家充值模块(flag43, 充值价值43);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\yb7.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\yb7.txt";
                 bool flag44 = FileOperation.Read7(Character.Account.V.ToString());
                 if (flag44)
                 {
                     int 充值价值44 = 7;
                     玩家充值模块(flag44, 充值价值44);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\yb8.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\yb8.txt";
                 bool flag45 = FileOperation.Read8(Character.Account.V.ToString());
                 if (flag45)
                 {
                     int 充值价值45 = 8;
                     玩家充值模块(flag45, 充值价值45);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\yb9.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\yb9.txt";
                 bool flag46 = FileOperation.Read9(Character.Account.V.ToString());
                 if (flag46)
                 {
                     int 充值价值46 = 9;
                     玩家充值模块(flag46, 充值价值46);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\yb10.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\yb10.txt";
                 bool flag47 = FileOperation.Read10(Character.Account.V.ToString());
                 if (flag47)
                 {
                     int 充值价值47 = 10;
                     玩家充值模块(flag47, 充值价值47);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\yb20.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\yb20.txt";
                 bool flag48 = FileOperation.Read20(Character.Account.V.ToString());
                 if (flag48)
                 {
                     int 充值价值48 = 20;
                     玩家充值模块(flag48, 充值价值48);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\yb30.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\yb30.txt";
                 bool flag49 = FileOperation.Read30(Character.Account.V.ToString());
                 if (flag49)
                 {
                     int 充值价值49 = 30;
                     玩家充值模块(flag49, 充值价值49);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\yb40.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\yb40.txt";
                 bool flag50 = FileOperation.Read40(Character.Account.V.ToString());
                 if (flag50)
                 {
                     int 充值价值50 = 40;
                     玩家充值模块(flag50, 充值价值50);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\yb50.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\yb50.txt";
                 bool flag51 = FileOperation.Read50(Character.Account.V.ToString());
                 if (flag51)
                 {
                     int 充值价值51 = 50;
                     玩家充值模块(flag51, 充值价值51);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\yb60.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\yb60.txt";
                 bool flag52 = FileOperation.Read60(Character.Account.V.ToString());
                 if (flag52)
                 {
                     int 充值价值52 = 60;
                     玩家充值模块(flag52, 充值价值52);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\yb70.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\yb70.txt";
                 bool flag53 = FileOperation.Read70(Character.Account.V.ToString());
                 if (flag53)
                 {
                     int 充值价值53 = 70;
                     玩家充值模块(flag53, 充值价值53);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\yb80.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\yb80.txt";
                 bool flag54 = FileOperation.Read80(Character.Account.V.ToString());
                 if (flag54)
                 {
                     int 充值价值54 = 80;
                     玩家充值模块(flag54, 充值价值54);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\yb90.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\yb90.txt";
                 bool flag55 = FileOperation.Read90(Character.Account.V.ToString());
                 if (flag55)
                 {
                     int 充值价值55 = 90;
                     玩家充值模块(flag55, 充值价值55);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\yb100.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\yb100.txt";
                 bool flag56 = FileOperation.Read100(Character.Account.V.ToString());
                 if (flag56)
                 {
                     int 充值价值56 = 100;
                     玩家充值模块(flag56, 充值价值56);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\yb200.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\yb200.txt";
                 bool flag57 = FileOperation.Read200(Character.Account.V.ToString());
                 if (flag57)
                 {
                     int 充值价值57 = 200;
                     玩家充值模块(flag57, 充值价值57);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\yb300.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\yb300.txt";
                 bool flag58 = FileOperation.Read300(Character.Account.V.ToString());
                 if (flag58)
                 {
                     int 充值价值58 = 300;
                     玩家充值模块(flag58, 充值价值58);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\yb400.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\yb400.txt";
                 bool flag59 = FileOperation.Read400(Character.Account.V.ToString());
                 if (flag59)
                 {
                     int 充值价值59 = 400;
                     玩家充值模块(flag59, 充值价值59);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\yb500.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\yb500.txt";
                 bool flag60 = FileOperation.Read500(Character.Account.V.ToString());
                 if (flag60)
                 {
                     int 充值价值60 = 500;
                     玩家充值模块(flag60, 充值价值60);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\yb600.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\yb600.txt";
                 bool flag61 = FileOperation.Read600(Character.Account.V.ToString());
                 if (flag61)
                 {
                     int 充值价值61 = 600;
                     玩家充值模块(flag61, 充值价值61);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\yb700.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\yb700.txt";
                 bool flag62 = FileOperation.Read700(Character.Account.V.ToString());
                 if (flag62)
                 {
                     int 充值价值62 = 700;
                     玩家充值模块(flag62, 充值价值62);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\yb800.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\yb800.txt";
                 bool flag63 = FileOperation.Read800(Character.Account.V.ToString());
                 if (flag63)
                 {
                     int 充值价值63 = 800;
                     玩家充值模块(flag63, 充值价值63);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\yb900.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\yb900.txt";
                 bool flag64 = FileOperation.Read900(Character.Account.V.ToString());
                 if (flag64)
                 {
                     int 充值价值64 = 900;
                     玩家充值模块(flag64, 充值价值64);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\yb1000.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\yb1000.txt";
                 bool flag65 = FileOperation.Read1000(Character.Account.V.ToString());
                 if (flag65)
                 {
                     int 充值价值65 = 1000;
                     玩家充值模块(flag65, 充值价值65);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\yb2000.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\yb2000.txt";
                 bool flag66 = FileOperation.Read2000(Character.Account.V.ToString());
                 if (flag66)
                 {
                     int 充值价值66 = 2000;
                     玩家充值模块(flag66, 充值价值66);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\yb3000.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\yb3000.txt";
                 bool flag67 = FileOperation.Read3000(Character.Account.V.ToString());
                 if (flag67)
                 {
                     int 充值价值67 = 3000;
                     玩家充值模块(flag67, 充值价值67);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\yb4000.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\yb4000.txt";
                 bool flag68 = FileOperation.Read4000(Character.Account.V.ToString());
                 if (flag68)
                 {
                     int 充值价值68 = 4000;
                     玩家充值模块(flag68, 充值价值68);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\yb5000.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\yb5000.txt";
                 bool flag69 = FileOperation.Read5000(Character.Account.V.ToString());
                 if (flag69)
                 {
                     int 充值价值69 = 5000;
                     玩家充值模块(flag69, 充值价值69);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\yb6000.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\yb6000.txt";
                 bool flag70 = FileOperation.Read6000(Character.Account.V.ToString());
                 if (flag70)
                 {
                     int 充值价值70 = 6000;
                     玩家充值模块(flag70, 充值价值70);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\yb7000.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\yb7000.txt";
                 bool flag71 = FileOperation.Read7000(Character.Account.V.ToString());
                 if (flag71)
                 {
                     int 充值价值71 = 7000;
                     玩家充值模块(flag71, 充值价值71);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\yb8000.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\yb8000.txt";
                 bool flag72 = FileOperation.Read8000(Character.Account.V.ToString());
                 if (flag72)
                 {
                     int 充值价值72 = 8000;
                     玩家充值模块(flag72, 充值价值72);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\yb9000.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\yb9000.txt";
                 bool flag73 = FileOperation.Read9000(Character.Account.V.ToString());
                 if (flag73)
                 {
                     int 充值价值73 = 9000;
                     玩家充值模块(flag73, 充值价值73);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\yb10000.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\yb10000.txt";
                 bool flag74 = FileOperation.Read10000(Character.Account.V.ToString());
                 if (flag74)
                 {
@@ -2798,261 +2798,261 @@ public sealed class PlayerObject : MapObject
                     玩家充值模块(flag74, 充值价值74);
                 }
             }
-            if (Config.CurrentVersion >= 1 && Config.充值模块格式 == 2)
+            if (Settings.CurrentVersion >= 1 && Settings.充值模块格式 == 2)
             {
-                FileOperation.Path = Config.平台接入目录 + "\\cz1.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\cz1.txt";
                 bool flag75 = FileOperation.Read1(Character.Account.V.ToString());
                 if (flag75)
                 {
                     int 充值价值75 = 1;
                     玩家充值模块(flag75, 充值价值75);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\cz2.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\cz2.txt";
                 bool flag76 = FileOperation.Read2(Character.Account.V.ToString());
                 if (flag76)
                 {
                     int 充值价值76 = 2;
                     玩家充值模块(flag76, 充值价值76);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\cz3.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\cz3.txt";
                 bool flag77 = FileOperation.Read3(Character.Account.V.ToString());
                 if (flag77)
                 {
                     int 充值价值77 = 3;
                     玩家充值模块(flag77, 充值价值77);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\cz4.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\cz4.txt";
                 bool flag78 = FileOperation.Read4(Character.Account.V.ToString());
                 if (flag78)
                 {
                     int 充值价值78 = 4;
                     玩家充值模块(flag78, 充值价值78);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\cz5.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\cz5.txt";
                 bool flag79 = FileOperation.Read5(Character.Account.V.ToString());
                 if (flag79)
                 {
                     int 充值价值79 = 5;
                     玩家充值模块(flag79, 充值价值79);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\cz6.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\cz6.txt";
                 bool flag80 = FileOperation.Read6(Character.Account.V.ToString());
                 if (flag80)
                 {
                     int 充值价值80 = 6;
                     玩家充值模块(flag80, 充值价值80);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\cz7.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\cz7.txt";
                 bool flag81 = FileOperation.Read7(Character.Account.V.ToString());
                 if (flag81)
                 {
                     int 充值价值81 = 7;
                     玩家充值模块(flag81, 充值价值81);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\cz8.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\cz8.txt";
                 bool flag82 = FileOperation.Read8(Character.Account.V.ToString());
                 if (flag82)
                 {
                     int 充值价值82 = 8;
                     玩家充值模块(flag82, 充值价值82);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\cz9.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\cz9.txt";
                 bool flag83 = FileOperation.Read9(Character.Account.V.ToString());
                 if (flag83)
                 {
                     int 充值价值83 = 9;
                     玩家充值模块(flag83, 充值价值83);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\cz10.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\cz10.txt";
                 bool flag84 = FileOperation.Read10(Character.Account.V.ToString());
                 if (flag84)
                 {
                     int 充值价值84 = 10;
                     玩家充值模块(flag84, 充值价值84);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\cz20.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\cz20.txt";
                 bool flag85 = FileOperation.Read20(Character.Account.V.ToString());
                 if (flag85)
                 {
                     int 充值价值85 = 20;
                     玩家充值模块(flag85, 充值价值85);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\cz30.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\cz30.txt";
                 bool flag86 = FileOperation.Read30(Character.Account.V.ToString());
                 if (flag86)
                 {
                     int 充值价值86 = 30;
                     玩家充值模块(flag86, 充值价值86);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\cz40.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\cz40.txt";
                 bool flag87 = FileOperation.Read40(Character.Account.V.ToString());
                 if (flag87)
                 {
                     int 充值价值87 = 40;
                     玩家充值模块(flag87, 充值价值87);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\cz50.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\cz50.txt";
                 bool flag88 = FileOperation.Read50(Character.Account.V.ToString());
                 if (flag88)
                 {
                     int 充值价值88 = 50;
                     玩家充值模块(flag88, 充值价值88);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\cz60.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\cz60.txt";
                 bool flag89 = FileOperation.Read60(Character.Account.V.ToString());
                 if (flag89)
                 {
                     int 充值价值89 = 60;
                     玩家充值模块(flag89, 充值价值89);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\cz70.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\cz70.txt";
                 bool flag90 = FileOperation.Read70(Character.Account.V.ToString());
                 if (flag90)
                 {
                     int 充值价值90 = 70;
                     玩家充值模块(flag90, 充值价值90);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\cz80.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\cz80.txt";
                 bool flag91 = FileOperation.Read80(Character.Account.V.ToString());
                 if (flag91)
                 {
                     int 充值价值91 = 80;
                     玩家充值模块(flag91, 充值价值91);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\cz90.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\cz90.txt";
                 bool flag92 = FileOperation.Read90(Character.Account.V.ToString());
                 if (flag92)
                 {
                     int 充值价值92 = 90;
                     玩家充值模块(flag92, 充值价值92);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\cz100.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\cz100.txt";
                 bool flag93 = FileOperation.Read100(Character.Account.V.ToString());
                 if (flag93)
                 {
                     int 充值价值93 = 100;
                     玩家充值模块(flag93, 充值价值93);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\cz200.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\cz200.txt";
                 bool flag94 = FileOperation.Read200(Character.Account.V.ToString());
                 if (flag94)
                 {
                     int 充值价值94 = 200;
                     玩家充值模块(flag94, 充值价值94);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\cz300.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\cz300.txt";
                 bool flag95 = FileOperation.Read300(Character.Account.V.ToString());
                 if (flag95)
                 {
                     int 充值价值95 = 300;
                     玩家充值模块(flag95, 充值价值95);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\cz400.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\cz400.txt";
                 bool flag96 = FileOperation.Read400(Character.Account.V.ToString());
                 if (flag96)
                 {
                     int 充值价值96 = 400;
                     玩家充值模块(flag96, 充值价值96);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\cz500.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\cz500.txt";
                 bool flag97 = FileOperation.Read500(Character.Account.V.ToString());
                 if (flag97)
                 {
                     int 充值价值97 = 500;
                     玩家充值模块(flag97, 充值价值97);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\cz600.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\cz600.txt";
                 bool flag98 = FileOperation.Read600(Character.Account.V.ToString());
                 if (flag98)
                 {
                     int 充值价值98 = 600;
                     玩家充值模块(flag98, 充值价值98);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\cz700.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\cz700.txt";
                 bool flag99 = FileOperation.Read700(Character.Account.V.ToString());
                 if (flag99)
                 {
                     int 充值价值99 = 700;
                     玩家充值模块(flag99, 充值价值99);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\cz800.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\cz800.txt";
                 bool flag100 = FileOperation.Read800(Character.Account.V.ToString());
                 if (flag100)
                 {
                     int 充值价值100 = 800;
                     玩家充值模块(flag100, 充值价值100);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\cz900.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\cz900.txt";
                 bool flag101 = FileOperation.Read900(Character.Account.V.ToString());
                 if (flag101)
                 {
                     int 充值价值101 = 900;
                     玩家充值模块(flag101, 充值价值101);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\cz1000.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\cz1000.txt";
                 bool flag102 = FileOperation.Read1000(Character.Account.V.ToString());
                 if (flag102)
                 {
                     int 充值价值102 = 1000;
                     玩家充值模块(flag102, 充值价值102);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\cz2000.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\cz2000.txt";
                 bool flag103 = FileOperation.Read2000(Character.Account.V.ToString());
                 if (flag103)
                 {
                     int 充值价值103 = 2000;
                     玩家充值模块(flag103, 充值价值103);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\cz3000.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\cz3000.txt";
                 bool flag104 = FileOperation.Read3000(Character.Account.V.ToString());
                 if (flag104)
                 {
                     int 充值价值104 = 3000;
                     玩家充值模块(flag104, 充值价值104);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\cz4000.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\cz4000.txt";
                 bool flag105 = FileOperation.Read4000(Character.Account.V.ToString());
                 if (flag105)
                 {
                     int 充值价值105 = 4000;
                     玩家充值模块(flag105, 充值价值105);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\cz5000.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\cz5000.txt";
                 bool flag106 = FileOperation.Read5000(Character.Account.V.ToString());
                 if (flag106)
                 {
                     int 充值价值106 = 5000;
                     玩家充值模块(flag106, 充值价值106);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\cz6000.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\cz6000.txt";
                 bool flag107 = FileOperation.Read6000(Character.Account.V.ToString());
                 if (flag107)
                 {
                     int 充值价值107 = 6000;
                     玩家充值模块(flag107, 充值价值107);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\cz7000.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\cz7000.txt";
                 bool flag108 = FileOperation.Read7000(Character.Account.V.ToString());
                 if (flag108)
                 {
                     int 充值价值108 = 7000;
                     玩家充值模块(flag108, 充值价值108);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\cz8000.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\cz8000.txt";
                 bool flag109 = FileOperation.Read8000(Character.Account.V.ToString());
                 if (flag109)
                 {
                     int 充值价值109 = 8000;
                     玩家充值模块(flag109, 充值价值109);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\cz9000.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\cz9000.txt";
                 bool flag110 = FileOperation.Read9000(Character.Account.V.ToString());
                 if (flag110)
                 {
                     int 充值价值110 = 9000;
                     玩家充值模块(flag110, 充值价值110);
                 }
-                FileOperation.Path = Config.平台接入目录 + "\\cz10000.txt";
+                FileOperation.Path = Settings.平台接入目录 + "\\cz10000.txt";
                 bool flag111 = FileOperation.Read10000(Character.Account.V.ToString());
                 if (flag111)
                 {
@@ -3063,13 +3063,13 @@ public sealed class PlayerObject : MapObject
             充值发放 = SEngine.CurrentTime.AddSeconds(5.0);
         }
         
-        if (Config.CurrentVersion >= 2 && Character.CurrentLevel >= Config.全服红包等级 && Character.保底参数2.V == 0 && SEngine.CurrentTime.Hour == Config.全服红包时间 && Config.红包开关)
+        if (Settings.CurrentVersion >= 2 && Character.CurrentLevel >= Settings.全服红包等级 && Character.保底参数2.V == 0 && SEngine.CurrentTime.Hour == Settings.全服红包时间 && Settings.红包开关)
         {
             Character.保底参数2.V++;
-            int n = SEngine.Random.Next(1, Config.全服红包货币数量);
-            Character.Currencies[(CurrencyType)Config.GlobalBonusCurrencyType] += n;
-            int amount = Character.Currencies[(CurrencyType)Config.GlobalBonusCurrencyType];
-            byte currency = (byte)Config.GlobalBonusCurrencyType;
+            int n = SEngine.Random.Next(1, Settings.全服红包货币数量);
+            Character.Currencies[(CurrencyType)Settings.GlobalBonusCurrencyType] += n;
+            int amount = Character.Currencies[(CurrencyType)Settings.GlobalBonusCurrencyType];
+            byte currency = (byte)Settings.GlobalBonusCurrencyType;
             Enqueue(new SyncCurrencyPacket
             {
                 Currency = currency,
@@ -3077,7 +3077,7 @@ public sealed class PlayerObject : MapObject
             });
         }
 
-        if (SEngine.CurrentTime.Hour != Config.全服红包时间 && Config.红包开关)
+        if (SEngine.CurrentTime.Hour != Settings.全服红包时间 && Settings.红包开关)
         {
             Character.保底参数2.V = 0;
         }
@@ -3140,7 +3140,7 @@ public sealed class PlayerObject : MapObject
 
     public void IncreasePlayerKills()
     {
-        if (Character.MonsterKillCount.V >= Config.暗之门杀怪触发 && Config.暗之门开关 == 1)
+        if (Character.MonsterKillCount.V >= Settings.暗之门杀怪触发 && Settings.暗之门开关 == 1)
         {
             Character.MonsterKillCount.V = 0;
             GuardObject guard = null;
@@ -3153,10 +3153,10 @@ public sealed class PlayerObject : MapObject
             {
                 guard = new GuardObject(GuardInfo.DataSheet[6581], CurrentMap, GameDirection.Down, new Point(CurrentPosition.X, CurrentPosition.Y + 1));
                 guard.AutoDisappear = true;
-                guard.ExistenceTime = SEngine.CurrentTime.AddSeconds(Config.暗之门时间);
+                guard.ExistenceTime = SEngine.CurrentTime.AddSeconds(Settings.暗之门时间);
             }
         }
-        if (Character.MonsterKillCount.V < 200_000_000 && Config.暗之门开关 == 1)
+        if (Character.MonsterKillCount.V < 200_000_000 && Settings.暗之门开关 == 1)
             Character.MonsterKillCount.V++;
     }
 
@@ -3266,16 +3266,16 @@ public sealed class PlayerObject : MapObject
 
     public void GainExperience(MonsterObject mon, int amount)
     {
-        if (amount > 0 && (CurrentLevel < Config.MaxUserLevel || CurrentExperience < MaxExperience))
+        if (amount > 0 && (CurrentLevel < Settings.MaxUserLevel || CurrentExperience < MaxExperience))
         {
             int exp = amount;
             int rate = 0;
             if (mon != null)
             {
-                var ratio = Compute.CalculateLevelRatio(CurrentLevel, mon.CurrentLevel, Config.减收益等级差, Config.收益减少比率);
+                var ratio = Compute.CalculateLevelRatio(CurrentLevel, mon.CurrentLevel, Settings.减收益等级差, Settings.收益减少比率);
                 exp = (int)Math.Max(0.0, (double)exp - Math.Round((float)exp * ratio));
-                exp = (int)((decimal)exp * Config.MonsterExperienceMultiplier);
-                if (CurrentLevel <= Config.NoobSupportLevel)
+                exp = (int)((decimal)exp * Settings.MonsterExperienceMultiplier);
+                if (CurrentLevel <= Settings.NoobSupportLevel)
                 {
                     exp *= 2;
                 }
@@ -3290,9 +3290,9 @@ public sealed class PlayerObject : MapObject
             if (Character.AwakeningExpEnabled.V)
             {
                 awakeexp = (int)((double)totalexp * 0.5);
-                if (Character.AwakeningExp.V + awakeexp > Config.MaxAwakeningExp)
+                if (Character.AwakeningExp.V + awakeexp > Settings.MaxAwakeningExp)
                 {
-                    awakeexp = Config.MaxAwakeningExp - Character.AwakeningExp.V;
+                    awakeexp = Settings.MaxAwakeningExp - Character.AwakeningExp.V;
                     Character.AwakeningExpEnabled.V = false;
                     Enqueue(new 同步补充变量
                     {
@@ -3305,7 +3305,7 @@ public sealed class PlayerObject : MapObject
                 totalexp -= awakeexp;
                 Character.AwakeningExp.V = Character.AwakeningExp.V + awakeexp;
             }
-            if ((CurrentExperience += totalexp) >= MaxExperience && CurrentLevel < Config.MaxUserLevel)
+            if ((CurrentExperience += totalexp) >= MaxExperience && CurrentLevel < Settings.MaxUserLevel)
             {
                 while (CurrentExperience >= MaxExperience)
                 {
@@ -3323,14 +3323,14 @@ public sealed class PlayerObject : MapObject
                 CurrentExperience = CurrentExperience,
                 MaxExperience = MaxExperience,
                 AwakeningExperienceGained = awakeexp,
-                MaxAwakeningExperience = Config.MaxAwakeningExp
+                MaxAwakeningExperience = Settings.MaxAwakeningExp
             });
         }
         else if (Character.AwakeningExpEnabled.V)
         {
-            if (Character.AwakeningExp.V + amount > Config.MaxAwakeningExp)
+            if (Character.AwakeningExp.V + amount > Settings.MaxAwakeningExp)
             {
-                amount = Config.MaxAwakeningExp - Character.AwakeningExp.V;
+                amount = Settings.MaxAwakeningExp - Character.AwakeningExp.V;
                 Character.AwakeningExpEnabled.V = false;
                 Enqueue(new 同步补充变量
                 {
@@ -3350,7 +3350,7 @@ public sealed class PlayerObject : MapObject
                 CurrentExperience = CurrentExperience,
                 MaxExperience = MaxExperience,
                 AwakeningExperienceGained = amount,
-                MaxAwakeningExperience = Config.MaxAwakeningExp
+                MaxAwakeningExperience = Settings.MaxAwakeningExp
             });
         }
     }
@@ -3406,7 +3406,7 @@ public sealed class PlayerObject : MapObject
                     CurrentExperience = CurrentExperience,
                     MaxExperience = MaxExperience,
                     AwakeningExperienceGained = -升级经验,
-                    MaxAwakeningExperience = Config.MaxAwakeningExp
+                    MaxAwakeningExperience = Settings.MaxAwakeningExp
                 });
                 skill.Level.V++;
                 SendPacket(new SyncSkillLevelPacket
@@ -3530,18 +3530,18 @@ public sealed class PlayerObject : MapObject
         UpdateCombatPower();
         BonusStats[Skills[skillID]] = Skills[skillID].BonusStats;
         RefreshStats();
-        if (Config.DefaultSkillLevel >= 1 && Config.CurrentVersion >= 2)
+        if (Settings.DefaultSkillLevel >= 1 && Settings.CurrentVersion >= 2)
         {
             if (skillID == 4587 || skillID == 1044 || skillID == 1045 || skillID == 1216 || skillID == 1217 || skillID == 1543 || skillID == 1544 || skillID == 2053 || skillID == 2054 || skillID == 2552 || skillID == 2553 || skillID == 3020 || skillID == 3021)
             {
                 return true;
             }
-            Skills[skillID].Level.V = (byte)Config.DefaultSkillLevel;
+            Skills[skillID].Level.V = (byte)Settings.DefaultSkillLevel;
             Enqueue(new 同步技能等级
             {
                 SkillID = skillID,
                 CurrentExperience = 0,
-                CurrentLevel = (byte)Config.DefaultSkillLevel
+                CurrentLevel = (byte)Settings.DefaultSkillLevel
             });
         }
         return true;
@@ -3652,7 +3652,7 @@ public sealed class PlayerObject : MapObject
                         pet.Die(null, skillDeath: false);
                 }
             }
-            if (Config.CurrentVersion >= 2)
+            if (Settings.CurrentVersion >= 2)
             {
                 if (原有装备.Type == ItemType.Weapon)
                 {
@@ -3799,7 +3799,7 @@ public sealed class PlayerObject : MapObject
             }
             CombatPowerBonus.Remove(原有装备);
             BonusStats.Remove(原有装备);
-            if (Config.装备技能开关 == 1 && !string.IsNullOrEmpty(原有装备.EquipInfo.装备特技) && GameSkill.DataSheet.TryGetValue(原有装备.EquipInfo.装备特技, out var value2))
+            if (Settings.装备技能开关 == 1 && !string.IsNullOrEmpty(原有装备.EquipInfo.装备特技) && GameSkill.DataSheet.TryGetValue(原有装备.EquipInfo.装备特技, out var value2))
             {
                 RemoveSkill(value2.OwnSkillID);
             }
@@ -3840,12 +3840,12 @@ public sealed class PlayerObject : MapObject
             {
                 AddBuff(现有装备.BuffID, this);
             }
-            if (Config.装备技能开关 == 1 && !string.IsNullOrEmpty(现有装备.EquipInfo.装备特技) && GameSkill.DataSheet.TryGetValue(现有装备.EquipInfo.装备特技, out var value3))
+            if (Settings.装备技能开关 == 1 && !string.IsNullOrEmpty(现有装备.EquipInfo.装备特技) && GameSkill.DataSheet.TryGetValue(现有装备.EquipInfo.装备特技, out var value3))
             {
                 AddSkill(value3.OwnSkillID);
             }
         }
-        if (Config.CurrentVersion >= 2)
+        if (Settings.CurrentVersion >= 2)
         {
             EquipmentInfo v3;
             if (Job == GameObjectRace.Warrior)
@@ -3883,7 +3883,7 @@ public sealed class PlayerObject : MapObject
                     Character.祖玛套装件头盔数.V = 1;
                 }
                 Character.祖玛套装件数.V = Character.祖玛套装件头盔数.V + Character.祖玛套装件武器数.V + Character.祖玛套装件项链数.V + Character.祖玛套装件衣服数.V + Character.祖玛套装件左手镯数.V + Character.祖玛套装件左戒指数.V + Character.祖玛套装件右手镯数.V + Character.祖玛套装件右戒指数.V;
-                if (Character.祖玛套装件数.V >= Config.祖玛战装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(1u, out var value4))
+                if (Character.祖玛套装件数.V >= Settings.祖玛战装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(1u, out var value4))
                 {
                     BonusStats[套装编号] = value4.Stats;
                     Character.祖玛套装件数.V = 0;
@@ -3929,7 +3929,7 @@ public sealed class PlayerObject : MapObject
                     Character.赤月套装件头盔数.V = 1;
                 }
                 Character.赤月套装件数.V = Character.赤月套装件头盔数.V + Character.赤月套装件武器数.V + Character.赤月套装件项链数.V + Character.赤月套装件衣服数.V + Character.赤月套装件左手镯数.V + Character.赤月套装件左戒指数.V + Character.赤月套装件右手镯数.V + Character.赤月套装件右戒指数.V;
-                if (Character.赤月套装件数.V >= Config.赤月战装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(7u, out var value5))
+                if (Character.赤月套装件数.V >= Settings.赤月战装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(7u, out var value5))
                 {
                     BonusStats[套装编号] = value5.Stats;
                     Character.赤月套装件数.V = 0;
@@ -3975,7 +3975,7 @@ public sealed class PlayerObject : MapObject
                     Character.魔龙套装件头盔数.V = 1;
                 }
                 Character.魔龙套装件数.V = Character.魔龙套装件头盔数.V + Character.魔龙套装件武器数.V + Character.魔龙套装件项链数.V + Character.魔龙套装件衣服数.V + Character.魔龙套装件左手镯数.V + Character.魔龙套装件左戒指数.V + Character.魔龙套装件右手镯数.V + Character.魔龙套装件右戒指数.V;
-                if (Character.魔龙套装件数.V >= Config.魔龙战装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(13u, out var value6))
+                if (Character.魔龙套装件数.V >= Settings.魔龙战装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(13u, out var value6))
                 {
                     BonusStats[套装编号] = value6.Stats;
                     Character.魔龙套装件数.V = 0;
@@ -4021,7 +4021,7 @@ public sealed class PlayerObject : MapObject
                     Character.苍月套装件头盔数.V = 1;
                 }
                 Character.苍月套装件数.V = Character.苍月套装件头盔数.V + Character.苍月套装件武器数.V + Character.苍月套装件项链数.V + Character.苍月套装件衣服数.V + Character.苍月套装件左手镯数.V + Character.苍月套装件左戒指数.V + Character.苍月套装件右手镯数.V + Character.苍月套装件右戒指数.V;
-                if (Character.苍月套装件数.V >= Config.苍月战装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(19u, out var value7))
+                if (Character.苍月套装件数.V >= Settings.苍月战装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(19u, out var value7))
                 {
                     BonusStats[套装编号] = value7.Stats;
                     Character.苍月套装件数.V = 0;
@@ -4067,7 +4067,7 @@ public sealed class PlayerObject : MapObject
                     Character.星王套装件头盔数.V = 1;
                 }
                 Character.星王套装件数.V = Character.星王套装件头盔数.V + Character.星王套装件武器数.V + Character.星王套装件项链数.V + Character.星王套装件衣服数.V + Character.星王套装件左手镯数.V + Character.星王套装件左戒指数.V + Character.星王套装件右手镯数.V + Character.星王套装件右戒指数.V;
-                if (Character.星王套装件数.V >= Config.星王战装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(25u, out var value8))
+                if (Character.星王套装件数.V >= Settings.星王战装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(25u, out var value8))
                 {
                     BonusStats[套装编号] = value8.Stats;
                     Character.星王套装件数.V = 0;
@@ -4113,7 +4113,7 @@ public sealed class PlayerObject : MapObject
                     Character.特殊1套装件头盔数.V = 1;
                 }
                 Character.特殊1套装件数.V = Character.特殊1套装件头盔数.V + Character.特殊1套装件武器数.V + Character.特殊1套装件项链数.V + Character.特殊1套装件衣服数.V + Character.特殊1套装件左手镯数.V + Character.特殊1套装件左戒指数.V + Character.特殊1套装件右手镯数.V + Character.特殊1套装件右戒指数.V;
-                if (Character.特殊1套装件数.V >= Config.特殊1战装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(31u, out var value9))
+                if (Character.特殊1套装件数.V >= Settings.特殊1战装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(31u, out var value9))
                 {
                     BonusStats[套装编号] = value9.Stats;
                     Character.特殊1套装件数.V = 0;
@@ -4159,7 +4159,7 @@ public sealed class PlayerObject : MapObject
                     Character.特殊2套装件头盔数.V = 1;
                 }
                 Character.特殊2套装件数.V = Character.特殊2套装件头盔数.V + Character.特殊2套装件武器数.V + Character.特殊2套装件项链数.V + Character.特殊2套装件衣服数.V + Character.特殊2套装件左手镯数.V + Character.特殊2套装件左戒指数.V + Character.特殊2套装件右手镯数.V + Character.特殊2套装件右戒指数.V;
-                if (Character.特殊2套装件数.V >= Config.特殊2战装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(37u, out var value10))
+                if (Character.特殊2套装件数.V >= Settings.特殊2战装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(37u, out var value10))
                 {
                     BonusStats[套装编号] = value10.Stats;
                     Character.特殊2套装件数.V = 0;
@@ -4205,7 +4205,7 @@ public sealed class PlayerObject : MapObject
                     Character.特殊3套装件头盔数.V = 1;
                 }
                 Character.特殊3套装件数.V = Character.特殊3套装件头盔数.V + Character.特殊3套装件武器数.V + Character.特殊3套装件项链数.V + Character.特殊3套装件衣服数.V + Character.特殊3套装件左手镯数.V + Character.特殊3套装件左戒指数.V + Character.特殊3套装件右手镯数.V + Character.特殊3套装件右戒指数.V;
-                if (Character.特殊3套装件数.V >= Config.特殊3战装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(43u, out var value11))
+                if (Character.特殊3套装件数.V >= Settings.特殊3战装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(43u, out var value11))
                 {
                     BonusStats[套装编号] = value11.Stats;
                     Character.特殊3套装件数.V = 0;
@@ -4254,7 +4254,7 @@ public sealed class PlayerObject : MapObject
                     Character.祖玛套装件头盔数.V = 1;
                 }
                 Character.祖玛套装件数.V = Character.祖玛套装件头盔数.V + Character.祖玛套装件武器数.V + Character.祖玛套装件项链数.V + Character.祖玛套装件衣服数.V + Character.祖玛套装件左手镯数.V + Character.祖玛套装件左戒指数.V + Character.祖玛套装件右手镯数.V + Character.祖玛套装件右戒指数.V;
-                if (Character.祖玛套装件数.V >= Config.祖玛法装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(2u, out var value12))
+                if (Character.祖玛套装件数.V >= Settings.祖玛法装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(2u, out var value12))
                 {
                     BonusStats[套装编号] = value12.Stats;
                     Character.祖玛套装件数.V = 0;
@@ -4300,7 +4300,7 @@ public sealed class PlayerObject : MapObject
                     Character.赤月套装件头盔数.V = 1;
                 }
                 Character.赤月套装件数.V = Character.赤月套装件头盔数.V + Character.赤月套装件武器数.V + Character.赤月套装件项链数.V + Character.赤月套装件衣服数.V + Character.赤月套装件左手镯数.V + Character.赤月套装件左戒指数.V + Character.赤月套装件右手镯数.V + Character.赤月套装件右戒指数.V;
-                if (Character.赤月套装件数.V >= Config.赤月法装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(8u, out var value13))
+                if (Character.赤月套装件数.V >= Settings.赤月法装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(8u, out var value13))
                 {
                     BonusStats[套装编号] = value13.Stats;
                     Character.赤月套装件数.V = 0;
@@ -4346,7 +4346,7 @@ public sealed class PlayerObject : MapObject
                     Character.魔龙套装件头盔数.V = 1;
                 }
                 Character.魔龙套装件数.V = Character.魔龙套装件头盔数.V + Character.魔龙套装件武器数.V + Character.魔龙套装件项链数.V + Character.魔龙套装件衣服数.V + Character.魔龙套装件左手镯数.V + Character.魔龙套装件左戒指数.V + Character.魔龙套装件右手镯数.V + Character.魔龙套装件右戒指数.V;
-                if (Character.魔龙套装件数.V >= Config.魔龙法装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(14u, out var value14))
+                if (Character.魔龙套装件数.V >= Settings.魔龙法装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(14u, out var value14))
                 {
                     BonusStats[套装编号] = value14.Stats;
                     Character.魔龙套装件数.V = 0;
@@ -4392,7 +4392,7 @@ public sealed class PlayerObject : MapObject
                     Character.苍月套装件头盔数.V = 1;
                 }
                 Character.苍月套装件数.V = Character.苍月套装件头盔数.V + Character.苍月套装件武器数.V + Character.苍月套装件项链数.V + Character.苍月套装件衣服数.V + Character.苍月套装件左手镯数.V + Character.苍月套装件左戒指数.V + Character.苍月套装件右手镯数.V + Character.苍月套装件右戒指数.V;
-                if (Character.苍月套装件数.V >= Config.苍月法装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(20u, out var value15))
+                if (Character.苍月套装件数.V >= Settings.苍月法装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(20u, out var value15))
                 {
                     BonusStats[套装编号] = value15.Stats;
                     Character.苍月套装件数.V = 0;
@@ -4438,7 +4438,7 @@ public sealed class PlayerObject : MapObject
                     Character.星王套装件头盔数.V = 1;
                 }
                 Character.星王套装件数.V = Character.星王套装件头盔数.V + Character.星王套装件武器数.V + Character.星王套装件项链数.V + Character.星王套装件衣服数.V + Character.星王套装件左手镯数.V + Character.星王套装件左戒指数.V + Character.星王套装件右手镯数.V + Character.星王套装件右戒指数.V;
-                if (Character.星王套装件数.V >= Config.星王法装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(26u, out var value16))
+                if (Character.星王套装件数.V >= Settings.星王法装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(26u, out var value16))
                 {
                     BonusStats[套装编号] = value16.Stats;
                     Character.星王套装件数.V = 0;
@@ -4484,7 +4484,7 @@ public sealed class PlayerObject : MapObject
                     Character.特殊1套装件头盔数.V = 1;
                 }
                 Character.特殊1套装件数.V = Character.特殊1套装件头盔数.V + Character.特殊1套装件武器数.V + Character.特殊1套装件项链数.V + Character.特殊1套装件衣服数.V + Character.特殊1套装件左手镯数.V + Character.特殊1套装件左戒指数.V + Character.特殊1套装件右手镯数.V + Character.特殊1套装件右戒指数.V;
-                if (Character.特殊1套装件数.V >= Config.特殊1法装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(32u, out var value17))
+                if (Character.特殊1套装件数.V >= Settings.特殊1法装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(32u, out var value17))
                 {
                     BonusStats[套装编号] = value17.Stats;
                     Character.特殊1套装件数.V = 0;
@@ -4530,7 +4530,7 @@ public sealed class PlayerObject : MapObject
                     Character.特殊2套装件头盔数.V = 1;
                 }
                 Character.特殊2套装件数.V = Character.特殊2套装件头盔数.V + Character.特殊2套装件武器数.V + Character.特殊2套装件项链数.V + Character.特殊2套装件衣服数.V + Character.特殊2套装件左手镯数.V + Character.特殊2套装件左戒指数.V + Character.特殊2套装件右手镯数.V + Character.特殊2套装件右戒指数.V;
-                if (Character.特殊2套装件数.V >= Config.特殊2法装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(38u, out var value18))
+                if (Character.特殊2套装件数.V >= Settings.特殊2法装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(38u, out var value18))
                 {
                     BonusStats[套装编号] = value18.Stats;
                     Character.特殊2套装件数.V = 0;
@@ -4576,7 +4576,7 @@ public sealed class PlayerObject : MapObject
                     Character.特殊3套装件头盔数.V = 1;
                 }
                 Character.特殊3套装件数.V = Character.特殊3套装件头盔数.V + Character.特殊3套装件武器数.V + Character.特殊3套装件项链数.V + Character.特殊3套装件衣服数.V + Character.特殊3套装件左手镯数.V + Character.特殊3套装件左戒指数.V + Character.特殊3套装件右手镯数.V + Character.特殊3套装件右戒指数.V;
-                if (Character.特殊3套装件数.V >= Config.特殊3法装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(44u, out var value19))
+                if (Character.特殊3套装件数.V >= Settings.特殊3法装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(44u, out var value19))
                 {
                     BonusStats[套装编号] = value19.Stats;
                     Character.特殊3套装件数.V = 0;
@@ -4625,7 +4625,7 @@ public sealed class PlayerObject : MapObject
                     Character.祖玛套装件头盔数.V = 1;
                 }
                 Character.祖玛套装件数.V = Character.祖玛套装件头盔数.V + Character.祖玛套装件武器数.V + Character.祖玛套装件项链数.V + Character.祖玛套装件衣服数.V + Character.祖玛套装件左手镯数.V + Character.祖玛套装件左戒指数.V + Character.祖玛套装件右手镯数.V + Character.祖玛套装件右戒指数.V;
-                if (Character.祖玛套装件数.V >= Config.祖玛道装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(3u, out var value20))
+                if (Character.祖玛套装件数.V >= Settings.祖玛道装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(3u, out var value20))
                 {
                     BonusStats[套装编号] = value20.Stats;
                     Character.祖玛套装件数.V = 0;
@@ -4671,7 +4671,7 @@ public sealed class PlayerObject : MapObject
                     Character.赤月套装件头盔数.V = 1;
                 }
                 Character.赤月套装件数.V = Character.赤月套装件头盔数.V + Character.赤月套装件武器数.V + Character.赤月套装件项链数.V + Character.赤月套装件衣服数.V + Character.赤月套装件左手镯数.V + Character.赤月套装件左戒指数.V + Character.赤月套装件右手镯数.V + Character.赤月套装件右戒指数.V;
-                if (Character.赤月套装件数.V >= Config.赤月道装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(9u, out var value21))
+                if (Character.赤月套装件数.V >= Settings.赤月道装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(9u, out var value21))
                 {
                     BonusStats[套装编号] = value21.Stats;
                     Character.赤月套装件数.V = 0;
@@ -4717,7 +4717,7 @@ public sealed class PlayerObject : MapObject
                     Character.魔龙套装件头盔数.V = 1;
                 }
                 Character.魔龙套装件数.V = Character.魔龙套装件头盔数.V + Character.魔龙套装件武器数.V + Character.魔龙套装件项链数.V + Character.魔龙套装件衣服数.V + Character.魔龙套装件左手镯数.V + Character.魔龙套装件左戒指数.V + Character.魔龙套装件右手镯数.V + Character.魔龙套装件右戒指数.V;
-                if (Character.魔龙套装件数.V >= Config.魔龙道装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(15u, out var value22))
+                if (Character.魔龙套装件数.V >= Settings.魔龙道装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(15u, out var value22))
                 {
                     BonusStats[套装编号] = value22.Stats;
                     Character.魔龙套装件数.V = 0;
@@ -4763,7 +4763,7 @@ public sealed class PlayerObject : MapObject
                     Character.苍月套装件头盔数.V = 1;
                 }
                 Character.苍月套装件数.V = Character.苍月套装件头盔数.V + Character.苍月套装件武器数.V + Character.苍月套装件项链数.V + Character.苍月套装件衣服数.V + Character.苍月套装件左手镯数.V + Character.苍月套装件左戒指数.V + Character.苍月套装件右手镯数.V + Character.苍月套装件右戒指数.V;
-                if (Character.苍月套装件数.V >= Config.苍月道装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(21u, out var value23))
+                if (Character.苍月套装件数.V >= Settings.苍月道装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(21u, out var value23))
                 {
                     BonusStats[套装编号] = value23.Stats;
                     Character.苍月套装件数.V = 0;
@@ -4809,7 +4809,7 @@ public sealed class PlayerObject : MapObject
                     Character.星王套装件头盔数.V = 1;
                 }
                 Character.星王套装件数.V = Character.星王套装件头盔数.V + Character.星王套装件武器数.V + Character.星王套装件项链数.V + Character.星王套装件衣服数.V + Character.星王套装件左手镯数.V + Character.星王套装件左戒指数.V + Character.星王套装件右手镯数.V + Character.星王套装件右戒指数.V;
-                if (Character.星王套装件数.V >= Config.星王道装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(27u, out var value24))
+                if (Character.星王套装件数.V >= Settings.星王道装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(27u, out var value24))
                 {
                     BonusStats[套装编号] = value24.Stats;
                     Character.星王套装件数.V = 0;
@@ -4855,7 +4855,7 @@ public sealed class PlayerObject : MapObject
                     Character.特殊1套装件头盔数.V = 1;
                 }
                 Character.特殊1套装件数.V = Character.特殊1套装件头盔数.V + Character.特殊1套装件武器数.V + Character.特殊1套装件项链数.V + Character.特殊1套装件衣服数.V + Character.特殊1套装件左手镯数.V + Character.特殊1套装件左戒指数.V + Character.特殊1套装件右手镯数.V + Character.特殊1套装件右戒指数.V;
-                if (Character.特殊1套装件数.V >= Config.特殊1道装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(33u, out var value25))
+                if (Character.特殊1套装件数.V >= Settings.特殊1道装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(33u, out var value25))
                 {
                     BonusStats[套装编号] = value25.Stats;
                     Character.特殊1套装件数.V = 0;
@@ -4901,7 +4901,7 @@ public sealed class PlayerObject : MapObject
                     Character.特殊2套装件头盔数.V = 1;
                 }
                 Character.特殊2套装件数.V = Character.特殊2套装件头盔数.V + Character.特殊2套装件武器数.V + Character.特殊2套装件项链数.V + Character.特殊2套装件衣服数.V + Character.特殊2套装件左手镯数.V + Character.特殊2套装件左戒指数.V + Character.特殊2套装件右手镯数.V + Character.特殊2套装件右戒指数.V;
-                if (Character.特殊2套装件数.V >= Config.特殊2道装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(39u, out var value26))
+                if (Character.特殊2套装件数.V >= Settings.特殊2道装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(39u, out var value26))
                 {
                     BonusStats[套装编号] = value26.Stats;
                     Character.特殊2套装件数.V = 0;
@@ -4947,7 +4947,7 @@ public sealed class PlayerObject : MapObject
                     Character.特殊3套装件头盔数.V = 1;
                 }
                 Character.特殊3套装件数.V = Character.特殊3套装件头盔数.V + Character.特殊3套装件武器数.V + Character.特殊3套装件项链数.V + Character.特殊3套装件衣服数.V + Character.特殊3套装件左手镯数.V + Character.特殊3套装件左戒指数.V + Character.特殊3套装件右手镯数.V + Character.特殊3套装件右戒指数.V;
-                if (Character.特殊3套装件数.V >= Config.特殊3道装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(45u, out var value27))
+                if (Character.特殊3套装件数.V >= Settings.特殊3道装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(45u, out var value27))
                 {
                     BonusStats[套装编号] = value27.Stats;
                     Character.特殊3套装件数.V = 0;
@@ -4996,7 +4996,7 @@ public sealed class PlayerObject : MapObject
                     Character.祖玛套装件头盔数.V = 1;
                 }
                 Character.祖玛套装件数.V = Character.祖玛套装件头盔数.V + Character.祖玛套装件武器数.V + Character.祖玛套装件项链数.V + Character.祖玛套装件衣服数.V + Character.祖玛套装件左手镯数.V + Character.祖玛套装件左戒指数.V + Character.祖玛套装件右手镯数.V + Character.祖玛套装件右戒指数.V;
-                if (Character.祖玛套装件数.V >= Config.祖玛刺装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(4u, out var value28))
+                if (Character.祖玛套装件数.V >= Settings.祖玛刺装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(4u, out var value28))
                 {
                     BonusStats[套装编号] = value28.Stats;
                     Character.祖玛套装件数.V = 0;
@@ -5042,7 +5042,7 @@ public sealed class PlayerObject : MapObject
                     Character.赤月套装件头盔数.V = 1;
                 }
                 Character.赤月套装件数.V = Character.赤月套装件头盔数.V + Character.赤月套装件武器数.V + Character.赤月套装件项链数.V + Character.赤月套装件衣服数.V + Character.赤月套装件左手镯数.V + Character.赤月套装件左戒指数.V + Character.赤月套装件右手镯数.V + Character.赤月套装件右戒指数.V;
-                if (Character.赤月套装件数.V >= Config.赤月刺装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(10u, out var value29))
+                if (Character.赤月套装件数.V >= Settings.赤月刺装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(10u, out var value29))
                 {
                     BonusStats[套装编号] = value29.Stats;
                     Character.赤月套装件数.V = 0;
@@ -5088,7 +5088,7 @@ public sealed class PlayerObject : MapObject
                     Character.魔龙套装件头盔数.V = 1;
                 }
                 Character.魔龙套装件数.V = Character.魔龙套装件头盔数.V + Character.魔龙套装件武器数.V + Character.魔龙套装件项链数.V + Character.魔龙套装件衣服数.V + Character.魔龙套装件左手镯数.V + Character.魔龙套装件左戒指数.V + Character.魔龙套装件右手镯数.V + Character.魔龙套装件右戒指数.V;
-                if (Character.魔龙套装件数.V >= Config.魔龙刺装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(16u, out var value30))
+                if (Character.魔龙套装件数.V >= Settings.魔龙刺装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(16u, out var value30))
                 {
                     BonusStats[套装编号] = value30.Stats;
                     Character.魔龙套装件数.V = 0;
@@ -5134,7 +5134,7 @@ public sealed class PlayerObject : MapObject
                     Character.苍月套装件头盔数.V = 1;
                 }
                 Character.苍月套装件数.V = Character.苍月套装件头盔数.V + Character.苍月套装件武器数.V + Character.苍月套装件项链数.V + Character.苍月套装件衣服数.V + Character.苍月套装件左手镯数.V + Character.苍月套装件左戒指数.V + Character.苍月套装件右手镯数.V + Character.苍月套装件右戒指数.V;
-                if (Character.苍月套装件数.V >= Config.苍月刺装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(22u, out var value31))
+                if (Character.苍月套装件数.V >= Settings.苍月刺装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(22u, out var value31))
                 {
                     BonusStats[套装编号] = value31.Stats;
                     Character.苍月套装件数.V = 0;
@@ -5180,7 +5180,7 @@ public sealed class PlayerObject : MapObject
                     Character.星王套装件头盔数.V = 1;
                 }
                 Character.星王套装件数.V = Character.星王套装件头盔数.V + Character.星王套装件武器数.V + Character.星王套装件项链数.V + Character.星王套装件衣服数.V + Character.星王套装件左手镯数.V + Character.星王套装件左戒指数.V + Character.星王套装件右手镯数.V + Character.星王套装件右戒指数.V;
-                if (Character.星王套装件数.V >= Config.星王刺装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(28u, out var value32))
+                if (Character.星王套装件数.V >= Settings.星王刺装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(28u, out var value32))
                 {
                     BonusStats[套装编号] = value32.Stats;
                     Character.星王套装件数.V = 0;
@@ -5226,7 +5226,7 @@ public sealed class PlayerObject : MapObject
                     Character.特殊1套装件头盔数.V = 1;
                 }
                 Character.特殊1套装件数.V = Character.特殊1套装件头盔数.V + Character.特殊1套装件武器数.V + Character.特殊1套装件项链数.V + Character.特殊1套装件衣服数.V + Character.特殊1套装件左手镯数.V + Character.特殊1套装件左戒指数.V + Character.特殊1套装件右手镯数.V + Character.特殊1套装件右戒指数.V;
-                if (Character.特殊1套装件数.V >= Config.特殊1刺装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(34u, out var value33))
+                if (Character.特殊1套装件数.V >= Settings.特殊1刺装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(34u, out var value33))
                 {
                     BonusStats[套装编号] = value33.Stats;
                     Character.特殊1套装件数.V = 0;
@@ -5272,7 +5272,7 @@ public sealed class PlayerObject : MapObject
                     Character.特殊2套装件头盔数.V = 1;
                 }
                 Character.特殊2套装件数.V = Character.特殊2套装件头盔数.V + Character.特殊2套装件武器数.V + Character.特殊2套装件项链数.V + Character.特殊2套装件衣服数.V + Character.特殊2套装件左手镯数.V + Character.特殊2套装件左戒指数.V + Character.特殊2套装件右手镯数.V + Character.特殊2套装件右戒指数.V;
-                if (Character.特殊2套装件数.V >= Config.特殊2刺装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(40u, out var value34))
+                if (Character.特殊2套装件数.V >= Settings.特殊2刺装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(40u, out var value34))
                 {
                     BonusStats[套装编号] = value34.Stats;
                     Character.特殊2套装件数.V = 0;
@@ -5318,7 +5318,7 @@ public sealed class PlayerObject : MapObject
                     Character.特殊3套装件头盔数.V = 1;
                 }
                 Character.特殊3套装件数.V = Character.特殊3套装件头盔数.V + Character.特殊3套装件武器数.V + Character.特殊3套装件项链数.V + Character.特殊3套装件衣服数.V + Character.特殊3套装件左手镯数.V + Character.特殊3套装件左戒指数.V + Character.特殊3套装件右手镯数.V + Character.特殊3套装件右戒指数.V;
-                if (Character.特殊3套装件数.V >= Config.特殊3刺装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(46u, out var value35))
+                if (Character.特殊3套装件数.V >= Settings.特殊3刺装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(46u, out var value35))
                 {
                     BonusStats[套装编号] = value35.Stats;
                     Character.特殊3套装件数.V = 0;
@@ -5367,7 +5367,7 @@ public sealed class PlayerObject : MapObject
                     Character.祖玛套装件头盔数.V = 1;
                 }
                 Character.祖玛套装件数.V = Character.祖玛套装件头盔数.V + Character.祖玛套装件武器数.V + Character.祖玛套装件项链数.V + Character.祖玛套装件衣服数.V + Character.祖玛套装件左手镯数.V + Character.祖玛套装件左戒指数.V + Character.祖玛套装件右手镯数.V + Character.祖玛套装件右戒指数.V;
-                if (Character.祖玛套装件数.V >= Config.祖玛弓装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(5u, out var value36))
+                if (Character.祖玛套装件数.V >= Settings.祖玛弓装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(5u, out var value36))
                 {
                     BonusStats[套装编号] = value36.Stats;
                     Character.祖玛套装件数.V = 0;
@@ -5413,7 +5413,7 @@ public sealed class PlayerObject : MapObject
                     Character.赤月套装件头盔数.V = 1;
                 }
                 Character.赤月套装件数.V = Character.赤月套装件头盔数.V + Character.赤月套装件武器数.V + Character.赤月套装件项链数.V + Character.赤月套装件衣服数.V + Character.赤月套装件左手镯数.V + Character.赤月套装件左戒指数.V + Character.赤月套装件右手镯数.V + Character.赤月套装件右戒指数.V;
-                if (Character.赤月套装件数.V >= Config.赤月弓装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(11u, out var value37))
+                if (Character.赤月套装件数.V >= Settings.赤月弓装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(11u, out var value37))
                 {
                     BonusStats[套装编号] = value37.Stats;
                     Character.赤月套装件数.V = 0;
@@ -5459,7 +5459,7 @@ public sealed class PlayerObject : MapObject
                     Character.魔龙套装件头盔数.V = 1;
                 }
                 Character.魔龙套装件数.V = Character.魔龙套装件头盔数.V + Character.魔龙套装件武器数.V + Character.魔龙套装件项链数.V + Character.魔龙套装件衣服数.V + Character.魔龙套装件左手镯数.V + Character.魔龙套装件左戒指数.V + Character.魔龙套装件右手镯数.V + Character.魔龙套装件右戒指数.V;
-                if (Character.魔龙套装件数.V >= Config.魔龙弓装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(17u, out var value38))
+                if (Character.魔龙套装件数.V >= Settings.魔龙弓装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(17u, out var value38))
                 {
                     BonusStats[套装编号] = value38.Stats;
                     Character.魔龙套装件数.V = 0;
@@ -5505,7 +5505,7 @@ public sealed class PlayerObject : MapObject
                     Character.苍月套装件头盔数.V = 1;
                 }
                 Character.苍月套装件数.V = Character.苍月套装件头盔数.V + Character.苍月套装件武器数.V + Character.苍月套装件项链数.V + Character.苍月套装件衣服数.V + Character.苍月套装件左手镯数.V + Character.苍月套装件左戒指数.V + Character.苍月套装件右手镯数.V + Character.苍月套装件右戒指数.V;
-                if (Character.苍月套装件数.V >= Config.苍月弓装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(23u, out var value39))
+                if (Character.苍月套装件数.V >= Settings.苍月弓装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(23u, out var value39))
                 {
                     BonusStats[套装编号] = value39.Stats;
                     Character.苍月套装件数.V = 0;
@@ -5551,7 +5551,7 @@ public sealed class PlayerObject : MapObject
                     Character.星王套装件头盔数.V = 1;
                 }
                 Character.星王套装件数.V = Character.星王套装件头盔数.V + Character.星王套装件武器数.V + Character.星王套装件项链数.V + Character.星王套装件衣服数.V + Character.星王套装件左手镯数.V + Character.星王套装件左戒指数.V + Character.星王套装件右手镯数.V + Character.星王套装件右戒指数.V;
-                if (Character.星王套装件数.V >= Config.星王弓装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(29u, out var value40))
+                if (Character.星王套装件数.V >= Settings.星王弓装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(29u, out var value40))
                 {
                     BonusStats[套装编号] = value40.Stats;
                     Character.星王套装件数.V = 0;
@@ -5597,7 +5597,7 @@ public sealed class PlayerObject : MapObject
                     Character.特殊1套装件头盔数.V = 1;
                 }
                 Character.特殊1套装件数.V = Character.特殊1套装件头盔数.V + Character.特殊1套装件武器数.V + Character.特殊1套装件项链数.V + Character.特殊1套装件衣服数.V + Character.特殊1套装件左手镯数.V + Character.特殊1套装件左戒指数.V + Character.特殊1套装件右手镯数.V + Character.特殊1套装件右戒指数.V;
-                if (Character.特殊1套装件数.V >= Config.特殊1弓装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(35u, out var value41))
+                if (Character.特殊1套装件数.V >= Settings.特殊1弓装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(35u, out var value41))
                 {
                     BonusStats[套装编号] = value41.Stats;
                     Character.特殊1套装件数.V = 0;
@@ -5643,7 +5643,7 @@ public sealed class PlayerObject : MapObject
                     Character.特殊2套装件头盔数.V = 1;
                 }
                 Character.特殊2套装件数.V = Character.特殊2套装件头盔数.V + Character.特殊2套装件武器数.V + Character.特殊2套装件项链数.V + Character.特殊2套装件衣服数.V + Character.特殊2套装件左手镯数.V + Character.特殊2套装件左戒指数.V + Character.特殊2套装件右手镯数.V + Character.特殊2套装件右戒指数.V;
-                if (Character.特殊2套装件数.V >= Config.特殊2弓装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(41u, out var value42))
+                if (Character.特殊2套装件数.V >= Settings.特殊2弓装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(41u, out var value42))
                 {
                     BonusStats[套装编号] = value42.Stats;
                     Character.特殊2套装件数.V = 0;
@@ -5689,7 +5689,7 @@ public sealed class PlayerObject : MapObject
                     Character.特殊3套装件头盔数.V = 1;
                 }
                 Character.特殊3套装件数.V = Character.特殊3套装件头盔数.V + Character.特殊3套装件武器数.V + Character.特殊3套装件项链数.V + Character.特殊3套装件衣服数.V + Character.特殊3套装件左手镯数.V + Character.特殊3套装件左戒指数.V + Character.特殊3套装件右手镯数.V + Character.特殊3套装件右戒指数.V;
-                if (Character.特殊3套装件数.V >= Config.特殊3弓装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(47u, out var value43))
+                if (Character.特殊3套装件数.V >= Settings.特殊3弓装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(47u, out var value43))
                 {
                     BonusStats[套装编号] = value43.Stats;
                     Character.特殊3套装件数.V = 0;
@@ -5738,7 +5738,7 @@ public sealed class PlayerObject : MapObject
                     Character.祖玛套装件头盔数.V = 1;
                 }
                 Character.祖玛套装件数.V = Character.祖玛套装件头盔数.V + Character.祖玛套装件武器数.V + Character.祖玛套装件项链数.V + Character.祖玛套装件衣服数.V + Character.祖玛套装件左手镯数.V + Character.祖玛套装件左戒指数.V + Character.祖玛套装件右手镯数.V + Character.祖玛套装件右戒指数.V;
-                if (Character.祖玛套装件数.V >= Config.祖玛枪装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(6u, out var value44))
+                if (Character.祖玛套装件数.V >= Settings.祖玛枪装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(6u, out var value44))
                 {
                     BonusStats[套装编号] = value44.Stats;
                     Character.祖玛套装件数.V = 0;
@@ -5784,7 +5784,7 @@ public sealed class PlayerObject : MapObject
                     Character.赤月套装件头盔数.V = 1;
                 }
                 Character.赤月套装件数.V = Character.赤月套装件头盔数.V + Character.赤月套装件武器数.V + Character.赤月套装件项链数.V + Character.赤月套装件衣服数.V + Character.赤月套装件左手镯数.V + Character.赤月套装件左戒指数.V + Character.赤月套装件右手镯数.V + Character.赤月套装件右戒指数.V;
-                if (Character.赤月套装件数.V >= Config.赤月枪装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(12u, out var value45))
+                if (Character.赤月套装件数.V >= Settings.赤月枪装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(12u, out var value45))
                 {
                     BonusStats[套装编号] = value45.Stats;
                     Character.赤月套装件数.V = 0;
@@ -5830,7 +5830,7 @@ public sealed class PlayerObject : MapObject
                     Character.魔龙套装件头盔数.V = 1;
                 }
                 Character.魔龙套装件数.V = Character.魔龙套装件头盔数.V + Character.魔龙套装件武器数.V + Character.魔龙套装件项链数.V + Character.魔龙套装件衣服数.V + Character.魔龙套装件左手镯数.V + Character.魔龙套装件左戒指数.V + Character.魔龙套装件右手镯数.V + Character.魔龙套装件右戒指数.V;
-                if (Character.魔龙套装件数.V >= Config.魔龙枪装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(18u, out var value46))
+                if (Character.魔龙套装件数.V >= Settings.魔龙枪装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(18u, out var value46))
                 {
                     BonusStats[套装编号] = value46.Stats;
                     Character.魔龙套装件数.V = 0;
@@ -5876,7 +5876,7 @@ public sealed class PlayerObject : MapObject
                     Character.苍月套装件头盔数.V = 1;
                 }
                 Character.苍月套装件数.V = Character.苍月套装件头盔数.V + Character.苍月套装件武器数.V + Character.苍月套装件项链数.V + Character.苍月套装件衣服数.V + Character.苍月套装件左手镯数.V + Character.苍月套装件左戒指数.V + Character.苍月套装件右手镯数.V + Character.苍月套装件右戒指数.V;
-                if (Character.苍月套装件数.V >= Config.苍月枪装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(24u, out var value47))
+                if (Character.苍月套装件数.V >= Settings.苍月枪装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(24u, out var value47))
                 {
                     BonusStats[套装编号] = value47.Stats;
                     Character.苍月套装件数.V = 0;
@@ -5922,7 +5922,7 @@ public sealed class PlayerObject : MapObject
                     Character.星王套装件头盔数.V = 1;
                 }
                 Character.星王套装件数.V = Character.星王套装件头盔数.V + Character.星王套装件武器数.V + Character.星王套装件项链数.V + Character.星王套装件衣服数.V + Character.星王套装件左手镯数.V + Character.星王套装件左戒指数.V + Character.星王套装件右手镯数.V + Character.星王套装件右戒指数.V;
-                if (Character.星王套装件数.V >= Config.星王枪装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(30u, out var value48))
+                if (Character.星王套装件数.V >= Settings.星王枪装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(30u, out var value48))
                 {
                     BonusStats[套装编号] = value48.Stats;
                     Character.星王套装件数.V = 0;
@@ -5968,7 +5968,7 @@ public sealed class PlayerObject : MapObject
                     Character.特殊1套装件头盔数.V = 1;
                 }
                 Character.特殊1套装件数.V = Character.特殊1套装件头盔数.V + Character.特殊1套装件武器数.V + Character.特殊1套装件项链数.V + Character.特殊1套装件衣服数.V + Character.特殊1套装件左手镯数.V + Character.特殊1套装件左戒指数.V + Character.特殊1套装件右手镯数.V + Character.特殊1套装件右戒指数.V;
-                if (Character.特殊1套装件数.V >= Config.特殊1枪装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(36u, out var value49))
+                if (Character.特殊1套装件数.V >= Settings.特殊1枪装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(36u, out var value49))
                 {
                     BonusStats[套装编号] = value49.Stats;
                     Character.特殊1套装件数.V = 0;
@@ -6014,7 +6014,7 @@ public sealed class PlayerObject : MapObject
                     Character.特殊2套装件头盔数.V = 1;
                 }
                 Character.特殊2套装件数.V = Character.特殊2套装件头盔数.V + Character.特殊2套装件武器数.V + Character.特殊2套装件项链数.V + Character.特殊2套装件衣服数.V + Character.特殊2套装件左手镯数.V + Character.特殊2套装件左戒指数.V + Character.特殊2套装件右手镯数.V + Character.特殊2套装件右戒指数.V;
-                if (Character.特殊2套装件数.V >= Config.特殊2枪装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(42u, out var value50))
+                if (Character.特殊2套装件数.V >= Settings.特殊2枪装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(42u, out var value50))
                 {
                     BonusStats[套装编号] = value50.Stats;
                     Character.特殊2套装件数.V = 0;
@@ -6060,7 +6060,7 @@ public sealed class PlayerObject : MapObject
                     Character.特殊3套装件头盔数.V = 1;
                 }
                 Character.特殊3套装件数.V = Character.特殊3套装件头盔数.V + Character.特殊3套装件武器数.V + Character.特殊3套装件项链数.V + Character.特殊3套装件衣服数.V + Character.特殊3套装件左手镯数.V + Character.特殊3套装件左戒指数.V + Character.特殊3套装件右手镯数.V + Character.特殊3套装件右戒指数.V;
-                if (Character.特殊3套装件数.V >= Config.特殊3枪装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(48u, out var value51))
+                if (Character.特殊3套装件数.V >= Settings.特殊3枪装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(48u, out var value51))
                 {
                     BonusStats[套装编号] = value51.Stats;
                     Character.特殊3套装件数.V = 0;
@@ -6109,7 +6109,7 @@ public sealed class PlayerObject : MapObject
                     Character.通用套装1件头盔数.V = 1;
                 }
                 Character.通用套装1件数.V = Character.通用套装1件头盔数.V + Character.通用套装1件武器数.V + Character.通用套装1件项链数.V + Character.通用套装1件衣服数.V + Character.通用套装1件左手镯数.V + Character.通用套装1件左戒指数.V + Character.通用套装1件右手镯数.V + Character.通用套装1件右戒指数.V;
-                if (Character.通用套装1件数.V >= Config.通用1装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(49u, out var value52))
+                if (Character.通用套装1件数.V >= Settings.通用1装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(49u, out var value52))
                 {
                     BonusStats[套装编号] = value52.Stats;
                     Character.通用套装1件数.V = 0;
@@ -6155,7 +6155,7 @@ public sealed class PlayerObject : MapObject
                     Character.通用套装2件头盔数.V = 1;
                 }
                 Character.通用套装2件数.V = Character.通用套装2件头盔数.V + Character.通用套装2件武器数.V + Character.通用套装2件项链数.V + Character.通用套装2件衣服数.V + Character.通用套装2件左手镯数.V + Character.通用套装2件左戒指数.V + Character.通用套装2件右手镯数.V + Character.通用套装2件右戒指数.V;
-                if (Character.通用套装2件数.V >= Config.通用2装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(50u, out var value53))
+                if (Character.通用套装2件数.V >= Settings.通用2装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(50u, out var value53))
                 {
                     BonusStats[套装编号] = value53.Stats;
                     Character.通用套装2件数.V = 0;
@@ -6201,7 +6201,7 @@ public sealed class PlayerObject : MapObject
                     Character.通用套装3件头盔数.V = 1;
                 }
                 Character.通用套装3件数.V = Character.通用套装3件头盔数.V + Character.通用套装3件武器数.V + Character.通用套装3件项链数.V + Character.通用套装3件衣服数.V + Character.通用套装3件左手镯数.V + Character.通用套装3件左戒指数.V + Character.通用套装3件右手镯数.V + Character.通用套装3件右戒指数.V;
-                if (Character.通用套装3件数.V >= Config.通用3装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(51u, out var value54))
+                if (Character.通用套装3件数.V >= Settings.通用3装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(51u, out var value54))
                 {
                     BonusStats[套装编号] = value54.Stats;
                     Character.通用套装3件数.V = 0;
@@ -6247,7 +6247,7 @@ public sealed class PlayerObject : MapObject
                     Character.通用套装4件头盔数.V = 1;
                 }
                 Character.通用套装4件数.V = Character.通用套装4件头盔数.V + Character.通用套装4件武器数.V + Character.通用套装4件项链数.V + Character.通用套装4件衣服数.V + Character.通用套装4件左手镯数.V + Character.通用套装4件左戒指数.V + Character.通用套装4件右手镯数.V + Character.通用套装4件右戒指数.V;
-                if (Character.通用套装4件数.V >= Config.通用4装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(52u, out var value55))
+                if (Character.通用套装4件数.V >= Settings.通用4装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(52u, out var value55))
                 {
                     BonusStats[套装编号] = value55.Stats;
                     Character.通用套装4件数.V = 0;
@@ -6293,7 +6293,7 @@ public sealed class PlayerObject : MapObject
                     Character.通用套装5件头盔数.V = 1;
                 }
                 Character.通用套装5件数.V = Character.通用套装5件头盔数.V + Character.通用套装5件武器数.V + Character.通用套装5件项链数.V + Character.通用套装5件衣服数.V + Character.通用套装5件左手镯数.V + Character.通用套装5件左戒指数.V + Character.通用套装5件右手镯数.V + Character.通用套装5件右戒指数.V;
-                if (Character.通用套装5件数.V >= Config.通用5装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(53u, out var value56))
+                if (Character.通用套装5件数.V >= Settings.通用5装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(53u, out var value56))
                 {
                     BonusStats[套装编号] = value56.Stats;
                     Character.通用套装5件数.V = 0;
@@ -6339,7 +6339,7 @@ public sealed class PlayerObject : MapObject
                     Character.通用套装6件头盔数.V = 1;
                 }
                 Character.通用套装6件数.V = Character.通用套装6件头盔数.V + Character.通用套装6件武器数.V + Character.通用套装6件项链数.V + Character.通用套装6件衣服数.V + Character.通用套装6件左手镯数.V + Character.通用套装6件左戒指数.V + Character.通用套装6件右手镯数.V + Character.通用套装6件右戒指数.V;
-                if (Character.通用套装6件数.V >= Config.通用6装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(54u, out var value57))
+                if (Character.通用套装6件数.V >= Settings.通用6装备佩戴数量 && ItemSetInfo.DataSheet.TryGetValue(54u, out var value57))
                 {
                     BonusStats[套装编号] = value57.Stats;
                     Character.通用套装6件数.V = 0;
@@ -6414,7 +6414,7 @@ public sealed class PlayerObject : MapObject
             if (Pets.Count < num3 + 额外诱惑数量)
             {
                 int num9 = Math.Min(num4 + num7, 7);
-                int 宠物时长 = Config.怪物诱惑时长 + 额外诱惑时长 + num6;
+                int 宠物时长 = Settings.怪物诱惑时长 + 额外诱惑时长 + num6;
                 bool 绑定武器 = flag2 || num4 != 0 || 额外诱惑时长 != 0 || 额外诱惑概率 != 0f || Pets.Count >= num3;
                 PetObject 宠物实例2 = ((target is MonsterObject 怪物实例2) ? new PetObject(this, 怪物实例2, (byte)Math.Max(怪物实例2.PetLevel, num9), 绑定武器, 宠物时长) : new PetObject(this, (PetObject)target, (byte)num9, 绑定武器, 宠物时长));
                 Enqueue(new SyncPetLevelPacket
@@ -6490,7 +6490,7 @@ public sealed class PlayerObject : MapObject
 
     public void DecreaseWeaponLuck()
     {
-        if (Config.PK死亡幸运开关 == 1 && Equipment.TryGetValue(0, out var v) && v.Luck.V > -9 && Compute.CalculateProbability(0.1f))
+        if (Settings.PK死亡幸运开关 == 1 && Equipment.TryGetValue(0, out var v) && v.Luck.V > -9 && Compute.CalculateProbability(0.1f))
         {
             v.Luck.V--;
             Enqueue(new SyncItemPacket
@@ -6897,7 +6897,7 @@ public sealed class PlayerObject : MapObject
         Dead = false;
         Blocking = true;
 
-        if (Config.CurrentVersion >= 1 && HasResurrectionRing && ResurrectionRingReady && ResurrectionRingDura > 0)
+        if (Settings.CurrentVersion >= 1 && HasResurrectionRing && ResurrectionRingReady && ResurrectionRingDura > 0)
         {
             CurrentHP = (int)this[Stat.MaxHP];
             CurrentMP = (int)this[Stat.MaxMP];
@@ -6908,7 +6908,7 @@ public sealed class PlayerObject : MapObject
             UpdateAllNeighbours();
             ResurrectionRingReady = false;
             AddBuff(47391, this);
-            ReviveTime = SEngine.CurrentTime.AddSeconds(Config.ReviveInterval);
+            ReviveTime = SEngine.CurrentTime.AddSeconds(Settings.ReviveInterval);
             if (Equipment.TryGetValue(ResurrectionRingLocation, out var v))
             {
                 v.Dura.V -= 1000;
@@ -7148,7 +7148,7 @@ public sealed class PlayerObject : MapObject
 
     public void SwitchStance(byte 姿态编号, byte 触发动作)
     {
-        if (!Config.安全区收刀开关 || Config.CurrentVersion < 2)
+        if (!Settings.安全区收刀开关 || Settings.CurrentVersion < 2)
         {
             return;
         }
@@ -7556,181 +7556,181 @@ public sealed class PlayerObject : MapObject
     {
         if (result)
         {
-            if (amount != 0 && Config.平台开关模式 == 19)
+            if (amount != 0 && Settings.平台开关模式 == 19)
             {
-                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * amount;
+                Character.Currencies[(CurrencyType)Settings.平台开关模式] += Settings.平台元宝充值模块 * amount;
                 Character.VIPPoints.V += amount;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * amount}修罗声威", rolling: true);
+                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.平台元宝充值模块 * amount}修罗声威", rolling: true);
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
                 });
             }
-            if (amount != 0 && Config.平台开关模式 == 18)
+            if (amount != 0 && Settings.平台开关模式 == 18)
             {
-                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * amount;
+                Character.Currencies[(CurrencyType)Settings.平台开关模式] += Settings.平台元宝充值模块 * amount;
                 Character.VIPPoints.V += amount;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * amount}跨服秘宝", rolling: true);
+                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.平台元宝充值模块 * amount}跨服秘宝", rolling: true);
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
                 });
             }
-            if (amount != 0 && Config.平台开关模式 == 17)
+            if (amount != 0 && Settings.平台开关模式 == 17)
             {
-                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * amount;
+                Character.Currencies[(CurrencyType)Settings.平台开关模式] += Settings.平台元宝充值模块 * amount;
                 Character.VIPPoints.V += amount;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * amount}勇者金币", rolling: true);
+                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.平台元宝充值模块 * amount}勇者金币", rolling: true);
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
                 });
             }
-            if (amount != 0 && Config.平台开关模式 == 16)
+            if (amount != 0 && Settings.平台开关模式 == 16)
             {
-                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * amount;
+                Character.Currencies[(CurrencyType)Settings.平台开关模式] += Settings.平台元宝充值模块 * amount;
                 Character.VIPPoints.V += amount;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * amount}武道荣誉", rolling: true);
+                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.平台元宝充值模块 * amount}武道荣誉", rolling: true);
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
                 });
             }
-            if (amount != 0 && Config.平台开关模式 == 13)
+            if (amount != 0 && Settings.平台开关模式 == 13)
             {
-                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * amount;
+                Character.Currencies[(CurrencyType)Settings.平台开关模式] += Settings.平台元宝充值模块 * amount;
                 Character.VIPPoints.V += amount;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * amount}成就点数", rolling: true);
+                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.平台元宝充值模块 * amount}成就点数", rolling: true);
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
                 });
             }
-            if (amount != 0 && Config.平台开关模式 == 15)
+            if (amount != 0 && Settings.平台开关模式 == 15)
             {
-                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * amount * 100;
+                Character.Currencies[(CurrencyType)Settings.平台开关模式] += Settings.平台元宝充值模块 * amount * 100;
                 Character.VIPPoints.V += amount;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * amount}绑定元宝", rolling: true);
+                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.平台元宝充值模块 * amount}绑定元宝", rolling: true);
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
                 });
             }
-            if (amount != 0 && Config.平台开关模式 == 12)
+            if (amount != 0 && Settings.平台开关模式 == 12)
             {
-                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * amount;
+                Character.Currencies[(CurrencyType)Settings.平台开关模式] += Settings.平台元宝充值模块 * amount;
                 Character.VIPPoints.V += amount;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * amount}擂台积分", rolling: true);
+                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.平台元宝充值模块 * amount}擂台积分", rolling: true);
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
                 });
             }
-            if (amount != 0 && Config.平台开关模式 == 11)
+            if (amount != 0 && Settings.平台开关模式 == 11)
             {
-                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * amount;
+                Character.Currencies[(CurrencyType)Settings.平台开关模式] += Settings.平台元宝充值模块 * amount;
                 Character.VIPPoints.V += amount;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * amount}道义点数", rolling: true);
+                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.平台元宝充值模块 * amount}道义点数", rolling: true);
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
                 });
             }
-            if (amount != 0 && Config.平台开关模式 == 10)
+            if (amount != 0 && Settings.平台开关模式 == 10)
             {
-                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * amount;
+                Character.Currencies[(CurrencyType)Settings.平台开关模式] += Settings.平台元宝充值模块 * amount;
                 Character.VIPPoints.V += amount;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * amount}修炼点数", rolling: true);
+                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.平台元宝充值模块 * amount}修炼点数", rolling: true);
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
                 });
             }
-            if (amount != 0 && Config.平台开关模式 == 9)
+            if (amount != 0 && Settings.平台开关模式 == 9)
             {
-                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * amount;
+                Character.Currencies[(CurrencyType)Settings.平台开关模式] += Settings.平台元宝充值模块 * amount;
                 Character.VIPPoints.V += amount;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * amount}公会贡献", rolling: true);
+                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.平台元宝充值模块 * amount}公会贡献", rolling: true);
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
                 });
             }
-            if (amount != 0 && Config.平台开关模式 == 8)
+            if (amount != 0 && Settings.平台开关模式 == 8)
             {
-                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * amount;
+                Character.Currencies[(CurrencyType)Settings.平台开关模式] += Settings.平台元宝充值模块 * amount;
                 Character.VIPPoints.V += amount;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * amount}战场点数", rolling: true);
+                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.平台元宝充值模块 * amount}战场点数", rolling: true);
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
                 });
             }
-            if (amount != 0 && Config.平台开关模式 == 7)
+            if (amount != 0 && Settings.平台开关模式 == 7)
             {
-                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * amount;
+                Character.Currencies[(CurrencyType)Settings.平台开关模式] += Settings.平台元宝充值模块 * amount;
                 Character.VIPPoints.V += amount;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * amount}万法之气", rolling: true);
+                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.平台元宝充值模块 * amount}万法之气", rolling: true);
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
                 });
             }
-            if (amount != 0 && Config.平台开关模式 == 6)
+            if (amount != 0 && Settings.平台开关模式 == 6)
             {
-                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * amount;
+                Character.Currencies[(CurrencyType)Settings.平台开关模式] += Settings.平台元宝充值模块 * amount;
                 Character.VIPPoints.V += amount;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * amount}名师声望", rolling: true);
+                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.平台元宝充值模块 * amount}名师声望", rolling: true);
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
                 });
             }
-            if (amount != 0 && Config.平台开关模式 == 3)
+            if (amount != 0 && Settings.平台开关模式 == 3)
             {
-                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * amount * 100;
+                Character.Currencies[(CurrencyType)Settings.平台开关模式] += Settings.平台元宝充值模块 * amount * 100;
                 Character.VIPPoints.V += amount;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * amount}元宝", rolling: true);
+                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.平台元宝充值模块 * amount}元宝", rolling: true);
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
                 });
             }
-            if (amount != 0 && Config.平台开关模式 == 5)
+            if (amount != 0 && Settings.平台开关模式 == 5)
             {
-                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * amount;
+                Character.Currencies[(CurrencyType)Settings.平台开关模式] += Settings.平台元宝充值模块 * amount;
                 Character.VIPPoints.V += amount;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * amount}魂值", rolling: true);
+                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.平台元宝充值模块 * amount}魂值", rolling: true);
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
                 });
             }
-            if (amount != 0 && Config.平台开关模式 == 2)
+            if (amount != 0 && Settings.平台开关模式 == 2)
             {
-                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * amount;
+                Character.Currencies[(CurrencyType)Settings.平台开关模式] += Settings.平台元宝充值模块 * amount;
                 Character.VIPPoints.V += amount;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * amount}声威", rolling: true);
+                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.平台元宝充值模块 * amount}声威", rolling: true);
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
                 });
             }
-            if (amount != 0 && Config.平台开关模式 == 0)
+            if (amount != 0 && Settings.平台开关模式 == 0)
             {
-                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * amount;
+                Character.Currencies[(CurrencyType)Settings.平台开关模式] += Settings.平台元宝充值模块 * amount;
                 Character.VIPPoints.V += amount;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * amount}银币", rolling: true);
+                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.平台元宝充值模块 * amount}银币", rolling: true);
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
                 });
             }
-            if (amount != 0 && Config.平台开关模式 == 1)
+            if (amount != 0 && Settings.平台开关模式 == 1)
             {
-                Character.Currencies[(CurrencyType)Config.平台开关模式] += Config.平台元宝充值模块 * amount;
+                Character.Currencies[(CurrencyType)Settings.平台开关模式] += Settings.平台元宝充值模块 * amount;
                 Character.VIPPoints.V += amount;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Config.平台元宝充值模块 * amount}金币", rolling: true);
+                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.平台元宝充值模块 * amount}金币", rolling: true);
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
@@ -7783,7 +7783,7 @@ public sealed class PlayerObject : MapObject
                     }
                     break;
                 case 616200001:
-                    if (Config.变性内容控件 == "ASDZWEERRZCQA" || Config.CurrentVersion >= 3)
+                    if (Settings.变性内容控件 == "ASDZWEERRZCQA" || Settings.CurrentVersion >= 3)
                     {
                         switch (选项编号)
                         {
@@ -7794,16 +7794,16 @@ public sealed class PlayerObject : MapObject
                                     {
                                         NetworkManager.SendMessage(this, "您是男儿身!禁止变性。");
                                     }
-                                    else if (Character.Currencies[(CurrencyType)Config.变性货币类型] < Config.变性货币值)
+                                    else if (Character.Currencies[(CurrencyType)Settings.变性货币类型] < Settings.变性货币值)
                                     {
                                         NetworkManager.SendMessage(this, "货币不足!查看具体货币值。");
                                     }
-                                    else if (FindItem(Config.变性物品数量, Config.变性物品ID, out 物品列表21))
+                                    else if (FindItem(Settings.变性物品数量, Settings.变性物品ID, out 物品列表21))
                                     {
-                                        if (Character.Currencies[(CurrencyType)Config.变性货币类型] >= Config.变性货币值)
+                                        if (Character.Currencies[(CurrencyType)Settings.变性货币类型] >= Settings.变性货币值)
                                         {
-                                            Character.Currencies[(CurrencyType)Config.变性货币类型] -= Config.变性货币值;
-                                            ConsumeItem(Config.变性物品数量, 物品列表21);
+                                            Character.Currencies[(CurrencyType)Settings.变性货币类型] -= Settings.变性货币值;
+                                            ConsumeItem(Settings.变性物品数量, 物品列表21);
                                             Enqueue(new 同步货币数量
                                             {
                                                 Description = 全部货币描述()
@@ -7831,16 +7831,16 @@ public sealed class PlayerObject : MapObject
                                     {
                                         NetworkManager.SendMessage(this, "您是女儿身!禁止变性。");
                                     }
-                                    else if (Character.Currencies[(CurrencyType)Config.变性货币类型] < Config.变性货币值)
+                                    else if (Character.Currencies[(CurrencyType)Settings.变性货币类型] < Settings.变性货币值)
                                     {
                                         NetworkManager.SendMessage(this, "货币不足!查看具体货币值。");
                                     }
-                                    else if (FindItem(Config.变性物品数量, Config.变性物品ID, out 物品列表20))
+                                    else if (FindItem(Settings.变性物品数量, Settings.变性物品ID, out 物品列表20))
                                     {
-                                        if (Character.Currencies[(CurrencyType)Config.变性货币类型] >= Config.变性货币值)
+                                        if (Character.Currencies[(CurrencyType)Settings.变性货币类型] >= Settings.变性货币值)
                                         {
-                                            Character.Currencies[(CurrencyType)Config.变性货币类型] -= Config.变性货币值;
-                                            ConsumeItem(Config.变性物品数量, 物品列表20);
+                                            Character.Currencies[(CurrencyType)Settings.变性货币类型] -= Settings.变性货币值;
+                                            ConsumeItem(Settings.变性物品数量, 物品列表20);
                                             Enqueue(new 同步货币数量
                                             {
                                                 Description = 全部货币描述()
@@ -7869,7 +7869,7 @@ public sealed class PlayerObject : MapObject
                     }
                     break;
                 case 616200002:
-                    if (Config.转职内容控件 == "EWQEQWCXQSADZ" || Config.CurrentVersion >= 3)
+                    if (Settings.转职内容控件 == "EWQEQWCXQSADZ" || Settings.CurrentVersion >= 3)
                     {
                         switch (选项编号)
                         {
@@ -7880,16 +7880,16 @@ public sealed class PlayerObject : MapObject
                                     {
                                         NetworkManager.SendMessage(this, "您是战士!禁止职业。");
                                     }
-                                    else if (Character.Currencies[(CurrencyType)Config.职业货币类型] < Config.职业货币值)
+                                    else if (Character.Currencies[(CurrencyType)Settings.职业货币类型] < Settings.职业货币值)
                                     {
                                         NetworkManager.SendMessage(this, "货币不足!查看具体货币值。");
                                     }
-                                    else if (FindItem(Config.职业物品数量, Config.职业物品ID, out 物品列表4))
+                                    else if (FindItem(Settings.职业物品数量, Settings.职业物品ID, out 物品列表4))
                                     {
-                                        if (Character.Currencies[(CurrencyType)Config.职业货币类型] >= Config.职业货币值)
+                                        if (Character.Currencies[(CurrencyType)Settings.职业货币类型] >= Settings.职业货币值)
                                         {
-                                            Character.Currencies[(CurrencyType)Config.职业货币类型] -= Config.职业货币值;
-                                            ConsumeItem(Config.职业物品数量, 物品列表4);
+                                            Character.Currencies[(CurrencyType)Settings.职业货币类型] -= Settings.职业货币值;
+                                            ConsumeItem(Settings.职业物品数量, 物品列表4);
                                             Enqueue(new 同步货币数量
                                             {
                                                 Description = 全部货币描述()
@@ -7921,16 +7921,16 @@ public sealed class PlayerObject : MapObject
                                     {
                                         NetworkManager.SendMessage(this, "您是法师!禁止职业。");
                                     }
-                                    else if (Character.Currencies[(CurrencyType)Config.职业货币类型] < Config.职业货币值)
+                                    else if (Character.Currencies[(CurrencyType)Settings.职业货币类型] < Settings.职业货币值)
                                     {
                                         NetworkManager.SendMessage(this, "货币不足!查看具体货币值。");
                                     }
-                                    else if (FindItem(Config.职业物品数量, Config.职业物品ID, out 物品列表3))
+                                    else if (FindItem(Settings.职业物品数量, Settings.职业物品ID, out 物品列表3))
                                     {
-                                        if (Character.Currencies[(CurrencyType)Config.职业货币类型] >= Config.职业货币值)
+                                        if (Character.Currencies[(CurrencyType)Settings.职业货币类型] >= Settings.职业货币值)
                                         {
-                                            Character.Currencies[(CurrencyType)Config.职业货币类型] -= Config.职业货币值;
-                                            ConsumeItem(Config.职业物品数量, 物品列表3);
+                                            Character.Currencies[(CurrencyType)Settings.职业货币类型] -= Settings.职业货币值;
+                                            ConsumeItem(Settings.职业物品数量, 物品列表3);
                                             Enqueue(new 同步货币数量
                                             {
                                                 Description = 全部货币描述()
@@ -7962,16 +7962,16 @@ public sealed class PlayerObject : MapObject
                                     {
                                         NetworkManager.SendMessage(this, "您是刺客!禁止职业。");
                                     }
-                                    else if (Character.Currencies[(CurrencyType)Config.职业货币类型] < Config.职业货币值)
+                                    else if (Character.Currencies[(CurrencyType)Settings.职业货币类型] < Settings.职业货币值)
                                     {
                                         NetworkManager.SendMessage(this, "货币不足!查看具体货币值。");
                                     }
-                                    else if (FindItem(Config.职业物品数量, Config.职业物品ID, out 物品列表5))
+                                    else if (FindItem(Settings.职业物品数量, Settings.职业物品ID, out 物品列表5))
                                     {
-                                        if (Character.Currencies[(CurrencyType)Config.职业货币类型] >= Config.职业货币值)
+                                        if (Character.Currencies[(CurrencyType)Settings.职业货币类型] >= Settings.职业货币值)
                                         {
-                                            Character.Currencies[(CurrencyType)Config.职业货币类型] -= Config.职业货币值;
-                                            ConsumeItem(Config.职业物品数量, 物品列表5);
+                                            Character.Currencies[(CurrencyType)Settings.职业货币类型] -= Settings.职业货币值;
+                                            ConsumeItem(Settings.职业物品数量, 物品列表5);
                                             Enqueue(new 同步货币数量
                                             {
                                                 Description = 全部货币描述()
@@ -8003,16 +8003,16 @@ public sealed class PlayerObject : MapObject
                                     {
                                         NetworkManager.SendMessage(this, "您是弓手!禁止职业。");
                                     }
-                                    else if (Character.Currencies[(CurrencyType)Config.职业货币类型] < Config.职业货币值)
+                                    else if (Character.Currencies[(CurrencyType)Settings.职业货币类型] < Settings.职业货币值)
                                     {
                                         NetworkManager.SendMessage(this, "货币不足!查看具体货币值。");
                                     }
-                                    else if (FindItem(Config.职业物品数量, Config.职业物品ID, out 物品列表6))
+                                    else if (FindItem(Settings.职业物品数量, Settings.职业物品ID, out 物品列表6))
                                     {
-                                        if (Character.Currencies[(CurrencyType)Config.职业货币类型] >= Config.职业货币值)
+                                        if (Character.Currencies[(CurrencyType)Settings.职业货币类型] >= Settings.职业货币值)
                                         {
-                                            Character.Currencies[(CurrencyType)Config.职业货币类型] -= Config.职业货币值;
-                                            ConsumeItem(Config.职业物品数量, 物品列表6);
+                                            Character.Currencies[(CurrencyType)Settings.职业货币类型] -= Settings.职业货币值;
+                                            ConsumeItem(Settings.职业物品数量, 物品列表6);
                                             Enqueue(new 同步货币数量
                                             {
                                                 Description = 全部货币描述()
@@ -8044,16 +8044,16 @@ public sealed class PlayerObject : MapObject
                                     {
                                         NetworkManager.SendMessage(this, "您是道士!禁止职业。");
                                     }
-                                    else if (Character.Currencies[(CurrencyType)Config.职业货币类型] < Config.职业货币值)
+                                    else if (Character.Currencies[(CurrencyType)Settings.职业货币类型] < Settings.职业货币值)
                                     {
                                         NetworkManager.SendMessage(this, "货币不足!查看具体货币值。");
                                     }
-                                    else if (FindItem(Config.职业物品数量, Config.职业物品ID, out 物品列表2))
+                                    else if (FindItem(Settings.职业物品数量, Settings.职业物品ID, out 物品列表2))
                                     {
-                                        if (Character.Currencies[(CurrencyType)Config.职业货币类型] >= Config.职业货币值)
+                                        if (Character.Currencies[(CurrencyType)Settings.职业货币类型] >= Settings.职业货币值)
                                         {
-                                            Character.Currencies[(CurrencyType)Config.职业货币类型] -= Config.职业货币值;
-                                            ConsumeItem(Config.职业物品数量, 物品列表2);
+                                            Character.Currencies[(CurrencyType)Settings.职业货币类型] -= Settings.职业货币值;
+                                            ConsumeItem(Settings.职业物品数量, 物品列表2);
                                             Enqueue(new 同步货币数量
                                             {
                                                 Description = 全部货币描述()
@@ -8085,16 +8085,16 @@ public sealed class PlayerObject : MapObject
                                     {
                                         NetworkManager.SendMessage(this, "您是道士!禁止职业。");
                                     }
-                                    else if (Character.Currencies[(CurrencyType)Config.职业货币类型] < Config.职业货币值)
+                                    else if (Character.Currencies[(CurrencyType)Settings.职业货币类型] < Settings.职业货币值)
                                     {
                                         NetworkManager.SendMessage(this, "货币不足!查看具体货币值。");
                                     }
-                                    else if (FindItem(Config.职业物品数量, Config.职业物品ID, out 物品列表))
+                                    else if (FindItem(Settings.职业物品数量, Settings.职业物品ID, out 物品列表))
                                     {
-                                        if (Character.Currencies[(CurrencyType)Config.职业货币类型] >= Config.职业货币值)
+                                        if (Character.Currencies[(CurrencyType)Settings.职业货币类型] >= Settings.职业货币值)
                                         {
-                                            Character.Currencies[(CurrencyType)Config.职业货币类型] -= Config.职业货币值;
-                                            ConsumeItem(Config.职业物品数量, 物品列表);
+                                            Character.Currencies[(CurrencyType)Settings.职业货币类型] -= Settings.职业货币值;
+                                            ConsumeItem(Settings.职业物品数量, 物品列表);
                                             Enqueue(new 同步货币数量
                                             {
                                                 Description = 全部货币描述()
@@ -8133,7 +8133,7 @@ public sealed class PlayerObject : MapObject
                             break;
                         }
                         int num40 = 152;
-                        int 沙巴克皇宫传送等级 = Config.沙巴克皇宫传送等级;
+                        int 沙巴克皇宫传送等级 = Settings.沙巴克皇宫传送等级;
                         if (Team != null)
                         {
                             CurrentNPCDialoguePage = 692301000;
@@ -8154,11 +8154,11 @@ public sealed class PlayerObject : MapObject
                             });
                             break;
                         }
-                        if (Config.沙巴克皇宫传送物品 == 0)
+                        if (Settings.沙巴克皇宫传送物品 == 0)
                         {
-                            if (Gold >= Config.沙巴克皇宫传送数量)
+                            if (Gold >= Settings.沙巴克皇宫传送数量)
                             {
-                                Gold -= Config.沙巴克皇宫传送数量;
+                                Gold -= Settings.沙巴克皇宫传送数量;
                                 Teleport((CurrentMap.MapID == num40) ? CurrentMap : MapManager.GetMap(num40), AreaType.传送区域皇宫);
                                 Enqueue(new 同步货币数量
                                 {
@@ -8175,11 +8175,11 @@ public sealed class PlayerObject : MapObject
                                 });
                             }
                         }
-                        if (Config.沙巴克皇宫传送物品 == 1)
+                        if (Settings.沙巴克皇宫传送物品 == 1)
                         {
-                            if (Ingot >= Config.沙巴克皇宫传送数量)
+                            if (Ingot >= Settings.沙巴克皇宫传送数量)
                             {
-                                Ingot -= Config.沙巴克皇宫传送数量;
+                                Ingot -= Settings.沙巴克皇宫传送数量;
                                 Teleport((CurrentMap.MapID == num40) ? CurrentMap : MapManager.GetMap(num40), AreaType.传送区域皇宫);
                             }
                             else
@@ -8192,11 +8192,11 @@ public sealed class PlayerObject : MapObject
                                 });
                             }
                         }
-                        if (Config.沙巴克皇宫传送物品 >= 2)
+                        if (Settings.沙巴克皇宫传送物品 >= 2)
                         {
-                            if (FindItem(Config.沙巴克皇宫传送数量, Config.沙巴克皇宫传送物品, out var 物品列表19))
+                            if (FindItem(Settings.沙巴克皇宫传送数量, Settings.沙巴克皇宫传送物品, out var 物品列表19))
                             {
-                                ConsumeItem(Config.沙巴克皇宫传送数量, 物品列表19);
+                                ConsumeItem(Settings.沙巴克皇宫传送数量, 物品列表19);
                                 Teleport((CurrentMap.MapID == num40) ? CurrentMap : MapManager.GetMap(num40), AreaType.传送区域皇宫);
                                 break;
                             }
@@ -8213,14 +8213,14 @@ public sealed class PlayerObject : MapObject
                     switch (选项编号)
                     {
                         case 1:
-                            if (Character.Level.V >= (byte)Config.直升等级1 && SEngine.CurrentTime > NPC间隔 && Character.升级直升变量.V == 0)
+                            if (Character.Level.V >= (byte)Settings.直升等级1 && SEngine.CurrentTime > NPC间隔 && Character.升级直升变量.V == 0)
                             {
-                                NetworkManager.SendAnnouncement($"{Name}成功领取了{Config.直升等级1}等级奖励！", rolling: true);
-                                ExperienceRate += Config.直升经验1;
+                                NetworkManager.SendAnnouncement($"{Name}成功领取了{Settings.直升等级1}等级奖励！", rolling: true);
+                                ExperienceRate += Settings.直升经验1;
                                 Character.升级直升变量.V++;
                                 NPC间隔 = SEngine.CurrentTime.AddSeconds(2.0);
                                 GameItem value44 = null;
-                                if (!GameItem.DataSheet.TryGetValue(Config.直升物品1, out value44))
+                                if (!GameItem.DataSheet.TryGetValue(Settings.直升物品1, out value44))
                                 {
                                     break;
                                 }
@@ -8252,14 +8252,14 @@ public sealed class PlayerObject : MapObject
                             }
                             break;
                         case 2:
-                            if (Character.Level.V >= (byte)Config.直升等级2 && SEngine.CurrentTime > NPC间隔 && Character.升级直升变量.V == 1)
+                            if (Character.Level.V >= (byte)Settings.直升等级2 && SEngine.CurrentTime > NPC间隔 && Character.升级直升变量.V == 1)
                             {
-                                NetworkManager.SendAnnouncement($"{Name}成功领取了{Config.直升等级2}等级奖励！", rolling: true);
-                                ExperienceRate += Config.直升经验2;
+                                NetworkManager.SendAnnouncement($"{Name}成功领取了{Settings.直升等级2}等级奖励！", rolling: true);
+                                ExperienceRate += Settings.直升经验2;
                                 Character.升级直升变量.V++;
                                 NPC间隔 = SEngine.CurrentTime.AddSeconds(2.0);
                                 GameItem value43 = null;
-                                if (!GameItem.DataSheet.TryGetValue(Config.直升物品2, out value43))
+                                if (!GameItem.DataSheet.TryGetValue(Settings.直升物品2, out value43))
                                 {
                                     break;
                                 }
@@ -8291,14 +8291,14 @@ public sealed class PlayerObject : MapObject
                             }
                             break;
                         case 3:
-                            if (Character.Level.V >= (byte)Config.直升等级3 && SEngine.CurrentTime > NPC间隔 && Character.升级直升变量.V == 2)
+                            if (Character.Level.V >= (byte)Settings.直升等级3 && SEngine.CurrentTime > NPC间隔 && Character.升级直升变量.V == 2)
                             {
-                                NetworkManager.SendAnnouncement($"{Name}成功领取了{Config.直升等级3}等级奖励！", rolling: true);
-                                ExperienceRate += Config.直升经验3;
+                                NetworkManager.SendAnnouncement($"{Name}成功领取了{Settings.直升等级3}等级奖励！", rolling: true);
+                                ExperienceRate += Settings.直升经验3;
                                 Character.升级直升变量.V++;
                                 NPC间隔 = SEngine.CurrentTime.AddSeconds(2.0);
                                 GameItem value39 = null;
-                                if (!GameItem.DataSheet.TryGetValue(Config.直升物品3, out value39))
+                                if (!GameItem.DataSheet.TryGetValue(Settings.直升物品3, out value39))
                                 {
                                     break;
                                 }
@@ -8330,14 +8330,14 @@ public sealed class PlayerObject : MapObject
                             }
                             break;
                         case 4:
-                            if (Character.Level.V >= (byte)Config.直升等级4 && SEngine.CurrentTime > NPC间隔 && Character.升级直升变量.V == 3)
+                            if (Character.Level.V >= (byte)Settings.直升等级4 && SEngine.CurrentTime > NPC间隔 && Character.升级直升变量.V == 3)
                             {
-                                NetworkManager.SendAnnouncement($"{Name}成功领取了{Config.直升等级4}等级奖励！", rolling: true);
-                                ExperienceRate += Config.直升经验4;
+                                NetworkManager.SendAnnouncement($"{Name}成功领取了{Settings.直升等级4}等级奖励！", rolling: true);
+                                ExperienceRate += Settings.直升经验4;
                                 Character.升级直升变量.V++;
                                 NPC间隔 = SEngine.CurrentTime.AddSeconds(2.0);
                                 GameItem value41 = null;
-                                if (!GameItem.DataSheet.TryGetValue(Config.直升物品4, out value41))
+                                if (!GameItem.DataSheet.TryGetValue(Settings.直升物品4, out value41))
                                 {
                                     break;
                                 }
@@ -8369,14 +8369,14 @@ public sealed class PlayerObject : MapObject
                             }
                             break;
                         case 5:
-                            if (Character.Level.V >= (byte)Config.直升等级5 && SEngine.CurrentTime > NPC间隔 && Character.升级直升变量.V == 4)
+                            if (Character.Level.V >= (byte)Settings.直升等级5 && SEngine.CurrentTime > NPC间隔 && Character.升级直升变量.V == 4)
                             {
-                                NetworkManager.SendAnnouncement($"{Name}成功领取了{Config.直升等级5}等级奖励！", rolling: true);
-                                ExperienceRate += Config.直升经验5;
+                                NetworkManager.SendAnnouncement($"{Name}成功领取了{Settings.直升等级5}等级奖励！", rolling: true);
+                                ExperienceRate += Settings.直升经验5;
                                 Character.升级直升变量.V++;
                                 NPC间隔 = SEngine.CurrentTime.AddSeconds(2.0);
                                 GameItem value45 = null;
-                                if (!GameItem.DataSheet.TryGetValue(Config.直升物品5, out value45))
+                                if (!GameItem.DataSheet.TryGetValue(Settings.直升物品5, out value45))
                                 {
                                     break;
                                 }
@@ -8403,14 +8403,14 @@ public sealed class PlayerObject : MapObject
                             }
                             break;
                         case 6:
-                            if (Character.Level.V >= (byte)Config.直升等级6 && SEngine.CurrentTime > NPC间隔 && Character.升级直升变量.V == 5)
+                            if (Character.Level.V >= (byte)Settings.直升等级6 && SEngine.CurrentTime > NPC间隔 && Character.升级直升变量.V == 5)
                             {
-                                NetworkManager.SendAnnouncement($"{Name}成功领取了{Config.直升等级6}等级奖励！", rolling: true);
-                                ExperienceRate += Config.直升经验6;
+                                NetworkManager.SendAnnouncement($"{Name}成功领取了{Settings.直升等级6}等级奖励！", rolling: true);
+                                ExperienceRate += Settings.直升经验6;
                                 Character.升级直升变量.V++;
                                 NPC间隔 = SEngine.CurrentTime.AddSeconds(2.0);
                                 GameItem value40 = null;
-                                if (!GameItem.DataSheet.TryGetValue(Config.直升物品6, out value40))
+                                if (!GameItem.DataSheet.TryGetValue(Settings.直升物品6, out value40))
                                 {
                                     break;
                                 }
@@ -8442,14 +8442,14 @@ public sealed class PlayerObject : MapObject
                             }
                             break;
                         case 7:
-                            if (Character.Level.V >= (byte)Config.直升等级7 && SEngine.CurrentTime > NPC间隔 && Character.升级直升变量.V == 6)
+                            if (Character.Level.V >= (byte)Settings.直升等级7 && SEngine.CurrentTime > NPC间隔 && Character.升级直升变量.V == 6)
                             {
-                                NetworkManager.SendAnnouncement($"{Name}成功领取了{Config.直升等级7}等级奖励！", rolling: true);
-                                ExperienceRate += Config.直升经验7;
+                                NetworkManager.SendAnnouncement($"{Name}成功领取了{Settings.直升等级7}等级奖励！", rolling: true);
+                                ExperienceRate += Settings.直升经验7;
                                 Character.升级直升变量.V++;
                                 NPC间隔 = SEngine.CurrentTime.AddSeconds(2.0);
                                 GameItem value46 = null;
-                                if (!GameItem.DataSheet.TryGetValue(Config.直升物品7, out value46))
+                                if (!GameItem.DataSheet.TryGetValue(Settings.直升物品7, out value46))
                                 {
                                     break;
                                 }
@@ -8481,14 +8481,14 @@ public sealed class PlayerObject : MapObject
                             }
                             break;
                         case 8:
-                            if (Character.Level.V >= (byte)Config.直升等级8 && SEngine.CurrentTime > NPC间隔 && Character.升级直升变量.V == 7)
+                            if (Character.Level.V >= (byte)Settings.直升等级8 && SEngine.CurrentTime > NPC间隔 && Character.升级直升变量.V == 7)
                             {
-                                NetworkManager.SendAnnouncement($"{Name}成功领取了{Config.直升等级8}等级奖励！", rolling: true);
-                                ExperienceRate += Config.直升经验8;
+                                NetworkManager.SendAnnouncement($"{Name}成功领取了{Settings.直升等级8}等级奖励！", rolling: true);
+                                ExperienceRate += Settings.直升经验8;
                                 Character.升级直升变量.V++;
                                 NPC间隔 = SEngine.CurrentTime.AddSeconds(2.0);
                                 GameItem value42 = null;
-                                if (!GameItem.DataSheet.TryGetValue(Config.直升物品8, out value42))
+                                if (!GameItem.DataSheet.TryGetValue(Settings.直升物品8, out value42))
                                 {
                                     break;
                                 }
@@ -8520,14 +8520,14 @@ public sealed class PlayerObject : MapObject
                             }
                             break;
                         case 9:
-                            if (Character.Level.V >= (byte)Config.直升等级9 && SEngine.CurrentTime > NPC间隔 && Character.升级直升变量.V == 8)
+                            if (Character.Level.V >= (byte)Settings.直升等级9 && SEngine.CurrentTime > NPC间隔 && Character.升级直升变量.V == 8)
                             {
-                                NetworkManager.SendAnnouncement($"{Name}成功领取了{Config.直升等级9}等级奖励！", rolling: true);
-                                ExperienceRate += Config.直升经验9;
+                                NetworkManager.SendAnnouncement($"{Name}成功领取了{Settings.直升等级9}等级奖励！", rolling: true);
+                                ExperienceRate += Settings.直升经验9;
                                 Character.升级直升变量.V++;
                                 NPC间隔 = SEngine.CurrentTime.AddSeconds(2.0);
                                 GameItem value38 = null;
-                                if (!GameItem.DataSheet.TryGetValue(Config.直升物品9, out value38))
+                                if (!GameItem.DataSheet.TryGetValue(Settings.直升物品9, out value38))
                                 {
                                     break;
                                 }
@@ -8565,7 +8565,7 @@ public sealed class PlayerObject : MapObject
                     {
                         case 1:
                             {
-                                if (FindItem(Config.自定义元宝兑换01, out var 物品4) && SEngine.CurrentTime > NPC间隔)
+                                if (FindItem(Settings.自定义元宝兑换01, out var 物品4) && SEngine.CurrentTime > NPC间隔)
                                 {
                                     Ingot += 100;
                                     Enqueue(new SyncIngotsPacket
@@ -8588,7 +8588,7 @@ public sealed class PlayerObject : MapObject
                             }
                         case 2:
                             {
-                                if (FindItem(Config.自定义元宝兑换02, out var 物品6) && SEngine.CurrentTime > NPC间隔)
+                                if (FindItem(Settings.自定义元宝兑换02, out var 物品6) && SEngine.CurrentTime > NPC间隔)
                                 {
                                     Ingot += 1000;
                                     Enqueue(new SyncIngotsPacket
@@ -8611,7 +8611,7 @@ public sealed class PlayerObject : MapObject
                             }
                         case 3:
                             {
-                                if (FindItem(Config.自定义元宝兑换03, out var 物品7) && SEngine.CurrentTime > NPC间隔)
+                                if (FindItem(Settings.自定义元宝兑换03, out var 物品7) && SEngine.CurrentTime > NPC间隔)
                                 {
                                     Ingot += 10000;
                                     Enqueue(new SyncIngotsPacket
@@ -8634,7 +8634,7 @@ public sealed class PlayerObject : MapObject
                             }
                         case 4:
                             {
-                                if (FindItem(Config.自定义元宝兑换04, out var 物品5) && SEngine.CurrentTime > NPC间隔)
+                                if (FindItem(Settings.自定义元宝兑换04, out var 物品5) && SEngine.CurrentTime > NPC间隔)
                                 {
                                     Ingot += 100000;
                                     Enqueue(new SyncIngotsPacket
@@ -8657,7 +8657,7 @@ public sealed class PlayerObject : MapObject
                             }
                         case 5:
                             {
-                                if (FindItem(Config.自定义元宝兑换05, out var 物品3) && SEngine.CurrentTime > NPC间隔)
+                                if (FindItem(Settings.自定义元宝兑换05, out var 物品3) && SEngine.CurrentTime > NPC间隔)
                                 {
                                     Ingot += 1000000;
                                     Enqueue(new SyncIngotsPacket
@@ -8681,261 +8681,261 @@ public sealed class PlayerObject : MapObject
                     }
                     break;
                 case 710100000:
-                    if (选项编号 == 1 && Config.CurrentVersion >= 1 && Config.充值模块格式 == 0)
+                    if (选项编号 == 1 && Settings.CurrentVersion >= 1 && Settings.充值模块格式 == 0)
                     {
-                        FileOperation.Path = Config.平台接入目录 + "\\1.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\1.txt";
                         bool flag = FileOperation.Read1(Character.Account.V.ToString());
                         if (flag)
                         {
                             int 充值价值 = 1;
                             玩家充值模块(flag, 充值价值);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\2.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\2.txt";
                         bool flag2 = FileOperation.Read2(Character.Account.V.ToString());
                         if (flag2)
                         {
                             int 充值价值2 = 2;
                             玩家充值模块(flag2, 充值价值2);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\3.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\3.txt";
                         bool flag3 = FileOperation.Read3(Character.Account.V.ToString());
                         if (flag3)
                         {
                             int 充值价值3 = 3;
                             玩家充值模块(flag3, 充值价值3);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\4.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\4.txt";
                         bool flag4 = FileOperation.Read4(Character.Account.V.ToString());
                         if (flag4)
                         {
                             int 充值价值4 = 4;
                             玩家充值模块(flag4, 充值价值4);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\5.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\5.txt";
                         bool flag5 = FileOperation.Read5(Character.Account.V.ToString());
                         if (flag5)
                         {
                             int 充值价值5 = 5;
                             玩家充值模块(flag5, 充值价值5);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\6.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\6.txt";
                         bool flag6 = FileOperation.Read6(Character.Account.V.ToString());
                         if (flag6)
                         {
                             int 充值价值6 = 6;
                             玩家充值模块(flag6, 充值价值6);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\7.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\7.txt";
                         bool flag7 = FileOperation.Read7(Character.Account.V.ToString());
                         if (flag7)
                         {
                             int 充值价值7 = 7;
                             玩家充值模块(flag7, 充值价值7);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\8.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\8.txt";
                         bool flag8 = FileOperation.Read8(Character.Account.V.ToString());
                         if (flag8)
                         {
                             int 充值价值8 = 8;
                             玩家充值模块(flag8, 充值价值8);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\9.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\9.txt";
                         bool flag9 = FileOperation.Read9(Character.Account.V.ToString());
                         if (flag9)
                         {
                             int 充值价值9 = 9;
                             玩家充值模块(flag9, 充值价值9);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\10.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\10.txt";
                         bool flag10 = FileOperation.Read10(Character.Account.V.ToString());
                         if (flag10)
                         {
                             int 充值价值10 = 10;
                             玩家充值模块(flag10, 充值价值10);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\20.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\20.txt";
                         bool flag11 = FileOperation.Read20(Character.Account.V.ToString());
                         if (flag11)
                         {
                             int 充值价值11 = 20;
                             玩家充值模块(flag11, 充值价值11);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\30.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\30.txt";
                         bool flag12 = FileOperation.Read30(Character.Account.V.ToString());
                         if (flag12)
                         {
                             int 充值价值12 = 30;
                             玩家充值模块(flag12, 充值价值12);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\40.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\40.txt";
                         bool flag13 = FileOperation.Read40(Character.Account.V.ToString());
                         if (flag13)
                         {
                             int 充值价值13 = 40;
                             玩家充值模块(flag13, 充值价值13);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\50.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\50.txt";
                         bool flag14 = FileOperation.Read50(Character.Account.V.ToString());
                         if (flag14)
                         {
                             int 充值价值14 = 50;
                             玩家充值模块(flag14, 充值价值14);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\60.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\60.txt";
                         bool flag15 = FileOperation.Read60(Character.Account.V.ToString());
                         if (flag15)
                         {
                             int 充值价值15 = 60;
                             玩家充值模块(flag15, 充值价值15);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\70.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\70.txt";
                         bool flag16 = FileOperation.Read70(Character.Account.V.ToString());
                         if (flag16)
                         {
                             int 充值价值16 = 70;
                             玩家充值模块(flag16, 充值价值16);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\80.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\80.txt";
                         bool flag17 = FileOperation.Read80(Character.Account.V.ToString());
                         if (flag17)
                         {
                             int 充值价值17 = 80;
                             玩家充值模块(flag17, 充值价值17);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\90.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\90.txt";
                         bool flag18 = FileOperation.Read90(Character.Account.V.ToString());
                         if (flag18)
                         {
                             int 充值价值18 = 90;
                             玩家充值模块(flag18, 充值价值18);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\100.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\100.txt";
                         bool flag19 = FileOperation.Read100(Character.Account.V.ToString());
                         if (flag19)
                         {
                             int 充值价值19 = 100;
                             玩家充值模块(flag19, 充值价值19);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\200.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\200.txt";
                         bool flag20 = FileOperation.Read200(Character.Account.V.ToString());
                         if (flag20)
                         {
                             int 充值价值20 = 200;
                             玩家充值模块(flag20, 充值价值20);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\300.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\300.txt";
                         bool flag21 = FileOperation.Read300(Character.Account.V.ToString());
                         if (flag21)
                         {
                             int 充值价值21 = 300;
                             玩家充值模块(flag21, 充值价值21);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\400.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\400.txt";
                         bool flag22 = FileOperation.Read400(Character.Account.V.ToString());
                         if (flag22)
                         {
                             int 充值价值22 = 400;
                             玩家充值模块(flag22, 充值价值22);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\500.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\500.txt";
                         bool flag23 = FileOperation.Read500(Character.Account.V.ToString());
                         if (flag23)
                         {
                             int 充值价值23 = 500;
                             玩家充值模块(flag23, 充值价值23);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\600.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\600.txt";
                         bool flag24 = FileOperation.Read600(Character.Account.V.ToString());
                         if (flag24)
                         {
                             int 充值价值24 = 600;
                             玩家充值模块(flag24, 充值价值24);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\700.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\700.txt";
                         bool flag25 = FileOperation.Read700(Character.Account.V.ToString());
                         if (flag25)
                         {
                             int 充值价值25 = 700;
                             玩家充值模块(flag25, 充值价值25);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\800.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\800.txt";
                         bool flag26 = FileOperation.Read800(Character.Account.V.ToString());
                         if (flag26)
                         {
                             int 充值价值26 = 800;
                             玩家充值模块(flag26, 充值价值26);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\900.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\900.txt";
                         bool flag27 = FileOperation.Read900(Character.Account.V.ToString());
                         if (flag27)
                         {
                             int 充值价值27 = 900;
                             玩家充值模块(flag27, 充值价值27);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\1000.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\1000.txt";
                         bool flag28 = FileOperation.Read1000(Character.Account.V.ToString());
                         if (flag28)
                         {
                             int 充值价值28 = 1000;
                             玩家充值模块(flag28, 充值价值28);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\2000.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\2000.txt";
                         bool flag29 = FileOperation.Read2000(Character.Account.V.ToString());
                         if (flag29)
                         {
                             int 充值价值29 = 2000;
                             玩家充值模块(flag29, 充值价值29);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\3000.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\3000.txt";
                         bool flag30 = FileOperation.Read3000(Character.Account.V.ToString());
                         if (flag30)
                         {
                             int 充值价值30 = 3000;
                             玩家充值模块(flag30, 充值价值30);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\4000.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\4000.txt";
                         bool flag31 = FileOperation.Read4000(Character.Account.V.ToString());
                         if (flag31)
                         {
                             int 充值价值31 = 4000;
                             玩家充值模块(flag31, 充值价值31);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\5000.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\5000.txt";
                         bool flag32 = FileOperation.Read5000(Character.Account.V.ToString());
                         if (flag32)
                         {
                             int 充值价值32 = 5000;
                             玩家充值模块(flag32, 充值价值32);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\6000.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\6000.txt";
                         bool flag33 = FileOperation.Read6000(Character.Account.V.ToString());
                         if (flag33)
                         {
                             int 充值价值33 = 6000;
                             玩家充值模块(flag33, 充值价值33);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\7000.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\7000.txt";
                         bool flag34 = FileOperation.Read7000(Character.Account.V.ToString());
                         if (flag34)
                         {
                             int 充值价值34 = 7000;
                             玩家充值模块(flag34, 充值价值34);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\8000.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\8000.txt";
                         bool flag35 = FileOperation.Read8000(Character.Account.V.ToString());
                         if (flag35)
                         {
                             int 充值价值35 = 8000;
                             玩家充值模块(flag35, 充值价值35);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\9000.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\9000.txt";
                         bool flag36 = FileOperation.Read9000(Character.Account.V.ToString());
                         if (flag36)
                         {
                             int 充值价值36 = 9000;
                             玩家充值模块(flag36, 充值价值36);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\10000.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\10000.txt";
                         bool flag37 = FileOperation.Read10000(Character.Account.V.ToString());
                         if (!flag37)
                         {
@@ -8950,261 +8950,261 @@ public sealed class PlayerObject : MapObject
                         int 充值价值37 = 10000;
                         玩家充值模块(flag37, 充值价值37);
                     }
-                    if (选项编号 == 1 && Config.CurrentVersion >= 1 && Config.充值模块格式 == 1)
+                    if (选项编号 == 1 && Settings.CurrentVersion >= 1 && Settings.充值模块格式 == 1)
                     {
-                        FileOperation.Path = Config.平台接入目录 + "\\yb1.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\yb1.txt";
                         bool flag38 = FileOperation.Read1(Character.Account.V.ToString());
                         if (flag38)
                         {
                             int 充值价值38 = 1;
                             玩家充值模块(flag38, 充值价值38);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\yb2.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\yb2.txt";
                         bool flag39 = FileOperation.Read2(Character.Account.V.ToString());
                         if (flag39)
                         {
                             int 充值价值39 = 2;
                             玩家充值模块(flag39, 充值价值39);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\yb3.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\yb3.txt";
                         bool flag40 = FileOperation.Read3(Character.Account.V.ToString());
                         if (flag40)
                         {
                             int 充值价值40 = 3;
                             玩家充值模块(flag40, 充值价值40);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\yb4.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\yb4.txt";
                         bool flag41 = FileOperation.Read4(Character.Account.V.ToString());
                         if (flag41)
                         {
                             int 充值价值41 = 4;
                             玩家充值模块(flag41, 充值价值41);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\yb5.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\yb5.txt";
                         bool flag42 = FileOperation.Read5(Character.Account.V.ToString());
                         if (flag42)
                         {
                             int 充值价值42 = 5;
                             玩家充值模块(flag42, 充值价值42);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\yb6.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\yb6.txt";
                         bool flag43 = FileOperation.Read6(Character.Account.V.ToString());
                         if (flag43)
                         {
                             int 充值价值43 = 6;
                             玩家充值模块(flag43, 充值价值43);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\yb7.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\yb7.txt";
                         bool flag44 = FileOperation.Read7(Character.Account.V.ToString());
                         if (flag44)
                         {
                             int 充值价值44 = 7;
                             玩家充值模块(flag44, 充值价值44);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\yb8.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\yb8.txt";
                         bool flag45 = FileOperation.Read8(Character.Account.V.ToString());
                         if (flag45)
                         {
                             int 充值价值45 = 8;
                             玩家充值模块(flag45, 充值价值45);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\yb9.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\yb9.txt";
                         bool flag46 = FileOperation.Read9(Character.Account.V.ToString());
                         if (flag46)
                         {
                             int 充值价值46 = 9;
                             玩家充值模块(flag46, 充值价值46);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\yb10.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\yb10.txt";
                         bool flag47 = FileOperation.Read10(Character.Account.V.ToString());
                         if (flag47)
                         {
                             int 充值价值47 = 10;
                             玩家充值模块(flag47, 充值价值47);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\yb20.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\yb20.txt";
                         bool flag48 = FileOperation.Read20(Character.Account.V.ToString());
                         if (flag48)
                         {
                             int 充值价值48 = 20;
                             玩家充值模块(flag48, 充值价值48);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\yb30.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\yb30.txt";
                         bool flag49 = FileOperation.Read30(Character.Account.V.ToString());
                         if (flag49)
                         {
                             int 充值价值49 = 30;
                             玩家充值模块(flag49, 充值价值49);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\yb40.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\yb40.txt";
                         bool flag50 = FileOperation.Read40(Character.Account.V.ToString());
                         if (flag50)
                         {
                             int 充值价值50 = 40;
                             玩家充值模块(flag50, 充值价值50);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\yb50.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\yb50.txt";
                         bool flag51 = FileOperation.Read50(Character.Account.V.ToString());
                         if (flag51)
                         {
                             int 充值价值51 = 50;
                             玩家充值模块(flag51, 充值价值51);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\yb60.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\yb60.txt";
                         bool flag52 = FileOperation.Read60(Character.Account.V.ToString());
                         if (flag52)
                         {
                             int 充值价值52 = 60;
                             玩家充值模块(flag52, 充值价值52);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\yb70.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\yb70.txt";
                         bool flag53 = FileOperation.Read70(Character.Account.V.ToString());
                         if (flag53)
                         {
                             int 充值价值53 = 70;
                             玩家充值模块(flag53, 充值价值53);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\yb80.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\yb80.txt";
                         bool flag54 = FileOperation.Read80(Character.Account.V.ToString());
                         if (flag54)
                         {
                             int 充值价值54 = 80;
                             玩家充值模块(flag54, 充值价值54);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\yb90.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\yb90.txt";
                         bool flag55 = FileOperation.Read90(Character.Account.V.ToString());
                         if (flag55)
                         {
                             int 充值价值55 = 90;
                             玩家充值模块(flag55, 充值价值55);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\yb100.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\yb100.txt";
                         bool flag56 = FileOperation.Read100(Character.Account.V.ToString());
                         if (flag56)
                         {
                             int 充值价值56 = 100;
                             玩家充值模块(flag56, 充值价值56);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\yb200.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\yb200.txt";
                         bool flag57 = FileOperation.Read200(Character.Account.V.ToString());
                         if (flag57)
                         {
                             int 充值价值57 = 200;
                             玩家充值模块(flag57, 充值价值57);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\yb300.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\yb300.txt";
                         bool flag58 = FileOperation.Read300(Character.Account.V.ToString());
                         if (flag58)
                         {
                             int 充值价值58 = 300;
                             玩家充值模块(flag58, 充值价值58);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\yb400.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\yb400.txt";
                         bool flag59 = FileOperation.Read400(Character.Account.V.ToString());
                         if (flag59)
                         {
                             int 充值价值59 = 400;
                             玩家充值模块(flag59, 充值价值59);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\yb500.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\yb500.txt";
                         bool flag60 = FileOperation.Read500(Character.Account.V.ToString());
                         if (flag60)
                         {
                             int 充值价值60 = 500;
                             玩家充值模块(flag60, 充值价值60);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\yb600.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\yb600.txt";
                         bool flag61 = FileOperation.Read600(Character.Account.V.ToString());
                         if (flag61)
                         {
                             int 充值价值61 = 600;
                             玩家充值模块(flag61, 充值价值61);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\yb700.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\yb700.txt";
                         bool flag62 = FileOperation.Read700(Character.Account.V.ToString());
                         if (flag62)
                         {
                             int 充值价值62 = 700;
                             玩家充值模块(flag62, 充值价值62);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\yb800.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\yb800.txt";
                         bool flag63 = FileOperation.Read800(Character.Account.V.ToString());
                         if (flag63)
                         {
                             int 充值价值63 = 800;
                             玩家充值模块(flag63, 充值价值63);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\yb900.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\yb900.txt";
                         bool flag64 = FileOperation.Read900(Character.Account.V.ToString());
                         if (flag64)
                         {
                             int 充值价值64 = 900;
                             玩家充值模块(flag64, 充值价值64);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\yb1000.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\yb1000.txt";
                         bool flag65 = FileOperation.Read1000(Character.Account.V.ToString());
                         if (flag65)
                         {
                             int 充值价值65 = 1000;
                             玩家充值模块(flag65, 充值价值65);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\yb2000.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\yb2000.txt";
                         bool flag66 = FileOperation.Read2000(Character.Account.V.ToString());
                         if (flag66)
                         {
                             int 充值价值66 = 2000;
                             玩家充值模块(flag66, 充值价值66);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\yb3000.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\yb3000.txt";
                         bool flag67 = FileOperation.Read3000(Character.Account.V.ToString());
                         if (flag67)
                         {
                             int 充值价值67 = 3000;
                             玩家充值模块(flag67, 充值价值67);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\yb4000.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\yb4000.txt";
                         bool flag68 = FileOperation.Read4000(Character.Account.V.ToString());
                         if (flag68)
                         {
                             int 充值价值68 = 4000;
                             玩家充值模块(flag68, 充值价值68);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\yb5000.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\yb5000.txt";
                         bool flag69 = FileOperation.Read5000(Character.Account.V.ToString());
                         if (flag69)
                         {
                             int 充值价值69 = 5000;
                             玩家充值模块(flag69, 充值价值69);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\yb6000.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\yb6000.txt";
                         bool flag70 = FileOperation.Read6000(Character.Account.V.ToString());
                         if (flag70)
                         {
                             int 充值价值70 = 6000;
                             玩家充值模块(flag70, 充值价值70);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\yb7000.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\yb7000.txt";
                         bool flag71 = FileOperation.Read7000(Character.Account.V.ToString());
                         if (flag71)
                         {
                             int 充值价值71 = 7000;
                             玩家充值模块(flag71, 充值价值71);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\yb8000.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\yb8000.txt";
                         bool flag72 = FileOperation.Read8000(Character.Account.V.ToString());
                         if (flag72)
                         {
                             int 充值价值72 = 8000;
                             玩家充值模块(flag72, 充值价值72);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\yb9000.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\yb9000.txt";
                         bool flag73 = FileOperation.Read9000(Character.Account.V.ToString());
                         if (flag73)
                         {
                             int 充值价值73 = 9000;
                             玩家充值模块(flag73, 充值价值73);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\yb10000.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\yb10000.txt";
                         bool flag74 = FileOperation.Read10000(Character.Account.V.ToString());
                         if (!flag74)
                         {
@@ -9219,261 +9219,261 @@ public sealed class PlayerObject : MapObject
                         int 充值价值74 = 10000;
                         玩家充值模块(flag74, 充值价值74);
                     }
-                    if (选项编号 == 1 && Config.CurrentVersion >= 1 && Config.充值模块格式 == 2)
+                    if (选项编号 == 1 && Settings.CurrentVersion >= 1 && Settings.充值模块格式 == 2)
                     {
-                        FileOperation.Path = Config.平台接入目录 + "\\cz1.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\cz1.txt";
                         bool flag75 = FileOperation.Read1(Character.Account.V.ToString());
                         if (flag75)
                         {
                             int 充值价值75 = 1;
                             玩家充值模块(flag75, 充值价值75);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\cz2.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\cz2.txt";
                         bool flag76 = FileOperation.Read2(Character.Account.V.ToString());
                         if (flag76)
                         {
                             int 充值价值76 = 2;
                             玩家充值模块(flag76, 充值价值76);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\cz3.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\cz3.txt";
                         bool flag77 = FileOperation.Read3(Character.Account.V.ToString());
                         if (flag77)
                         {
                             int 充值价值77 = 3;
                             玩家充值模块(flag77, 充值价值77);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\cz4.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\cz4.txt";
                         bool flag78 = FileOperation.Read4(Character.Account.V.ToString());
                         if (flag78)
                         {
                             int 充值价值78 = 4;
                             玩家充值模块(flag78, 充值价值78);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\cz5.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\cz5.txt";
                         bool flag79 = FileOperation.Read5(Character.Account.V.ToString());
                         if (flag79)
                         {
                             int 充值价值79 = 5;
                             玩家充值模块(flag79, 充值价值79);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\cz6.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\cz6.txt";
                         bool flag80 = FileOperation.Read6(Character.Account.V.ToString());
                         if (flag80)
                         {
                             int 充值价值80 = 6;
                             玩家充值模块(flag80, 充值价值80);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\cz7.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\cz7.txt";
                         bool flag81 = FileOperation.Read7(Character.Account.V.ToString());
                         if (flag81)
                         {
                             int 充值价值81 = 7;
                             玩家充值模块(flag81, 充值价值81);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\cz8.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\cz8.txt";
                         bool flag82 = FileOperation.Read8(Character.Account.V.ToString());
                         if (flag82)
                         {
                             int 充值价值82 = 8;
                             玩家充值模块(flag82, 充值价值82);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\cz9.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\cz9.txt";
                         bool flag83 = FileOperation.Read9(Character.Account.V.ToString());
                         if (flag83)
                         {
                             int 充值价值83 = 9;
                             玩家充值模块(flag83, 充值价值83);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\cz10.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\cz10.txt";
                         bool flag84 = FileOperation.Read10(Character.Account.V.ToString());
                         if (flag84)
                         {
                             int 充值价值84 = 10;
                             玩家充值模块(flag84, 充值价值84);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\cz20.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\cz20.txt";
                         bool flag85 = FileOperation.Read20(Character.Account.V.ToString());
                         if (flag85)
                         {
                             int 充值价值85 = 20;
                             玩家充值模块(flag85, 充值价值85);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\cz30.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\cz30.txt";
                         bool flag86 = FileOperation.Read30(Character.Account.V.ToString());
                         if (flag86)
                         {
                             int 充值价值86 = 30;
                             玩家充值模块(flag86, 充值价值86);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\cz40.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\cz40.txt";
                         bool flag87 = FileOperation.Read40(Character.Account.V.ToString());
                         if (flag87)
                         {
                             int 充值价值87 = 40;
                             玩家充值模块(flag87, 充值价值87);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\cz50.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\cz50.txt";
                         bool flag88 = FileOperation.Read50(Character.Account.V.ToString());
                         if (flag88)
                         {
                             int 充值价值88 = 50;
                             玩家充值模块(flag88, 充值价值88);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\cz60.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\cz60.txt";
                         bool flag89 = FileOperation.Read60(Character.Account.V.ToString());
                         if (flag89)
                         {
                             int 充值价值89 = 60;
                             玩家充值模块(flag89, 充值价值89);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\cz70.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\cz70.txt";
                         bool flag90 = FileOperation.Read70(Character.Account.V.ToString());
                         if (flag90)
                         {
                             int 充值价值90 = 70;
                             玩家充值模块(flag90, 充值价值90);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\cz80.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\cz80.txt";
                         bool flag91 = FileOperation.Read80(Character.Account.V.ToString());
                         if (flag91)
                         {
                             int 充值价值91 = 80;
                             玩家充值模块(flag91, 充值价值91);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\cz90.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\cz90.txt";
                         bool flag92 = FileOperation.Read90(Character.Account.V.ToString());
                         if (flag92)
                         {
                             int 充值价值92 = 90;
                             玩家充值模块(flag92, 充值价值92);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\cz100.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\cz100.txt";
                         bool flag93 = FileOperation.Read100(Character.Account.V.ToString());
                         if (flag93)
                         {
                             int 充值价值93 = 100;
                             玩家充值模块(flag93, 充值价值93);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\cz200.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\cz200.txt";
                         bool flag94 = FileOperation.Read200(Character.Account.V.ToString());
                         if (flag94)
                         {
                             int 充值价值94 = 200;
                             玩家充值模块(flag94, 充值价值94);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\cz300.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\cz300.txt";
                         bool flag95 = FileOperation.Read300(Character.Account.V.ToString());
                         if (flag95)
                         {
                             int 充值价值95 = 300;
                             玩家充值模块(flag95, 充值价值95);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\cz400.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\cz400.txt";
                         bool flag96 = FileOperation.Read400(Character.Account.V.ToString());
                         if (flag96)
                         {
                             int 充值价值96 = 400;
                             玩家充值模块(flag96, 充值价值96);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\cz500.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\cz500.txt";
                         bool flag97 = FileOperation.Read500(Character.Account.V.ToString());
                         if (flag97)
                         {
                             int 充值价值97 = 500;
                             玩家充值模块(flag97, 充值价值97);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\cz600.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\cz600.txt";
                         bool flag98 = FileOperation.Read600(Character.Account.V.ToString());
                         if (flag98)
                         {
                             int 充值价值98 = 600;
                             玩家充值模块(flag98, 充值价值98);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\cz700.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\cz700.txt";
                         bool flag99 = FileOperation.Read700(Character.Account.V.ToString());
                         if (flag99)
                         {
                             int 充值价值99 = 700;
                             玩家充值模块(flag99, 充值价值99);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\cz800.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\cz800.txt";
                         bool flag100 = FileOperation.Read800(Character.Account.V.ToString());
                         if (flag100)
                         {
                             int 充值价值100 = 800;
                             玩家充值模块(flag100, 充值价值100);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\cz900.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\cz900.txt";
                         bool flag101 = FileOperation.Read900(Character.Account.V.ToString());
                         if (flag101)
                         {
                             int 充值价值101 = 900;
                             玩家充值模块(flag101, 充值价值101);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\cz1000.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\cz1000.txt";
                         bool flag102 = FileOperation.Read1000(Character.Account.V.ToString());
                         if (flag102)
                         {
                             int 充值价值102 = 1000;
                             玩家充值模块(flag102, 充值价值102);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\cz2000.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\cz2000.txt";
                         bool flag103 = FileOperation.Read2000(Character.Account.V.ToString());
                         if (flag103)
                         {
                             int 充值价值103 = 2000;
                             玩家充值模块(flag103, 充值价值103);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\cz3000.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\cz3000.txt";
                         bool flag104 = FileOperation.Read3000(Character.Account.V.ToString());
                         if (flag104)
                         {
                             int 充值价值104 = 3000;
                             玩家充值模块(flag104, 充值价值104);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\cz4000.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\cz4000.txt";
                         bool flag105 = FileOperation.Read4000(Character.Account.V.ToString());
                         if (flag105)
                         {
                             int 充值价值105 = 4000;
                             玩家充值模块(flag105, 充值价值105);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\cz5000.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\cz5000.txt";
                         bool flag106 = FileOperation.Read5000(Character.Account.V.ToString());
                         if (flag106)
                         {
                             int 充值价值106 = 5000;
                             玩家充值模块(flag106, 充值价值106);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\cz6000.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\cz6000.txt";
                         bool flag107 = FileOperation.Read6000(Character.Account.V.ToString());
                         if (flag107)
                         {
                             int 充值价值107 = 6000;
                             玩家充值模块(flag107, 充值价值107);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\cz7000.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\cz7000.txt";
                         bool flag108 = FileOperation.Read7000(Character.Account.V.ToString());
                         if (flag108)
                         {
                             int 充值价值108 = 7000;
                             玩家充值模块(flag108, 充值价值108);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\cz8000.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\cz8000.txt";
                         bool flag109 = FileOperation.Read8000(Character.Account.V.ToString());
                         if (flag109)
                         {
                             int 充值价值109 = 8000;
                             玩家充值模块(flag109, 充值价值109);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\cz9000.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\cz9000.txt";
                         bool flag110 = FileOperation.Read9000(Character.Account.V.ToString());
                         if (flag110)
                         {
                             int 充值价值110 = 9000;
                             玩家充值模块(flag110, 充值价值110);
                         }
-                        FileOperation.Path = Config.平台接入目录 + "\\cz10000.txt";
+                        FileOperation.Path = Settings.平台接入目录 + "\\cz10000.txt";
                         bool flag111 = FileOperation.Read10000(Character.Account.V.ToString());
                         if (!flag111)
                         {
@@ -9493,11 +9493,11 @@ public sealed class PlayerObject : MapObject
                         CurrentNPCDialoguePage = 710101000;
                         Enqueue(new 同步交互结果
                         {
-                            Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"赞助人数：[{Config.沙城捐献赞助人数}] 赞助金额：[{Config.沙城捐献赞助金额}]<br>"),
+                            Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"赞助人数：[{Settings.沙城捐献赞助人数}] 赞助金额：[{Settings.沙城捐献赞助金额}]<br>"),
                             ObjectID = CurrentNPC.ObjectID
                         });
                     }
-                    if (选项编号 == 3 && Config.CurrentVersion >= 2)
+                    if (选项编号 == 3 && Settings.CurrentVersion >= 2)
                     {
                         CurrentNPCDialoguePage = 710102000;
                         Enqueue(new 同步交互结果
@@ -9702,16 +9702,16 @@ public sealed class PlayerObject : MapObject
                         break;
                     }
                 case 710101000:
-                    if (选项编号 != 1 || Config.CurrentVersion < 2)
+                    if (选项编号 != 1 || Settings.CurrentVersion < 2)
                     {
                         break;
                     }
-                    if (Character.Currencies[(CurrencyType)Config.沙城捐献货币类型] >= Config.沙城捐献支付数量 && Character.保底参数1.V == 0)
+                    if (Character.Currencies[(CurrencyType)Settings.沙城捐献货币类型] >= Settings.沙城捐献支付数量 && Character.保底参数1.V == 0)
                     {
-                        Character.Currencies[(CurrencyType)Config.沙城捐献货币类型] -= Config.沙城捐献支付数量;
+                        Character.Currencies[(CurrencyType)Settings.沙城捐献货币类型] -= Settings.沙城捐献支付数量;
                         Character.保底参数1.V++;
-                        Config.沙城捐献赞助金额 += Config.沙城捐献支付数量;
-                        Config.沙城捐献赞助人数++;
+                        Settings.沙城捐献赞助金额 += Settings.沙城捐献支付数量;
+                        Settings.沙城捐献赞助人数++;
                         Enqueue(new 同步货币数量
                         {
                             Description = 全部货币描述()
@@ -9719,7 +9719,7 @@ public sealed class PlayerObject : MapObject
                         CurrentNPCDialoguePage = 710101000;
                         Enqueue(new 同步交互结果
                         {
-                            Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"赞助人数：[{Config.沙城捐献赞助人数}] 赞助金额：[{Config.沙城捐献赞助金额}]<br>"),
+                            Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"赞助人数：[{Settings.沙城捐献赞助人数}] 赞助金额：[{Settings.沙城捐献赞助金额}]<br>"),
                             ObjectID = CurrentNPC.ObjectID
                         });
                         NetworkManager.SendAnnouncement("勇士【" + Name + "】进行了一次沙捐(我司给与奖励)!", rolling: true);
@@ -9727,9 +9727,9 @@ public sealed class PlayerObject : MapObject
                         {
                             Directory.CreateDirectory(".\\3DMIR文本\\沙城捐献系统");
                         }
-                        File.WriteAllText(".\\3DMIR文本\\沙城捐献系统\\总捐献.txt", "赞助总人数:\r\n" + Config.沙城捐献赞助人数 + "\r\n赞助总金额:\r\n" + Config.沙城捐献赞助金额);
-                        SMain.AddSystemLog($"{Name}捐献{Config.沙城捐献货币类型}货币类型,捐献金额{Config.沙城捐献支付数量},累积捐献{Config.沙城捐献赞助金额},赞助总人数{Config.沙城捐献赞助人数}");
-                        if (GameItem.DataSheet.TryGetValue(Config.沙城捐献获得物品1, out var value33))
+                        File.WriteAllText(".\\3DMIR文本\\沙城捐献系统\\总捐献.txt", "赞助总人数:\r\n" + Settings.沙城捐献赞助人数 + "\r\n赞助总金额:\r\n" + Settings.沙城捐献赞助金额);
+                        SMain.AddSystemLog($"{Name}捐献{Settings.沙城捐献货币类型}货币类型,捐献金额{Settings.沙城捐献支付数量},累积捐献{Settings.沙城捐献赞助金额},赞助总人数{Settings.沙城捐献赞助人数}");
+                        if (GameItem.DataSheet.TryGetValue(Settings.沙城捐献获得物品1, out var value33))
                         {
                             byte b7 = FindEmptyInventoryIndex();
                             if (b7 == byte.MaxValue)
@@ -9742,14 +9742,14 @@ public sealed class PlayerObject : MapObject
                             }
                             if (value33 != null)
                             {
-                                Inventory[b7] = new ItemInfo(value33, Character, 1, b7, Config.沙城捐献物品数量1);
+                                Inventory[b7] = new ItemInfo(value33, Character, 1, b7, Settings.沙城捐献物品数量1);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b7].ToArray()
                                 });
                             }
                         }
-                        if (GameItem.DataSheet.TryGetValue(Config.沙城捐献获得物品2, out var value34))
+                        if (GameItem.DataSheet.TryGetValue(Settings.沙城捐献获得物品2, out var value34))
                         {
                             byte b9 = byte.MaxValue;
                             byte b10 = 0;
@@ -9773,14 +9773,14 @@ public sealed class PlayerObject : MapObject
                             }
                             if (value34 != null)
                             {
-                                Inventory[b9] = new ItemInfo(value34, Character, 1, b9, Config.沙城捐献物品数量2);
+                                Inventory[b9] = new ItemInfo(value34, Character, 1, b9, Settings.沙城捐献物品数量2);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b9].ToArray()
                                 });
                             }
                         }
-                        if (!GameItem.DataSheet.TryGetValue(Config.沙城捐献获得物品3, out var value35))
+                        if (!GameItem.DataSheet.TryGetValue(Settings.沙城捐献获得物品3, out var value35))
                         {
                             break;
                         }
@@ -9805,7 +9805,7 @@ public sealed class PlayerObject : MapObject
                         }
                         else if (value35 != null)
                         {
-                            Inventory[b11] = new ItemInfo(value35, Character, 1, b11, Config.沙城捐献物品数量3);
+                            Inventory[b11] = new ItemInfo(value35, Character, 1, b11, Settings.沙城捐献物品数量3);
                             Enqueue(new SyncItemPacket
                             {
                                 Description = Inventory[b11].ToArray()
@@ -9831,9 +9831,9 @@ public sealed class PlayerObject : MapObject
                     {
                         case 1:
                             {
-                                if (MapManager.Maps.TryGetValue(Config.暗之门地图1 * 16 + 1, out var value27))
+                                if (MapManager.Maps.TryGetValue(Settings.暗之门地图1 * 16 + 1, out var value27))
                                 {
-                                    Map map = new Map(GameMap.DataSheet[(byte)Config.暗之门地图1]);
+                                    Map map = new Map(GameMap.DataSheet[(byte)Settings.暗之门地图1]);
                                     map.Terrain = value27.Terrain;
                                     map.Areas = value27.Areas;
                                     map.Spawns = value27.Spawns;
@@ -9844,9 +9844,9 @@ public sealed class PlayerObject : MapObject
                                     MapManager.ReplicaMaps.Add(map);
                                     Teleport(map, AreaType.Teleportation);
                                     NetworkManager.SendAnnouncement($"玩家：{Name}进入【{map}】魔渊历练", rolling: true);
-                                    if (MonsterInfo.DataSheet.TryGetValue(Config.暗之门地图1BOSS, out var value28))
+                                    if (MonsterInfo.DataSheet.TryGetValue(Settings.暗之门地图1BOSS, out var value28))
                                     {
-                                        MonsterObject mon = new MonsterObject(value28, map, int.MaxValue, new Point(Config.暗之门地图1X, Config.暗之门地图1Y), 1,
+                                        MonsterObject mon = new MonsterObject(value28, map, int.MaxValue, new Point(Settings.暗之门地图1X, Settings.暗之门地图1Y), 1,
                                             forbidResurrection: true, 立即刷新: true);
                                         mon.CurrentDirection = GameDirection.UpRight;
                                         mon.SurvivalTime = SEngine.CurrentTime.AddMinutes(30.0);
@@ -9858,9 +9858,9 @@ public sealed class PlayerObject : MapObject
                             }
                         case 2:
                             {
-                                if (MapManager.Maps.TryGetValue(Config.暗之门地图2 * 16 + 1, out var value29))
+                                if (MapManager.Maps.TryGetValue(Settings.暗之门地图2 * 16 + 1, out var value29))
                                 {
-                                    Map map = new Map(GameMap.DataSheet[(byte)Config.暗之门地图2]);
+                                    Map map = new Map(GameMap.DataSheet[(byte)Settings.暗之门地图2]);
                                     map.Terrain = value29.Terrain;
                                     map.Areas = value29.Areas;
                                     map.Spawns = value29.Spawns;
@@ -9871,9 +9871,9 @@ public sealed class PlayerObject : MapObject
                                     MapManager.ReplicaMaps.Add(map);
                                     Teleport(map, AreaType.Teleportation);
                                     NetworkManager.SendAnnouncement($"玩家：{Name}进入【{map}】魔渊历练", rolling: true);
-                                    if (MonsterInfo.DataSheet.TryGetValue(Config.暗之门地图2BOSS, out var value30))
+                                    if (MonsterInfo.DataSheet.TryGetValue(Settings.暗之门地图2BOSS, out var value30))
                                     {
-                                        MonsterObject mon = new MonsterObject(value30, map, int.MaxValue, new Point(Config.暗之门地图2X, Config.暗之门地图2Y), 1,
+                                        MonsterObject mon = new MonsterObject(value30, map, int.MaxValue, new Point(Settings.暗之门地图2X, Settings.暗之门地图2Y), 1,
                                             forbidResurrection: true, 立即刷新: true);
                                         mon.CurrentDirection = GameDirection.UpRight;
                                         mon.SurvivalTime = SEngine.CurrentTime.AddMinutes(30.0);
@@ -9885,9 +9885,9 @@ public sealed class PlayerObject : MapObject
                             }
                         case 3:
                             {
-                                if (MapManager.Maps.TryGetValue(Config.暗之门地图3 * 16 + 1, out var value25))
+                                if (MapManager.Maps.TryGetValue(Settings.暗之门地图3 * 16 + 1, out var value25))
                                 {
-                                    Map map = new Map(GameMap.DataSheet[(byte)Config.暗之门地图3]);
+                                    Map map = new Map(GameMap.DataSheet[(byte)Settings.暗之门地图3]);
                                     map.Terrain = value25.Terrain;
                                     map.Areas = value25.Areas;
                                     map.Spawns = value25.Spawns;
@@ -9898,9 +9898,9 @@ public sealed class PlayerObject : MapObject
                                     MapManager.ReplicaMaps.Add(map);
                                     Teleport(map, AreaType.Teleportation);
                                     NetworkManager.SendAnnouncement($"玩家：{Name}进入【{map}】魔渊历练", rolling: true);
-                                    if (MonsterInfo.DataSheet.TryGetValue(Config.暗之门地图3BOSS, out var value26))
+                                    if (MonsterInfo.DataSheet.TryGetValue(Settings.暗之门地图3BOSS, out var value26))
                                     {
-                                        MonsterObject mon = new MonsterObject(value26, map, int.MaxValue, new Point(Config.暗之门地图3X, Config.暗之门地图3Y), 1,
+                                        MonsterObject mon = new MonsterObject(value26, map, int.MaxValue, new Point(Settings.暗之门地图3X, Settings.暗之门地图3Y), 1,
                                             forbidResurrection: true, 立即刷新: true);
                                         mon.CurrentDirection = GameDirection.UpRight;
                                         mon.SurvivalTime = SEngine.CurrentTime.AddMinutes(30.0);
@@ -9912,9 +9912,9 @@ public sealed class PlayerObject : MapObject
                             }
                         default:
                             {
-                                if (MapManager.Maps.TryGetValue(Config.暗之门地图4 * 16 + 1, out var value23))
+                                if (MapManager.Maps.TryGetValue(Settings.暗之门地图4 * 16 + 1, out var value23))
                                 {
-                                    Map map = new Map(GameMap.DataSheet[(byte)Config.暗之门地图4]);
+                                    Map map = new Map(GameMap.DataSheet[(byte)Settings.暗之门地图4]);
                                     map.Terrain = value23.Terrain;
                                     map.Areas = value23.Areas;
                                     map.Spawns = value23.Spawns;
@@ -9925,9 +9925,9 @@ public sealed class PlayerObject : MapObject
                                     MapManager.ReplicaMaps.Add(map);
                                     Teleport(map, AreaType.Teleportation);
                                     NetworkManager.SendAnnouncement($"玩家：{Name}进入【{map}】魔渊历练", rolling: true);
-                                    if (MonsterInfo.DataSheet.TryGetValue(Config.暗之门地图4BOSS, out var value24))
+                                    if (MonsterInfo.DataSheet.TryGetValue(Settings.暗之门地图4BOSS, out var value24))
                                     {
-                                        MonsterObject mon = new MonsterObject(value24, map, int.MaxValue, new Point(Config.暗之门地图4X, Config.暗之门地图4Y), 1,
+                                        MonsterObject mon = new MonsterObject(value24, map, int.MaxValue, new Point(Settings.暗之门地图4X, Settings.暗之门地图4Y), 1,
                                             forbidResurrection: true, 立即刷新: true);
                                         mon.CurrentDirection = GameDirection.UpRight;
                                         mon.SurvivalTime = SEngine.CurrentTime.AddMinutes(30.0);
@@ -9945,7 +9945,7 @@ public sealed class PlayerObject : MapObject
                         {
                             break;
                         }
-                        int 魔虫窟副本等级 = Config.魔虫窟副本等级;
+                        int 魔虫窟副本等级 = Settings.魔虫窟副本等级;
                         if (Team != null)
                         {
                             CurrentNPCDialoguePage = 616701000;
@@ -9956,12 +9956,12 @@ public sealed class PlayerObject : MapObject
                             });
                             break;
                         }
-                        if (Character.魔虫窟次数.V >= Config.魔虫窟副本次数)
+                        if (Character.魔虫窟次数.V >= Settings.魔虫窟副本次数)
                         {
                             CurrentNPCDialoguePage = 616704000;
                             Enqueue(new 同步交互结果
                             {
-                                Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{Config.魔虫窟副本次数}><#P1:0>"),
+                                Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{Settings.魔虫窟副本次数}><#P1:0>"),
                                 ObjectID = CurrentNPC.ObjectID
                             });
                             break;
@@ -9976,7 +9976,7 @@ public sealed class PlayerObject : MapObject
                             });
                             break;
                         }
-                        if (SEngine.CurrentTime.Hour <= Config.魔虫窟副本时间小)
+                        if (SEngine.CurrentTime.Hour <= Settings.魔虫窟副本时间小)
                         {
                             CurrentNPCDialoguePage = 616705000;
                             Enqueue(new 同步交互结果
@@ -9986,7 +9986,7 @@ public sealed class PlayerObject : MapObject
                             });
                             break;
                         }
-                        if (SEngine.CurrentTime.Hour >= Config.魔虫窟副本时间大)
+                        if (SEngine.CurrentTime.Hour >= Settings.魔虫窟副本时间大)
                         {
                             CurrentNPCDialoguePage = 616705000;
                             Enqueue(new 同步交互结果
@@ -9996,11 +9996,11 @@ public sealed class PlayerObject : MapObject
                             });
                             break;
                         }
-                        if (Config.魔虫窟副本物品 == 0)
+                        if (Settings.魔虫窟副本物品 == 0)
                         {
-                            if (Gold >= Config.魔虫窟副本数量)
+                            if (Gold >= Settings.魔虫窟副本数量)
                             {
-                                Gold -= Config.魔虫窟副本数量;
+                                Gold -= Settings.魔虫窟副本数量;
                                 if (!MapManager.Maps.TryGetValue(1153, out var value48))
                                 {
                                     break;
@@ -10031,7 +10031,7 @@ public sealed class PlayerObject : MapObject
                                                 MonsterObject mon = new MonsterObject(moni, map, int.MaxValue, spawn.Coordinates, spawn.AreaRadius, 
                                                     forbidResurrection: true, 立即刷新: true);
                                                 mon.CurrentDirection = GameDirection.UpRight;
-                                                mon.SurvivalTime = SEngine.CurrentTime.AddHours(Config.魔虫窟分钟限制);
+                                                mon.SurvivalTime = SEngine.CurrentTime.AddHours(Settings.魔虫窟分钟限制);
                                                 魔虫窟怪物 = mon;
                                             }
                                         }
@@ -10052,11 +10052,11 @@ public sealed class PlayerObject : MapObject
                                 });
                             }
                         }
-                        if (Config.魔虫窟副本物品 == 1)
+                        if (Settings.魔虫窟副本物品 == 1)
                         {
-                            if (Ingot >= Config.魔虫窟副本数量)
+                            if (Ingot >= Settings.魔虫窟副本数量)
                             {
-                                Ingot -= Config.魔虫窟副本数量;
+                                Ingot -= Settings.魔虫窟副本数量;
                                 if (!MapManager.Maps.TryGetValue(1153, out var value50))
                                 {
                                     break;
@@ -10087,7 +10087,7 @@ public sealed class PlayerObject : MapObject
                                                 MonsterObject mon = new MonsterObject(value51, map, int.MaxValue, spawn.Coordinates, spawn.AreaRadius,
                                                     forbidResurrection: true, 立即刷新: true);
                                                 mon.CurrentDirection = GameDirection.UpRight;
-                                                mon.SurvivalTime = SEngine.CurrentTime.AddHours(Config.魔虫窟分钟限制);
+                                                mon.SurvivalTime = SEngine.CurrentTime.AddHours(Settings.魔虫窟分钟限制);
                                                 魔虫窟怪物 = mon;
                                             }
                                         }
@@ -10104,13 +10104,13 @@ public sealed class PlayerObject : MapObject
                                 });
                             }
                         }
-                        if (Config.魔虫窟副本物品 < 2)
+                        if (Settings.魔虫窟副本物品 < 2)
                         {
                             break;
                         }
-                        if (FindItem(Config.魔虫窟副本数量, Config.魔虫窟副本物品, out var 物品列表24))
+                        if (FindItem(Settings.魔虫窟副本数量, Settings.魔虫窟副本物品, out var 物品列表24))
                         {
-                            ConsumeItem(Config.魔虫窟副本数量, 物品列表24);
+                            ConsumeItem(Settings.魔虫窟副本数量, 物品列表24);
                             if (!MapManager.Maps.TryGetValue(1153, out var value52))
                             {
                                 break;
@@ -10142,7 +10142,7 @@ public sealed class PlayerObject : MapObject
                                                 MonsterObject mon = new MonsterObject(value53, map, int.MaxValue, spawn.Coordinates, spawn.AreaRadius,
                                                     forbidResurrection: true, 立即刷新: true);
                                                 mon.CurrentDirection = GameDirection.UpRight;
-                                                mon.SurvivalTime = SEngine.CurrentTime.AddHours(Config.魔虫窟分钟限制);
+                                                mon.SurvivalTime = SEngine.CurrentTime.AddHours(Settings.魔虫窟分钟限制);
                                                 魔虫窟怪物 = mon;
                                             }
                                         }
@@ -10416,17 +10416,17 @@ public sealed class PlayerObject : MapObject
                     }
                     break;
                 case 848202000:
-                    if (Config.购买狂暴之力)
+                    if (Settings.购买狂暴之力)
                     {
                         if (选项编号 != 1)
                         {
                             break;
                         }
-                        int 狂暴开启物品数量2 = Config.狂暴开启物品数量;
-                        int 狂暴开启物品名称2 = Config.狂暴开启物品名称;
-                        int 狂暴开启元宝数量2 = Config.狂暴开启元宝数量;
-                        int 狂暴开启金币数量2 = Config.狂暴开启金币数量;
-                        if (Titles.ContainsKey(Config.狂暴称号格式))
+                        int 狂暴开启物品数量2 = Settings.狂暴开启物品数量;
+                        int 狂暴开启物品名称2 = Settings.狂暴开启物品名称;
+                        int 狂暴开启元宝数量2 = Settings.狂暴开启元宝数量;
+                        int 狂暴开启金币数量2 = Settings.狂暴开启金币数量;
+                        if (Titles.ContainsKey(Settings.狂暴称号格式))
                         {
                             CurrentNPCDialoguePage = 699700002;
                             Enqueue(new 同步交互结果
@@ -10435,13 +10435,13 @@ public sealed class PlayerObject : MapObject
                                 Description = NpcDialog.GetBufferFromDialogID(CurrentNPCDialoguePage)
                             });
                         }
-                        else if (Config.狂暴货币格式 == 1)
+                        else if (Settings.狂暴货币格式 == 1)
                         {
                             if (Ingot >= 狂暴开启元宝数量2)
                             {
                                 Ingot -= 狂暴开启元宝数量2;
-                                AddTitle(Config.狂暴称号格式);
-                                if (GameTitle.DataSheet.TryGetValue(Config.狂暴称号格式, out var value8))
+                                AddTitle(Settings.狂暴称号格式);
+                                if (GameTitle.DataSheet.TryGetValue(Settings.狂暴称号格式, out var value8))
                                 {
                                     CombatPowerBonus.Add(value8, value8.CombatPower);
                                     BonusStats.Add(value8, value8.Stats);
@@ -10457,7 +10457,7 @@ public sealed class PlayerObject : MapObject
                                 });
                             }
                         }
-                        else if (Config.狂暴货币格式 == 0)
+                        else if (Settings.狂暴货币格式 == 0)
                         {
                             if (Gold >= 狂暴开启金币数量2)
                             {
@@ -10466,8 +10466,8 @@ public sealed class PlayerObject : MapObject
                                 {
                                     Description = 全部货币描述()
                                 });
-                                AddTitle(Config.狂暴称号格式);
-                                if (GameTitle.DataSheet.TryGetValue(Config.狂暴称号格式, out var value9))
+                                AddTitle(Settings.狂暴称号格式);
+                                if (GameTitle.DataSheet.TryGetValue(Settings.狂暴称号格式, out var value9))
                                 {
                                     CombatPowerBonus.Add(value9, value9.CombatPower);
                                     BonusStats.Add(value9, value9.Stats);
@@ -10483,13 +10483,13 @@ public sealed class PlayerObject : MapObject
                                 });
                             }
                         }
-                        else if (Config.狂暴货币格式 == 2)
+                        else if (Settings.狂暴货币格式 == 2)
                         {
                             if (FindItem(狂暴开启物品数量2, 狂暴开启物品名称2, out var 物品列表11))
                             {
                                 ConsumeItem(狂暴开启物品数量2, 物品列表11);
-                                AddTitle(Config.狂暴称号格式);
-                                if (GameTitle.DataSheet.TryGetValue(Config.狂暴称号格式, out var value10))
+                                AddTitle(Settings.狂暴称号格式);
+                                if (GameTitle.DataSheet.TryGetValue(Settings.狂暴称号格式, out var value10))
                                 {
                                     CombatPowerBonus.Add(value10, value10.CombatPower);
                                     BonusStats.Add(value10, value10.Stats);
@@ -10521,7 +10521,7 @@ public sealed class PlayerObject : MapObject
                     }
                     break;
                 case 848203000:
-                    if (Config.会员满血设置)
+                    if (Settings.会员满血设置)
                     {
                         if (CurrentMap.IsSafeArea(CurrentPosition))
                         {
@@ -10536,7 +10536,7 @@ public sealed class PlayerObject : MapObject
                     }
                     break;
                 case 848204000:
-                    if (Config.AutoPickUpAllVisible)
+                    if (Settings.AutoPickUpAllVisible)
                     {
                         if (Character.AutoPickUpAllVisible.V == false)
                         {
@@ -10559,11 +10559,11 @@ public sealed class PlayerObject : MapObject
                     {
                         break;
                     }
-                    if (Config.监狱货币类型 == 0 && Config.CurrentVersion >= 1)
+                    if (Settings.监狱货币类型 == 0 && Settings.CurrentVersion >= 1)
                     {
-                        if (Gold >= Config.监狱货币)
+                        if (Gold >= Settings.监狱货币)
                         {
-                            Gold -= Config.监狱货币;
+                            Gold -= Settings.监狱货币;
                             Teleport((CurrentMap.MapID == 147) ? CurrentMap : MapManager.GetMap(147), AreaType.Resurrection);
                             Enqueue(new 同步货币数量
                             {
@@ -10580,11 +10580,11 @@ public sealed class PlayerObject : MapObject
                             });
                         }
                     }
-                    else if (Config.监狱货币类型 == 1 && Config.CurrentVersion >= 1)
+                    else if (Settings.监狱货币类型 == 1 && Settings.CurrentVersion >= 1)
                     {
-                        if (Ingot >= Config.监狱货币)
+                        if (Ingot >= Settings.监狱货币)
                         {
-                            Ingot -= Config.监狱货币;
+                            Ingot -= Settings.监狱货币;
                             Teleport((CurrentMap.MapID == 147) ? CurrentMap : MapManager.GetMap(147), AreaType.Resurrection);
                             Enqueue(new 同步货币数量
                             {
@@ -10617,7 +10617,7 @@ public sealed class PlayerObject : MapObject
                         {
                             break;
                         }
-                        int 九层妖塔副本等级 = Config.九层妖塔副本等级;
+                        int 九层妖塔副本等级 = Settings.九层妖塔副本等级;
                         if (Team != null)
                         {
                             CurrentNPCDialoguePage = 611203000;
@@ -10628,12 +10628,12 @@ public sealed class PlayerObject : MapObject
                             });
                             break;
                         }
-                        if (Character.九层妖塔次数.V >= Config.九层妖塔副本次数)
+                        if (Character.九层妖塔次数.V >= Settings.九层妖塔副本次数)
                         {
                             CurrentNPCDialoguePage = 611204000;
                             Enqueue(new 同步交互结果
                             {
-                                Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{Config.九层妖塔副本次数}><#P1:0>"),
+                                Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{Settings.九层妖塔副本次数}><#P1:0>"),
                                 ObjectID = CurrentNPC.ObjectID
                             });
                             break;
@@ -10648,7 +10648,7 @@ public sealed class PlayerObject : MapObject
                             });
                             break;
                         }
-                        if (SEngine.CurrentTime.Hour <= Config.九层妖塔副本时间小)
+                        if (SEngine.CurrentTime.Hour <= Settings.九层妖塔副本时间小)
                         {
                             CurrentNPCDialoguePage = 611205000;
                             Enqueue(new 同步交互结果
@@ -10658,7 +10658,7 @@ public sealed class PlayerObject : MapObject
                             });
                             break;
                         }
-                        if (SEngine.CurrentTime.Hour >= Config.九层妖塔副本时间大)
+                        if (SEngine.CurrentTime.Hour >= Settings.九层妖塔副本时间大)
                         {
                             CurrentNPCDialoguePage = 611205000;
                             Enqueue(new 同步交互结果
@@ -10683,11 +10683,11 @@ public sealed class PlayerObject : MapObject
                             return null;
                         }
 
-                        if (Config.九层妖塔副本物品 == 0)
+                        if (Settings.九层妖塔副本物品 == 0)
                         {
-                            if (Gold >= Config.九层妖塔副本数量)
+                            if (Gold >= Settings.九层妖塔副本数量)
                             {
-                                Gold -= Config.九层妖塔副本数量;
+                                Gold -= Settings.九层妖塔副本数量;
                                 Enqueue(new 同步货币数量
                                 {
                                     Description = 全部货币描述()
@@ -10719,42 +10719,42 @@ public sealed class PlayerObject : MapObject
                                 Character.九层妖塔次数.V++;
                                 NetworkManager.SendAnnouncement($"玩家：{Name}进入{map}副本历练", rolling: true);
 
-                                九层妖塔BOSS1 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS1, new Point(1028, 160));
-                                九层妖塔BOSS2 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS2, new Point(881, 301));
-                                九层妖塔BOSS3 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS3, new Point(733, 454));
-                                九层妖塔BOSS4 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS4, new Point(1148, 280));
-                                九层妖塔BOSS5 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS5, new Point(1001, 427));
-                                九层妖塔BOSS6 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS6, new Point(853, 575));
-                                九层妖塔BOSS7 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS7, new Point(1291, 423));
-                                九层妖塔BOSS8 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS8, new Point(1144, 570));
-                                九层妖塔BOSS9 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS9, new Point(996, 702));
+                                九层妖塔BOSS1 = ZenDemonTowerMonster(map, Settings.九层妖塔BOSS1, new Point(1028, 160));
+                                九层妖塔BOSS2 = ZenDemonTowerMonster(map, Settings.九层妖塔BOSS2, new Point(881, 301));
+                                九层妖塔BOSS3 = ZenDemonTowerMonster(map, Settings.九层妖塔BOSS3, new Point(733, 454));
+                                九层妖塔BOSS4 = ZenDemonTowerMonster(map, Settings.九层妖塔BOSS4, new Point(1148, 280));
+                                九层妖塔BOSS5 = ZenDemonTowerMonster(map, Settings.九层妖塔BOSS5, new Point(1001, 427));
+                                九层妖塔BOSS6 = ZenDemonTowerMonster(map, Settings.九层妖塔BOSS6, new Point(853, 575));
+                                九层妖塔BOSS7 = ZenDemonTowerMonster(map, Settings.九层妖塔BOSS7, new Point(1291, 423));
+                                九层妖塔BOSS8 = ZenDemonTowerMonster(map, Settings.九层妖塔BOSS8, new Point(1144, 570));
+                                九层妖塔BOSS9 = ZenDemonTowerMonster(map, Settings.九层妖塔BOSS9, new Point(996, 702));
 
-                                for (var i = 0; i <= Config.九层妖塔数量1; i++)
-                                    九层妖塔精英1 = ZenDemonTowerMonster(map, Config.九层妖塔精英1, new Point(1028, 160));
+                                for (var i = 0; i <= Settings.九层妖塔数量1; i++)
+                                    九层妖塔精英1 = ZenDemonTowerMonster(map, Settings.九层妖塔精英1, new Point(1028, 160));
                                 
-                                for (var i = 0; i <= Config.九层妖塔数量2; i++)
-                                    九层妖塔精英2 = ZenDemonTowerMonster(map, Config.九层妖塔精英2, new Point(881, 301));
+                                for (var i = 0; i <= Settings.九层妖塔数量2; i++)
+                                    九层妖塔精英2 = ZenDemonTowerMonster(map, Settings.九层妖塔精英2, new Point(881, 301));
 
-                                for (var i = 0; i <= Config.九层妖塔数量3; i++)
-                                    九层妖塔精英3 = ZenDemonTowerMonster(map, Config.九层妖塔精英3, new Point(733, 454));
+                                for (var i = 0; i <= Settings.九层妖塔数量3; i++)
+                                    九层妖塔精英3 = ZenDemonTowerMonster(map, Settings.九层妖塔精英3, new Point(733, 454));
 
-                                for (var i = 0; i <= Config.九层妖塔数量4; i++)
-                                    九层妖塔精英4 = ZenDemonTowerMonster(map, Config.九层妖塔精英4, new Point(1148, 280));
+                                for (var i = 0; i <= Settings.九层妖塔数量4; i++)
+                                    九层妖塔精英4 = ZenDemonTowerMonster(map, Settings.九层妖塔精英4, new Point(1148, 280));
 
-                                for (var i = 0; i <= Config.九层妖塔数量5; i++)
-                                    九层妖塔精英5 = ZenDemonTowerMonster(map, Config.九层妖塔精英5, new Point(1001, 427));
+                                for (var i = 0; i <= Settings.九层妖塔数量5; i++)
+                                    九层妖塔精英5 = ZenDemonTowerMonster(map, Settings.九层妖塔精英5, new Point(1001, 427));
 
-                                for (var i = 0; i <= Config.九层妖塔数量6; i++)
-                                    九层妖塔精英6 = ZenDemonTowerMonster(map, Config.九层妖塔精英6, new Point(853, 575));
+                                for (var i = 0; i <= Settings.九层妖塔数量6; i++)
+                                    九层妖塔精英6 = ZenDemonTowerMonster(map, Settings.九层妖塔精英6, new Point(853, 575));
 
-                                for (var i = 0; i <= Config.九层妖塔数量7; i++)
-                                    九层妖塔精英7 = ZenDemonTowerMonster(map, Config.九层妖塔精英7, new Point(1291, 423));
+                                for (var i = 0; i <= Settings.九层妖塔数量7; i++)
+                                    九层妖塔精英7 = ZenDemonTowerMonster(map, Settings.九层妖塔精英7, new Point(1291, 423));
 
-                                for (var i = 0; i <= Config.九层妖塔数量8; i++)
-                                    九层妖塔精英8 = ZenDemonTowerMonster(map, Config.九层妖塔精英8, new Point(1144, 570));
+                                for (var i = 0; i <= Settings.九层妖塔数量8; i++)
+                                    九层妖塔精英8 = ZenDemonTowerMonster(map, Settings.九层妖塔精英8, new Point(1144, 570));
 
-                                for (var i = 0; i <= Config.九层妖塔数量9; i++)
-                                    九层妖塔精英9 = ZenDemonTowerMonster(map, Config.九层妖塔精英9, new Point(996, 702));
+                                for (var i = 0; i <= Settings.九层妖塔数量9; i++)
+                                    九层妖塔精英9 = ZenDemonTowerMonster(map, Settings.九层妖塔精英9, new Point(996, 702));
                             }
                             else
                             {
@@ -10766,11 +10766,11 @@ public sealed class PlayerObject : MapObject
                                 });
                             }
                         }
-                        if (Config.九层妖塔副本物品 == 1)
+                        if (Settings.九层妖塔副本物品 == 1)
                         {
-                            if (Ingot >= Config.九层妖塔副本数量)
+                            if (Ingot >= Settings.九层妖塔副本数量)
                             {
-                                Ingot -= Config.九层妖塔副本数量;
+                                Ingot -= Settings.九层妖塔副本数量;
                                 if (!MapManager.Maps.TryGetValue(3633, out var value77))
                                 {
                                     break;
@@ -10798,42 +10798,42 @@ public sealed class PlayerObject : MapObject
                                 Character.九层妖塔次数.V++;
                                 NetworkManager.SendAnnouncement($"玩家：{Name}进入{map}副本历练", rolling: true);
 
-                                九层妖塔BOSS1 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS1, new Point(1028, 160));
-                                九层妖塔BOSS2 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS2, new Point(881, 301));
-                                九层妖塔BOSS3 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS3, new Point(733, 454));
-                                九层妖塔BOSS4 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS4, new Point(1148, 280));
-                                九层妖塔BOSS5 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS5, new Point(1001, 427));
-                                九层妖塔BOSS6 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS6, new Point(853, 575));
-                                九层妖塔BOSS7 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS7, new Point(1291, 423));
-                                九层妖塔BOSS8 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS8, new Point(1144, 570));
-                                九层妖塔BOSS9 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS9, new Point(996, 702));
+                                九层妖塔BOSS1 = ZenDemonTowerMonster(map, Settings.九层妖塔BOSS1, new Point(1028, 160));
+                                九层妖塔BOSS2 = ZenDemonTowerMonster(map, Settings.九层妖塔BOSS2, new Point(881, 301));
+                                九层妖塔BOSS3 = ZenDemonTowerMonster(map, Settings.九层妖塔BOSS3, new Point(733, 454));
+                                九层妖塔BOSS4 = ZenDemonTowerMonster(map, Settings.九层妖塔BOSS4, new Point(1148, 280));
+                                九层妖塔BOSS5 = ZenDemonTowerMonster(map, Settings.九层妖塔BOSS5, new Point(1001, 427));
+                                九层妖塔BOSS6 = ZenDemonTowerMonster(map, Settings.九层妖塔BOSS6, new Point(853, 575));
+                                九层妖塔BOSS7 = ZenDemonTowerMonster(map, Settings.九层妖塔BOSS7, new Point(1291, 423));
+                                九层妖塔BOSS8 = ZenDemonTowerMonster(map, Settings.九层妖塔BOSS8, new Point(1144, 570));
+                                九层妖塔BOSS9 = ZenDemonTowerMonster(map, Settings.九层妖塔BOSS9, new Point(996, 702));
 
-                                for (var i = 0; i <= Config.九层妖塔数量1; i++)
-                                    九层妖塔精英1 = ZenDemonTowerMonster(map, Config.九层妖塔精英1, new Point(1028, 160));
+                                for (var i = 0; i <= Settings.九层妖塔数量1; i++)
+                                    九层妖塔精英1 = ZenDemonTowerMonster(map, Settings.九层妖塔精英1, new Point(1028, 160));
 
-                                for (var i = 0; i <= Config.九层妖塔数量2; i++)
-                                    九层妖塔精英2 = ZenDemonTowerMonster(map, Config.九层妖塔精英2, new Point(881, 301));
+                                for (var i = 0; i <= Settings.九层妖塔数量2; i++)
+                                    九层妖塔精英2 = ZenDemonTowerMonster(map, Settings.九层妖塔精英2, new Point(881, 301));
 
-                                for (var i = 0; i <= Config.九层妖塔数量3; i++)
-                                    九层妖塔精英3 = ZenDemonTowerMonster(map, Config.九层妖塔精英3, new Point(733, 454));
+                                for (var i = 0; i <= Settings.九层妖塔数量3; i++)
+                                    九层妖塔精英3 = ZenDemonTowerMonster(map, Settings.九层妖塔精英3, new Point(733, 454));
 
-                                for (var i = 0; i <= Config.九层妖塔数量4; i++)
-                                    九层妖塔精英4 = ZenDemonTowerMonster(map, Config.九层妖塔精英4, new Point(1148, 280));
+                                for (var i = 0; i <= Settings.九层妖塔数量4; i++)
+                                    九层妖塔精英4 = ZenDemonTowerMonster(map, Settings.九层妖塔精英4, new Point(1148, 280));
 
-                                for (var i = 0; i <= Config.九层妖塔数量5; i++)
-                                    九层妖塔精英5 = ZenDemonTowerMonster(map, Config.九层妖塔精英5, new Point(1001, 427));
+                                for (var i = 0; i <= Settings.九层妖塔数量5; i++)
+                                    九层妖塔精英5 = ZenDemonTowerMonster(map, Settings.九层妖塔精英5, new Point(1001, 427));
 
-                                for (var i = 0; i <= Config.九层妖塔数量6; i++)
-                                    九层妖塔精英6 = ZenDemonTowerMonster(map, Config.九层妖塔精英6, new Point(853, 575));
+                                for (var i = 0; i <= Settings.九层妖塔数量6; i++)
+                                    九层妖塔精英6 = ZenDemonTowerMonster(map, Settings.九层妖塔精英6, new Point(853, 575));
 
-                                for (var i = 0; i <= Config.九层妖塔数量7; i++)
-                                    九层妖塔精英7 = ZenDemonTowerMonster(map, Config.九层妖塔精英7, new Point(1291, 423));
+                                for (var i = 0; i <= Settings.九层妖塔数量7; i++)
+                                    九层妖塔精英7 = ZenDemonTowerMonster(map, Settings.九层妖塔精英7, new Point(1291, 423));
 
-                                for (var i = 0; i <= Config.九层妖塔数量8; i++)
-                                    九层妖塔精英8 = ZenDemonTowerMonster(map, Config.九层妖塔精英8, new Point(1144, 570));
+                                for (var i = 0; i <= Settings.九层妖塔数量8; i++)
+                                    九层妖塔精英8 = ZenDemonTowerMonster(map, Settings.九层妖塔精英8, new Point(1144, 570));
 
-                                for (var i = 0; i <= Config.九层妖塔数量9; i++)
-                                    九层妖塔精英9 = ZenDemonTowerMonster(map, Config.九层妖塔精英9, new Point(996, 702));
+                                for (var i = 0; i <= Settings.九层妖塔数量9; i++)
+                                    九层妖塔精英9 = ZenDemonTowerMonster(map, Settings.九层妖塔精英9, new Point(996, 702));
                             }
                             else
                             {
@@ -10845,13 +10845,13 @@ public sealed class PlayerObject : MapObject
                                 });
                             }
                         }
-                        if (Config.九层妖塔副本物品 < 2)
+                        if (Settings.九层妖塔副本物品 < 2)
                         {
                             break;
                         }
-                        if (FindItem(Config.九层妖塔副本数量, Config.九层妖塔副本物品, out var 物品列表29))
+                        if (FindItem(Settings.九层妖塔副本数量, Settings.九层妖塔副本物品, out var 物品列表29))
                         {
-                            ConsumeItem(Config.九层妖塔副本数量, 物品列表29);
+                            ConsumeItem(Settings.九层妖塔副本数量, 物品列表29);
                             if (!MapManager.Maps.TryGetValue(3633, out var value96))
                             {
                                 break;
@@ -10879,42 +10879,42 @@ public sealed class PlayerObject : MapObject
                             Character.九层妖塔次数.V++;
                             NetworkManager.SendAnnouncement($"玩家：{Name}进入{map}副本历练", rolling: true);
 
-                            九层妖塔BOSS1 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS1, new Point(1028, 160));
-                            九层妖塔BOSS2 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS2, new Point(881, 301));
-                            九层妖塔BOSS3 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS3, new Point(733, 454));
-                            九层妖塔BOSS4 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS4, new Point(1148, 280));
-                            九层妖塔BOSS5 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS5, new Point(1001, 427));
-                            九层妖塔BOSS6 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS6, new Point(853, 575));
-                            九层妖塔BOSS7 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS7, new Point(1291, 423));
-                            九层妖塔BOSS8 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS8, new Point(1144, 570));
-                            九层妖塔BOSS9 = ZenDemonTowerMonster(map, Config.九层妖塔BOSS9, new Point(996, 702));
+                            九层妖塔BOSS1 = ZenDemonTowerMonster(map, Settings.九层妖塔BOSS1, new Point(1028, 160));
+                            九层妖塔BOSS2 = ZenDemonTowerMonster(map, Settings.九层妖塔BOSS2, new Point(881, 301));
+                            九层妖塔BOSS3 = ZenDemonTowerMonster(map, Settings.九层妖塔BOSS3, new Point(733, 454));
+                            九层妖塔BOSS4 = ZenDemonTowerMonster(map, Settings.九层妖塔BOSS4, new Point(1148, 280));
+                            九层妖塔BOSS5 = ZenDemonTowerMonster(map, Settings.九层妖塔BOSS5, new Point(1001, 427));
+                            九层妖塔BOSS6 = ZenDemonTowerMonster(map, Settings.九层妖塔BOSS6, new Point(853, 575));
+                            九层妖塔BOSS7 = ZenDemonTowerMonster(map, Settings.九层妖塔BOSS7, new Point(1291, 423));
+                            九层妖塔BOSS8 = ZenDemonTowerMonster(map, Settings.九层妖塔BOSS8, new Point(1144, 570));
+                            九层妖塔BOSS9 = ZenDemonTowerMonster(map, Settings.九层妖塔BOSS9, new Point(996, 702));
 
-                            for (var i = 0; i <= Config.九层妖塔数量1; i++)
-                                九层妖塔精英1 = ZenDemonTowerMonster(map, Config.九层妖塔精英1, new Point(1028, 160));
+                            for (var i = 0; i <= Settings.九层妖塔数量1; i++)
+                                九层妖塔精英1 = ZenDemonTowerMonster(map, Settings.九层妖塔精英1, new Point(1028, 160));
 
-                            for (var i = 0; i <= Config.九层妖塔数量2; i++)
-                                九层妖塔精英2 = ZenDemonTowerMonster(map, Config.九层妖塔精英2, new Point(881, 301));
+                            for (var i = 0; i <= Settings.九层妖塔数量2; i++)
+                                九层妖塔精英2 = ZenDemonTowerMonster(map, Settings.九层妖塔精英2, new Point(881, 301));
 
-                            for (var i = 0; i <= Config.九层妖塔数量3; i++)
-                                九层妖塔精英3 = ZenDemonTowerMonster(map, Config.九层妖塔精英3, new Point(733, 454));
+                            for (var i = 0; i <= Settings.九层妖塔数量3; i++)
+                                九层妖塔精英3 = ZenDemonTowerMonster(map, Settings.九层妖塔精英3, new Point(733, 454));
 
-                            for (var i = 0; i <= Config.九层妖塔数量4; i++)
-                                九层妖塔精英4 = ZenDemonTowerMonster(map, Config.九层妖塔精英4, new Point(1148, 280));
+                            for (var i = 0; i <= Settings.九层妖塔数量4; i++)
+                                九层妖塔精英4 = ZenDemonTowerMonster(map, Settings.九层妖塔精英4, new Point(1148, 280));
 
-                            for (var i = 0; i <= Config.九层妖塔数量5; i++)
-                                九层妖塔精英5 = ZenDemonTowerMonster(map, Config.九层妖塔精英5, new Point(1001, 427));
+                            for (var i = 0; i <= Settings.九层妖塔数量5; i++)
+                                九层妖塔精英5 = ZenDemonTowerMonster(map, Settings.九层妖塔精英5, new Point(1001, 427));
 
-                            for (var i = 0; i <= Config.九层妖塔数量6; i++)
-                                九层妖塔精英6 = ZenDemonTowerMonster(map, Config.九层妖塔精英6, new Point(853, 575));
+                            for (var i = 0; i <= Settings.九层妖塔数量6; i++)
+                                九层妖塔精英6 = ZenDemonTowerMonster(map, Settings.九层妖塔精英6, new Point(853, 575));
 
-                            for (var i = 0; i <= Config.九层妖塔数量7; i++)
-                                九层妖塔精英7 = ZenDemonTowerMonster(map, Config.九层妖塔精英7, new Point(1291, 423));
+                            for (var i = 0; i <= Settings.九层妖塔数量7; i++)
+                                九层妖塔精英7 = ZenDemonTowerMonster(map, Settings.九层妖塔精英7, new Point(1291, 423));
 
-                            for (var i = 0; i <= Config.九层妖塔数量8; i++)
-                                九层妖塔精英8 = ZenDemonTowerMonster(map, Config.九层妖塔精英8, new Point(1144, 570));
+                            for (var i = 0; i <= Settings.九层妖塔数量8; i++)
+                                九层妖塔精英8 = ZenDemonTowerMonster(map, Settings.九层妖塔精英8, new Point(1144, 570));
 
-                            for (var i = 0; i <= Config.九层妖塔数量9; i++)
-                                九层妖塔精英9 = ZenDemonTowerMonster(map, Config.九层妖塔精英9, new Point(996, 702));
+                            for (var i = 0; i <= Settings.九层妖塔数量9; i++)
+                                九层妖塔精英9 = ZenDemonTowerMonster(map, Settings.九层妖塔精英9, new Point(996, 702));
                         }
                         else
                         {
@@ -10929,11 +10929,11 @@ public sealed class PlayerObject : MapObject
                     }
                 case 612300000:
                     {
-                        int num4 = Config.九层妖塔数量2 + Config.九层妖塔数量3 + Config.九层妖塔数量4 + Config.九层妖塔数量5 + Config.九层妖塔数量6 + Config.九层妖塔数量7 + Config.九层妖塔数量8 + Config.九层妖塔数量9 + 16;
+                        int num4 = Settings.九层妖塔数量2 + Settings.九层妖塔数量3 + Settings.九层妖塔数量4 + Settings.九层妖塔数量5 + Settings.九层妖塔数量6 + Settings.九层妖塔数量7 + Settings.九层妖塔数量8 + Settings.九层妖塔数量9 + 16;
                         if (选项编号 == 1)
                         {
                             Map value4;
-                            if (CurrentMap.TotalSurvivingMonsters != num4 && Config.九层妖塔统计开关 == 1)
+                            if (CurrentMap.TotalSurvivingMonsters != num4 && Settings.九层妖塔统计开关 == 1)
                             {
                                 CurrentNPCDialoguePage = 612301000;
                                 Enqueue(new 同步交互结果
@@ -10952,11 +10952,11 @@ public sealed class PlayerObject : MapObject
                     }
                 case 618300000:
                     {
-                        int num30 = Config.九层妖塔数量3 + Config.九层妖塔数量4 + Config.九层妖塔数量5 + Config.九层妖塔数量6 + Config.九层妖塔数量7 + Config.九层妖塔数量8 + Config.九层妖塔数量9 + 14;
+                        int num30 = Settings.九层妖塔数量3 + Settings.九层妖塔数量4 + Settings.九层妖塔数量5 + Settings.九层妖塔数量6 + Settings.九层妖塔数量7 + Settings.九层妖塔数量8 + Settings.九层妖塔数量9 + 14;
                         if (选项编号 == 1)
                         {
                             Map value36;
-                            if (CurrentMap.TotalSurvivingMonsters != num30 && Config.九层妖塔统计开关 == 1)
+                            if (CurrentMap.TotalSurvivingMonsters != num30 && Settings.九层妖塔统计开关 == 1)
                             {
                                 CurrentNPCDialoguePage = 612301000;
                                 Enqueue(new 同步交互结果
@@ -10975,11 +10975,11 @@ public sealed class PlayerObject : MapObject
                     }
                 case 618400000:
                     {
-                        int num14 = Config.九层妖塔数量4 + Config.九层妖塔数量5 + Config.九层妖塔数量6 + Config.九层妖塔数量7 + Config.九层妖塔数量8 + Config.九层妖塔数量9 + 12;
+                        int num14 = Settings.九层妖塔数量4 + Settings.九层妖塔数量5 + Settings.九层妖塔数量6 + Settings.九层妖塔数量7 + Settings.九层妖塔数量8 + Settings.九层妖塔数量9 + 12;
                         if (选项编号 == 1)
                         {
                             Map value11;
-                            if (CurrentMap.TotalSurvivingMonsters != num14 && Config.九层妖塔统计开关 == 1)
+                            if (CurrentMap.TotalSurvivingMonsters != num14 && Settings.九层妖塔统计开关 == 1)
                             {
                                 CurrentNPCDialoguePage = 612301000;
                                 Enqueue(new 同步交互结果
@@ -10998,11 +10998,11 @@ public sealed class PlayerObject : MapObject
                     }
                 case 618500000:
                     {
-                        int num66 = Config.九层妖塔数量5 + Config.九层妖塔数量6 + Config.九层妖塔数量7 + Config.九层妖塔数量8 + Config.九层妖塔数量9 + 10;
+                        int num66 = Settings.九层妖塔数量5 + Settings.九层妖塔数量6 + Settings.九层妖塔数量7 + Settings.九层妖塔数量8 + Settings.九层妖塔数量9 + 10;
                         if (选项编号 == 1)
                         {
                             Map value57;
-                            if (CurrentMap.TotalSurvivingMonsters != num66 && Config.九层妖塔统计开关 == 1)
+                            if (CurrentMap.TotalSurvivingMonsters != num66 && Settings.九层妖塔统计开关 == 1)
                             {
                                 CurrentNPCDialoguePage = 612301000;
                                 Enqueue(new 同步交互结果
@@ -11021,11 +11021,11 @@ public sealed class PlayerObject : MapObject
                     }
                 case 624300000:
                     {
-                        int num31 = Config.九层妖塔数量6 + Config.九层妖塔数量7 + Config.九层妖塔数量8 + Config.九层妖塔数量9 + 8;
+                        int num31 = Settings.九层妖塔数量6 + Settings.九层妖塔数量7 + Settings.九层妖塔数量8 + Settings.九层妖塔数量9 + 8;
                         if (选项编号 == 1)
                         {
                             Map value37;
-                            if (CurrentMap.TotalSurvivingMonsters != num31 && Config.九层妖塔统计开关 == 1)
+                            if (CurrentMap.TotalSurvivingMonsters != num31 && Settings.九层妖塔统计开关 == 1)
                             {
                                 CurrentNPCDialoguePage = 612301000;
                                 Enqueue(new 同步交互结果
@@ -11044,11 +11044,11 @@ public sealed class PlayerObject : MapObject
                     }
                 case 624400000:
                     {
-                        int num18 = Config.九层妖塔数量7 + Config.九层妖塔数量8 + Config.九层妖塔数量9 + 6;
+                        int num18 = Settings.九层妖塔数量7 + Settings.九层妖塔数量8 + Settings.九层妖塔数量9 + 6;
                         if (选项编号 == 1)
                         {
                             Map value12;
-                            if (CurrentMap.TotalSurvivingMonsters != num18 && Config.九层妖塔统计开关 == 1)
+                            if (CurrentMap.TotalSurvivingMonsters != num18 && Settings.九层妖塔统计开关 == 1)
                             {
                                 CurrentNPCDialoguePage = 612301000;
                                 Enqueue(new 同步交互结果
@@ -11067,11 +11067,11 @@ public sealed class PlayerObject : MapObject
                     }
                 case 621500000:
                     {
-                        int num48 = Config.九层妖塔数量8 + Config.九层妖塔数量9 + 4;
+                        int num48 = Settings.九层妖塔数量8 + Settings.九层妖塔数量9 + 4;
                         if (选项编号 == 1)
                         {
                             Map value47;
-                            if (CurrentMap.TotalSurvivingMonsters != num48 && Config.九层妖塔统计开关 == 1)
+                            if (CurrentMap.TotalSurvivingMonsters != num48 && Settings.九层妖塔统计开关 == 1)
                             {
                                 CurrentNPCDialoguePage = 612301000;
                                 Enqueue(new 同步交互结果
@@ -11090,11 +11090,11 @@ public sealed class PlayerObject : MapObject
                     }
                 case 634200000:
                     {
-                        int num55 = Config.九层妖塔数量9 + 2;
+                        int num55 = Settings.九层妖塔数量9 + 2;
                         if (选项编号 == 1)
                         {
                             Map value54;
-                            if (CurrentMap.TotalSurvivingMonsters != num55 && Config.九层妖塔统计开关 == 1)
+                            if (CurrentMap.TotalSurvivingMonsters != num55 && Settings.九层妖塔统计开关 == 1)
                             {
                                 CurrentNPCDialoguePage = 612301000;
                                 Enqueue(new 同步交互结果
@@ -11122,17 +11122,17 @@ public sealed class PlayerObject : MapObject
                     {
                         break;
                     }
-                    if (SEngine.CurrentTime.Hour != Config.武斗场时间一 && SEngine.CurrentTime.Hour != Config.武斗场时间二)
+                    if (SEngine.CurrentTime.Hour != Settings.武斗场时间一 && SEngine.CurrentTime.Hour != Settings.武斗场时间二)
                     {
                         CurrentNPCDialoguePage = 479501000;
                         Enqueue(new 同步交互结果
                         {
                             ObjectID = CurrentNPC.ObjectID,
-                            Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{Config.武斗场时间一}><#P1:{Config.武斗场时间二}>")
+                            Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{Settings.武斗场时间一}><#P1:{Settings.武斗场时间二}>")
                         });
                         break;
                     }
-                    if (SEngine.CurrentTime.Hour == Character.武斗日期.V.Hour && Config.武斗场次数限制 == 1)
+                    if (SEngine.CurrentTime.Hour == Character.武斗日期.V.Hour && Settings.武斗场次数限制 == 1)
                     {
                         CurrentNPCDialoguePage = 479502000;
                         Enqueue(new 同步交互结果
@@ -11238,11 +11238,11 @@ public sealed class PlayerObject : MapObject
                         {
                             break;
                         }
-                        int 狂暴开启物品数量 = Config.狂暴开启物品数量;
-                        int 狂暴开启物品名称 = Config.狂暴开启物品名称;
-                        int 狂暴开启元宝数量 = Config.狂暴开启元宝数量;
-                        int 狂暴开启金币数量 = Config.狂暴开启金币数量;
-                        if (Titles.ContainsKey(Config.狂暴称号格式))
+                        int 狂暴开启物品数量 = Settings.狂暴开启物品数量;
+                        int 狂暴开启物品名称 = Settings.狂暴开启物品名称;
+                        int 狂暴开启元宝数量 = Settings.狂暴开启元宝数量;
+                        int 狂暴开启金币数量 = Settings.狂暴开启金币数量;
+                        if (Titles.ContainsKey(Settings.狂暴称号格式))
                         {
                             CurrentNPCDialoguePage = 699700002;
                             Enqueue(new 同步交互结果
@@ -11251,22 +11251,22 @@ public sealed class PlayerObject : MapObject
                                 Description = NpcDialog.GetBufferFromDialogID(CurrentNPCDialoguePage)
                             });
                         }
-                        else if (Config.狂暴货币格式 == 1)
+                        else if (Settings.狂暴货币格式 == 1)
                         {
-                            if (Ingot >= 狂暴开启元宝数量 && Config.称号叠加开关 == 1)
+                            if (Ingot >= 狂暴开启元宝数量 && Settings.称号叠加开关 == 1)
                             {
                                 Ingot -= 狂暴开启元宝数量;
-                                AddTitle(Config.狂暴称号格式);
-                                if (GameTitle.DataSheet.TryGetValue(Config.狂暴称号格式, out var value5))
+                                AddTitle(Settings.狂暴称号格式);
+                                if (GameTitle.DataSheet.TryGetValue(Settings.狂暴称号格式, out var value5))
                                 {
                                     CombatPowerBonus.Add(value5, value5.CombatPower);
                                     BonusStats.Add(value5, value5.Stats);
                                 }
                             }
-                            else if (Ingot >= 狂暴开启元宝数量 && Config.称号叠加开关 == 0)
+                            else if (Ingot >= 狂暴开启元宝数量 && Settings.称号叠加开关 == 0)
                             {
                                 Ingot -= 狂暴开启元宝数量;
-                                AddTitle(Config.狂暴称号格式);
+                                AddTitle(Settings.狂暴称号格式);
                             }
                             else
                             {
@@ -11278,30 +11278,30 @@ public sealed class PlayerObject : MapObject
                                 });
                             }
                         }
-                        else if (Config.狂暴货币格式 == 0)
+                        else if (Settings.狂暴货币格式 == 0)
                         {
-                            if (Gold >= 狂暴开启金币数量 && Config.称号叠加开关 == 1)
+                            if (Gold >= 狂暴开启金币数量 && Settings.称号叠加开关 == 1)
                             {
                                 Gold -= 狂暴开启金币数量;
                                 Enqueue(new 同步货币数量
                                 {
                                     Description = 全部货币描述()
                                 });
-                                AddTitle(Config.狂暴称号格式);
-                                if (GameTitle.DataSheet.TryGetValue(Config.狂暴称号格式, out var value6))
+                                AddTitle(Settings.狂暴称号格式);
+                                if (GameTitle.DataSheet.TryGetValue(Settings.狂暴称号格式, out var value6))
                                 {
                                     CombatPowerBonus.Add(value6, value6.CombatPower);
                                     BonusStats.Add(value6, value6.Stats);
                                 }
                             }
-                            else if (Gold >= 狂暴开启金币数量 && Config.称号叠加开关 == 0)
+                            else if (Gold >= 狂暴开启金币数量 && Settings.称号叠加开关 == 0)
                             {
                                 Gold -= 狂暴开启金币数量;
                                 Enqueue(new 同步货币数量
                                 {
                                     Description = 全部货币描述()
                                 });
-                                AddTitle(Config.狂暴称号格式);
+                                AddTitle(Settings.狂暴称号格式);
                             }
                             else
                             {
@@ -11313,23 +11313,23 @@ public sealed class PlayerObject : MapObject
                                 });
                             }
                         }
-                        else if (Config.狂暴货币格式 == 2)
+                        else if (Settings.狂暴货币格式 == 2)
                         {
                             List<ItemInfo> 物品列表8;
-                            if (FindItem(狂暴开启物品数量, 狂暴开启物品名称, out var 物品列表7) && Config.称号叠加开关 == 1)
+                            if (FindItem(狂暴开启物品数量, 狂暴开启物品名称, out var 物品列表7) && Settings.称号叠加开关 == 1)
                             {
                                 ConsumeItem(狂暴开启物品数量, 物品列表7);
-                                AddTitle(Config.狂暴称号格式);
-                                if (GameTitle.DataSheet.TryGetValue(Config.狂暴称号格式, out var value7))
+                                AddTitle(Settings.狂暴称号格式);
+                                if (GameTitle.DataSheet.TryGetValue(Settings.狂暴称号格式, out var value7))
                                 {
                                     CombatPowerBonus.Add(value7, value7.CombatPower);
                                     BonusStats.Add(value7, value7.Stats);
                                 }
                             }
-                            else if (FindItem(狂暴开启物品数量, 狂暴开启物品名称, out 物品列表8) && Config.称号叠加开关 == 0)
+                            else if (FindItem(狂暴开启物品数量, 狂暴开启物品名称, out 物品列表8) && Settings.称号叠加开关 == 0)
                             {
                                 ConsumeItem(狂暴开启物品数量, 物品列表8);
-                                AddTitle(Config.狂暴称号格式);
+                                AddTitle(Settings.狂暴称号格式);
                             }
                             else
                             {
@@ -11364,7 +11364,7 @@ public sealed class PlayerObject : MapObject
                         if (FindItem(31031, out var 物品9) || FindItem(31032, out 物品9) || FindItem(31033, out 物品9) || FindItem(31034, out 物品9) || FindItem(31035, out 物品9) || FindItem(31036, out 物品9) || FindItem(31037, out 物品9) || FindItem(31038, out 物品9) || FindItem(31042, out 物品9) || FindItem(31043, out 物品9) || FindItem(31044, out 物品9) || FindItem(31045, out 物品9) || FindItem(31046, out 物品9) || FindItem(32531, out 物品9) || FindItem(32532, out 物品9) || FindItem(32533, out 物品9) || FindItem(32534, out 物品9) || FindItem(32535, out 物品9) || FindItem(32536, out 物品9) || FindItem(32537, out 物品9) || FindItem(32538, out 物品9) || FindItem(32539, out 物品9) || FindItem(32540, out 物品9) || FindItem(32541, out 物品9) || FindItem(32544, out 物品9) || FindItem(32545, out 物品9) || FindItem(32546, out 物品9) || FindItem(32547, out 物品9) || FindItem(32548, out 物品9) || FindItem(32549, out 物品9) || FindItem(32550, out 物品9) || FindItem(32551, out 物品9) || FindItem(32552, out 物品9) || FindItem(32553, out 物品9) || FindItem(32554, out 物品9) || FindItem(33001, out 物品9) || FindItem(33002, out 物品9) || FindItem(33003, out 物品9) || FindItem(33004, out 物品9) || FindItem(33005, out 物品9) || FindItem(33006, out 物品9) || FindItem(33007, out 物品9) || FindItem(33008, out 物品9) || FindItem(33009, out 物品9) || FindItem(33010, out 物品9) || FindItem(33011, out 物品9) || FindItem(33012, out 物品9) || FindItem(33014, out 物品9) || FindItem(33015, out 物品9) || FindItem(33016, out 物品9) || FindItem(33017, out 物品9) || FindItem(33018, out 物品9) || FindItem(33019, out 物品9) || FindItem(33020, out 物品9) || FindItem(34001, out 物品9) || FindItem(34002, out 物品9) || FindItem(34003, out 物品9) || FindItem(34004, out 物品9) || FindItem(34005, out 物品9) || FindItem(34006, out 物品9) || FindItem(34007, out 物品9) || FindItem(34008, out 物品9) || FindItem(34009, out 物品9) || FindItem(34010, out 物品9) || FindItem(34011, out 物品9) || FindItem(34012, out 物品9) || FindItem(34013, out 物品9) || FindItem(34014, out 物品9) || FindItem(34015, out 物品9) || FindItem(35001, out 物品9) || FindItem(35002, out 物品9) || FindItem(35003, out 物品9) || FindItem(35004, out 物品9) || FindItem(35005, out 物品9) || FindItem(35006, out 物品9) || FindItem(35007, out 物品9) || FindItem(35008, out 物品9) || FindItem(35009, out 物品9) || FindItem(35010, out 物品9) || FindItem(35011, out 物品9) || FindItem(35012, out 物品9) || FindItem(35013, out 物品9) || FindItem(35014, out 物品9) || FindItem(35015, out 物品9) || FindItem(36001, out 物品9) || FindItem(36002, out 物品9) || FindItem(36003, out 物品9) || FindItem(36004, out 物品9) || FindItem(36005, out 物品9) || FindItem(36006, out 物品9) || FindItem(36007, out 物品9) || FindItem(36008, out 物品9) || FindItem(36009, out 物品9) || FindItem(36010, out 物品9) || FindItem(36011, out 物品9) || FindItem(36012, out 物品9) || FindItem(36013, out 物品9) || FindItem(36014, out 物品9) || FindItem(36015, out 物品9))
                         {
                             GameItem.DataSheetByName.TryGetValue($"{物品9}", out value55);
-                            if (value55.书页分解 > 0 && GameItem.DataSheetByName.TryGetValue(Config.书店商贩物品, out value56))
+                            if (value55.书页分解 > 0 && GameItem.DataSheetByName.TryGetValue(Settings.书店商贩物品, out value56))
                             {
                                 Character.Inventory[b36] = new ItemInfo(value56, Character, 1, b36, 1);
                                 Character.Inventory[b36].Dura.V = value55.书页分解;
@@ -11419,7 +11419,7 @@ public sealed class PlayerObject : MapObject
                             });
                             break;
                         }
-                        if (!FindItem(Config.雕爷使用物品, out var 物品8))
+                        if (!FindItem(Settings.雕爷使用物品, out var 物品8))
                         {
                             Enqueue(new GameErrorMessagePacket
                             {
@@ -11427,7 +11427,7 @@ public sealed class PlayerObject : MapObject
                             });
                             break;
                         }
-                        if (Gold < Config.雕爷使用金币)
+                        if (Gold < Settings.雕爷使用金币)
                         {
                             Enqueue(new GameErrorMessagePacket
                             {
@@ -11435,7 +11435,7 @@ public sealed class PlayerObject : MapObject
                             });
                             break;
                         }
-                        Gold -= Config.雕爷使用金币;
+                        Gold -= Settings.雕爷使用金币;
                         Enqueue(new 同步货币数量
                         {
                             Description = 全部货币描述()
@@ -11542,34 +11542,34 @@ public sealed class PlayerObject : MapObject
                             default:
                                 return;
                             case 1:
-                                物品编号2 = Config.猎魔暗使材料一;
-                                b4 = Config.猎魔暗使称号一;
-                                num22 = Config.猎魔暗使数量一;
+                                物品编号2 = Settings.猎魔暗使材料一;
+                                b4 = Settings.猎魔暗使称号一;
+                                num22 = Settings.猎魔暗使数量一;
                                 break;
                             case 2:
-                                物品编号2 = Config.猎魔暗使材料二;
-                                b4 = Config.猎魔暗使称号二;
-                                num22 = Config.猎魔暗使数量二;
+                                物品编号2 = Settings.猎魔暗使材料二;
+                                b4 = Settings.猎魔暗使称号二;
+                                num22 = Settings.猎魔暗使数量二;
                                 break;
                             case 3:
-                                物品编号2 = Config.猎魔暗使材料三;
-                                b4 = Config.猎魔暗使称号三;
-                                num22 = Config.猎魔暗使数量三;
+                                物品编号2 = Settings.猎魔暗使材料三;
+                                b4 = Settings.猎魔暗使称号三;
+                                num22 = Settings.猎魔暗使数量三;
                                 break;
                             case 4:
-                                物品编号2 = Config.猎魔暗使材料四;
-                                b4 = Config.猎魔暗使称号四;
-                                num22 = Config.猎魔暗使数量四;
+                                物品编号2 = Settings.猎魔暗使材料四;
+                                b4 = Settings.猎魔暗使称号四;
+                                num22 = Settings.猎魔暗使数量四;
                                 break;
                             case 5:
-                                物品编号2 = Config.猎魔暗使材料五;
-                                b4 = Config.猎魔暗使称号五;
-                                num22 = Config.猎魔暗使数量五;
+                                物品编号2 = Settings.猎魔暗使材料五;
+                                b4 = Settings.猎魔暗使称号五;
+                                num22 = Settings.猎魔暗使数量五;
                                 break;
                             case 6:
-                                物品编号2 = Config.猎魔暗使材料六;
-                                b4 = Config.猎魔暗使称号六;
-                                num22 = Config.猎魔暗使数量六;
+                                物品编号2 = Settings.猎魔暗使材料六;
+                                b4 = Settings.猎魔暗使称号六;
+                                num22 = Settings.猎魔暗使数量六;
                                 break;
                         }
                         List<ItemInfo> 物品列表14;
@@ -11609,8 +11609,8 @@ public sealed class PlayerObject : MapObject
                     if (选项编号 == 1)
                     {
                         int num69 = 223;
-                        int 幽冥海副本价格 = Config.幽冥海副本价格;
-                        int 幽冥海副本等级 = Config.幽冥海副本等级;
+                        int 幽冥海副本价格 = Settings.幽冥海副本价格;
+                        int 幽冥海副本等级 = Settings.幽冥海副本等级;
                         if (CurrentLevel < 幽冥海副本等级)
                         {
                             CurrentNPCDialoguePage = 611400001;
@@ -11809,7 +11809,7 @@ public sealed class PlayerObject : MapObject
                             Description = 全部货币描述()
                         });
                         v7.RandomStats.SetValue(EquipmentStats.生成属性(v7.Type, 重铸装备: true));
-                        if (Character.幸运项链保底.V >= Config.幸运洗练次数保底 && 重铸部位 == 8 && Config.CurrentVersion >= 1 && Config.幸运保底开关)
+                        if (Character.幸运项链保底.V >= Settings.幸运洗练次数保底 && 重铸部位 == 8 && Settings.CurrentVersion >= 1 && Settings.幸运保底开关)
                         {
                             Character.幸运项链保底.V = 0;
                             v7.RandomStats.SetValue(EquipmentStats.生成属性1(v7.Type, 重铸装备: true));
@@ -11826,7 +11826,7 @@ public sealed class PlayerObject : MapObject
                             ObjectID = CurrentNPC.ObjectID,
                             Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, "<#P1:" + v7.StatDescription + ">")
                         });
-                        if (重铸部位 == 8 && Config.CurrentVersion >= 1 && Config.幸运保底开关)
+                        if (重铸部位 == 8 && Settings.CurrentVersion >= 1 && Settings.幸运保底开关)
                         {
                             Character.幸运项链保底.V++;
                         }
@@ -13093,7 +13093,7 @@ public sealed class PlayerObject : MapObject
                 case 625200000:
                     if (选项编号 == 1)
                     {
-                        if (Character.屠魔令回收数量.V >= Config.屠魔令回收数量)
+                        if (Character.屠魔令回收数量.V >= Settings.屠魔令回收数量)
                         {
                             CurrentNPCDialoguePage = 625200001;
                             Enqueue(new 同步交互结果
@@ -13102,10 +13102,10 @@ public sealed class PlayerObject : MapObject
                                 ObjectID = CurrentNPC.ObjectID
                             });
                         }
-                        if (FindItem(1, 91127, out var 物品列表22) && Character.屠魔令回收数量.V <= Config.屠魔令回收数量)
+                        if (FindItem(1, 91127, out var 物品列表22) && Character.屠魔令回收数量.V <= Settings.屠魔令回收数量)
                         {
                             ConsumeItem(1, 物品列表22);
-                            GainExperience(null, Math.Max(Config.屠魔令回收经验, Config.屠魔令回收经验));
+                            GainExperience(null, Math.Max(Settings.屠魔令回收经验, Settings.屠魔令回收经验));
                             Character.屠魔令回收数量.V++;
                         }
                         else
@@ -13126,7 +13126,7 @@ public sealed class PlayerObject : MapObject
                             break;
                         }
                         int 扣除金币 = 100000;
-                        int 需要等级 = Config.屠魔殿等级限制;
+                        int 需要等级 = Settings.屠魔殿等级限制;
                         MapObject value3;
                         if (Team == null)
                         {
@@ -13146,12 +13146,12 @@ public sealed class PlayerObject : MapObject
                                 ObjectID = CurrentNPC.ObjectID
                             });
                         }
-                        else if (Team.Members.Count < Config.屠魔组队人数)
+                        else if (Team.Members.Count < Settings.屠魔组队人数)
                         {
                             CurrentNPCDialoguePage = 624207000;
                             Enqueue(new 同步交互结果
                             {
-                                Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{Config.屠魔组队人数}><#P1:0>"),
+                                Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{Settings.屠魔组队人数}><#P1:0>"),
                                 ObjectID = CurrentNPC.ObjectID
                             });
                         }
@@ -13173,12 +13173,12 @@ public sealed class PlayerObject : MapObject
                                 ObjectID = CurrentNPC.ObjectID
                             });
                         }
-                        else if (Team.Members.FirstOrDefault((CharacterInfo O) => O.屠魔次数.V >= Config.屠魔副本次数) != null)
+                        else if (Team.Members.FirstOrDefault((CharacterInfo O) => O.屠魔次数.V >= Settings.屠魔副本次数) != null)
                         {
                             CurrentNPCDialoguePage = 624209000;
                             Enqueue(new 同步交互结果
                             {
-                                Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{Config.屠魔副本次数}><#P1:0>"),
+                                Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{Settings.屠魔副本次数}><#P1:0>"),
                                 ObjectID = CurrentNPC.ObjectID
                             });
                         }
@@ -13307,15 +13307,15 @@ public sealed class PlayerObject : MapObject
                         }
                         if (!(Character.领奖日期.V.Date == SEngine.CurrentTime.Date))
                         {
-                            if (Config.沙巴克称号领取开关 == 1)
+                            if (Settings.沙巴克称号领取开关 == 1)
                             {
-                                if (Config.CurrentVersion >= 2 && Guild != null && Guild == SystemInfo.Info.OccupyGuild.V && Guild.Members[Character] == GuildRank.President)
+                                if (Settings.CurrentVersion >= 2 && Guild != null && Guild == SystemInfo.Info.OccupyGuild.V && Guild.Members[Character] == GuildRank.President)
                                 {
-                                    AddTitle(Config.沙巴克城主称号);
+                                    AddTitle(Settings.沙巴克城主称号);
                                 }
-                                else if (Config.CurrentVersion >= 2 && Guild != null && SystemInfo.Info.OccupyGuild.V == Guild)
+                                else if (Settings.CurrentVersion >= 2 && Guild != null && SystemInfo.Info.OccupyGuild.V == Guild)
                                 {
-                                    AddTitle(Config.沙巴克成员称号);
+                                    AddTitle(Settings.沙巴克成员称号);
                                 }
                             }
                             byte b2 = byte.MaxValue;
@@ -13433,8 +13433,8 @@ public sealed class PlayerObject : MapObject
                     if (选项编号 == 1)
                     {
                         int num58 = 87;
-                        int 未知暗点副本价格 = Config.未知暗点副本价格;
-                        int 未知暗点副本等级 = Config.未知暗点副本等级;
+                        int 未知暗点副本价格 = Settings.未知暗点副本价格;
+                        int 未知暗点副本等级 = Settings.未知暗点副本等级;
                         if (CurrentLevel < 未知暗点副本等级)
                         {
                             CurrentNPCDialoguePage = 636100001;
@@ -13468,8 +13468,8 @@ public sealed class PlayerObject : MapObject
                     if (选项编号 == 1)
                     {
                         int num44 = 88;
-                        int 未知暗点二层价格 = Config.未知暗点二层价格;
-                        int 未知暗点二层等级 = Config.未知暗点二层等级;
+                        int 未知暗点二层价格 = Settings.未知暗点二层价格;
+                        int 未知暗点二层等级 = Settings.未知暗点二层等级;
                         if (CurrentLevel < 未知暗点二层等级)
                         {
                             CurrentNPCDialoguePage = 635900001;
@@ -13650,7 +13650,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     ObjectID = CurrentNPC.ObjectID,
-                                    Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{(int)(Character.取回时间.V - SEngine.CurrentTime).TotalMinutes + Config.武器强化取回时间}><#P1:0>")
+                                    Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{(int)(Character.取回时间.V - SEngine.CurrentTime).TotalMinutes + Settings.武器强化取回时间}><#P1:0>")
                                 });
                             }
                             else if (RemainingInventorySpace <= 0)
@@ -13691,7 +13691,7 @@ public sealed class PlayerObject : MapObject
                                     Description = NpcDialog.GetBufferFromDialogID(CurrentNPCDialoguePage)
                                 });
                             }
-                            else if (Gold < Config.武器强化消耗货币值 && Config.武器强化消耗货币开关 == 0)
+                            else if (Gold < Settings.武器强化消耗货币值 && Settings.武器强化消耗货币开关 == 0)
                             {
                                 CurrentNPCDialoguePage = 670506000;
                                 Enqueue(new 同步交互结果
@@ -13700,7 +13700,7 @@ public sealed class PlayerObject : MapObject
                                     Description = NpcDialog.GetBufferFromDialogID(CurrentNPCDialoguePage)
                                 });
                             }
-                            else if (Ingot < Config.武器强化消耗货币值 && Config.武器强化消耗货币开关 == 1)
+                            else if (Ingot < Settings.武器强化消耗货币值 && Settings.武器强化消耗货币开关 == 1)
                             {
                                 CurrentNPCDialoguePage = 670506000;
                                 Enqueue(new 同步交互结果
@@ -13718,7 +13718,7 @@ public sealed class PlayerObject : MapObject
                                     Description = NpcDialog.GetBufferFromDialogID(CurrentNPCDialoguePage)
                                 });
                             }
-                            else if (玩家取回装备(Config.武器强化消耗货币值))
+                            else if (玩家取回装备(Settings.武器强化消耗货币值))
                             {
                                 CurrentNPCDialoguePage = 670507000;
                                 Enqueue(new 同步交互结果
@@ -13771,8 +13771,8 @@ public sealed class PlayerObject : MapObject
                             break;
                         }
                         int num19 = 152;
-                        int 沙城快捷货币一 = Config.沙城快捷货币一;
-                        int 沙城快捷等级一 = Config.沙城快捷等级一;
+                        int 沙城快捷货币一 = Settings.沙城快捷货币一;
+                        int 沙城快捷等级一 = Settings.沙城快捷等级一;
                         if (CurrentLevel < 沙城快捷等级一)
                         {
                             CurrentNPCDialoguePage = 711900001;
@@ -13782,7 +13782,7 @@ public sealed class PlayerObject : MapObject
                                 ObjectID = CurrentNPC.ObjectID
                             });
                         }
-                        else if (Config.沙城传送货币开关 == 0)
+                        else if (Settings.沙城传送货币开关 == 0)
                         {
                             if (Gold >= 沙城快捷货币一)
                             {
@@ -13794,7 +13794,7 @@ public sealed class PlayerObject : MapObject
                                 });
                             }
                         }
-                        else if (Config.沙城传送货币开关 == 1)
+                        else if (Settings.沙城传送货币开关 == 1)
                         {
                             if (Ingot >= 沙城快捷货币一)
                             {
@@ -13824,8 +13824,8 @@ public sealed class PlayerObject : MapObject
                             break;
                         }
                         int num99 = 152;
-                        int 沙城快捷货币二 = Config.沙城快捷货币二;
-                        int 沙城快捷等级二 = Config.沙城快捷等级二;
+                        int 沙城快捷货币二 = Settings.沙城快捷货币二;
+                        int 沙城快捷等级二 = Settings.沙城快捷等级二;
                         if (CurrentLevel < 沙城快捷等级二)
                         {
                             CurrentNPCDialoguePage = 711900001;
@@ -13835,7 +13835,7 @@ public sealed class PlayerObject : MapObject
                                 ObjectID = CurrentNPC.ObjectID
                             });
                         }
-                        else if (Config.沙城传送货币开关 == 0)
+                        else if (Settings.沙城传送货币开关 == 0)
                         {
                             if (Gold >= 沙城快捷货币二)
                             {
@@ -13847,7 +13847,7 @@ public sealed class PlayerObject : MapObject
                                 });
                             }
                         }
-                        else if (Config.沙城传送货币开关 == 1)
+                        else if (Settings.沙城传送货币开关 == 1)
                         {
                             if (Ingot >= 沙城快捷货币二)
                             {
@@ -13877,8 +13877,8 @@ public sealed class PlayerObject : MapObject
                             break;
                         }
                         int num51 = 152;
-                        int 沙城快捷货币三 = Config.沙城快捷货币三;
-                        int 沙城快捷等级三 = Config.沙城快捷等级三;
+                        int 沙城快捷货币三 = Settings.沙城快捷货币三;
+                        int 沙城快捷等级三 = Settings.沙城快捷等级三;
                         if (CurrentLevel < 沙城快捷等级三)
                         {
                             CurrentNPCDialoguePage = 711900001;
@@ -13888,7 +13888,7 @@ public sealed class PlayerObject : MapObject
                                 ObjectID = CurrentNPC.ObjectID
                             });
                         }
-                        else if (Config.沙城传送货币开关 == 0)
+                        else if (Settings.沙城传送货币开关 == 0)
                         {
                             if (Gold >= 沙城快捷货币三)
                             {
@@ -13900,7 +13900,7 @@ public sealed class PlayerObject : MapObject
                                 });
                             }
                         }
-                        else if (Config.沙城传送货币开关 == 1)
+                        else if (Settings.沙城传送货币开关 == 1)
                         {
                             if (Ingot >= 沙城快捷货币三)
                             {
@@ -13930,8 +13930,8 @@ public sealed class PlayerObject : MapObject
                             break;
                         }
                         int num32 = 152;
-                        int 沙城快捷货币四 = Config.沙城快捷货币四;
-                        int 沙城快捷等级四 = Config.沙城快捷等级四;
+                        int 沙城快捷货币四 = Settings.沙城快捷货币四;
+                        int 沙城快捷等级四 = Settings.沙城快捷等级四;
                         if (CurrentLevel < 沙城快捷等级四)
                         {
                             CurrentNPCDialoguePage = 711900001;
@@ -13941,7 +13941,7 @@ public sealed class PlayerObject : MapObject
                                 ObjectID = CurrentNPC.ObjectID
                             });
                         }
-                        else if (Config.沙城传送货币开关 == 0)
+                        else if (Settings.沙城传送货币开关 == 0)
                         {
                             if (Gold >= 沙城快捷货币四)
                             {
@@ -13953,7 +13953,7 @@ public sealed class PlayerObject : MapObject
                                 });
                             }
                         }
-                        else if (Config.沙城传送货币开关 == 1)
+                        else if (Settings.沙城传送货币开关 == 1)
                         {
                             if (Ingot >= 沙城快捷货币四)
                             {
@@ -14007,29 +14007,29 @@ public sealed class PlayerObject : MapObject
                     });
                     break;
                 case 711906000:
-                    if (Config.CurrentVersion < 3 || 选项编号 != 1)
+                    if (Settings.CurrentVersion < 3 || 选项编号 != 1)
                     {
                         break;
                     }
-                    if (Ingot < Config.秘宝广场元宝)
+                    if (Ingot < Settings.秘宝广场元宝)
                     {
                         CurrentNPCDialoguePage = 711900003;
                         Enqueue(new 同步交互结果
                         {
                             ObjectID = CurrentNPC.ObjectID,
-                            Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{Config.秘宝广场元宝 / 10}>")
+                            Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{Settings.秘宝广场元宝 / 10}>")
                         });
                     }
-                    if (SEngine.CurrentTime.Hour == Config.WorldBossTimeHour && Ingot >= Config.秘宝广场元宝)
+                    if (SEngine.CurrentTime.Hour == Settings.WorldBossTimeHour && Ingot >= Settings.秘宝广场元宝)
                     {
-                        Ingot -= Config.秘宝广场元宝;
+                        Ingot -= Settings.秘宝广场元宝;
                         Teleport((CurrentMap.MapID == 74) ? CurrentMap : MapManager.GetMap(74), AreaType.Teleportation);
                     }
-                    if (SEngine.CurrentTime.Hour + 1 == Config.WorldBossTimeHour)
+                    if (SEngine.CurrentTime.Hour + 1 == Settings.WorldBossTimeHour)
                     {
-                        if (Ingot >= Config.秘宝广场元宝)
+                        if (Ingot >= Settings.秘宝广场元宝)
                         {
-                            Ingot -= Config.秘宝广场元宝;
+                            Ingot -= Settings.秘宝广场元宝;
                             Teleport((CurrentMap.MapID == 74) ? CurrentMap : MapManager.GetMap(74), AreaType.Teleportation);
                         }
                     }
@@ -14039,7 +14039,7 @@ public sealed class PlayerObject : MapObject
                         Enqueue(new 同步交互结果
                         {
                             ObjectID = CurrentNPC.ObjectID,
-                            Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{Config.WorldBossTimeHour}>")
+                            Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{Settings.WorldBossTimeHour}>")
                         });
                     }
                     break;
@@ -14053,34 +14053,34 @@ public sealed class PlayerObject : MapObject
                             default:
                                 return;
                             case 1:
-                                num63 = Config.快捷传送一等级2;
-                                num64 = Config.快捷传送一货币2;
-                                num65 = Config.快捷传送一编号2;
+                                num63 = Settings.快捷传送一等级2;
+                                num64 = Settings.快捷传送一货币2;
+                                num65 = Settings.快捷传送一编号2;
                                 break;
                             case 2:
-                                num63 = Config.快捷传送二等级2;
-                                num64 = Config.快捷传送二货币2;
-                                num65 = Config.快捷传送二编号2;
+                                num63 = Settings.快捷传送二等级2;
+                                num64 = Settings.快捷传送二货币2;
+                                num65 = Settings.快捷传送二编号2;
                                 break;
                             case 3:
-                                num63 = Config.快捷传送三等级2;
-                                num64 = Config.快捷传送三货币2;
-                                num65 = Config.快捷传送三编号2;
+                                num63 = Settings.快捷传送三等级2;
+                                num64 = Settings.快捷传送三货币2;
+                                num65 = Settings.快捷传送三编号2;
                                 break;
                             case 4:
-                                num63 = Config.快捷传送四等级2;
-                                num64 = Config.快捷传送四货币2;
-                                num65 = Config.快捷传送四编号2;
+                                num63 = Settings.快捷传送四等级2;
+                                num64 = Settings.快捷传送四货币2;
+                                num65 = Settings.快捷传送四编号2;
                                 break;
                             case 5:
-                                num63 = Config.快捷传送五等级2;
-                                num64 = Config.快捷传送五货币2;
-                                num65 = Config.快捷传送五编号2;
+                                num63 = Settings.快捷传送五等级2;
+                                num64 = Settings.快捷传送五货币2;
+                                num65 = Settings.快捷传送五编号2;
                                 break;
                             case 6:
-                                num63 = Config.快捷传送六等级2;
-                                num64 = Config.快捷传送六货币2;
-                                num65 = Config.快捷传送六编号2;
+                                num63 = Settings.快捷传送六等级2;
+                                num64 = Settings.快捷传送六货币2;
+                                num65 = Settings.快捷传送六编号2;
                                 break;
                         }
                         if (CurrentLevel < num63)
@@ -14092,7 +14092,7 @@ public sealed class PlayerObject : MapObject
                                 ObjectID = CurrentNPC.ObjectID
                             });
                         }
-                        else if (Config.元宝金币传送设定2 == 0)
+                        else if (Settings.元宝金币传送设定2 == 0)
                         {
                             if (Gold >= num64)
                             {
@@ -14104,7 +14104,7 @@ public sealed class PlayerObject : MapObject
                                 });
                             }
                         }
-                        else if (Config.元宝金币传送设定2 == 1)
+                        else if (Settings.元宝金币传送设定2 == 1)
                         {
                             if (Ingot >= num64)
                             {
@@ -14137,29 +14137,29 @@ public sealed class PlayerObject : MapObject
                             default:
                                 return;
                             case 1:
-                                num41 = Config.快捷传送一等级;
-                                num42 = Config.快捷传送一货币;
-                                num43 = Config.快捷传送一编号;
+                                num41 = Settings.快捷传送一等级;
+                                num42 = Settings.快捷传送一货币;
+                                num43 = Settings.快捷传送一编号;
                                 break;
                             case 2:
-                                num41 = Config.快捷传送二等级;
-                                num42 = Config.快捷传送二货币;
-                                num43 = Config.快捷传送二编号;
+                                num41 = Settings.快捷传送二等级;
+                                num42 = Settings.快捷传送二货币;
+                                num43 = Settings.快捷传送二编号;
                                 break;
                             case 3:
-                                num41 = Config.快捷传送三等级;
-                                num42 = Config.快捷传送三货币;
-                                num43 = Config.快捷传送三编号;
+                                num41 = Settings.快捷传送三等级;
+                                num42 = Settings.快捷传送三货币;
+                                num43 = Settings.快捷传送三编号;
                                 break;
                             case 4:
-                                num41 = Config.快捷传送四等级;
-                                num42 = Config.快捷传送四货币;
-                                num43 = Config.快捷传送四编号;
+                                num41 = Settings.快捷传送四等级;
+                                num42 = Settings.快捷传送四货币;
+                                num43 = Settings.快捷传送四编号;
                                 break;
                             case 5:
-                                num41 = Config.快捷传送五等级;
-                                num42 = Config.快捷传送五货币;
-                                num43 = Config.快捷传送五编号;
+                                num41 = Settings.快捷传送五等级;
+                                num42 = Settings.快捷传送五货币;
+                                num43 = Settings.快捷传送五编号;
                                 break;
                         }
                         if (CurrentLevel < num41)
@@ -14171,7 +14171,7 @@ public sealed class PlayerObject : MapObject
                                 ObjectID = CurrentNPC.ObjectID
                             });
                         }
-                        else if (Config.元宝金币传送设定 == 0)
+                        else if (Settings.元宝金币传送设定 == 0)
                         {
                             if (Gold >= num42)
                             {
@@ -14183,7 +14183,7 @@ public sealed class PlayerObject : MapObject
                                 });
                             }
                         }
-                        else if (Config.元宝金币传送设定 == 1)
+                        else if (Settings.元宝金币传送设定 == 1)
                         {
                             if (Ingot >= num42)
                             {
@@ -14490,7 +14490,7 @@ public sealed class PlayerObject : MapObject
         switch (背包类型)
         {
             case 7:
-                if (Config.资源包开关 == 1)
+                if (Settings.资源包开关 == 1)
                 {
                     int num5 = 10000;
                     int num6 = 扩展大小 * num5;
@@ -15026,11 +15026,11 @@ public sealed class PlayerObject : MapObject
                 Description = Inventory[(byte)num3].ToArray()
             });
         }
-        if (Config.CurrentVersion >= 1 && Config.珍宝阁提示开关 == 1)
+        if (Settings.CurrentVersion >= 1 && Settings.珍宝阁提示开关 == 1)
         {
             SEngine.AddSystemLog($"[{Name}][{CurrentLevel}级] 购买了 [{value2.Name}] * {num}, 消耗元宝[{num2}]");
         }
-        if (Config.CurrentVersion == 0)
+        if (Settings.CurrentVersion == 0)
         {
             SEngine.AddSystemLog($"[{Name}][{CurrentLevel}级] 购买了 [{value2.Name}] * {num}, 消耗元宝[{num2}]");
         }
@@ -15041,7 +15041,7 @@ public sealed class PlayerObject : MapObject
         switch (礼包编号)
         {
             case 1:
-                if (Ingot < Config.每周特惠礼包一元宝)
+                if (Ingot < Settings.每周特惠礼包一元宝)
                 {
                     Enqueue(new GameErrorMessagePacket
                     {
@@ -15064,7 +15064,7 @@ public sealed class PlayerObject : MapObject
                 }
                 else
                 {
-                    if (!GameItem.DataSheet.TryGetValue(Config.每周特惠一物品3, out var value) || !GameItem.DataSheet.TryGetValue(Config.每周特惠一物品4, out var value2) || !GameItem.DataSheet.TryGetValue(Config.每周特惠一物品5, out var value3))
+                    if (!GameItem.DataSheet.TryGetValue(Settings.每周特惠一物品3, out var value) || !GameItem.DataSheet.TryGetValue(Settings.每周特惠一物品4, out var value2) || !GameItem.DataSheet.TryGetValue(Settings.每周特惠一物品5, out var value3))
                     {
                         break;
                     }
@@ -15101,14 +15101,14 @@ public sealed class PlayerObject : MapObject
                         });
                         break;
                     }
-                    Ingot -= Config.每周特惠礼包一元宝;
-                    Gold += Config.每周特惠一物品1;
-                    ExperienceRate += Config.每周特惠一物品2;
+                    Ingot -= Settings.每周特惠礼包一元宝;
+                    Gold += Settings.每周特惠一物品1;
+                    ExperienceRate += Settings.每周特惠一物品2;
                     Enqueue(new 同步货币数量
                     {
                         Description = 全部货币描述()
                     });
-                    Character.消耗元宝.V += Config.每周特惠礼包一元宝;
+                    Character.消耗元宝.V += Settings.每周特惠礼包一元宝;
                     Inventory[b] = new ItemInfo(value, Character, 1, b, 1);
                     Enqueue(new SyncItemPacket
                     {
@@ -15132,11 +15132,11 @@ public sealed class PlayerObject : MapObject
                         变量索引 = 112,
                         变量内容 = Compute.TimeSeconds(SEngine.CurrentTime)
                     });
-                    SEngine.AddSystemLog($"[{Name}][{CurrentLevel}级] 购买了 [每周补给礼包], 消耗元宝[{Config.每周特惠礼包一元宝 / 100}]");
+                    SEngine.AddSystemLog($"[{Name}][{CurrentLevel}级] 购买了 [每周补给礼包], 消耗元宝[{Settings.每周特惠礼包一元宝 / 100}]");
                 }
                 break;
             case 2:
-                if (Ingot < Config.每周特惠礼包二元宝)
+                if (Ingot < Settings.每周特惠礼包二元宝)
                 {
                     Enqueue(new GameErrorMessagePacket
                     {
@@ -15152,7 +15152,7 @@ public sealed class PlayerObject : MapObject
                 }
                 else
                 {
-                    if (!GameItem.DataSheet.TryGetValue(Config.每周特惠二物品3, out var value4) || !GameItem.DataSheet.TryGetValue(Config.每周特惠二物品4, out var value5) || !GameItem.DataSheet.TryGetValue(Config.每周特惠二物品5, out var value6))
+                    if (!GameItem.DataSheet.TryGetValue(Settings.每周特惠二物品3, out var value4) || !GameItem.DataSheet.TryGetValue(Settings.每周特惠二物品4, out var value5) || !GameItem.DataSheet.TryGetValue(Settings.每周特惠二物品5, out var value6))
                     {
                         break;
                     }
@@ -15191,14 +15191,14 @@ public sealed class PlayerObject : MapObject
                             });
                             break;
                         }
-                        Ingot -= Config.每周特惠礼包二元宝;
-                        Gold += Config.每周特惠二物品1;
-                        ExperienceRate += Config.每周特惠二物品2;
+                        Ingot -= Settings.每周特惠礼包二元宝;
+                        Gold += Settings.每周特惠二物品1;
+                        ExperienceRate += Settings.每周特惠二物品2;
                         Enqueue(new 同步货币数量
                         {
                             Description = 全部货币描述()
                         });
-                        Character.消耗元宝.V += Config.每周特惠礼包二元宝;
+                        Character.消耗元宝.V += Settings.每周特惠礼包二元宝;
                         Inventory[b5] = new ItemInfo(value4, Character, 1, b5, 1);
                         Enqueue(new SyncItemPacket
                         {
@@ -15222,7 +15222,7 @@ public sealed class PlayerObject : MapObject
                             变量索引 = 975,
                             变量内容 = Compute.TimeSeconds(SEngine.CurrentTime)
                         });
-                        SEngine.AddSystemLog($"[{Name}][{CurrentLevel}级] 购买了 [每周战备礼包], 消耗元宝[{Config.每周特惠礼包二元宝 / 100}]");
+                        SEngine.AddSystemLog($"[{Name}][{CurrentLevel}级] 购买了 [每周战备礼包], 消耗元宝[{Settings.每周特惠礼包二元宝 / 100}]");
                         break;
                     }
                     byte b9 = byte.MaxValue;
@@ -15258,14 +15258,14 @@ public sealed class PlayerObject : MapObject
                         });
                         break;
                     }
-                    Ingot -= Config.每周特惠礼包二元宝;
-                    Gold += Config.每周特惠二物品1;
-                    ExperienceRate += Config.每周特惠二物品2;
+                    Ingot -= Settings.每周特惠礼包二元宝;
+                    Gold += Settings.每周特惠二物品1;
+                    ExperienceRate += Settings.每周特惠二物品2;
                     Enqueue(new 同步货币数量
                     {
                         Description = 全部货币描述()
                     });
-                    Character.消耗元宝.V += Config.每周特惠礼包二元宝;
+                    Character.消耗元宝.V += Settings.每周特惠礼包二元宝;
                     Inventory[b9] = new ItemInfo(value4, Character, 1, b9, 1);
                     Enqueue(new SyncItemPacket
                     {
@@ -15289,7 +15289,7 @@ public sealed class PlayerObject : MapObject
                         变量索引 = 975,
                         变量内容 = Compute.TimeSeconds(SEngine.CurrentTime)
                     });
-                    SEngine.AddSystemLog($"[{Name}][{CurrentLevel}级] 购买了 [每周战备礼包], 消耗元宝[{Config.每周特惠礼包二元宝 / 100}]");
+                    SEngine.AddSystemLog($"[{Name}][{CurrentLevel}级] 购买了 [每周战备礼包], 消耗元宝[{Settings.每周特惠礼包二元宝 / 100}]");
                 }
                 break;
             default:
@@ -15303,7 +15303,7 @@ public sealed class PlayerObject : MapObject
 
     public void 购买玛法特权(byte 特权类型, byte 购买数量)
     {
-        if (Config.CurrentVersion >= 3)
+        if (Settings.CurrentVersion >= 3)
         {
             int num;
             switch (特权类型)
@@ -15311,13 +15311,13 @@ public sealed class PlayerObject : MapObject
                 default:
                     return;
                 case 3:
-                    num = Config.特权玛法名俊元宝;
+                    num = Settings.特权玛法名俊元宝;
                     break;
                 case 4:
-                    num = Config.特权玛法豪杰元宝;
+                    num = Settings.特权玛法豪杰元宝;
                     break;
                 case 5:
-                    num = Config.特权玛法战将元宝;
+                    num = Settings.特权玛法战将元宝;
                     break;
             }
             if (Ingot < num)
@@ -15360,7 +15360,7 @@ public sealed class PlayerObject : MapObject
                     break;
             }
         }
-        if (Config.CurrentVersion > 2)
+        if (Settings.CurrentVersion > 2)
         {
             return;
         }
@@ -15854,7 +15854,7 @@ public sealed class PlayerObject : MapObject
     public void ChangeTitle(byte id)
     {
         GameTitle value2;
-        if (Config.称号叠加开关 == 0)
+        if (Settings.称号叠加开关 == 0)
         {
             if (!Titles.ContainsKey(id))
             {
@@ -15942,7 +15942,7 @@ public sealed class PlayerObject : MapObject
 
     public void RemoveCurrentTitle()
     {
-        if (Config.称号叠加开关 == 0)
+        if (Settings.称号叠加开关 == 0)
         {
             if (CurrentTitle != 0)
             {
@@ -16202,7 +16202,7 @@ public sealed class PlayerObject : MapObject
             Description = Inventory[b].ToArray()
         });
         item.PickedUp();
-        if (Config.CurrentVersion >= 1)
+        if (Settings.CurrentVersion >= 1)
         {
             if (item.Info.装备套装提示 == GameItemSet.沃玛装备 && 沃玛分解开关)
             {
@@ -16325,11 +16325,11 @@ public sealed class PlayerObject : MapObject
                 }
                 GameItem value = null;
                 int 出售价格 = equip.SalePrice;
-                if (Config.元宝金币回收设定 == 1)
+                if (Settings.元宝金币回收设定 == 1)
                 {
                     if (equip.EquipInfo.EquipSet == GameItemSet.沃玛装备)
                     {
-                        Ingot += Config.沃玛分解元宝;
+                        Ingot += Settings.沃玛分解元宝;
                         Enqueue(new SyncIngotsPacket
                         {
                             Amount = Ingot
@@ -16337,7 +16337,7 @@ public sealed class PlayerObject : MapObject
                     }
                     else if (equip.EquipInfo.EquipSet == GameItemSet.祖玛装备)
                     {
-                        Ingot += Config.祖玛分解元宝;
+                        Ingot += Settings.祖玛分解元宝;
                         Enqueue(new SyncIngotsPacket
                         {
                             Amount = Ingot
@@ -16345,7 +16345,7 @@ public sealed class PlayerObject : MapObject
                     }
                     else if (equip.EquipInfo.EquipSet == GameItemSet.赤月装备)
                     {
-                        Ingot += Config.赤月分解元宝;
+                        Ingot += Settings.赤月分解元宝;
                         Enqueue(new SyncIngotsPacket
                         {
                             Amount = Ingot
@@ -16353,7 +16353,7 @@ public sealed class PlayerObject : MapObject
                     }
                     else if (equip.EquipInfo.EquipSet == GameItemSet.魔龙装备)
                     {
-                        Ingot += Config.魔龙分解元宝;
+                        Ingot += Settings.魔龙分解元宝;
                         Enqueue(new SyncIngotsPacket
                         {
                             Amount = Ingot
@@ -16361,7 +16361,7 @@ public sealed class PlayerObject : MapObject
                     }
                     else if (equip.EquipInfo.EquipSet == GameItemSet.苍月装备)
                     {
-                        Ingot += Config.苍月分解元宝;
+                        Ingot += Settings.苍月分解元宝;
                         Enqueue(new SyncIngotsPacket
                         {
                             Amount = Ingot
@@ -16369,7 +16369,7 @@ public sealed class PlayerObject : MapObject
                     }
                     else if (equip.EquipInfo.EquipSet == GameItemSet.星王装备)
                     {
-                        Ingot += Config.星王分解元宝;
+                        Ingot += Settings.星王分解元宝;
                         Enqueue(new SyncIngotsPacket
                         {
                             Amount = Ingot
@@ -16377,7 +16377,7 @@ public sealed class PlayerObject : MapObject
                     }
                     else if (equip.EquipInfo.EquipSet == GameItemSet.城主装备)
                     {
-                        Ingot += Config.城主分解元宝;
+                        Ingot += Settings.城主分解元宝;
                         Enqueue(new SyncIngotsPacket
                         {
                             Amount = Ingot
@@ -16385,7 +16385,7 @@ public sealed class PlayerObject : MapObject
                     }
                     else if (equip.EquipInfo.EquipSet == GameItemSet.神秘装备)
                     {
-                        Ingot += Config.神秘分解元宝;
+                        Ingot += Settings.神秘分解元宝;
                         Enqueue(new SyncIngotsPacket
                         {
                             Amount = Ingot
@@ -16400,42 +16400,42 @@ public sealed class PlayerObject : MapObject
                         });
                     }
                 }
-                if (Config.元宝金币回收设定 == 2)
+                if (Settings.元宝金币回收设定 == 2)
                 {
-                    if (Config.CurrentVersion < 1)
+                    if (Settings.CurrentVersion < 1)
                     {
                         return;
                     }
                     if (equip.EquipInfo.EquipSet == GameItemSet.祖玛装备)
                     {
-                        if (Config.祖玛分解开关 == 5)
+                        if (Settings.祖玛分解开关 == 5)
                         {
                             int num = SEngine.Random.Next(100);
-                            if (num < Config.祖玛分解几率一)
+                            if (num < Settings.祖玛分解几率一)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.祖玛分解物品一, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.祖玛分解物品一, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.祖玛分解数量一;
+                                Inventory[b].Dura.V = Settings.祖玛分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num < Config.祖玛分解几率二)
+                            else if (num < Settings.祖玛分解几率二)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.祖玛分解物品二, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.祖玛分解物品二, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.祖玛分解数量二;
+                                Inventory[b].Dura.V = Settings.祖玛分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num < Config.祖玛分解几率三)
+                            else if (num < Settings.祖玛分解几率三)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.祖玛分解物品三, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.祖玛分解物品三, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.祖玛分解数量三;
+                                Inventory[b].Dura.V = Settings.祖玛分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
@@ -16443,48 +16443,48 @@ public sealed class PlayerObject : MapObject
                             }
                             else
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.祖玛分解物品四, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.祖玛分解物品四, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.祖玛分解数量四;
+                                Inventory[b].Dura.V = Settings.祖玛分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            Ingot += Config.祖玛分解元宝;
+                            Ingot += Settings.祖玛分解元宝;
                             Enqueue(new SyncIngotsPacket
                             {
                                 Amount = Ingot
                             });
                         }
-                        else if (Config.祖玛分解开关 == 4)
+                        else if (Settings.祖玛分解开关 == 4)
                         {
                             int num2 = SEngine.Random.Next(100);
-                            if (num2 < Config.祖玛分解几率一)
+                            if (num2 < Settings.祖玛分解几率一)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.祖玛分解物品一, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.祖玛分解物品一, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.祖玛分解数量一;
+                                Inventory[b].Dura.V = Settings.祖玛分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num2 < Config.祖玛分解几率二)
+                            else if (num2 < Settings.祖玛分解几率二)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.祖玛分解物品二, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.祖玛分解物品二, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.祖玛分解数量二;
+                                Inventory[b].Dura.V = Settings.祖玛分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num2 < Config.祖玛分解几率三)
+                            else if (num2 < Settings.祖玛分解几率三)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.祖玛分解物品三, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.祖玛分解物品三, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.祖玛分解数量三;
+                                Inventory[b].Dura.V = Settings.祖玛分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
@@ -16492,9 +16492,9 @@ public sealed class PlayerObject : MapObject
                             }
                             else
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.祖玛分解物品四, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.祖玛分解物品四, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.祖玛分解数量四;
+                                Inventory[b].Dura.V = Settings.祖玛分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
@@ -16506,34 +16506,34 @@ public sealed class PlayerObject : MapObject
                                 Description = 全部货币描述()
                             });
                         }
-                        else if (Config.祖玛分解开关 == 3)
+                        else if (Settings.祖玛分解开关 == 3)
                         {
                             int num3 = SEngine.Random.Next(100);
-                            if (num3 < Config.祖玛分解几率一)
+                            if (num3 < Settings.祖玛分解几率一)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.祖玛分解物品一, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.祖玛分解物品一, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.祖玛分解数量一;
+                                Inventory[b].Dura.V = Settings.祖玛分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num3 < Config.祖玛分解几率二)
+                            else if (num3 < Settings.祖玛分解几率二)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.祖玛分解物品二, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.祖玛分解物品二, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.祖玛分解数量二;
+                                Inventory[b].Dura.V = Settings.祖玛分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num3 < Config.祖玛分解几率三)
+                            else if (num3 < Settings.祖玛分解几率三)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.祖玛分解物品三, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.祖玛分解物品三, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.祖玛分解数量三;
+                                Inventory[b].Dura.V = Settings.祖玛分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
@@ -16541,24 +16541,24 @@ public sealed class PlayerObject : MapObject
                             }
                             else
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.祖玛分解物品四, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.祖玛分解物品四, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.祖玛分解数量四;
+                                Inventory[b].Dura.V = Settings.祖玛分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
                         }
-                        else if (Config.祖玛分解开关 == 2)
+                        else if (Settings.祖玛分解开关 == 2)
                         {
-                            Ingot += Config.祖玛分解元宝;
+                            Ingot += Settings.祖玛分解元宝;
                             Enqueue(new SyncIngotsPacket
                             {
                                 Amount = Ingot
                             });
                         }
-                        else if (Config.祖玛分解开关 == 1)
+                        else if (Settings.祖玛分解开关 == 1)
                         {
                             Gold += Math.Max(1, equip.SalePrice);
                             Enqueue(new 同步货币数量
@@ -16569,34 +16569,34 @@ public sealed class PlayerObject : MapObject
                     }
                     else if (equip.EquipInfo.EquipSet == GameItemSet.赤月装备)
                     {
-                        if (Config.赤月分解开关 == 5)
+                        if (Settings.赤月分解开关 == 5)
                         {
                             int num4 = SEngine.Random.Next(100);
-                            if (num4 < Config.赤月分解几率一)
+                            if (num4 < Settings.赤月分解几率一)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.赤月分解物品一, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.赤月分解物品一, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.赤月分解数量一;
+                                Inventory[b].Dura.V = Settings.赤月分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num4 < Config.赤月分解几率二)
+                            else if (num4 < Settings.赤月分解几率二)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.赤月分解物品二, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.赤月分解物品二, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.赤月分解数量二;
+                                Inventory[b].Dura.V = Settings.赤月分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num4 < Config.赤月分解几率三)
+                            else if (num4 < Settings.赤月分解几率三)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.赤月分解物品三, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.赤月分解物品三, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.赤月分解数量三;
+                                Inventory[b].Dura.V = Settings.赤月分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
@@ -16604,48 +16604,48 @@ public sealed class PlayerObject : MapObject
                             }
                             else
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.赤月分解物品四, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.赤月分解物品四, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.赤月分解数量四;
+                                Inventory[b].Dura.V = Settings.赤月分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            Ingot += Config.赤月分解元宝;
+                            Ingot += Settings.赤月分解元宝;
                             Enqueue(new SyncIngotsPacket
                             {
                                 Amount = Ingot
                             });
                         }
-                        else if (Config.赤月分解开关 == 4)
+                        else if (Settings.赤月分解开关 == 4)
                         {
                             int num5 = SEngine.Random.Next(100);
-                            if (num5 < Config.赤月分解几率一)
+                            if (num5 < Settings.赤月分解几率一)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.赤月分解物品一, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.赤月分解物品一, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.赤月分解数量一;
+                                Inventory[b].Dura.V = Settings.赤月分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num5 < Config.赤月分解几率二)
+                            else if (num5 < Settings.赤月分解几率二)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.赤月分解物品二, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.赤月分解物品二, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.赤月分解数量二;
+                                Inventory[b].Dura.V = Settings.赤月分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num5 < Config.赤月分解几率三)
+                            else if (num5 < Settings.赤月分解几率三)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.赤月分解物品三, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.赤月分解物品三, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.赤月分解数量三;
+                                Inventory[b].Dura.V = Settings.赤月分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
@@ -16653,9 +16653,9 @@ public sealed class PlayerObject : MapObject
                             }
                             else
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.赤月分解物品四, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.赤月分解物品四, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.赤月分解数量四;
+                                Inventory[b].Dura.V = Settings.赤月分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
@@ -16667,34 +16667,34 @@ public sealed class PlayerObject : MapObject
                                 Description = 全部货币描述()
                             });
                         }
-                        else if (Config.赤月分解开关 == 3)
+                        else if (Settings.赤月分解开关 == 3)
                         {
                             int num6 = SEngine.Random.Next(100);
-                            if (num6 < Config.赤月分解几率一)
+                            if (num6 < Settings.赤月分解几率一)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.赤月分解物品一, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.赤月分解物品一, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.赤月分解数量一;
+                                Inventory[b].Dura.V = Settings.赤月分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num6 < Config.赤月分解几率二)
+                            else if (num6 < Settings.赤月分解几率二)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.赤月分解物品二, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.赤月分解物品二, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.赤月分解数量二;
+                                Inventory[b].Dura.V = Settings.赤月分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num6 < Config.赤月分解几率三)
+                            else if (num6 < Settings.赤月分解几率三)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.赤月分解物品三, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.赤月分解物品三, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.赤月分解数量三;
+                                Inventory[b].Dura.V = Settings.赤月分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
@@ -16702,24 +16702,24 @@ public sealed class PlayerObject : MapObject
                             }
                             else
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.赤月分解物品四, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.赤月分解物品四, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.赤月分解数量四;
+                                Inventory[b].Dura.V = Settings.赤月分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
                         }
-                        else if (Config.赤月分解开关 == 2)
+                        else if (Settings.赤月分解开关 == 2)
                         {
-                            Ingot += Config.赤月分解元宝;
+                            Ingot += Settings.赤月分解元宝;
                             Enqueue(new SyncIngotsPacket
                             {
                                 Amount = Ingot
                             });
                         }
-                        else if (Config.赤月分解开关 == 1)
+                        else if (Settings.赤月分解开关 == 1)
                         {
                             Gold += Math.Max(1, equip.SalePrice);
                             Enqueue(new 同步货币数量
@@ -16730,34 +16730,34 @@ public sealed class PlayerObject : MapObject
                     }
                     else if (equip.EquipInfo.EquipSet == GameItemSet.魔龙装备)
                     {
-                        if (Config.魔龙分解开关 == 5)
+                        if (Settings.魔龙分解开关 == 5)
                         {
                             int num7 = SEngine.Random.Next(100);
-                            if (num7 < Config.魔龙分解几率一)
+                            if (num7 < Settings.魔龙分解几率一)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.魔龙分解物品一, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.魔龙分解物品一, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.魔龙分解数量一;
+                                Inventory[b].Dura.V = Settings.魔龙分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num7 < Config.魔龙分解几率二)
+                            else if (num7 < Settings.魔龙分解几率二)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.魔龙分解物品二, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.魔龙分解物品二, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.魔龙分解数量二;
+                                Inventory[b].Dura.V = Settings.魔龙分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num7 < Config.魔龙分解几率三)
+                            else if (num7 < Settings.魔龙分解几率三)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.魔龙分解物品三, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.魔龙分解物品三, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.魔龙分解数量三;
+                                Inventory[b].Dura.V = Settings.魔龙分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
@@ -16765,48 +16765,48 @@ public sealed class PlayerObject : MapObject
                             }
                             else
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.魔龙分解物品四, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.魔龙分解物品四, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.魔龙分解数量四;
+                                Inventory[b].Dura.V = Settings.魔龙分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            Ingot += Config.魔龙分解元宝;
+                            Ingot += Settings.魔龙分解元宝;
                             Enqueue(new SyncIngotsPacket
                             {
                                 Amount = Ingot
                             });
                         }
-                        else if (Config.魔龙分解开关 == 4)
+                        else if (Settings.魔龙分解开关 == 4)
                         {
                             int num8 = SEngine.Random.Next(100);
-                            if (num8 < Config.魔龙分解几率一)
+                            if (num8 < Settings.魔龙分解几率一)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.魔龙分解物品一, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.魔龙分解物品一, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.魔龙分解数量一;
+                                Inventory[b].Dura.V = Settings.魔龙分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num8 < Config.魔龙分解几率二)
+                            else if (num8 < Settings.魔龙分解几率二)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.魔龙分解物品二, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.魔龙分解物品二, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.魔龙分解数量二;
+                                Inventory[b].Dura.V = Settings.魔龙分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num8 < Config.魔龙分解几率三)
+                            else if (num8 < Settings.魔龙分解几率三)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.魔龙分解物品三, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.魔龙分解物品三, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.魔龙分解数量三;
+                                Inventory[b].Dura.V = Settings.魔龙分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
@@ -16814,9 +16814,9 @@ public sealed class PlayerObject : MapObject
                             }
                             else
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.魔龙分解物品四, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.魔龙分解物品四, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.魔龙分解数量四;
+                                Inventory[b].Dura.V = Settings.魔龙分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
@@ -16828,34 +16828,34 @@ public sealed class PlayerObject : MapObject
                                 Description = 全部货币描述()
                             });
                         }
-                        else if (Config.魔龙分解开关 == 3)
+                        else if (Settings.魔龙分解开关 == 3)
                         {
                             int num9 = SEngine.Random.Next(100);
-                            if (num9 < Config.魔龙分解几率一)
+                            if (num9 < Settings.魔龙分解几率一)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.魔龙分解物品一, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.魔龙分解物品一, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.魔龙分解数量一;
+                                Inventory[b].Dura.V = Settings.魔龙分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num9 < Config.魔龙分解几率二)
+                            else if (num9 < Settings.魔龙分解几率二)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.魔龙分解物品二, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.魔龙分解物品二, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.魔龙分解数量二;
+                                Inventory[b].Dura.V = Settings.魔龙分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num9 < Config.魔龙分解几率三)
+                            else if (num9 < Settings.魔龙分解几率三)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.魔龙分解物品三, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.魔龙分解物品三, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.魔龙分解数量三;
+                                Inventory[b].Dura.V = Settings.魔龙分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
@@ -16863,24 +16863,24 @@ public sealed class PlayerObject : MapObject
                             }
                             else
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.魔龙分解物品四, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.魔龙分解物品四, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.魔龙分解数量四;
+                                Inventory[b].Dura.V = Settings.魔龙分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
                         }
-                        else if (Config.魔龙分解开关 == 2)
+                        else if (Settings.魔龙分解开关 == 2)
                         {
-                            Ingot += Config.魔龙分解元宝;
+                            Ingot += Settings.魔龙分解元宝;
                             Enqueue(new SyncIngotsPacket
                             {
                                 Amount = Ingot
                             });
                         }
-                        else if (Config.魔龙分解开关 == 1)
+                        else if (Settings.魔龙分解开关 == 1)
                         {
                             Gold += Math.Max(1, equip.SalePrice);
                             Enqueue(new 同步货币数量
@@ -16891,34 +16891,34 @@ public sealed class PlayerObject : MapObject
                     }
                     else if (equip.EquipInfo.EquipSet == GameItemSet.苍月装备)
                     {
-                        if (Config.苍月分解开关 == 5)
+                        if (Settings.苍月分解开关 == 5)
                         {
                             int num10 = SEngine.Random.Next(100);
-                            if (num10 < Config.苍月分解几率一)
+                            if (num10 < Settings.苍月分解几率一)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.苍月分解物品一, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.苍月分解物品一, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.苍月分解数量一;
+                                Inventory[b].Dura.V = Settings.苍月分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num10 < Config.苍月分解几率二)
+                            else if (num10 < Settings.苍月分解几率二)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.苍月分解物品二, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.苍月分解物品二, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.苍月分解数量二;
+                                Inventory[b].Dura.V = Settings.苍月分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num10 < Config.苍月分解几率三)
+                            else if (num10 < Settings.苍月分解几率三)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.苍月分解物品三, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.苍月分解物品三, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.苍月分解数量三;
+                                Inventory[b].Dura.V = Settings.苍月分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
@@ -16926,48 +16926,48 @@ public sealed class PlayerObject : MapObject
                             }
                             else
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.苍月分解物品四, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.苍月分解物品四, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.苍月分解数量四;
+                                Inventory[b].Dura.V = Settings.苍月分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            Ingot += Config.苍月分解元宝;
+                            Ingot += Settings.苍月分解元宝;
                             Enqueue(new SyncIngotsPacket
                             {
                                 Amount = Ingot
                             });
                         }
-                        else if (Config.苍月分解开关 == 4)
+                        else if (Settings.苍月分解开关 == 4)
                         {
                             int num11 = SEngine.Random.Next(100);
-                            if (num11 < Config.苍月分解几率一)
+                            if (num11 < Settings.苍月分解几率一)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.苍月分解物品一, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.苍月分解物品一, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.苍月分解数量一;
+                                Inventory[b].Dura.V = Settings.苍月分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num11 < Config.苍月分解几率二)
+                            else if (num11 < Settings.苍月分解几率二)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.苍月分解物品二, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.苍月分解物品二, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.苍月分解数量二;
+                                Inventory[b].Dura.V = Settings.苍月分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num11 < Config.苍月分解几率三)
+                            else if (num11 < Settings.苍月分解几率三)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.苍月分解物品三, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.苍月分解物品三, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.苍月分解数量三;
+                                Inventory[b].Dura.V = Settings.苍月分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
@@ -16975,9 +16975,9 @@ public sealed class PlayerObject : MapObject
                             }
                             else
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.苍月分解物品四, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.苍月分解物品四, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.苍月分解数量四;
+                                Inventory[b].Dura.V = Settings.苍月分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
@@ -16989,34 +16989,34 @@ public sealed class PlayerObject : MapObject
                                 Description = 全部货币描述()
                             });
                         }
-                        else if (Config.苍月分解开关 == 3)
+                        else if (Settings.苍月分解开关 == 3)
                         {
                             int num12 = SEngine.Random.Next(100);
-                            if (num12 < Config.苍月分解几率一)
+                            if (num12 < Settings.苍月分解几率一)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.苍月分解物品一, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.苍月分解物品一, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.苍月分解数量一;
+                                Inventory[b].Dura.V = Settings.苍月分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num12 < Config.苍月分解几率二)
+                            else if (num12 < Settings.苍月分解几率二)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.苍月分解物品二, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.苍月分解物品二, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.苍月分解数量二;
+                                Inventory[b].Dura.V = Settings.苍月分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num12 < Config.苍月分解几率三)
+                            else if (num12 < Settings.苍月分解几率三)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.苍月分解物品三, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.苍月分解物品三, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.苍月分解数量三;
+                                Inventory[b].Dura.V = Settings.苍月分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
@@ -17024,24 +17024,24 @@ public sealed class PlayerObject : MapObject
                             }
                             else
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.苍月分解物品四, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.苍月分解物品四, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.苍月分解数量四;
+                                Inventory[b].Dura.V = Settings.苍月分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
                         }
-                        else if (Config.苍月分解开关 == 2)
+                        else if (Settings.苍月分解开关 == 2)
                         {
-                            Ingot += Config.苍月分解元宝;
+                            Ingot += Settings.苍月分解元宝;
                             Enqueue(new SyncIngotsPacket
                             {
                                 Amount = Ingot
                             });
                         }
-                        else if (Config.苍月分解开关 == 1)
+                        else if (Settings.苍月分解开关 == 1)
                         {
                             Gold += Math.Max(1, equip.SalePrice);
                             Enqueue(new 同步货币数量
@@ -17052,34 +17052,34 @@ public sealed class PlayerObject : MapObject
                     }
                     else if (equip.EquipInfo.EquipSet == GameItemSet.星王装备)
                     {
-                        if (Config.星王分解开关 == 5)
+                        if (Settings.星王分解开关 == 5)
                         {
                             int num13 = SEngine.Random.Next(100);
-                            if (num13 < Config.星王分解几率一)
+                            if (num13 < Settings.星王分解几率一)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.星王分解物品一, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.星王分解物品一, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.星王分解数量一;
+                                Inventory[b].Dura.V = Settings.星王分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num13 < Config.星王分解几率二)
+                            else if (num13 < Settings.星王分解几率二)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.星王分解物品二, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.星王分解物品二, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.星王分解数量二;
+                                Inventory[b].Dura.V = Settings.星王分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num13 < Config.星王分解几率三)
+                            else if (num13 < Settings.星王分解几率三)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.星王分解物品三, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.星王分解物品三, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.星王分解数量三;
+                                Inventory[b].Dura.V = Settings.星王分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
@@ -17087,48 +17087,48 @@ public sealed class PlayerObject : MapObject
                             }
                             else
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.星王分解物品四, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.星王分解物品四, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.星王分解数量四;
+                                Inventory[b].Dura.V = Settings.星王分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            Ingot += Config.星王分解元宝;
+                            Ingot += Settings.星王分解元宝;
                             Enqueue(new SyncIngotsPacket
                             {
                                 Amount = Ingot
                             });
                         }
-                        else if (Config.星王分解开关 == 4)
+                        else if (Settings.星王分解开关 == 4)
                         {
                             int num14 = SEngine.Random.Next(100);
-                            if (num14 < Config.星王分解几率一)
+                            if (num14 < Settings.星王分解几率一)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.星王分解物品一, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.星王分解物品一, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.星王分解数量一;
+                                Inventory[b].Dura.V = Settings.星王分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num14 < Config.星王分解几率二)
+                            else if (num14 < Settings.星王分解几率二)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.星王分解物品二, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.星王分解物品二, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.星王分解数量二;
+                                Inventory[b].Dura.V = Settings.星王分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num14 < Config.星王分解几率三)
+                            else if (num14 < Settings.星王分解几率三)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.星王分解物品三, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.星王分解物品三, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.星王分解数量三;
+                                Inventory[b].Dura.V = Settings.星王分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
@@ -17136,9 +17136,9 @@ public sealed class PlayerObject : MapObject
                             }
                             else
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.星王分解物品四, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.星王分解物品四, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.星王分解数量四;
+                                Inventory[b].Dura.V = Settings.星王分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
@@ -17150,34 +17150,34 @@ public sealed class PlayerObject : MapObject
                                 Description = 全部货币描述()
                             });
                         }
-                        else if (Config.星王分解开关 == 3)
+                        else if (Settings.星王分解开关 == 3)
                         {
                             int num15 = SEngine.Random.Next(100);
-                            if (num15 < Config.星王分解几率一)
+                            if (num15 < Settings.星王分解几率一)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.星王分解物品一, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.星王分解物品一, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.星王分解数量一;
+                                Inventory[b].Dura.V = Settings.星王分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num15 < Config.星王分解几率二)
+                            else if (num15 < Settings.星王分解几率二)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.星王分解物品二, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.星王分解物品二, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.星王分解数量二;
+                                Inventory[b].Dura.V = Settings.星王分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num15 < Config.星王分解几率三)
+                            else if (num15 < Settings.星王分解几率三)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.星王分解物品三, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.星王分解物品三, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.星王分解数量三;
+                                Inventory[b].Dura.V = Settings.星王分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
@@ -17185,24 +17185,24 @@ public sealed class PlayerObject : MapObject
                             }
                             else
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.星王分解物品四, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.星王分解物品四, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.星王分解数量四;
+                                Inventory[b].Dura.V = Settings.星王分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
                         }
-                        else if (Config.星王分解开关 == 2)
+                        else if (Settings.星王分解开关 == 2)
                         {
-                            Ingot += Config.星王分解元宝;
+                            Ingot += Settings.星王分解元宝;
                             Enqueue(new SyncIngotsPacket
                             {
                                 Amount = Ingot
                             });
                         }
-                        else if (Config.星王分解开关 == 1)
+                        else if (Settings.星王分解开关 == 1)
                         {
                             Gold += Math.Max(1, equip.SalePrice);
                             Enqueue(new 同步货币数量
@@ -17213,34 +17213,34 @@ public sealed class PlayerObject : MapObject
                     }
                     else if (equip.EquipInfo.EquipSet == GameItemSet.城主装备)
                     {
-                        if (Config.城主分解开关 == 5)
+                        if (Settings.城主分解开关 == 5)
                         {
                             int num16 = SEngine.Random.Next(100);
-                            if (num16 < Config.城主分解几率一)
+                            if (num16 < Settings.城主分解几率一)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.城主分解物品一, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.城主分解物品一, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.城主分解数量一;
+                                Inventory[b].Dura.V = Settings.城主分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num16 < Config.城主分解几率二)
+                            else if (num16 < Settings.城主分解几率二)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.城主分解物品二, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.城主分解物品二, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.城主分解数量二;
+                                Inventory[b].Dura.V = Settings.城主分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num16 < Config.城主分解几率三)
+                            else if (num16 < Settings.城主分解几率三)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.城主分解物品三, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.城主分解物品三, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.城主分解数量三;
+                                Inventory[b].Dura.V = Settings.城主分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
@@ -17248,48 +17248,48 @@ public sealed class PlayerObject : MapObject
                             }
                             else
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.城主分解物品四, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.城主分解物品四, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.城主分解数量四;
+                                Inventory[b].Dura.V = Settings.城主分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            Ingot += Config.城主分解元宝;
+                            Ingot += Settings.城主分解元宝;
                             Enqueue(new SyncIngotsPacket
                             {
                                 Amount = Ingot
                             });
                         }
-                        else if (Config.城主分解开关 == 4)
+                        else if (Settings.城主分解开关 == 4)
                         {
                             int num17 = SEngine.Random.Next(100);
-                            if (num17 < Config.城主分解几率一)
+                            if (num17 < Settings.城主分解几率一)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.城主分解物品一, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.城主分解物品一, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.城主分解数量一;
+                                Inventory[b].Dura.V = Settings.城主分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num17 < Config.城主分解几率二)
+                            else if (num17 < Settings.城主分解几率二)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.城主分解物品二, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.城主分解物品二, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.城主分解数量二;
+                                Inventory[b].Dura.V = Settings.城主分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num17 < Config.城主分解几率三)
+                            else if (num17 < Settings.城主分解几率三)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.城主分解物品三, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.城主分解物品三, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.城主分解数量三;
+                                Inventory[b].Dura.V = Settings.城主分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
@@ -17297,9 +17297,9 @@ public sealed class PlayerObject : MapObject
                             }
                             else
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.城主分解物品四, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.城主分解物品四, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.城主分解数量四;
+                                Inventory[b].Dura.V = Settings.城主分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
@@ -17311,34 +17311,34 @@ public sealed class PlayerObject : MapObject
                                 Description = 全部货币描述()
                             });
                         }
-                        else if (Config.城主分解开关 == 3)
+                        else if (Settings.城主分解开关 == 3)
                         {
                             int num18 = SEngine.Random.Next(100);
-                            if (num18 < Config.城主分解几率一)
+                            if (num18 < Settings.城主分解几率一)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.城主分解物品一, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.城主分解物品一, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.城主分解数量一;
+                                Inventory[b].Dura.V = Settings.城主分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num18 < Config.城主分解几率二)
+                            else if (num18 < Settings.城主分解几率二)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.城主分解物品二, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.城主分解物品二, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.城主分解数量二;
+                                Inventory[b].Dura.V = Settings.城主分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num18 < Config.城主分解几率三)
+                            else if (num18 < Settings.城主分解几率三)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.城主分解物品三, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.城主分解物品三, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.城主分解数量三;
+                                Inventory[b].Dura.V = Settings.城主分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
@@ -17346,24 +17346,24 @@ public sealed class PlayerObject : MapObject
                             }
                             else
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.城主分解物品四, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.城主分解物品四, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.城主分解数量四;
+                                Inventory[b].Dura.V = Settings.城主分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
                         }
-                        else if (Config.城主分解开关 == 2)
+                        else if (Settings.城主分解开关 == 2)
                         {
-                            Ingot += Config.城主分解元宝;
+                            Ingot += Settings.城主分解元宝;
                             Enqueue(new SyncIngotsPacket
                             {
                                 Amount = Ingot
                             });
                         }
-                        else if (Config.城主分解开关 == 1)
+                        else if (Settings.城主分解开关 == 1)
                         {
                             Gold += Math.Max(1, equip.SalePrice);
                             Enqueue(new 同步货币数量
@@ -17374,34 +17374,34 @@ public sealed class PlayerObject : MapObject
                     }
                     else if (equip.EquipInfo.EquipSet == GameItemSet.其他装备)
                     {
-                        if (Config.其他分解开关 == 5)
+                        if (Settings.其他分解开关 == 5)
                         {
                             int num19 = SEngine.Random.Next(100);
-                            if (num19 < Config.其他分解几率一)
+                            if (num19 < Settings.其他分解几率一)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.其他分解物品一, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.其他分解物品一, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.其他分解数量一;
+                                Inventory[b].Dura.V = Settings.其他分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num19 < Config.其他分解几率二)
+                            else if (num19 < Settings.其他分解几率二)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.其他分解物品二, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.其他分解物品二, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.其他分解数量二;
+                                Inventory[b].Dura.V = Settings.其他分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num19 < Config.其他分解几率三)
+                            else if (num19 < Settings.其他分解几率三)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.其他分解物品三, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.其他分解物品三, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.其他分解数量三;
+                                Inventory[b].Dura.V = Settings.其他分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
@@ -17409,9 +17409,9 @@ public sealed class PlayerObject : MapObject
                             }
                             else
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.其他分解物品四, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.其他分解物品四, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.其他分解数量四;
+                                Inventory[b].Dura.V = Settings.其他分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
@@ -17423,34 +17423,34 @@ public sealed class PlayerObject : MapObject
                                 Description = 全部货币描述()
                             });
                         }
-                        else if (Config.其他分解开关 == 4)
+                        else if (Settings.其他分解开关 == 4)
                         {
                             int num20 = SEngine.Random.Next(100);
-                            if (num20 < Config.其他分解几率一)
+                            if (num20 < Settings.其他分解几率一)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.其他分解物品一, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.其他分解物品一, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.其他分解数量一;
+                                Inventory[b].Dura.V = Settings.其他分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num20 < Config.其他分解几率二)
+                            else if (num20 < Settings.其他分解几率二)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.其他分解物品二, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.其他分解物品二, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.其他分解数量二;
+                                Inventory[b].Dura.V = Settings.其他分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num20 < Config.其他分解几率三)
+                            else if (num20 < Settings.其他分解几率三)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.其他分解物品三, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.其他分解物品三, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.其他分解数量三;
+                                Inventory[b].Dura.V = Settings.其他分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
@@ -17458,9 +17458,9 @@ public sealed class PlayerObject : MapObject
                             }
                             else
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.其他分解物品四, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.其他分解物品四, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.其他分解数量四;
+                                Inventory[b].Dura.V = Settings.其他分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
@@ -17472,34 +17472,34 @@ public sealed class PlayerObject : MapObject
                                 Description = 全部货币描述()
                             });
                         }
-                        else if (Config.其他分解开关 == 3)
+                        else if (Settings.其他分解开关 == 3)
                         {
                             int num21 = SEngine.Random.Next(100);
-                            if (num21 < Config.其他分解几率一)
+                            if (num21 < Settings.其他分解几率一)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.其他分解物品一, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.其他分解物品一, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.其他分解数量一;
+                                Inventory[b].Dura.V = Settings.其他分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num21 < Config.其他分解几率二)
+                            else if (num21 < Settings.其他分解几率二)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.其他分解物品二, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.其他分解物品二, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.其他分解数量二;
+                                Inventory[b].Dura.V = Settings.其他分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num21 < Config.其他分解几率三)
+                            else if (num21 < Settings.其他分解几率三)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.其他分解物品三, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.其他分解物品三, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.其他分解数量三;
+                                Inventory[b].Dura.V = Settings.其他分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
@@ -17507,16 +17507,16 @@ public sealed class PlayerObject : MapObject
                             }
                             else
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.其他分解物品四, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.其他分解物品四, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.其他分解数量四;
+                                Inventory[b].Dura.V = Settings.其他分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
                         }
-                        else if (Config.其他分解开关 == 2)
+                        else if (Settings.其他分解开关 == 2)
                         {
                             Gold += Math.Max(1, equip.SalePrice);
                             Enqueue(new 同步货币数量
@@ -17524,7 +17524,7 @@ public sealed class PlayerObject : MapObject
                                 Description = 全部货币描述()
                             });
                         }
-                        else if (Config.其他分解开关 == 1)
+                        else if (Settings.其他分解开关 == 1)
                         {
                             Gold += Math.Max(1, equip.SalePrice);
                             Enqueue(new 同步货币数量
@@ -17535,34 +17535,34 @@ public sealed class PlayerObject : MapObject
                     }
                     else if (equip.EquipInfo.EquipSet == GameItemSet.沃玛装备)
                     {
-                        if (Config.沃玛分解开关 == 5)
+                        if (Settings.沃玛分解开关 == 5)
                         {
                             int num22 = SEngine.Random.Next(100);
-                            if (num22 < Config.沃玛分解几率一)
+                            if (num22 < Settings.沃玛分解几率一)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.沃玛分解物品一, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.沃玛分解物品一, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.沃玛分解数量一;
+                                Inventory[b].Dura.V = Settings.沃玛分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num22 < Config.沃玛分解几率二)
+                            else if (num22 < Settings.沃玛分解几率二)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.沃玛分解物品二, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.沃玛分解物品二, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.沃玛分解数量二;
+                                Inventory[b].Dura.V = Settings.沃玛分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num22 < Config.沃玛分解几率三)
+                            else if (num22 < Settings.沃玛分解几率三)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.沃玛分解物品三, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.沃玛分解物品三, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.沃玛分解数量三;
+                                Inventory[b].Dura.V = Settings.沃玛分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
@@ -17570,48 +17570,48 @@ public sealed class PlayerObject : MapObject
                             }
                             else
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.沃玛分解物品四, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.沃玛分解物品四, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.沃玛分解数量四;
+                                Inventory[b].Dura.V = Settings.沃玛分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            Ingot += Config.沃玛分解元宝;
+                            Ingot += Settings.沃玛分解元宝;
                             Enqueue(new SyncIngotsPacket
                             {
                                 Amount = Ingot
                             });
                         }
-                        else if (Config.沃玛分解开关 == 4)
+                        else if (Settings.沃玛分解开关 == 4)
                         {
                             int num23 = SEngine.Random.Next(100);
-                            if (num23 < Config.沃玛分解几率一)
+                            if (num23 < Settings.沃玛分解几率一)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.沃玛分解物品一, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.沃玛分解物品一, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.沃玛分解数量一;
+                                Inventory[b].Dura.V = Settings.沃玛分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num23 < Config.沃玛分解几率二)
+                            else if (num23 < Settings.沃玛分解几率二)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.沃玛分解物品二, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.沃玛分解物品二, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.沃玛分解数量二;
+                                Inventory[b].Dura.V = Settings.沃玛分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num23 < Config.沃玛分解几率三)
+                            else if (num23 < Settings.沃玛分解几率三)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.沃玛分解物品三, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.沃玛分解物品三, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.沃玛分解数量三;
+                                Inventory[b].Dura.V = Settings.沃玛分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
@@ -17619,9 +17619,9 @@ public sealed class PlayerObject : MapObject
                             }
                             else
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.沃玛分解物品四, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.沃玛分解物品四, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.沃玛分解数量四;
+                                Inventory[b].Dura.V = Settings.沃玛分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
@@ -17633,34 +17633,34 @@ public sealed class PlayerObject : MapObject
                                 Description = 全部货币描述()
                             });
                         }
-                        else if (Config.沃玛分解开关 == 3)
+                        else if (Settings.沃玛分解开关 == 3)
                         {
                             int num24 = SEngine.Random.Next(100);
-                            if (num24 < Config.沃玛分解几率一)
+                            if (num24 < Settings.沃玛分解几率一)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.沃玛分解物品一, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.沃玛分解物品一, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.沃玛分解数量一;
+                                Inventory[b].Dura.V = Settings.沃玛分解数量一;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num24 < Config.沃玛分解几率二)
+                            else if (num24 < Settings.沃玛分解几率二)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.沃玛分解物品二, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.沃玛分解物品二, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.沃玛分解数量二;
+                                Inventory[b].Dura.V = Settings.沃玛分解数量二;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
-                            else if (num24 < Config.沃玛分解几率三)
+                            else if (num24 < Settings.沃玛分解几率三)
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.沃玛分解物品三, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.沃玛分解物品三, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.沃玛分解数量三;
+                                Inventory[b].Dura.V = Settings.沃玛分解数量三;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
@@ -17668,24 +17668,24 @@ public sealed class PlayerObject : MapObject
                             }
                             else
                             {
-                                GameItem.DataSheetByName.TryGetValue(Config.沃玛分解物品四, out value);
+                                GameItem.DataSheetByName.TryGetValue(Settings.沃玛分解物品四, out value);
                                 Inventory[b] = new ItemInfo(value, Character, grid, b, 1);
-                                Inventory[b].Dura.V = Config.沃玛分解数量四;
+                                Inventory[b].Dura.V = Settings.沃玛分解数量四;
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b].ToArray()
                                 });
                             }
                         }
-                        else if (Config.沃玛分解开关 == 2)
+                        else if (Settings.沃玛分解开关 == 2)
                         {
-                            Ingot += Config.沃玛分解元宝;
+                            Ingot += Settings.沃玛分解元宝;
                             Enqueue(new SyncIngotsPacket
                             {
                                 Amount = Ingot
                             });
                         }
-                        else if (Config.沃玛分解开关 == 1)
+                        else if (Settings.沃玛分解开关 == 1)
                         {
                             Gold += Math.Max(1, equip.SalePrice);
                             Enqueue(new 同步货币数量
@@ -17696,7 +17696,7 @@ public sealed class PlayerObject : MapObject
                     }
                     else if (equip.EquipInfo.EquipSet == GameItemSet.神秘装备)
                     {
-                        Ingot += Config.神秘分解元宝;
+                        Ingot += Settings.神秘分解元宝;
                         Enqueue(new SyncIngotsPacket
                         {
                             Amount = Ingot
@@ -17711,7 +17711,7 @@ public sealed class PlayerObject : MapObject
                         });
                     }
                 }
-                else if (Config.元宝金币回收设定 == 0)
+                else if (Settings.元宝金币回收设定 == 0)
                 {
                     Gold += Math.Max(1, equip.SalePrice);
                     Enqueue(new 同步货币数量
@@ -17755,7 +17755,7 @@ public sealed class PlayerObject : MapObject
         {
             物品数据 = (Storage.TryGetValue(location, out var v3) ? v3 : null);
         }
-        if (grid == 7 && Config.资源包开关 == 1)
+        if (grid == 7 && Settings.资源包开关 == 1)
         {
             物品数据 = (角色资源背包.TryGetValue(location, out var v4) ? v4 : null);
         }
@@ -17777,7 +17777,7 @@ public sealed class PlayerObject : MapObject
         {
             物品数据2 = (Storage.TryGetValue(targetLocation, out var v7) ? v7 : null);
         }
-        if (targetGrid == 7 && Config.资源包开关 == 1)
+        if (targetGrid == 7 && Settings.资源包开关 == 1)
         {
             物品数据2 = (角色资源背包.TryGetValue(targetLocation, out var v8) ? v8 : null);
         }
@@ -18308,7 +18308,7 @@ public sealed class PlayerObject : MapObject
                     });
                 }
             }
-            if (v.ID == Config.会员物品对接)
+            if (v.ID == Settings.会员物品对接)
             {
                 GuardObject 守卫实例2 = null;
                 foreach (int key in MapManager.Guards.Keys)
@@ -19664,31 +19664,31 @@ public sealed class PlayerObject : MapObject
 
                         var name = v.Name switch
                         {
-                            "BOSS卷轴一" => Config.BOSS卷轴怪物一,
-                            "BOSS卷轴二" => Config.BOSS卷轴怪物二,
-                            "BOSS卷轴三" => Config.BOSS卷轴怪物三,
-                            "BOSS卷轴四" => Config.BOSS卷轴怪物四,
-                            "BOSS卷轴五" => Config.BOSS卷轴怪物五,
-                            "BOSS卷轴六" => Config.BOSS卷轴怪物六,
-                            "BOSS卷轴七" => Config.BOSS卷轴怪物七,
-                            "BOSS卷轴八" => Config.BOSS卷轴怪物八,
-                            "BOSS卷轴九" => Config.BOSS卷轴怪物九,
-                            "BOSS卷轴十" => Config.BOSS卷轴怪物十,
-                            "BOSS卷轴11" => Config.BOSS卷轴怪物11,
-                            "BOSS卷轴12" => Config.BOSS卷轴怪物12,
-                            "BOSS卷轴13" => Config.BOSS卷轴怪物13,
-                            "BOSS卷轴14" => Config.BOSS卷轴怪物14,
-                            "BOSS卷轴15" => Config.BOSS卷轴怪物15,
-                            "BOSS卷轴16" => Config.BOSS卷轴怪物16,
+                            "BOSS卷轴一" => Settings.BOSS卷轴怪物一,
+                            "BOSS卷轴二" => Settings.BOSS卷轴怪物二,
+                            "BOSS卷轴三" => Settings.BOSS卷轴怪物三,
+                            "BOSS卷轴四" => Settings.BOSS卷轴怪物四,
+                            "BOSS卷轴五" => Settings.BOSS卷轴怪物五,
+                            "BOSS卷轴六" => Settings.BOSS卷轴怪物六,
+                            "BOSS卷轴七" => Settings.BOSS卷轴怪物七,
+                            "BOSS卷轴八" => Settings.BOSS卷轴怪物八,
+                            "BOSS卷轴九" => Settings.BOSS卷轴怪物九,
+                            "BOSS卷轴十" => Settings.BOSS卷轴怪物十,
+                            "BOSS卷轴11" => Settings.BOSS卷轴怪物11,
+                            "BOSS卷轴12" => Settings.BOSS卷轴怪物12,
+                            "BOSS卷轴13" => Settings.BOSS卷轴怪物13,
+                            "BOSS卷轴14" => Settings.BOSS卷轴怪物14,
+                            "BOSS卷轴15" => Settings.BOSS卷轴怪物15,
+                            "BOSS卷轴16" => Settings.BOSS卷轴怪物16,
                             _ => string.Empty
                         };
 
                         if (string.IsNullOrEmpty(name))
                             break;
 
-                        if (Config.CurrentVersion >= 1 && MonsterInfo.DataSheet.TryGetValue(name, out var moni))
+                        if (Settings.CurrentVersion >= 1 && MonsterInfo.DataSheet.TryGetValue(name, out var moni))
                         {
-                            if (Config.BOSS卷轴地图开关 == 1 && CurrentMap.MapID == Config.BOSS卷轴地图编号)
+                            if (Settings.BOSS卷轴地图开关 == 1 && CurrentMap.MapID == Settings.BOSS卷轴地图编号)
                             {
                                 MonsterObject mon = new MonsterObject(moni, CurrentMap, int.MaxValue, new Point(CurrentPosition.X, CurrentPosition.Y), 1,
                                     true, true);
@@ -19696,7 +19696,7 @@ public sealed class PlayerObject : MapObject
                                 mon.SurvivalTime = DateTime.MaxValue;
                                 ConsumeItem(1, v);
                             }
-                            if (Config.BOSS卷轴地图开关 == 0)
+                            if (Settings.BOSS卷轴地图开关 == 0)
                             {
                                 MonsterObject mon = new MonsterObject(moni, CurrentMap, int.MaxValue, new Point(CurrentPosition.X, CurrentPosition.Y), 1,
                                     true, true);
@@ -19709,11 +19709,11 @@ public sealed class PlayerObject : MapObject
                     }
                 case "初级赞助礼包":
                     {
-                        if (Config.新手领取选项 != 1)
+                        if (Settings.新手领取选项 != 1)
                         {
                             break;
                         }
-                        if (GameItem.DataSheet.TryGetValue(Config.初级赞助礼包1, out var value17))
+                        if (GameItem.DataSheet.TryGetValue(Settings.初级赞助礼包1, out var value17))
                         {
                             byte b31 = FindEmptyInventoryIndex();
                             Character.Inventory[b31] = new ItemInfo(value17, Character, 1, b31, 1);
@@ -19723,7 +19723,7 @@ public sealed class PlayerObject : MapObject
                             });
                             ConsumeItem(1, v);
                         }
-                        if (GameItem.DataSheet.TryGetValue(Config.初级赞助礼包2, out var value18))
+                        if (GameItem.DataSheet.TryGetValue(Settings.初级赞助礼包2, out var value18))
                         {
                             byte b33 = byte.MaxValue;
                             byte b34 = 0;
@@ -19744,7 +19744,7 @@ public sealed class PlayerObject : MapObject
                             });
                             ConsumeItem(1, v);
                         }
-                        if (GameItem.DataSheet.TryGetValue(Config.初级赞助礼包3, out var value19))
+                        if (GameItem.DataSheet.TryGetValue(Settings.初级赞助礼包3, out var value19))
                         {
                             byte b35 = byte.MaxValue;
                             byte b36 = 0;
@@ -19765,7 +19765,7 @@ public sealed class PlayerObject : MapObject
                             });
                             ConsumeItem(1, v);
                         }
-                        if (GameItem.DataSheet.TryGetValue(Config.初级赞助礼包4, out var value20))
+                        if (GameItem.DataSheet.TryGetValue(Settings.初级赞助礼包4, out var value20))
                         {
                             byte b37 = byte.MaxValue;
                             byte b38 = 0;
@@ -19786,7 +19786,7 @@ public sealed class PlayerObject : MapObject
                             });
                             ConsumeItem(1, v);
                         }
-                        if (GameItem.DataSheet.TryGetValue(Config.初级赞助礼包5, out var value21))
+                        if (GameItem.DataSheet.TryGetValue(Settings.初级赞助礼包5, out var value21))
                         {
                             byte b39 = byte.MaxValue;
                             byte b40 = 0;
@@ -19807,7 +19807,7 @@ public sealed class PlayerObject : MapObject
                             });
                             ConsumeItem(1, v);
                         }
-                        if (GameItem.DataSheet.TryGetValue(Config.初级赞助礼包6, out var value22))
+                        if (GameItem.DataSheet.TryGetValue(Settings.初级赞助礼包6, out var value22))
                         {
                             byte b41 = byte.MaxValue;
                             byte b42 = 0;
@@ -19828,7 +19828,7 @@ public sealed class PlayerObject : MapObject
                             });
                             ConsumeItem(1, v);
                         }
-                        if (GameItem.DataSheet.TryGetValue(Config.初级赞助礼包7, out var value23))
+                        if (GameItem.DataSheet.TryGetValue(Settings.初级赞助礼包7, out var value23))
                         {
                             byte b43 = byte.MaxValue;
                             byte b44 = 0;
@@ -19849,7 +19849,7 @@ public sealed class PlayerObject : MapObject
                             });
                             ConsumeItem(1, v);
                         }
-                        if (GameItem.DataSheet.TryGetValue(Config.初级赞助礼包8, out var value24))
+                        if (GameItem.DataSheet.TryGetValue(Settings.初级赞助礼包8, out var value24))
                         {
                             byte b45 = byte.MaxValue;
                             byte b46 = 0;
@@ -19870,17 +19870,17 @@ public sealed class PlayerObject : MapObject
                             });
                             ConsumeItem(1, v);
                         }
-                        AddTitle((byte)Config.初级赞助称号1);
+                        AddTitle((byte)Settings.初级赞助称号1);
                         ConsumeItem(1, v);
                         break;
                     }
                 case "中级赞助礼包":
                     {
-                        if (Config.新手领取选项 != 1)
+                        if (Settings.新手领取选项 != 1)
                         {
                             break;
                         }
-                        if (GameItem.DataSheet.TryGetValue(Config.中级赞助礼包1, out var value94))
+                        if (GameItem.DataSheet.TryGetValue(Settings.中级赞助礼包1, out var value94))
                         {
                             byte b121 = byte.MaxValue;
                             byte b122 = 0;
@@ -19901,7 +19901,7 @@ public sealed class PlayerObject : MapObject
                             });
                             ConsumeItem(1, v);
                         }
-                        if (GameItem.DataSheet.TryGetValue(Config.中级赞助礼包2, out var value95))
+                        if (GameItem.DataSheet.TryGetValue(Settings.中级赞助礼包2, out var value95))
                         {
                             byte b123 = byte.MaxValue;
                             byte b124 = 0;
@@ -19922,7 +19922,7 @@ public sealed class PlayerObject : MapObject
                             });
                             ConsumeItem(1, v);
                         }
-                        if (GameItem.DataSheet.TryGetValue(Config.中级赞助礼包3, out var value96))
+                        if (GameItem.DataSheet.TryGetValue(Settings.中级赞助礼包3, out var value96))
                         {
                             byte b125 = byte.MaxValue;
                             byte b126 = 0;
@@ -19943,7 +19943,7 @@ public sealed class PlayerObject : MapObject
                             });
                             ConsumeItem(1, v);
                         }
-                        if (GameItem.DataSheet.TryGetValue(Config.中级赞助礼包4, out var value97))
+                        if (GameItem.DataSheet.TryGetValue(Settings.中级赞助礼包4, out var value97))
                         {
                             byte b127 = byte.MaxValue;
                             byte b128 = 0;
@@ -19964,7 +19964,7 @@ public sealed class PlayerObject : MapObject
                             });
                             ConsumeItem(1, v);
                         }
-                        if (GameItem.DataSheet.TryGetValue(Config.中级赞助礼包5, out var value98))
+                        if (GameItem.DataSheet.TryGetValue(Settings.中级赞助礼包5, out var value98))
                         {
                             byte b129 = byte.MaxValue;
                             byte b130 = 0;
@@ -19985,7 +19985,7 @@ public sealed class PlayerObject : MapObject
                             });
                             ConsumeItem(1, v);
                         }
-                        if (GameItem.DataSheet.TryGetValue(Config.中级赞助礼包6, out var value99))
+                        if (GameItem.DataSheet.TryGetValue(Settings.中级赞助礼包6, out var value99))
                         {
                             byte b131 = byte.MaxValue;
                             byte b132 = 0;
@@ -20006,7 +20006,7 @@ public sealed class PlayerObject : MapObject
                             });
                             ConsumeItem(1, v);
                         }
-                        if (GameItem.DataSheet.TryGetValue(Config.中级赞助礼包7, out var value100))
+                        if (GameItem.DataSheet.TryGetValue(Settings.中级赞助礼包7, out var value100))
                         {
                             byte b133 = byte.MaxValue;
                             byte b134 = 0;
@@ -20027,7 +20027,7 @@ public sealed class PlayerObject : MapObject
                             });
                             ConsumeItem(1, v);
                         }
-                        if (GameItem.DataSheet.TryGetValue(Config.中级赞助礼包8, out var value101))
+                        if (GameItem.DataSheet.TryGetValue(Settings.中级赞助礼包8, out var value101))
                         {
                             byte b135 = byte.MaxValue;
                             byte b136 = 0;
@@ -20048,17 +20048,17 @@ public sealed class PlayerObject : MapObject
                             });
                             ConsumeItem(1, v);
                         }
-                        AddTitle((byte)Config.中级赞助称号1);
+                        AddTitle((byte)Settings.中级赞助称号1);
                         ConsumeItem(1, v);
                         break;
                     }
                 case "高级赞助礼包":
                     {
-                        if (Config.新手领取选项 != 1)
+                        if (Settings.新手领取选项 != 1)
                         {
                             break;
                         }
-                        if (GameItem.DataSheet.TryGetValue(Config.高级赞助礼包1, out var value67))
+                        if (GameItem.DataSheet.TryGetValue(Settings.高级赞助礼包1, out var value67))
                         {
                             byte b89 = byte.MaxValue;
                             byte b90 = 0;
@@ -20079,7 +20079,7 @@ public sealed class PlayerObject : MapObject
                             });
                             ConsumeItem(1, v);
                         }
-                        if (GameItem.DataSheet.TryGetValue(Config.高级赞助礼包2, out var value68))
+                        if (GameItem.DataSheet.TryGetValue(Settings.高级赞助礼包2, out var value68))
                         {
                             byte b91 = byte.MaxValue;
                             byte b92 = 0;
@@ -20100,7 +20100,7 @@ public sealed class PlayerObject : MapObject
                             });
                             ConsumeItem(1, v);
                         }
-                        if (GameItem.DataSheet.TryGetValue(Config.高级赞助礼包3, out var value69))
+                        if (GameItem.DataSheet.TryGetValue(Settings.高级赞助礼包3, out var value69))
                         {
                             byte b93 = byte.MaxValue;
                             byte b94 = 0;
@@ -20121,7 +20121,7 @@ public sealed class PlayerObject : MapObject
                             });
                             ConsumeItem(1, v);
                         }
-                        if (GameItem.DataSheet.TryGetValue(Config.高级赞助礼包4, out var value70))
+                        if (GameItem.DataSheet.TryGetValue(Settings.高级赞助礼包4, out var value70))
                         {
                             byte b95 = byte.MaxValue;
                             byte b96 = 0;
@@ -20142,7 +20142,7 @@ public sealed class PlayerObject : MapObject
                             });
                             ConsumeItem(1, v);
                         }
-                        if (GameItem.DataSheet.TryGetValue(Config.高级赞助礼包5, out var value71))
+                        if (GameItem.DataSheet.TryGetValue(Settings.高级赞助礼包5, out var value71))
                         {
                             byte b97 = byte.MaxValue;
                             byte b98 = 0;
@@ -20163,7 +20163,7 @@ public sealed class PlayerObject : MapObject
                             });
                             ConsumeItem(1, v);
                         }
-                        if (GameItem.DataSheet.TryGetValue(Config.高级赞助礼包6, out var value72))
+                        if (GameItem.DataSheet.TryGetValue(Settings.高级赞助礼包6, out var value72))
                         {
                             byte b99 = byte.MaxValue;
                             byte b100 = 0;
@@ -20184,7 +20184,7 @@ public sealed class PlayerObject : MapObject
                             });
                             ConsumeItem(1, v);
                         }
-                        if (GameItem.DataSheet.TryGetValue(Config.高级赞助礼包7, out var value73))
+                        if (GameItem.DataSheet.TryGetValue(Settings.高级赞助礼包7, out var value73))
                         {
                             byte b101 = byte.MaxValue;
                             byte b102 = 0;
@@ -20205,7 +20205,7 @@ public sealed class PlayerObject : MapObject
                             });
                             ConsumeItem(1, v);
                         }
-                        if (GameItem.DataSheet.TryGetValue(Config.高级赞助礼包8, out var value74))
+                        if (GameItem.DataSheet.TryGetValue(Settings.高级赞助礼包8, out var value74))
                         {
                             byte b103 = byte.MaxValue;
                             byte b104 = 0;
@@ -20226,7 +20226,7 @@ public sealed class PlayerObject : MapObject
                             });
                             ConsumeItem(1, v);
                         }
-                        AddTitle((byte)Config.高级赞助称号1);
+                        AddTitle((byte)Settings.高级赞助称号1);
                         ConsumeItem(1, v);
                         break;
                     }
@@ -20933,8 +20933,8 @@ public sealed class PlayerObject : MapObject
                         });
                     }
                     ConsumeItem(1, v);
-                    CurrentHP += (int)Math.Max((float)Config.万年雪霜HP * (1f + (float)this[Stat.HPRatePercent] / 10000f), 0f);
-                    CurrentMP += (int)Math.Max((float)Config.万年雪霜MP * (1f + (float)this[Stat.MPRatePercent] / 10000f), 0f);
+                    CurrentHP += (int)Math.Max((float)Settings.万年雪霜HP * (1f + (float)this[Stat.HPRatePercent] / 10000f), 0f);
+                    CurrentMP += (int)Math.Max((float)Settings.万年雪霜MP * (1f + (float)this[Stat.MPRatePercent] / 10000f), 0f);
                     break;
                 case "强效太阳水":
                     if (v.GroupID > 0 && v.GroupCooling > 0)
@@ -21200,8 +21200,8 @@ public sealed class PlayerObject : MapObject
                         });
                     }
                     ConsumeItem(1, v);
-                    CurrentHP += (int)Math.Max((float)Config.疗伤药HP * (1f + (float)this[Stat.HPRatePercent] / 10000f), 0f);
-                    CurrentMP += (int)Math.Max((float)Config.疗伤药MP * (1f + (float)this[Stat.MPRatePercent] / 10000f), 0f);
+                    CurrentHP += (int)Math.Max((float)Settings.疗伤药HP * (1f + (float)this[Stat.HPRatePercent] / 10000f), 0f);
+                    CurrentMP += (int)Math.Max((float)Settings.疗伤药MP * (1f + (float)this[Stat.MPRatePercent] / 10000f), 0f);
                     break;
                 case "超级金创药":
                     if (InventorySize - Inventory.Count < 5)
@@ -21577,13 +21577,13 @@ public sealed class PlayerObject : MapObject
                     break;
                 case "自定义物品1":
                     {
-                        if (!GameItem.DataSheetByName.TryGetValue(Config.自定义物品内容一, out var value51))
+                        if (!GameItem.DataSheetByName.TryGetValue(Settings.自定义物品内容一, out var value51))
                         {
                             break;
                         }
                         byte b77 = FindEmptyInventoryIndex();
                         Character.Inventory[b77] = new ItemInfo(value51, Character, 1, b77, 1);
-                        Character.Inventory[b77].Dura.V = Config.自定义物品数量一;
+                        Character.Inventory[b77].Dura.V = Settings.自定义物品数量一;
                         Character.Enqueue(new SyncItemPacket
                         {
                             Description = Character.Inventory[b77].ToArray()
@@ -21593,13 +21593,13 @@ public sealed class PlayerObject : MapObject
                     }
                 case "自定义物品2":
                     {
-                        if (!GameItem.DataSheetByName.TryGetValue(Config.自定义物品内容二, out var value48))
+                        if (!GameItem.DataSheetByName.TryGetValue(Settings.自定义物品内容二, out var value48))
                         {
                             break;
                         }
                         byte b73 = FindEmptyInventoryIndex();
                         Character.Inventory[b73] = new ItemInfo(value48, Character, 1, b73, 1);
-                        Character.Inventory[b73].Dura.V = Config.自定义物品数量二;
+                        Character.Inventory[b73].Dura.V = Settings.自定义物品数量二;
                         Character.Enqueue(new SyncItemPacket
                         {
                             Description = Character.Inventory[b73].ToArray()
@@ -21609,13 +21609,13 @@ public sealed class PlayerObject : MapObject
                     }
                 case "自定义物品3":
                     {
-                        if (!GameItem.DataSheetByName.TryGetValue(Config.自定义物品内容三, out var value44))
+                        if (!GameItem.DataSheetByName.TryGetValue(Settings.自定义物品内容三, out var value44))
                         {
                             break;
                         }
                         byte b67 = FindEmptyInventoryIndex();
                         Character.Inventory[b67] = new ItemInfo(value44, Character, 1, b67, 1);
-                        Character.Inventory[b67].Dura.V = Config.自定义物品数量三;
+                        Character.Inventory[b67].Dura.V = Settings.自定义物品数量三;
                         Character.Enqueue(new SyncItemPacket
                         {
                             Description = Character.Inventory[b67].ToArray()
@@ -21625,13 +21625,13 @@ public sealed class PlayerObject : MapObject
                     }
                 case "自定义物品4":
                     {
-                        if (!GameItem.DataSheetByName.TryGetValue(Config.自定义物品内容四, out var value35))
+                        if (!GameItem.DataSheetByName.TryGetValue(Settings.自定义物品内容四, out var value35))
                         {
                             break;
                         }
                         byte b63 = FindEmptyInventoryIndex();
                         Character.Inventory[b63] = new ItemInfo(value35, Character, 1, b63, 1);
-                        Character.Inventory[b63].Dura.V = Config.自定义物品数量四;
+                        Character.Inventory[b63].Dura.V = Settings.自定义物品数量四;
                         Character.Enqueue(new SyncItemPacket
                         {
                             Description = Character.Inventory[b63].ToArray()
@@ -21641,13 +21641,13 @@ public sealed class PlayerObject : MapObject
                     }
                 case "自定义物品5":
                     {
-                        if (!GameItem.DataSheetByName.TryGetValue(Config.自定义物品内容五, out var value32))
+                        if (!GameItem.DataSheetByName.TryGetValue(Settings.自定义物品内容五, out var value32))
                         {
                             break;
                         }
                         byte b57 = FindEmptyInventoryIndex();
                         Character.Inventory[b57] = new ItemInfo(value32, Character, 1, b57, 1);
-                        Character.Inventory[b57].Dura.V = Config.自定义物品数量五;
+                        Character.Inventory[b57].Dura.V = Settings.自定义物品数量五;
                         Character.Enqueue(new SyncItemPacket
                         {
                             Description = Character.Inventory[b57].ToArray()
@@ -21656,23 +21656,23 @@ public sealed class PlayerObject : MapObject
                         break;
                     }
                 case "自定义称号1":
-                    AddTitle(Config.自定义称号内容一);
+                    AddTitle(Settings.自定义称号内容一);
                     ConsumeItem(1, v);
                     break;
                 case "自定义称号2":
-                    AddTitle(Config.自定义称号内容二);
+                    AddTitle(Settings.自定义称号内容二);
                     ConsumeItem(1, v);
                     break;
                 case "自定义称号3":
-                    AddTitle(Config.自定义称号内容三);
+                    AddTitle(Settings.自定义称号内容三);
                     ConsumeItem(1, v);
                     break;
                 case "自定义称号4":
-                    AddTitle(Config.自定义称号内容四);
+                    AddTitle(Settings.自定义称号内容四);
                     ConsumeItem(1, v);
                     break;
                 case "自定义称号5":
-                    AddTitle(Config.自定义称号内容五);
+                    AddTitle(Settings.自定义称号内容五);
                     ConsumeItem(1, v);
                     break;
                 case "魔龙城回城卷包":
@@ -22044,7 +22044,7 @@ public sealed class PlayerObject : MapObject
                     break;
                 case "RandomTeleportStone(L)":
                 case "RandomTeleportStone":
-                    if (Character.CurrentMap.V != 179 && (Character.CurrentMap.V != 152 || Config.沙巴克禁止随机 != 1))
+                    if (Character.CurrentMap.V != 179 && (Character.CurrentMap.V != 152 || Settings.沙巴克禁止随机 != 1))
                     {
                         Point point = CurrentMap.GetRandomTeleportPosition(CurrentPosition);
                         if (point != default(Point))
@@ -22063,7 +22063,7 @@ public sealed class PlayerObject : MapObject
                     break;
                 case "冥想丹":
                     ConsumeItem(1, v);
-                    ExperienceRate += Config.冥想丹自定义经验;
+                    ExperienceRate += Settings.冥想丹自定义经验;
                     break;
                 case "祝福油":
                     {
@@ -22091,13 +22091,13 @@ public sealed class PlayerObject : MapObject
                         }
                         int num3 = v8 switch
                         {
-                            0 => Config.祝福油幸运1机率,
-                            1 => Config.祝福油幸运2机率,
-                            2 => Config.祝福油幸运3机率,
-                            3 => Config.祝福油幸运4机率,
-                            4 => Config.祝福油幸运5机率,
-                            5 => Config.祝福油幸运6机率,
-                            6 => Config.祝福油幸运7机率,
+                            0 => Settings.祝福油幸运1机率,
+                            1 => Settings.祝福油幸运2机率,
+                            2 => Settings.祝福油幸运3机率,
+                            3 => Settings.祝福油幸运4机率,
+                            4 => Settings.祝福油幸运5机率,
+                            5 => Settings.祝福油幸运6机率,
+                            6 => Settings.祝福油幸运7机率,
                             _ => 80,
                         };
                         if (1 == 0)
@@ -22172,14 +22172,14 @@ public sealed class PlayerObject : MapObject
                         }
                         int num3 = v6 switch
                         {
-                            0 => Config.高级祝福油幸运机率,
-                            1 => Config.高级祝福油幸运机率,
-                            2 => Config.高级祝福油幸运机率,
-                            3 => Config.高级祝福油幸运机率,
-                            4 => Config.高级祝福油幸运机率,
-                            5 => Config.高级祝福油幸运机率,
-                            6 => Config.高级祝福油幸运机率,
-                            _ => Config.高级祝福油幸运机率,
+                            0 => Settings.高级祝福油幸运机率,
+                            1 => Settings.高级祝福油幸运机率,
+                            2 => Settings.高级祝福油幸运机率,
+                            3 => Settings.高级祝福油幸运机率,
+                            4 => Settings.高级祝福油幸运机率,
+                            5 => Settings.高级祝福油幸运机率,
+                            6 => Settings.高级祝福油幸运机率,
+                            _ => Settings.高级祝福油幸运机率,
                         };
                         if (1 == 0)
                         {
@@ -22474,7 +22474,7 @@ public sealed class PlayerObject : MapObject
                     break;
                 case "沙城每日宝箱":
                     {
-                        if (Config.CurrentVersion < 2)
+                        if (Settings.CurrentVersion < 2)
                         {
                             break;
                         }
@@ -22489,94 +22489,94 @@ public sealed class PlayerObject : MapObject
                         }
                         int num8 = SEngine.Random.Next(100);
                         GameItem value93;
-                        if (num8 < Config.随机宝箱一几率1)
+                        if (num8 < Settings.随机宝箱一几率1)
                         {
-                            if (GameItem.DataSheet.TryGetValue(Config.随机宝箱一物品1, out var value86))
+                            if (GameItem.DataSheet.TryGetValue(Settings.随机宝箱一物品1, out var value86))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b119] = new ItemInfo(value86, Character, grid, b119, Config.随机宝箱一数量1);
+                                Inventory[b119] = new ItemInfo(value86, Character, grid, b119, Settings.随机宝箱一数量1);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b119].ToArray()
                                 });
                             }
                         }
-                        else if (num8 < Config.随机宝箱一几率2)
+                        else if (num8 < Settings.随机宝箱一几率2)
                         {
-                            if (GameItem.DataSheet.TryGetValue(Config.随机宝箱一物品2, out var value87))
+                            if (GameItem.DataSheet.TryGetValue(Settings.随机宝箱一物品2, out var value87))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b119] = new ItemInfo(value87, Character, grid, b119, Config.随机宝箱一数量2);
+                                Inventory[b119] = new ItemInfo(value87, Character, grid, b119, Settings.随机宝箱一数量2);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b119].ToArray()
                                 });
                             }
                         }
-                        else if (num8 < Config.随机宝箱一几率3)
+                        else if (num8 < Settings.随机宝箱一几率3)
                         {
-                            if (GameItem.DataSheet.TryGetValue(Config.随机宝箱一物品3, out var value88))
+                            if (GameItem.DataSheet.TryGetValue(Settings.随机宝箱一物品3, out var value88))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b119] = new ItemInfo(value88, Character, grid, b119, Config.随机宝箱一数量3);
+                                Inventory[b119] = new ItemInfo(value88, Character, grid, b119, Settings.随机宝箱一数量3);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b119].ToArray()
                                 });
                             }
                         }
-                        else if (num8 < Config.随机宝箱一几率4)
+                        else if (num8 < Settings.随机宝箱一几率4)
                         {
-                            if (GameItem.DataSheet.TryGetValue(Config.随机宝箱一物品4, out var value89))
+                            if (GameItem.DataSheet.TryGetValue(Settings.随机宝箱一物品4, out var value89))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b119] = new ItemInfo(value89, Character, grid, b119, Config.随机宝箱一数量4);
+                                Inventory[b119] = new ItemInfo(value89, Character, grid, b119, Settings.随机宝箱一数量4);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b119].ToArray()
                                 });
                             }
                         }
-                        else if (num8 < Config.随机宝箱一几率5)
+                        else if (num8 < Settings.随机宝箱一几率5)
                         {
-                            if (GameItem.DataSheet.TryGetValue(Config.随机宝箱一物品5, out var value90))
+                            if (GameItem.DataSheet.TryGetValue(Settings.随机宝箱一物品5, out var value90))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b119] = new ItemInfo(value90, Character, grid, b119, Config.随机宝箱一数量5);
+                                Inventory[b119] = new ItemInfo(value90, Character, grid, b119, Settings.随机宝箱一数量5);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b119].ToArray()
                                 });
                             }
                         }
-                        else if (num8 < Config.随机宝箱一几率6)
+                        else if (num8 < Settings.随机宝箱一几率6)
                         {
-                            if (GameItem.DataSheet.TryGetValue(Config.随机宝箱一物品6, out var value91))
+                            if (GameItem.DataSheet.TryGetValue(Settings.随机宝箱一物品6, out var value91))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b119] = new ItemInfo(value91, Character, grid, b119, Config.随机宝箱一数量6);
+                                Inventory[b119] = new ItemInfo(value91, Character, grid, b119, Settings.随机宝箱一数量6);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b119].ToArray()
                                 });
                             }
                         }
-                        else if (num8 < Config.随机宝箱一几率7)
+                        else if (num8 < Settings.随机宝箱一几率7)
                         {
-                            if (GameItem.DataSheet.TryGetValue(Config.随机宝箱一物品7, out var value92))
+                            if (GameItem.DataSheet.TryGetValue(Settings.随机宝箱一物品7, out var value92))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b119] = new ItemInfo(value92, Character, grid, b119, Config.随机宝箱一数量7);
+                                Inventory[b119] = new ItemInfo(value92, Character, grid, b119, Settings.随机宝箱一数量7);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b119].ToArray()
                                 });
                             }
                         }
-                        else if (num8 < Config.随机宝箱一几率8 && GameItem.DataSheet.TryGetValue(Config.随机宝箱一物品8, out value93))
+                        else if (num8 < Settings.随机宝箱一几率8 && GameItem.DataSheet.TryGetValue(Settings.随机宝箱一物品8, out value93))
                         {
                             ConsumeItem(1, v);
-                            Inventory[b119] = new ItemInfo(value93, Character, grid, b119, Config.随机宝箱一数量8);
+                            Inventory[b119] = new ItemInfo(value93, Character, grid, b119, Settings.随机宝箱一数量8);
                             Enqueue(new SyncItemPacket
                             {
                                 Description = Inventory[b119].ToArray()
@@ -22586,7 +22586,7 @@ public sealed class PlayerObject : MapObject
                     }
                 case "随机宝箱1":
                     {
-                        if (Config.CurrentVersion < 2)
+                        if (Settings.CurrentVersion < 2)
                         {
                             break;
                         }
@@ -22601,94 +22601,94 @@ public sealed class PlayerObject : MapObject
                         }
                         int num7 = SEngine.Random.Next(100);
                         GameItem value63;
-                        if (num7 < Config.随机宝箱二几率1)
+                        if (num7 < Settings.随机宝箱二几率1)
                         {
-                            if (GameItem.DataSheet.TryGetValue(Config.随机宝箱二物品1, out var value56))
+                            if (GameItem.DataSheet.TryGetValue(Settings.随机宝箱二物品1, out var value56))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b85] = new ItemInfo(value56, Character, grid, b85, Config.随机宝箱二数量1);
+                                Inventory[b85] = new ItemInfo(value56, Character, grid, b85, Settings.随机宝箱二数量1);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b85].ToArray()
                                 });
                             }
                         }
-                        else if (num7 < Config.随机宝箱二几率2)
+                        else if (num7 < Settings.随机宝箱二几率2)
                         {
-                            if (GameItem.DataSheet.TryGetValue(Config.随机宝箱二物品2, out var value57))
+                            if (GameItem.DataSheet.TryGetValue(Settings.随机宝箱二物品2, out var value57))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b85] = new ItemInfo(value57, Character, grid, b85, Config.随机宝箱二数量2);
+                                Inventory[b85] = new ItemInfo(value57, Character, grid, b85, Settings.随机宝箱二数量2);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b85].ToArray()
                                 });
                             }
                         }
-                        else if (num7 < Config.随机宝箱二几率3)
+                        else if (num7 < Settings.随机宝箱二几率3)
                         {
-                            if (GameItem.DataSheet.TryGetValue(Config.随机宝箱二物品3, out var value58))
+                            if (GameItem.DataSheet.TryGetValue(Settings.随机宝箱二物品3, out var value58))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b85] = new ItemInfo(value58, Character, grid, b85, Config.随机宝箱二数量3);
+                                Inventory[b85] = new ItemInfo(value58, Character, grid, b85, Settings.随机宝箱二数量3);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b85].ToArray()
                                 });
                             }
                         }
-                        else if (num7 < Config.随机宝箱二几率4)
+                        else if (num7 < Settings.随机宝箱二几率4)
                         {
-                            if (GameItem.DataSheet.TryGetValue(Config.随机宝箱二物品4, out var value59))
+                            if (GameItem.DataSheet.TryGetValue(Settings.随机宝箱二物品4, out var value59))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b85] = new ItemInfo(value59, Character, grid, b85, Config.随机宝箱二数量4);
+                                Inventory[b85] = new ItemInfo(value59, Character, grid, b85, Settings.随机宝箱二数量4);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b85].ToArray()
                                 });
                             }
                         }
-                        else if (num7 < Config.随机宝箱二几率5)
+                        else if (num7 < Settings.随机宝箱二几率5)
                         {
-                            if (GameItem.DataSheet.TryGetValue(Config.随机宝箱二物品5, out var value60))
+                            if (GameItem.DataSheet.TryGetValue(Settings.随机宝箱二物品5, out var value60))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b85] = new ItemInfo(value60, Character, grid, b85, Config.随机宝箱二数量5);
+                                Inventory[b85] = new ItemInfo(value60, Character, grid, b85, Settings.随机宝箱二数量5);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b85].ToArray()
                                 });
                             }
                         }
-                        else if (num7 < Config.随机宝箱二几率6)
+                        else if (num7 < Settings.随机宝箱二几率6)
                         {
-                            if (GameItem.DataSheet.TryGetValue(Config.随机宝箱二物品6, out var value61))
+                            if (GameItem.DataSheet.TryGetValue(Settings.随机宝箱二物品6, out var value61))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b85] = new ItemInfo(value61, Character, grid, b85, Config.随机宝箱二数量6);
+                                Inventory[b85] = new ItemInfo(value61, Character, grid, b85, Settings.随机宝箱二数量6);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b85].ToArray()
                                 });
                             }
                         }
-                        else if (num7 < Config.随机宝箱二几率7)
+                        else if (num7 < Settings.随机宝箱二几率7)
                         {
-                            if (GameItem.DataSheet.TryGetValue(Config.随机宝箱二物品7, out var value62))
+                            if (GameItem.DataSheet.TryGetValue(Settings.随机宝箱二物品7, out var value62))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b85] = new ItemInfo(value62, Character, grid, b85, Config.随机宝箱二数量7);
+                                Inventory[b85] = new ItemInfo(value62, Character, grid, b85, Settings.随机宝箱二数量7);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b85].ToArray()
                                 });
                             }
                         }
-                        else if (num7 < Config.随机宝箱二几率8 && GameItem.DataSheet.TryGetValue(Config.随机宝箱二物品8, out value63))
+                        else if (num7 < Settings.随机宝箱二几率8 && GameItem.DataSheet.TryGetValue(Settings.随机宝箱二物品8, out value63))
                         {
                             ConsumeItem(1, v);
-                            Inventory[b85] = new ItemInfo(value63, Character, grid, b85, Config.随机宝箱二数量8);
+                            Inventory[b85] = new ItemInfo(value63, Character, grid, b85, Settings.随机宝箱二数量8);
                             Enqueue(new SyncItemPacket
                             {
                                 Description = Inventory[b85].ToArray()
@@ -22698,7 +22698,7 @@ public sealed class PlayerObject : MapObject
                     }
                 case "随机宝箱2":
                     {
-                        if (Config.CurrentVersion < 2)
+                        if (Settings.CurrentVersion < 2)
                         {
                             break;
                         }
@@ -22713,94 +22713,94 @@ public sealed class PlayerObject : MapObject
                         }
                         int num = SEngine.Random.Next(100);
                         GameItem value43;
-                        if (num < Config.随机宝箱三几率1)
+                        if (num < Settings.随机宝箱三几率1)
                         {
-                            if (GameItem.DataSheet.TryGetValue(Config.随机宝箱三物品1, out var value36))
+                            if (GameItem.DataSheet.TryGetValue(Settings.随机宝箱三物品1, out var value36))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b65] = new ItemInfo(value36, Character, grid, b65, Config.随机宝箱三数量1);
+                                Inventory[b65] = new ItemInfo(value36, Character, grid, b65, Settings.随机宝箱三数量1);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b65].ToArray()
                                 });
                             }
                         }
-                        else if (num < Config.随机宝箱三几率2)
+                        else if (num < Settings.随机宝箱三几率2)
                         {
-                            if (GameItem.DataSheet.TryGetValue(Config.随机宝箱三物品2, out var value37))
+                            if (GameItem.DataSheet.TryGetValue(Settings.随机宝箱三物品2, out var value37))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b65] = new ItemInfo(value37, Character, grid, b65, Config.随机宝箱三数量2);
+                                Inventory[b65] = new ItemInfo(value37, Character, grid, b65, Settings.随机宝箱三数量2);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b65].ToArray()
                                 });
                             }
                         }
-                        else if (num < Config.随机宝箱三几率3)
+                        else if (num < Settings.随机宝箱三几率3)
                         {
-                            if (GameItem.DataSheet.TryGetValue(Config.随机宝箱三物品3, out var value38))
+                            if (GameItem.DataSheet.TryGetValue(Settings.随机宝箱三物品3, out var value38))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b65] = new ItemInfo(value38, Character, grid, b65, Config.随机宝箱三数量3);
+                                Inventory[b65] = new ItemInfo(value38, Character, grid, b65, Settings.随机宝箱三数量3);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b65].ToArray()
                                 });
                             }
                         }
-                        else if (num < Config.随机宝箱三几率4)
+                        else if (num < Settings.随机宝箱三几率4)
                         {
-                            if (GameItem.DataSheet.TryGetValue(Config.随机宝箱三物品4, out var value39))
+                            if (GameItem.DataSheet.TryGetValue(Settings.随机宝箱三物品4, out var value39))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b65] = new ItemInfo(value39, Character, grid, b65, Config.随机宝箱三数量4);
+                                Inventory[b65] = new ItemInfo(value39, Character, grid, b65, Settings.随机宝箱三数量4);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b65].ToArray()
                                 });
                             }
                         }
-                        else if (num < Config.随机宝箱三几率5)
+                        else if (num < Settings.随机宝箱三几率5)
                         {
-                            if (GameItem.DataSheet.TryGetValue(Config.随机宝箱三物品5, out var value40))
+                            if (GameItem.DataSheet.TryGetValue(Settings.随机宝箱三物品5, out var value40))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b65] = new ItemInfo(value40, Character, grid, b65, Config.随机宝箱三数量5);
+                                Inventory[b65] = new ItemInfo(value40, Character, grid, b65, Settings.随机宝箱三数量5);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b65].ToArray()
                                 });
                             }
                         }
-                        else if (num < Config.随机宝箱三几率6)
+                        else if (num < Settings.随机宝箱三几率6)
                         {
-                            if (GameItem.DataSheet.TryGetValue(Config.随机宝箱三物品6, out var value41))
+                            if (GameItem.DataSheet.TryGetValue(Settings.随机宝箱三物品6, out var value41))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b65] = new ItemInfo(value41, Character, grid, b65, Config.随机宝箱三数量6);
+                                Inventory[b65] = new ItemInfo(value41, Character, grid, b65, Settings.随机宝箱三数量6);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b65].ToArray()
                                 });
                             }
                         }
-                        else if (num < Config.随机宝箱三几率7)
+                        else if (num < Settings.随机宝箱三几率7)
                         {
-                            if (GameItem.DataSheet.TryGetValue(Config.随机宝箱三物品7, out var value42))
+                            if (GameItem.DataSheet.TryGetValue(Settings.随机宝箱三物品7, out var value42))
                             {
                                 ConsumeItem(1, v);
-                                Inventory[b65] = new ItemInfo(value42, Character, grid, b65, Config.随机宝箱三数量7);
+                                Inventory[b65] = new ItemInfo(value42, Character, grid, b65, Settings.随机宝箱三数量7);
                                 Enqueue(new SyncItemPacket
                                 {
                                     Description = Inventory[b65].ToArray()
                                 });
                             }
                         }
-                        else if (num < Config.随机宝箱三几率8 && GameItem.DataSheet.TryGetValue(Config.随机宝箱三物品8, out value43))
+                        else if (num < Settings.随机宝箱三几率8 && GameItem.DataSheet.TryGetValue(Settings.随机宝箱三物品8, out value43))
                         {
                             ConsumeItem(1, v);
-                            Inventory[b65] = new ItemInfo(value43, Character, grid, b65, Config.随机宝箱三数量8);
+                            Inventory[b65] = new ItemInfo(value43, Character, grid, b65, Settings.随机宝箱三数量8);
                             Enqueue(new SyncItemPacket
                             {
                                 Description = Inventory[b65].ToArray()
@@ -22958,7 +22958,7 @@ public sealed class PlayerObject : MapObject
                 case "元宝袋(1)":
                     if (ConsumeItem(1, v))
                     {
-                        Ingot += Config.元宝袋新创数量1;
+                        Ingot += Settings.元宝袋新创数量1;
                         Enqueue(new SyncIngotsPacket
                         {
                             Amount = Ingot
@@ -22968,7 +22968,7 @@ public sealed class PlayerObject : MapObject
                 case "元宝袋(2)":
                     if (ConsumeItem(1, v))
                     {
-                        Ingot += Config.元宝袋新创数量2;
+                        Ingot += Settings.元宝袋新创数量2;
                         Enqueue(new SyncIngotsPacket
                         {
                             Amount = Ingot
@@ -22978,7 +22978,7 @@ public sealed class PlayerObject : MapObject
                 case "元宝袋(3)":
                     if (ConsumeItem(1, v))
                     {
-                        Ingot += Config.元宝袋新创数量3;
+                        Ingot += Settings.元宝袋新创数量3;
                         Enqueue(new SyncIngotsPacket
                         {
                             Amount = Ingot
@@ -22988,7 +22988,7 @@ public sealed class PlayerObject : MapObject
                 case "元宝袋(4)":
                     if (ConsumeItem(1, v))
                     {
-                        Ingot += Config.元宝袋新创数量4;
+                        Ingot += Settings.元宝袋新创数量4;
                         Enqueue(new SyncIngotsPacket
                         {
                             Amount = Ingot
@@ -22998,7 +22998,7 @@ public sealed class PlayerObject : MapObject
                 case "元宝袋(5)":
                     if (ConsumeItem(1, v))
                     {
-                        Ingot += Config.元宝袋新创数量5;
+                        Ingot += Settings.元宝袋新创数量5;
                         Enqueue(new SyncIngotsPacket
                         {
                             Amount = Ingot
@@ -23138,9 +23138,9 @@ public sealed class PlayerObject : MapObject
         {
             NetworkManager.SendMessage(this, "You can't craft in your current state.");
         }
-        else if (ItemCrafting.DataSheet.TryGetValue(id, out value) && Config.CurrentVersion >= 2)
+        else if (ItemCrafting.DataSheet.TryGetValue(id, out value) && Settings.CurrentVersion >= 2)
         {
-            if (!(Config.合成模块控件 == "CXZQWEZZADDRX") && Config.CurrentVersion < 3)
+            if (!(Settings.合成模块控件 == "CXZQWEZZADDRX") && Settings.CurrentVersion < 3)
             {
                 return;
             }
@@ -23630,7 +23630,7 @@ public sealed class PlayerObject : MapObject
         {
             装备数据 = v;
         }
-        if (装备类型 == 1 && Inventory.TryGetValue(装备位置, out var v2) && v2 is EquipmentInfo 装备数据2 && Config.禁止背包铭文洗练 == 0)
+        if (装备类型 == 1 && Inventory.TryGetValue(装备位置, out var v2) && v2 is EquipmentInfo 装备数据2 && Settings.禁止背包铭文洗练 == 0)
         {
             装备数据 = 装备数据2;
         }
@@ -23725,133 +23725,133 @@ public sealed class PlayerObject : MapObject
                     铭文技能4 = 铭文技能3;
                 }
                 while (铭文技能4.SkillID == 装备数据.FirstInscription?.SkillID);
-                if (Config.CurrentVersion >= 1)
+                if (Settings.CurrentVersion >= 1)
                 {
                     int num = SEngine.Random.Next(100);
-                    if (Job == GameObjectRace.Wizard && Config.铭文法师保底开关 == 1)
+                    if (Job == GameObjectRace.Wizard && Settings.铭文法师保底开关 == 1)
                     {
-                        if (Character.铭文洗练次数2.V == Config.铭文法师2挡1次数 && num <= Config.铭文法师2挡1概率)
+                        if (Character.铭文洗练次数2.V == Settings.铭文法师2挡1次数 && num <= Settings.铭文法师2挡1概率)
                         {
                             Character.铭文洗练次数2.V = 0;
-                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文法师2挡技能编号;
-                            装备数据.FirstInscription.ID = (byte)Config.铭文法师2挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Settings.铭文法师2挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Settings.铭文法师2挡技能铭文;
                         }
-                        if (Character.铭文洗练次数2.V == Config.铭文法师2挡2次数 && num <= Config.铭文法师2挡2概率)
+                        if (Character.铭文洗练次数2.V == Settings.铭文法师2挡2次数 && num <= Settings.铭文法师2挡2概率)
                         {
                             Character.铭文洗练次数2.V = 0;
-                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文法师2挡技能编号;
-                            装备数据.FirstInscription.ID = (byte)Config.铭文法师2挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Settings.铭文法师2挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Settings.铭文法师2挡技能铭文;
                         }
-                        if (Character.铭文洗练次数2.V >= Config.铭文法师2挡3次数 && 100 == Config.铭文法师2挡3概率)
+                        if (Character.铭文洗练次数2.V >= Settings.铭文法师2挡3次数 && 100 == Settings.铭文法师2挡3概率)
                         {
                             Character.铭文洗练次数2.V = 0;
-                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文法师2挡技能编号;
-                            装备数据.FirstInscription.ID = (byte)Config.铭文法师2挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Settings.铭文法师2挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Settings.铭文法师2挡技能铭文;
                         }
                     }
-                    if (Job == GameObjectRace.Warrior && Config.铭文战士保底开关 == 1)
+                    if (Job == GameObjectRace.Warrior && Settings.铭文战士保底开关 == 1)
                     {
-                        if (Character.铭文洗练次数2.V == Config.铭文战士2挡1次数 && num <= Config.铭文战士2挡1概率)
+                        if (Character.铭文洗练次数2.V == Settings.铭文战士2挡1次数 && num <= Settings.铭文战士2挡1概率)
                         {
                             Character.铭文洗练次数2.V = 0;
-                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文战士2挡技能编号;
-                            装备数据.FirstInscription.ID = (byte)Config.铭文战士2挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Settings.铭文战士2挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Settings.铭文战士2挡技能铭文;
                         }
-                        if (Character.铭文洗练次数2.V == Config.铭文战士2挡2次数 && num <= Config.铭文战士2挡2概率)
+                        if (Character.铭文洗练次数2.V == Settings.铭文战士2挡2次数 && num <= Settings.铭文战士2挡2概率)
                         {
                             Character.铭文洗练次数2.V = 0;
-                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文战士2挡技能编号;
-                            装备数据.FirstInscription.ID = (byte)Config.铭文战士2挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Settings.铭文战士2挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Settings.铭文战士2挡技能铭文;
                         }
-                        if (Character.铭文洗练次数2.V >= Config.铭文战士2挡3次数 && 100 == Config.铭文战士2挡3概率)
+                        if (Character.铭文洗练次数2.V >= Settings.铭文战士2挡3次数 && 100 == Settings.铭文战士2挡3概率)
                         {
                             Character.铭文洗练次数2.V = 0;
-                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文战士2挡技能编号;
-                            装备数据.FirstInscription.ID = (byte)Config.铭文战士2挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Settings.铭文战士2挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Settings.铭文战士2挡技能铭文;
                         }
                     }
-                    if (Job == GameObjectRace.Taoist && Config.铭文道士保底开关 == 1)
+                    if (Job == GameObjectRace.Taoist && Settings.铭文道士保底开关 == 1)
                     {
-                        if (Character.铭文洗练次数2.V == Config.铭文道士2挡1次数 && num <= Config.铭文道士2挡1概率)
+                        if (Character.铭文洗练次数2.V == Settings.铭文道士2挡1次数 && num <= Settings.铭文道士2挡1概率)
                         {
                             Character.铭文洗练次数2.V = 0;
-                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文道士2挡技能编号;
-                            装备数据.FirstInscription.ID = (byte)Config.铭文道士2挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Settings.铭文道士2挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Settings.铭文道士2挡技能铭文;
                         }
-                        if (Character.铭文洗练次数2.V == Config.铭文道士2挡2次数 && num <= Config.铭文道士2挡2概率)
+                        if (Character.铭文洗练次数2.V == Settings.铭文道士2挡2次数 && num <= Settings.铭文道士2挡2概率)
                         {
                             Character.铭文洗练次数2.V = 0;
-                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文道士2挡技能编号;
-                            装备数据.FirstInscription.ID = (byte)Config.铭文道士2挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Settings.铭文道士2挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Settings.铭文道士2挡技能铭文;
                         }
-                        if (Character.铭文洗练次数2.V >= Config.铭文道士2挡3次数 && 100 == Config.铭文道士2挡3概率)
+                        if (Character.铭文洗练次数2.V >= Settings.铭文道士2挡3次数 && 100 == Settings.铭文道士2挡3概率)
                         {
                             Character.铭文洗练次数2.V = 0;
-                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文道士2挡技能编号;
-                            装备数据.FirstInscription.ID = (byte)Config.铭文道士2挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Settings.铭文道士2挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Settings.铭文道士2挡技能铭文;
                         }
                     }
-                    if (Job == GameObjectRace.Assassin && Config.铭文刺客保底开关 == 1)
+                    if (Job == GameObjectRace.Assassin && Settings.铭文刺客保底开关 == 1)
                     {
-                        if (Character.铭文洗练次数2.V == Config.铭文刺客2挡1次数 && num <= Config.铭文刺客2挡1概率)
+                        if (Character.铭文洗练次数2.V == Settings.铭文刺客2挡1次数 && num <= Settings.铭文刺客2挡1概率)
                         {
                             Character.铭文洗练次数2.V = 0;
-                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文刺客2挡技能编号;
-                            装备数据.FirstInscription.ID = (byte)Config.铭文刺客2挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Settings.铭文刺客2挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Settings.铭文刺客2挡技能铭文;
                         }
-                        if (Character.铭文洗练次数2.V == Config.铭文刺客2挡2次数 && num <= Config.铭文刺客2挡2概率)
+                        if (Character.铭文洗练次数2.V == Settings.铭文刺客2挡2次数 && num <= Settings.铭文刺客2挡2概率)
                         {
                             Character.铭文洗练次数2.V = 0;
-                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文刺客2挡技能编号;
-                            装备数据.FirstInscription.ID = (byte)Config.铭文刺客2挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Settings.铭文刺客2挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Settings.铭文刺客2挡技能铭文;
                         }
-                        if (Character.铭文洗练次数2.V >= Config.铭文刺客2挡3次数 && 100 == Config.铭文刺客2挡3概率)
+                        if (Character.铭文洗练次数2.V >= Settings.铭文刺客2挡3次数 && 100 == Settings.铭文刺客2挡3概率)
                         {
                             Character.铭文洗练次数2.V = 0;
-                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文刺客2挡技能编号;
-                            装备数据.FirstInscription.ID = (byte)Config.铭文刺客2挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Settings.铭文刺客2挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Settings.铭文刺客2挡技能铭文;
                         }
                     }
-                    if (Job == GameObjectRace.Archer && Config.铭文弓手保底开关 == 1)
+                    if (Job == GameObjectRace.Archer && Settings.铭文弓手保底开关 == 1)
                     {
-                        if (Character.铭文洗练次数2.V == Config.铭文弓手2挡1次数 && num <= Config.铭文弓手2挡1概率)
+                        if (Character.铭文洗练次数2.V == Settings.铭文弓手2挡1次数 && num <= Settings.铭文弓手2挡1概率)
                         {
                             Character.铭文洗练次数2.V = 0;
-                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文弓手2挡技能编号;
-                            装备数据.FirstInscription.ID = (byte)Config.铭文弓手2挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Settings.铭文弓手2挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Settings.铭文弓手2挡技能铭文;
                         }
-                        if (Character.铭文洗练次数2.V == Config.铭文弓手2挡2次数 && num <= Config.铭文弓手2挡2概率)
+                        if (Character.铭文洗练次数2.V == Settings.铭文弓手2挡2次数 && num <= Settings.铭文弓手2挡2概率)
                         {
                             Character.铭文洗练次数2.V = 0;
-                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文弓手2挡技能编号;
-                            装备数据.FirstInscription.ID = (byte)Config.铭文弓手2挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Settings.铭文弓手2挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Settings.铭文弓手2挡技能铭文;
                         }
-                        if (Character.铭文洗练次数2.V >= Config.铭文弓手2挡3次数 && 100 == Config.铭文弓手2挡3概率)
+                        if (Character.铭文洗练次数2.V >= Settings.铭文弓手2挡3次数 && 100 == Settings.铭文弓手2挡3概率)
                         {
                             Character.铭文洗练次数2.V = 0;
-                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文弓手2挡技能编号;
-                            装备数据.FirstInscription.ID = (byte)Config.铭文弓手2挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Settings.铭文弓手2挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Settings.铭文弓手2挡技能铭文;
                         }
                     }
-                    if (Job == GameObjectRace.DragonLance && Config.铭文龙枪保底开关 == 1)
+                    if (Job == GameObjectRace.DragonLance && Settings.铭文龙枪保底开关 == 1)
                     {
-                        if (Character.铭文洗练次数2.V == Config.铭文龙枪2挡1次数 && num <= Config.铭文龙枪2挡1概率)
+                        if (Character.铭文洗练次数2.V == Settings.铭文龙枪2挡1次数 && num <= Settings.铭文龙枪2挡1概率)
                         {
                             Character.铭文洗练次数2.V = 0;
-                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文龙枪2挡技能编号;
-                            装备数据.FirstInscription.ID = (byte)Config.铭文龙枪2挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Settings.铭文龙枪2挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Settings.铭文龙枪2挡技能铭文;
                         }
-                        if (Character.铭文洗练次数2.V == Config.铭文龙枪2挡2次数 && num <= Config.铭文龙枪2挡2概率)
+                        if (Character.铭文洗练次数2.V == Settings.铭文龙枪2挡2次数 && num <= Settings.铭文龙枪2挡2概率)
                         {
                             Character.铭文洗练次数2.V = 0;
-                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文龙枪2挡技能编号;
-                            装备数据.FirstInscription.ID = (byte)Config.铭文龙枪2挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Settings.铭文龙枪2挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Settings.铭文龙枪2挡技能铭文;
                         }
-                        if (Character.铭文洗练次数2.V >= Config.铭文龙枪2挡3次数 && 100 == Config.铭文龙枪2挡3概率)
+                        if (Character.铭文洗练次数2.V >= Settings.铭文龙枪2挡3次数 && 100 == Settings.铭文龙枪2挡3概率)
                         {
                             Character.铭文洗练次数2.V = 0;
-                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文龙枪2挡技能编号;
-                            装备数据.FirstInscription.ID = (byte)Config.铭文龙枪2挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Settings.铭文龙枪2挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Settings.铭文龙枪2挡技能铭文;
                         }
                     }
                 }
@@ -23872,133 +23872,133 @@ public sealed class PlayerObject : MapObject
                     铭文技能7 = 铭文技能6;
                 }
                 while (铭文技能7.SkillID == 装备数据.SecondInscription?.SkillID);
-                if (Config.CurrentVersion >= 1)
+                if (Settings.CurrentVersion >= 1)
                 {
                     int num2 = SEngine.Random.Next(10000);
-                    if (Job == GameObjectRace.Wizard && Config.铭文法师保底开关 == 1)
+                    if (Job == GameObjectRace.Wizard && Settings.铭文法师保底开关 == 1)
                     {
-                        if (Character.铭文洗练次数1.V == Config.铭文法师1挡1次数 && num2 <= Config.铭文法师1挡1概率)
+                        if (Character.铭文洗练次数1.V == Settings.铭文法师1挡1次数 && num2 <= Settings.铭文法师1挡1概率)
                         {
                             Character.铭文洗练次数1.V = 0;
-                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文法师1挡技能编号;
-                            装备数据.FirstInscription.ID = (byte)Config.铭文法师1挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Settings.铭文法师1挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Settings.铭文法师1挡技能铭文;
                         }
-                        if (Character.铭文洗练次数1.V == Config.铭文法师1挡2次数 && num2 <= Config.铭文法师1挡2概率)
+                        if (Character.铭文洗练次数1.V == Settings.铭文法师1挡2次数 && num2 <= Settings.铭文法师1挡2概率)
                         {
                             Character.铭文洗练次数1.V = 0;
-                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文法师1挡技能编号;
-                            装备数据.FirstInscription.ID = (byte)Config.铭文法师1挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Settings.铭文法师1挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Settings.铭文法师1挡技能铭文;
                         }
-                        if (Character.铭文洗练次数1.V >= Config.铭文法师1挡3次数 && 100 == Config.铭文法师1挡3概率)
+                        if (Character.铭文洗练次数1.V >= Settings.铭文法师1挡3次数 && 100 == Settings.铭文法师1挡3概率)
                         {
                             Character.铭文洗练次数1.V = 0;
-                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文法师1挡技能编号;
-                            装备数据.FirstInscription.ID = (byte)Config.铭文法师1挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Settings.铭文法师1挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Settings.铭文法师1挡技能铭文;
                         }
                     }
-                    if (Job == GameObjectRace.Warrior && Config.铭文战士保底开关 == 1)
+                    if (Job == GameObjectRace.Warrior && Settings.铭文战士保底开关 == 1)
                     {
-                        if (Character.铭文洗练次数1.V == Config.铭文战士1挡1次数 && num2 <= Config.铭文战士1挡1概率)
+                        if (Character.铭文洗练次数1.V == Settings.铭文战士1挡1次数 && num2 <= Settings.铭文战士1挡1概率)
                         {
                             Character.铭文洗练次数1.V = 0;
-                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文战士1挡技能编号;
-                            装备数据.FirstInscription.ID = (byte)Config.铭文战士1挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Settings.铭文战士1挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Settings.铭文战士1挡技能铭文;
                         }
-                        if (Character.铭文洗练次数1.V == Config.铭文战士1挡2次数 && num2 <= Config.铭文战士1挡2概率)
+                        if (Character.铭文洗练次数1.V == Settings.铭文战士1挡2次数 && num2 <= Settings.铭文战士1挡2概率)
                         {
                             Character.铭文洗练次数1.V = 0;
-                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文战士1挡技能编号;
-                            装备数据.FirstInscription.ID = (byte)Config.铭文战士1挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Settings.铭文战士1挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Settings.铭文战士1挡技能铭文;
                         }
-                        if (Character.铭文洗练次数1.V >= Config.铭文战士1挡3次数 && 100 == Config.铭文战士1挡3概率)
+                        if (Character.铭文洗练次数1.V >= Settings.铭文战士1挡3次数 && 100 == Settings.铭文战士1挡3概率)
                         {
                             Character.铭文洗练次数1.V = 0;
-                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文战士1挡技能编号;
-                            装备数据.FirstInscription.ID = (byte)Config.铭文战士1挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Settings.铭文战士1挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Settings.铭文战士1挡技能铭文;
                         }
                     }
-                    if (Job == GameObjectRace.Taoist && Config.铭文道士保底开关 == 1)
+                    if (Job == GameObjectRace.Taoist && Settings.铭文道士保底开关 == 1)
                     {
-                        if (Character.铭文洗练次数1.V == Config.铭文道士1挡1次数 && num2 <= Config.铭文道士1挡1概率)
+                        if (Character.铭文洗练次数1.V == Settings.铭文道士1挡1次数 && num2 <= Settings.铭文道士1挡1概率)
                         {
                             Character.铭文洗练次数1.V = 0;
-                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文道士1挡技能编号;
-                            装备数据.FirstInscription.ID = (byte)Config.铭文道士1挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Settings.铭文道士1挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Settings.铭文道士1挡技能铭文;
                         }
-                        if (Character.铭文洗练次数1.V == Config.铭文道士1挡2次数 && num2 <= Config.铭文道士1挡2概率)
+                        if (Character.铭文洗练次数1.V == Settings.铭文道士1挡2次数 && num2 <= Settings.铭文道士1挡2概率)
                         {
                             Character.铭文洗练次数1.V = 0;
-                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文道士1挡技能编号;
-                            装备数据.FirstInscription.ID = (byte)Config.铭文道士1挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Settings.铭文道士1挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Settings.铭文道士1挡技能铭文;
                         }
-                        if (Character.铭文洗练次数1.V >= Config.铭文道士1挡3次数 && 100 == Config.铭文道士1挡3概率)
+                        if (Character.铭文洗练次数1.V >= Settings.铭文道士1挡3次数 && 100 == Settings.铭文道士1挡3概率)
                         {
                             Character.铭文洗练次数1.V = 0;
-                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文道士1挡技能编号;
-                            装备数据.FirstInscription.ID = (byte)Config.铭文道士1挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Settings.铭文道士1挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Settings.铭文道士1挡技能铭文;
                         }
                     }
-                    if (Job == GameObjectRace.Assassin && Config.铭文刺客保底开关 == 1)
+                    if (Job == GameObjectRace.Assassin && Settings.铭文刺客保底开关 == 1)
                     {
-                        if (Character.铭文洗练次数1.V == Config.铭文刺客1挡1次数 && num2 <= Config.铭文刺客1挡1概率)
+                        if (Character.铭文洗练次数1.V == Settings.铭文刺客1挡1次数 && num2 <= Settings.铭文刺客1挡1概率)
                         {
                             Character.铭文洗练次数1.V = 0;
-                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文刺客1挡技能编号;
-                            装备数据.FirstInscription.ID = (byte)Config.铭文刺客1挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Settings.铭文刺客1挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Settings.铭文刺客1挡技能铭文;
                         }
-                        if (Character.铭文洗练次数1.V == Config.铭文刺客1挡2次数 && num2 <= Config.铭文刺客1挡2概率)
+                        if (Character.铭文洗练次数1.V == Settings.铭文刺客1挡2次数 && num2 <= Settings.铭文刺客1挡2概率)
                         {
                             Character.铭文洗练次数1.V = 0;
-                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文刺客1挡技能编号;
-                            装备数据.FirstInscription.ID = (byte)Config.铭文刺客1挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Settings.铭文刺客1挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Settings.铭文刺客1挡技能铭文;
                         }
-                        if (Character.铭文洗练次数1.V >= Config.铭文刺客1挡3次数 && 100 == Config.铭文刺客1挡3概率)
+                        if (Character.铭文洗练次数1.V >= Settings.铭文刺客1挡3次数 && 100 == Settings.铭文刺客1挡3概率)
                         {
                             Character.铭文洗练次数1.V = 0;
-                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文刺客1挡技能编号;
-                            装备数据.FirstInscription.ID = (byte)Config.铭文刺客1挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Settings.铭文刺客1挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Settings.铭文刺客1挡技能铭文;
                         }
                     }
-                    if (Job == GameObjectRace.Archer && Config.铭文弓手保底开关 == 1)
+                    if (Job == GameObjectRace.Archer && Settings.铭文弓手保底开关 == 1)
                     {
-                        if (Character.铭文洗练次数1.V == Config.铭文弓手1挡1次数 && num2 <= Config.铭文弓手1挡1概率)
+                        if (Character.铭文洗练次数1.V == Settings.铭文弓手1挡1次数 && num2 <= Settings.铭文弓手1挡1概率)
                         {
                             Character.铭文洗练次数1.V = 0;
-                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文弓手1挡技能编号;
-                            装备数据.FirstInscription.ID = (byte)Config.铭文弓手1挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Settings.铭文弓手1挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Settings.铭文弓手1挡技能铭文;
                         }
-                        if (Character.铭文洗练次数1.V == Config.铭文弓手1挡2次数 && num2 <= Config.铭文弓手1挡2概率)
+                        if (Character.铭文洗练次数1.V == Settings.铭文弓手1挡2次数 && num2 <= Settings.铭文弓手1挡2概率)
                         {
                             Character.铭文洗练次数1.V = 0;
-                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文弓手1挡技能编号;
-                            装备数据.FirstInscription.ID = (byte)Config.铭文弓手1挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Settings.铭文弓手1挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Settings.铭文弓手1挡技能铭文;
                         }
-                        if (Character.铭文洗练次数1.V >= Config.铭文弓手1挡3次数 && 100 == Config.铭文弓手1挡3概率)
+                        if (Character.铭文洗练次数1.V >= Settings.铭文弓手1挡3次数 && 100 == Settings.铭文弓手1挡3概率)
                         {
                             Character.铭文洗练次数1.V = 0;
-                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文弓手1挡技能编号;
-                            装备数据.FirstInscription.ID = (byte)Config.铭文弓手1挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Settings.铭文弓手1挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Settings.铭文弓手1挡技能铭文;
                         }
                     }
-                    if (Job == GameObjectRace.DragonLance && Config.铭文龙枪保底开关 == 1)
+                    if (Job == GameObjectRace.DragonLance && Settings.铭文龙枪保底开关 == 1)
                     {
-                        if (Character.铭文洗练次数1.V == Config.铭文龙枪1挡1次数 && num2 <= Config.铭文龙枪1挡1概率)
+                        if (Character.铭文洗练次数1.V == Settings.铭文龙枪1挡1次数 && num2 <= Settings.铭文龙枪1挡1概率)
                         {
                             Character.铭文洗练次数1.V = 0;
-                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文龙枪1挡技能编号;
-                            装备数据.FirstInscription.ID = (byte)Config.铭文龙枪1挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Settings.铭文龙枪1挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Settings.铭文龙枪1挡技能铭文;
                         }
-                        if (Character.铭文洗练次数1.V == Config.铭文龙枪1挡2次数 && num2 <= Config.铭文龙枪1挡2概率)
+                        if (Character.铭文洗练次数1.V == Settings.铭文龙枪1挡2次数 && num2 <= Settings.铭文龙枪1挡2概率)
                         {
                             Character.铭文洗练次数1.V = 0;
-                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文龙枪1挡技能编号;
-                            装备数据.FirstInscription.ID = (byte)Config.铭文龙枪1挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Settings.铭文龙枪1挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Settings.铭文龙枪1挡技能铭文;
                         }
-                        if (Character.铭文洗练次数1.V >= Config.铭文龙枪1挡3次数 && 100 == Config.铭文龙枪1挡3概率)
+                        if (Character.铭文洗练次数1.V >= Settings.铭文龙枪1挡3次数 && 100 == Settings.铭文龙枪1挡3概率)
                         {
                             Character.铭文洗练次数1.V = 0;
-                            装备数据.FirstInscription.SkillID = (ushort)Config.铭文龙枪1挡技能编号;
-                            装备数据.FirstInscription.ID = (byte)Config.铭文龙枪1挡技能铭文;
+                            装备数据.FirstInscription.SkillID = (ushort)Settings.铭文龙枪1挡技能编号;
+                            装备数据.FirstInscription.ID = (byte)Settings.铭文龙枪1挡技能铭文;
                         }
                     }
                 }
@@ -24027,7 +24027,7 @@ public sealed class PlayerObject : MapObject
         {
             装备数据 = v;
         }
-        if (装备类型 == 1 && Inventory.TryGetValue(装备位置, out var v2) && v2 is EquipmentInfo 装备数据2 && Config.禁止背包铭文洗练 == 0)
+        if (装备类型 == 1 && Inventory.TryGetValue(装备位置, out var v2) && v2 is EquipmentInfo 装备数据2 && Settings.禁止背包铭文洗练 == 0)
         {
             装备数据 = 装备数据2;
         }
@@ -24788,7 +24788,7 @@ public sealed class PlayerObject : MapObject
                     int num4 = dictionary2.Values.Sum((ItemInfo x) => x.Dura.V);
                     float num5 = Math.Max(0f, num4 - 146);
                     int num6 = 90 - v.UpgradeCount.V * 10;
-                    float 概率 = (num3 * (float)num6 * 0.001f + num5 * 0.01f) * (float)Config.锻造成功倍数;
+                    float 概率 = (num3 * (float)num6 * 0.001f + num5 * 0.01f) * (float)Settings.锻造成功倍数;
                     Character.升级装备.V = v;
                     Character.取回时间.V = SEngine.CurrentTime.AddHours(2.0);
                     if (Character.升级成功.V = Compute.CalculateProbability(概率))
@@ -24861,7 +24861,7 @@ public sealed class PlayerObject : MapObject
         {
             return false;
         }
-        if (Character.升级成功.V && Config.武器强化消耗货币开关 == 0)
+        if (Character.升级成功.V && Settings.武器强化消耗货币开关 == 0)
         {
             byte b = 0;
             while (b < InventorySize)
@@ -24894,7 +24894,7 @@ public sealed class PlayerObject : MapObject
             }
             Character.升级装备.V = null;
         }
-        else if (Character.升级成功.V && Config.武器强化消耗货币开关 == 1)
+        else if (Character.升级成功.V && Settings.武器强化消耗货币开关 == 1)
         {
             byte b2 = 0;
             while (b2 < InventorySize)
@@ -24959,10 +24959,10 @@ public sealed class PlayerObject : MapObject
                             {
                                 case "STALL":
                                     {
-                                        if (Character.CurrentMap.V != Config.可摆摊地图编号)
+                                        if (Character.CurrentMap.V != Settings.可摆摊地图编号)
                                             break;
 
-                                        if (CurrentLevel < Config.可摆摊等级 && CurrentPrivilege == 0)
+                                        if (CurrentLevel < Settings.可摆摊等级 && CurrentPrivilege == 0)
                                         {
                                             CurrentTrade?.BreakTrade();
                                             Enqueue(new GameErrorMessagePacket
@@ -25006,7 +25006,7 @@ public sealed class PlayerObject : MapObject
 
                                 case "会员":
                                     {
-                                        if (!Titles.ContainsKey(Config.分解称号选项))
+                                        if (!Titles.ContainsKey(Settings.分解称号选项))
                                             break;
 
                                         GuardObject guard = null;
@@ -25615,7 +25615,7 @@ public sealed class PlayerObject : MapObject
                     ObjectID = player.ObjectID
                 });
             }
-            if (Config.安全区收刀开关 && Config.CurrentVersion >= 2 && CurrentMap.IsSafeArea(CurrentPosition))
+            if (Settings.安全区收刀开关 && Settings.CurrentVersion >= 2 && CurrentMap.IsSafeArea(CurrentPosition))
             {
                 if (GameSkill.DataSheet.TryGetValue("通用-玩家收起武器", out var value2))
                 {
@@ -26830,7 +26830,7 @@ public sealed class PlayerObject : MapObject
                 });
                 return;
             }
-            if (guild.Members.Count >= Config.行会申请人数限制)
+            if (guild.Members.Count >= Settings.行会申请人数限制)
             {
                 Enqueue(new GameErrorMessagePacket
                 {
@@ -26889,7 +26889,7 @@ public sealed class PlayerObject : MapObject
                 ErrorCode = 6709
             });
         }
-        else if (Guild.Members.Count >= Config.行会申请人数限制)
+        else if (Guild.Members.Count >= Settings.行会申请人数限制)
         {
             Enqueue(new SocialErrorPacket
             {
@@ -28526,9 +28526,9 @@ public sealed class PlayerObject : MapObject
 
     public void 玩家准备摆摊()
     {
-        if (!Dead && TradeState < 3 && Character.CurrentMap.V == Config.可摆摊地图编号)
+        if (!Dead && TradeState < 3 && Character.CurrentMap.V == Settings.可摆摊地图编号)
         {
-            if (CurrentLevel < Config.可摆摊等级 && CurrentPrivilege == 0)
+            if (CurrentLevel < Settings.可摆摊等级 && CurrentPrivilege == 0)
             {
                 CurrentTrade?.BreakTrade();
                 Enqueue(new GameErrorMessagePacket
@@ -28596,7 +28596,7 @@ public sealed class PlayerObject : MapObject
                 ErrorCode = 2817
             });
         }
-        if (CurrentLevel < Config.可摆摊等级 && CurrentPrivilege == 0)
+        if (CurrentLevel < Settings.可摆摊等级 && CurrentPrivilege == 0)
         {
             CurrentTrade?.BreakTrade();
             Enqueue(new GameErrorMessagePacket
@@ -28604,7 +28604,7 @@ public sealed class PlayerObject : MapObject
                 ErrorCode = 65538
             });
         }
-        if (Config.可摆摊货币选择 == 0)
+        if (Settings.可摆摊货币选择 == 0)
         {
             if (CurrentStall.TotalPrice + Gold > int.MaxValue)
             {
@@ -28623,7 +28623,7 @@ public sealed class PlayerObject : MapObject
                 });
             }
         }
-        if (Config.可摆摊货币选择 == 1)
+        if (Settings.可摆摊货币选择 == 1)
         {
             if (CurrentStall.TotalPrice + Ingot > int.MaxValue)
             {
@@ -28838,7 +28838,7 @@ public sealed class PlayerObject : MapObject
             });
             return;
         }
-        if (Config.可摆摊货币选择 == 0)
+        if (Settings.可摆摊货币选择 == 0)
         {
             if (Gold < value.CurrentStall.Prices[value2] * 购买数量)
             {
@@ -28916,7 +28916,7 @@ public sealed class PlayerObject : MapObject
                 value.玩家收起摊位();
             }
         }
-        if (Config.可摆摊货币选择 != 1)
+        if (Settings.可摆摊货币选择 != 1)
         {
             return;
         }
@@ -29096,7 +29096,7 @@ public sealed class PlayerObject : MapObject
         技能ID = x技能ID;
         开启自动拾取 = x开启自动拾取;
         拾取范围 = x拾取范围;
-        if (Config.CurrentVersion < 1 || (!(Config.挂机权限选项 == "GGXZZIIUKBBAQ") && Config.CurrentVersion < 3) || !Character.Titles.ContainsKey(Config.挂机称号选项) || CurrentLevel <= Config.AutoBattleLevel || 自动战斗 == AutoBattle)
+        if (Settings.CurrentVersion < 1 || (!(Settings.挂机权限选项 == "GGXZZIIUKBBAQ") && Settings.CurrentVersion < 3) || !Character.Titles.ContainsKey(Settings.挂机称号选项) || CurrentLevel <= Settings.AutoBattleLevel || 自动战斗 == AutoBattle)
         {
             return;
         }
@@ -29841,11 +29841,11 @@ public sealed class PlayerObject : MapObject
             var iname = string.Empty;
             switch (SEngine.Random.Next(120))
             {
-                case 1 or 2: iname = Config.GoldStoneName; break;
-                case >= 3 and <= 20: iname = Config.SilverStoneName; break;
-                case >= 21 and <= 45: iname = Config.IronStoneName; break;
-                case >= 46 and <= 56: iname = Config.BlackIronStoneName; break;
-                default: iname = Config.CopperStoneName; break;
+                case 1 or 2: iname = Settings.GoldStoneName; break;
+                case >= 3 and <= 20: iname = Settings.SilverStoneName; break;
+                case >= 21 and <= 45: iname = Settings.IronStoneName; break;
+                case >= 46 and <= 56: iname = Settings.BlackIronStoneName; break;
+                default: iname = Settings.CopperStoneName; break;
             }
 
             if (!string.IsNullOrEmpty(iname))
@@ -29862,10 +29862,10 @@ public sealed class PlayerObject : MapObject
             var iname = string.Empty;
             switch (SEngine.Random.Next(120))
             {
-                case 1 or 2: iname = Config.Gem1StoneName; break;
-                case >= 3 and <= 20: iname = Config.Gem2StoneName; break;
-                case >= 21 and <= 45: iname = Config.Gem4StoneName; break;
-                default: iname = Config.Gem3StoneName; break;
+                case 1 or 2: iname = Settings.Gem1StoneName; break;
+                case >= 3 and <= 20: iname = Settings.Gem2StoneName; break;
+                case >= 21 and <= 45: iname = Settings.Gem4StoneName; break;
+                default: iname = Settings.Gem3StoneName; break;
             }
 
             if (!string.IsNullOrEmpty(iname))
@@ -29889,17 +29889,17 @@ public sealed class PlayerObject : MapObject
             var iname = string.Empty;
             switch (SEngine.Random.Next(240))
             {
-                case >= 1 and <= 6: iname = Config.GoldStoneName; break;
-                case >= 7 and <= 30: iname = Config.SilverStoneName; break;
-                case >= 31 and <= 66: iname = Config.IronStoneName; break;
-                case >= 67 and <= 91: iname = Config.BlackIronStoneName; break;
-                case >= 92 and <= 131: iname = Config.CopperStoneName; break;
+                case >= 1 and <= 6: iname = Settings.GoldStoneName; break;
+                case >= 7 and <= 30: iname = Settings.SilverStoneName; break;
+                case >= 31 and <= 66: iname = Settings.IronStoneName; break;
+                case >= 67 and <= 91: iname = Settings.BlackIronStoneName; break;
+                case >= 92 and <= 131: iname = Settings.CopperStoneName; break;
 
-                case >= 132 and <= 137: iname = Config.Gem1StoneName; break;
-                case >= 138 and <= 161: iname = Config.Gem2StoneName; break;
-                case >= 162 and <= 197: iname = Config.Gem4StoneName; break;
+                case >= 132 and <= 137: iname = Settings.Gem1StoneName; break;
+                case >= 138 and <= 161: iname = Settings.Gem2StoneName; break;
+                case >= 162 and <= 197: iname = Settings.Gem4StoneName; break;
 
-                default: iname = Config.Gem3StoneName; break;
+                default: iname = Settings.Gem3StoneName; break;
             }
 
             if (!string.IsNullOrEmpty(iname))

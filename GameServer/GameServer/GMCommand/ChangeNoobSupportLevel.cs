@@ -11,12 +11,12 @@ public sealed class ChangeNoobSupportLevel : GMCommand
 
     public override void ExecuteCommand()
     {
-        Config.NoobSupportLevel = Level;
-        Config.Save();
+        Settings.NoobSupportLevel = Level;
+        Settings.Save();
         SMain.Main.BeginInvoke(() =>
         {
             SMain.Main.S_NoobSupportLevel.Value = Level;
         });
-        SMain.AddCommandLog($"<= @{GetType().Name} The command has been executed, the current support level:{Config.NoobSupportLevel}");
+        SMain.AddCommandLog($"<= @{GetType().Name} The command has been executed, the current support level:{Settings.NoobSupportLevel}");
     }
 }

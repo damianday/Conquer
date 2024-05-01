@@ -20,9 +20,9 @@ public sealed class MapGuard
     {
         DataSheet = new HashSet<MapGuard>();
 
-        if (Config.DBMethod == 0)
+        if (Settings.DBMethod == 0)
         {
-            var path = Config.GameDataPath + "\\System\\GameMap\\Guards\\";
+            var path = Settings.GameDataPath + "\\System\\GameMap\\Guards\\";
             if (!Directory.Exists(path))
                 return;
 
@@ -31,7 +31,7 @@ public sealed class MapGuard
                 DataSheet.Add(obj);
         }
 
-        if (Config.DBMethod == 1)
+        if (Settings.DBMethod == 1)
         {
             if (!DBAgent.X.Connected)
                 return;

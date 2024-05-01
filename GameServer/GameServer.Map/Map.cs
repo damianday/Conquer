@@ -564,7 +564,7 @@ public sealed class Map
 
     public bool CanDrop(Point point, bool redName)
     {
-        if (MapManager.SandCityStage >= 2 && (MapID == 152 || MapID == 178) && Config.沙巴克爆装备开关 == 0)
+        if (MapManager.SandCityStage >= 2 && (MapID == 152 || MapID == 178) && Settings.沙巴克爆装备开关 == 0)
             return false;
 
         if (ValidPoint(point))

@@ -8,7 +8,7 @@ using System.Reflection;
 
 namespace GameServer;
 
-public class Config
+public class Settings
 {
     [JsonIgnore]
     public const string SettingFile = "!Settings.txt";
@@ -1037,7 +1037,7 @@ public class Config
         };
 
         var source = JsonConvert.DeserializeObject<JToken>(json, settings);
-        var destinationProperties = typeof(Config).GetFields(BindingFlags.Public | BindingFlags.Static);
+        var destinationProperties = typeof(Settings).GetFields(BindingFlags.Public | BindingFlags.Static);
         foreach (JProperty prop in source)
         {
             var destinationProp = destinationProperties
@@ -1061,7 +1061,7 @@ public class Config
             Formatting = Formatting.Indented
         };
 
-        var myType = typeof(Config);
+        var myType = typeof(Settings);
         var TypeBlob = myType.GetFields()
             .Where(x => !(x.IsLiteral && !x.IsInitOnly))
             .ToDictionary(x => x.Name, x => x.GetValue(null));

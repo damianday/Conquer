@@ -331,7 +331,7 @@ public class EquipmentInfo : ItemInfo
             int dura = MaxDura.V - Dura.V;
             decimal cost = ((EquipmentItem)Item.V).SpecialRepairCost;
             decimal num3 = (decimal)((EquipmentItem)Item.V).MaxDura * 1000m;
-            return (int)(cost / num3 * dura * Config.SpecialRepairDiscount * 1.15m);
+            return (int)(cost / num3 * dura * Settings.SpecialRepairDiscount * 1.15m);
         }
     }
 
