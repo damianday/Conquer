@@ -6642,28 +6642,9 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public bool FindItem(int id, out ItemInfo item)
-    {
-        for (byte i = 0; i < InventorySize; i++)
-        {
-            if (Inventory.TryGetValue(i, out item) && item.ID == id)
-                return true;
-        }
+    public bool FindItem(int id, out ItemInfo item) => Character.FindItem(id, out item);
 
-        item = null;
-        return false;
-    }
-
-    public byte FindEmptyInventoryIndex()
-    {
-        for (byte i = 0; i < InventorySize; i++)
-        {
-            if (!Inventory.ContainsKey(i))
-                return i;
-        }
-
-        return byte.MaxValue;
-    }
+    public byte FindEmptyInventoryIndex() => Character.FindEmptyInventoryIndex();
 
     public bool FindItem(int quantity, int id, out List<ItemInfo> items)
     {

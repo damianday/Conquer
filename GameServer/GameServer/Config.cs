@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -996,6 +997,7 @@ public class Config
     public static string 合成模块控件 = "输入密码";
 
     public static bool GuardKillWillDrop = false;
+
     public static string GoldStoneName = "GoldOre";
     public static string SilverStoneName = "SilverOre";
     public static string IronStoneName = "IronOre";
@@ -1005,6 +1007,18 @@ public class Config
     public static string Gem2StoneName = "AmethystGem";
     public static string Gem3StoneName = "NephriteGem";
     public static string Gem4StoneName = "PlatinumGem";
+
+
+    public static List<StarterItem> StarterItems = new List<StarterItem>()
+    {
+        new StarterItem { ItemName = "柴刀", RequiredGender = GameObjectGender.Any, RequiredRace = GameObjectRace.Assassin },
+        new StarterItem { ItemName = "木剑", RequiredGender = GameObjectGender.Any, RequiredRace = GameObjectRace.Any, BlockedRace = GameObjectRace.Assassin },
+
+        new StarterItem { ItemName = "布衣(男)", RequiredGender = GameObjectGender.Man, RequiredRace = GameObjectRace.Any },
+        new StarterItem { ItemName = "布衣(女)", RequiredGender = GameObjectGender.Woman, RequiredRace = GameObjectRace.Any }
+    };
+
+
     public static int DBMethod = 1; // 0: Default (JSON/TXT), 1: SQL, 2: CSV
 
     public static void Load()

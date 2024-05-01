@@ -336,7 +336,7 @@ public class ItemInfo : DBObject
     {
     }
 
-    public ItemInfo(GameItem item, CharacterInfo owner, byte grid, byte position, int durability)
+    public ItemInfo(GameItem item, CharacterInfo owner, byte grid, byte position, int durability = int.MaxValue)
     {
         Item.V = item;
         Owner.V = owner;

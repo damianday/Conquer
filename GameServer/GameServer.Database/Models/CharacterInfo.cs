@@ -807,13 +807,22 @@ public sealed class CharacterInfo : DBObject
             }
         }
 
-        if (GameItem.DataSheetByName.TryGetValue((job == GameObjectRace.Assassin) ? "柴刀" : "木剑", out var value11) && value11 is EquipmentItem 模板)
+        foreach (var item in Config.StarterItems)
         {
-            Equipment[0] = new EquipmentInfo(模板, this, 0, 0);
-        }
-        if (GameItem.DataSheetByName.TryGetValue((gender == GameObjectGender.Man) ? "布衣(男)" : "布衣(女)", out var value12) && value12 is EquipmentItem 模板2)
-        {
-            Equipment[1] = new EquipmentInfo(模板2, this, 0, 1);
+            if (string.IsNullOrEmpty(item.ItemName)) continue;
+            if (item.RequiredGender != GameObjectGender.Any && item.RequiredGender != gender) continue;
+            if (item.RequiredRace != GameObjectRace.Any && item.RequiredRace != job) continue;
+
+            if (item.BlockedGender != GameObjectGender.Any && item.BlockedGender == gender) continue;
+            if (item.BlockedRace != GameObjectRace.Any && item.BlockedRace == job) continue;
+
+            var index = FindEmptyInventoryIndex();
+            if (index == byte.MaxValue) break; // No more space to store items
+
+            if (GameItem.DataSheetByName.TryGetValue(item.ItemName, out var val))
+            {
+                Inventory[index] = new ItemInfo(val, this, 1, index);
+            }
         }
 
         ushort n = job switch
@@ -843,7 +852,7 @@ public sealed class CharacterInfo : DBObject
         return UserName?.V;
     }
 
-    public void SubscribeToEvents()
+    private void SubscribeToEvents()
     {
         Account.Changed += delegate (AccountInfo O)
         {
@@ -1062,6 +1071,30 @@ public sealed class CharacterInfo : DBObject
         base.Remove();
     }
 
+    public bool FindItem(int id, out ItemInfo item)
+    {
+        for (byte i = 0; i < InventorySize.V; i++)
+        {
+            if (Inventory.TryGetValue(i, out item) && item.ID == id)
+                return true;
+        }
+
+        item = null;
+        return false;
+    }
+
+    public byte FindEmptyInventoryIndex()
+    {
+        for (byte i = 0; i < InventorySize.V; i++)
+        {
+            if (!Inventory.ContainsKey(i))
+                return i;
+        }
+
+        return byte.MaxValue;
+    }
+
+    #region Descriptions
     public byte[] RoleDescription()
     {
         using var ms = new MemoryStream(new byte[94]);
@@ -1127,5 +1160,6 @@ public sealed class CharacterInfo : DBObject
             writer.Write(mail.MailMessageDescription());
         }
         return ms.ToArray();
-    }
+    } 
+    #endregion
 }
