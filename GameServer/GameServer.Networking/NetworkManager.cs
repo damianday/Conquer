@@ -42,6 +42,7 @@ public static class NetworkManager
     public static void StartService()
     {
         Stopped = false;
+
         Connections = new HashSet<SConnection>();
         ConnectingConnections = new ConcurrentQueue<SConnection>();
         DisconnectingConnections = new ConcurrentQueue<SConnection>();
@@ -58,12 +59,11 @@ public static class NetworkManager
 
     public static void StopService()
     {
-        SMain.AddSystemLog("The server network listener is stopped");
         Stopped = true;
+
         Listener?.Stop();
         Listener = null;
 
-        SMain.AddSystemLog("The server ticket receiver is stopped");
         TicketListener?.Close();
         TicketListener = null;
     }

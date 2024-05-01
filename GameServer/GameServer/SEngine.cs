@@ -64,19 +64,14 @@ public static class SEngine
     {
         if (!Running)
         {
-            (MainThread = new Thread(ServiceThreadLoop)
-            {
-                IsBackground = true
-            }).Start();
+            MainThread = new Thread(ServiceThreadLoop) { IsBackground = true };
+            MainThread.Start();
         }
     }
 
     public static void StopService()
     {
-        SMain.AddSystemLog("Server shutting down..");
         Running = false;
-        SMain.AddSystemLog("Server stopped.");
-        NetworkManager.StopService();
     }
 
     public static void AddSystemLog(string message)
@@ -192,16 +187,24 @@ public static class SEngine
                 NetworkManager.Process();
                 MapManager.Process();
             }
-            SMain.AddSystemLog("Cleaning item data...");
+
+            SMain.AddSystemLog("Server shutting down..");
+
+            SMain.AddSystemLog("Clearing item data...");
             MapManager.RemoveItems();
-            SMain.AddSystemLog("Saving customer data...");
+
+            SMain.AddSystemLog("Saving user data...");
             Session.Save();
             Session.SaveUsers();
-            SMain.AddSystemLog("Server is out of service");
+
+            SMain.AddSystemLog("The network service is being stopped...");
+            NetworkManager.StopService();
+
             SMain.OnStopServiceCompleted();
-            SMain.AddSystemLog("Server thread shut down");
+
             MainThread = null;
-            SMain.AddSystemLog("Server has been shut down successfully");
+
+            SMain.AddSystemLog("Server successfully stopped.");
         }
         catch (Exception ex)
         {
