@@ -38,7 +38,7 @@ public static class SEngine
 
 		try
 		{
-			Listener = new TcpListener(IPAddress.Parse(Settings.LocalListeningIP), Settings.LocalListeningPort);
+			Listener = new TcpListener(IPAddress.Parse(Settings.Default.LocalListeningIP), Settings.Default.LocalListeningPort);
 			Listener.Start();
 			Listener.BeginAcceptTcpClient(Connection, null);
 

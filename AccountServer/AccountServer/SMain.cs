@@ -62,8 +62,11 @@ public partial class SMain : Form
     {
         InitializeComponent();
         Instance = this;
-        LocalListeningPortEdit.Value = Settings.LocalListeningPort;
-        TicketSendingPortEdit.Value = Settings.TicketSendingPort;
+
+        Settings.Default.Load();
+
+        LocalListeningPortEdit.Value = Settings.Default.LocalListeningPort;
+        TicketSendingPortEdit.Value = Settings.Default.TicketSendingPort;
 
         if (!File.Exists(ServerConfigFile))
         {
@@ -195,9 +198,9 @@ public partial class SMain : Form
             loadAccountsToolStripMenuItem_Click(sender, e);
         }
 
-        Settings.LocalListeningPort = (ushort)LocalListeningPortEdit.Value;
-        Settings.TicketSendingPort = (ushort)TicketSendingPortEdit.Value;
-        Settings.Save();
+        Settings.Default.LocalListeningPort = (ushort)LocalListeningPortEdit.Value;
+        Settings.Default.TicketSendingPort = (ushort)TicketSendingPortEdit.Value;
+        Settings.Default.Save();
 
         if (SEngine.StartService())
         {

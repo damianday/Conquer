@@ -7,14 +7,16 @@ using System.Reflection;
 
 public class Settings
 {
+    public static Settings Default = new Settings();
+
     [JsonIgnore]
-    public const string SettingFile = "!Settings.txt";
+    public const string SettingFile = "!Settings.Default.txt";
 
-    public static string LocalListeningIP = "127.0.0.1";
-    public static ushort LocalListeningPort = 7_000;
-    public static ushort TicketSendingPort = 6_678;
+    public string LocalListeningIP = "127.0.0.1";
+    public ushort LocalListeningPort = 7_000;
+    public ushort TicketSendingPort = 6_678;
 
-    public static void Load()
+    public void Load()
     {
         if (!File.Exists(SettingFile))
             return;
@@ -28,22 +30,10 @@ public class Settings
             Formatting = Formatting.Indented
         };
 
-        var source = JsonConvert.DeserializeObject<JToken>(json, settings);
-        var destinationProperties = typeof(Settings).GetFields(BindingFlags.Public | BindingFlags.Static);
-        foreach (JProperty prop in source)
-        {
-            var destinationProp = destinationProperties
-                .SingleOrDefault(p => p.Name.Equals(prop.Name, StringComparison.OrdinalIgnoreCase));
-            if (destinationProp == null) continue;
-            if (destinationProp.IsLiteral && !destinationProp.IsInitOnly) continue; // Is a const field
-            var value = ((JValue)prop.Value).Value;
-            //The ChangeType is required because JSON.Net will deserialise
-            //numbers as long by default
-            destinationProp.SetValue(null, Convert.ChangeType(value, destinationProp.FieldType));
-        }
+        Default = JsonConvert.DeserializeObject<Settings>(json, settings);
     }
 
-    public static void Save()
+    public void Save()
     {
         var settings = new JsonSerializerSettings
         {
@@ -53,11 +43,7 @@ public class Settings
             Formatting = Formatting.Indented
         };
 
-        var myType = typeof(Settings);
-        var TypeBlob = myType.GetFields()
-            .Where(x => !(x.IsLiteral && !x.IsInitOnly))
-            .ToDictionary(x => x.Name, x => x.GetValue(null));
-        var json = JsonConvert.SerializeObject(TypeBlob, settings);
+        var json = JsonConvert.SerializeObject(Default, settings);
         File.WriteAllText(SettingFile, json);
     }
 }
