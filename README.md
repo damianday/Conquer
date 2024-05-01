@@ -7,7 +7,7 @@
 ### Client & Launcher Configuration
 
 First, a compatible client will need to be downloaded, for example:
-* LATEST * [Client](https://mirfiles.com/resources/mir2/users/Jev/Mir%203DEMU/Clients/HC%20-%201.0.4.24.rar)
+* LATEST  [Client](https://mirfiles.com/resources/mir2/users/Jev/Mir%203DEMU/Clients/HC%20-%201.0.4.24.rar)
 
 * If you wish to use the Chinese Pak Files you can download these [here](https://mirfiles.com/resources/mir2/users/Jev/Mir%203DEMU/Clients/HC%20-%201.0.4.24%20CN%20Paks.rar)
 
