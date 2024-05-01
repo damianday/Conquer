@@ -10,7 +10,7 @@ public class Settings
     public static Settings Default = new Settings();
 
     [JsonIgnore]
-    public const string SettingFile = "!Settings.Default.txt";
+    public const string SettingFile = "!Settings.txt";
 
     public string LocalListeningIP = "127.0.0.1";
     public ushort LocalListeningPort = 7_000;
