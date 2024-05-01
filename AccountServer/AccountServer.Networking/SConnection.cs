@@ -328,11 +328,11 @@ public sealed class SConnection
 
 	public void Process(AccountDownloadConfigFilePacket P)
 	{
-		if (P.文件序号 < SMain.PatchChunks)
+		if (P.DocumentIndex < SMain.PatchChunks)
 		{
 			SendPacket(new AccountSendConfigFilePacket
 			{
-				FileInformation = SMain.PatchData.Skip(P.文件序号 * 40960).Take(40960).ToArray()
+				FileInformation = SMain.PatchData.Skip(P.DocumentIndex * 40960).Take(40960).ToArray()
 			});
 		}
 		else
@@ -396,14 +396,14 @@ public sealed class SConnection
 		});
 	}
 
-	public void Process(请求更新文件 P)
+	public void Process(AccountRequestUpdateInfoPacket P)
 	{
 		string[] array = Encoding.UTF8.GetString(P.UpdateInformation).Split('/');
 		string value = array[1];
 
         if (!ulong.TryParse(value, out var number))
 		{
-            SendPacket(new 程序提示信息
+            SendPacket(new AccountSendUpdateInfoFailPacket
             {
                 HintCode = -1
             });
@@ -412,16 +412,16 @@ public sealed class SConnection
 
 		if (number != SMain.PatchChecksum)
 		{
-			SendPacket(new 开始更新文件
+			SendPacket(new AccountSendUpdateInfoSuccessPacket
 			{
-				文件编号 = 1,
-				文件数量 = SMain.PatchChunks,
-				校验代码 = SMain.PatchChecksum
+				DocumentID = 1,
+				DocumentCount = SMain.PatchChunks,
+				DocumentChecksum = SMain.PatchChecksum
 			});
 		}
 		else
 		{
-			SendPacket(new 程序提示信息
+			SendPacket(new AccountSendUpdateInfoFailPacket
 			{
 				HintCode = 0
 			});
@@ -430,11 +430,13 @@ public sealed class SConnection
 
 	public void Process(AccountStartGamePacket P)
 	{
-		string[] array = Encoding.UTF8.GetString(P.LoginInformation).Split('/');
+		var array = Encoding.UTF8.GetString(P.LoginInformation).Split('/');
 		if (LoggedIn && array.Length == 2)
 		{
-			string svname = array[1];
-			if (!SMain.ServerTable.TryGetValue(svname, out var server))
+            var svname = array[1];
+			var server = SMain.ServerList.Find(x => x.ServerName == svname);
+
+            if (server == null)
 			{
 				SendPacket(new AccountStartGameFailPacket
 				{

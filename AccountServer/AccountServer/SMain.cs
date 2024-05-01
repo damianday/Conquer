@@ -46,14 +46,14 @@ public partial class SMain : Form
 
     public static Dictionary<string, AccountInfo> Accounts;
     public static Dictionary<string, AccountInfo> AccountRefferalCodes;
-    public static Dictionary<string, GameServerInfo> ServerTable = new Dictionary<string, GameServerInfo>();
+    public static List<GameServerInfo> ServerList = new List<GameServerInfo>();
 
     public static string PatchFile = ".\\GameLogin.exe";
     public static byte[] PatchData;
     public static ulong PatchChecksum;
     public static int PatchChunks;
 
-    public static string PublicServerInfo => string.Join("\n", ServerTable.Values.Select(x => $"{x.PublicAddressIP}:{x.PublicAddressPort}/{x.ServerName}"));
+    public static string PublicServerInfo => string.Join("\n", ServerList.Select(x => $"{x.PublicAddressIP}:{x.PublicAddressPort}/{x.ServerName}"));
 
     private static char[] RandomChars = new char[36]
     {
@@ -210,12 +210,11 @@ public partial class SMain : Form
 
         var buffer = File.ReadAllBytes(PatchFile);
         using var ms = new MemoryStream();
-        using var writer = new DeflateStream(ms, CompressionMode.Decompress);
-        writer.Write(buffer, 0, buffer.Length);
-        writer.Close();
+        using (var writer = new DeflateStream(ms, CompressionMode.Decompress, false))
+            writer.Write(buffer, 0, buffer.Length);
 
         PatchData = ms.ToArray();
-        PatchChecksum = CalcFileChecksum(File.ReadAllBytes(PatchFile));
+        PatchChecksum = CalcFileChecksum(buffer);
         PatchChunks = (int)Math.Ceiling((float)PatchData.Length / 40960f);
 
         AddLogMessage($"{PatchData.Length} {PatchChecksum}");
@@ -225,10 +224,10 @@ public partial class SMain : Form
     {
         ReadPatchFile();
 
-        if (ServerTable.Count == 0)
+        if (ServerList.Count == 0)
             loadConfigurationToolStripMenuItem_Click(sender, e);
 
-        if (ServerTable.Count == 0)
+        if (ServerList.Count == 0)
         {
             AddLogMessage("The server configuration is empty and the startup fails");
             return;
@@ -286,7 +285,7 @@ public partial class SMain : Form
         if (!File.Exists(ServerConfigFile))
             return;
 
-        ServerTable.Clear();
+        ServerList.Clear();
 
         try
         {
@@ -299,10 +298,9 @@ public partial class SMain : Form
                 Formatting = Formatting.Indented
             };
 
-            ServerTable = JsonConvert.DeserializeObject<Dictionary<string, GameServerInfo>>(json, settings);
-            foreach (var kvp in ServerTable)
+            ServerList = JsonConvert.DeserializeObject<List<GameServerInfo>>(json, settings);
+            foreach (var server in ServerList)
             {
-                var server = kvp.Value;
                 server.TicketAddress = new IPEndPoint(IPAddress.Loopback, server.TicketAddressPort);
                 server.PublicAddress = new IPEndPoint(IPAddress.Parse(server.PublicAddressIP), server.PublicAddressPort);
             }
@@ -313,7 +311,7 @@ public partial class SMain : Form
             Environment.Exit(0);
         }
         
-        AddLogMessage($"The network configuration loaded {ServerTable.Count}.");
+        AddLogMessage($"The network configuration loaded {ServerList.Count}.");
     }
 
     private void openAccountDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
