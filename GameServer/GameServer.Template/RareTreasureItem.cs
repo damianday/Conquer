@@ -34,9 +34,9 @@ public sealed class RareTreasureItem
     {
         DataSheet = new Dictionary<int, RareTreasureItem>();
 
-        if (Settings.DBMethod == 0)
+        if (Settings.Default.DBMethod == 0)
         {
-            var path = Settings.GameDataPath + "\\System\\Items\\Treasures\\";
+            var path = Settings.Default.GameDataPath + "\\System\\Items\\Treasures\\";
             if (!Directory.Exists(path))
                 return;
 
@@ -45,7 +45,7 @@ public sealed class RareTreasureItem
                 DataSheet.Add(obj.ItemID, obj);
         }
 
-        if (Settings.DBMethod == 1)
+        if (Settings.Default.DBMethod == 1)
         {
             if (!DBAgent.X.Connected)
                 return;
@@ -89,9 +89,9 @@ public sealed class RareTreasureItem
             }
         }
 
-        if (Settings.DBMethod == 2)
+        if (Settings.Default.DBMethod == 2)
         {
-            var path = Settings.GameDataPath + "\\System\\Items\\Treasures\\";
+            var path = Settings.Default.GameDataPath + "\\System\\Items\\Treasures\\";
             if (!Directory.Exists(path))
                 return;
 

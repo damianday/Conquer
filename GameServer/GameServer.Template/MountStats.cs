@@ -19,9 +19,9 @@ public sealed class MountStats
     {
         DataSheet = new Dictionary<uint, MountStats>();
 
-        if (Settings.DBMethod == 0)
+        if (Settings.Default.DBMethod == 0)
         {
-            var path = Settings.GameDataPath + "\\System\\Mounts\\MountBeast\\";
+            var path = Settings.Default.GameDataPath + "\\System\\Mounts\\MountBeast\\";
             if (!Directory.Exists(path))
                 return;
 
@@ -30,7 +30,7 @@ public sealed class MountStats
                 DataSheet.Add(obj.MountID, obj);
         }
 
-        if (Settings.DBMethod == 1)
+        if (Settings.Default.DBMethod == 1)
         {
             if (!DBAgent.X.Connected)
                 return;
@@ -83,9 +83,9 @@ public sealed class MountStats
             }
         }
 
-        if (Settings.DBMethod == 2)
+        if (Settings.Default.DBMethod == 2)
         {
-            var path = Settings.GameDataPath + "\\System\\Mounts\\MountBeast\\";
+            var path = Settings.Default.GameDataPath + "\\System\\Mounts\\MountBeast\\";
             if (!Directory.Exists(path))
                 return;
             using var reader = new StreamReader(path + "\\坐骑御兽.csv", Encoding.GetEncoding("GB18030"));

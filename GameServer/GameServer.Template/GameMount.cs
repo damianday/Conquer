@@ -26,9 +26,9 @@ public sealed class GameMount
     {
         DataSheet = new Dictionary<uint, GameMount>();
 
-        if (Settings.DBMethod == 0)
+        if (Settings.Default.DBMethod == 0)
         {
-            var path = Settings.GameDataPath + "\\System\\Mounts\\RidingMounts";
+            var path = Settings.Default.GameDataPath + "\\System\\Mounts\\RidingMounts";
             if (!Directory.Exists(path))
                 return;
 
@@ -43,7 +43,7 @@ public sealed class GameMount
             }
         }
 
-        if (Settings.DBMethod == 1)
+        if (Settings.Default.DBMethod == 1)
         {
             if (!DBAgent.X.Connected)
                 return;
@@ -88,9 +88,9 @@ public sealed class GameMount
             }
         }
 
-        if (Settings.DBMethod == 2)
+        if (Settings.Default.DBMethod == 2)
         {
-            var path = Settings.GameDataPath + "\\System\\Mounts\\RidingMounts";
+            var path = Settings.Default.GameDataPath + "\\System\\Mounts\\RidingMounts";
             if (!Directory.Exists(path))
                 return;
 

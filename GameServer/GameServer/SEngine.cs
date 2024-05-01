@@ -48,7 +48,7 @@ public static class SEngine
         StartTime = DateTime.UtcNow;
         CurrentTime = StartTime;
         OneSecondTime = CurrentTime.AddSeconds(1.0);
-        NextSaveDataTime = CurrentTime.AddMinutes(Settings.AutoSaveInterval);
+        NextSaveDataTime = CurrentTime.AddMinutes(Settings.Default.AutoSaveInterval);
 
         ExternalCommands = new ConcurrentQueue<GMCommand>();
 
@@ -232,11 +232,11 @@ public static class SEngine
             Session.SaveUsers();
             SMain.AddSystemLog("The automatic storage of data has been completed");
 
-            NextSaveDataTime = CurrentTime.AddMinutes(Settings.AutoSaveInterval);
+            NextSaveDataTime = CurrentTime.AddMinutes(Settings.Default.AutoSaveInterval);
         }
         if (自动保存日志 > CurrentTime)
         {
-            自动保存日志 = CurrentTime.AddMinutes(Settings.自动保存日志);
+            自动保存日志 = CurrentTime.AddMinutes(Settings.Default.自动保存日志);
         }
     }
 }

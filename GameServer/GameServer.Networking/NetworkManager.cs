@@ -48,12 +48,12 @@ public static class NetworkManager
         DisconnectingConnections = new ConcurrentQueue<SConnection>();
         ServerAnnouncements = new ConcurrentQueue<GamePacket>();
 
-        Listener = new TcpListener(IPAddress.Parse(Settings.UserConnectionIP), Settings.UserConnectionPort);
+        Listener = new TcpListener(IPAddress.Parse(Settings.Default.UserConnectionIP), Settings.Default.UserConnectionPort);
         Listener.Start();
         Listener.BeginAcceptTcpClient(Connection, null);
 
         Tickets = new Dictionary<string, TicketInformation>();
-        TicketListener = new UdpClient(new IPEndPoint(IPAddress.Any, Settings.TicketReceivePort));
+        TicketListener = new UdpClient(new IPEndPoint(IPAddress.Any, Settings.Default.TicketReceivePort));
         TicketBeginReceive();
     }
 
@@ -132,7 +132,7 @@ public static class NetworkManager
             SEngine.AddSystemLog("Asynchronous connection exception: " + ex.ToString());
         }
 
-        while (!Stopped && Connections.Count > Settings.MaxUserConnections)
+        while (!Stopped && Connections.Count > Settings.Default.MaxUserConnections)
             Thread.Sleep(1);
 
         if (!Stopped)
@@ -217,7 +217,7 @@ public static class NetworkManager
 
     public static void BlockIP(string ip)
     {
-        SystemInfo.Info.AddIPBan(ip, SEngine.CurrentTime.AddMinutes(Settings.AbnormalBlockTime));
+        SystemInfo.Info.AddIPBan(ip, SEngine.CurrentTime.AddMinutes(Settings.Default.AbnormalBlockTime));
     }
 
     public static void SendMessage(PlayerObject player, string message)
@@ -267,7 +267,7 @@ public static class NetworkManager
                 Description = memoryStream.ToArray()
             });
         }
-        if (Settings.系统窗口发送 == 1)
+        if (Settings.Default.系统窗口发送 == 1)
         {
             SMain.AddSystemLog(message);
         }

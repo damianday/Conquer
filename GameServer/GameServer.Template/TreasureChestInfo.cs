@@ -30,7 +30,7 @@ public sealed class TreasureChestInfo
     {
         DataSheet = new Dictionary<int, TreasureChestInfo>();
 
-        if (Settings.DBMethod == 1)
+        if (Settings.Default.DBMethod == 1)
         {
             if (!DBAgent.X.Connected)
                 return;
@@ -74,9 +74,9 @@ public sealed class TreasureChestInfo
             }
         }
 
-        if (Settings.DBMethod == 2)
+        if (Settings.Default.DBMethod == 2)
         {
-            var path = Settings.GameDataPath + "\\System\\Items";
+            var path = Settings.Default.GameDataPath + "\\System\\Items";
             if (!Directory.Exists(path))
                 return;
 

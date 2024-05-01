@@ -46,7 +46,7 @@ public sealed class SConnection
         Connection = client;
         Connection.NoDelay = true;
         ConnectedTime = SEngine.CurrentTime;
-        DisconnectTime = SEngine.CurrentTime.AddMinutes(Settings.DisconnectTime);
+        DisconnectTime = SEngine.CurrentTime.AddMinutes(Settings.Default.DisconnectTime);
         ErrorEventHandler = (EventHandler<Exception>)Delegate.Combine(ErrorEventHandler, new EventHandler<Exception>(NetworkManager.OnDisconnect));
         IPAddress = Connection.Client.RemoteEndPoint.ToString().Split(':')[0];
         BeginReceive();
@@ -113,7 +113,7 @@ public sealed class SConnection
     {
         if (!Disconnecting && !NetworkManager.Stopped && packet != null)
         {
-            if (Settings.SendPacketsAsync)
+            if (Settings.Default.SendPacketsAsync)
                 SendPackets.Enqueue(packet);
             else
                 Connection.Client.Send(packet.ReadPacket());
@@ -158,7 +158,7 @@ public sealed class SConnection
             if (ReceivedPackets.IsEmpty)
                 return;
 
-            if (ReceivedPackets.Count > Settings.PacketLimit)
+            if (ReceivedPackets.Count > Settings.Default.PacketLimit)
             {
                 ReceivedPackets.Clear();
                 NetworkManager.BlockIP(IPAddress);
@@ -193,7 +193,7 @@ public sealed class SConnection
 
     private void DelayDisconnectTime()
     {
-        DisconnectTime = SEngine.CurrentTime.AddMinutes(Settings.DisconnectTime);
+        DisconnectTime = SEngine.CurrentTime.AddMinutes(Settings.Default.DisconnectTime);
     }
 
     private void BeginReceive()
@@ -657,9 +657,9 @@ public sealed class SConnection
 
     public void Process(角色转移物品 P)
     {
-        if (Settings.法阵卡BUG清理 == 1 && Stage != GameStage.Game)
+        if (Settings.Default.法阵卡BUG清理 == 1 && Stage != GameStage.Game)
         {
-            Settings.法阵卡BUG清理 = 0;
+            Settings.Default.法阵卡BUG清理 = 0;
             Player.UserMoveItem(1, 1, 1, 1);
             Player.EnterScene();
             Stage = GameStage.Game;
@@ -1791,7 +1791,7 @@ public sealed class SConnection
         }
         else if (Player.FindItem(90226, out 物品))
         {
-            Player.ConsumeItem(Settings.雕爷激活灵符需求, 物品);
+            Player.ConsumeItem(Settings.Default.雕爷激活灵符需求, 物品);
             if (P.位置 == 12)
             {
                 P.位置 = 2;
@@ -1833,8 +1833,8 @@ public sealed class SConnection
         }
         else if (Player.FindItem(90226, out 物品) && Player.FindItem(P.物品编号, out 物品2) && P.解锁参数 == 0 && Player.Equipment.TryGetValue(P.装备部位, out v))
         {
-            Player.ConsumeItem(Settings.雕爷1号位铭文石, 物品2);
-            Player.ConsumeItem(Settings.雕爷1号位灵符, 物品);
+            Player.ConsumeItem(Settings.Default.雕爷1号位铭文石, 物品2);
+            Player.ConsumeItem(Settings.Default.雕爷1号位灵符, 物品);
             v.FirstInscription = InscriptionSkill.DataSheet[(ushort)P.铭文索引];
             Player.玩家装卸铭文(v.FirstInscription.SkillID, 0);
             Player.玩家装卸铭文(v.FirstInscription.SkillID, v.FirstInscription.ID);

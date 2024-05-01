@@ -397,13 +397,13 @@ public sealed class MonsterObject : MapObject
         
         if (SelectHitter(out var hitter))
         {
-            if (CurrentMap.MapID == 80 && Settings.屠魔爆率开关 == 0)
+            if (CurrentMap.MapID == 80 && Settings.Default.屠魔爆率开关 == 0)
             {
                 int num = 0;
                 if (GameItem.DataSheetByName.TryGetValue("强效金创药", out var value))
                 {
                     int num2 = ((Grade != MonsterGradeType.Normal) ? 1 : 15);
-                    int num3 = Math.Max(1, num2 - (int)Math.Round((decimal)num2 * Settings.ItemDropRate));
+                    int num3 = Math.Max(1, num2 - (int)Math.Round((decimal)num2 * Settings.Default.ItemDropRate));
                     if (SEngine.Random.Next(num3) == num3 / 2)
                     {
                         num++;
@@ -413,7 +413,7 @@ public sealed class MonsterObject : MapObject
                 if (GameItem.DataSheetByName.TryGetValue("强效魔法药", out var value2))
                 {
                     int num4 = ((Grade != MonsterGradeType.Normal) ? 1 : 20);
-                    int num5 = Math.Max(1, num4 - (int)Math.Round((decimal)num4 * Settings.ItemDropRate));
+                    int num5 = Math.Max(1, num4 - (int)Math.Round((decimal)num4 * Settings.Default.ItemDropRate));
                     if (SEngine.Random.Next(num5) == num5 / 2)
                     {
                         num++;
@@ -423,7 +423,7 @@ public sealed class MonsterObject : MapObject
                 if (GameItem.DataSheetByName.TryGetValue("疗伤药", out var value3))
                 {
                     int num6 = ((Grade != MonsterGradeType.Normal) ? 1 : 100);
-                    int num7 = Math.Max(1, num6 - (int)Math.Round((decimal)num6 * Settings.ItemDropRate));
+                    int num7 = Math.Max(1, num6 - (int)Math.Round((decimal)num6 * Settings.Default.ItemDropRate));
                     if (SEngine.Random.Next(num7) == num7 / 2)
                     {
                         num++;
@@ -433,7 +433,7 @@ public sealed class MonsterObject : MapObject
                 if (GameItem.DataSheetByName.TryGetValue("祝福油", out var value4))
                 {
                     int num8 = ((Grade == MonsterGradeType.Normal) ? 1000 : ((Grade == MonsterGradeType.Elite) ? 50 : 10));
-                    int num9 = Math.Max(1, num8 - (int)Math.Round((decimal)num8 * Settings.ItemDropRate));
+                    int num9 = Math.Max(1, num8 - (int)Math.Round((decimal)num8 * Settings.Default.ItemDropRate));
                     if (SEngine.Random.Next(num9) == num9 / 2)
                     {
                         num++;
@@ -452,7 +452,7 @@ public sealed class MonsterObject : MapObject
             }
             else
             {
-                if (!guardKill || Settings.GuardKillWillDrop)
+                if (!guardKill || Settings.Default.GuardKillWillDrop)
                 {
                     DropItems(hitter);
 
@@ -620,10 +620,10 @@ public sealed class MonsterObject : MapObject
             members.Add(hitter.Character);
         }
 
-        float ratio = Compute.CalculateLevelRatio(hitter.CurrentLevel, CurrentLevel, Settings.减收益等级差, Settings.收益减少比率);
+        float ratio = Compute.CalculateLevelRatio(hitter.CurrentLevel, CurrentLevel, Settings.Default.减收益等级差, Settings.Default.收益减少比率);
         int goldCount = 0;
         int itemCount = 0;
-        if (ratio < 1f && Settings.DropRateModifier == 0)
+        if (ratio < 1f && Settings.Default.DropRateModifier == 0)
         {
             foreach (MonItemInfo drop in Drops)
             {
@@ -636,7 +636,7 @@ public sealed class MonsterObject : MapObject
                     continue;
                 }
 
-                int chance = Math.Max(1, drop.MaxPoint - (int)Math.Round((decimal)drop.MaxPoint * Settings.ItemDropRate));
+                int chance = Math.Max(1, drop.MaxPoint - (int)Math.Round((decimal)drop.MaxPoint * Settings.Default.ItemDropRate));
                 if (drop.SelPoint < SEngine.Random.Next(chance))
                     continue;
 
@@ -668,7 +668,7 @@ public sealed class MonsterObject : MapObject
             }
         }
 
-        if (ratio < 1f && Settings.DropRateModifier == 1 && Settings.CurrentVersion >= 1)
+        if (ratio < 1f && Settings.Default.DropRateModifier == 1 && Settings.Default.CurrentVersion >= 1)
         {
             int num15 = 0;
             int num16 = 0;
@@ -704,7 +704,7 @@ public sealed class MonsterObject : MapObject
                     continue;
                 }
 
-                int chance = Math.Max(1, drop.MaxPoint - (int)Math.Round((decimal)drop.MaxPoint * Settings.ItemDropRate));
+                int chance = Math.Max(1, drop.MaxPoint - (int)Math.Round((decimal)drop.MaxPoint * Settings.Default.ItemDropRate));
                 if (drop.SelPoint < SEngine.Random.Next(chance))
                     continue;
 
@@ -924,7 +924,7 @@ public sealed class MonsterObject : MapObject
     {
         static string GetDropUserNameColor()
         {
-            return Settings.DropPlayerNameColor switch
+            return Settings.Default.DropPlayerNameColor switch
             {
                 0 => "#f9e01d",
                 1 => "#7dea00",
@@ -940,49 +940,49 @@ public sealed class MonsterObject : MapObject
         }
 
 
-        if (Settings.CurrentVersion >= 1)
+        if (Settings.Default.CurrentVersion >= 1)
         {
-            if (Settings.怪物掉落广播开关 == 1 && item.ValuableObjects)
+            if (Settings.Default.怪物掉落广播开关 == 1 && item.ValuableObjects)
             {
                 string color1 = null, color2 = null;
 
-                if (Settings.CurrentVersion >= 1 && item.装备套装提示 == GameItemSet.沃玛装备)
+                if (Settings.Default.CurrentVersion >= 1 && item.装备套装提示 == GameItemSet.沃玛装备)
                 {
                     color1 = GetDropUserNameColor();
                     
-                    if (Settings.掉落沃玛物品颜色 == 0)
+                    if (Settings.Default.掉落沃玛物品颜色 == 0)
                     {
                         color2 = "#f9e01d";
                     }
-                    else if (Settings.掉落沃玛物品颜色 == 1)
+                    else if (Settings.Default.掉落沃玛物品颜色 == 1)
                     {
                         color2 = "#7dea00";
                     }
-                    else if (Settings.掉落沃玛物品颜色 == 2)
+                    else if (Settings.Default.掉落沃玛物品颜色 == 2)
                     {
                         color2 = "#EA0000";
                     }
-                    else if (Settings.掉落沃玛物品颜色 == 3)
+                    else if (Settings.Default.掉落沃玛物品颜色 == 3)
                     {
                         color2 = "#0003ea";
                     }
-                    else if (Settings.掉落沃玛物品颜色 == 4)
+                    else if (Settings.Default.掉落沃玛物品颜色 == 4)
                     {
                         color2 = "#ff4aea";
                     }
-                    else if (Settings.掉落沃玛物品颜色 == 5)
+                    else if (Settings.Default.掉落沃玛物品颜色 == 5)
                     {
                         color2 = "#ffad4a";
                     }
-                    else if (Settings.掉落沃玛物品颜色 == 6)
+                    else if (Settings.Default.掉落沃玛物品颜色 == 6)
                     {
                         color2 = "#6bcbd2";
                     }
-                    else if (Settings.掉落沃玛物品颜色 == 7)
+                    else if (Settings.Default.掉落沃玛物品颜色 == 7)
                     {
                         color2 = "#ff4abf";
                     }
-                    else if (Settings.掉落沃玛物品颜色 == 8)
+                    else if (Settings.Default.掉落沃玛物品颜色 == 8)
                     {
                         color2 = "#fbf1f7";
                     }
@@ -991,43 +991,43 @@ public sealed class MonsterObject : MapObject
                         NetworkManager.SendAnnouncement("[" + Name + "] 被 [<font color = '" + color1 + "'>" + hitter.Name + "</font>]击杀, 掉落了[<font color = '" + color2 + "'>" + item.Name + "</font>]");
                     }
                 }
-                if (Settings.CurrentVersion >= 1 && item.装备套装提示 == GameItemSet.祖玛装备)
+                if (Settings.Default.CurrentVersion >= 1 && item.装备套装提示 == GameItemSet.祖玛装备)
                 {
                     color1 = GetDropUserNameColor();
 
-                    if (Settings.掉落祖玛物品颜色 == 0)
+                    if (Settings.Default.掉落祖玛物品颜色 == 0)
                     {
                         color2 = "#f9e01d";
                     }
-                    else if (Settings.掉落祖玛物品颜色 == 1)
+                    else if (Settings.Default.掉落祖玛物品颜色 == 1)
                     {
                         color2 = "#7dea00";
                     }
-                    else if (Settings.掉落祖玛物品颜色 == 2)
+                    else if (Settings.Default.掉落祖玛物品颜色 == 2)
                     {
                         color2 = "#EA0000";
                     }
-                    else if (Settings.掉落祖玛物品颜色 == 3)
+                    else if (Settings.Default.掉落祖玛物品颜色 == 3)
                     {
                         color2 = "#0003ea";
                     }
-                    else if (Settings.掉落祖玛物品颜色 == 4)
+                    else if (Settings.Default.掉落祖玛物品颜色 == 4)
                     {
                         color2 = "#ff4aea";
                     }
-                    else if (Settings.掉落祖玛物品颜色 == 5)
+                    else if (Settings.Default.掉落祖玛物品颜色 == 5)
                     {
                         color2 = "#ffad4a";
                     }
-                    else if (Settings.掉落祖玛物品颜色 == 6)
+                    else if (Settings.Default.掉落祖玛物品颜色 == 6)
                     {
                         color2 = "#6bcbd2";
                     }
-                    else if (Settings.掉落祖玛物品颜色 == 7)
+                    else if (Settings.Default.掉落祖玛物品颜色 == 7)
                     {
                         color2 = "#ff4abf";
                     }
-                    else if (Settings.掉落祖玛物品颜色 == 8)
+                    else if (Settings.Default.掉落祖玛物品颜色 == 8)
                     {
                         color2 = "#fbf1f7";
                     }
@@ -1036,43 +1036,43 @@ public sealed class MonsterObject : MapObject
                         NetworkManager.SendAnnouncement("[" + Name + "] 被 [<font color = '" + color1 + "'>" + hitter.Name + "</font>]击杀, 掉落了[<font color = '" + color2 + "'>" + item.Name + "</font>]");
                     }
                 }
-                if (Settings.CurrentVersion >= 1 && item.装备套装提示 == GameItemSet.赤月装备)
+                if (Settings.Default.CurrentVersion >= 1 && item.装备套装提示 == GameItemSet.赤月装备)
                 {
                     color1 = GetDropUserNameColor();
 
-                    if (Settings.掉落赤月物品颜色 == 0)
+                    if (Settings.Default.掉落赤月物品颜色 == 0)
                     {
                         color2 = "#f9e01d";
                     }
-                    else if (Settings.掉落赤月物品颜色 == 1)
+                    else if (Settings.Default.掉落赤月物品颜色 == 1)
                     {
                         color2 = "#7dea00";
                     }
-                    else if (Settings.掉落赤月物品颜色 == 2)
+                    else if (Settings.Default.掉落赤月物品颜色 == 2)
                     {
                         color2 = "#EA0000";
                     }
-                    else if (Settings.掉落赤月物品颜色 == 3)
+                    else if (Settings.Default.掉落赤月物品颜色 == 3)
                     {
                         color2 = "#0003ea";
                     }
-                    else if (Settings.掉落赤月物品颜色 == 4)
+                    else if (Settings.Default.掉落赤月物品颜色 == 4)
                     {
                         color2 = "#ff4aea";
                     }
-                    else if (Settings.掉落赤月物品颜色 == 5)
+                    else if (Settings.Default.掉落赤月物品颜色 == 5)
                     {
                         color2 = "#ffad4a";
                     }
-                    else if (Settings.掉落赤月物品颜色 == 6)
+                    else if (Settings.Default.掉落赤月物品颜色 == 6)
                     {
                         color2 = "#6bcbd2";
                     }
-                    else if (Settings.掉落赤月物品颜色 == 7)
+                    else if (Settings.Default.掉落赤月物品颜色 == 7)
                     {
                         color2 = "#ff4abf";
                     }
-                    else if (Settings.掉落赤月物品颜色 == 8)
+                    else if (Settings.Default.掉落赤月物品颜色 == 8)
                     {
                         color2 = "#fbf1f7";
                     }
@@ -1081,43 +1081,43 @@ public sealed class MonsterObject : MapObject
                         NetworkManager.SendAnnouncement("[" + Name + "] 被 [<font color = '" + color1 + "'>" + hitter.Name + "</font>]击杀, 掉落了[<font color = '" + color2 + "'>" + item.Name + "</font>]");
                     }
                 }
-                if (Settings.CurrentVersion >= 1 && item.装备套装提示 == GameItemSet.魔龙装备)
+                if (Settings.Default.CurrentVersion >= 1 && item.装备套装提示 == GameItemSet.魔龙装备)
                 {
                     color1 = GetDropUserNameColor();
 
-                    if (Settings.掉落魔龙物品颜色 == 0)
+                    if (Settings.Default.掉落魔龙物品颜色 == 0)
                     {
                         color2 = "#f9e01d";
                     }
-                    else if (Settings.掉落魔龙物品颜色 == 1)
+                    else if (Settings.Default.掉落魔龙物品颜色 == 1)
                     {
                         color2 = "#7dea00";
                     }
-                    else if (Settings.掉落魔龙物品颜色 == 2)
+                    else if (Settings.Default.掉落魔龙物品颜色 == 2)
                     {
                         color2 = "#EA0000";
                     }
-                    else if (Settings.掉落魔龙物品颜色 == 3)
+                    else if (Settings.Default.掉落魔龙物品颜色 == 3)
                     {
                         color2 = "#0003ea";
                     }
-                    else if (Settings.掉落魔龙物品颜色 == 4)
+                    else if (Settings.Default.掉落魔龙物品颜色 == 4)
                     {
                         color2 = "#ff4aea";
                     }
-                    else if (Settings.掉落魔龙物品颜色 == 5)
+                    else if (Settings.Default.掉落魔龙物品颜色 == 5)
                     {
                         color2 = "#ffad4a";
                     }
-                    else if (Settings.掉落魔龙物品颜色 == 6)
+                    else if (Settings.Default.掉落魔龙物品颜色 == 6)
                     {
                         color2 = "#6bcbd2";
                     }
-                    else if (Settings.掉落魔龙物品颜色 == 7)
+                    else if (Settings.Default.掉落魔龙物品颜色 == 7)
                     {
                         color2 = "#ff4abf";
                     }
-                    else if (Settings.掉落魔龙物品颜色 == 8)
+                    else if (Settings.Default.掉落魔龙物品颜色 == 8)
                     {
                         color2 = "#fbf1f7";
                     }
@@ -1126,43 +1126,43 @@ public sealed class MonsterObject : MapObject
                         NetworkManager.SendAnnouncement("[" + Name + "] 被 [<font color = '" + color1 + "'>" + hitter.Name + "</font>]击杀, 掉落了[<font color = '" + color2 + "'>" + item.Name + "</font>]");
                     }
                 }
-                if (Settings.CurrentVersion >= 1 && item.装备套装提示 == GameItemSet.星王装备)
+                if (Settings.Default.CurrentVersion >= 1 && item.装备套装提示 == GameItemSet.星王装备)
                 {
                     color1 = GetDropUserNameColor();
 
-                    if (Settings.掉落星王物品颜色 == 0)
+                    if (Settings.Default.掉落星王物品颜色 == 0)
                     {
                         color2 = "#f9e01d";
                     }
-                    else if (Settings.掉落星王物品颜色 == 1)
+                    else if (Settings.Default.掉落星王物品颜色 == 1)
                     {
                         color2 = "#7dea00";
                     }
-                    else if (Settings.掉落星王物品颜色 == 2)
+                    else if (Settings.Default.掉落星王物品颜色 == 2)
                     {
                         color2 = "#EA0000";
                     }
-                    else if (Settings.掉落星王物品颜色 == 3)
+                    else if (Settings.Default.掉落星王物品颜色 == 3)
                     {
                         color2 = "#0003ea";
                     }
-                    else if (Settings.掉落星王物品颜色 == 4)
+                    else if (Settings.Default.掉落星王物品颜色 == 4)
                     {
                         color2 = "#ff4aea";
                     }
-                    else if (Settings.掉落星王物品颜色 == 5)
+                    else if (Settings.Default.掉落星王物品颜色 == 5)
                     {
                         color2 = "#ffad4a";
                     }
-                    else if (Settings.掉落星王物品颜色 == 6)
+                    else if (Settings.Default.掉落星王物品颜色 == 6)
                     {
                         color2 = "#6bcbd2";
                     }
-                    else if (Settings.掉落星王物品颜色 == 7)
+                    else if (Settings.Default.掉落星王物品颜色 == 7)
                     {
                         color2 = "#ff4abf";
                     }
-                    else if (Settings.掉落星王物品颜色 == 8)
+                    else if (Settings.Default.掉落星王物品颜色 == 8)
                     {
                         color2 = "#fbf1f7";
                     }
@@ -1171,43 +1171,43 @@ public sealed class MonsterObject : MapObject
                         NetworkManager.SendAnnouncement("[" + Name + "] 被 [<font color = '" + color1 + "'>" + hitter.Name + "</font>]击杀, 掉落了[<font color = '" + color2 + "'>" + item.Name + "</font>]");
                     }
                 }
-                if (Settings.CurrentVersion >= 1 && item.装备套装提示 == GameItemSet.城主装备)
+                if (Settings.Default.CurrentVersion >= 1 && item.装备套装提示 == GameItemSet.城主装备)
                 {
                     color1 = GetDropUserNameColor();
 
-                    if (Settings.掉落城主物品颜色 == 0)
+                    if (Settings.Default.掉落城主物品颜色 == 0)
                     {
                         color2 = "#f9e01d";
                     }
-                    else if (Settings.掉落城主物品颜色 == 1)
+                    else if (Settings.Default.掉落城主物品颜色 == 1)
                     {
                         color2 = "#7dea00";
                     }
-                    else if (Settings.掉落城主物品颜色 == 2)
+                    else if (Settings.Default.掉落城主物品颜色 == 2)
                     {
                         color2 = "#EA0000";
                     }
-                    else if (Settings.掉落城主物品颜色 == 3)
+                    else if (Settings.Default.掉落城主物品颜色 == 3)
                     {
                         color2 = "#0003ea";
                     }
-                    else if (Settings.掉落城主物品颜色 == 4)
+                    else if (Settings.Default.掉落城主物品颜色 == 4)
                     {
                         color2 = "#ff4aea";
                     }
-                    else if (Settings.掉落城主物品颜色 == 5)
+                    else if (Settings.Default.掉落城主物品颜色 == 5)
                     {
                         color2 = "#ffad4a";
                     }
-                    else if (Settings.掉落城主物品颜色 == 6)
+                    else if (Settings.Default.掉落城主物品颜色 == 6)
                     {
                         color2 = "#6bcbd2";
                     }
-                    else if (Settings.掉落城主物品颜色 == 7)
+                    else if (Settings.Default.掉落城主物品颜色 == 7)
                     {
                         color2 = "#ff4abf";
                     }
-                    else if (Settings.掉落城主物品颜色 == 8)
+                    else if (Settings.Default.掉落城主物品颜色 == 8)
                     {
                         color2 = "#fbf1f7";
                     }
@@ -1216,43 +1216,43 @@ public sealed class MonsterObject : MapObject
                         NetworkManager.SendAnnouncement("[" + Name + "] 被 [<font color = '" + color1 + "'>" + hitter.Name + "</font>]击杀, 掉落了[<font color = '" + color2 + "'>" + item.Name + "</font>]");
                     }
                 }
-                if (Settings.CurrentVersion >= 1 && item.ValuableObjects)
+                if (Settings.Default.CurrentVersion >= 1 && item.ValuableObjects)
                 {
                     color1 = GetDropUserNameColor();
 
-                    if (Settings.掉落贵重物品颜色 == 0)
+                    if (Settings.Default.掉落贵重物品颜色 == 0)
                     {
                         color2 = "#f9e01d";
                     }
-                    else if (Settings.掉落贵重物品颜色 == 1)
+                    else if (Settings.Default.掉落贵重物品颜色 == 1)
                     {
                         color2 = "#7dea00";
                     }
-                    else if (Settings.掉落贵重物品颜色 == 2)
+                    else if (Settings.Default.掉落贵重物品颜色 == 2)
                     {
                         color2 = "#EA0000";
                     }
-                    else if (Settings.掉落贵重物品颜色 == 3)
+                    else if (Settings.Default.掉落贵重物品颜色 == 3)
                     {
                         color2 = "#0003ea";
                     }
-                    else if (Settings.掉落贵重物品颜色 == 4)
+                    else if (Settings.Default.掉落贵重物品颜色 == 4)
                     {
                         color2 = "#ff4aea";
                     }
-                    else if (Settings.掉落贵重物品颜色 == 5)
+                    else if (Settings.Default.掉落贵重物品颜色 == 5)
                     {
                         color2 = "#ffad4a";
                     }
-                    else if (Settings.掉落贵重物品颜色 == 6)
+                    else if (Settings.Default.掉落贵重物品颜色 == 6)
                     {
                         color2 = "#6bcbd2";
                     }
-                    else if (Settings.掉落贵重物品颜色 == 7)
+                    else if (Settings.Default.掉落贵重物品颜色 == 7)
                     {
                         color2 = "#ff4abf";
                     }
-                    else if (Settings.掉落贵重物品颜色 == 8)
+                    else if (Settings.Default.掉落贵重物品颜色 == 8)
                     {
                         color2 = "#fbf1f7";
                     }
@@ -1266,47 +1266,47 @@ public sealed class MonsterObject : MapObject
                     NetworkManager.SendAnnouncement("[" + CurrentMap?.ToString() + "]的[" + Name + "] 被 [" + hitter.Name + "] 击杀, 掉落了[" + item.Name + "]");
                 }
             }
-            if (Settings.怪物掉落窗口开关 == 1 && item.ValuableObjects)
+            if (Settings.Default.怪物掉落窗口开关 == 1 && item.ValuableObjects)
             {
                 string color1 = null;
                 string color2 = null;
-                if (Settings.CurrentVersion >= 1 && item.装备套装提示 == GameItemSet.沃玛装备)
+                if (Settings.Default.CurrentVersion >= 1 && item.装备套装提示 == GameItemSet.沃玛装备)
                 {
                     color1 = GetDropUserNameColor();
 
-                    if (Settings.掉落沃玛物品颜色 == 0)
+                    if (Settings.Default.掉落沃玛物品颜色 == 0)
                     {
                         color2 = "#f9e01d";
                     }
-                    else if (Settings.掉落沃玛物品颜色 == 1)
+                    else if (Settings.Default.掉落沃玛物品颜色 == 1)
                     {
                         color2 = "#7dea00";
                     }
-                    else if (Settings.掉落沃玛物品颜色 == 2)
+                    else if (Settings.Default.掉落沃玛物品颜色 == 2)
                     {
                         color2 = "#EA0000";
                     }
-                    else if (Settings.掉落沃玛物品颜色 == 3)
+                    else if (Settings.Default.掉落沃玛物品颜色 == 3)
                     {
                         color2 = "#0003ea";
                     }
-                    else if (Settings.掉落沃玛物品颜色 == 4)
+                    else if (Settings.Default.掉落沃玛物品颜色 == 4)
                     {
                         color2 = "#ff4aea";
                     }
-                    else if (Settings.掉落沃玛物品颜色 == 5)
+                    else if (Settings.Default.掉落沃玛物品颜色 == 5)
                     {
                         color2 = "#ffad4a";
                     }
-                    else if (Settings.掉落沃玛物品颜色 == 6)
+                    else if (Settings.Default.掉落沃玛物品颜色 == 6)
                     {
                         color2 = "#6bcbd2";
                     }
-                    else if (Settings.掉落沃玛物品颜色 == 7)
+                    else if (Settings.Default.掉落沃玛物品颜色 == 7)
                     {
                         color2 = "#ff4abf";
                     }
-                    else if (Settings.掉落沃玛物品颜色 == 8)
+                    else if (Settings.Default.掉落沃玛物品颜色 == 8)
                     {
                         color2 = "#fbf1f7";
                     }
@@ -1315,43 +1315,43 @@ public sealed class MonsterObject : MapObject
                         NetworkManager.SendAnnouncement("[" + Name + "] 被 [<font color = '" + color1 + "'>" + hitter.Name + "</font>]击杀, 掉落了[<font color = '" + color2 + "'>" + item.Name + "</font>]", rolling: true);
                     }
                 }
-                if (Settings.CurrentVersion >= 1 && item.装备套装提示 == GameItemSet.祖玛装备)
+                if (Settings.Default.CurrentVersion >= 1 && item.装备套装提示 == GameItemSet.祖玛装备)
                 {
                     color1 = GetDropUserNameColor();
 
-                    if (Settings.掉落祖玛物品颜色 == 0)
+                    if (Settings.Default.掉落祖玛物品颜色 == 0)
                     {
                         color2 = "#f9e01d";
                     }
-                    else if (Settings.掉落祖玛物品颜色 == 1)
+                    else if (Settings.Default.掉落祖玛物品颜色 == 1)
                     {
                         color2 = "#7dea00";
                     }
-                    else if (Settings.掉落祖玛物品颜色 == 2)
+                    else if (Settings.Default.掉落祖玛物品颜色 == 2)
                     {
                         color2 = "#EA0000";
                     }
-                    else if (Settings.掉落祖玛物品颜色 == 3)
+                    else if (Settings.Default.掉落祖玛物品颜色 == 3)
                     {
                         color2 = "#0003ea";
                     }
-                    else if (Settings.掉落祖玛物品颜色 == 4)
+                    else if (Settings.Default.掉落祖玛物品颜色 == 4)
                     {
                         color2 = "#ff4aea";
                     }
-                    else if (Settings.掉落祖玛物品颜色 == 5)
+                    else if (Settings.Default.掉落祖玛物品颜色 == 5)
                     {
                         color2 = "#ffad4a";
                     }
-                    else if (Settings.掉落祖玛物品颜色 == 6)
+                    else if (Settings.Default.掉落祖玛物品颜色 == 6)
                     {
                         color2 = "#6bcbd2";
                     }
-                    else if (Settings.掉落祖玛物品颜色 == 7)
+                    else if (Settings.Default.掉落祖玛物品颜色 == 7)
                     {
                         color2 = "#ff4abf";
                     }
-                    else if (Settings.掉落祖玛物品颜色 == 8)
+                    else if (Settings.Default.掉落祖玛物品颜色 == 8)
                     {
                         color2 = "#fbf1f7";
                     }
@@ -1360,43 +1360,43 @@ public sealed class MonsterObject : MapObject
                         NetworkManager.SendAnnouncement("[" + Name + "] 被 [<font color = '" + color1 + "'>" + hitter.Name + "</font>]击杀, 掉落了[<font color = '" + color2 + "'>" + item.Name + "</font>]", rolling: true);
                     }
                 }
-                if (Settings.CurrentVersion >= 1 && item.装备套装提示 == GameItemSet.赤月装备)
+                if (Settings.Default.CurrentVersion >= 1 && item.装备套装提示 == GameItemSet.赤月装备)
                 {
                     color1 = GetDropUserNameColor();
 
-                    if (Settings.掉落赤月物品颜色 == 0)
+                    if (Settings.Default.掉落赤月物品颜色 == 0)
                     {
                         color2 = "#f9e01d";
                     }
-                    else if (Settings.掉落赤月物品颜色 == 1)
+                    else if (Settings.Default.掉落赤月物品颜色 == 1)
                     {
                         color2 = "#7dea00";
                     }
-                    else if (Settings.掉落赤月物品颜色 == 2)
+                    else if (Settings.Default.掉落赤月物品颜色 == 2)
                     {
                         color2 = "#EA0000";
                     }
-                    else if (Settings.掉落赤月物品颜色 == 3)
+                    else if (Settings.Default.掉落赤月物品颜色 == 3)
                     {
                         color2 = "#0003ea";
                     }
-                    else if (Settings.掉落赤月物品颜色 == 4)
+                    else if (Settings.Default.掉落赤月物品颜色 == 4)
                     {
                         color2 = "#ff4aea";
                     }
-                    else if (Settings.掉落赤月物品颜色 == 5)
+                    else if (Settings.Default.掉落赤月物品颜色 == 5)
                     {
                         color2 = "#ffad4a";
                     }
-                    else if (Settings.掉落赤月物品颜色 == 6)
+                    else if (Settings.Default.掉落赤月物品颜色 == 6)
                     {
                         color2 = "#6bcbd2";
                     }
-                    else if (Settings.掉落赤月物品颜色 == 7)
+                    else if (Settings.Default.掉落赤月物品颜色 == 7)
                     {
                         color2 = "#ff4abf";
                     }
-                    else if (Settings.掉落赤月物品颜色 == 8)
+                    else if (Settings.Default.掉落赤月物品颜色 == 8)
                     {
                         color2 = "#fbf1f7";
                     }
@@ -1405,43 +1405,43 @@ public sealed class MonsterObject : MapObject
                         NetworkManager.SendAnnouncement("[" + Name + "] 被 [<font color = '" + color1 + "'>" + hitter.Name + "</font>]击杀, 掉落了[<font color = '" + color2 + "'>" + item.Name + "</font>]", rolling: true);
                     }
                 }
-                if (Settings.CurrentVersion >= 1 && item.装备套装提示 == GameItemSet.魔龙装备)
+                if (Settings.Default.CurrentVersion >= 1 && item.装备套装提示 == GameItemSet.魔龙装备)
                 {
                     color1 = GetDropUserNameColor();
 
-                    if (Settings.掉落魔龙物品颜色 == 0)
+                    if (Settings.Default.掉落魔龙物品颜色 == 0)
                     {
                         color2 = "#f9e01d";
                     }
-                    else if (Settings.掉落魔龙物品颜色 == 1)
+                    else if (Settings.Default.掉落魔龙物品颜色 == 1)
                     {
                         color2 = "#7dea00";
                     }
-                    else if (Settings.掉落魔龙物品颜色 == 2)
+                    else if (Settings.Default.掉落魔龙物品颜色 == 2)
                     {
                         color2 = "#EA0000";
                     }
-                    else if (Settings.掉落魔龙物品颜色 == 3)
+                    else if (Settings.Default.掉落魔龙物品颜色 == 3)
                     {
                         color2 = "#0003ea";
                     }
-                    else if (Settings.掉落魔龙物品颜色 == 4)
+                    else if (Settings.Default.掉落魔龙物品颜色 == 4)
                     {
                         color2 = "#ff4aea";
                     }
-                    else if (Settings.掉落魔龙物品颜色 == 5)
+                    else if (Settings.Default.掉落魔龙物品颜色 == 5)
                     {
                         color2 = "#ffad4a";
                     }
-                    else if (Settings.掉落魔龙物品颜色 == 6)
+                    else if (Settings.Default.掉落魔龙物品颜色 == 6)
                     {
                         color2 = "#6bcbd2";
                     }
-                    else if (Settings.掉落魔龙物品颜色 == 7)
+                    else if (Settings.Default.掉落魔龙物品颜色 == 7)
                     {
                         color2 = "#ff4abf";
                     }
-                    else if (Settings.掉落魔龙物品颜色 == 8)
+                    else if (Settings.Default.掉落魔龙物品颜色 == 8)
                     {
                         color2 = "#fbf1f7";
                     }
@@ -1450,43 +1450,43 @@ public sealed class MonsterObject : MapObject
                         NetworkManager.SendAnnouncement("[" + Name + "] 被 [<font color = '" + color1 + "'>" + hitter.Name + "</font>]击杀, 掉落了[<font color = '" + color2 + "'>" + item.Name + "</font>]", rolling: true);
                     }
                 }
-                if (Settings.CurrentVersion >= 1 && item.装备套装提示 == GameItemSet.星王装备)
+                if (Settings.Default.CurrentVersion >= 1 && item.装备套装提示 == GameItemSet.星王装备)
                 {
                     color1 = GetDropUserNameColor();
 
-                    if (Settings.掉落星王物品颜色 == 0)
+                    if (Settings.Default.掉落星王物品颜色 == 0)
                     {
                         color2 = "#f9e01d";
                     }
-                    else if (Settings.掉落星王物品颜色 == 1)
+                    else if (Settings.Default.掉落星王物品颜色 == 1)
                     {
                         color2 = "#7dea00";
                     }
-                    else if (Settings.掉落星王物品颜色 == 2)
+                    else if (Settings.Default.掉落星王物品颜色 == 2)
                     {
                         color2 = "#EA0000";
                     }
-                    else if (Settings.掉落星王物品颜色 == 3)
+                    else if (Settings.Default.掉落星王物品颜色 == 3)
                     {
                         color2 = "#0003ea";
                     }
-                    else if (Settings.掉落星王物品颜色 == 4)
+                    else if (Settings.Default.掉落星王物品颜色 == 4)
                     {
                         color2 = "#ff4aea";
                     }
-                    else if (Settings.掉落星王物品颜色 == 5)
+                    else if (Settings.Default.掉落星王物品颜色 == 5)
                     {
                         color2 = "#ffad4a";
                     }
-                    else if (Settings.掉落星王物品颜色 == 6)
+                    else if (Settings.Default.掉落星王物品颜色 == 6)
                     {
                         color2 = "#6bcbd2";
                     }
-                    else if (Settings.掉落星王物品颜色 == 7)
+                    else if (Settings.Default.掉落星王物品颜色 == 7)
                     {
                         color2 = "#ff4abf";
                     }
-                    else if (Settings.掉落星王物品颜色 == 8)
+                    else if (Settings.Default.掉落星王物品颜色 == 8)
                     {
                         color2 = "#fbf1f7";
                     }
@@ -1495,43 +1495,43 @@ public sealed class MonsterObject : MapObject
                         NetworkManager.SendAnnouncement("[" + Name + "] 被 [<font color = '" + color1 + "'>" + hitter.Name + "</font>]击杀, 掉落了[<font color = '" + color2 + "'>" + item.Name + "</font>]", rolling: true);
                     }
                 }
-                if (Settings.CurrentVersion >= 1 && item.装备套装提示 == GameItemSet.城主装备)
+                if (Settings.Default.CurrentVersion >= 1 && item.装备套装提示 == GameItemSet.城主装备)
                 {
                     color1 = GetDropUserNameColor();
 
-                    if (Settings.掉落城主物品颜色 == 0)
+                    if (Settings.Default.掉落城主物品颜色 == 0)
                     {
                         color2 = "#f9e01d";
                     }
-                    else if (Settings.掉落城主物品颜色 == 1)
+                    else if (Settings.Default.掉落城主物品颜色 == 1)
                     {
                         color2 = "#7dea00";
                     }
-                    else if (Settings.掉落城主物品颜色 == 2)
+                    else if (Settings.Default.掉落城主物品颜色 == 2)
                     {
                         color2 = "#EA0000";
                     }
-                    else if (Settings.掉落城主物品颜色 == 3)
+                    else if (Settings.Default.掉落城主物品颜色 == 3)
                     {
                         color2 = "#0003ea";
                     }
-                    else if (Settings.掉落城主物品颜色 == 4)
+                    else if (Settings.Default.掉落城主物品颜色 == 4)
                     {
                         color2 = "#ff4aea";
                     }
-                    else if (Settings.掉落城主物品颜色 == 5)
+                    else if (Settings.Default.掉落城主物品颜色 == 5)
                     {
                         color2 = "#ffad4a";
                     }
-                    else if (Settings.掉落城主物品颜色 == 6)
+                    else if (Settings.Default.掉落城主物品颜色 == 6)
                     {
                         color2 = "#6bcbd2";
                     }
-                    else if (Settings.掉落城主物品颜色 == 7)
+                    else if (Settings.Default.掉落城主物品颜色 == 7)
                     {
                         color2 = "#ff4abf";
                     }
-                    else if (Settings.掉落城主物品颜色 == 8)
+                    else if (Settings.Default.掉落城主物品颜色 == 8)
                     {
                         color2 = "#fbf1f7";
                     }
@@ -1540,43 +1540,43 @@ public sealed class MonsterObject : MapObject
                         NetworkManager.SendAnnouncement("[" + Name + "] 被 [<font color = '" + color1 + "'>" + hitter.Name + "</font>]击杀, 掉落了[<font color = '" + color2 + "'>" + item.Name + "</font>]", rolling: true);
                     }
                 }
-                if (Settings.CurrentVersion >= 1 && item.装备套装提示 == GameItemSet.None)
+                if (Settings.Default.CurrentVersion >= 1 && item.装备套装提示 == GameItemSet.None)
                 {
                     color1 = GetDropUserNameColor();
 
-                    if (Settings.掉落贵重物品颜色 == 0)
+                    if (Settings.Default.掉落贵重物品颜色 == 0)
                     {
                         color2 = "#f9e01d";
                     }
-                    else if (Settings.掉落贵重物品颜色 == 1)
+                    else if (Settings.Default.掉落贵重物品颜色 == 1)
                     {
                         color2 = "#7dea00";
                     }
-                    else if (Settings.掉落贵重物品颜色 == 2)
+                    else if (Settings.Default.掉落贵重物品颜色 == 2)
                     {
                         color2 = "#EA0000";
                     }
-                    else if (Settings.掉落贵重物品颜色 == 3)
+                    else if (Settings.Default.掉落贵重物品颜色 == 3)
                     {
                         color2 = "#0003ea";
                     }
-                    else if (Settings.掉落贵重物品颜色 == 4)
+                    else if (Settings.Default.掉落贵重物品颜色 == 4)
                     {
                         color2 = "#ff4aea";
                     }
-                    else if (Settings.掉落贵重物品颜色 == 5)
+                    else if (Settings.Default.掉落贵重物品颜色 == 5)
                     {
                         color2 = "#ffad4a";
                     }
-                    else if (Settings.掉落贵重物品颜色 == 6)
+                    else if (Settings.Default.掉落贵重物品颜色 == 6)
                     {
                         color2 = "#6bcbd2";
                     }
-                    else if (Settings.掉落贵重物品颜色 == 7)
+                    else if (Settings.Default.掉落贵重物品颜色 == 7)
                     {
                         color2 = "#ff4abf";
                     }
-                    else if (Settings.掉落贵重物品颜色 == 8)
+                    else if (Settings.Default.掉落贵重物品颜色 == 8)
                     {
                         color2 = "#fbf1f7";
                     }
@@ -1591,7 +1591,7 @@ public sealed class MonsterObject : MapObject
                 }
             }
         }
-        if (Settings.CurrentVersion == 0)
+        if (Settings.Default.CurrentVersion == 0)
         {
             NetworkManager.SendAnnouncement("[" + Name + "] 被 [" + hitter.Name + "] 击杀, 掉落了[" + item.Name + "]");
         }
@@ -1650,7 +1650,7 @@ public sealed class MonsterObject : MapObject
         BindGrid();
         UpdateAllNeighbours();
 
-        if (Grade == MonsterGradeType.Boss && Settings.BOSS刷新提示开关 == 1)
+        if (Grade == MonsterGradeType.Boss && Settings.Default.BOSS刷新提示开关 == 1)
         {
             NetworkManager.SendAnnouncement($"{Info.MonsterName}在{CurrentMap}刷新！", rolling: true);
         }

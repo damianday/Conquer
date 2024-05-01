@@ -20,9 +20,9 @@ public class MonsterSpawn
     {
         DataSheet = new HashSet<MonsterSpawn>();
 
-        if (Settings.DBMethod == 0)
+        if (Settings.Default.DBMethod == 0)
         {
-            var path = Settings.GameDataPath + "\\System\\GameMap\\Monsters\\";
+            var path = Settings.Default.GameDataPath + "\\System\\GameMap\\Monsters\\";
             if (!Directory.Exists(path))
                 return;
 
@@ -31,7 +31,7 @@ public class MonsterSpawn
                 DataSheet.Add(obj);
         }
 
-        if (Settings.DBMethod == 1)
+        if (Settings.Default.DBMethod == 1)
         {
             if (!DBAgent.X.Connected)
                 return;

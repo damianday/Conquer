@@ -158,9 +158,9 @@ public sealed class MonsterInfo
     {
         DataSheet = new Dictionary<string, MonsterInfo>();
 
-        if (Settings.DBMethod == 0)
+        if (Settings.Default.DBMethod == 0)
         {
-            var path = Settings.GameDataPath + "\\System\\Npc\\Monsters\\";
+            var path = Settings.Default.GameDataPath + "\\System\\Npc\\Monsters\\";
             if (!Directory.Exists(path))
                 return;
 
@@ -169,7 +169,7 @@ public sealed class MonsterInfo
                 DataSheet.Add(obj.MonsterName, obj);
         }
 
-        if (Settings.DBMethod == 1)
+        if (Settings.Default.DBMethod == 1)
         {
             if (!DBAgent.X.Connected)
                 return;

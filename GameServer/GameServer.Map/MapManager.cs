@@ -103,37 +103,37 @@ public static class MapManager
     {
         var day = DateTime.Now.DayOfWeek;
 
-        if (SEngine.CurrentTime.Hour + 2 >= Settings.沙巴克开启 && Settings.沙巴克每周攻沙时间 == 0)
+        if (SEngine.CurrentTime.Hour + 2 >= Settings.Default.沙巴克开启 && Settings.Default.沙巴克每周攻沙时间 == 0)
         {
             ProcessSabakWar();
         }
-        else if (SEngine.CurrentTime.Hour + 2 >= Settings.沙巴克开启 && day == DayOfWeek.Monday && Settings.沙巴克每周攻沙时间 == 1)
+        else if (SEngine.CurrentTime.Hour + 2 >= Settings.Default.沙巴克开启 && day == DayOfWeek.Monday && Settings.Default.沙巴克每周攻沙时间 == 1)
         {
             ProcessSabakWar();
         }
-        else if (SEngine.CurrentTime.Hour + 2 >= Settings.沙巴克开启 && day == DayOfWeek.Tuesday && Settings.沙巴克每周攻沙时间 == 2)
+        else if (SEngine.CurrentTime.Hour + 2 >= Settings.Default.沙巴克开启 && day == DayOfWeek.Tuesday && Settings.Default.沙巴克每周攻沙时间 == 2)
         {
             ProcessSabakWar();
         }
-        else if (SEngine.CurrentTime.Hour + 2 >= Settings.沙巴克开启 && day == DayOfWeek.Wednesday && Settings.沙巴克每周攻沙时间 == 3)
+        else if (SEngine.CurrentTime.Hour + 2 >= Settings.Default.沙巴克开启 && day == DayOfWeek.Wednesday && Settings.Default.沙巴克每周攻沙时间 == 3)
         {
             ProcessSabakWar();
         }
-        else if (SEngine.CurrentTime.Hour + 2 >= Settings.沙巴克开启 && day == DayOfWeek.Thursday && Settings.沙巴克每周攻沙时间 == 4)
+        else if (SEngine.CurrentTime.Hour + 2 >= Settings.Default.沙巴克开启 && day == DayOfWeek.Thursday && Settings.Default.沙巴克每周攻沙时间 == 4)
         {
             ProcessSabakWar();
         }
-        else if (SEngine.CurrentTime.Hour + 2 >= Settings.沙巴克开启 && day == DayOfWeek.Friday && Settings.沙巴克每周攻沙时间 == 5)
+        else if (SEngine.CurrentTime.Hour + 2 >= Settings.Default.沙巴克开启 && day == DayOfWeek.Friday && Settings.Default.沙巴克每周攻沙时间 == 5)
         {
             ProcessSabakWar();
         }
-        else if (SEngine.CurrentTime.Hour + 2 >= Settings.沙巴克开启 && day == DayOfWeek.Saturday && Settings.沙巴克每周攻沙时间 == 6)
+        else if (SEngine.CurrentTime.Hour + 2 >= Settings.Default.沙巴克开启 && day == DayOfWeek.Saturday && Settings.Default.沙巴克每周攻沙时间 == 6)
         {
             ProcessSabakWar();
         }
         else
         {
-            if (SEngine.CurrentTime.Hour + 2 < Settings.沙巴克开启 || day != DayOfWeek.Sunday || Settings.沙巴克每周攻沙时间 != 7)
+            if (SEngine.CurrentTime.Hour + 2 < Settings.Default.沙巴克开启 || day != DayOfWeek.Sunday || Settings.Default.沙巴克每周攻沙时间 != 7)
                 return;
 
             ProcessSabakWar();
@@ -224,21 +224,21 @@ public static class MapManager
 
         if (SEngine.CurrentTime < SandCityTime) return;
 
-        if (SEngine.CurrentTime.Hour + 1 < Settings.沙巴克开启)
+        if (SEngine.CurrentTime.Hour + 1 < Settings.Default.沙巴克开启)
         {
             SandCityStage = 0;
         }
 
-        if (SEngine.CurrentTime.Hour + 1 == Settings.沙巴克开启 && SEngine.CurrentTime.Minute == 50 && SandCityStage == 0)
+        if (SEngine.CurrentTime.Hour + 1 == Settings.Default.沙巴克开启 && SEngine.CurrentTime.Minute == 50 && SandCityStage == 0)
         {
             NetworkManager.SendAnnouncement("The Siege of Sabak will begin in ten minutes, so be prepared", true);
             SandCityStage = 1;
         }
 
-        if (Settings.沙巴克停止开关 == 1)
+        if (Settings.Default.沙巴克停止开关 == 1)
         {
             SandCityStage = 0;
-            Settings.沙巴克停止开关 = 0;
+            Settings.Default.沙巴克停止开关 = 0;
 
             GuildInfo guild = FindGuild(map);
  
@@ -259,10 +259,10 @@ public static class MapManager
             }
         }
 
-        if (SEngine.CurrentTime.Hour == Settings.沙巴克开启 && Settings.沙巴克重置系统 == 1)
+        if (SEngine.CurrentTime.Hour == Settings.Default.沙巴克开启 && Settings.Default.沙巴克重置系统 == 1)
         {
             SystemInfo.Info.OccupyGuild.V = null;
-            Settings.沙巴克重置系统 = 0;
+            Settings.Default.沙巴克重置系统 = 0;
             NetworkManager.SendAnnouncement("Sabak reset, about to start the siege, please get ready", true);
             SandCityStage = 1;
         }
@@ -302,7 +302,7 @@ public static class MapManager
             }
         }
 
-        if (SEngine.CurrentTime.Hour == Settings.沙巴克开启 && SandCityStage == 2)
+        if (SEngine.CurrentTime.Hour == Settings.Default.沙巴克开启 && SandCityStage == 2)
         {
             if (SystemInfo.Info.OccupyGuild.V != null)
             {
@@ -339,7 +339,7 @@ public static class MapManager
             SandCityStage = 3;
         }
 
-        if (SEngine.CurrentTime.Hour == Settings.沙巴克开启 && SandCityStage == 3)
+        if (SEngine.CurrentTime.Hour == Settings.Default.沙巴克开启 && SandCityStage == 3)
         {
             沙城城门.RemoveBuffEx(22300);
             下方宫门.RemoveBuffEx(22300);
@@ -349,14 +349,14 @@ public static class MapManager
             SandCityStage = 4;
         }
 
-        if (SEngine.CurrentTime.Hour == Settings.沙巴克开启 && SandCityStage == 4 && 沙城城门.Dead && 沙城城门.BirthMap != null)
+        if (SEngine.CurrentTime.Hour == Settings.Default.沙巴克开启 && SandCityStage == 4 && 沙城城门.Dead && 沙城城门.BirthMap != null)
         {
             NetworkManager.SendAnnouncement("The gates of Sabak have been breached", true);
             沙城城门.BirthMap = null;
             SandCityStage = 5;
         }
 
-        if (SEngine.CurrentTime.Hour == Settings.沙巴克开启 && SandCityStage == 5)
+        if (SEngine.CurrentTime.Hour == Settings.Default.沙巴克开启 && SandCityStage == 5)
         {
             皇宫随机区域 = map.Areas.FirstOrDefault(x => x.RegionName == "沙巴克-皇宫随机区域");
 
@@ -374,7 +374,7 @@ public static class MapManager
             }
         }
 
-        if (SEngine.CurrentTime.Hour == Settings.沙巴克结束 && SandCityStage == 5)
+        if (SEngine.CurrentTime.Hour == Settings.Default.沙巴克结束 && SandCityStage == 5)
         {
             GuildInfo guild = FindGuild(map);
 
@@ -443,7 +443,7 @@ public static class MapManager
 
             if (SEngine.CurrentTime.Minute == 55 && SEngine.CurrentTime.Hour != NotificationTime.Hour)
             {
-                if (SEngine.CurrentTime.Hour + 1 == Settings.武斗场时间一 || SEngine.CurrentTime.Hour + 1 == Settings.武斗场时间二)
+                if (SEngine.CurrentTime.Hour + 1 == Settings.Default.武斗场时间一 || SEngine.CurrentTime.Hour + 1 == Settings.Default.武斗场时间二)
                 {
                     NetworkManager.SendAnnouncement("The Experience Arena will open in five minutes, so be prepared if you want to participate", rolling: true);
                 }
@@ -472,18 +472,18 @@ public static class MapManager
                 MonsterBossZenTime = SEngine.CurrentTime.AddSeconds(15.0);
             }
 
-            if (Settings.CurrentVersion >= 3 && SEngine.CurrentTime.Minute == Settings.WorldBossTimeMinute && SEngine.CurrentTime.Hour != MonsterWorldBossZenTime.Hour && SEngine.CurrentTime.Second == 1)
+            if (Settings.Default.CurrentVersion >= 3 && SEngine.CurrentTime.Minute == Settings.Default.WorldBossTimeMinute && SEngine.CurrentTime.Hour != MonsterWorldBossZenTime.Hour && SEngine.CurrentTime.Second == 1)
             {
-                if (SEngine.CurrentTime.Hour == Settings.WorldBossTimeHour && MonsterInfo.DataSheet.TryGetValue(Settings.WorldBossName, out var value))
+                if (SEngine.CurrentTime.Hour == Settings.Default.WorldBossTimeHour && MonsterInfo.DataSheet.TryGetValue(Settings.Default.WorldBossName, out var value))
                 {
-                    Map map = GetMap(Settings.WorldBossMapID);
-                    WorldBoss = new MonsterObject(value, map, int.MaxValue, new Point(Settings.WorldBossMapPosX, Settings.WorldBossMapPosY), 1,
+                    Map map = GetMap(Settings.Default.WorldBossMapID);
+                    WorldBoss = new MonsterObject(value, map, int.MaxValue, new Point(Settings.Default.WorldBossMapPosX, Settings.Default.WorldBossMapPosY), 1,
                         forbidResurrection: true, 立即刷新: true)
                     {
                         CurrentDirection = GameDirection.UpRight,
                         SurvivalTime = DateTime.MaxValue
                     };
-                    NetworkManager.SendAnnouncement("世界BOSS[ " + Settings.WorldBossName + " ]已经降临秘宝广场, 想要参加的勇士请做好准备", rolling: true);
+                    NetworkManager.SendAnnouncement("世界BOSS[ " + Settings.Default.WorldBossName + " ]已经降临秘宝广场, 想要参加的勇士请做好准备", rolling: true);
                 }
                 MonsterWorldBossZenTime = SEngine.CurrentTime;
             }

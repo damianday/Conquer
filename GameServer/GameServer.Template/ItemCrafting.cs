@@ -34,7 +34,7 @@ public sealed class ItemCrafting
     {
         DataSheet = new Dictionary<int, ItemCrafting>();
 
-        if (Settings.DBMethod == 1)
+        if (Settings.Default.DBMethod == 1)
         {
             if (!DBAgent.X.Connected)
                 return;
@@ -82,9 +82,9 @@ public sealed class ItemCrafting
             }
         }
 
-        if (Settings.DBMethod == 2)
+        if (Settings.Default.DBMethod == 2)
         {
-            var path = Settings.GameDataPath + "\\System\\Items\\Crafting";
+            var path = Settings.Default.GameDataPath + "\\System\\Items\\Crafting";
             if (!Directory.Exists(path))
                 return;
 

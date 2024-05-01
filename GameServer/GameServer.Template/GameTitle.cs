@@ -21,9 +21,9 @@ public sealed class GameTitle
     {
         DataSheet = new Dictionary<byte, GameTitle>();
 
-        if (Settings.DBMethod == 0)
+        if (Settings.Default.DBMethod == 0)
         {
-            var path = Settings.GameDataPath + "\\System\\Items\\GameTitle\\";
+            var path = Settings.Default.GameDataPath + "\\System\\Items\\GameTitle\\";
             if (!Directory.Exists(path))
                 return;
 
@@ -32,7 +32,7 @@ public sealed class GameTitle
                 DataSheet.Add(obj.ID, obj);
         }
 
-        if (Settings.DBMethod == 1)
+        if (Settings.Default.DBMethod == 1)
         {
             if (!DBAgent.X.Connected)
                 return;
@@ -98,9 +98,9 @@ public sealed class GameTitle
             }
         }
 
-        if (Settings.DBMethod == 2)
+        if (Settings.Default.DBMethod == 2)
         {
-            var path = Settings.GameDataPath + "\\System\\Items\\GameTitle\\";
+            var path = Settings.Default.GameDataPath + "\\System\\Items\\GameTitle\\";
             if (!Directory.Exists(path))
                 return;
 

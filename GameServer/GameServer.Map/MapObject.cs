@@ -1104,7 +1104,7 @@ public abstract class MapObject
     public void 被技能命中处理(SkillObject skill, C_01_CalculateHitTarget 参数)
     {
         MapObject caster = ((skill.Caster is TrapObject trap) ? trap.Caster : skill.Caster);
-        if (skill.HitList.ContainsKey(ObjectID) || !CanBeHit || (this != caster && !Neighbors.Contains(caster)) || skill.HitList.Count >= 参数.HitsLimit || (参数.LimitTargetRelationship & caster.GetRelationship(this)) == 0 || (参数.LimitTargetType & ObjectType) == 0 || !IsValidTarget(skill.Caster, 参数.LimitSpecificType) || ((参数.LimitTargetRelationship & GameObjectRelationship.Hostile) != 0 && (CheckStatus(GameObjectState.Invincible) || ((this is PlayerObject || this is PetObject) && (caster is PlayerObject || caster is PetObject) && (CurrentMap.IsSafeArea(CurrentPosition) || caster.CurrentMap.IsSafeArea(caster.CurrentPosition))) || (caster is MonsterObject && CurrentMap.IsSafeArea(CurrentPosition)))) || (this is MonsterObject 怪物实例2 && (怪物实例2.MonID == 8618 || 怪物实例2.MonID == 8621) && ((caster is PlayerObject 玩家实例2 && 玩家实例2.Guild != null && 玩家实例2.Guild == SystemInfo.Info.OccupyGuild.V) || (caster is PetObject 宠物实例2 && 宠物实例2.Master != null && 宠物实例2.Master.Guild != null && 宠物实例2.Master.Guild == SystemInfo.Info.OccupyGuild.V))) || (CurrentLevel <= Settings.NoobProtectionLevel && ObjectType == GameObjectType.Player && (CurrentMap.MapID == Settings.新手地图保护1 || CurrentMap.MapID == Settings.新手地图保护2 || CurrentMap.MapID == Settings.新手地图保护3 || CurrentMap.MapID == Settings.新手地图保护4 || CurrentMap.MapID == Settings.新手地图保护5 || CurrentMap.MapID == Settings.新手地图保护6 || CurrentMap.MapID == Settings.新手地图保护7 || CurrentMap.MapID == Settings.新手地图保护8 || CurrentMap.MapID == Settings.新手地图保护9 || CurrentMap.MapID == Settings.新手地图保护10)))
+        if (skill.HitList.ContainsKey(ObjectID) || !CanBeHit || (this != caster && !Neighbors.Contains(caster)) || skill.HitList.Count >= 参数.HitsLimit || (参数.LimitTargetRelationship & caster.GetRelationship(this)) == 0 || (参数.LimitTargetType & ObjectType) == 0 || !IsValidTarget(skill.Caster, 参数.LimitSpecificType) || ((参数.LimitTargetRelationship & GameObjectRelationship.Hostile) != 0 && (CheckStatus(GameObjectState.Invincible) || ((this is PlayerObject || this is PetObject) && (caster is PlayerObject || caster is PetObject) && (CurrentMap.IsSafeArea(CurrentPosition) || caster.CurrentMap.IsSafeArea(caster.CurrentPosition))) || (caster is MonsterObject && CurrentMap.IsSafeArea(CurrentPosition)))) || (this is MonsterObject 怪物实例2 && (怪物实例2.MonID == 8618 || 怪物实例2.MonID == 8621) && ((caster is PlayerObject 玩家实例2 && 玩家实例2.Guild != null && 玩家实例2.Guild == SystemInfo.Info.OccupyGuild.V) || (caster is PetObject 宠物实例2 && 宠物实例2.Master != null && 宠物实例2.Master.Guild != null && 宠物实例2.Master.Guild == SystemInfo.Info.OccupyGuild.V))) || (CurrentLevel <= Settings.Default.NoobProtectionLevel && ObjectType == GameObjectType.Player && (CurrentMap.MapID == Settings.Default.新手地图保护1 || CurrentMap.MapID == Settings.Default.新手地图保护2 || CurrentMap.MapID == Settings.Default.新手地图保护3 || CurrentMap.MapID == Settings.Default.新手地图保护4 || CurrentMap.MapID == Settings.Default.新手地图保护5 || CurrentMap.MapID == Settings.Default.新手地图保护6 || CurrentMap.MapID == Settings.Default.新手地图保护7 || CurrentMap.MapID == Settings.Default.新手地图保护8 || CurrentMap.MapID == Settings.Default.新手地图保护9 || CurrentMap.MapID == Settings.Default.新手地图保护10)))
         {
             return;
         }
@@ -1159,7 +1159,7 @@ public abstract class MapObject
         };
         skill.HitList.Add(ObjectID, value);
         int num5 = SEngine.Random.Next(100);
-        if (Buffs.TryGetValue(2555, out var v) && num5 <= Settings.下马击落机率)
+        if (Buffs.TryGetValue(2555, out var v) && num5 <= Settings.Default.下马击落机率)
         {
             RemoveBuffEx(v.ID.V);
         }
@@ -1167,7 +1167,7 @@ public abstract class MapObject
 
     public void 被动受伤时处理(SkillObject skill, C_02_CalculateTargetDamage 参数, HitInfo 详情, float 伤害系数)
     {
-        if (Settings.CurrentVersion >= 1 && skill.Caster is PlayerObject 玩家实例2 && 玩家实例2.ParalysisRing && Compute.CalculateProbability(Settings.自定义麻痹几率))
+        if (Settings.Default.CurrentVersion >= 1 && skill.Caster is PlayerObject 玩家实例2 && 玩家实例2.ParalysisRing && Compute.CalculateProbability(Settings.Default.自定义麻痹几率))
         {
             AddBuff(49160, 玩家实例2);
         }
@@ -1543,7 +1543,7 @@ public abstract class MapObject
 
         if (this is PlayerObject 玩家实例7 && 玩家实例7.HasProtectionRing)
         {
-            if (Settings.CurrentVersion >= 1)
+            if (Settings.Default.CurrentVersion >= 1)
             {
                 CurrentMP = Math.Max(0, CurrentMP - 详情.SkillDamage);
                 CurrentHP = Math.Max(0, CurrentHP - 详情.SkillDamage);

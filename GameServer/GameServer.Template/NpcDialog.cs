@@ -38,7 +38,7 @@ public sealed class NpcDialog
         DataSheet = new Dictionary<int, string>();
         DataById = new Dictionary<int, byte[]>();
 
-        var path = Settings.GameDataPath + "\\System\\Npc\\Dialogs\\";
+        var path = Settings.Default.GameDataPath + "\\System\\Npc\\Dialogs\\";
         if (!Directory.Exists(path))
             return;
 

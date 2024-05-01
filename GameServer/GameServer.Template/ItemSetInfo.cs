@@ -15,7 +15,7 @@ public sealed class ItemSetInfo
     {
         DataSheet = new Dictionary<uint, ItemSetInfo>();
 
-        var path = Settings.GameDataPath + "\\System\\Items\\Sets\\";
+        var path = Settings.Default.GameDataPath + "\\System\\Items\\Sets\\";
         if (Directory.Exists(path))
         {
             var array = Serializer.Deserialize<ItemSetInfo>(path);

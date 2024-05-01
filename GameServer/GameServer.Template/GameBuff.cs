@@ -116,7 +116,7 @@ public sealed class GameBuff
     {
         DataSheet = new Dictionary<ushort, GameBuff>();
 
-        var path = Settings.GameDataPath + "\\System\\Skills\\Buffs\\";
+        var path = Settings.Default.GameDataPath + "\\System\\Skills\\Buffs\\";
         if (!Directory.Exists(path))
             return;
 

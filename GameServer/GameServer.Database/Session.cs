@@ -44,11 +44,11 @@ public static class Session
         }
     }
 
-    public static string UserDataPath => Settings.GameDataPath + "\\User";
-    public static string BackupPath => Settings.DataBackupPath;
-    public static string UserDataFile => Settings.GameDataPath + "\\User\\Data.db";
-    public static string UserCacheFile => Settings.GameDataPath + "\\User\\Temp.db";
-    public static string BackupFile => $"{Settings.DataBackupPath}\\User-{SEngine.CurrentTime:yyyy-MM-dd-HH-mm-ss-ffff}.db.gz";
+    public static string UserDataPath => Settings.Default.GameDataPath + "\\User";
+    public static string BackupPath => Settings.Default.DataBackupPath;
+    public static string UserDataFile => Settings.Default.GameDataPath + "\\User\\Data.db";
+    public static string UserCacheFile => Settings.Default.GameDataPath + "\\User\\Temp.db";
+    public static string BackupFile => $"{Settings.Default.DataBackupPath}\\User-{SEngine.CurrentTime:yyyy-MM-dd-HH-mm-ss-ffff}.db.gz";
 
     public static void Load()
     {
@@ -169,8 +169,8 @@ public static class Session
             }
         }
 
-        if (!Directory.Exists(Settings.DataBackupPath))
-            Directory.CreateDirectory(Settings.DataBackupPath);
+        if (!Directory.Exists(Settings.Default.DataBackupPath))
+            Directory.CreateDirectory(Settings.Default.DataBackupPath);
         if (File.Exists(UserDataFile))
         {
             using (var fs = File.OpenRead(UserDataFile))

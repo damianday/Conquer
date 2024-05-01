@@ -649,7 +649,7 @@ public sealed class CharacterInfo : DBObject
 
     public void GainExperience(int exp)
     {
-        if ((CurrentLevel < Settings.MaxUserLevel || CurrentExperience < MaxExp) && (CurrentExperience += exp) > MaxExp && CurrentLevel < Settings.MaxUserLevel)
+        if ((CurrentLevel < Settings.Default.MaxUserLevel || CurrentExperience < MaxExp) && (CurrentExperience += exp) > MaxExp && CurrentLevel < Settings.Default.MaxUserLevel)
         {
             while (CurrentExperience >= MaxExp)
             {
@@ -717,17 +717,17 @@ public sealed class CharacterInfo : DBObject
 
     public CharacterInfo(AccountInfo account, string uname, GameObjectRace job, GameObjectGender gender, ObjectHairStyle hairStyle, ObjectHairColor hairColor, ObjectFaceStyle faceStyle)
     {
-        if ((job == GameObjectRace.Warrior && Settings.AllowRaceWarrior == 0) || 
-            (job == GameObjectRace.Wizard && Settings.AllowRaceWizard == 0) || 
-            (job == GameObjectRace.Assassin && Settings.AllowRaceAssassin == 0) || 
-            (job == GameObjectRace.Archer && Settings.AllowRaceArcher == 0) || 
-            (job == GameObjectRace.Taoist && Settings.AllowRaceTaoist == 0) || 
-            (job == GameObjectRace.DragonLance && Settings.AllowRaceDragonLance == 0))
+        if ((job == GameObjectRace.Warrior && Settings.Default.AllowRaceWarrior == 0) || 
+            (job == GameObjectRace.Wizard && Settings.Default.AllowRaceWizard == 0) || 
+            (job == GameObjectRace.Assassin && Settings.Default.AllowRaceAssassin == 0) || 
+            (job == GameObjectRace.Archer && Settings.Default.AllowRaceArcher == 0) || 
+            (job == GameObjectRace.Taoist && Settings.Default.AllowRaceTaoist == 0) || 
+            (job == GameObjectRace.DragonLance && Settings.Default.AllowRaceDragonLance == 0))
         {
             return;
         }
 
-        Level.V = Settings.StartingLevel;
+        Level.V = Settings.Default.StartingLevel;
         InventorySize.V = 32;
         WarehouseSize.V = 16;
         资源背包大小.V = 0;
@@ -746,68 +746,68 @@ public sealed class CharacterInfo : DBObject
         HomeMap.V = 142;
         CurrentPosition.V = MapManager.GetMap(142).GetRandomPosition(AreaType.Resurrection);
 
-        if (Settings.CurrentVersion == 0)
+        if (Settings.Default.CurrentVersion == 0)
         {
             for (int i = 0; i <= 19; i++)
             {
                 Currencies[(CurrencyType)i] = 0;
             }
             PlayerSettings.SetValue(new uint[128].ToList());
-            if (GameItem.DataSheetByName.TryGetValue(Settings.战将特权礼包, out var value))
+            if (GameItem.DataSheetByName.TryGetValue(Settings.Default.战将特权礼包, out var value))
             {
                 Inventory[0] = new ItemInfo(value, this, 1, 0, 1);
             }
-            if (GameItem.DataSheetByName.TryGetValue(Settings.豪杰特权礼包, out var value2))
+            if (GameItem.DataSheetByName.TryGetValue(Settings.Default.豪杰特权礼包, out var value2))
             {
                 Inventory[1] = new ItemInfo(value2, this, 1, 1, 1);
             }
         }
 
-        if (Settings.CurrentVersion >= 1)
+        if (Settings.Default.CurrentVersion >= 1)
         {
             for (int j = 0; j <= 19; j++)
             {
-                Currencies[(CurrencyType)Settings.自定义初始货币类型] = Settings.新手出售货币值;
+                Currencies[(CurrencyType)Settings.Default.自定义初始货币类型] = Settings.Default.新手出售货币值;
             }
             PlayerSettings.SetValue(new uint[128].ToList());
-            if (GameItem.DataSheetByName.TryGetValue(Settings.战将特权礼包, out var value3))
+            if (GameItem.DataSheetByName.TryGetValue(Settings.Default.战将特权礼包, out var value3))
             {
                 Inventory[0] = new ItemInfo(value3, this, 1, 0, 1);
             }
-            if (GameItem.DataSheetByName.TryGetValue(Settings.豪杰特权礼包, out var value4))
+            if (GameItem.DataSheetByName.TryGetValue(Settings.Default.豪杰特权礼包, out var value4))
             {
                 Inventory[1] = new ItemInfo(value4, this, 1, 1, 1);
             }
-            if (Settings.新手上线赠送开关 == 1 && Settings.新手领取选项 == 1)
+            if (Settings.Default.新手上线赠送开关 == 1 && Settings.Default.新手领取选项 == 1)
             {
-                if (GameItem.DataSheet.TryGetValue(Settings.新手上线赠送物品1, out var value5))
+                if (GameItem.DataSheet.TryGetValue(Settings.Default.新手上线赠送物品1, out var value5))
                 {
                     Inventory[2] = new ItemInfo(value5, this, 1, 2, 1);
                 }
-                if (GameItem.DataSheet.TryGetValue(Settings.新手上线赠送物品2, out var value6))
+                if (GameItem.DataSheet.TryGetValue(Settings.Default.新手上线赠送物品2, out var value6))
                 {
                     Inventory[3] = new ItemInfo(value6, this, 1, 3, 1);
                 }
-                if (GameItem.DataSheet.TryGetValue(Settings.新手上线赠送物品3, out var value7))
+                if (GameItem.DataSheet.TryGetValue(Settings.Default.新手上线赠送物品3, out var value7))
                 {
                     Inventory[4] = new ItemInfo(value7, this, 1, 4, 1);
                 }
-                if (GameItem.DataSheet.TryGetValue(Settings.新手上线赠送物品4, out var value8))
+                if (GameItem.DataSheet.TryGetValue(Settings.Default.新手上线赠送物品4, out var value8))
                 {
                     Inventory[5] = new ItemInfo(value8, this, 1, 5, 1);
                 }
-                if (GameItem.DataSheet.TryGetValue(Settings.新手上线赠送物品5, out var value9))
+                if (GameItem.DataSheet.TryGetValue(Settings.Default.新手上线赠送物品5, out var value9))
                 {
                     Inventory[6] = new ItemInfo(value9, this, 1, 6, 1);
                 }
-                if (GameItem.DataSheet.TryGetValue(Settings.新手上线赠送物品6, out var value10))
+                if (GameItem.DataSheet.TryGetValue(Settings.Default.新手上线赠送物品6, out var value10))
                 {
                     Inventory[7] = new ItemInfo(value10, this, 1, 7, 1);
                 }
             }
         }
 
-        foreach (var item in Settings.StarterItems)
+        foreach (var item in Settings.Default.StarterItems)
         {
             if (string.IsNullOrEmpty(item.ItemName)) continue;
             if (item.RequiredGender != GameObjectGender.Any && item.RequiredGender != gender) continue;

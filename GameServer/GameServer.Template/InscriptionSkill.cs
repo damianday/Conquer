@@ -72,7 +72,7 @@ public sealed class InscriptionSkill
     {
         DataSheet = new Dictionary<ushort, InscriptionSkill>();
 
-        var path = Settings.GameDataPath + "\\System\\Skills\\Inscriptions\\";
+        var path = Settings.Default.GameDataPath + "\\System\\Skills\\Inscriptions\\";
         if (Directory.Exists(path))
         {
             var array = Serializer.Deserialize<InscriptionSkill>(path);

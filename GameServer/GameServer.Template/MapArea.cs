@@ -20,9 +20,9 @@ public class MapArea
     {
         DataSheet = new List<MapArea>();
 
-        if (Settings.DBMethod == 0)
+        if (Settings.Default.DBMethod == 0)
         {
-            var path = Settings.GameDataPath + "\\System\\GameMap\\MapAreas\\";
+            var path = Settings.Default.GameDataPath + "\\System\\GameMap\\MapAreas\\";
             if (!Directory.Exists(path))
                 return;
 
@@ -31,7 +31,7 @@ public class MapArea
                 DataSheet.Add(obj);
         }
 
-        if (Settings.DBMethod == 1)
+        if (Settings.Default.DBMethod == 1)
         {
             if (!DBAgent.X.Connected)
                 return;
