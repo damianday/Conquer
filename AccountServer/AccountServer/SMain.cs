@@ -43,7 +43,7 @@ public partial class SMain : Form
     public static string ServerConfigFile = ".\\!ServerInfo.txt";
     public static string PatchConfigFile = ".\\!Patch.txt";
 
-    
+
     public static List<GameServerInfo> ServerList = new List<GameServerInfo>();
 
     public static string PatchFile = ".\\GameLogin.exe";
@@ -208,8 +208,6 @@ public partial class SMain : Form
             LocalListeningPortEdit.Enabled = false;
             TicketSendingPortEdit.Enabled = false;
         }
-
-        LoadAccountsView();
     }
 
     private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -268,7 +266,7 @@ public partial class SMain : Form
             MessageBox.Show("Server configuration error, parsing failed. \n\n" + ex.ToString());
             Environment.Exit(0);
         }
-        
+
         AddLogMessage($"The network configuration loaded {ServerList.Count}.");
     }
 
@@ -280,7 +278,7 @@ public partial class SMain : Form
             Directory.CreateDirectory(SAccounts.AccountDirectory);
             return;
         }
-        
+
         Process.Start("explorer.exe", SAccounts.AccountDirectory);
     }
 
@@ -329,6 +327,8 @@ public partial class SMain : Form
 
     private void LoadAccountsView()
     {
+        AccountsListView.Items.Clear();
+
         foreach (var accountInfo in SAccounts.Accounts.Values)
         {
             var item = new ListViewItem(accountInfo.AccountName);
@@ -340,5 +340,11 @@ public partial class SMain : Form
             item.SubItems.Add(accountInfo.ReferrerCode);
             AccountsListView.Items.Add(item);
         }
+    }
+
+    private void MainTabControl_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (MainTabControl.SelectedIndex == 1)
+            LoadAccountsView();
     }
 }

@@ -98,7 +98,8 @@ public partial class SMain
         MainTabControl.SelectedIndex = 0;
         MainTabControl.Size = new Size(519, 420);
         MainTabControl.SizeMode = TabSizeMode.Fixed;
-        MainTabControl.TabIndex = 0;
+        MainTabControl.TabIndex = 1;
+        MainTabControl.SelectedIndexChanged += MainTabControl_SelectedIndexChanged;
         // 
         // LogsTabPage
         // 
