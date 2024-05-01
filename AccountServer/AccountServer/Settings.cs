@@ -10,8 +10,9 @@ public class Settings
     [JsonIgnore]
     public const string SettingFile = "!Settings.txt";
 
-    public static ushort LocalListeningPort = 7000;
-    public static ushort TicketSendingPort = 6678;
+    public static string LocalListeningIP = "127.0.0.1";
+    public static ushort LocalListeningPort = 7_000;
+    public static ushort TicketSendingPort = 6_678;
 
     public static void Load()
     {

@@ -48,7 +48,7 @@ public static class NetworkManager
         DisconnectingConnections = new ConcurrentQueue<SConnection>();
         ServerAnnouncements = new ConcurrentQueue<GamePacket>();
 
-        Listener = new TcpListener(IPAddress.Any, Config.UserConnectionPort);
+        Listener = new TcpListener(IPAddress.Parse(Config.UserConnectionIP), Config.UserConnectionPort);
         Listener.Start();
         Listener.BeginAcceptTcpClient(Connection, null);
 

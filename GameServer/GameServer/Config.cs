@@ -21,6 +21,7 @@ public class Config
     public static string 系统公告内容 = string.Empty;
     public static string GameDataPath = "..\\Database";
     public static string DataBackupPath = ".\\Backup";
+    public static string UserConnectionIP = "127.0.0.1";
     public static ushort UserConnectionPort = 8701;
     public static ushort TicketReceivePort = 6678;
     public static ushort PacketLimit = 100;
