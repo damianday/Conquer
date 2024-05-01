@@ -699,16 +699,13 @@ public static class MapManager
 
     public static void RemoveItems()
     {
-        foreach (ItemObject item in Items.Values)
-        {
+        foreach (var item in Items.Values)
             item.Item?.Remove();
-        }
-        foreach (KeyValuePair<int, GameStore> item in GameStore.DataSheet)
+
+        foreach (var kvp in GameStore.DataSheet)
         {
-            foreach (ItemInfo item2 in item.Value.AvailableItems)
-            {
-                item2.Remove();
-            }
+            foreach (var item in kvp.Value.AvailableItems)
+                item.Remove();
         }
     }
 
