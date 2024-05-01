@@ -4,7 +4,7 @@ namespace GamePackets.Client;
 public sealed class AccountDownloadConfigFilePacket : GamePacket
 {
 	[FieldAttribute(Position = 2, Length = 4)]
-	public int 文件序号;
+	public int DocumentIndex;
 
 	public override bool Encrypted => false;
 }
