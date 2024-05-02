@@ -230,7 +230,7 @@ public sealed class GuildInfo : DBObject
             对象职业 = (byte)member.Job.V,
             当前地图 = (byte)member.CurrentMap.V
         });
-        if (member.Connection == null)
+        if (!member.Connected)
         {
             Broadcast(new SyncMemberInfoPacket
             {
@@ -639,7 +639,7 @@ public sealed class GuildInfo : DBObject
     {
         foreach (var member in Members)
         {
-            if (member.Value <= rank && member.Key.Online)
+            if (member.Value <= rank && member.Key.Connected)
             {
                 member.Key.Enqueue(new 发送行会通知
                 {
@@ -709,7 +709,7 @@ public sealed class GuildInfo : DBObject
             binaryWriter.Write(item.Key.CurrentLevel);
             binaryWriter.Write((byte)item.Key.Job.V);
             binaryWriter.Write(item.Key.CurrentMap.V);
-            binaryWriter.Write(!item.Key.Online ? Compute.TimeSeconds(item.Key.DisconnectDate.V) : 0);
+            binaryWriter.Write(!item.Key.Connected ? Compute.TimeSeconds(item.Key.DisconnectDate.V) : 0);
             binaryWriter.Write(0);
             binaryWriter.Write(BannedMembers.ContainsKey(item.Key));
         }
@@ -766,7 +766,7 @@ public sealed class GuildInfo : DBObject
             binaryWriter.Write(array);
             binaryWriter.Write(key.CurrentLevel);
             binaryWriter.Write(key.CurrentLevel);
-            binaryWriter.Write(key.Online ? Compute.TimeSeconds(SEngine.CurrentTime) : Compute.TimeSeconds(key.DisconnectDate.V));
+            binaryWriter.Write(key.Connected ? Compute.TimeSeconds(SEngine.CurrentTime) : Compute.TimeSeconds(key.DisconnectDate.V));
         }
         return memoryStream.ToArray();
     }
