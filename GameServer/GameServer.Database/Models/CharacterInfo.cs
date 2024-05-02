@@ -527,7 +527,7 @@ public sealed class CharacterInfo : DBObject
         }
     }
 
-    public int MaxExp => CharacterProgression.MaxExpTable[CurrentLevel];
+    public int MaxExperience => CurrentLevel < Settings.Default.UserUpgradeXP.Length ? Settings.Default.UserUpgradeXP[CurrentLevel - 1] : 0;
 
     public int Ingot
     {
@@ -649,11 +649,11 @@ public sealed class CharacterInfo : DBObject
 
     public void GainExperience(int exp)
     {
-        if ((CurrentLevel < Settings.Default.MaxUserLevel || CurrentExperience < MaxExp) && (CurrentExperience += exp) > MaxExp && CurrentLevel < Settings.Default.MaxUserLevel)
+        if ((CurrentLevel < Settings.Default.MaxUserLevel || CurrentExperience < MaxExperience) && (CurrentExperience += exp) > MaxExperience && CurrentLevel < Settings.Default.MaxUserLevel)
         {
-            while (CurrentExperience >= MaxExp)
+            while (CurrentExperience >= MaxExperience)
             {
-                CurrentExperience -= MaxExp;
+                CurrentExperience -= MaxExperience;
                 CurrentLevel++;
             }
         }

@@ -1052,169 +1052,16 @@ public partial class SMain
         label454 = new Label();
         S_StartingLevel = new NumericUpDown();
         tabPage52 = new TabPage();
-        tabControl7 = new TabControl();
-        tabPage75 = new TabPage();
-        groupBox225 = new GroupBox();
-        UpgradeXPLevel39 = new NumericUpDown();
-        UpgradeXPLevel33 = new NumericUpDown();
-        UpgradeXPLevel34 = new NumericUpDown();
-        UpgradeXPLevel35 = new NumericUpDown();
-        UpgradeXPLevel36 = new NumericUpDown();
-        UpgradeXPLevel37 = new NumericUpDown();
-        UpgradeXPLevel38 = new NumericUpDown();
-        label869 = new Label();
-        label868 = new Label();
-        label867 = new Label();
-        label866 = new Label();
-        label865 = new Label();
-        label864 = new Label();
-        label863 = new Label();
-        label862 = new Label();
-        UpgradeXPLevel22 = new NumericUpDown();
-        UpgradeXPLevel23 = new NumericUpDown();
-        UpgradeXPLevel24 = new NumericUpDown();
-        UpgradeXPLevel31 = new NumericUpDown();
-        UpgradeXPLevel25 = new NumericUpDown();
-        UpgradeXPLevel30 = new NumericUpDown();
-        UpgradeXPLevel29 = new NumericUpDown();
-        UpgradeXPLevel28 = new NumericUpDown();
-        UpgradeXPLevel27 = new NumericUpDown();
-        UpgradeXPLevel26 = new NumericUpDown();
-        UpgradeXPLevel32 = new NumericUpDown();
-        label859 = new Label();
-        label858 = new Label();
-        label857 = new Label();
-        label856 = new Label();
-        label855 = new Label();
-        label854 = new Label();
-        label853 = new Label();
-        label852 = new Label();
-        label851 = new Label();
-        label850 = new Label();
-        UpgradeXPLevel12 = new NumericUpDown();
-        UpgradeXPLevel13 = new NumericUpDown();
-        UpgradeXPLevel14 = new NumericUpDown();
-        UpgradeXPLevel15 = new NumericUpDown();
-        UpgradeXPLevel16 = new NumericUpDown();
-        UpgradeXPLevel17 = new NumericUpDown();
-        UpgradeXPLevel18 = new NumericUpDown();
-        UpgradeXPLevel19 = new NumericUpDown();
-        UpgradeXPLevel20 = new NumericUpDown();
-        UpgradeXPLevel21 = new NumericUpDown();
-        label779 = new Label();
-        label782 = new Label();
-        label783 = new Label();
-        label790 = new Label();
-        label835 = new Label();
-        label836 = new Label();
-        label837 = new Label();
-        label838 = new Label();
-        label839 = new Label();
-        label840 = new Label();
-        UpgradeXPLevel11 = new NumericUpDown();
-        UpgradeXPLevel10 = new NumericUpDown();
-        label841 = new Label();
-        label842 = new Label();
-        UpgradeXPLevel9 = new NumericUpDown();
-        UpgradeXPLevel8 = new NumericUpDown();
-        UpgradeXPLevel7 = new NumericUpDown();
-        UpgradeXPLevel6 = new NumericUpDown();
-        label843 = new Label();
-        label844 = new Label();
-        label845 = new Label();
-        label846 = new Label();
-        UpgradeXPLevel5 = new NumericUpDown();
-        UpgradeXPLevel4 = new NumericUpDown();
-        UpgradeXPLevel3 = new NumericUpDown();
-        UpgradeXPLevel2 = new NumericUpDown();
-        label847 = new Label();
-        label848 = new Label();
-        label849 = new Label();
-        label882 = new Label();
-        UpgradeXPLevel1 = new NumericUpDown();
-        label887 = new Label();
-        tabPage100 = new TabPage();
-        groupBox15 = new GroupBox();
-        S_升级经验模块三十 = new NumericUpDown();
-        S_升级经验模块二十九 = new NumericUpDown();
-        S_升级经验模块二十八 = new NumericUpDown();
-        S_升级经验模块二十七 = new NumericUpDown();
-        S_升级经验模块二十六 = new NumericUpDown();
-        S_升级经验模块二十五 = new NumericUpDown();
-        label184 = new Label();
-        label183 = new Label();
-        label182 = new Label();
-        label181 = new Label();
-        label180 = new Label();
-        label179 = new Label();
-        label178 = new Label();
-        label177 = new Label();
-        S_升级经验模块十二 = new NumericUpDown();
-        S_升级经验模块十三 = new NumericUpDown();
-        S_升级经验模块十四 = new NumericUpDown();
-        S_升级经验模块十五 = new NumericUpDown();
-        S_升级经验模块十六 = new NumericUpDown();
-        S_升级经验模块十七 = new NumericUpDown();
-        S_升级经验模块十八 = new NumericUpDown();
-        S_升级经验模块十九 = new NumericUpDown();
-        S_升级经验模块二十 = new NumericUpDown();
-        S_升级经验模块二十一 = new NumericUpDown();
-        S_升级经验模块二十二 = new NumericUpDown();
-        S_升级经验模块二十四 = new NumericUpDown();
-        S_升级经验模块二十三 = new NumericUpDown();
-        label176 = new Label();
-        label175 = new Label();
-        label174 = new Label();
-        label173 = new Label();
-        label172 = new Label();
-        label171 = new Label();
-        label170 = new Label();
-        label169 = new Label();
-        label168 = new Label();
-        label167 = new Label();
-        label166 = new Label();
-        S_升级经验模块十一 = new NumericUpDown();
-        S_升级经验模块十 = new NumericUpDown();
-        label78 = new Label();
-        label77 = new Label();
-        S_升级经验模块九 = new NumericUpDown();
-        S_升级经验模块八 = new NumericUpDown();
-        S_升级经验模块七 = new NumericUpDown();
-        S_升级经验模块六 = new NumericUpDown();
-        label76 = new Label();
-        label75 = new Label();
-        label74 = new Label();
-        label73 = new Label();
-        S_升级经验模块五 = new NumericUpDown();
-        S_升级经验模块四 = new NumericUpDown();
-        S_升级经验模块三 = new NumericUpDown();
-        S_升级经验模块二 = new NumericUpDown();
-        label72 = new Label();
-        label71 = new Label();
-        label70 = new Label();
-        label69 = new Label();
-        S_升级经验模块一 = new NumericUpDown();
-        label68 = new Label();
-        tabPage54 = new TabPage();
         groupBox34 = new GroupBox();
-        S_PetUpgradeXPLevel9 = new NumericUpDown();
-        S_PetUpgradeXPLevel8 = new NumericUpDown();
-        label204 = new Label();
-        label203 = new Label();
-        label209 = new Label();
-        label210 = new Label();
-        label211 = new Label();
-        S_PetUpgradeXPLevel7 = new NumericUpDown();
-        S_PetUpgradeXPLevel6 = new NumericUpDown();
-        S_PetUpgradeXPLevel5 = new NumericUpDown();
-        S_PetUpgradeXPLevel4 = new NumericUpDown();
-        S_PetUpgradeXPLevel3 = new NumericUpDown();
-        S_PetUpgradeXPLevel2 = new NumericUpDown();
-        label212 = new Label();
-        label213 = new Label();
-        label214 = new Label();
+        label196 = new Label();
+        S_PetUpgradeXPLevel = new NumericUpDown();
         label216 = new Label();
-        S_PetUpgradeXPLevel1 = new NumericUpDown();
+        S_PetUpgradeXP = new NumericUpDown();
+        groupBox225 = new GroupBox();
+        S_UpgradeXP = new NumericUpDown();
+        label882 = new Label();
+        S_UpgradeXPLevel = new NumericUpDown();
+        label887 = new Label();
         tabPage7 = new TabPage();
         tabControl10 = new TabControl();
         tabPage36 = new TabPage();
@@ -2409,13 +2256,13 @@ public partial class SMain
         exitToolStripMenuItem = new ToolStripMenuItem();
         statusStrip1 = new StatusStrip();
         PortStatusLabel = new ToolStripStatusLabel();
+        RunTimeStatusLabel = new ToolStripStatusLabel();
         ConnectionsStatusLabel = new ToolStripStatusLabel();
         OnlineStatusLabel = new ToolStripStatusLabel();
         ObjectsStatusLabel = new ToolStripStatusLabel();
         CycleStatusLabel = new ToolStripStatusLabel();
         DataReceivedStatusLabel = new ToolStripStatusLabel();
         DataSentStatusLabel = new ToolStripStatusLabel();
-        RunTimeStatusLabel = new ToolStripStatusLabel();
         角色右键菜单.SuspendLayout();
         下方控件页.SuspendLayout();
         功能模块1.SuspendLayout();
@@ -3025,91 +2872,12 @@ public partial class SMain
         groupBox69.SuspendLayout();
         ((ISupportInitialize)S_StartingLevel).BeginInit();
         tabPage52.SuspendLayout();
-        tabControl7.SuspendLayout();
-        tabPage75.SuspendLayout();
-        groupBox225.SuspendLayout();
-        ((ISupportInitialize)UpgradeXPLevel39).BeginInit();
-        ((ISupportInitialize)UpgradeXPLevel33).BeginInit();
-        ((ISupportInitialize)UpgradeXPLevel34).BeginInit();
-        ((ISupportInitialize)UpgradeXPLevel35).BeginInit();
-        ((ISupportInitialize)UpgradeXPLevel36).BeginInit();
-        ((ISupportInitialize)UpgradeXPLevel37).BeginInit();
-        ((ISupportInitialize)UpgradeXPLevel38).BeginInit();
-        ((ISupportInitialize)UpgradeXPLevel22).BeginInit();
-        ((ISupportInitialize)UpgradeXPLevel23).BeginInit();
-        ((ISupportInitialize)UpgradeXPLevel24).BeginInit();
-        ((ISupportInitialize)UpgradeXPLevel31).BeginInit();
-        ((ISupportInitialize)UpgradeXPLevel25).BeginInit();
-        ((ISupportInitialize)UpgradeXPLevel30).BeginInit();
-        ((ISupportInitialize)UpgradeXPLevel29).BeginInit();
-        ((ISupportInitialize)UpgradeXPLevel28).BeginInit();
-        ((ISupportInitialize)UpgradeXPLevel27).BeginInit();
-        ((ISupportInitialize)UpgradeXPLevel26).BeginInit();
-        ((ISupportInitialize)UpgradeXPLevel32).BeginInit();
-        ((ISupportInitialize)UpgradeXPLevel12).BeginInit();
-        ((ISupportInitialize)UpgradeXPLevel13).BeginInit();
-        ((ISupportInitialize)UpgradeXPLevel14).BeginInit();
-        ((ISupportInitialize)UpgradeXPLevel15).BeginInit();
-        ((ISupportInitialize)UpgradeXPLevel16).BeginInit();
-        ((ISupportInitialize)UpgradeXPLevel17).BeginInit();
-        ((ISupportInitialize)UpgradeXPLevel18).BeginInit();
-        ((ISupportInitialize)UpgradeXPLevel19).BeginInit();
-        ((ISupportInitialize)UpgradeXPLevel20).BeginInit();
-        ((ISupportInitialize)UpgradeXPLevel21).BeginInit();
-        ((ISupportInitialize)UpgradeXPLevel11).BeginInit();
-        ((ISupportInitialize)UpgradeXPLevel10).BeginInit();
-        ((ISupportInitialize)UpgradeXPLevel9).BeginInit();
-        ((ISupportInitialize)UpgradeXPLevel8).BeginInit();
-        ((ISupportInitialize)UpgradeXPLevel7).BeginInit();
-        ((ISupportInitialize)UpgradeXPLevel6).BeginInit();
-        ((ISupportInitialize)UpgradeXPLevel5).BeginInit();
-        ((ISupportInitialize)UpgradeXPLevel4).BeginInit();
-        ((ISupportInitialize)UpgradeXPLevel3).BeginInit();
-        ((ISupportInitialize)UpgradeXPLevel2).BeginInit();
-        ((ISupportInitialize)UpgradeXPLevel1).BeginInit();
-        tabPage100.SuspendLayout();
-        groupBox15.SuspendLayout();
-        ((ISupportInitialize)S_升级经验模块三十).BeginInit();
-        ((ISupportInitialize)S_升级经验模块二十九).BeginInit();
-        ((ISupportInitialize)S_升级经验模块二十八).BeginInit();
-        ((ISupportInitialize)S_升级经验模块二十七).BeginInit();
-        ((ISupportInitialize)S_升级经验模块二十六).BeginInit();
-        ((ISupportInitialize)S_升级经验模块二十五).BeginInit();
-        ((ISupportInitialize)S_升级经验模块十二).BeginInit();
-        ((ISupportInitialize)S_升级经验模块十三).BeginInit();
-        ((ISupportInitialize)S_升级经验模块十四).BeginInit();
-        ((ISupportInitialize)S_升级经验模块十五).BeginInit();
-        ((ISupportInitialize)S_升级经验模块十六).BeginInit();
-        ((ISupportInitialize)S_升级经验模块十七).BeginInit();
-        ((ISupportInitialize)S_升级经验模块十八).BeginInit();
-        ((ISupportInitialize)S_升级经验模块十九).BeginInit();
-        ((ISupportInitialize)S_升级经验模块二十).BeginInit();
-        ((ISupportInitialize)S_升级经验模块二十一).BeginInit();
-        ((ISupportInitialize)S_升级经验模块二十二).BeginInit();
-        ((ISupportInitialize)S_升级经验模块二十四).BeginInit();
-        ((ISupportInitialize)S_升级经验模块二十三).BeginInit();
-        ((ISupportInitialize)S_升级经验模块十一).BeginInit();
-        ((ISupportInitialize)S_升级经验模块十).BeginInit();
-        ((ISupportInitialize)S_升级经验模块九).BeginInit();
-        ((ISupportInitialize)S_升级经验模块八).BeginInit();
-        ((ISupportInitialize)S_升级经验模块七).BeginInit();
-        ((ISupportInitialize)S_升级经验模块六).BeginInit();
-        ((ISupportInitialize)S_升级经验模块五).BeginInit();
-        ((ISupportInitialize)S_升级经验模块四).BeginInit();
-        ((ISupportInitialize)S_升级经验模块三).BeginInit();
-        ((ISupportInitialize)S_升级经验模块二).BeginInit();
-        ((ISupportInitialize)S_升级经验模块一).BeginInit();
-        tabPage54.SuspendLayout();
         groupBox34.SuspendLayout();
-        ((ISupportInitialize)S_PetUpgradeXPLevel9).BeginInit();
-        ((ISupportInitialize)S_PetUpgradeXPLevel8).BeginInit();
-        ((ISupportInitialize)S_PetUpgradeXPLevel7).BeginInit();
-        ((ISupportInitialize)S_PetUpgradeXPLevel6).BeginInit();
-        ((ISupportInitialize)S_PetUpgradeXPLevel5).BeginInit();
-        ((ISupportInitialize)S_PetUpgradeXPLevel4).BeginInit();
-        ((ISupportInitialize)S_PetUpgradeXPLevel3).BeginInit();
-        ((ISupportInitialize)S_PetUpgradeXPLevel2).BeginInit();
-        ((ISupportInitialize)S_PetUpgradeXPLevel1).BeginInit();
+        ((ISupportInitialize)S_PetUpgradeXPLevel).BeginInit();
+        ((ISupportInitialize)S_PetUpgradeXP).BeginInit();
+        groupBox225.SuspendLayout();
+        ((ISupportInitialize)S_UpgradeXP).BeginInit();
+        ((ISupportInitialize)S_UpgradeXPLevel).BeginInit();
         tabPage7.SuspendLayout();
         tabControl10.SuspendLayout();
         tabPage36.SuspendLayout();
@@ -15498,7 +15266,6 @@ public partial class SMain
         tabControl14.AllowDrop = true;
         tabControl14.Controls.Add(tabPage53);
         tabControl14.Controls.Add(tabPage52);
-        tabControl14.Controls.Add(tabPage54);
         tabControl14.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
         tabControl14.ItemSize = new Size(100, 30);
         tabControl14.Location = new Point(7, 7);
@@ -16236,7 +16003,8 @@ public partial class SMain
         // 
         // tabPage52
         // 
-        tabPage52.Controls.Add(tabControl7);
+        tabPage52.Controls.Add(groupBox34);
+        tabPage52.Controls.Add(groupBox225);
         tabPage52.Location = new Point(4, 34);
         tabPage52.Margin = new Padding(4, 3, 4, 3);
         tabPage52.Name = "tabPage52";
@@ -16246,2193 +16014,135 @@ public partial class SMain
         tabPage52.Text = "Upgrade Experience";
         tabPage52.UseVisualStyleBackColor = true;
         // 
-        // tabControl7
-        // 
-        tabControl7.AllowDrop = true;
-        tabControl7.Controls.Add(tabPage75);
-        tabControl7.Controls.Add(tabPage100);
-        tabControl7.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
-        tabControl7.ItemSize = new Size(100, 30);
-        tabControl7.Location = new Point(7, 7);
-        tabControl7.Margin = new Padding(4, 3, 4, 3);
-        tabControl7.Name = "tabControl7";
-        tabControl7.SelectedIndex = 0;
-        tabControl7.Size = new Size(1281, 567);
-        tabControl7.SizeMode = TabSizeMode.FillToRight;
-        tabControl7.TabIndex = 57;
-        tabControl7.TabStop = false;
-        // 
-        // tabPage75
-        // 
-        tabPage75.Controls.Add(groupBox225);
-        tabPage75.Location = new Point(4, 34);
-        tabPage75.Margin = new Padding(4, 3, 4, 3);
-        tabPage75.Name = "tabPage75";
-        tabPage75.Padding = new Padding(4, 3, 4, 3);
-        tabPage75.Size = new Size(1273, 529);
-        tabPage75.TabIndex = 19;
-        tabPage75.Text = "Level 1~39";
-        tabPage75.UseVisualStyleBackColor = true;
-        // 
-        // groupBox225
-        // 
-        groupBox225.Controls.Add(UpgradeXPLevel39);
-        groupBox225.Controls.Add(UpgradeXPLevel33);
-        groupBox225.Controls.Add(UpgradeXPLevel34);
-        groupBox225.Controls.Add(UpgradeXPLevel35);
-        groupBox225.Controls.Add(UpgradeXPLevel36);
-        groupBox225.Controls.Add(UpgradeXPLevel37);
-        groupBox225.Controls.Add(UpgradeXPLevel38);
-        groupBox225.Controls.Add(label869);
-        groupBox225.Controls.Add(label868);
-        groupBox225.Controls.Add(label867);
-        groupBox225.Controls.Add(label866);
-        groupBox225.Controls.Add(label865);
-        groupBox225.Controls.Add(label864);
-        groupBox225.Controls.Add(label863);
-        groupBox225.Controls.Add(label862);
-        groupBox225.Controls.Add(UpgradeXPLevel22);
-        groupBox225.Controls.Add(UpgradeXPLevel23);
-        groupBox225.Controls.Add(UpgradeXPLevel24);
-        groupBox225.Controls.Add(UpgradeXPLevel31);
-        groupBox225.Controls.Add(UpgradeXPLevel25);
-        groupBox225.Controls.Add(UpgradeXPLevel30);
-        groupBox225.Controls.Add(UpgradeXPLevel29);
-        groupBox225.Controls.Add(UpgradeXPLevel28);
-        groupBox225.Controls.Add(UpgradeXPLevel27);
-        groupBox225.Controls.Add(UpgradeXPLevel26);
-        groupBox225.Controls.Add(UpgradeXPLevel32);
-        groupBox225.Controls.Add(label859);
-        groupBox225.Controls.Add(label858);
-        groupBox225.Controls.Add(label857);
-        groupBox225.Controls.Add(label856);
-        groupBox225.Controls.Add(label855);
-        groupBox225.Controls.Add(label854);
-        groupBox225.Controls.Add(label853);
-        groupBox225.Controls.Add(label852);
-        groupBox225.Controls.Add(label851);
-        groupBox225.Controls.Add(label850);
-        groupBox225.Controls.Add(UpgradeXPLevel12);
-        groupBox225.Controls.Add(UpgradeXPLevel13);
-        groupBox225.Controls.Add(UpgradeXPLevel14);
-        groupBox225.Controls.Add(UpgradeXPLevel15);
-        groupBox225.Controls.Add(UpgradeXPLevel16);
-        groupBox225.Controls.Add(UpgradeXPLevel17);
-        groupBox225.Controls.Add(UpgradeXPLevel18);
-        groupBox225.Controls.Add(UpgradeXPLevel19);
-        groupBox225.Controls.Add(UpgradeXPLevel20);
-        groupBox225.Controls.Add(UpgradeXPLevel21);
-        groupBox225.Controls.Add(label779);
-        groupBox225.Controls.Add(label782);
-        groupBox225.Controls.Add(label783);
-        groupBox225.Controls.Add(label790);
-        groupBox225.Controls.Add(label835);
-        groupBox225.Controls.Add(label836);
-        groupBox225.Controls.Add(label837);
-        groupBox225.Controls.Add(label838);
-        groupBox225.Controls.Add(label839);
-        groupBox225.Controls.Add(label840);
-        groupBox225.Controls.Add(UpgradeXPLevel11);
-        groupBox225.Controls.Add(UpgradeXPLevel10);
-        groupBox225.Controls.Add(label841);
-        groupBox225.Controls.Add(label842);
-        groupBox225.Controls.Add(UpgradeXPLevel9);
-        groupBox225.Controls.Add(UpgradeXPLevel8);
-        groupBox225.Controls.Add(UpgradeXPLevel7);
-        groupBox225.Controls.Add(UpgradeXPLevel6);
-        groupBox225.Controls.Add(label843);
-        groupBox225.Controls.Add(label844);
-        groupBox225.Controls.Add(label845);
-        groupBox225.Controls.Add(label846);
-        groupBox225.Controls.Add(UpgradeXPLevel5);
-        groupBox225.Controls.Add(UpgradeXPLevel4);
-        groupBox225.Controls.Add(UpgradeXPLevel3);
-        groupBox225.Controls.Add(UpgradeXPLevel2);
-        groupBox225.Controls.Add(label847);
-        groupBox225.Controls.Add(label848);
-        groupBox225.Controls.Add(label849);
-        groupBox225.Controls.Add(label882);
-        groupBox225.Controls.Add(UpgradeXPLevel1);
-        groupBox225.Controls.Add(label887);
-        groupBox225.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
-        groupBox225.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
-        groupBox225.Location = new Point(6, 12);
-        groupBox225.Margin = new Padding(4, 3, 4, 3);
-        groupBox225.Name = "groupBox225";
-        groupBox225.Padding = new Padding(4, 3, 4, 3);
-        groupBox225.Size = new Size(1259, 495);
-        groupBox225.TabIndex = 23;
-        groupBox225.TabStop = false;
-        groupBox225.Text = "Upgrade Experience - Credit: Xiruo Minglan";
-        // 
-        // UpgradeXPLevel39
-        // 
-        UpgradeXPLevel39.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel39.Location = new Point(752, 387);
-        UpgradeXPLevel39.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel39.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel39.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel39.Name = "UpgradeXPLevel39";
-        UpgradeXPLevel39.Size = new Size(115, 23);
-        UpgradeXPLevel39.TabIndex = 106;
-        UpgradeXPLevel39.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel39.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel39.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // UpgradeXPLevel33
-        // 
-        UpgradeXPLevel33.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel33.Location = new Point(752, 119);
-        UpgradeXPLevel33.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel33.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel33.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel33.Name = "UpgradeXPLevel33";
-        UpgradeXPLevel33.Size = new Size(115, 23);
-        UpgradeXPLevel33.TabIndex = 105;
-        UpgradeXPLevel33.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel33.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel33.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // UpgradeXPLevel34
-        // 
-        UpgradeXPLevel34.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel34.Location = new Point(752, 163);
-        UpgradeXPLevel34.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel34.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel34.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel34.Name = "UpgradeXPLevel34";
-        UpgradeXPLevel34.Size = new Size(115, 23);
-        UpgradeXPLevel34.TabIndex = 104;
-        UpgradeXPLevel34.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel34.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel34.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // UpgradeXPLevel35
-        // 
-        UpgradeXPLevel35.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel35.Location = new Point(752, 209);
-        UpgradeXPLevel35.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel35.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel35.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel35.Name = "UpgradeXPLevel35";
-        UpgradeXPLevel35.Size = new Size(115, 23);
-        UpgradeXPLevel35.TabIndex = 103;
-        UpgradeXPLevel35.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel35.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel35.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // UpgradeXPLevel36
-        // 
-        UpgradeXPLevel36.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel36.Location = new Point(752, 252);
-        UpgradeXPLevel36.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel36.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel36.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel36.Name = "UpgradeXPLevel36";
-        UpgradeXPLevel36.Size = new Size(115, 23);
-        UpgradeXPLevel36.TabIndex = 102;
-        UpgradeXPLevel36.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel36.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel36.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // UpgradeXPLevel37
-        // 
-        UpgradeXPLevel37.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel37.Location = new Point(752, 297);
-        UpgradeXPLevel37.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel37.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel37.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel37.Name = "UpgradeXPLevel37";
-        UpgradeXPLevel37.Size = new Size(115, 23);
-        UpgradeXPLevel37.TabIndex = 101;
-        UpgradeXPLevel37.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel37.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel37.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // UpgradeXPLevel38
-        // 
-        UpgradeXPLevel38.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel38.Location = new Point(752, 343);
-        UpgradeXPLevel38.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel38.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel38.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel38.Name = "UpgradeXPLevel38";
-        UpgradeXPLevel38.Size = new Size(115, 23);
-        UpgradeXPLevel38.TabIndex = 100;
-        UpgradeXPLevel38.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel38.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel38.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label869
-        // 
-        label869.AutoSize = true;
-        label869.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label869.Location = new Point(664, 78);
-        label869.Margin = new Padding(4, 0, 4, 0);
-        label869.Name = "label869";
-        label869.Size = new Size(75, 15);
-        label869.TabIndex = 99;
-        label869.Text = "Level 32 Exp";
-        // 
-        // label868
-        // 
-        label868.AutoSize = true;
-        label868.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label868.Location = new Point(664, 122);
-        label868.Margin = new Padding(4, 0, 4, 0);
-        label868.Name = "label868";
-        label868.Size = new Size(75, 15);
-        label868.TabIndex = 98;
-        label868.Text = "Level 33 Exp";
-        // 
-        // label867
-        // 
-        label867.AutoSize = true;
-        label867.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label867.Location = new Point(664, 166);
-        label867.Margin = new Padding(4, 0, 4, 0);
-        label867.Name = "label867";
-        label867.Size = new Size(75, 15);
-        label867.TabIndex = 97;
-        label867.Text = "Level 34 Exp";
-        // 
-        // label866
-        // 
-        label866.AutoSize = true;
-        label866.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label866.Location = new Point(664, 212);
-        label866.Margin = new Padding(4, 0, 4, 0);
-        label866.Name = "label866";
-        label866.Size = new Size(75, 15);
-        label866.TabIndex = 96;
-        label866.Text = "Level 35 Exp";
-        // 
-        // label865
-        // 
-        label865.AutoSize = true;
-        label865.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label865.Location = new Point(664, 257);
-        label865.Margin = new Padding(4, 0, 4, 0);
-        label865.Name = "label865";
-        label865.Size = new Size(75, 15);
-        label865.TabIndex = 95;
-        label865.Text = "Level 36 Exp";
-        // 
-        // label864
-        // 
-        label864.AutoSize = true;
-        label864.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label864.Location = new Point(664, 302);
-        label864.Margin = new Padding(4, 0, 4, 0);
-        label864.Name = "label864";
-        label864.Size = new Size(75, 15);
-        label864.TabIndex = 94;
-        label864.Text = "Level 37 Exp";
-        // 
-        // label863
-        // 
-        label863.AutoSize = true;
-        label863.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label863.Location = new Point(664, 347);
-        label863.Margin = new Padding(4, 0, 4, 0);
-        label863.Name = "label863";
-        label863.Size = new Size(75, 15);
-        label863.TabIndex = 93;
-        label863.Text = "Level 38 Exp";
-        // 
-        // label862
-        // 
-        label862.AutoSize = true;
-        label862.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label862.Location = new Point(664, 391);
-        label862.Margin = new Padding(4, 0, 4, 0);
-        label862.Name = "label862";
-        label862.Size = new Size(75, 15);
-        label862.TabIndex = 92;
-        label862.Text = "Level 39 Exp";
-        // 
-        // UpgradeXPLevel22
-        // 
-        UpgradeXPLevel22.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel22.Location = new Point(534, 74);
-        UpgradeXPLevel22.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel22.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel22.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel22.Name = "UpgradeXPLevel22";
-        UpgradeXPLevel22.Size = new Size(111, 23);
-        UpgradeXPLevel22.TabIndex = 89;
-        UpgradeXPLevel22.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel22.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel22.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // UpgradeXPLevel23
-        // 
-        UpgradeXPLevel23.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel23.Location = new Point(534, 119);
-        UpgradeXPLevel23.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel23.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel23.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel23.Name = "UpgradeXPLevel23";
-        UpgradeXPLevel23.Size = new Size(111, 23);
-        UpgradeXPLevel23.TabIndex = 88;
-        UpgradeXPLevel23.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel23.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel23.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // UpgradeXPLevel24
-        // 
-        UpgradeXPLevel24.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel24.Location = new Point(534, 163);
-        UpgradeXPLevel24.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel24.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel24.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel24.Name = "UpgradeXPLevel24";
-        UpgradeXPLevel24.Size = new Size(111, 23);
-        UpgradeXPLevel24.TabIndex = 87;
-        UpgradeXPLevel24.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel24.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel24.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // UpgradeXPLevel31
-        // 
-        UpgradeXPLevel31.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel31.Location = new Point(752, 31);
-        UpgradeXPLevel31.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel31.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel31.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel31.Name = "UpgradeXPLevel31";
-        UpgradeXPLevel31.Size = new Size(115, 23);
-        UpgradeXPLevel31.TabIndex = 86;
-        UpgradeXPLevel31.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel31.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel31.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // UpgradeXPLevel25
-        // 
-        UpgradeXPLevel25.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel25.Location = new Point(534, 209);
-        UpgradeXPLevel25.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel25.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel25.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel25.Name = "UpgradeXPLevel25";
-        UpgradeXPLevel25.Size = new Size(111, 23);
-        UpgradeXPLevel25.TabIndex = 85;
-        UpgradeXPLevel25.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel25.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel25.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // UpgradeXPLevel30
-        // 
-        UpgradeXPLevel30.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel30.Location = new Point(534, 432);
-        UpgradeXPLevel30.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel30.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel30.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel30.Name = "UpgradeXPLevel30";
-        UpgradeXPLevel30.Size = new Size(111, 23);
-        UpgradeXPLevel30.TabIndex = 84;
-        UpgradeXPLevel30.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel30.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel30.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // UpgradeXPLevel29
-        // 
-        UpgradeXPLevel29.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel29.Location = new Point(534, 387);
-        UpgradeXPLevel29.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel29.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel29.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel29.Name = "UpgradeXPLevel29";
-        UpgradeXPLevel29.Size = new Size(111, 23);
-        UpgradeXPLevel29.TabIndex = 83;
-        UpgradeXPLevel29.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel29.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel29.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // UpgradeXPLevel28
-        // 
-        UpgradeXPLevel28.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel28.Location = new Point(534, 343);
-        UpgradeXPLevel28.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel28.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel28.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel28.Name = "UpgradeXPLevel28";
-        UpgradeXPLevel28.Size = new Size(111, 23);
-        UpgradeXPLevel28.TabIndex = 82;
-        UpgradeXPLevel28.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel28.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel28.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // UpgradeXPLevel27
-        // 
-        UpgradeXPLevel27.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel27.Location = new Point(534, 297);
-        UpgradeXPLevel27.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel27.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel27.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel27.Name = "UpgradeXPLevel27";
-        UpgradeXPLevel27.Size = new Size(111, 23);
-        UpgradeXPLevel27.TabIndex = 81;
-        UpgradeXPLevel27.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel27.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel27.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // UpgradeXPLevel26
-        // 
-        UpgradeXPLevel26.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel26.Location = new Point(534, 252);
-        UpgradeXPLevel26.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel26.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel26.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel26.Name = "UpgradeXPLevel26";
-        UpgradeXPLevel26.Size = new Size(111, 23);
-        UpgradeXPLevel26.TabIndex = 80;
-        UpgradeXPLevel26.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel26.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel26.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // UpgradeXPLevel32
-        // 
-        UpgradeXPLevel32.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel32.Location = new Point(752, 74);
-        UpgradeXPLevel32.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel32.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel32.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel32.Name = "UpgradeXPLevel32";
-        UpgradeXPLevel32.Size = new Size(115, 23);
-        UpgradeXPLevel32.TabIndex = 79;
-        UpgradeXPLevel32.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel32.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel32.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label859
-        // 
-        label859.AutoSize = true;
-        label859.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label859.Location = new Point(444, 78);
-        label859.Margin = new Padding(4, 0, 4, 0);
-        label859.Name = "label859";
-        label859.Size = new Size(75, 15);
-        label859.TabIndex = 78;
-        label859.Text = "Level 22 Exp";
-        // 
-        // label858
-        // 
-        label858.AutoSize = true;
-        label858.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label858.Location = new Point(444, 122);
-        label858.Margin = new Padding(4, 0, 4, 0);
-        label858.Name = "label858";
-        label858.Size = new Size(75, 15);
-        label858.TabIndex = 77;
-        label858.Text = "Level 23 Exp";
-        // 
-        // label857
-        // 
-        label857.AutoSize = true;
-        label857.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label857.Location = new Point(444, 166);
-        label857.Margin = new Padding(4, 0, 4, 0);
-        label857.Name = "label857";
-        label857.Size = new Size(75, 15);
-        label857.TabIndex = 76;
-        label857.Text = "Level 24 Exp";
-        // 
-        // label856
-        // 
-        label856.AutoSize = true;
-        label856.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label856.Location = new Point(444, 212);
-        label856.Margin = new Padding(4, 0, 4, 0);
-        label856.Name = "label856";
-        label856.Size = new Size(75, 15);
-        label856.TabIndex = 75;
-        label856.Text = "Level 25 Exp";
-        // 
-        // label855
-        // 
-        label855.AutoSize = true;
-        label855.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label855.Location = new Point(444, 257);
-        label855.Margin = new Padding(4, 0, 4, 0);
-        label855.Name = "label855";
-        label855.Size = new Size(75, 15);
-        label855.TabIndex = 74;
-        label855.Text = "Level 26 Exp";
-        // 
-        // label854
-        // 
-        label854.AutoSize = true;
-        label854.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label854.Location = new Point(444, 302);
-        label854.Margin = new Padding(4, 0, 4, 0);
-        label854.Name = "label854";
-        label854.Size = new Size(75, 15);
-        label854.TabIndex = 73;
-        label854.Text = "Level 27 Exp";
-        // 
-        // label853
-        // 
-        label853.AutoSize = true;
-        label853.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label853.Location = new Point(444, 347);
-        label853.Margin = new Padding(4, 0, 4, 0);
-        label853.Name = "label853";
-        label853.Size = new Size(75, 15);
-        label853.TabIndex = 72;
-        label853.Text = "Level 28 Exp";
-        // 
-        // label852
-        // 
-        label852.AutoSize = true;
-        label852.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label852.Location = new Point(444, 391);
-        label852.Margin = new Padding(4, 0, 4, 0);
-        label852.Name = "label852";
-        label852.Size = new Size(75, 15);
-        label852.TabIndex = 71;
-        label852.Text = "Level 29 Exp";
-        // 
-        // label851
-        // 
-        label851.AutoSize = true;
-        label851.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label851.Location = new Point(444, 436);
-        label851.Margin = new Padding(4, 0, 4, 0);
-        label851.Name = "label851";
-        label851.Size = new Size(75, 15);
-        label851.TabIndex = 70;
-        label851.Text = "Level 30 Exp";
-        // 
-        // label850
-        // 
-        label850.AutoSize = true;
-        label850.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label850.Location = new Point(664, 35);
-        label850.Margin = new Padding(4, 0, 4, 0);
-        label850.Name = "label850";
-        label850.Size = new Size(75, 15);
-        label850.TabIndex = 69;
-        label850.Text = "Level 31 Exp";
-        // 
-        // UpgradeXPLevel12
-        // 
-        UpgradeXPLevel12.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel12.Location = new Point(310, 74);
-        UpgradeXPLevel12.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel12.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel12.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel12.Name = "UpgradeXPLevel12";
-        UpgradeXPLevel12.Size = new Size(119, 23);
-        UpgradeXPLevel12.TabIndex = 68;
-        UpgradeXPLevel12.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel12.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel12.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // UpgradeXPLevel13
-        // 
-        UpgradeXPLevel13.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel13.Location = new Point(310, 119);
-        UpgradeXPLevel13.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel13.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel13.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel13.Name = "UpgradeXPLevel13";
-        UpgradeXPLevel13.Size = new Size(119, 23);
-        UpgradeXPLevel13.TabIndex = 67;
-        UpgradeXPLevel13.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel13.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel13.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // UpgradeXPLevel14
-        // 
-        UpgradeXPLevel14.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel14.Location = new Point(310, 164);
-        UpgradeXPLevel14.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel14.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel14.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel14.Name = "UpgradeXPLevel14";
-        UpgradeXPLevel14.Size = new Size(119, 23);
-        UpgradeXPLevel14.TabIndex = 66;
-        UpgradeXPLevel14.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel14.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel14.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // UpgradeXPLevel15
-        // 
-        UpgradeXPLevel15.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel15.Location = new Point(310, 209);
-        UpgradeXPLevel15.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel15.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel15.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel15.Name = "UpgradeXPLevel15";
-        UpgradeXPLevel15.Size = new Size(119, 23);
-        UpgradeXPLevel15.TabIndex = 65;
-        UpgradeXPLevel15.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel15.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel15.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // UpgradeXPLevel16
-        // 
-        UpgradeXPLevel16.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel16.Location = new Point(310, 252);
-        UpgradeXPLevel16.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel16.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel16.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel16.Name = "UpgradeXPLevel16";
-        UpgradeXPLevel16.Size = new Size(119, 23);
-        UpgradeXPLevel16.TabIndex = 64;
-        UpgradeXPLevel16.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel16.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel16.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // UpgradeXPLevel17
-        // 
-        UpgradeXPLevel17.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel17.Location = new Point(310, 297);
-        UpgradeXPLevel17.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel17.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel17.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel17.Name = "UpgradeXPLevel17";
-        UpgradeXPLevel17.Size = new Size(119, 23);
-        UpgradeXPLevel17.TabIndex = 63;
-        UpgradeXPLevel17.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel17.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel17.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // UpgradeXPLevel18
-        // 
-        UpgradeXPLevel18.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel18.Location = new Point(310, 343);
-        UpgradeXPLevel18.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel18.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel18.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel18.Name = "UpgradeXPLevel18";
-        UpgradeXPLevel18.Size = new Size(119, 23);
-        UpgradeXPLevel18.TabIndex = 62;
-        UpgradeXPLevel18.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel18.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel18.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // UpgradeXPLevel19
-        // 
-        UpgradeXPLevel19.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel19.Location = new Point(310, 388);
-        UpgradeXPLevel19.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel19.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel19.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel19.Name = "UpgradeXPLevel19";
-        UpgradeXPLevel19.Size = new Size(119, 23);
-        UpgradeXPLevel19.TabIndex = 61;
-        UpgradeXPLevel19.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel19.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel19.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // UpgradeXPLevel20
-        // 
-        UpgradeXPLevel20.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel20.Location = new Point(310, 432);
-        UpgradeXPLevel20.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel20.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel20.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel20.Name = "UpgradeXPLevel20";
-        UpgradeXPLevel20.Size = new Size(119, 23);
-        UpgradeXPLevel20.TabIndex = 60;
-        UpgradeXPLevel20.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel20.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel20.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // UpgradeXPLevel21
-        // 
-        UpgradeXPLevel21.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel21.Location = new Point(534, 31);
-        UpgradeXPLevel21.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel21.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel21.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel21.Name = "UpgradeXPLevel21";
-        UpgradeXPLevel21.Size = new Size(111, 23);
-        UpgradeXPLevel21.TabIndex = 59;
-        UpgradeXPLevel21.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel21.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel21.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label779
-        // 
-        label779.AutoSize = true;
-        label779.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label779.Location = new Point(222, 122);
-        label779.Margin = new Padding(4, 0, 4, 0);
-        label779.Name = "label779";
-        label779.Size = new Size(75, 15);
-        label779.TabIndex = 55;
-        label779.Text = "Level 13 Exp";
-        // 
-        // label782
-        // 
-        label782.AutoSize = true;
-        label782.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label782.Location = new Point(222, 166);
-        label782.Margin = new Padding(4, 0, 4, 0);
-        label782.Name = "label782";
-        label782.Size = new Size(75, 15);
-        label782.TabIndex = 54;
-        label782.Text = "Level 14 Exp";
-        // 
-        // label783
-        // 
-        label783.AutoSize = true;
-        label783.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label783.Location = new Point(222, 212);
-        label783.Margin = new Padding(4, 0, 4, 0);
-        label783.Name = "label783";
-        label783.Size = new Size(75, 15);
-        label783.TabIndex = 53;
-        label783.Text = "Level 15 Exp";
-        // 
-        // label790
-        // 
-        label790.AutoSize = true;
-        label790.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label790.Location = new Point(222, 257);
-        label790.Margin = new Padding(4, 0, 4, 0);
-        label790.Name = "label790";
-        label790.Size = new Size(75, 15);
-        label790.TabIndex = 52;
-        label790.Text = "Level 16 Exp";
-        // 
-        // label835
-        // 
-        label835.AutoSize = true;
-        label835.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label835.Location = new Point(222, 302);
-        label835.Margin = new Padding(4, 0, 4, 0);
-        label835.Name = "label835";
-        label835.Size = new Size(75, 15);
-        label835.TabIndex = 51;
-        label835.Text = "Level 17 Exp";
-        // 
-        // label836
-        // 
-        label836.AutoSize = true;
-        label836.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label836.Location = new Point(222, 347);
-        label836.Margin = new Padding(4, 0, 4, 0);
-        label836.Name = "label836";
-        label836.Size = new Size(75, 15);
-        label836.TabIndex = 50;
-        label836.Text = "Level 18 Exp";
-        // 
-        // label837
-        // 
-        label837.AutoSize = true;
-        label837.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label837.Location = new Point(222, 391);
-        label837.Margin = new Padding(4, 0, 4, 0);
-        label837.Name = "label837";
-        label837.Size = new Size(75, 15);
-        label837.TabIndex = 49;
-        label837.Text = "Level 19 Exp";
-        // 
-        // label838
-        // 
-        label838.AutoSize = true;
-        label838.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label838.Location = new Point(222, 436);
-        label838.Margin = new Padding(4, 0, 4, 0);
-        label838.Name = "label838";
-        label838.Size = new Size(75, 15);
-        label838.TabIndex = 48;
-        label838.Text = "Level 20 Exp";
-        // 
-        // label839
-        // 
-        label839.AutoSize = true;
-        label839.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label839.Location = new Point(444, 35);
-        label839.Margin = new Padding(4, 0, 4, 0);
-        label839.Name = "label839";
-        label839.Size = new Size(75, 15);
-        label839.TabIndex = 47;
-        label839.Text = "Level 21 Exp";
-        // 
-        // label840
-        // 
-        label840.AutoSize = true;
-        label840.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label840.Location = new Point(222, 78);
-        label840.Margin = new Padding(4, 0, 4, 0);
-        label840.Name = "label840";
-        label840.Size = new Size(75, 15);
-        label840.TabIndex = 45;
-        label840.Text = "Level 12 Exp";
-        // 
-        // UpgradeXPLevel11
-        // 
-        UpgradeXPLevel11.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel11.Location = new Point(310, 31);
-        UpgradeXPLevel11.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel11.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel11.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel11.Name = "UpgradeXPLevel11";
-        UpgradeXPLevel11.Size = new Size(119, 23);
-        UpgradeXPLevel11.TabIndex = 44;
-        UpgradeXPLevel11.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel11.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel11.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // UpgradeXPLevel10
-        // 
-        UpgradeXPLevel10.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel10.Location = new Point(97, 432);
-        UpgradeXPLevel10.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel10.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel10.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel10.Name = "UpgradeXPLevel10";
-        UpgradeXPLevel10.Size = new Size(108, 23);
-        UpgradeXPLevel10.TabIndex = 43;
-        UpgradeXPLevel10.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel10.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel10.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label841
-        // 
-        label841.AutoSize = true;
-        label841.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label841.Location = new Point(222, 35);
-        label841.Margin = new Padding(4, 0, 4, 0);
-        label841.Name = "label841";
-        label841.Size = new Size(75, 15);
-        label841.TabIndex = 42;
-        label841.Text = "Level 11 Exp";
-        // 
-        // label842
-        // 
-        label842.AutoSize = true;
-        label842.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label842.Location = new Point(8, 435);
-        label842.Margin = new Padding(4, 0, 4, 0);
-        label842.Name = "label842";
-        label842.Size = new Size(75, 15);
-        label842.TabIndex = 41;
-        label842.Text = "Level 10 Exp";
-        // 
-        // UpgradeXPLevel9
-        // 
-        UpgradeXPLevel9.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel9.Location = new Point(97, 387);
-        UpgradeXPLevel9.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel9.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel9.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel9.Name = "UpgradeXPLevel9";
-        UpgradeXPLevel9.Size = new Size(108, 23);
-        UpgradeXPLevel9.TabIndex = 40;
-        UpgradeXPLevel9.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel9.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel9.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // UpgradeXPLevel8
-        // 
-        UpgradeXPLevel8.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel8.Location = new Point(97, 343);
-        UpgradeXPLevel8.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel8.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel8.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel8.Name = "UpgradeXPLevel8";
-        UpgradeXPLevel8.Size = new Size(108, 23);
-        UpgradeXPLevel8.TabIndex = 39;
-        UpgradeXPLevel8.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel8.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel8.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // UpgradeXPLevel7
-        // 
-        UpgradeXPLevel7.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel7.Location = new Point(97, 297);
-        UpgradeXPLevel7.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel7.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel7.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel7.Name = "UpgradeXPLevel7";
-        UpgradeXPLevel7.Size = new Size(108, 23);
-        UpgradeXPLevel7.TabIndex = 38;
-        UpgradeXPLevel7.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel7.Value = new decimal(new int[] { 1280000000, 0, 0, 0 });
-        UpgradeXPLevel7.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // UpgradeXPLevel6
-        // 
-        UpgradeXPLevel6.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel6.Location = new Point(97, 252);
-        UpgradeXPLevel6.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel6.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel6.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel6.Name = "UpgradeXPLevel6";
-        UpgradeXPLevel6.Size = new Size(108, 23);
-        UpgradeXPLevel6.TabIndex = 37;
-        UpgradeXPLevel6.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel6.Value = new decimal(new int[] { 640000000, 0, 0, 0 });
-        UpgradeXPLevel6.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label843
-        // 
-        label843.AutoSize = true;
-        label843.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label843.Location = new Point(8, 390);
-        label843.Margin = new Padding(4, 0, 4, 0);
-        label843.Name = "label843";
-        label843.Size = new Size(68, 15);
-        label843.TabIndex = 35;
-        label843.Text = "Level 9 Exp";
-        // 
-        // label844
-        // 
-        label844.AutoSize = true;
-        label844.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label844.Location = new Point(8, 346);
-        label844.Margin = new Padding(4, 0, 4, 0);
-        label844.Name = "label844";
-        label844.Size = new Size(68, 15);
-        label844.TabIndex = 34;
-        label844.Text = "Level 8 Exp";
-        // 
-        // label845
-        // 
-        label845.AutoSize = true;
-        label845.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label845.Location = new Point(7, 301);
-        label845.Margin = new Padding(4, 0, 4, 0);
-        label845.Name = "label845";
-        label845.Size = new Size(68, 15);
-        label845.TabIndex = 33;
-        label845.Text = "Level 7 Exp";
-        // 
-        // label846
-        // 
-        label846.AutoSize = true;
-        label846.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label846.Location = new Point(7, 256);
-        label846.Margin = new Padding(4, 0, 4, 0);
-        label846.Name = "label846";
-        label846.Size = new Size(68, 15);
-        label846.TabIndex = 32;
-        label846.Text = "Level 6 Exp";
-        // 
-        // UpgradeXPLevel5
-        // 
-        UpgradeXPLevel5.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel5.Location = new Point(97, 209);
-        UpgradeXPLevel5.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel5.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel5.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel5.Name = "UpgradeXPLevel5";
-        UpgradeXPLevel5.Size = new Size(108, 23);
-        UpgradeXPLevel5.TabIndex = 31;
-        UpgradeXPLevel5.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel5.Value = new decimal(new int[] { 320000000, 0, 0, 0 });
-        UpgradeXPLevel5.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // UpgradeXPLevel4
-        // 
-        UpgradeXPLevel4.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel4.Location = new Point(97, 163);
-        UpgradeXPLevel4.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel4.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel4.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel4.Name = "UpgradeXPLevel4";
-        UpgradeXPLevel4.Size = new Size(108, 23);
-        UpgradeXPLevel4.TabIndex = 30;
-        UpgradeXPLevel4.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel4.Value = new decimal(new int[] { 160000000, 0, 0, 0 });
-        UpgradeXPLevel4.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // UpgradeXPLevel3
-        // 
-        UpgradeXPLevel3.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel3.Location = new Point(97, 119);
-        UpgradeXPLevel3.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel3.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel3.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel3.Name = "UpgradeXPLevel3";
-        UpgradeXPLevel3.Size = new Size(108, 23);
-        UpgradeXPLevel3.TabIndex = 29;
-        UpgradeXPLevel3.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel3.Value = new decimal(new int[] { 80000000, 0, 0, 0 });
-        UpgradeXPLevel3.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // UpgradeXPLevel2
-        // 
-        UpgradeXPLevel2.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel2.Location = new Point(97, 74);
-        UpgradeXPLevel2.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel2.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel2.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel2.Name = "UpgradeXPLevel2";
-        UpgradeXPLevel2.Size = new Size(108, 23);
-        UpgradeXPLevel2.TabIndex = 28;
-        UpgradeXPLevel2.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel2.Value = new decimal(new int[] { 40000000, 0, 0, 0 });
-        UpgradeXPLevel2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label847
-        // 
-        label847.AutoSize = true;
-        label847.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label847.Location = new Point(8, 211);
-        label847.Margin = new Padding(4, 0, 4, 0);
-        label847.Name = "label847";
-        label847.Size = new Size(68, 15);
-        label847.TabIndex = 27;
-        label847.Text = "Level 5 Exp";
-        // 
-        // label848
-        // 
-        label848.AutoSize = true;
-        label848.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label848.Location = new Point(8, 165);
-        label848.Margin = new Padding(4, 0, 4, 0);
-        label848.Name = "label848";
-        label848.Size = new Size(68, 15);
-        label848.TabIndex = 26;
-        label848.Text = "Level 4 Exp";
-        // 
-        // label849
-        // 
-        label849.AutoSize = true;
-        label849.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label849.Location = new Point(7, 121);
-        label849.Margin = new Padding(4, 0, 4, 0);
-        label849.Name = "label849";
-        label849.Size = new Size(68, 15);
-        label849.TabIndex = 25;
-        label849.Text = "Level 3 Exp";
-        // 
-        // label882
-        // 
-        label882.AutoSize = true;
-        label882.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label882.Location = new Point(7, 77);
-        label882.Margin = new Padding(4, 0, 4, 0);
-        label882.Name = "label882";
-        label882.Size = new Size(68, 15);
-        label882.TabIndex = 24;
-        label882.Text = "Level 2 Exp";
-        // 
-        // UpgradeXPLevel1
-        // 
-        UpgradeXPLevel1.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        UpgradeXPLevel1.Location = new Point(97, 31);
-        UpgradeXPLevel1.Margin = new Padding(4, 3, 4, 3);
-        UpgradeXPLevel1.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        UpgradeXPLevel1.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        UpgradeXPLevel1.Name = "UpgradeXPLevel1";
-        UpgradeXPLevel1.Size = new Size(108, 23);
-        UpgradeXPLevel1.TabIndex = 23;
-        UpgradeXPLevel1.TextAlign = HorizontalAlignment.Center;
-        UpgradeXPLevel1.Value = new decimal(new int[] { 20000000, 0, 0, 0 });
-        UpgradeXPLevel1.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label887
-        // 
-        label887.AutoSize = true;
-        label887.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label887.Location = new Point(7, 33);
-        label887.Margin = new Padding(4, 0, 4, 0);
-        label887.Name = "label887";
-        label887.Size = new Size(68, 15);
-        label887.TabIndex = 17;
-        label887.Text = "Level 1 Exp";
-        // 
-        // tabPage100
-        // 
-        tabPage100.Controls.Add(groupBox15);
-        tabPage100.Location = new Point(4, 34);
-        tabPage100.Margin = new Padding(4, 3, 4, 3);
-        tabPage100.Name = "tabPage100";
-        tabPage100.Padding = new Padding(4, 3, 4, 3);
-        tabPage100.Size = new Size(1273, 529);
-        tabPage100.TabIndex = 20;
-        tabPage100.Text = "Level 40~99";
-        tabPage100.UseVisualStyleBackColor = true;
-        // 
-        // groupBox15
-        // 
-        groupBox15.Controls.Add(S_升级经验模块三十);
-        groupBox15.Controls.Add(S_升级经验模块二十九);
-        groupBox15.Controls.Add(S_升级经验模块二十八);
-        groupBox15.Controls.Add(S_升级经验模块二十七);
-        groupBox15.Controls.Add(S_升级经验模块二十六);
-        groupBox15.Controls.Add(S_升级经验模块二十五);
-        groupBox15.Controls.Add(label184);
-        groupBox15.Controls.Add(label183);
-        groupBox15.Controls.Add(label182);
-        groupBox15.Controls.Add(label181);
-        groupBox15.Controls.Add(label180);
-        groupBox15.Controls.Add(label179);
-        groupBox15.Controls.Add(label178);
-        groupBox15.Controls.Add(label177);
-        groupBox15.Controls.Add(S_升级经验模块十二);
-        groupBox15.Controls.Add(S_升级经验模块十三);
-        groupBox15.Controls.Add(S_升级经验模块十四);
-        groupBox15.Controls.Add(S_升级经验模块十五);
-        groupBox15.Controls.Add(S_升级经验模块十六);
-        groupBox15.Controls.Add(S_升级经验模块十七);
-        groupBox15.Controls.Add(S_升级经验模块十八);
-        groupBox15.Controls.Add(S_升级经验模块十九);
-        groupBox15.Controls.Add(S_升级经验模块二十);
-        groupBox15.Controls.Add(S_升级经验模块二十一);
-        groupBox15.Controls.Add(S_升级经验模块二十二);
-        groupBox15.Controls.Add(S_升级经验模块二十四);
-        groupBox15.Controls.Add(S_升级经验模块二十三);
-        groupBox15.Controls.Add(label176);
-        groupBox15.Controls.Add(label175);
-        groupBox15.Controls.Add(label174);
-        groupBox15.Controls.Add(label173);
-        groupBox15.Controls.Add(label172);
-        groupBox15.Controls.Add(label171);
-        groupBox15.Controls.Add(label170);
-        groupBox15.Controls.Add(label169);
-        groupBox15.Controls.Add(label168);
-        groupBox15.Controls.Add(label167);
-        groupBox15.Controls.Add(label166);
-        groupBox15.Controls.Add(S_升级经验模块十一);
-        groupBox15.Controls.Add(S_升级经验模块十);
-        groupBox15.Controls.Add(label78);
-        groupBox15.Controls.Add(label77);
-        groupBox15.Controls.Add(S_升级经验模块九);
-        groupBox15.Controls.Add(S_升级经验模块八);
-        groupBox15.Controls.Add(S_升级经验模块七);
-        groupBox15.Controls.Add(S_升级经验模块六);
-        groupBox15.Controls.Add(label76);
-        groupBox15.Controls.Add(label75);
-        groupBox15.Controls.Add(label74);
-        groupBox15.Controls.Add(label73);
-        groupBox15.Controls.Add(S_升级经验模块五);
-        groupBox15.Controls.Add(S_升级经验模块四);
-        groupBox15.Controls.Add(S_升级经验模块三);
-        groupBox15.Controls.Add(S_升级经验模块二);
-        groupBox15.Controls.Add(label72);
-        groupBox15.Controls.Add(label71);
-        groupBox15.Controls.Add(label70);
-        groupBox15.Controls.Add(label69);
-        groupBox15.Controls.Add(S_升级经验模块一);
-        groupBox15.Controls.Add(label68);
-        groupBox15.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
-        groupBox15.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
-        groupBox15.Location = new Point(7, 7);
-        groupBox15.Margin = new Padding(4, 3, 4, 3);
-        groupBox15.Name = "groupBox15";
-        groupBox15.Padding = new Padding(4, 3, 4, 3);
-        groupBox15.Size = new Size(864, 504);
-        groupBox15.TabIndex = 21;
-        groupBox15.TabStop = false;
-        groupBox15.Text = "Upgrade Experience - Credit: Xiruo Minglan";
-        // 
-        // S_升级经验模块三十
-        // 
-        S_升级经验模块三十.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        S_升级经验模块三十.Location = new Point(682, 432);
-        S_升级经验模块三十.Margin = new Padding(4, 3, 4, 3);
-        S_升级经验模块三十.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块三十.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_升级经验模块三十.Name = "S_升级经验模块三十";
-        S_升级经验模块三十.Size = new Size(130, 23);
-        S_升级经验模块三十.TabIndex = 83;
-        S_升级经验模块三十.TextAlign = HorizontalAlignment.Center;
-        S_升级经验模块三十.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块三十.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // S_升级经验模块二十九
-        // 
-        S_升级经验模块二十九.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        S_升级经验模块二十九.Location = new Point(682, 387);
-        S_升级经验模块二十九.Margin = new Padding(4, 3, 4, 3);
-        S_升级经验模块二十九.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块二十九.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_升级经验模块二十九.Name = "S_升级经验模块二十九";
-        S_升级经验模块二十九.Size = new Size(130, 23);
-        S_升级经验模块二十九.TabIndex = 82;
-        S_升级经验模块二十九.TextAlign = HorizontalAlignment.Center;
-        S_升级经验模块二十九.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块二十九.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // S_升级经验模块二十八
-        // 
-        S_升级经验模块二十八.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        S_升级经验模块二十八.Location = new Point(682, 343);
-        S_升级经验模块二十八.Margin = new Padding(4, 3, 4, 3);
-        S_升级经验模块二十八.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块二十八.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_升级经验模块二十八.Name = "S_升级经验模块二十八";
-        S_升级经验模块二十八.Size = new Size(130, 23);
-        S_升级经验模块二十八.TabIndex = 81;
-        S_升级经验模块二十八.TextAlign = HorizontalAlignment.Center;
-        S_升级经验模块二十八.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块二十八.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // S_升级经验模块二十七
-        // 
-        S_升级经验模块二十七.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        S_升级经验模块二十七.Location = new Point(682, 297);
-        S_升级经验模块二十七.Margin = new Padding(4, 3, 4, 3);
-        S_升级经验模块二十七.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块二十七.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_升级经验模块二十七.Name = "S_升级经验模块二十七";
-        S_升级经验模块二十七.Size = new Size(130, 23);
-        S_升级经验模块二十七.TabIndex = 80;
-        S_升级经验模块二十七.TextAlign = HorizontalAlignment.Center;
-        S_升级经验模块二十七.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块二十七.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // S_升级经验模块二十六
-        // 
-        S_升级经验模块二十六.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        S_升级经验模块二十六.Location = new Point(682, 252);
-        S_升级经验模块二十六.Margin = new Padding(4, 3, 4, 3);
-        S_升级经验模块二十六.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块二十六.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_升级经验模块二十六.Name = "S_升级经验模块二十六";
-        S_升级经验模块二十六.Size = new Size(130, 23);
-        S_升级经验模块二十六.TabIndex = 79;
-        S_升级经验模块二十六.TextAlign = HorizontalAlignment.Center;
-        S_升级经验模块二十六.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块二十六.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // S_升级经验模块二十五
-        // 
-        S_升级经验模块二十五.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        S_升级经验模块二十五.Location = new Point(682, 209);
-        S_升级经验模块二十五.Margin = new Padding(4, 3, 4, 3);
-        S_升级经验模块二十五.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块二十五.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_升级经验模块二十五.Name = "S_升级经验模块二十五";
-        S_升级经验模块二十五.Size = new Size(130, 23);
-        S_升级经验模块二十五.TabIndex = 77;
-        S_升级经验模块二十五.TextAlign = HorizontalAlignment.Center;
-        S_升级经验模块二十五.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块二十五.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label184
-        // 
-        label184.AutoSize = true;
-        label184.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label184.Location = new Point(573, 436);
-        label184.Margin = new Padding(4, 0, 4, 0);
-        label184.Name = "label184";
-        label184.Size = new Size(93, 15);
-        label184.TabIndex = 76;
-        label184.Text = "Level 96-99 Exp";
-        // 
-        // label183
-        // 
-        label183.AutoSize = true;
-        label183.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label183.Location = new Point(573, 391);
-        label183.Margin = new Padding(4, 0, 4, 0);
-        label183.Name = "label183";
-        label183.Size = new Size(93, 15);
-        label183.TabIndex = 75;
-        label183.Text = "Level 92-95 Exp";
-        // 
-        // label182
-        // 
-        label182.AutoSize = true;
-        label182.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label182.Location = new Point(573, 347);
-        label182.Margin = new Padding(4, 0, 4, 0);
-        label182.Name = "label182";
-        label182.Size = new Size(93, 15);
-        label182.TabIndex = 74;
-        label182.Text = "Level 88-91 Exp";
-        // 
-        // label181
-        // 
-        label181.AutoSize = true;
-        label181.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label181.Location = new Point(573, 302);
-        label181.Margin = new Padding(4, 0, 4, 0);
-        label181.Name = "label181";
-        label181.Size = new Size(93, 15);
-        label181.TabIndex = 73;
-        label181.Text = "Level 84-87 Exp";
-        // 
-        // label180
-        // 
-        label180.AutoSize = true;
-        label180.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label180.Location = new Point(573, 257);
-        label180.Margin = new Padding(4, 0, 4, 0);
-        label180.Name = "label180";
-        label180.Size = new Size(93, 15);
-        label180.TabIndex = 72;
-        label180.Text = "Level 79-83 Exp";
-        // 
-        // label179
-        // 
-        label179.AutoSize = true;
-        label179.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label179.Location = new Point(573, 212);
-        label179.Margin = new Padding(4, 0, 4, 0);
-        label179.Name = "label179";
-        label179.Size = new Size(93, 15);
-        label179.TabIndex = 71;
-        label179.Text = "Level 75-78 Exp";
-        // 
-        // label178
-        // 
-        label178.AutoSize = true;
-        label178.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label178.Location = new Point(573, 166);
-        label178.Margin = new Padding(4, 0, 4, 0);
-        label178.Name = "label178";
-        label178.Size = new Size(93, 15);
-        label178.TabIndex = 70;
-        label178.Text = "Level 70-74 Exp";
-        // 
-        // label177
-        // 
-        label177.AutoSize = true;
-        label177.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label177.Location = new Point(573, 122);
-        label177.Margin = new Padding(4, 0, 4, 0);
-        label177.Name = "label177";
-        label177.Size = new Size(93, 15);
-        label177.TabIndex = 69;
-        label177.Text = "Level 66-69 Exp";
-        // 
-        // S_升级经验模块十二
-        // 
-        S_升级经验模块十二.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        S_升级经验模块十二.Location = new Point(393, 74);
-        S_升级经验模块十二.Margin = new Padding(4, 3, 4, 3);
-        S_升级经验模块十二.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块十二.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_升级经验模块十二.Name = "S_升级经验模块十二";
-        S_升级经验模块十二.Size = new Size(130, 23);
-        S_升级经验模块十二.TabIndex = 68;
-        S_升级经验模块十二.TextAlign = HorizontalAlignment.Center;
-        S_升级经验模块十二.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块十二.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // S_升级经验模块十三
-        // 
-        S_升级经验模块十三.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        S_升级经验模块十三.Location = new Point(393, 119);
-        S_升级经验模块十三.Margin = new Padding(4, 3, 4, 3);
-        S_升级经验模块十三.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块十三.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_升级经验模块十三.Name = "S_升级经验模块十三";
-        S_升级经验模块十三.Size = new Size(130, 23);
-        S_升级经验模块十三.TabIndex = 67;
-        S_升级经验模块十三.TextAlign = HorizontalAlignment.Center;
-        S_升级经验模块十三.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块十三.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // S_升级经验模块十四
-        // 
-        S_升级经验模块十四.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        S_升级经验模块十四.Location = new Point(393, 164);
-        S_升级经验模块十四.Margin = new Padding(4, 3, 4, 3);
-        S_升级经验模块十四.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块十四.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_升级经验模块十四.Name = "S_升级经验模块十四";
-        S_升级经验模块十四.Size = new Size(130, 23);
-        S_升级经验模块十四.TabIndex = 66;
-        S_升级经验模块十四.TextAlign = HorizontalAlignment.Center;
-        S_升级经验模块十四.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块十四.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // S_升级经验模块十五
-        // 
-        S_升级经验模块十五.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        S_升级经验模块十五.Location = new Point(393, 209);
-        S_升级经验模块十五.Margin = new Padding(4, 3, 4, 3);
-        S_升级经验模块十五.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块十五.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_升级经验模块十五.Name = "S_升级经验模块十五";
-        S_升级经验模块十五.Size = new Size(130, 23);
-        S_升级经验模块十五.TabIndex = 65;
-        S_升级经验模块十五.TextAlign = HorizontalAlignment.Center;
-        S_升级经验模块十五.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块十五.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // S_升级经验模块十六
-        // 
-        S_升级经验模块十六.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        S_升级经验模块十六.Location = new Point(393, 252);
-        S_升级经验模块十六.Margin = new Padding(4, 3, 4, 3);
-        S_升级经验模块十六.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块十六.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_升级经验模块十六.Name = "S_升级经验模块十六";
-        S_升级经验模块十六.Size = new Size(130, 23);
-        S_升级经验模块十六.TabIndex = 64;
-        S_升级经验模块十六.TextAlign = HorizontalAlignment.Center;
-        S_升级经验模块十六.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块十六.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // S_升级经验模块十七
-        // 
-        S_升级经验模块十七.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        S_升级经验模块十七.Location = new Point(393, 297);
-        S_升级经验模块十七.Margin = new Padding(4, 3, 4, 3);
-        S_升级经验模块十七.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块十七.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_升级经验模块十七.Name = "S_升级经验模块十七";
-        S_升级经验模块十七.Size = new Size(130, 23);
-        S_升级经验模块十七.TabIndex = 63;
-        S_升级经验模块十七.TextAlign = HorizontalAlignment.Center;
-        S_升级经验模块十七.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块十七.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // S_升级经验模块十八
-        // 
-        S_升级经验模块十八.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        S_升级经验模块十八.Location = new Point(393, 343);
-        S_升级经验模块十八.Margin = new Padding(4, 3, 4, 3);
-        S_升级经验模块十八.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块十八.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_升级经验模块十八.Name = "S_升级经验模块十八";
-        S_升级经验模块十八.Size = new Size(130, 23);
-        S_升级经验模块十八.TabIndex = 62;
-        S_升级经验模块十八.TextAlign = HorizontalAlignment.Center;
-        S_升级经验模块十八.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块十八.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // S_升级经验模块十九
-        // 
-        S_升级经验模块十九.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        S_升级经验模块十九.Location = new Point(393, 388);
-        S_升级经验模块十九.Margin = new Padding(4, 3, 4, 3);
-        S_升级经验模块十九.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块十九.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_升级经验模块十九.Name = "S_升级经验模块十九";
-        S_升级经验模块十九.Size = new Size(130, 23);
-        S_升级经验模块十九.TabIndex = 61;
-        S_升级经验模块十九.TextAlign = HorizontalAlignment.Center;
-        S_升级经验模块十九.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块十九.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // S_升级经验模块二十
-        // 
-        S_升级经验模块二十.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        S_升级经验模块二十.Location = new Point(393, 432);
-        S_升级经验模块二十.Margin = new Padding(4, 3, 4, 3);
-        S_升级经验模块二十.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块二十.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_升级经验模块二十.Name = "S_升级经验模块二十";
-        S_升级经验模块二十.Size = new Size(130, 23);
-        S_升级经验模块二十.TabIndex = 60;
-        S_升级经验模块二十.TextAlign = HorizontalAlignment.Center;
-        S_升级经验模块二十.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块二十.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // S_升级经验模块二十一
-        // 
-        S_升级经验模块二十一.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        S_升级经验模块二十一.Location = new Point(682, 31);
-        S_升级经验模块二十一.Margin = new Padding(4, 3, 4, 3);
-        S_升级经验模块二十一.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块二十一.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_升级经验模块二十一.Name = "S_升级经验模块二十一";
-        S_升级经验模块二十一.Size = new Size(130, 23);
-        S_升级经验模块二十一.TabIndex = 59;
-        S_升级经验模块二十一.TextAlign = HorizontalAlignment.Center;
-        S_升级经验模块二十一.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块二十一.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // S_升级经验模块二十二
-        // 
-        S_升级经验模块二十二.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        S_升级经验模块二十二.Location = new Point(682, 74);
-        S_升级经验模块二十二.Margin = new Padding(4, 3, 4, 3);
-        S_升级经验模块二十二.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块二十二.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_升级经验模块二十二.Name = "S_升级经验模块二十二";
-        S_升级经验模块二十二.Size = new Size(130, 23);
-        S_升级经验模块二十二.TabIndex = 58;
-        S_升级经验模块二十二.TextAlign = HorizontalAlignment.Center;
-        S_升级经验模块二十二.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块二十二.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // S_升级经验模块二十四
-        // 
-        S_升级经验模块二十四.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        S_升级经验模块二十四.Location = new Point(682, 163);
-        S_升级经验模块二十四.Margin = new Padding(4, 3, 4, 3);
-        S_升级经验模块二十四.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块二十四.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_升级经验模块二十四.Name = "S_升级经验模块二十四";
-        S_升级经验模块二十四.Size = new Size(130, 23);
-        S_升级经验模块二十四.TabIndex = 57;
-        S_升级经验模块二十四.TextAlign = HorizontalAlignment.Center;
-        S_升级经验模块二十四.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块二十四.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // S_升级经验模块二十三
-        // 
-        S_升级经验模块二十三.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        S_升级经验模块二十三.Location = new Point(682, 119);
-        S_升级经验模块二十三.Margin = new Padding(4, 3, 4, 3);
-        S_升级经验模块二十三.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块二十三.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_升级经验模块二十三.Name = "S_升级经验模块二十三";
-        S_升级经验模块二十三.Size = new Size(130, 23);
-        S_升级经验模块二十三.TabIndex = 56;
-        S_升级经验模块二十三.TextAlign = HorizontalAlignment.Center;
-        S_升级经验模块二十三.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块二十三.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label176
-        // 
-        label176.AutoSize = true;
-        label176.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label176.Location = new Point(304, 122);
-        label176.Margin = new Padding(4, 0, 4, 0);
-        label176.Name = "label176";
-        label176.Size = new Size(75, 15);
-        label176.TabIndex = 55;
-        label176.Text = "Level 52 Exp";
-        // 
-        // label175
-        // 
-        label175.AutoSize = true;
-        label175.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label175.Location = new Point(304, 166);
-        label175.Margin = new Padding(4, 0, 4, 0);
-        label175.Name = "label175";
-        label175.Size = new Size(75, 15);
-        label175.TabIndex = 54;
-        label175.Text = "Level 53 Exp";
-        // 
-        // label174
-        // 
-        label174.AutoSize = true;
-        label174.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label174.Location = new Point(304, 212);
-        label174.Margin = new Padding(4, 0, 4, 0);
-        label174.Name = "label174";
-        label174.Size = new Size(75, 15);
-        label174.TabIndex = 53;
-        label174.Text = "Level 54 Exp";
-        // 
-        // label173
-        // 
-        label173.AutoSize = true;
-        label173.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label173.Location = new Point(304, 257);
-        label173.Margin = new Padding(4, 0, 4, 0);
-        label173.Name = "label173";
-        label173.Size = new Size(75, 15);
-        label173.TabIndex = 52;
-        label173.Text = "Level 55 Exp";
-        // 
-        // label172
-        // 
-        label172.AutoSize = true;
-        label172.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label172.Location = new Point(304, 302);
-        label172.Margin = new Padding(4, 0, 4, 0);
-        label172.Name = "label172";
-        label172.Size = new Size(75, 15);
-        label172.TabIndex = 51;
-        label172.Text = "Level 56 Exp";
-        // 
-        // label171
-        // 
-        label171.AutoSize = true;
-        label171.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label171.Location = new Point(304, 347);
-        label171.Margin = new Padding(4, 0, 4, 0);
-        label171.Name = "label171";
-        label171.Size = new Size(75, 15);
-        label171.TabIndex = 50;
-        label171.Text = "Level 57 Exp";
-        // 
-        // label170
-        // 
-        label170.AutoSize = true;
-        label170.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label170.Location = new Point(304, 391);
-        label170.Margin = new Padding(4, 0, 4, 0);
-        label170.Name = "label170";
-        label170.Size = new Size(75, 15);
-        label170.TabIndex = 49;
-        label170.Text = "Level 58 Exp";
-        // 
-        // label169
-        // 
-        label169.AutoSize = true;
-        label169.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label169.Location = new Point(304, 436);
-        label169.Margin = new Padding(4, 0, 4, 0);
-        label169.Name = "label169";
-        label169.Size = new Size(75, 15);
-        label169.TabIndex = 48;
-        label169.Text = "Level 59 Exp";
-        // 
-        // label168
-        // 
-        label168.AutoSize = true;
-        label168.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label168.Location = new Point(594, 35);
-        label168.Margin = new Padding(4, 0, 4, 0);
-        label168.Name = "label168";
-        label168.Size = new Size(75, 15);
-        label168.TabIndex = 47;
-        label168.Text = "Level 60 Exp";
-        // 
-        // label167
-        // 
-        label167.AutoSize = true;
-        label167.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label167.Location = new Point(573, 78);
-        label167.Margin = new Padding(4, 0, 4, 0);
-        label167.Name = "label167";
-        label167.Size = new Size(93, 15);
-        label167.TabIndex = 46;
-        label167.Text = "Level 61-65 Exp";
-        // 
-        // label166
-        // 
-        label166.AutoSize = true;
-        label166.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label166.Location = new Point(304, 78);
-        label166.Margin = new Padding(4, 0, 4, 0);
-        label166.Name = "label166";
-        label166.Size = new Size(75, 15);
-        label166.TabIndex = 45;
-        label166.Text = "Level 51 Exp";
-        // 
-        // S_升级经验模块十一
-        // 
-        S_升级经验模块十一.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        S_升级经验模块十一.Location = new Point(393, 31);
-        S_升级经验模块十一.Margin = new Padding(4, 3, 4, 3);
-        S_升级经验模块十一.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块十一.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_升级经验模块十一.Name = "S_升级经验模块十一";
-        S_升级经验模块十一.Size = new Size(130, 23);
-        S_升级经验模块十一.TabIndex = 44;
-        S_升级经验模块十一.TextAlign = HorizontalAlignment.Center;
-        S_升级经验模块十一.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块十一.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // S_升级经验模块十
-        // 
-        S_升级经验模块十.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        S_升级经验模块十.Location = new Point(140, 433);
-        S_升级经验模块十.Margin = new Padding(4, 3, 4, 3);
-        S_升级经验模块十.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块十.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_升级经验模块十.Name = "S_升级经验模块十";
-        S_升级经验模块十.Size = new Size(115, 23);
-        S_升级经验模块十.TabIndex = 43;
-        S_升级经验模块十.TextAlign = HorizontalAlignment.Center;
-        S_升级经验模块十.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块十.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label78
-        // 
-        label78.AutoSize = true;
-        label78.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label78.Location = new Point(304, 35);
-        label78.Margin = new Padding(4, 0, 4, 0);
-        label78.Name = "label78";
-        label78.Size = new Size(75, 15);
-        label78.TabIndex = 42;
-        label78.Text = "Level 50 Exp";
-        // 
-        // label77
-        // 
-        label77.AutoSize = true;
-        label77.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label77.Location = new Point(51, 437);
-        label77.Margin = new Padding(4, 0, 4, 0);
-        label77.Name = "label77";
-        label77.Size = new Size(75, 15);
-        label77.TabIndex = 41;
-        label77.Text = "Level 49 Exp";
-        // 
-        // S_升级经验模块九
-        // 
-        S_升级经验模块九.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        S_升级经验模块九.Location = new Point(140, 388);
-        S_升级经验模块九.Margin = new Padding(4, 3, 4, 3);
-        S_升级经验模块九.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块九.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_升级经验模块九.Name = "S_升级经验模块九";
-        S_升级经验模块九.Size = new Size(115, 23);
-        S_升级经验模块九.TabIndex = 40;
-        S_升级经验模块九.TextAlign = HorizontalAlignment.Center;
-        S_升级经验模块九.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块九.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // S_升级经验模块八
-        // 
-        S_升级经验模块八.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        S_升级经验模块八.Location = new Point(140, 344);
-        S_升级经验模块八.Margin = new Padding(4, 3, 4, 3);
-        S_升级经验模块八.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块八.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_升级经验模块八.Name = "S_升级经验模块八";
-        S_升级经验模块八.Size = new Size(115, 23);
-        S_升级经验模块八.TabIndex = 39;
-        S_升级经验模块八.TextAlign = HorizontalAlignment.Center;
-        S_升级经验模块八.Value = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块八.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // S_升级经验模块七
-        // 
-        S_升级经验模块七.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        S_升级经验模块七.Location = new Point(140, 298);
-        S_升级经验模块七.Margin = new Padding(4, 3, 4, 3);
-        S_升级经验模块七.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块七.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_升级经验模块七.Name = "S_升级经验模块七";
-        S_升级经验模块七.Size = new Size(115, 23);
-        S_升级经验模块七.TabIndex = 38;
-        S_升级经验模块七.TextAlign = HorizontalAlignment.Center;
-        S_升级经验模块七.Value = new decimal(new int[] { 1280000000, 0, 0, 0 });
-        S_升级经验模块七.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // S_升级经验模块六
-        // 
-        S_升级经验模块六.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        S_升级经验模块六.Location = new Point(140, 253);
-        S_升级经验模块六.Margin = new Padding(4, 3, 4, 3);
-        S_升级经验模块六.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块六.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_升级经验模块六.Name = "S_升级经验模块六";
-        S_升级经验模块六.Size = new Size(115, 23);
-        S_升级经验模块六.TabIndex = 37;
-        S_升级经验模块六.TextAlign = HorizontalAlignment.Center;
-        S_升级经验模块六.Value = new decimal(new int[] { 640000000, 0, 0, 0 });
-        S_升级经验模块六.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label76
-        // 
-        label76.AutoSize = true;
-        label76.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label76.Location = new Point(51, 392);
-        label76.Margin = new Padding(4, 0, 4, 0);
-        label76.Name = "label76";
-        label76.Size = new Size(75, 15);
-        label76.TabIndex = 35;
-        label76.Text = "Level 48 Exp";
-        // 
-        // label75
-        // 
-        label75.AutoSize = true;
-        label75.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label75.Location = new Point(51, 348);
-        label75.Margin = new Padding(4, 0, 4, 0);
-        label75.Name = "label75";
-        label75.Size = new Size(75, 15);
-        label75.TabIndex = 34;
-        label75.Text = "Level 47 Exp";
-        // 
-        // label74
-        // 
-        label74.AutoSize = true;
-        label74.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label74.Location = new Point(50, 303);
-        label74.Margin = new Padding(4, 0, 4, 0);
-        label74.Name = "label74";
-        label74.Size = new Size(75, 15);
-        label74.TabIndex = 33;
-        label74.Text = "Level 46 Exp";
-        // 
-        // label73
-        // 
-        label73.AutoSize = true;
-        label73.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label73.Location = new Point(50, 258);
-        label73.Margin = new Padding(4, 0, 4, 0);
-        label73.Name = "label73";
-        label73.Size = new Size(75, 15);
-        label73.TabIndex = 32;
-        label73.Text = "Level 45 Exp";
-        // 
-        // S_升级经验模块五
-        // 
-        S_升级经验模块五.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        S_升级经验模块五.Location = new Point(140, 210);
-        S_升级经验模块五.Margin = new Padding(4, 3, 4, 3);
-        S_升级经验模块五.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块五.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_升级经验模块五.Name = "S_升级经验模块五";
-        S_升级经验模块五.Size = new Size(115, 23);
-        S_升级经验模块五.TabIndex = 31;
-        S_升级经验模块五.TextAlign = HorizontalAlignment.Center;
-        S_升级经验模块五.Value = new decimal(new int[] { 320000000, 0, 0, 0 });
-        S_升级经验模块五.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // S_升级经验模块四
-        // 
-        S_升级经验模块四.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        S_升级经验模块四.Location = new Point(140, 164);
-        S_升级经验模块四.Margin = new Padding(4, 3, 4, 3);
-        S_升级经验模块四.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块四.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_升级经验模块四.Name = "S_升级经验模块四";
-        S_升级经验模块四.Size = new Size(115, 23);
-        S_升级经验模块四.TabIndex = 30;
-        S_升级经验模块四.TextAlign = HorizontalAlignment.Center;
-        S_升级经验模块四.Value = new decimal(new int[] { 160000000, 0, 0, 0 });
-        S_升级经验模块四.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // S_升级经验模块三
-        // 
-        S_升级经验模块三.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        S_升级经验模块三.Location = new Point(140, 120);
-        S_升级经验模块三.Margin = new Padding(4, 3, 4, 3);
-        S_升级经验模块三.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块三.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_升级经验模块三.Name = "S_升级经验模块三";
-        S_升级经验模块三.Size = new Size(115, 23);
-        S_升级经验模块三.TabIndex = 29;
-        S_升级经验模块三.TextAlign = HorizontalAlignment.Center;
-        S_升级经验模块三.Value = new decimal(new int[] { 80000000, 0, 0, 0 });
-        S_升级经验模块三.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // S_升级经验模块二
-        // 
-        S_升级经验模块二.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        S_升级经验模块二.Location = new Point(140, 75);
-        S_升级经验模块二.Margin = new Padding(4, 3, 4, 3);
-        S_升级经验模块二.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块二.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_升级经验模块二.Name = "S_升级经验模块二";
-        S_升级经验模块二.Size = new Size(115, 23);
-        S_升级经验模块二.TabIndex = 28;
-        S_升级经验模块二.TextAlign = HorizontalAlignment.Center;
-        S_升级经验模块二.Value = new decimal(new int[] { 40000000, 0, 0, 0 });
-        S_升级经验模块二.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label72
-        // 
-        label72.AutoSize = true;
-        label72.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label72.Location = new Point(51, 213);
-        label72.Margin = new Padding(4, 0, 4, 0);
-        label72.Name = "label72";
-        label72.Size = new Size(75, 15);
-        label72.TabIndex = 27;
-        label72.Text = "Level 44 Exp";
-        // 
-        // label71
-        // 
-        label71.AutoSize = true;
-        label71.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label71.Location = new Point(51, 167);
-        label71.Margin = new Padding(4, 0, 4, 0);
-        label71.Name = "label71";
-        label71.Size = new Size(75, 15);
-        label71.TabIndex = 26;
-        label71.Text = "Level 43 Exp";
-        // 
-        // label70
-        // 
-        label70.AutoSize = true;
-        label70.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label70.Location = new Point(50, 123);
-        label70.Margin = new Padding(4, 0, 4, 0);
-        label70.Name = "label70";
-        label70.Size = new Size(75, 15);
-        label70.TabIndex = 25;
-        label70.Text = "Level 42 Exp";
-        // 
-        // label69
-        // 
-        label69.AutoSize = true;
-        label69.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label69.Location = new Point(50, 80);
-        label69.Margin = new Padding(4, 0, 4, 0);
-        label69.Name = "label69";
-        label69.Size = new Size(75, 15);
-        label69.TabIndex = 24;
-        label69.Text = "Level 41 Exp";
-        // 
-        // S_升级经验模块一
-        // 
-        S_升级经验模块一.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
-        S_升级经验模块一.Location = new Point(140, 32);
-        S_升级经验模块一.Margin = new Padding(4, 3, 4, 3);
-        S_升级经验模块一.Maximum = new decimal(new int[] { 2000000000, 0, 0, 0 });
-        S_升级经验模块一.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_升级经验模块一.Name = "S_升级经验模块一";
-        S_升级经验模块一.Size = new Size(115, 23);
-        S_升级经验模块一.TabIndex = 23;
-        S_升级经验模块一.TextAlign = HorizontalAlignment.Center;
-        S_升级经验模块一.Value = new decimal(new int[] { 20000000, 0, 0, 0 });
-        S_升级经验模块一.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label68
-        // 
-        label68.AutoSize = true;
-        label68.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label68.Location = new Point(50, 36);
-        label68.Margin = new Padding(4, 0, 4, 0);
-        label68.Name = "label68";
-        label68.Size = new Size(75, 15);
-        label68.TabIndex = 17;
-        label68.Text = "Level 40 Exp";
-        // 
-        // tabPage54
-        // 
-        tabPage54.Controls.Add(groupBox34);
-        tabPage54.Location = new Point(4, 34);
-        tabPage54.Margin = new Padding(4, 3, 4, 3);
-        tabPage54.Name = "tabPage54";
-        tabPage54.Padding = new Padding(4, 3, 4, 3);
-        tabPage54.Size = new Size(1299, 591);
-        tabPage54.TabIndex = 22;
-        tabPage54.Text = "Pet Upgrade";
-        tabPage54.UseVisualStyleBackColor = true;
-        // 
         // groupBox34
         // 
-        groupBox34.Controls.Add(S_PetUpgradeXPLevel9);
-        groupBox34.Controls.Add(S_PetUpgradeXPLevel8);
-        groupBox34.Controls.Add(label204);
-        groupBox34.Controls.Add(label203);
-        groupBox34.Controls.Add(label209);
-        groupBox34.Controls.Add(label210);
-        groupBox34.Controls.Add(label211);
-        groupBox34.Controls.Add(S_PetUpgradeXPLevel7);
-        groupBox34.Controls.Add(S_PetUpgradeXPLevel6);
-        groupBox34.Controls.Add(S_PetUpgradeXPLevel5);
-        groupBox34.Controls.Add(S_PetUpgradeXPLevel4);
-        groupBox34.Controls.Add(S_PetUpgradeXPLevel3);
-        groupBox34.Controls.Add(S_PetUpgradeXPLevel2);
-        groupBox34.Controls.Add(label212);
-        groupBox34.Controls.Add(label213);
-        groupBox34.Controls.Add(label214);
+        groupBox34.Controls.Add(label196);
+        groupBox34.Controls.Add(S_PetUpgradeXPLevel);
         groupBox34.Controls.Add(label216);
-        groupBox34.Controls.Add(S_PetUpgradeXPLevel1);
+        groupBox34.Controls.Add(S_PetUpgradeXP);
         groupBox34.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
         groupBox34.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
-        groupBox34.Location = new Point(23, 23);
+        groupBox34.Location = new Point(8, 162);
         groupBox34.Margin = new Padding(4, 3, 4, 3);
         groupBox34.Name = "groupBox34";
         groupBox34.Padding = new Padding(4, 3, 4, 3);
-        groupBox34.Size = new Size(267, 367);
-        groupBox34.TabIndex = 36;
+        groupBox34.Size = new Size(267, 147);
+        groupBox34.TabIndex = 110;
         groupBox34.TabStop = false;
         groupBox34.Text = "Pet Upgrade Experience";
         // 
-        // S_PetUpgradeXPLevel9
+        // label196
         // 
-        S_PetUpgradeXPLevel9.Location = new Point(121, 307);
-        S_PetUpgradeXPLevel9.Margin = new Padding(4, 3, 4, 3);
-        S_PetUpgradeXPLevel9.Maximum = new decimal(new int[] { 10000000, 0, 0, 0 });
-        S_PetUpgradeXPLevel9.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_PetUpgradeXPLevel9.Name = "S_PetUpgradeXPLevel9";
-        S_PetUpgradeXPLevel9.Size = new Size(93, 23);
-        S_PetUpgradeXPLevel9.TabIndex = 50;
-        S_PetUpgradeXPLevel9.TextAlign = HorizontalAlignment.Center;
-        S_PetUpgradeXPLevel9.Value = new decimal(new int[] { 35, 0, 0, 0 });
-        S_PetUpgradeXPLevel9.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
+        label196.AutoSize = true;
+        label196.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
+        label196.Location = new Point(23, 85);
+        label196.Margin = new Padding(4, 0, 4, 0);
+        label196.Name = "label196";
+        label196.Size = new Size(93, 15);
+        label196.TabIndex = 52;
+        label196.Text = "Pet Experience:";
         // 
-        // S_PetUpgradeXPLevel8
+        // S_PetUpgradeXPLevel
         // 
-        S_PetUpgradeXPLevel8.Location = new Point(121, 273);
-        S_PetUpgradeXPLevel8.Margin = new Padding(4, 3, 4, 3);
-        S_PetUpgradeXPLevel8.Maximum = new decimal(new int[] { 10000000, 0, 0, 0 });
-        S_PetUpgradeXPLevel8.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_PetUpgradeXPLevel8.Name = "S_PetUpgradeXPLevel8";
-        S_PetUpgradeXPLevel8.Size = new Size(93, 23);
-        S_PetUpgradeXPLevel8.TabIndex = 49;
-        S_PetUpgradeXPLevel8.TextAlign = HorizontalAlignment.Center;
-        S_PetUpgradeXPLevel8.Value = new decimal(new int[] { 35, 0, 0, 0 });
-        S_PetUpgradeXPLevel8.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label204
-        // 
-        label204.AutoSize = true;
-        label204.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label204.Location = new Point(28, 314);
-        label204.Margin = new Padding(4, 0, 4, 0);
-        label204.Name = "label204";
-        label204.Size = new Size(74, 15);
-        label204.TabIndex = 48;
-        label204.Text = "Pet +9 Level";
-        // 
-        // label203
-        // 
-        label203.AutoSize = true;
-        label203.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label203.Location = new Point(28, 279);
-        label203.Margin = new Padding(4, 0, 4, 0);
-        label203.Name = "label203";
-        label203.Size = new Size(74, 15);
-        label203.TabIndex = 47;
-        label203.Text = "Pet +8 Level";
-        // 
-        // label209
-        // 
-        label209.AutoSize = true;
-        label209.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label209.Location = new Point(28, 246);
-        label209.Margin = new Padding(4, 0, 4, 0);
-        label209.Name = "label209";
-        label209.Size = new Size(74, 15);
-        label209.TabIndex = 46;
-        label209.Text = "Pet +7 Level";
-        // 
-        // label210
-        // 
-        label210.AutoSize = true;
-        label210.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label210.Location = new Point(27, 212);
-        label210.Margin = new Padding(4, 0, 4, 0);
-        label210.Name = "label210";
-        label210.Size = new Size(74, 15);
-        label210.TabIndex = 45;
-        label210.Text = "Pet +6 Level";
-        // 
-        // label211
-        // 
-        label211.AutoSize = true;
-        label211.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label211.Location = new Point(27, 178);
-        label211.Margin = new Padding(4, 0, 4, 0);
-        label211.Name = "label211";
-        label211.Size = new Size(74, 15);
-        label211.TabIndex = 44;
-        label211.Text = "Pet +5 Level";
-        // 
-        // S_PetUpgradeXPLevel7
-        // 
-        S_PetUpgradeXPLevel7.Location = new Point(121, 240);
-        S_PetUpgradeXPLevel7.Margin = new Padding(4, 3, 4, 3);
-        S_PetUpgradeXPLevel7.Maximum = new decimal(new int[] { 10000000, 0, 0, 0 });
-        S_PetUpgradeXPLevel7.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_PetUpgradeXPLevel7.Name = "S_PetUpgradeXPLevel7";
-        S_PetUpgradeXPLevel7.Size = new Size(93, 23);
-        S_PetUpgradeXPLevel7.TabIndex = 43;
-        S_PetUpgradeXPLevel7.TextAlign = HorizontalAlignment.Center;
-        S_PetUpgradeXPLevel7.Value = new decimal(new int[] { 35, 0, 0, 0 });
-        S_PetUpgradeXPLevel7.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // S_PetUpgradeXPLevel6
-        // 
-        S_PetUpgradeXPLevel6.Location = new Point(121, 205);
-        S_PetUpgradeXPLevel6.Margin = new Padding(4, 3, 4, 3);
-        S_PetUpgradeXPLevel6.Maximum = new decimal(new int[] { 10000000, 0, 0, 0 });
-        S_PetUpgradeXPLevel6.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_PetUpgradeXPLevel6.Name = "S_PetUpgradeXPLevel6";
-        S_PetUpgradeXPLevel6.Size = new Size(93, 23);
-        S_PetUpgradeXPLevel6.TabIndex = 42;
-        S_PetUpgradeXPLevel6.TextAlign = HorizontalAlignment.Center;
-        S_PetUpgradeXPLevel6.Value = new decimal(new int[] { 30, 0, 0, 0 });
-        S_PetUpgradeXPLevel6.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // S_PetUpgradeXPLevel5
-        // 
-        S_PetUpgradeXPLevel5.Location = new Point(121, 172);
-        S_PetUpgradeXPLevel5.Margin = new Padding(4, 3, 4, 3);
-        S_PetUpgradeXPLevel5.Maximum = new decimal(new int[] { 10000000, 0, 0, 0 });
-        S_PetUpgradeXPLevel5.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_PetUpgradeXPLevel5.Name = "S_PetUpgradeXPLevel5";
-        S_PetUpgradeXPLevel5.Size = new Size(93, 23);
-        S_PetUpgradeXPLevel5.TabIndex = 41;
-        S_PetUpgradeXPLevel5.TextAlign = HorizontalAlignment.Center;
-        S_PetUpgradeXPLevel5.Value = new decimal(new int[] { 25, 0, 0, 0 });
-        S_PetUpgradeXPLevel5.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // S_PetUpgradeXPLevel4
-        // 
-        S_PetUpgradeXPLevel4.Location = new Point(121, 138);
-        S_PetUpgradeXPLevel4.Margin = new Padding(4, 3, 4, 3);
-        S_PetUpgradeXPLevel4.Maximum = new decimal(new int[] { 10000000, 0, 0, 0 });
-        S_PetUpgradeXPLevel4.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_PetUpgradeXPLevel4.Name = "S_PetUpgradeXPLevel4";
-        S_PetUpgradeXPLevel4.Size = new Size(93, 23);
-        S_PetUpgradeXPLevel4.TabIndex = 40;
-        S_PetUpgradeXPLevel4.TextAlign = HorizontalAlignment.Center;
-        S_PetUpgradeXPLevel4.Value = new decimal(new int[] { 20, 0, 0, 0 });
-        S_PetUpgradeXPLevel4.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // S_PetUpgradeXPLevel3
-        // 
-        S_PetUpgradeXPLevel3.Location = new Point(121, 105);
-        S_PetUpgradeXPLevel3.Margin = new Padding(4, 3, 4, 3);
-        S_PetUpgradeXPLevel3.Maximum = new decimal(new int[] { 10000000, 0, 0, 0 });
-        S_PetUpgradeXPLevel3.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_PetUpgradeXPLevel3.Name = "S_PetUpgradeXPLevel3";
-        S_PetUpgradeXPLevel3.Size = new Size(93, 23);
-        S_PetUpgradeXPLevel3.TabIndex = 39;
-        S_PetUpgradeXPLevel3.TextAlign = HorizontalAlignment.Center;
-        S_PetUpgradeXPLevel3.Value = new decimal(new int[] { 15, 0, 0, 0 });
-        S_PetUpgradeXPLevel3.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // S_PetUpgradeXPLevel2
-        // 
-        S_PetUpgradeXPLevel2.Location = new Point(121, 70);
-        S_PetUpgradeXPLevel2.Margin = new Padding(4, 3, 4, 3);
-        S_PetUpgradeXPLevel2.Maximum = new decimal(new int[] { 10000000, 0, 0, 0 });
-        S_PetUpgradeXPLevel2.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_PetUpgradeXPLevel2.Name = "S_PetUpgradeXPLevel2";
-        S_PetUpgradeXPLevel2.Size = new Size(93, 23);
-        S_PetUpgradeXPLevel2.TabIndex = 38;
-        S_PetUpgradeXPLevel2.TextAlign = HorizontalAlignment.Center;
-        S_PetUpgradeXPLevel2.Value = new decimal(new int[] { 10, 0, 0, 0 });
-        S_PetUpgradeXPLevel2.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
-        // 
-        // label212
-        // 
-        label212.AutoSize = true;
-        label212.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label212.Location = new Point(27, 144);
-        label212.Margin = new Padding(4, 0, 4, 0);
-        label212.Name = "label212";
-        label212.Size = new Size(74, 15);
-        label212.TabIndex = 37;
-        label212.Text = "Pet +4 Level";
-        // 
-        // label213
-        // 
-        label213.AutoSize = true;
-        label213.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label213.Location = new Point(27, 111);
-        label213.Margin = new Padding(4, 0, 4, 0);
-        label213.Name = "label213";
-        label213.Size = new Size(74, 15);
-        label213.TabIndex = 36;
-        label213.Text = "Pet +3 Level";
-        // 
-        // label214
-        // 
-        label214.AutoSize = true;
-        label214.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label214.Location = new Point(28, 77);
-        label214.Margin = new Padding(4, 0, 4, 0);
-        label214.Name = "label214";
-        label214.Size = new Size(74, 15);
-        label214.TabIndex = 35;
-        label214.Text = "Pet +2 Level";
+        S_PetUpgradeXPLevel.Location = new Point(8, 52);
+        S_PetUpgradeXPLevel.Margin = new Padding(4, 3, 4, 3);
+        S_PetUpgradeXPLevel.Maximum = new decimal(new int[] { 9, 0, 0, 0 });
+        S_PetUpgradeXPLevel.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+        S_PetUpgradeXPLevel.Name = "S_PetUpgradeXPLevel";
+        S_PetUpgradeXPLevel.Size = new Size(108, 23);
+        S_PetUpgradeXPLevel.TabIndex = 51;
+        S_PetUpgradeXPLevel.TextAlign = HorizontalAlignment.Center;
+        S_PetUpgradeXPLevel.Value = new decimal(new int[] { 1, 0, 0, 0 });
+        S_PetUpgradeXPLevel.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label216
         // 
         label216.AutoSize = true;
         label216.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label216.Location = new Point(27, 44);
+        label216.Location = new Point(54, 34);
         label216.Margin = new Padding(4, 0, 4, 0);
         label216.Name = "label216";
-        label216.Size = new Size(74, 15);
+        label216.Size = new Size(62, 15);
         label216.TabIndex = 27;
-        label216.Text = "Pet +1 Level";
+        label216.Text = "Pet Level:";
         // 
-        // S_PetUpgradeXPLevel1
+        // S_PetUpgradeXP
         // 
-        S_PetUpgradeXPLevel1.Location = new Point(121, 37);
-        S_PetUpgradeXPLevel1.Margin = new Padding(4, 3, 4, 3);
-        S_PetUpgradeXPLevel1.Maximum = new decimal(new int[] { 10000000, 0, 0, 0 });
-        S_PetUpgradeXPLevel1.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-        S_PetUpgradeXPLevel1.Name = "S_PetUpgradeXPLevel1";
-        S_PetUpgradeXPLevel1.Size = new Size(93, 23);
-        S_PetUpgradeXPLevel1.TabIndex = 26;
-        S_PetUpgradeXPLevel1.TextAlign = HorizontalAlignment.Center;
-        S_PetUpgradeXPLevel1.Value = new decimal(new int[] { 5, 0, 0, 0 });
-        S_PetUpgradeXPLevel1.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
+        S_PetUpgradeXP.Location = new Point(8, 103);
+        S_PetUpgradeXP.Margin = new Padding(4, 3, 4, 3);
+        S_PetUpgradeXP.Maximum = new decimal(new int[] { 65535, 0, 0, 0 });
+        S_PetUpgradeXP.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+        S_PetUpgradeXP.Name = "S_PetUpgradeXP";
+        S_PetUpgradeXP.Size = new Size(109, 23);
+        S_PetUpgradeXP.TabIndex = 26;
+        S_PetUpgradeXP.TextAlign = HorizontalAlignment.Center;
+        S_PetUpgradeXP.Value = new decimal(new int[] { 1, 0, 0, 0 });
+        S_PetUpgradeXP.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
+        // 
+        // groupBox225
+        // 
+        groupBox225.Controls.Add(S_UpgradeXP);
+        groupBox225.Controls.Add(label882);
+        groupBox225.Controls.Add(S_UpgradeXPLevel);
+        groupBox225.Controls.Add(label887);
+        groupBox225.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
+        groupBox225.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
+        groupBox225.Location = new Point(8, 10);
+        groupBox225.Margin = new Padding(4, 3, 4, 3);
+        groupBox225.Name = "groupBox225";
+        groupBox225.Padding = new Padding(4, 3, 4, 3);
+        groupBox225.Size = new Size(267, 146);
+        groupBox225.TabIndex = 109;
+        groupBox225.TabStop = false;
+        groupBox225.Text = "Upgrade Experience";
+        // 
+        // S_UpgradeXP
+        // 
+        S_UpgradeXP.Increment = new decimal(new int[] { 1000000, 0, 0, 0 });
+        S_UpgradeXP.Location = new Point(8, 100);
+        S_UpgradeXP.Margin = new Padding(4, 3, 4, 3);
+        S_UpgradeXP.Maximum = new decimal(new int[] { 2100000000, 0, 0, 0 });
+        S_UpgradeXP.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+        S_UpgradeXP.Name = "S_UpgradeXP";
+        S_UpgradeXP.Size = new Size(108, 23);
+        S_UpgradeXP.TabIndex = 28;
+        S_UpgradeXP.TextAlign = HorizontalAlignment.Center;
+        S_UpgradeXP.Value = new decimal(new int[] { 40000000, 0, 0, 0 });
+        S_UpgradeXP.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
+        // 
+        // label882
+        // 
+        label882.AutoSize = true;
+        label882.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
+        label882.Location = new Point(49, 82);
+        label882.Margin = new Padding(4, 0, 4, 0);
+        label882.Name = "label882";
+        label882.Size = new Size(71, 15);
+        label882.TabIndex = 24;
+        label882.Text = "Experience:";
+        // 
+        // S_UpgradeXPLevel
+        // 
+        S_UpgradeXPLevel.Location = new Point(8, 52);
+        S_UpgradeXPLevel.Margin = new Padding(4, 3, 4, 3);
+        S_UpgradeXPLevel.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+        S_UpgradeXPLevel.Name = "S_UpgradeXPLevel";
+        S_UpgradeXPLevel.Size = new Size(108, 23);
+        S_UpgradeXPLevel.TabIndex = 23;
+        S_UpgradeXPLevel.TextAlign = HorizontalAlignment.Center;
+        S_UpgradeXPLevel.Value = new decimal(new int[] { 1, 0, 0, 0 });
+        S_UpgradeXPLevel.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
+        // 
+        // label887
+        // 
+        label887.AutoSize = true;
+        label887.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
+        label887.Location = new Point(77, 31);
+        label887.Margin = new Padding(4, 0, 4, 0);
+        label887.Name = "label887";
+        label887.Size = new Size(40, 15);
+        label887.TabIndex = 17;
+        label887.Text = "Level:";
         // 
         // tabPage7
         // 
@@ -33277,6 +30987,14 @@ public partial class SMain
         PortStatusLabel.Size = new Size(50, 19);
         PortStatusLabel.Text = "----";
         // 
+        // RunTimeStatusLabel
+        // 
+        RunTimeStatusLabel.BorderSides = (ToolStripStatusLabelBorderSides)(((ToolStripStatusLabelBorderSides.Left) | (ToolStripStatusLabelBorderSides.Top)) | (ToolStripStatusLabelBorderSides.Right)) | (ToolStripStatusLabelBorderSides.Bottom);
+        RunTimeStatusLabel.BorderStyle = Border3DStyle.SunkenInner;
+        RunTimeStatusLabel.Name = "RunTimeStatusLabel";
+        RunTimeStatusLabel.Size = new Size(74, 19);
+        RunTimeStatusLabel.Text = "RunTime: ??";
+        // 
         // ConnectionsStatusLabel
         // 
         ConnectionsStatusLabel.BorderSides = (ToolStripStatusLabelBorderSides)(((ToolStripStatusLabelBorderSides.Left) | (ToolStripStatusLabelBorderSides.Top)) | (ToolStripStatusLabelBorderSides.Right)) | (ToolStripStatusLabelBorderSides.Bottom);
@@ -33324,14 +31042,6 @@ public partial class SMain
         DataSentStatusLabel.Name = "DataSentStatusLabel";
         DataSentStatusLabel.Size = new Size(50, 19);
         DataSentStatusLabel.Text = "Sent: ??";
-        // 
-        // RunTimeStatusLabel
-        // 
-        RunTimeStatusLabel.BorderSides = (ToolStripStatusLabelBorderSides)(((ToolStripStatusLabelBorderSides.Left) | (ToolStripStatusLabelBorderSides.Top)) | (ToolStripStatusLabelBorderSides.Right)) | (ToolStripStatusLabelBorderSides.Bottom);
-        RunTimeStatusLabel.BorderStyle = Border3DStyle.SunkenInner;
-        RunTimeStatusLabel.Name = "RunTimeStatusLabel";
-        RunTimeStatusLabel.Size = new Size(74, 19);
-        RunTimeStatusLabel.Text = "RunTime: ??";
         // 
         // SMain
         // 
@@ -34050,94 +31760,14 @@ public partial class SMain
         groupBox69.PerformLayout();
         ((ISupportInitialize)S_StartingLevel).EndInit();
         tabPage52.ResumeLayout(false);
-        tabControl7.ResumeLayout(false);
-        tabPage75.ResumeLayout(false);
-        groupBox225.ResumeLayout(false);
-        groupBox225.PerformLayout();
-        ((ISupportInitialize)UpgradeXPLevel39).EndInit();
-        ((ISupportInitialize)UpgradeXPLevel33).EndInit();
-        ((ISupportInitialize)UpgradeXPLevel34).EndInit();
-        ((ISupportInitialize)UpgradeXPLevel35).EndInit();
-        ((ISupportInitialize)UpgradeXPLevel36).EndInit();
-        ((ISupportInitialize)UpgradeXPLevel37).EndInit();
-        ((ISupportInitialize)UpgradeXPLevel38).EndInit();
-        ((ISupportInitialize)UpgradeXPLevel22).EndInit();
-        ((ISupportInitialize)UpgradeXPLevel23).EndInit();
-        ((ISupportInitialize)UpgradeXPLevel24).EndInit();
-        ((ISupportInitialize)UpgradeXPLevel31).EndInit();
-        ((ISupportInitialize)UpgradeXPLevel25).EndInit();
-        ((ISupportInitialize)UpgradeXPLevel30).EndInit();
-        ((ISupportInitialize)UpgradeXPLevel29).EndInit();
-        ((ISupportInitialize)UpgradeXPLevel28).EndInit();
-        ((ISupportInitialize)UpgradeXPLevel27).EndInit();
-        ((ISupportInitialize)UpgradeXPLevel26).EndInit();
-        ((ISupportInitialize)UpgradeXPLevel32).EndInit();
-        ((ISupportInitialize)UpgradeXPLevel12).EndInit();
-        ((ISupportInitialize)UpgradeXPLevel13).EndInit();
-        ((ISupportInitialize)UpgradeXPLevel14).EndInit();
-        ((ISupportInitialize)UpgradeXPLevel15).EndInit();
-        ((ISupportInitialize)UpgradeXPLevel16).EndInit();
-        ((ISupportInitialize)UpgradeXPLevel17).EndInit();
-        ((ISupportInitialize)UpgradeXPLevel18).EndInit();
-        ((ISupportInitialize)UpgradeXPLevel19).EndInit();
-        ((ISupportInitialize)UpgradeXPLevel20).EndInit();
-        ((ISupportInitialize)UpgradeXPLevel21).EndInit();
-        ((ISupportInitialize)UpgradeXPLevel11).EndInit();
-        ((ISupportInitialize)UpgradeXPLevel10).EndInit();
-        ((ISupportInitialize)UpgradeXPLevel9).EndInit();
-        ((ISupportInitialize)UpgradeXPLevel8).EndInit();
-        ((ISupportInitialize)UpgradeXPLevel7).EndInit();
-        ((ISupportInitialize)UpgradeXPLevel6).EndInit();
-        ((ISupportInitialize)UpgradeXPLevel5).EndInit();
-        ((ISupportInitialize)UpgradeXPLevel4).EndInit();
-        ((ISupportInitialize)UpgradeXPLevel3).EndInit();
-        ((ISupportInitialize)UpgradeXPLevel2).EndInit();
-        ((ISupportInitialize)UpgradeXPLevel1).EndInit();
-        tabPage100.ResumeLayout(false);
-        groupBox15.ResumeLayout(false);
-        groupBox15.PerformLayout();
-        ((ISupportInitialize)S_升级经验模块三十).EndInit();
-        ((ISupportInitialize)S_升级经验模块二十九).EndInit();
-        ((ISupportInitialize)S_升级经验模块二十八).EndInit();
-        ((ISupportInitialize)S_升级经验模块二十七).EndInit();
-        ((ISupportInitialize)S_升级经验模块二十六).EndInit();
-        ((ISupportInitialize)S_升级经验模块二十五).EndInit();
-        ((ISupportInitialize)S_升级经验模块十二).EndInit();
-        ((ISupportInitialize)S_升级经验模块十三).EndInit();
-        ((ISupportInitialize)S_升级经验模块十四).EndInit();
-        ((ISupportInitialize)S_升级经验模块十五).EndInit();
-        ((ISupportInitialize)S_升级经验模块十六).EndInit();
-        ((ISupportInitialize)S_升级经验模块十七).EndInit();
-        ((ISupportInitialize)S_升级经验模块十八).EndInit();
-        ((ISupportInitialize)S_升级经验模块十九).EndInit();
-        ((ISupportInitialize)S_升级经验模块二十).EndInit();
-        ((ISupportInitialize)S_升级经验模块二十一).EndInit();
-        ((ISupportInitialize)S_升级经验模块二十二).EndInit();
-        ((ISupportInitialize)S_升级经验模块二十四).EndInit();
-        ((ISupportInitialize)S_升级经验模块二十三).EndInit();
-        ((ISupportInitialize)S_升级经验模块十一).EndInit();
-        ((ISupportInitialize)S_升级经验模块十).EndInit();
-        ((ISupportInitialize)S_升级经验模块九).EndInit();
-        ((ISupportInitialize)S_升级经验模块八).EndInit();
-        ((ISupportInitialize)S_升级经验模块七).EndInit();
-        ((ISupportInitialize)S_升级经验模块六).EndInit();
-        ((ISupportInitialize)S_升级经验模块五).EndInit();
-        ((ISupportInitialize)S_升级经验模块四).EndInit();
-        ((ISupportInitialize)S_升级经验模块三).EndInit();
-        ((ISupportInitialize)S_升级经验模块二).EndInit();
-        ((ISupportInitialize)S_升级经验模块一).EndInit();
-        tabPage54.ResumeLayout(false);
         groupBox34.ResumeLayout(false);
         groupBox34.PerformLayout();
-        ((ISupportInitialize)S_PetUpgradeXPLevel9).EndInit();
-        ((ISupportInitialize)S_PetUpgradeXPLevel8).EndInit();
-        ((ISupportInitialize)S_PetUpgradeXPLevel7).EndInit();
-        ((ISupportInitialize)S_PetUpgradeXPLevel6).EndInit();
-        ((ISupportInitialize)S_PetUpgradeXPLevel5).EndInit();
-        ((ISupportInitialize)S_PetUpgradeXPLevel4).EndInit();
-        ((ISupportInitialize)S_PetUpgradeXPLevel3).EndInit();
-        ((ISupportInitialize)S_PetUpgradeXPLevel2).EndInit();
-        ((ISupportInitialize)S_PetUpgradeXPLevel1).EndInit();
+        ((ISupportInitialize)S_PetUpgradeXPLevel).EndInit();
+        ((ISupportInitialize)S_PetUpgradeXP).EndInit();
+        groupBox225.ResumeLayout(false);
+        groupBox225.PerformLayout();
+        ((ISupportInitialize)S_UpgradeXP).EndInit();
+        ((ISupportInitialize)S_UpgradeXPLevel).EndInit();
         tabPage7.ResumeLayout(false);
         tabControl10.ResumeLayout(false);
         tabPage36.ResumeLayout(false);
@@ -35374,128 +33004,6 @@ public partial class SMain
 
     private TabPage 经验调整;
 
-    private GroupBox groupBox15;
-
-    private NumericUpDown S_升级经验模块三十;
-
-    private NumericUpDown S_升级经验模块二十九;
-
-    private NumericUpDown S_升级经验模块二十八;
-
-    private NumericUpDown S_升级经验模块二十七;
-
-    private NumericUpDown S_升级经验模块二十六;
-
-    private NumericUpDown S_升级经验模块二十五;
-
-    private Label label184;
-
-    private Label label183;
-
-    private Label label182;
-
-    private Label label181;
-
-    private Label label180;
-
-    private Label label179;
-
-    private Label label178;
-
-    private Label label177;
-
-    private NumericUpDown S_升级经验模块十二;
-
-    private NumericUpDown S_升级经验模块十三;
-
-    private NumericUpDown S_升级经验模块十四;
-
-    private NumericUpDown S_升级经验模块十五;
-
-    private NumericUpDown S_升级经验模块十六;
-
-    private NumericUpDown S_升级经验模块十七;
-
-    private NumericUpDown S_升级经验模块十八;
-
-    private NumericUpDown S_升级经验模块十九;
-
-    private NumericUpDown S_升级经验模块二十;
-
-    private NumericUpDown S_升级经验模块二十一;
-
-    private NumericUpDown S_升级经验模块二十二;
-
-    private NumericUpDown S_升级经验模块二十四;
-
-    private NumericUpDown S_升级经验模块二十三;
-
-    private Label label176;
-
-    private Label label175;
-
-    private Label label174;
-
-    private Label label173;
-
-    private Label label172;
-
-    private Label label171;
-
-    private Label label170;
-
-    private Label label169;
-
-    private Label label168;
-
-    private Label label167;
-
-    private Label label166;
-
-    private NumericUpDown S_升级经验模块十一;
-
-    private NumericUpDown S_升级经验模块十;
-
-    private Label label78;
-
-    private Label label77;
-
-    private NumericUpDown S_升级经验模块九;
-
-    private NumericUpDown S_升级经验模块八;
-
-    private NumericUpDown S_升级经验模块七;
-
-    private NumericUpDown S_升级经验模块六;
-
-    private Label label76;
-
-    private Label label75;
-
-    private Label label74;
-
-    private Label label73;
-
-    private NumericUpDown S_升级经验模块五;
-
-    private NumericUpDown S_升级经验模块四;
-
-    private NumericUpDown S_升级经验模块三;
-
-    private NumericUpDown S_升级经验模块二;
-
-    private Label label72;
-
-    private Label label71;
-
-    private Label label70;
-
-    private Label label69;
-
-    private NumericUpDown S_升级经验模块一;
-
-    private Label label68;
-
     private TabPage tabPage7;
 
     private GroupBox groupBox9;
@@ -35680,44 +33188,6 @@ public partial class SMain
 
     private Label label7;
 
-    private GroupBox groupBox34;
-
-    private Label label209;
-
-    private Label label210;
-
-    private Label label211;
-
-    private NumericUpDown S_PetUpgradeXPLevel7;
-
-    private NumericUpDown S_PetUpgradeXPLevel6;
-
-    private NumericUpDown S_PetUpgradeXPLevel5;
-
-    private NumericUpDown S_PetUpgradeXPLevel4;
-
-    private NumericUpDown S_PetUpgradeXPLevel3;
-
-    private NumericUpDown S_PetUpgradeXPLevel2;
-
-    private Label label212;
-
-    private Label label213;
-
-    private Label label214;
-
-    private Label label216;
-
-    private NumericUpDown S_PetUpgradeXPLevel1;
-
-    private NumericUpDown S_PetUpgradeXPLevel9;
-
-    private NumericUpDown S_PetUpgradeXPLevel8;
-
-    private Label label204;
-
-    private Label label203;
-
     private GroupBox groupBox35;
 
     private Label label205;
@@ -35727,36 +33197,6 @@ public partial class SMain
     private NumericUpDown S_下马击落机率;
 
     private Label label207;
-
-    private GroupBox groupBox37;
-
-    private Label label222;
-
-    private Label label221;
-
-    private NumericUpDown S_AllowRaceDragonLance;
-
-    private NumericUpDown S_AllowRaceAssassin;
-
-    private NumericUpDown S_AllowRaceArcher;
-
-    private NumericUpDown S_AllowRaceTaoist;
-
-    private NumericUpDown S_AllowRaceWizard;
-
-    private NumericUpDown S_AllowRaceWarrior;
-
-    private Label label220;
-
-    private Label label219;
-
-    private Label label218;
-
-    private Label label217;
-
-    private Label label215;
-
-    private Label label208;
 
     private Label label229;
 
@@ -35937,16 +33377,6 @@ public partial class SMain
     public TabControl tabControl1;
 
     private TabPage tabPage12;
-
-    private GroupBox 新手赠送;
-
-    private TextBox S_豪杰特权礼包;
-
-    private TextBox S_战将特权礼包;
-
-    private Label 赠送二号位;
-
-    private Label 赠送一号位;
 
     private TabPage tabPage1;
 
@@ -36628,12 +34058,6 @@ public partial class SMain
 
     private Label label446;
 
-    private GroupBox groupBox69;
-
-    private Label label454;
-
-    private NumericUpDown S_StartingLevel;
-
     private TabPage tabPage33;
 
     private Label label463;
@@ -37150,12 +34574,6 @@ public partial class SMain
 
     private NumericUpDown S_每周特惠二物品3;
 
-    private GroupBox groupBox144;
-
-    private Label label634;
-
-    private NumericUpDown S_新手出售货币值;
-
     private TabPage tabPage40;
 
     private Label label637;
@@ -37171,8 +34589,6 @@ public partial class SMain
     private Label label635;
 
     private NumericUpDown S_挂机称号选项;
-
-    private Label label638;
 
     private Label label640;
 
@@ -37468,36 +34884,6 @@ public partial class SMain
 
     private NumericUpDown S_沙城地图保护;
 
-    private GroupBox groupBox154;
-
-    private Label label696;
-
-    private Label label695;
-
-    private NumericUpDown S_NoobProtectionLevel;
-
-    private NumericUpDown S_新手地图保护5;
-
-    private NumericUpDown S_新手地图保护10;
-
-    private NumericUpDown S_新手地图保护9;
-
-    private NumericUpDown S_新手地图保护8;
-
-    private NumericUpDown S_新手地图保护7;
-
-    private NumericUpDown S_新手地图保护6;
-
-    private NumericUpDown S_新手地图保护4;
-
-    private NumericUpDown S_新手地图保护3;
-
-    private NumericUpDown S_新手地图保护2;
-
-    private NumericUpDown S_新手地图保护1;
-
-    private Label label490;
-
     private GroupBox groupBox156;
 
     private Label label190;
@@ -37587,14 +34973,6 @@ public partial class SMain
     private NumericUpDown S_重置屠魔副本时间;
 
     private Label label386;
-
-    public TabControl tabControl14;
-
-    private TabPage tabPage53;
-
-    private TabPage tabPage52;
-
-    private TabPage tabPage54;
 
     private Label label392;
 
@@ -37723,32 +35101,6 @@ public partial class SMain
     private NumericUpDown S_自动保存日志;
 
     private Label label396;
-
-    private GroupBox groupBox122;
-
-    private NumericUpDown S_新手上线赠送物品6;
-
-    private NumericUpDown S_新手上线赠送物品5;
-
-    private NumericUpDown S_新手上线赠送物品4;
-
-    private NumericUpDown S_新手上线赠送物品3;
-
-    private NumericUpDown S_新手上线赠送物品2;
-
-    private NumericUpDown S_新手上线赠送物品1;
-
-    private Label label404;
-
-    private NumericUpDown S_新手上线赠送称号1;
-
-    private Label label398;
-
-    private Label label399;
-
-    private Label label400;
-
-    private NumericUpDown S_新手上线赠送开关;
 
     private GroupBox groupBox170;
 
@@ -38960,170 +36312,6 @@ public partial class SMain
 
     private NumericUpDown 拾取地图控制3;
 
-    public TabControl tabControl7;
-
-    private TabPage tabPage75;
-
-    private GroupBox groupBox225;
-
-    private NumericUpDown UpgradeXPLevel39;
-
-    private NumericUpDown UpgradeXPLevel33;
-
-    private NumericUpDown UpgradeXPLevel34;
-
-    private NumericUpDown UpgradeXPLevel35;
-
-    private NumericUpDown UpgradeXPLevel36;
-
-    private NumericUpDown UpgradeXPLevel37;
-
-    private NumericUpDown UpgradeXPLevel38;
-
-    private Label label869;
-
-    private Label label868;
-
-    private Label label867;
-
-    private Label label866;
-
-    private Label label865;
-
-    private Label label864;
-
-    private Label label863;
-
-    private Label label862;
-
-    private NumericUpDown UpgradeXPLevel22;
-
-    private NumericUpDown UpgradeXPLevel23;
-
-    private NumericUpDown UpgradeXPLevel24;
-
-    private NumericUpDown UpgradeXPLevel31;
-
-    private NumericUpDown UpgradeXPLevel25;
-
-    private NumericUpDown UpgradeXPLevel30;
-
-    private NumericUpDown UpgradeXPLevel29;
-
-    private NumericUpDown UpgradeXPLevel28;
-
-    private NumericUpDown UpgradeXPLevel27;
-
-    private NumericUpDown UpgradeXPLevel26;
-
-    private NumericUpDown UpgradeXPLevel32;
-
-    private Label label859;
-
-    private Label label858;
-
-    private Label label857;
-
-    private Label label856;
-
-    private Label label855;
-
-    private Label label854;
-
-    private Label label853;
-
-    private Label label852;
-
-    private Label label851;
-
-    private Label label850;
-
-    private NumericUpDown UpgradeXPLevel12;
-
-    private NumericUpDown UpgradeXPLevel13;
-
-    private NumericUpDown UpgradeXPLevel14;
-
-    private NumericUpDown UpgradeXPLevel15;
-
-    private NumericUpDown UpgradeXPLevel16;
-
-    private NumericUpDown UpgradeXPLevel17;
-
-    private NumericUpDown UpgradeXPLevel18;
-
-    private NumericUpDown UpgradeXPLevel19;
-
-    private NumericUpDown UpgradeXPLevel20;
-
-    private NumericUpDown UpgradeXPLevel21;
-
-    private Label label779;
-
-    private Label label782;
-
-    private Label label783;
-
-    private Label label790;
-
-    private Label label835;
-
-    private Label label836;
-
-    private Label label837;
-
-    private Label label838;
-
-    private Label label839;
-
-    private Label label840;
-
-    private NumericUpDown UpgradeXPLevel11;
-
-    private NumericUpDown UpgradeXPLevel10;
-
-    private Label label841;
-
-    private Label label842;
-
-    private NumericUpDown UpgradeXPLevel9;
-
-    private NumericUpDown UpgradeXPLevel8;
-
-    private NumericUpDown UpgradeXPLevel7;
-
-    private NumericUpDown UpgradeXPLevel6;
-
-    private Label label843;
-
-    private Label label844;
-
-    private Label label845;
-
-    private Label label846;
-
-    private NumericUpDown UpgradeXPLevel5;
-
-    private NumericUpDown UpgradeXPLevel4;
-
-    private NumericUpDown UpgradeXPLevel3;
-
-    private NumericUpDown UpgradeXPLevel2;
-
-    private Label label847;
-
-    private Label label848;
-
-    private Label label849;
-
-    private Label label882;
-
-    private NumericUpDown UpgradeXPLevel1;
-
-    private Label label887;
-
-    private TabPage tabPage100;
-
     private GroupBox groupBox226;
 
     private Label label690;
@@ -39243,8 +36431,6 @@ public partial class SMain
     private Label label630;
 
     private Label label629;
-
-    private NumericUpDown 自定义初始货币类型;
 
     private GroupBox groupBox139;
 
@@ -39477,4 +36663,73 @@ public partial class SMain
     private ToolStripStatusLabel OnlineStatusLabel;
     private ToolStripStatusLabel PortStatusLabel;
     private ToolStripStatusLabel RunTimeStatusLabel;
+    public TabControl tabControl14;
+    private TabPage tabPage53;
+    private GroupBox groupBox122;
+    private NumericUpDown S_新手上线赠送物品6;
+    private NumericUpDown S_新手上线赠送物品5;
+    private NumericUpDown S_新手上线赠送物品4;
+    private NumericUpDown S_新手上线赠送物品3;
+    private NumericUpDown S_新手上线赠送物品2;
+    private NumericUpDown S_新手上线赠送物品1;
+    private Label label404;
+    private NumericUpDown S_新手上线赠送称号1;
+    private Label label398;
+    private Label label399;
+    private Label label400;
+    private NumericUpDown S_新手上线赠送开关;
+    private GroupBox 新手赠送;
+    private TextBox S_豪杰特权礼包;
+    private TextBox S_战将特权礼包;
+    private Label 赠送二号位;
+    private Label 赠送一号位;
+    private GroupBox groupBox144;
+    private NumericUpDown 自定义初始货币类型;
+    private Label label638;
+    private Label label634;
+    private NumericUpDown S_新手出售货币值;
+    private GroupBox groupBox37;
+    private Label label222;
+    private Label label221;
+    private NumericUpDown S_AllowRaceDragonLance;
+    private NumericUpDown S_AllowRaceAssassin;
+    private NumericUpDown S_AllowRaceArcher;
+    private NumericUpDown S_AllowRaceTaoist;
+    private NumericUpDown S_AllowRaceWizard;
+    private NumericUpDown S_AllowRaceWarrior;
+    private Label label220;
+    private Label label219;
+    private Label label218;
+    private Label label217;
+    private Label label215;
+    private Label label208;
+    private GroupBox groupBox154;
+    private NumericUpDown S_新手地图保护5;
+    private NumericUpDown S_新手地图保护10;
+    private NumericUpDown S_新手地图保护9;
+    private NumericUpDown S_新手地图保护8;
+    private NumericUpDown S_新手地图保护7;
+    private NumericUpDown S_新手地图保护6;
+    private NumericUpDown S_新手地图保护4;
+    private NumericUpDown S_新手地图保护3;
+    private NumericUpDown S_新手地图保护2;
+    private NumericUpDown S_新手地图保护1;
+    private Label label490;
+    private Label label696;
+    private Label label695;
+    private NumericUpDown S_NoobProtectionLevel;
+    private GroupBox groupBox69;
+    private Label label454;
+    private NumericUpDown S_StartingLevel;
+    private TabPage tabPage52;
+    private GroupBox groupBox34;
+    private Label label196;
+    private NumericUpDown S_PetUpgradeXPLevel;
+    private Label label216;
+    private NumericUpDown S_PetUpgradeXP;
+    private GroupBox groupBox225;
+    private NumericUpDown S_UpgradeXP;
+    private Label label882;
+    private NumericUpDown S_UpgradeXPLevel;
+    private Label label887;
 }

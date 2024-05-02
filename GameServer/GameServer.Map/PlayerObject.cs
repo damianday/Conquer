@@ -506,7 +506,7 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public int MaxExperience => CharacterProgression.MaxExpTable[CurrentLevel];
+    public int MaxExperience => Character.MaxExperience;
 
     public int Silver
     {
@@ -3189,13 +3189,13 @@ public sealed class PlayerObject : MapObject
         });
         if (Mentor != null && Team != null && Mentor.Master != Character && Team.Members.Contains(Mentor.Master))
         {
-            Mentor.徒弟经验[Character] += (int)((float)CharacterProgression.MaxExpTable[CurrentLevel] * 0.05f);
-            Mentor.师父经验[Character] += (int)((float)CharacterProgression.MaxExpTable[CurrentLevel] * 0.05f);
+            Mentor.徒弟经验[Character] += (int)((float)MaxExperience * 0.05f);
+            Mentor.师父经验[Character] += (int)((float)MaxExperience * 0.05f);
             if (CurrentPrivilege != 0)
             {
-                Mentor.徒弟金币[Character] += (int)((float)CharacterProgression.MaxExpTable[CurrentLevel] * 0.01f);
-                Mentor.师父金币[Character] += (int)((float)CharacterProgression.MaxExpTable[CurrentLevel] * 0.02f);
-                Mentor.师父声望[Character] += (int)((float)CharacterProgression.MaxExpTable[CurrentLevel] * 0.03f);
+                Mentor.徒弟金币[Character] += (int)((float)MaxExperience * 0.01f);
+                Mentor.师父金币[Character] += (int)((float)MaxExperience * 0.02f);
+                Mentor.师父声望[Character] += (int)((float)MaxExperience * 0.03f);
             }
         }
         if (CurrentLevel == 30 && Mentor == null)

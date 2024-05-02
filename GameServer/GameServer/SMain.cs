@@ -601,6 +601,8 @@ public partial class SMain : Form
 
     public SMain()
     {
+        int index;
+
         InitializeComponent();
 
         Settings.Default.Load();
@@ -614,7 +616,7 @@ public partial class SMain : Form
         for (int i = 0; i < array.Length; i++)
         {
             string[] array2 = array[i].Split('\t');
-            int index = 公告浏览表.Rows.Add();
+            index = 公告浏览表.Rows.Add();
             公告浏览表.Rows[index].Cells["公告间隔"].Value = array2[0];
             公告浏览表.Rows[index].Cells["公告次数"].Value = array2[1];
             公告浏览表.Rows[index].Cells["公告内容"].Value = array2[2];
@@ -672,36 +674,6 @@ public partial class SMain : Form
         S_死亡掉落身上几率.Value = (decimal)Settings.Default.死亡掉落身上几率;
         S_PK死亡幸运开关.Value = Settings.Default.PK死亡幸运开关;
         S_屠魔副本次数.Value = Settings.Default.屠魔副本次数;
-        S_升级经验模块一.Value = Settings.Default.升级经验模块一;
-        S_升级经验模块二.Value = Settings.Default.升级经验模块二;
-        S_升级经验模块三.Value = Settings.Default.升级经验模块三;
-        S_升级经验模块四.Value = Settings.Default.升级经验模块四;
-        S_升级经验模块五.Value = Settings.Default.升级经验模块五;
-        S_升级经验模块六.Value = Settings.Default.升级经验模块六;
-        S_升级经验模块七.Value = Settings.Default.升级经验模块七;
-        S_升级经验模块八.Value = Settings.Default.升级经验模块八;
-        S_升级经验模块九.Value = Settings.Default.升级经验模块九;
-        S_升级经验模块十.Value = Settings.Default.升级经验模块十;
-        S_升级经验模块十一.Value = Settings.Default.升级经验模块十一;
-        S_升级经验模块十二.Value = Settings.Default.升级经验模块十二;
-        S_升级经验模块十三.Value = Settings.Default.升级经验模块十三;
-        S_升级经验模块十四.Value = Settings.Default.升级经验模块十四;
-        S_升级经验模块十五.Value = Settings.Default.升级经验模块十五;
-        S_升级经验模块十六.Value = Settings.Default.升级经验模块十六;
-        S_升级经验模块十七.Value = Settings.Default.升级经验模块十七;
-        S_升级经验模块十八.Value = Settings.Default.升级经验模块十八;
-        S_升级经验模块十九.Value = Settings.Default.升级经验模块十九;
-        S_升级经验模块二十.Value = Settings.Default.升级经验模块二十;
-        S_升级经验模块二十一.Value = Settings.Default.升级经验模块二十一;
-        S_升级经验模块二十二.Value = Settings.Default.升级经验模块二十二;
-        S_升级经验模块二十三.Value = Settings.Default.升级经验模块二十三;
-        S_升级经验模块二十四.Value = Settings.Default.升级经验模块二十四;
-        S_升级经验模块二十五.Value = Settings.Default.升级经验模块二十五;
-        S_升级经验模块二十六.Value = Settings.Default.升级经验模块二十六;
-        S_升级经验模块二十七.Value = Settings.Default.升级经验模块二十七;
-        S_升级经验模块二十八.Value = Settings.Default.升级经验模块二十八;
-        S_升级经验模块二十九.Value = Settings.Default.升级经验模块二十九;
-        S_升级经验模块三十.Value = Settings.Default.升级经验模块三十;
         S_高级祝福油幸运机率.Value = Settings.Default.高级祝福油幸运机率;
         S_雕爷使用物品.Value = Settings.Default.雕爷使用物品;
         S_雕爷使用金币.Value = Settings.Default.雕爷使用金币;
@@ -748,15 +720,14 @@ public partial class SMain : Form
         S_可摆摊等级.Value = Settings.Default.可摆摊等级;
         S_ReviveInterval.Value = Settings.Default.ReviveInterval;
         S_自定义麻痹几率.Value = (decimal)Settings.Default.自定义麻痹几率;
-        S_PetUpgradeXPLevel1.Value = Settings.Default.PetUpgradeXPLevel1;
-        S_PetUpgradeXPLevel2.Value = Settings.Default.PetUpgradeXPLevel2;
-        S_PetUpgradeXPLevel3.Value = Settings.Default.PetUpgradeXPLevel3;
-        S_PetUpgradeXPLevel4.Value = Settings.Default.PetUpgradeXPLevel4;
-        S_PetUpgradeXPLevel5.Value = Settings.Default.PetUpgradeXPLevel5;
-        S_PetUpgradeXPLevel6.Value = Settings.Default.PetUpgradeXPLevel6;
-        S_PetUpgradeXPLevel7.Value = Settings.Default.PetUpgradeXPLevel7;
-        S_PetUpgradeXPLevel8.Value = Settings.Default.PetUpgradeXPLevel8;
-        S_PetUpgradeXPLevel9.Value = Settings.Default.PetUpgradeXPLevel9;
+
+
+        index = (int)S_UpgradeXPLevel.Value;
+        S_UpgradeXP.Value = Settings.Default.UserUpgradeXP[index - 1];
+
+        index = (int)S_PetUpgradeXPLevel.Value;
+        S_PetUpgradeXP.Value = Settings.Default.PetUpgradeXP[index - 1];
+
         S_下马击落机率.Value = Settings.Default.下马击落机率;
         S_AllowRaceWarrior.Value = Settings.Default.AllowRaceWarrior;
         S_AllowRaceWizard.Value = Settings.Default.AllowRaceWizard;
@@ -1427,45 +1398,6 @@ public partial class SMain : Form
         S_直升物品8.Value = Settings.Default.直升物品8;
         S_直升物品9.Value = Settings.Default.直升物品9;
         S_充值模块格式.Value = Settings.Default.充值模块格式;
-        UpgradeXPLevel1.Value = Settings.Default.UpgradeXPLevel1;
-        UpgradeXPLevel2.Value = Settings.Default.UpgradeXPLevel2;
-        UpgradeXPLevel3.Value = Settings.Default.UpgradeXPLevel3;
-        UpgradeXPLevel4.Value = Settings.Default.UpgradeXPLevel4;
-        UpgradeXPLevel5.Value = Settings.Default.UpgradeXPLevel5;
-        UpgradeXPLevel6.Value = Settings.Default.UpgradeXPLevel6;
-        UpgradeXPLevel7.Value = Settings.Default.UpgradeXPLevel7;
-        UpgradeXPLevel8.Value = Settings.Default.UpgradeXPLevel8;
-        UpgradeXPLevel9.Value = Settings.Default.UpgradeXPLevel9;
-        UpgradeXPLevel10.Value = Settings.Default.UpgradeXPLevel10;
-        UpgradeXPLevel11.Value = Settings.Default.UpgradeXPLevel11;
-        UpgradeXPLevel12.Value = Settings.Default.UpgradeXPLevel12;
-        UpgradeXPLevel13.Value = Settings.Default.UpgradeXPLevel13;
-        UpgradeXPLevel14.Value = Settings.Default.UpgradeXPLevel14;
-        UpgradeXPLevel15.Value = Settings.Default.UpgradeXPLevel15;
-        UpgradeXPLevel16.Value = Settings.Default.UpgradeXPLevel16;
-        UpgradeXPLevel17.Value = Settings.Default.UpgradeXPLevel17;
-        UpgradeXPLevel18.Value = Settings.Default.UpgradeXPLevel18;
-        UpgradeXPLevel19.Value = Settings.Default.UpgradeXPLevel19;
-        UpgradeXPLevel20.Value = Settings.Default.UpgradeXPLevel20;
-        UpgradeXPLevel21.Value = Settings.Default.UpgradeXPLevel21;
-        UpgradeXPLevel22.Value = Settings.Default.UpgradeXPLevel22;
-        UpgradeXPLevel23.Value = Settings.Default.UpgradeXPLevel23;
-        UpgradeXPLevel24.Value = Settings.Default.UpgradeXPLevel24;
-        UpgradeXPLevel25.Value = Settings.Default.UpgradeXPLevel25;
-        UpgradeXPLevel26.Value = Settings.Default.UpgradeXPLevel26;
-        UpgradeXPLevel27.Value = Settings.Default.UpgradeXPLevel27;
-        UpgradeXPLevel28.Value = Settings.Default.UpgradeXPLevel28;
-        UpgradeXPLevel29.Value = Settings.Default.UpgradeXPLevel29;
-        UpgradeXPLevel30.Value = Settings.Default.UpgradeXPLevel30;
-        UpgradeXPLevel31.Value = Settings.Default.UpgradeXPLevel31;
-        UpgradeXPLevel32.Value = Settings.Default.UpgradeXPLevel32;
-        UpgradeXPLevel33.Value = Settings.Default.UpgradeXPLevel33;
-        UpgradeXPLevel34.Value = Settings.Default.UpgradeXPLevel34;
-        UpgradeXPLevel35.Value = Settings.Default.UpgradeXPLevel35;
-        UpgradeXPLevel36.Value = Settings.Default.UpgradeXPLevel36;
-        UpgradeXPLevel37.Value = Settings.Default.UpgradeXPLevel37;
-        UpgradeXPLevel38.Value = Settings.Default.UpgradeXPLevel38;
-        UpgradeXPLevel39.Value = Settings.Default.UpgradeXPLevel39;
         DefaultSkillLevel.Value = Settings.Default.DefaultSkillLevel;
         S_沃玛分解物品一.Text = Settings.Default.沃玛分解物品一;
         S_沃玛分解物品二.Text = Settings.Default.沃玛分解物品二;
@@ -1774,36 +1706,6 @@ public partial class SMain : Form
             case nameof(S_死亡掉落身上几率): Settings.Default.死亡掉落身上几率 = (float)control.Value; break;
             case nameof(S_PK死亡幸运开关): Settings.Default.PK死亡幸运开关 = (int)control.Value; break;
             case nameof(S_屠魔副本次数): Settings.Default.屠魔副本次数 = (int)control.Value; break;
-            case nameof(S_升级经验模块一): Settings.Default.升级经验模块一 = (int)control.Value; break;
-            case nameof(S_升级经验模块二): Settings.Default.升级经验模块二 = (int)control.Value; break;
-            case nameof(S_升级经验模块三): Settings.Default.升级经验模块三 = (int)control.Value; break;
-            case nameof(S_升级经验模块四): Settings.Default.升级经验模块四 = (int)control.Value; break;
-            case nameof(S_升级经验模块五): Settings.Default.升级经验模块五 = (int)control.Value; break;
-            case nameof(S_升级经验模块六): Settings.Default.升级经验模块六 = (int)control.Value; break;
-            case nameof(S_升级经验模块七): Settings.Default.升级经验模块七 = (int)control.Value; break;
-            case nameof(S_升级经验模块八): Settings.Default.升级经验模块八 = (int)control.Value; break;
-            case nameof(S_升级经验模块九): Settings.Default.升级经验模块九 = (int)control.Value; break;
-            case nameof(S_升级经验模块十): Settings.Default.升级经验模块十 = (int)control.Value; break;
-            case nameof(S_升级经验模块十一): Settings.Default.升级经验模块十一 = (int)control.Value; break;
-            case nameof(S_升级经验模块十二): Settings.Default.升级经验模块十二 = (int)control.Value; break;
-            case nameof(S_升级经验模块十三): Settings.Default.升级经验模块十三 = (int)control.Value; break;
-            case nameof(S_升级经验模块十四): Settings.Default.升级经验模块十四 = (int)control.Value; break;
-            case nameof(S_升级经验模块十五): Settings.Default.升级经验模块十五 = (int)control.Value; break;
-            case nameof(S_升级经验模块十六): Settings.Default.升级经验模块十六 = (int)control.Value; break;
-            case nameof(S_升级经验模块十七): Settings.Default.升级经验模块十七 = (int)control.Value; break;
-            case nameof(S_升级经验模块十八): Settings.Default.升级经验模块十八 = (int)control.Value; break;
-            case nameof(S_升级经验模块十九): Settings.Default.升级经验模块十九 = (int)control.Value; break;
-            case nameof(S_升级经验模块二十): Settings.Default.升级经验模块二十 = (int)control.Value; break;
-            case nameof(S_升级经验模块二十一): Settings.Default.升级经验模块二十一 = (int)control.Value; break;
-            case nameof(S_升级经验模块二十二): Settings.Default.升级经验模块二十二 = (int)control.Value; break;
-            case nameof(S_升级经验模块二十三): Settings.Default.升级经验模块二十三 = (int)control.Value; break;
-            case nameof(S_升级经验模块二十四): Settings.Default.升级经验模块二十四 = (int)control.Value; break;
-            case nameof(S_升级经验模块二十五): Settings.Default.升级经验模块二十五 = (int)control.Value; break;
-            case nameof(S_升级经验模块二十六): Settings.Default.升级经验模块二十六 = (int)control.Value; break;
-            case nameof(S_升级经验模块二十七): Settings.Default.升级经验模块二十七 = (int)control.Value; break;
-            case nameof(S_升级经验模块二十八): Settings.Default.升级经验模块二十八 = (int)control.Value; break;
-            case nameof(S_升级经验模块二十九): Settings.Default.升级经验模块二十九 = (int)control.Value; break;
-            case nameof(S_升级经验模块三十): Settings.Default.升级经验模块三十 = (int)control.Value; break;
             case nameof(S_高级祝福油幸运机率): Settings.Default.高级祝福油幸运机率 = (int)control.Value; break;
             case nameof(S_雕爷使用物品): Settings.Default.雕爷使用物品 = (int)control.Value; break;
             case nameof(S_雕爷使用金币): Settings.Default.雕爷使用金币 = (int)control.Value; break;
@@ -1850,15 +1752,33 @@ public partial class SMain : Form
             case nameof(S_可摆摊等级): Settings.Default.可摆摊等级 = (int)control.Value; break;
             case nameof(S_ReviveInterval): Settings.Default.ReviveInterval = (int)control.Value; break;
             case nameof(S_自定义麻痹几率): Settings.Default.自定义麻痹几率 = (float)control.Value; break;
-            case nameof(S_PetUpgradeXPLevel1): Settings.Default.PetUpgradeXPLevel1 = (ushort)control.Value; break;
-            case nameof(S_PetUpgradeXPLevel2): Settings.Default.PetUpgradeXPLevel2 = (ushort)control.Value; break;
-            case nameof(S_PetUpgradeXPLevel3): Settings.Default.PetUpgradeXPLevel3 = (ushort)control.Value; break;
-            case nameof(S_PetUpgradeXPLevel4): Settings.Default.PetUpgradeXPLevel4 = (ushort)control.Value; break;
-            case nameof(S_PetUpgradeXPLevel5): Settings.Default.PetUpgradeXPLevel5 = (ushort)control.Value; break;
-            case nameof(S_PetUpgradeXPLevel6): Settings.Default.PetUpgradeXPLevel6 = (ushort)control.Value; break;
-            case nameof(S_PetUpgradeXPLevel7): Settings.Default.PetUpgradeXPLevel7 = (ushort)control.Value; break;
-            case nameof(S_PetUpgradeXPLevel8): Settings.Default.PetUpgradeXPLevel8 = (ushort)control.Value; break;
-            case nameof(S_PetUpgradeXPLevel9): Settings.Default.PetUpgradeXPLevel9 = (ushort)control.Value; break;
+
+            case nameof(S_PetUpgradeXP):
+                {
+                    var index = (int)S_PetUpgradeXPLevel.Value;
+                    Settings.Default.PetUpgradeXP[index - 1] = (ushort)control.Value;
+                    break;
+                }
+            case nameof(S_PetUpgradeXPLevel):
+                {
+                    var index = (int)control.Value;
+                    S_PetUpgradeXP.Value = Settings.Default.PetUpgradeXP[index - 1];
+                    break;
+                }
+
+            case nameof(S_UpgradeXP):
+                {
+                    var index = (int)S_UpgradeXPLevel.Value;
+                    Settings.Default.UserUpgradeXP[index - 1] = (int)control.Value;
+                    break;
+                }
+            case nameof(S_UpgradeXPLevel):
+                {
+                    var index = (int)control.Value;
+                    S_UpgradeXP.Value = Settings.Default.UserUpgradeXP[index - 1];
+                    break;
+                }
+
             case nameof(S_下马击落机率): Settings.Default.下马击落机率 = (int)control.Value; break;
             case nameof(S_AllowRaceWarrior): Settings.Default.AllowRaceWarrior = (int)control.Value; break;
             case nameof(S_AllowRaceWizard): Settings.Default.AllowRaceWizard = (int)control.Value; break;
@@ -2477,45 +2397,6 @@ public partial class SMain : Form
             case nameof(S_直升经验8): Settings.Default.直升经验8 = (int)control.Value; break;
             case nameof(S_直升经验9): Settings.Default.直升经验9 = (int)control.Value; break;
             case nameof(S_充值模块格式): Settings.Default.充值模块格式 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel1): Settings.Default.UpgradeXPLevel1 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel2): Settings.Default.UpgradeXPLevel2 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel3): Settings.Default.UpgradeXPLevel3 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel4): Settings.Default.UpgradeXPLevel4 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel5): Settings.Default.UpgradeXPLevel5 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel6): Settings.Default.UpgradeXPLevel6 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel7): Settings.Default.UpgradeXPLevel7 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel8): Settings.Default.UpgradeXPLevel8 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel9): Settings.Default.UpgradeXPLevel9 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel10): Settings.Default.UpgradeXPLevel10 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel11): Settings.Default.UpgradeXPLevel11 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel12): Settings.Default.UpgradeXPLevel12 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel13): Settings.Default.UpgradeXPLevel13 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel14): Settings.Default.UpgradeXPLevel14 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel15): Settings.Default.UpgradeXPLevel15 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel16): Settings.Default.UpgradeXPLevel16 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel17): Settings.Default.UpgradeXPLevel17 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel18): Settings.Default.UpgradeXPLevel18 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel19): Settings.Default.UpgradeXPLevel19 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel20): Settings.Default.UpgradeXPLevel20 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel21): Settings.Default.UpgradeXPLevel21 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel22): Settings.Default.UpgradeXPLevel22 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel23): Settings.Default.UpgradeXPLevel23 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel24): Settings.Default.UpgradeXPLevel24 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel25): Settings.Default.UpgradeXPLevel25 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel26): Settings.Default.UpgradeXPLevel26 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel27): Settings.Default.UpgradeXPLevel27 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel28): Settings.Default.UpgradeXPLevel28 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel29): Settings.Default.UpgradeXPLevel29 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel30): Settings.Default.UpgradeXPLevel30 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel31): Settings.Default.UpgradeXPLevel31 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel32): Settings.Default.UpgradeXPLevel32 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel33): Settings.Default.UpgradeXPLevel33 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel34): Settings.Default.UpgradeXPLevel34 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel35): Settings.Default.UpgradeXPLevel35 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel36): Settings.Default.UpgradeXPLevel36 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel37): Settings.Default.UpgradeXPLevel37 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel38): Settings.Default.UpgradeXPLevel38 = (int)control.Value; break;
-            case nameof(UpgradeXPLevel39): Settings.Default.UpgradeXPLevel39 = (int)control.Value; break;
             case nameof(DefaultSkillLevel): Settings.Default.DefaultSkillLevel = (int)control.Value; break;
             case nameof(S_其他分解几率一): Settings.Default.其他分解几率一 = (int)control.Value; break;
             case nameof(S_其他分解几率二): Settings.Default.其他分解几率二 = (int)control.Value; break;

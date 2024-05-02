@@ -178,14 +178,9 @@ public sealed class PetObject : MapObject
     public int TargetSelecthInterval => 5000;
     public ushort PetID => MInfo.ID;
 
-    public ushort MaxExp
+    public ushort MaxExperience
     {
-        get
-        {
-            if (CharacterProgression.PetMaxExpTable?.Length > PetLevel)
-                return CharacterProgression.PetMaxExpTable[PetLevel];
-            return 10;
-        }
+        get { return PetLevel < Settings.Default.PetUpgradeXP.Length ? Settings.Default.PetUpgradeXP[PetLevel] : (ushort)10; }
     }
 
     public int MoveInterval => MInfo.MoveInterval;
@@ -560,7 +555,7 @@ public sealed class PetObject : MapObject
 
     public void GainExperience()
     {
-        if (PetLevel < PetMaxLevel && ++CurrentExp >= MaxExp)
+        if (PetLevel < PetMaxLevel && ++CurrentExp >= MaxExperience)
         {
             PetLevel++;
             CurrentExp = 0;

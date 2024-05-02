@@ -9,6 +9,20 @@ public class Settings
 {
     public static Settings Default = new Settings();
 
+    private static readonly JsonSerializerSettings JsonSettings;
+
+    static Settings()
+    {
+        JsonSettings = new JsonSerializerSettings
+        {
+            DefaultValueHandling = DefaultValueHandling.Ignore,
+            NullValueHandling = NullValueHandling.Ignore,
+            ObjectCreationHandling = ObjectCreationHandling.Replace,
+            TypeNameHandling = TypeNameHandling.Auto,
+            Formatting = Formatting.Indented
+        };
+    }
+
 
     [JsonIgnore]
     public const string SettingFile = "!Settings.txt";
@@ -71,75 +85,111 @@ public class Settings
     public float 死亡掉落背包几率 = 0.01F;
     public float 死亡掉落身上几率 = 0.01F;
     public int PK死亡幸运开关 = 1;
-    public int 升级经验模块一 = 20_000_000;
-    public int 升级经验模块二 = 40_000_000;
-    public int 升级经验模块三 = 80_000_000;
-    public int 升级经验模块四 = 160_000_000;
-    public int 升级经验模块五 = 320_000_000;
-    public int 升级经验模块六 = 640_000_000;
-    public int 升级经验模块七 = 1_280_000_000;
-    public int 升级经验模块八 = 2_000_000_000;
-    public int 升级经验模块九 = 2_000_000_000;
-    public int 升级经验模块十 = 2_000_000_000;
-    public int 升级经验模块十一 = 2_000_000_000;
-    public int 升级经验模块十二 = 2_000_000_000;
-    public int 升级经验模块十三 = 2_000_000_000;
-    public int 升级经验模块十四 = 2_000_000_000;
-    public int 升级经验模块十五 = 2_000_000_000;
-    public int 升级经验模块十六 = 2_000_000_000;
-    public int 升级经验模块十七 = 2_000_000_000;
-    public int 升级经验模块十八 = 2_000_000_000;
-    public int 升级经验模块十九 = 2_000_000_000;
-    public int 升级经验模块二十 = 2_000_000_000;
-    public int 升级经验模块二十一 = 2_000_000_000;
-    public int 升级经验模块二十二 = 2_000_000_000;
-    public int 升级经验模块二十三 = 2_000_000_000;
-    public int 升级经验模块二十四 = 2_000_000_000;
-    public int 升级经验模块二十五 = 2_000_000_000;
-    public int 升级经验模块二十六 = 2_000_000_000;
-    public int 升级经验模块二十七 = 2_000_000_000;
-    public int 升级经验模块二十八 = 2_000_000_000;
-    public int 升级经验模块二十九 = 2_000_000_000;
-    public int 升级经验模块三十 = 2_000_000_000;
-    public int UpgradeXPLevel1 = 100;
-    public int UpgradeXPLevel2 = 200;
-    public int UpgradeXPLevel3 = 300;
-    public int UpgradeXPLevel4 = 400;
-    public int UpgradeXPLevel5 = 600;
-    public int UpgradeXPLevel6 = 900;
-    public int UpgradeXPLevel7 = 1_200;
-    public int UpgradeXPLevel8 = 1_700;
-    public int UpgradeXPLevel9 = 2_500;
-    public int UpgradeXPLevel10 = 6_000;
-    public int UpgradeXPLevel11 = 8_000;
-    public int UpgradeXPLevel12 = 10_000;
-    public int UpgradeXPLevel13 = 15_000;
-    public int UpgradeXPLevel14 = 30_000;
-    public int UpgradeXPLevel15 = 40_000;
-    public int UpgradeXPLevel16 = 50_000;
-    public int UpgradeXPLevel17 = 70_000;
-    public int UpgradeXPLevel18 = 100_000;
-    public int UpgradeXPLevel19 = 120_000;
-    public int UpgradeXPLevel20 = 140_000;
-    public int UpgradeXPLevel21 = 250_000;
-    public int UpgradeXPLevel22 = 300_000;
-    public int UpgradeXPLevel23 = 350_000;
-    public int UpgradeXPLevel24 = 400_000;
-    public int UpgradeXPLevel25 = 500_000;
-    public int UpgradeXPLevel26 = 700_000;
-    public int UpgradeXPLevel27 = 1_000_000;
-    public int UpgradeXPLevel28 = 1_400_000;
-    public int UpgradeXPLevel29 = 1_800_000;
-    public int UpgradeXPLevel30 = 2_000_000;
-    public int UpgradeXPLevel31 = 2_400_000;
-    public int UpgradeXPLevel32 = 2_800_000;
-    public int UpgradeXPLevel33 = 3_200_000;
-    public int UpgradeXPLevel34 = 3_600_000;
-    public int UpgradeXPLevel35 = 4_000_000;
-    public int UpgradeXPLevel36 = 4_800_000;
-    public int UpgradeXPLevel37 = 5_600_000;
-    public int UpgradeXPLevel38 = 8_200_000;
-    public int UpgradeXPLevel39 = 9_000_000;
+
+    public int[] UserUpgradeXP = new int[100]
+    {
+        100,
+        200,
+        300,
+        400,
+        600,
+        900,
+        1_200,
+        1_700,
+        2_500,
+        6_000,
+        8_000,
+        10_000,
+        15_000,
+        30_000,
+        40_000,
+        50_000,
+        70_000,
+        100_000,
+        120_000,
+        140_000,
+        250_000,
+        300_000,
+        350_000,
+        400_000,
+        500_000,
+        700_000,
+        1_000_000,
+        1_400_000,
+        1_800_000,
+        2_000_000,
+        2_400_000,
+        2_800_000,
+        3_200_000,
+        3_600_000,
+        4_000_000,
+        4_800_000,
+        5_600_000,
+        8_200_000,
+        9_000_000,
+        12_000_000,
+        16_000_000,
+        30_000_000,
+        50_000_000,
+        80_000_000,
+        120_000_000,
+        280_000_000,
+        360_000_000,
+        400_000_000,
+        420_000_000,
+        430_000_000,
+        440_000_000,
+        460_000_000,
+        480_000_000,
+        500_000_000,
+        520_000_000,
+        550_000_000,
+        600_000_000,
+        700_000_000,
+        800_000_000,
+        900_000_000,
+        1_200_000_000,
+        1_200_000_000,
+        1_200_000_000,
+        1_200_000_000,
+        1_200_000_000,
+        1_800_000_000,
+        1_800_000_000,
+        1_800_000_000,
+        1_800_000_000,
+        1_800_000_000,
+        2_000_000_000,
+        2_000_000_000,
+        2_000_000_000,
+        2_000_000_000,
+        2_000_000_000,
+        2_100_000_000,
+        2_100_000_000,
+        2_100_000_000,
+        2_100_000_000,
+        2_100_000_000,
+        2_100_000_000,
+        2_100_000_000,
+        2_100_000_000,
+        2_100_000_000,
+        2_100_000_000,
+        2_100_000_000,
+        2_100_000_000,
+        2_100_000_000,
+        2_100_000_000,
+        2_100_000_000,
+        2_100_000_000,
+        2_100_000_000,
+        2_100_000_000,
+        2_100_000_000,
+        2_100_000_000,
+        2_100_000_000,
+        2_100_000_000,
+        2_100_000_000,
+        2_100_000_000,
+        2_100_000_000
+    };
+
     public int 高级祝福油幸运机率 = 80;
     public int 雕爷使用物品 = 90235;
     public int 雕爷使用金币 = 10000;
@@ -187,15 +237,10 @@ public class Settings
     public int 可摆摊等级 = 7;
     public int ReviveInterval = 60;
     public float 自定义麻痹几率 = 0.01F;
-    public ushort PetUpgradeXPLevel1 = 5;
-    public ushort PetUpgradeXPLevel2 = 10;
-    public ushort PetUpgradeXPLevel3 = 15;
-    public ushort PetUpgradeXPLevel4 = 20;
-    public ushort PetUpgradeXPLevel5 = 25;
-    public ushort PetUpgradeXPLevel6 = 30;
-    public ushort PetUpgradeXPLevel7 = 35;
-    public ushort PetUpgradeXPLevel8 = 40;
-    public ushort PetUpgradeXPLevel9 = 45;
+    public ushort[] PetUpgradeXP =
+    {
+        5, 10, 15, 20, 25, 30, 35, 40, 45
+    };
     public int 下马击落机率 = 100;
     public int AllowRaceWarrior = 1;
     public int AllowRaceWizard = 1;
@@ -1028,28 +1073,12 @@ public class Settings
             return;
 
         var json = File.ReadAllText(SettingFile);
-        var settings = new JsonSerializerSettings
-        {
-            DefaultValueHandling = DefaultValueHandling.Ignore,
-            NullValueHandling = NullValueHandling.Ignore,
-            TypeNameHandling = TypeNameHandling.Auto,
-            Formatting = Formatting.Indented
-        };
-
-        Default = JsonConvert.DeserializeObject<Settings>(json, settings);
+        Default = JsonConvert.DeserializeObject<Settings>(json, JsonSettings);
     }
 
     public void Save()
     {
-        var settings = new JsonSerializerSettings
-        {
-            DefaultValueHandling = DefaultValueHandling.Ignore,
-            NullValueHandling = NullValueHandling.Ignore,
-            TypeNameHandling = TypeNameHandling.None,
-            Formatting = Formatting.Indented
-        };
-
-        var json = JsonConvert.SerializeObject(Default, settings);
+        var json = JsonConvert.SerializeObject(Default, JsonSettings);
         File.WriteAllText(SettingFile, json);
     }
 }
