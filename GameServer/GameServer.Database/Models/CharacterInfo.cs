@@ -37,6 +37,8 @@ public sealed class CharacterInfo : DBObject
 
     public readonly DataMonitor<int> 分解经验;
 
+    public readonly DataMonitor<UserDegree> Degree;
+
     public readonly DataMonitor<GameObjectRace> Job;
     public readonly DataMonitor<GameObjectGender> Gender;
     public readonly DataMonitor<ObjectHairStyle> HairStyle;
@@ -306,6 +308,12 @@ public sealed class CharacterInfo : DBObject
     public readonly DataMonitor<bool> AutoPickUpAllVisible;
 
     public int ID => Index.V;
+
+    public UserDegree CurrentDegree
+    {
+        get { return Degree.V; }
+        set { Degree.V = value; }
+    }
 
     public int CurrentExperience
     {
