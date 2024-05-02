@@ -89,7 +89,7 @@ public sealed class TeamInfo : DBObject
         writer.Seek(36, SeekOrigin.Begin);
         writer.Write((byte)member.Gender.V);
         writer.Write((byte)member.Job.V);
-        writer.Write((byte)((member.Connection == null) ? 3u : 0u));
+        writer.Write((byte)((!member.Connected) ? 3u : 0u));
         return ms.ToArray();
     }
 }
