@@ -24,30 +24,45 @@ If it is WAN: `<public_ip>`
 
 We will have to create a file in the root of the account server called "!ServerInfo" in which we will include a list of the GS that we will have raised, by default we will only have one, so we will have something like the following:
 
-If it is locally: 
-`
+<details>
+  <summary>If it is locally:</summary>
+
 [
   {
+  
     "ServerName": "LOMCN",
+  
     "TicketAddressIP": "127.0.0.1",
+    
     "TicketAddressPort": 6678,
+    
     "PublicAddressIP": "127.0.0.1",
+    
     "PublicAddressPort": 8701
   }
 ]
-`
-If it is WAN: 
-`
+
+  </details>
+  
+  <details>
+  <summary>If it is WAN:</summary>
+
 [
   {
+    
     "ServerName": "LOMCN",
+    
     "TicketAddressIP": "127.0.0.1",
+    
     "TicketAddressPort": 6678,
+    
     "PublicAddressIP": "public_ip",
+    
     "PublicAddressPort": 8701
   }
 ]
-`
+
+  </details>
 
 ### Game Server Configuration
 
