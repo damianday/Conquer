@@ -42,10 +42,7 @@ public sealed class AccountInfo : DBObject
         Connection.SendPacket(p);
     }
 
-    public override string ToString()
-    {
-        return AccountName?.V;
-    }
+    public override string ToString() => AccountName?.V;
 
     public byte[] 角色列表描述()
     {
