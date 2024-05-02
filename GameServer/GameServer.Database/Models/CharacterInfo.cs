@@ -89,7 +89,7 @@ public sealed class CharacterInfo : DBObject
 
     public readonly DataMonitor<ushort> 装备套装编号;
 
-    public readonly DictionaryMonitor<byte, int> 历史排名;
+    public readonly DictionaryMonitor<byte, int> PreviousRanking;
     public readonly DictionaryMonitor<byte, int> CurrentRanking;
 
     public readonly DictionaryMonitor<byte, DateTime> Titles;
@@ -111,21 +111,14 @@ public sealed class CharacterInfo : DBObject
     public readonly HashMonitor<MailInfo> UnreadMail;
 
     public readonly DataMonitor<byte> 预定特权;
-
     public readonly DataMonitor<byte> 本期特权;
-
     public readonly DataMonitor<byte> 上期特权;
-
     public readonly DataMonitor<uint> 本期记录;
-
     public readonly DataMonitor<uint> 上期记录;
 
     public readonly DataMonitor<DateTime> 本期日期;
-
     public readonly DataMonitor<DateTime> 上期日期;
-
     public readonly DataMonitor<DateTime> 补给日期;
-
     public readonly DataMonitor<DateTime> 战备日期;
 
     public readonly DictionaryMonitor<byte, int> RemainingPrivileges;
@@ -143,341 +136,173 @@ public sealed class CharacterInfo : DBObject
     public readonly HashMonitor<CharacterInfo> BlackList;
 
     public readonly DataMonitor<uint> CurrentMount;
-
     public readonly ListMonitor<uint> Mounts;
-
     public readonly ListMonitor<uint> 坐骑技能槽;
-
     public readonly DataMonitor<bool> AwakeningExpEnabled;
-
     public readonly DataMonitor<int> AwakeningExp;
-
     public readonly DataMonitor<DateTime> 屠魔大厅;
-
     public readonly DataMonitor<DateTime> 屠魔兑换;
-
     public readonly DataMonitor<int> 分解极品设置;
-
     public readonly DataMonitor<int> 分解套装设置;
-
     public readonly DataMonitor<int> 屠魔次数;
-
     public readonly DataMonitor<int> 九层妖塔次数;
-
     public readonly DataMonitor<int> 铭文洗练次数1;
-
     public readonly DataMonitor<int> 铭文洗练次数2;
-
     public readonly DataMonitor<int> 铭文洗练次数3;
-
     public readonly DataMonitor<int> 屠魔令回收数量;
-
     public readonly DataMonitor<int> 魔虫窟次数;
-
     public readonly DataMonitor<int> 祖玛套装件数;
-
     public readonly DataMonitor<int> 祖玛套装件头盔数;
-
     public readonly DataMonitor<int> 祖玛套装件项链数;
-
     public readonly DataMonitor<int> 祖玛套装件左戒指数;
-
     public readonly DataMonitor<int> 祖玛套装件右戒指数;
-
     public readonly DataMonitor<int> 祖玛套装件左手镯数;
-
     public readonly DataMonitor<int> 祖玛套装件右手镯数;
-
     public readonly DataMonitor<int> 祖玛套装件武器数;
-
     public readonly DataMonitor<int> 祖玛套装件衣服数;
-
     public readonly DataMonitor<int> 赤月套装件数;
-
     public readonly DataMonitor<int> 赤月套装件头盔数;
-
     public readonly DataMonitor<int> 赤月套装件项链数;
-
     public readonly DataMonitor<int> 赤月套装件左戒指数;
-
     public readonly DataMonitor<int> 赤月套装件右戒指数;
-
     public readonly DataMonitor<int> 赤月套装件左手镯数;
-
     public readonly DataMonitor<int> 赤月套装件右手镯数;
-
     public readonly DataMonitor<int> 赤月套装件武器数;
-
     public readonly DataMonitor<int> 赤月套装件衣服数;
-
     public readonly DataMonitor<int> 魔龙套装件数;
-
     public readonly DataMonitor<int> 魔龙套装件头盔数;
-
     public readonly DataMonitor<int> 魔龙套装件项链数;
-
     public readonly DataMonitor<int> 魔龙套装件左戒指数;
-
     public readonly DataMonitor<int> 魔龙套装件右戒指数;
-
     public readonly DataMonitor<int> 魔龙套装件左手镯数;
-
     public readonly DataMonitor<int> 魔龙套装件右手镯数;
-
     public readonly DataMonitor<int> 魔龙套装件武器数;
-
     public readonly DataMonitor<int> 魔龙套装件衣服数;
-
     public readonly DataMonitor<int> 苍月套装件数;
-
     public readonly DataMonitor<int> 苍月套装件头盔数;
-
     public readonly DataMonitor<int> 苍月套装件项链数;
-
     public readonly DataMonitor<int> 苍月套装件左戒指数;
-
     public readonly DataMonitor<int> 苍月套装件右戒指数;
-
     public readonly DataMonitor<int> 苍月套装件左手镯数;
-
     public readonly DataMonitor<int> 苍月套装件右手镯数;
-
     public readonly DataMonitor<int> 苍月套装件武器数;
-
     public readonly DataMonitor<int> 苍月套装件衣服数;
-
     public readonly DataMonitor<int> 星王套装件数;
-
     public readonly DataMonitor<int> 星王套装件头盔数;
-
     public readonly DataMonitor<int> 星王套装件项链数;
-
     public readonly DataMonitor<int> 星王套装件左戒指数;
-
     public readonly DataMonitor<int> 星王套装件右戒指数;
-
     public readonly DataMonitor<int> 星王套装件左手镯数;
-
     public readonly DataMonitor<int> 星王套装件右手镯数;
-
     public readonly DataMonitor<int> 星王套装件武器数;
-
     public readonly DataMonitor<int> 星王套装件衣服数;
-
     public readonly DataMonitor<int> 特殊1套装件数;
-
     public readonly DataMonitor<int> 特殊1套装件头盔数;
-
     public readonly DataMonitor<int> 特殊1套装件项链数;
-
     public readonly DataMonitor<int> 特殊1套装件左戒指数;
-
     public readonly DataMonitor<int> 特殊1套装件右戒指数;
-
     public readonly DataMonitor<int> 特殊1套装件左手镯数;
-
     public readonly DataMonitor<int> 特殊1套装件右手镯数;
-
     public readonly DataMonitor<int> 特殊1套装件武器数;
-
     public readonly DataMonitor<int> 特殊1套装件衣服数;
-
     public readonly DataMonitor<int> 特殊2套装件数;
-
     public readonly DataMonitor<int> 特殊2套装件头盔数;
-
     public readonly DataMonitor<int> 特殊2套装件项链数;
-
     public readonly DataMonitor<int> 特殊2套装件左戒指数;
-
     public readonly DataMonitor<int> 特殊2套装件右戒指数;
-
     public readonly DataMonitor<int> 特殊2套装件左手镯数;
-
     public readonly DataMonitor<int> 特殊2套装件右手镯数;
-
     public readonly DataMonitor<int> 特殊2套装件武器数;
-
     public readonly DataMonitor<int> 特殊2套装件衣服数;
-
     public readonly DataMonitor<int> 特殊3套装件数;
-
     public readonly DataMonitor<int> 特殊3套装件头盔数;
-
     public readonly DataMonitor<int> 特殊3套装件项链数;
-
     public readonly DataMonitor<int> 特殊3套装件左戒指数;
-
     public readonly DataMonitor<int> 特殊3套装件右戒指数;
-
     public readonly DataMonitor<int> 特殊3套装件左手镯数;
-
     public readonly DataMonitor<int> 特殊3套装件右手镯数;
-
     public readonly DataMonitor<int> 特殊3套装件武器数;
-
     public readonly DataMonitor<int> 特殊3套装件衣服数;
-
     public readonly DataMonitor<int> 通用套装1件数;
-
     public readonly DataMonitor<int> 通用套装1件头盔数;
-
     public readonly DataMonitor<int> 通用套装1件项链数;
-
     public readonly DataMonitor<int> 通用套装1件左戒指数;
-
     public readonly DataMonitor<int> 通用套装1件右戒指数;
-
     public readonly DataMonitor<int> 通用套装1件左手镯数;
-
     public readonly DataMonitor<int> 通用套装1件右手镯数;
-
     public readonly DataMonitor<int> 通用套装1件武器数;
-
     public readonly DataMonitor<int> 通用套装1件衣服数;
-
     public readonly DataMonitor<int> 通用套装2件数;
-
     public readonly DataMonitor<int> 通用套装2件头盔数;
-
     public readonly DataMonitor<int> 通用套装2件项链数;
-
     public readonly DataMonitor<int> 通用套装2件左戒指数;
-
     public readonly DataMonitor<int> 通用套装2件右戒指数;
-
     public readonly DataMonitor<int> 通用套装2件左手镯数;
-
     public readonly DataMonitor<int> 通用套装2件右手镯数;
-
     public readonly DataMonitor<int> 通用套装2件武器数;
-
     public readonly DataMonitor<int> 通用套装2件衣服数;
-
     public readonly DataMonitor<int> 通用套装3件数;
-
     public readonly DataMonitor<int> 通用套装3件头盔数;
-
     public readonly DataMonitor<int> 通用套装3件项链数;
-
     public readonly DataMonitor<int> 通用套装3件左戒指数;
-
     public readonly DataMonitor<int> 通用套装3件右戒指数;
-
     public readonly DataMonitor<int> 通用套装3件左手镯数;
-
     public readonly DataMonitor<int> 通用套装3件右手镯数;
-
     public readonly DataMonitor<int> 通用套装3件武器数;
-
     public readonly DataMonitor<int> 通用套装3件衣服数;
-
     public readonly DataMonitor<int> 通用套装4件数;
-
     public readonly DataMonitor<int> 通用套装4件头盔数;
-
     public readonly DataMonitor<int> 通用套装4件项链数;
-
     public readonly DataMonitor<int> 通用套装4件左戒指数;
-
     public readonly DataMonitor<int> 通用套装4件右戒指数;
-
     public readonly DataMonitor<int> 通用套装4件左手镯数;
-
     public readonly DataMonitor<int> 通用套装4件右手镯数;
-
     public readonly DataMonitor<int> 通用套装4件武器数;
-
     public readonly DataMonitor<int> 通用套装4件衣服数;
-
     public readonly DataMonitor<int> 通用套装5件数;
-
     public readonly DataMonitor<int> 通用套装5件头盔数;
-
     public readonly DataMonitor<int> 通用套装5件项链数;
-
     public readonly DataMonitor<int> 通用套装5件左戒指数;
-
     public readonly DataMonitor<int> 通用套装5件右戒指数;
-
     public readonly DataMonitor<int> 通用套装5件左手镯数;
-
     public readonly DataMonitor<int> 通用套装5件右手镯数;
-
     public readonly DataMonitor<int> 通用套装5件武器数;
-
     public readonly DataMonitor<int> 通用套装5件衣服数;
-
     public readonly DataMonitor<int> 通用套装6件数;
-
     public readonly DataMonitor<int> 通用套装6件头盔数;
-
     public readonly DataMonitor<int> 通用套装6件项链数;
-
     public readonly DataMonitor<int> 通用套装6件左戒指数;
-
     public readonly DataMonitor<int> 通用套装6件右戒指数;
-
     public readonly DataMonitor<int> 通用套装6件左手镯数;
-
     public readonly DataMonitor<int> 通用套装6件右手镯数;
-
     public readonly DataMonitor<int> 通用套装6件武器数;
-
     public readonly DataMonitor<int> 通用套装6件衣服数;
-
     public readonly DataMonitor<int> 幸运项链保底;
-
     public readonly DataMonitor<int> MonsterKillCount;
-
     public readonly DataMonitor<int> 升级直升变量;
-
     public readonly DataMonitor<int> VIPLevel;
-
     public readonly DataMonitor<int> 物理抗性变量;
-
     public readonly DataMonitor<int> 魔法抗性变量;
-
     public readonly DataMonitor<int> 物理伤害变量;
-
     public readonly DataMonitor<int> 魔法伤害变量;
-
     public readonly DataMonitor<int> 拉镖护送次数;
-
     public readonly DataMonitor<int> 百层塔层数;
-
     public readonly DataMonitor<int> 百层塔次数;
-
     public readonly DataMonitor<int> 保底参数1;
-
     public readonly DataMonitor<int> 保底参数2;
-
     public readonly DataMonitor<int> 保底参数3;
-
     public readonly DataMonitor<int> 保底参数4;
-
     public readonly DataMonitor<int> 保底参数5;
-
     public readonly DataMonitor<int> 保底参数6;
-
     public readonly DataMonitor<int> 保底参数7;
-
     public readonly DataMonitor<int> 保底参数8;
-
     public readonly DataMonitor<int> 保底参数9;
-
     public readonly DataMonitor<int> 保底参数10;
-
     public readonly DataMonitor<int> 激活标识;
-
     public readonly DataMonitor<int> VIPPoints;
-
     public readonly DataMonitor<int> 当前角色物理回击;
-
     public readonly DataMonitor<int> 当前角色魔法回击;
-
     public readonly DataMonitor<int> 地图分配线路;
-
     public readonly DataMonitor<bool> AutoPickUpAllVisible;
 
     public int ID => Index.V;
@@ -639,7 +464,7 @@ public sealed class CharacterInfo : DBObject
 
     public SConnection Connection { get; set; }
 
-    public bool Online => Connection != null;
+    public bool Connected => Connection != null;
 
     public void Enqueue(GamePacket packet)
     {
@@ -861,7 +686,7 @@ public sealed class CharacterInfo : DBObject
         };
         Account.V.BlockDate.Changed += delegate (DateTime O)
         {
-            SMain.UpdateCharacter(this, "账号封禁", (O != default(DateTime)) ? ((object)O) : null);
+            SMain.UpdateCharacter(this, "账号封禁", (O != default(DateTime)) ? O : null);
         };
         UserName.Changed += delegate (string O)
         {
@@ -869,23 +694,23 @@ public sealed class CharacterInfo : DBObject
         };
         BlockDate.Changed += delegate (DateTime O)
         {
-            SMain.UpdateCharacter(this, "角色封禁", (O != default(DateTime)) ? ((object)O) : null);
+            SMain.UpdateCharacter(this, "角色封禁", (O != default(DateTime)) ? O : null);
         };
         FrozenDate.Changed += delegate (DateTime O)
         {
-            SMain.UpdateCharacter(this, "冻结日期", (O != default(DateTime)) ? ((object)O) : null);
+            SMain.UpdateCharacter(this, "冻结日期", (O != default(DateTime)) ? O : null);
         };
         DeletetionDate.Changed += delegate (DateTime O)
         {
-            SMain.UpdateCharacter(this, "删除日期", (O != default(DateTime)) ? ((object)O) : null);
+            SMain.UpdateCharacter(this, "删除日期", (O != default(DateTime)) ? O : null);
         };
         LoginDate.Changed += delegate (DateTime O)
         {
-            SMain.UpdateCharacter(this, "登录日期", (O != default(DateTime)) ? ((object)O) : null);
+            SMain.UpdateCharacter(this, "登录日期", (O != default(DateTime)) ? O : null);
         };
         DisconnectDate.Changed += delegate (DateTime O)
         {
-            SMain.UpdateCharacter(this, "离线日期", (Connection == null) ? ((object)O) : null);
+            SMain.UpdateCharacter(this, "离线日期", !Connected ? O : null);
         };
         IPAddress.Changed += delegate (string O)
         {
