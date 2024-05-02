@@ -491,7 +491,7 @@ public static class Session
             }
             foreach (KeyValuePair<int, DBObject> item11 in dictionary[typeof(CharacterInfo)].DataSheet)
             {
-                ((CharacterInfo)item11.Value).历史排名.Clear();
+                ((CharacterInfo)item11.Value).PreviousRanking.Clear();
                 ((CharacterInfo)item11.Value).CurrentRanking.Clear();
             }
 
