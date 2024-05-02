@@ -26,7 +26,7 @@ We will have to create a file in the root of the account server called "!ServerI
 
 <details>
   <summary>If it is locally:</summary>
-`
+
 [
   {
   
@@ -41,13 +41,13 @@ We will have to create a file in the root of the account server called "!ServerI
     "PublicAddressPort": 8701
   }
 ]
-`
+
   </details>
   
   <details>
   <summary>If it is WAN:</summary>
 If it is WAN: 
-`
+
 [
   {
     
@@ -62,7 +62,7 @@ If it is WAN:
     "PublicAddressPort": 8701
   }
 ]
-`
+
   </details>
 
 ### Game Server Configuration
