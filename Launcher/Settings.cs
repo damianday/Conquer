@@ -7,6 +7,20 @@ using System.Reflection;
 
 public class Settings
 {
+    private static readonly JsonSerializerSettings JsonSettings;
+
+    static Settings()
+    {
+        JsonSettings = new JsonSerializerSettings
+        {
+            DefaultValueHandling = DefaultValueHandling.Ignore,
+            NullValueHandling = NullValueHandling.Ignore,
+            ObjectCreationHandling = ObjectCreationHandling.Replace,
+            TypeNameHandling = TypeNameHandling.Auto,
+            Formatting = Formatting.Indented
+        };
+    }
+
     [JsonIgnore]
     public const string SettingFile = "!Settings.txt";
 
@@ -22,15 +36,8 @@ public class Settings
             return;
 
         var json = File.ReadAllText(SettingFile);
-        var settings = new JsonSerializerSettings
-        {
-            DefaultValueHandling = DefaultValueHandling.Ignore,
-            NullValueHandling = NullValueHandling.Ignore,
-            TypeNameHandling = TypeNameHandling.Auto,
-            Formatting = Formatting.Indented
-        };
 
-        var source = JsonConvert.DeserializeObject<JToken>(json, settings);
+        var source = JsonConvert.DeserializeObject<JToken>(json, JsonSettings);
         var destinationProperties = typeof(Settings).GetFields(BindingFlags.Public | BindingFlags.Static);
         foreach (JProperty prop in source)
         {
@@ -47,19 +54,11 @@ public class Settings
 
     public static void Save()
     {
-        var settings = new JsonSerializerSettings
-        {
-            DefaultValueHandling = DefaultValueHandling.Ignore,
-            NullValueHandling = NullValueHandling.Ignore,
-            TypeNameHandling = TypeNameHandling.None,
-            Formatting = Formatting.Indented
-        };
-
         var myType = typeof(Settings);
         var TypeBlob = myType.GetFields()
             .Where(x => !(x.IsLiteral && !x.IsInitOnly))
             .ToDictionary(x => x.Name, x => x.GetValue(null));
-        var json = JsonConvert.SerializeObject(TypeBlob, settings);
+        var json = JsonConvert.SerializeObject(TypeBlob, JsonSettings);
         File.WriteAllText(SettingFile, json);
     }
 }
