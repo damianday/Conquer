@@ -29,6 +29,7 @@ We will have to create a file in the root of the account server called "!ServerI
 `
 [
   {
+  
     "ServerName": "LOMCN",
   
     "TicketAddressIP": "127.0.0.1",
@@ -49,6 +50,7 @@ If it is WAN:
 `
 [
   {
+    
     "ServerName": "LOMCN",
     
     "TicketAddressIP": "127.0.0.1",
