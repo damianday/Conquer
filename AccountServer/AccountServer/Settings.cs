@@ -6,6 +6,20 @@ public class Settings
 {
     public static Settings Default = new Settings();
 
+    private static readonly JsonSerializerSettings JsonSettings;
+
+    static Settings()
+    {
+        JsonSettings = new JsonSerializerSettings
+        {
+            DefaultValueHandling = DefaultValueHandling.Ignore,
+            NullValueHandling = NullValueHandling.Ignore,
+            ObjectCreationHandling = ObjectCreationHandling.Replace,
+            TypeNameHandling = TypeNameHandling.Auto,
+            Formatting = Formatting.Indented
+        };
+    }
+
     [JsonIgnore]
     public const string SettingFile = "!Settings.txt";
 
@@ -19,28 +33,12 @@ public class Settings
             return;
 
         var json = File.ReadAllText(SettingFile);
-        var settings = new JsonSerializerSettings
-        {
-            DefaultValueHandling = DefaultValueHandling.Ignore,
-            NullValueHandling = NullValueHandling.Ignore,
-            TypeNameHandling = TypeNameHandling.Auto,
-            Formatting = Formatting.Indented
-        };
-
-        Default = JsonConvert.DeserializeObject<Settings>(json, settings);
+        Default = JsonConvert.DeserializeObject<Settings>(json, JsonSettings);
     }
 
     public void Save()
     {
-        var settings = new JsonSerializerSettings
-        {
-            DefaultValueHandling = DefaultValueHandling.Ignore,
-            NullValueHandling = NullValueHandling.Ignore,
-            TypeNameHandling = TypeNameHandling.None,
-            Formatting = Formatting.Indented
-        };
-
-        var json = JsonConvert.SerializeObject(Default, settings);
+        var json = JsonConvert.SerializeObject(Default, JsonSettings);
         File.WriteAllText(SettingFile, json);
     }
 }
