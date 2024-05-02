@@ -13164,7 +13164,7 @@ public sealed class PlayerObject : MapObject
                                 ObjectID = CurrentNPC.ObjectID
                             });
                         }
-                        else if (Team.Members.FirstOrDefault((CharacterInfo O) => O.Connection == null || !MapManager.Objects.TryGetValue(O.ID, out value3) || !CurrentNPC.Neighbors.Contains(value3)) != null)
+                        else if (Team.Members.FirstOrDefault((CharacterInfo O) => !O.Connected || !MapManager.Objects.TryGetValue(O.ID, out value3) || !CurrentNPC.Neighbors.Contains(value3)) != null)
                         {
                             CurrentNPCDialoguePage = 624203000;
                             Enqueue(new 同步交互结果
@@ -25181,7 +25181,7 @@ public sealed class PlayerObject : MapObject
                 {
                     if (Session.CharacterInfoTable.DataSheet.TryGetValue(param2, out var value) && value is CharacterInfo character)
                     {
-                        if (ObjectID == character.ID || this.Character.BlackList.Contains(this.Character) || !character.Online)
+                        if (ObjectID == character.ID || this.Character.BlackList.Contains(this.Character) || !character.Connected)
                         {
                             break;
                         }
@@ -25236,11 +25236,12 @@ public sealed class PlayerObject : MapObject
         byte[] array = data.Skip(4).ToArray();
         if (Session.CharacterInfoTable.DataSheet.TryGetValue(key, out var value) && value is CharacterInfo character && FriendList.Contains(character))
         {
-            if (character.Connection == null)
+            if (!character.Connected)
             {
                 Enqueue(new SocialErrorPacket { ErrorCode = 5124 });
                 return;
             }
+
             byte[] 字节数据 = null;
             using (MemoryStream memoryStream = new MemoryStream())
             {
@@ -25312,7 +25313,7 @@ public sealed class PlayerObject : MapObject
                     Name = character.UserName.V,
                     Job = (byte)character.Job.V,
                     Gender = (byte)character.Gender.V,
-                    上线下线 = (byte)((character.Connection == null) ? 3u : 0u)
+                    上线下线 = (byte)((!character.Connected) ? 3u : 0u)
                 });
                 if (粉丝列表.Contains(character) || character.偶像列表.Contains(this.Character))
                 {
@@ -25365,7 +25366,7 @@ public sealed class PlayerObject : MapObject
                 Name = 角色数据2.UserName.V,
                 Job = (byte)角色数据2.Job.V,
                 Gender = (byte)角色数据2.Gender.V,
-                上线下线 = (byte)((角色数据2.Connection == null) ? 3u : 0u)
+                上线下线 = (byte)((!角色数据2.Connected) ? 3u : 0u)
             });
             if (粉丝列表.Contains(角色数据2) || 角色数据2.偶像列表.Contains(this.Character))
             {
@@ -25457,7 +25458,7 @@ public sealed class PlayerObject : MapObject
                 Name = 角色数据.UserName.V,
                 Job = (byte)角色数据.Job.V,
                 Gender = (byte)角色数据.Gender.V,
-                上线下线 = (byte)((角色数据.Connection == null) ? 3u : 0u)
+                上线下线 = (byte)((!角色数据.Connected) ? 3u : 0u)
             });
         }
         else
@@ -25754,75 +25755,75 @@ public sealed class PlayerObject : MapObject
         int num = 0;
         int num2 = 起始位置 * 10;
         int num3 = 起始位置 * 10 + 10;
-        ListMonitor<CharacterInfo> 列表监视器 = null;
+        ListMonitor<CharacterInfo> ranks = null;
         switch (榜单类型)
         {
             case 37:
-                列表监视器 = SystemInfo.Info.DragonLanceBattleRanking;
+                ranks = SystemInfo.Info.DragonLanceBattleRanking;
                 num = 1;
                 break;
             case 36:
-                列表监视器 = SystemInfo.Info.DragonLanceRanking;
+                ranks = SystemInfo.Info.DragonLanceRanking;
                 num = 0;
                 break;
             case 0:
-                列表监视器 = SystemInfo.Info.IndividualRanking;
+                ranks = SystemInfo.Info.IndividualRanking;
                 num = 0;
                 break;
             case 1:
-                列表监视器 = SystemInfo.Info.WarriorRanking;
+                ranks = SystemInfo.Info.WarriorRanking;
                 num = 0;
                 break;
             case 2:
-                列表监视器 = SystemInfo.Info.WizardRanking;
+                ranks = SystemInfo.Info.WizardRanking;
                 num = 0;
                 break;
             case 3:
-                列表监视器 = SystemInfo.Info.TaoistRanking;
+                ranks = SystemInfo.Info.TaoistRanking;
                 num = 0;
                 break;
             case 4:
-                列表监视器 = SystemInfo.Info.AssassinRanking;
+                ranks = SystemInfo.Info.AssassinRanking;
                 num = 0;
                 break;
             case 5:
-                列表监视器 = SystemInfo.Info.ArcherRanking;
+                ranks = SystemInfo.Info.ArcherRanking;
                 num = 0;
                 break;
             case 6:
-                列表监视器 = SystemInfo.Info.IndividualBattleRanking;
+                ranks = SystemInfo.Info.IndividualBattleRanking;
                 num = 1;
                 break;
             case 7:
-                列表监视器 = SystemInfo.Info.WarriorBattleRanking;
+                ranks = SystemInfo.Info.WarriorBattleRanking;
                 num = 1;
                 break;
             case 8:
-                列表监视器 = SystemInfo.Info.WizardBattleRanking;
+                ranks = SystemInfo.Info.WizardBattleRanking;
                 num = 1;
                 break;
             case 9:
-                列表监视器 = SystemInfo.Info.TaoistBattleRanking;
+                ranks = SystemInfo.Info.TaoistBattleRanking;
                 num = 1;
                 break;
             case 10:
-                列表监视器 = SystemInfo.Info.AssassinBattleRanking;
+                ranks = SystemInfo.Info.AssassinBattleRanking;
                 num = 1;
                 break;
             case 11:
-                列表监视器 = SystemInfo.Info.ArcherBattleRanking;
+                ranks = SystemInfo.Info.ArcherBattleRanking;
                 num = 1;
                 break;
             case 14:
-                列表监视器 = SystemInfo.Info.IndividualPrestigeRanking;
+                ranks = SystemInfo.Info.IndividualPrestigeRanking;
                 num = 2;
                 break;
             case 15:
-                列表监视器 = SystemInfo.Info.IndividualPKRanking;
+                ranks = SystemInfo.Info.IndividualPKRanking;
                 num = 3;
                 break;
         }
-        if (列表监视器 == null || 列表监视器.Count == 0)
+        if (ranks == null || ranks.Count == 0)
         {
             return;
         }
@@ -25830,11 +25831,11 @@ public sealed class PlayerObject : MapObject
         using BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
         binaryWriter.Write(b);
         binaryWriter.Write((ushort)Character.CurrentRanking[b]);
-        binaryWriter.Write((ushort)Character.历史排名[b]);
-        binaryWriter.Write(列表监视器.Count);
+        binaryWriter.Write((ushort)Character.PreviousRanking[b]);
+        binaryWriter.Write(ranks.Count);
         for (int i = num2; i < num3; i++)
         {
-            binaryWriter.Write((long)(列表监视器[i]?.ID ?? 0));
+            binaryWriter.Write((long)(ranks[i]?.ID ?? 0));
         }
         for (int j = num2; j < num3; j++)
         {
@@ -25844,22 +25845,22 @@ public sealed class PlayerObject : MapObject
                     binaryWriter.Write(0);
                     break;
                 case 0:
-                    binaryWriter.Write((long)((ulong)(列表监视器[j]?.CurrentLevel ?? 0) << 56));
+                    binaryWriter.Write((long)((ulong)(ranks[j]?.CurrentLevel ?? 0) << 56));
                     break;
                 case 1:
-                    binaryWriter.Write((long)(列表监视器[j]?.CurrentCombatPower ?? 0));
+                    binaryWriter.Write((long)(ranks[j]?.CurrentCombatPower ?? 0));
                     break;
                 case 2:
-                    binaryWriter.Write((long)(列表监视器[j]?.师门声望 ?? 0));
+                    binaryWriter.Write((long)(ranks[j]?.师门声望 ?? 0));
                     break;
                 case 3:
-                    binaryWriter.Write((long)(列表监视器[j]?.PKPoint ?? 0));
+                    binaryWriter.Write((long)(ranks[j]?.PKPoint ?? 0));
                     break;
             }
         }
         for (int k = num2; k < num3; k++)
         {
-            binaryWriter.Write((ushort)(列表监视器[k]?.历史排名[b] ?? 0));
+            binaryWriter.Write((ushort)(ranks[k]?.PreviousRanking[b] ?? 0));
         }
         Enqueue(new 查询排行榜单
         {
@@ -25925,7 +25926,7 @@ public sealed class PlayerObject : MapObject
         {
             Enqueue(new SocialErrorPacket { ErrorCode = 3847 });
         }
-        else if (character.Online)
+        else if (character.Connected)
         {
             Team = new TeamInfo(this.Character, 1);
             Enqueue(new 玩家加入队伍
@@ -25975,7 +25976,7 @@ public sealed class PlayerObject : MapObject
             {
                 Enqueue(new SocialErrorPacket { ErrorCode = 3848 });
             }
-            else if (character.CurrentTeam.Captain.Online)
+            else if (character.CurrentTeam.Captain.Connected)
             {
                 character.CurrentTeam.Applications[this.Character] = SEngine.CurrentTime.AddMinutes(5.0);
                 character.CurrentTeam.Captain.Enqueue(new 发送组队申请
@@ -26004,7 +26005,7 @@ public sealed class PlayerObject : MapObject
         {
             Enqueue(new SocialErrorPacket { ErrorCode = 3848 });
         }
-        else if (character.Online)
+        else if (character.Connected)
         {
             Team.Invitations[character] = SEngine.CurrentTime.AddMinutes(5.0);
 
@@ -26086,7 +26087,7 @@ public sealed class PlayerObject : MapObject
             }
             else
             {
-                if (character.CurrentTeam != null && character.CurrentTeam.Invitations.Remove(this.Character) && character.Online)
+                if (character.CurrentTeam != null && character.CurrentTeam.Invitations.Remove(this.Character) && character.Connected)
                 {
                     character.Enqueue(new SocialErrorPacket { ErrorCode = 3856 });
                 }
@@ -26120,7 +26121,7 @@ public sealed class PlayerObject : MapObject
             {
                 Enqueue(new SocialErrorPacket { ErrorCode = 3847 });
             }
-            else if (character.Online)
+            else if (character.Connected)
             {
                 Team.Broadcast(new 队伍增加成员
                 {
@@ -26141,7 +26142,7 @@ public sealed class PlayerObject : MapObject
         }
         else
         {
-            if (Team != null && Team.Applications.Remove(character) && character.Online)
+            if (Team != null && Team.Applications.Remove(character) && character.Connected)
             {
                 character.Enqueue(new SocialErrorPacket { ErrorCode = 3858 });
             }
@@ -26180,7 +26181,7 @@ public sealed class PlayerObject : MapObject
 
             if (Character == Team.Captain)
             {
-                CharacterInfo member = Team.Members.FirstOrDefault(x => x.Online);
+                CharacterInfo member = Team.Members.FirstOrDefault(x => x.Connected);
                 if (member != null)
                 {
                     Team.Captain = member;
@@ -26898,7 +26899,7 @@ public sealed class PlayerObject : MapObject
         }
         else if (Session.CharacterInfoTable.SearchTable.TryGetValue(对象名字, out value) && value is CharacterInfo character)
         {
-            if (!character.Online)
+            if (!character.Connected)
             {
                 Enqueue(new GameErrorMessagePacket
                 {
@@ -27671,7 +27672,7 @@ public sealed class PlayerObject : MapObject
             {
                 Enqueue(new SocialErrorPacket { ErrorCode = 5891 });
             }
-            else if (character.Online)
+            else if (character.Connected)
             {
                 if (character.CurrentMentor == null)
                 {
@@ -27734,7 +27735,7 @@ public sealed class PlayerObject : MapObject
             {
                 Enqueue(new SocialErrorPacket { ErrorCode = 5891 });
             }
-            else if (character.Online)
+            else if (character.Connected)
             {
                 if (Mentor == null)
                 {
@@ -27836,7 +27837,7 @@ public sealed class PlayerObject : MapObject
             {
                 Enqueue(new SocialErrorPacket { ErrorCode = 5891 });
             }
-            else if (character.Online)
+            else if (character.Connected)
             {
                 if (Mentor == null)
                 {
@@ -27898,7 +27899,7 @@ public sealed class PlayerObject : MapObject
             {
                 Enqueue(new SocialErrorPacket { ErrorCode = 5891 });
             }
-            else if (character.Online)
+            else if (character.Connected)
             {
                 Enqueue(new 收徒申请同意
                 {
@@ -30155,30 +30156,30 @@ public sealed class PlayerObject : MapObject
         using BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
         binaryWriter.Write((byte)FriendList.Count);
         binaryWriter.Write((byte)(偶像列表.Count + 仇人列表.Count));
-        foreach (CharacterInfo item in 偶像列表)
+        foreach (CharacterInfo character in 偶像列表)
         {
-            binaryWriter.Write(item.Index.V);
+            binaryWriter.Write(character.Index.V);
             byte[] array = new byte[69];
-            byte[] array2 = item.NameDescription();
+            byte[] array2 = character.NameDescription();
             Buffer.BlockCopy(array2, 0, array, 0, array2.Length);
             binaryWriter.Write(array);
-            binaryWriter.Write((byte)item.Job.V);
-            binaryWriter.Write((byte)item.Gender.V);
-            binaryWriter.Write((byte)((item.Connection == null) ? 3u : 0u));
+            binaryWriter.Write((byte)character.Job.V);
+            binaryWriter.Write((byte)character.Gender.V);
+            binaryWriter.Write((byte)(!character.Connected ? 3u : 0u));
             binaryWriter.Write(0u);
             binaryWriter.Write((byte)0);
-            binaryWriter.Write((byte)(FriendList.Contains(item) ? 1u : 0u));
+            binaryWriter.Write((byte)(FriendList.Contains(character) ? 1u : 0u));
         }
-        foreach (CharacterInfo item2 in 仇人列表)
+        foreach (CharacterInfo character in 仇人列表)
         {
-            binaryWriter.Write(item2.Index.V);
+            binaryWriter.Write(character.Index.V);
             byte[] array3 = new byte[69];
-            byte[] array4 = item2.NameDescription();
+            byte[] array4 = character.NameDescription();
             Buffer.BlockCopy(array4, 0, array3, 0, array4.Length);
             binaryWriter.Write(array3);
-            binaryWriter.Write((byte)item2.Job.V);
-            binaryWriter.Write((byte)item2.Gender.V);
-            binaryWriter.Write((byte)((item2.Connection == null) ? 3u : 0u));
+            binaryWriter.Write((byte)character.Job.V);
+            binaryWriter.Write((byte)character.Gender.V);
+            binaryWriter.Write((byte)(!character.Connected ? 3u : 0u));
             binaryWriter.Write(0u);
             binaryWriter.Write((byte)21);
             binaryWriter.Write((byte)0);
