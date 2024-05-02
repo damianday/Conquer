@@ -285,7 +285,7 @@ public class SystemInfo : DBObject
                 listing.Insert(index, character);
                 for (int i = Math.Min(num, index); i <= Math.Max(num, index); i++)
                 {
-                    listing[i].历史排名[currentType] = listing[i].CurrentRanking[currentType];
+                    listing[i].PreviousRanking[currentType] = listing[i].CurrentRanking[currentType];
                     listing[i].CurrentRanking[currentType] = i + 1;
                 }
             }
@@ -295,7 +295,7 @@ public class SystemInfo : DBObject
                 listing.Insert(index, character);
                 for (int j = index; j < listing.Count; j++)
                 {
-                    listing[j].历史排名[currentType] = listing[j].CurrentRanking[currentType];
+                    listing[j].PreviousRanking[currentType] = listing[j].CurrentRanking[currentType];
                     listing[j].CurrentRanking[currentType] = j + 1;
                 }
             }
@@ -307,7 +307,7 @@ public class SystemInfo : DBObject
             listing.Insert(index, character);
             for (int k = Math.Min(num, index); k <= Math.Max(num, index); k++)
             {
-                listing[k].历史排名[currentType] = listing[k].CurrentRanking[currentType];
+                listing[k].PreviousRanking[currentType] = listing[k].CurrentRanking[currentType];
                 listing[k].CurrentRanking[currentType] = k + 1;
             }
         }
@@ -317,7 +317,7 @@ public class SystemInfo : DBObject
             listing.Insert(index, character);
             for (int l = index; l < listing.Count; l++)
             {
-                listing[l].历史排名[currentType] = listing[l].CurrentRanking[currentType];
+                listing[l].PreviousRanking[currentType] = listing[l].CurrentRanking[currentType];
                 listing[l].CurrentRanking[currentType] = l + 1;
             }
             listing[300].CurrentRanking.Remove(currentType);
