@@ -46,7 +46,6 @@ We will have to create a file in the root of the account server called "!ServerI
   
   <details>
   <summary>If it is WAN:</summary>
-If it is WAN: 
 
 [
   {
