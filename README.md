@@ -24,7 +24,8 @@ If it is WAN: `<public_ip>`
 
 We will have to create a file in the root of the account server called "!ServerInfo" in which we will include a list of the GS that we will have raised, by default we will only have one, so we will have something like the following:
 
-If it is locally: 
+<details>
+  <summary>If it is locally:</summary>
 `
 [
   {
@@ -36,6 +37,10 @@ If it is locally:
   }
 ]
 `
+  </details>
+  
+  <details>
+  <summary>If it is WAN:</summary>
 If it is WAN: 
 `
 [
@@ -48,6 +53,7 @@ If it is WAN:
   }
 ]
 `
+  </details>
 
 ### Game Server Configuration
 
