@@ -307,7 +307,7 @@ public partial class SMain : Form
                 dataRow["冻结日期"] = ((character.FrozenDate.V != default(DateTime)) ? character.FrozenDate : null);
                 dataRow["删除日期"] = ((character.DeletetionDate.V != default(DateTime)) ? character.DeletetionDate : null);
                 dataRow["登录日期"] = ((character.LoginDate.V != default(DateTime)) ? character.LoginDate : null);
-                dataRow["离线日期"] = ((character.Connection == null) ? character.DisconnectDate : null);
+                dataRow["离线日期"] = (!character.Connected ? character.DisconnectDate : null);
                 dataRow["网络地址"] = character.IPAddress;
                 dataRow["物理地址"] = character.MACAddress;
                 dataRow["角色职业"] = character.Job;
