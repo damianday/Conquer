@@ -35,6 +35,7 @@ namespace Launcher
             Register_Back_To_LoginBtn = new UISymbolButton();
             RegistrationErrorLabel = new UILabel();
             Register_AccountBtn = new UISymbolButton();
+            Register_ReferralCodeTextBox = new UITextBox();
             Register_SecretAnswerTextBox = new UITextBox();
             Register_PasswordTextBox = new UITextBox();
             Register_QuestionTextBox = new UITextBox();
@@ -346,6 +347,7 @@ namespace Launcher
             RegistrationTab.Controls.Add(Register_Back_To_LoginBtn);
             RegistrationTab.Controls.Add(RegistrationErrorLabel);
             RegistrationTab.Controls.Add(Register_AccountBtn);
+            RegistrationTab.Controls.Add(Register_ReferralCodeTextBox);
             RegistrationTab.Controls.Add(Register_SecretAnswerTextBox);
             RegistrationTab.Controls.Add(Register_PasswordTextBox);
             RegistrationTab.Controls.Add(Register_QuestionTextBox);
@@ -446,6 +448,38 @@ namespace Launcher
             Register_AccountBtn.ZoomScaleRect = new Rectangle(0, 0, 0, 0);
             Register_AccountBtn.Click += RegisterAccount_Click;
             // 
+            // Register_ReferralCodeTextBox
+            // 
+            Register_ReferralCodeTextBox.ButtonFillColor = Color.FromArgb(230, 80, 80);
+            Register_ReferralCodeTextBox.ButtonFillHoverColor = Color.FromArgb(235, 115, 115);
+            Register_ReferralCodeTextBox.ButtonFillPressColor = Color.FromArgb(184, 64, 64);
+            Register_ReferralCodeTextBox.ButtonRectColor = Color.FromArgb(230, 80, 80);
+            Register_ReferralCodeTextBox.ButtonRectHoverColor = Color.FromArgb(235, 115, 115);
+            Register_ReferralCodeTextBox.ButtonRectPressColor = Color.FromArgb(184, 64, 64);
+            Register_ReferralCodeTextBox.Cursor = Cursors.IBeam;
+            Register_ReferralCodeTextBox.FillColor = Color.FromArgb(64, 64, 64);
+            Register_ReferralCodeTextBox.FillColor2 = Color.Transparent;
+            Register_ReferralCodeTextBox.Font = new Font("Arial", 12F);
+            Register_ReferralCodeTextBox.ForeColor = Color.DodgerBlue;
+            Register_ReferralCodeTextBox.Location = new Point(120, 229);
+            Register_ReferralCodeTextBox.Margin = new Padding(4, 5, 4, 5);
+            Register_ReferralCodeTextBox.MinimumSize = new Size(1, 14);
+            Register_ReferralCodeTextBox.Name = "Register_ReferralCodeTextBox";
+            Register_ReferralCodeTextBox.RectColor = Color.LightSkyBlue;
+            Register_ReferralCodeTextBox.ScrollBarColor = Color.FromArgb(230, 80, 80);
+            Register_ReferralCodeTextBox.ShowText = false;
+            Register_ReferralCodeTextBox.Size = new Size(391, 36);
+            Register_ReferralCodeTextBox.Style = UIStyle.Custom;
+            Register_ReferralCodeTextBox.Symbol = 61447;
+            Register_ReferralCodeTextBox.SymbolColor = Color.LightSkyBlue;
+            Register_ReferralCodeTextBox.SymbolSize = 22;
+            Register_ReferralCodeTextBox.TabIndex = 1;
+            Register_ReferralCodeTextBox.TextAlignment = ContentAlignment.MiddleLeft;
+            Register_ReferralCodeTextBox.Watermark = "Referral Code - Optional";
+            Register_ReferralCodeTextBox.WatermarkActiveColor = Color.DodgerBlue;
+            Register_ReferralCodeTextBox.WatermarkColor = Color.LightSkyBlue;
+            Register_ReferralCodeTextBox.ZoomScaleRect = new Rectangle(0, 0, 0, 0);
+            // 
             // Register_SecretAnswerTextBox
             // 
             Register_SecretAnswerTextBox.ButtonFillColor = Color.FromArgb(230, 80, 80);
@@ -459,7 +493,7 @@ namespace Launcher
             Register_SecretAnswerTextBox.FillColor2 = Color.Transparent;
             Register_SecretAnswerTextBox.Font = new Font("Arial", 12F);
             Register_SecretAnswerTextBox.ForeColor = Color.DodgerBlue;
-            Register_SecretAnswerTextBox.Location = new Point(120, 205);
+            Register_SecretAnswerTextBox.Location = new Point(120, 188);
             Register_SecretAnswerTextBox.Margin = new Padding(4, 5, 4, 5);
             Register_SecretAnswerTextBox.MinimumSize = new Size(1, 14);
             Register_SecretAnswerTextBox.Name = "Register_SecretAnswerTextBox";
@@ -474,7 +508,7 @@ namespace Launcher
             Register_SecretAnswerTextBox.SymbolSize = 22;
             Register_SecretAnswerTextBox.TabIndex = 4;
             Register_SecretAnswerTextBox.TextAlignment = ContentAlignment.MiddleLeft;
-            Register_SecretAnswerTextBox.Watermark = "Please Enter a Security Answer";
+            Register_SecretAnswerTextBox.Watermark = "Please enter a security answer";
             Register_SecretAnswerTextBox.WatermarkActiveColor = Color.DodgerBlue;
             Register_SecretAnswerTextBox.WatermarkColor = Color.LightSkyBlue;
             Register_SecretAnswerTextBox.ZoomScaleRect = new Rectangle(0, 0, 0, 0);
@@ -492,7 +526,7 @@ namespace Launcher
             Register_PasswordTextBox.FillColor2 = Color.Transparent;
             Register_PasswordTextBox.Font = new Font("Arial", 12F);
             Register_PasswordTextBox.ForeColor = Color.DodgerBlue;
-            Register_PasswordTextBox.Location = new Point(120, 113);
+            Register_PasswordTextBox.Location = new Point(120, 106);
             Register_PasswordTextBox.Margin = new Padding(4, 5, 4, 5);
             Register_PasswordTextBox.MinimumSize = new Size(1, 14);
             Register_PasswordTextBox.Name = "Register_PasswordTextBox";
@@ -507,7 +541,7 @@ namespace Launcher
             Register_PasswordTextBox.SymbolSize = 22;
             Register_PasswordTextBox.TabIndex = 2;
             Register_PasswordTextBox.TextAlignment = ContentAlignment.MiddleLeft;
-            Register_PasswordTextBox.Watermark = "Please Enter a Password";
+            Register_PasswordTextBox.Watermark = "Please enter a password";
             Register_PasswordTextBox.WatermarkActiveColor = Color.DodgerBlue;
             Register_PasswordTextBox.WatermarkColor = Color.LightSkyBlue;
             Register_PasswordTextBox.ZoomScaleRect = new Rectangle(0, 0, 0, 0);
@@ -525,7 +559,7 @@ namespace Launcher
             Register_QuestionTextBox.FillColor2 = Color.Transparent;
             Register_QuestionTextBox.Font = new Font("Arial", 12F);
             Register_QuestionTextBox.ForeColor = Color.DodgerBlue;
-            Register_QuestionTextBox.Location = new Point(120, 159);
+            Register_QuestionTextBox.Location = new Point(120, 147);
             Register_QuestionTextBox.Margin = new Padding(4, 5, 4, 5);
             Register_QuestionTextBox.MinimumSize = new Size(1, 14);
             Register_QuestionTextBox.Name = "Register_QuestionTextBox";
@@ -539,7 +573,7 @@ namespace Launcher
             Register_QuestionTextBox.SymbolSize = 22;
             Register_QuestionTextBox.TabIndex = 3;
             Register_QuestionTextBox.TextAlignment = ContentAlignment.MiddleLeft;
-            Register_QuestionTextBox.Watermark = "Please Enter a Security Question";
+            Register_QuestionTextBox.Watermark = "Please enter a security question";
             Register_QuestionTextBox.WatermarkActiveColor = Color.DodgerBlue;
             Register_QuestionTextBox.WatermarkColor = Color.LightSkyBlue;
             Register_QuestionTextBox.ZoomScaleRect = new Rectangle(0, 0, 0, 0);
@@ -557,7 +591,7 @@ namespace Launcher
             Register_AccountNameTextBox.FillColor2 = Color.Transparent;
             Register_AccountNameTextBox.Font = new Font("Arial", 12F);
             Register_AccountNameTextBox.ForeColor = Color.DodgerBlue;
-            Register_AccountNameTextBox.Location = new Point(120, 67);
+            Register_AccountNameTextBox.Location = new Point(120, 65);
             Register_AccountNameTextBox.Margin = new Padding(4, 5, 4, 5);
             Register_AccountNameTextBox.MinimumSize = new Size(1, 14);
             Register_AccountNameTextBox.Name = "Register_AccountNameTextBox";
@@ -571,7 +605,7 @@ namespace Launcher
             Register_AccountNameTextBox.SymbolSize = 22;
             Register_AccountNameTextBox.TabIndex = 1;
             Register_AccountNameTextBox.TextAlignment = ContentAlignment.MiddleLeft;
-            Register_AccountNameTextBox.Watermark = "Please Enter an Account Name";
+            Register_AccountNameTextBox.Watermark = "Please enter an account name";
             Register_AccountNameTextBox.WatermarkActiveColor = Color.DodgerBlue;
             Register_AccountNameTextBox.WatermarkColor = Color.LightSkyBlue;
             Register_AccountNameTextBox.ZoomScaleRect = new Rectangle(0, 0, 0, 0);
@@ -1081,6 +1115,7 @@ namespace Launcher
         private global::System.Windows.Forms.TabPage ChangePasswordTab;
         private global::System.Windows.Forms.TabPage StartGameTab;
         private UISymbolButton Register_AccountBtn;
+        private UITextBox Register_ReferralCodeTextBox;
         private UITextBox Register_SecretAnswerTextBox;
         private UITextBox Register_PasswordTextBox;
         private UITextBox Register_QuestionTextBox;

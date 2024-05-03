@@ -54,8 +54,8 @@ namespace Launcher
                 uiCheckBox1.Checked = true;
             }
 
-            start_selected_zone.Text = Settings.SaveArea;
-            AccountTextBox.Text = Settings.SaveAccountName;
+            start_selected_zone.Text = Settings.Default.ServerName;
+            AccountTextBox.Text = Settings.Default.AccountName;
 
             ConnectionStatusLabel.Text = "Attempting to connect to the server.";
             Network.Instance.Connect();
@@ -63,8 +63,8 @@ namespace Launcher
 
         private void LoadConfig()
         {
-            Settings.Load();
-            Network.Instance.ASAddress = new IPEndPoint(IPAddress.Parse(Settings.AccountServerAddressIP), Settings.AccountServerAddressPort);
+            Settings.Default.Load();
+            Network.Instance.ASAddress = new IPEndPoint(IPAddress.Parse(Settings.Default.AccountServerAddressIP), Settings.Default.AccountServerAddressPort);
         }
         private void PreLaunchChecks()
         {
@@ -179,8 +179,8 @@ namespace Launcher
                     GameServerList.Items.Add(name);
                 }
                 MainTab.SelectedIndex = 3;
-                Settings.SaveAccountName = LoginAccount;
-                Settings.Save();
+                Settings.Default.AccountName = LoginAccount;
+                Settings.Default.Save();
             });
         }
         public void AccountLogInFailUpdate(string message)
@@ -225,8 +225,8 @@ namespace Launcher
                         "/ticket:" + ticket + 
                         " /AreaName:" + start_selected_zone.Text;
 
-                    Settings.SaveArea = start_selected_zone.Text;
-                    Settings.Save();
+                    Settings.Default.ServerName = start_selected_zone.Text;
+                    Settings.Default.Save();
                     GameProgress = new Process();
 
                     if (Is32Bit && Is64Bit || !Is32Bit && !Is64Bit)
@@ -370,73 +370,78 @@ namespace Launcher
 
             if (Register_AccountNameTextBox.Text.Length <= 0)
             {
-                RegistrationErrorLabel.Text = "Account Name Cannot Be Empty";
+                RegistrationErrorLabel.Text = "Account name cannot be empty";
                 RegistrationErrorLabel.Visible = true;
             }
             else if (Register_AccountNameTextBox.Text.IndexOf(' ') >= 0)
             {
-                RegistrationErrorLabel.Text = "Account Name Cannot Contain Spaces";
+                RegistrationErrorLabel.Text = "Account name cannot contain spaces";
                 RegistrationErrorLabel.Visible = true;
             }
             else if (Register_AccountNameTextBox.Text.Length <= 5 || Register_AccountNameTextBox.Text.Length > 12)
             {
-                RegistrationErrorLabel.Text = "Account Name Must Be 6 to 12 Characters Long";
+                RegistrationErrorLabel.Text = "Account name must be 6 to 12 characters long";
                 RegistrationErrorLabel.Visible = true;
             }
             else if (!Regex.IsMatch(Register_AccountNameTextBox.Text, "^[a-zA-Z]+.*$"))
             {
-                RegistrationErrorLabel.Text = "Account Name Must Start With A Letter";
+                RegistrationErrorLabel.Text = "Account name must start with a letter";
                 RegistrationErrorLabel.Visible = true;
             }
             else if (!Regex.IsMatch(Register_AccountNameTextBox.Text, "^[a-zA-Z_][A-Za-z0-9_]*$"))
             {
-                RegistrationErrorLabel.Text = "Account Name Can Only Contain Alphanumeric and Underscores";
+                RegistrationErrorLabel.Text = "Account name can only contain alphanumeric and underscores";
                 RegistrationErrorLabel.Visible = true;
             }
             else if (Register_PasswordTextBox.Text.Length <= 0)
             {
-                RegistrationErrorLabel.Text = "Password Cannot Be Blank";
+                RegistrationErrorLabel.Text = "Password cannot be empty";
                 RegistrationErrorLabel.Visible = true;
             }
             else if (Register_PasswordTextBox.Text.IndexOf(' ') >= 0)
             {
-                RegistrationErrorLabel.Text = "Password Cannot Contain Spaces";
+                RegistrationErrorLabel.Text = "Password cannot contain spaces";
                 RegistrationErrorLabel.Visible = true;
             }
             else if (Register_PasswordTextBox.Text.Length <= 5 || Register_PasswordTextBox.Text.Length > 18)
             {
-                RegistrationErrorLabel.Text = "Password Must Be 6 to 18 Characters Long";
+                RegistrationErrorLabel.Text = "Password must be 6 to 18 characters long";
                 RegistrationErrorLabel.Visible = true;
             }
             else if (Register_QuestionTextBox.Text.Length <= 0)
             {
-                RegistrationErrorLabel.Text = "Security Question Cannot Be Empty";
+                RegistrationErrorLabel.Text = "Security question cannot be empty";
                 RegistrationErrorLabel.Visible = true;
             }
             else if (Register_QuestionTextBox.Text.IndexOf(' ') >= 0)
             {
-                RegistrationErrorLabel.Text = "Security Question Cannot Contain Spaces";
+                RegistrationErrorLabel.Text = "Security question cannot contain spaces";
                 RegistrationErrorLabel.Visible = true;
             }
             else if (Register_QuestionTextBox.Text.Length <= 1 || Register_QuestionTextBox.Text.Length > 18)
             {
-                RegistrationErrorLabel.Text = "Security Question Must Be 2 to 18 Characters Long";
+                RegistrationErrorLabel.Text = "Security question must me 2 to 18 characters long";
                 RegistrationErrorLabel.Visible = true;
             }
             else if (Register_SecretAnswerTextBox.Text.Length <= 0)
             {
-                RegistrationErrorLabel.Text = "Security Answer Cannot Be Empty";
+                RegistrationErrorLabel.Text = "Security answer cannot be empty";
                 RegistrationErrorLabel.Visible = true;
             }
             else if (Register_SecretAnswerTextBox.Text.IndexOf(' ') >= 0)
             {
-                RegistrationErrorLabel.Text = "Security Answer Cannot Contain Spaces";
+                RegistrationErrorLabel.Text = "Security answer cannot contain spaces";
                 RegistrationErrorLabel.Visible = true;
             }
             else if (Register_SecretAnswerTextBox.Text.Length <= 1 || Register_SecretAnswerTextBox.Text.Length > 18)
             {
-                RegistrationErrorLabel.Text = "Security Answer Must Be 2 to 18 Characters Long";
+                RegistrationErrorLabel.Text = "Security answer must be 2 to 18 characters long";
                 RegistrationErrorLabel.Visible = true;
+            }
+            else if (Register_ReferralCodeTextBox.Text.Length != 4)
+            {
+                Register_ReferralCodeTextBox.Text = "Referral code must me 4 characters long";
+                Register_ReferralCodeTextBox.Visible = true;
             }
             else
             {
@@ -445,23 +450,12 @@ namespace Launcher
 
                 var str = Register_AccountNameTextBox.Text + '/' + Register_PasswordTextBox.Text + '/' +
                     Register_QuestionTextBox.Text + '/' + Register_SecretAnswerTextBox.Text + '/' +
-                    string.Empty; // ReferralCode // TODO..
+                    Register_ReferralCodeTextBox.Text;
 
                 Network.Instance.SendPacket(new AccountRegisterPacket
                 {
                     RegistrationInformation = Encoding.UTF8.GetBytes(str)
                 });
-
-                /*var p = new AccountRegisterPacket
-                {
-                    RegistrationInformation = Encoding.UTF8.GetBytes(str)
-                };
-                var buffer = p.ReadPacket();
-
-                AccountRegisterPacket packet = GamePacket.GetPacket(buffer, out _) as AccountRegisterPacket;
-                var buffer2 = packet.ReadPacket();
-
-                string[] array = Encoding.UTF8.GetString(packet.RegistrationInformation).Split('/');*/
 
                 UILock();
                 Register_PasswordTextBox.Text = Register_SecretAnswerTextBox.Text = "";
