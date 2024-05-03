@@ -37,7 +37,7 @@ namespace Launcher
             CurrentForm = this;
 
             PreLaunchChecks();
-            LoadConfig();
+            Settings.Default.Load();
 
             if (Environment.Is64BitOperatingSystem)
             {
@@ -61,11 +61,6 @@ namespace Launcher
             Network.Instance.Connect();
         }
 
-        private void LoadConfig()
-        {
-            Settings.Default.Load();
-            Network.Instance.ASAddress = new IPEndPoint(IPAddress.Parse(Settings.Default.AccountServerAddressIP), Settings.Default.AccountServerAddressPort);
-        }
         private void PreLaunchChecks()
         {
             bool ClientFound32Bit = File.Exists(".\\Binaries\\Win32\\MMOGame-Win32-Shipping.exe");
@@ -95,7 +90,7 @@ namespace Launcher
         }
         public void AccountRegisterSuccessUpdate()
         {
-            BeginInvoke((MethodInvoker)delegate
+            BeginInvoke(() =>
             {
                 AccountTextBox.Text = RegisterAccount;
                 AccountPasswordTextBox.Text = RegisterPassword;
@@ -109,7 +104,7 @@ namespace Launcher
             RegisterAccount = string.Empty;
             RegisterPassword = string.Empty;
 
-            BeginInvoke((MethodInvoker)delegate
+            BeginInvoke(() =>
             {
                 UIUnlock(null, null);
                 RegistrationErrorLabel.Text = message;
@@ -119,7 +114,7 @@ namespace Launcher
         }
         public void AccountChangePasswordSuccessUpdate()
         {
-            BeginInvoke((MethodInvoker)delegate
+            BeginInvoke(() =>
             {
                 AccountTextBox.Text = ModifyAccount;
                 AccountPasswordTextBox.Text = ModifyPassword;
@@ -133,7 +128,7 @@ namespace Launcher
             ModifyAccount = string.Empty;
             ModifyPassword = string.Empty;
 
-            BeginInvoke((MethodInvoker)delegate
+            BeginInvoke(() =>
             {
                 UIUnlock(null, null);
                 Modify_ErrorLabel.Text = message;
@@ -144,7 +139,7 @@ namespace Launcher
         {
             LoggedIn = true;
 
-            BeginInvoke((MethodInvoker)delegate
+            BeginInvoke(() =>
             {
                 UIUnlock(null, null);
 
@@ -189,7 +184,7 @@ namespace Launcher
             LoginAccount = string.Empty;
             LoginPassword = string.Empty;
 
-            BeginInvoke((MethodInvoker)delegate
+            BeginInvoke(() =>
             {
                 UIUnlock(null, null);
                 LoginErrorLabel.Text = message;
@@ -203,7 +198,7 @@ namespace Launcher
             LoginAccount = string.Empty;
             LoginPassword = string.Empty;
 
-            BeginInvoke((MethodInvoker)delegate
+            BeginInvoke(() =>
             {
                 UIUnlock(null, null);
                 LoginErrorLabel.Text = message;
@@ -215,7 +210,7 @@ namespace Launcher
         }
         public void AccountStartGameSuccessUpdate(string ticket)
         {
-            BeginInvoke((MethodInvoker)delegate
+            BeginInvoke(() =>
             {
                 if (ServerTable.TryGetValue(start_selected_zone.Text, out var value))
                 {
@@ -251,7 +246,7 @@ namespace Launcher
         }
         public void AccountStartGameFailUpdate(string message)
         {
-            BeginInvoke((MethodInvoker)delegate
+            BeginInvoke(() =>
             {
                 UIUnlock(null, null);
                 MessageBox.Show("Failed To Start The Game\r\n" + message);
@@ -259,7 +254,7 @@ namespace Launcher
         }
         public void UIUnlock(object sender, EventArgs e)
         {
-            BeginInvoke((MethodInvoker)delegate
+            BeginInvoke(() =>
             {
                 MainTab.Enabled = true;
                 InterfaceUpdateTimer.Enabled = false;

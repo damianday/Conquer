@@ -19,7 +19,6 @@ namespace Launcher
         public static Network Instance { get; } = new Network();
 
         private Socket _client;
-        public IPEndPoint ASAddress;
         public int ConnectAttempt = 0;
         public bool Connected;
         public DateTime TimeOutTime, TimeConnected, RetryTime = DateTime.Now.AddSeconds(5);
@@ -37,8 +36,9 @@ namespace Launcher
 
             ConnectAttempt++;
 
+            var endPoint = new IPEndPoint(IPAddress.Parse(Settings.Default.AccountServerAddressIP), Settings.Default.AccountServerAddressPort);
             _client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp) { NoDelay = true };
-            _client.BeginConnect(ASAddress, Connection, null);
+            _client.BeginConnect(endPoint, Connection, null);
         }
 
         private void Connection(IAsyncResult result)
@@ -57,7 +57,6 @@ namespace Launcher
 
                 _rawData = new byte[0];
 
-                //TimeOutTime = CMain.Time + Settings.TimeOut;
                 TimeConnected = DateTime.Now;
                 Connected = true;
 
@@ -171,17 +170,6 @@ namespace Launcher
             {
                 if (Connected)
                 {
-                    /*while (!_receiveList.IsEmpty)
-                    {
-                        if (!_receiveList.TryDequeue(out Packet p) || p == null) continue;
-                        if (!(p is ServerPackets.Disconnect) && !(p is ServerPackets.ClientVersion)) continue;
-
-                        MirScene.ActiveScene.ProcessPacket(p);
-                        _receiveList.Clear();
-                        return;
-                    }
-
-                    MirMessageBox.Show("Lost connection with the server.", true);*/
                     Disconnect();
                     return;
                 }
@@ -192,13 +180,6 @@ namespace Launcher
                 }
                 return;
             }
-
-            /*if (!Connected && TimeConnected > 0 && CMain.Time > TimeConnected + 5000)
-            {
-                Disconnect();
-                Connect();
-                return;
-            }*/
 
             ProcessReceivedPackets();
 			SendAllPackets();
