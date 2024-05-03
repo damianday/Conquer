@@ -1378,7 +1378,7 @@ public sealed class PlayerObject : MapObject
         }
         if (Team != null)
         {
-            Enqueue(new 玩家加入队伍
+            Enqueue(new UserJoinTeamPacket
             {
                 Description = Team.队伍描述()
             });
@@ -25894,7 +25894,7 @@ public sealed class PlayerObject : MapObject
         if (ObjectID == id)
         {
             Team = new TeamInfo(this.Character, 1);
-            Enqueue(new 玩家加入队伍
+            Enqueue(new UserJoinTeamPacket
             {
                 Description = Team.队伍描述()
             });
@@ -25915,7 +25915,7 @@ public sealed class PlayerObject : MapObject
         else if (character.Connected)
         {
             Team = new TeamInfo(this.Character, 1);
-            Enqueue(new 玩家加入队伍
+            Enqueue(new UserJoinTeamPacket
             {
                 Description = Team.队伍描述()
             });
@@ -26066,7 +26066,7 @@ public sealed class PlayerObject : MapObject
                 });
                 Team = character.CurrentTeam;
                 character.CurrentTeam.Members.Add(this.Character);
-                Enqueue(new 玩家加入队伍
+                Enqueue(new UserJoinTeamPacket
                 {
                     Description = Team.队伍描述()
                 });
@@ -26120,7 +26120,7 @@ public sealed class PlayerObject : MapObject
                 });
                 character.CurrentTeam = Team;
                 Team.Members.Add(character);
-                character.Enqueue(new 玩家加入队伍
+                character.Enqueue(new UserJoinTeamPacket
                 {
                     Description = Team.队伍描述()
                 });
