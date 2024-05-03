@@ -104,9 +104,9 @@ public sealed class CharacterProgression
                             stats[Stat.HealthRecovery] = reader.GetInt32("HealthRecovery");
                             stats[Stat.ManaRecovery] = reader.GetInt32("ManaRecovery");
                             stats[Stat.PoisonEvade] = reader.GetInt32("PoisonEvade");
-                            stats[Stat.最大腕力] = reader.GetInt32("最大腕力");
-                            stats[Stat.最大穿戴] = reader.GetInt32("最大穿戴");
-                            stats[Stat.最大负重] = reader.GetInt32("最大负重");
+                            stats[Stat.MaxHandWeight] = reader.GetInt32("MaxHandWeight");
+                            stats[Stat.MaxWearWeight] = reader.GetInt32("MaxWearWeight");
+                            stats[Stat.MaxWeight] = reader.GetInt32("MaxWeight");
                             stats[Stat.MinHC] = reader.GetInt32("MinHC");
                             stats[Stat.MaxHC] = reader.GetInt32("MaxHC");
 
