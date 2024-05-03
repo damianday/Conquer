@@ -1,6 +1,6 @@
 # Mir 3D EMU Holy Cow
 
-[Latest Build]()
+[Latest Build](https://github.com/damianday/Conquer/tree/main/Release)
 
 ## How to start
 
