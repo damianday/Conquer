@@ -17,7 +17,7 @@ namespace Launcher
         private Socket _client;
         public int ConnectAttempt = 0;
         public bool Connected;
-        public DateTime TimeOutTime, TimeConnected, RetryTime = DateTime.Now.AddSeconds(5);
+        public DateTime TimeOutTime, TimeConnected, RetryTime = DateTime.UtcNow.AddSeconds(5);
 
         private ConcurrentQueue<GamePacket> ReceivedPackets = new ConcurrentQueue<GamePacket>();
         private ConcurrentQueue<GamePacket> SendPackets = new ConcurrentQueue<GamePacket>();
@@ -53,7 +53,7 @@ namespace Launcher
 
                 _rawData = new byte[0];
 
-                TimeConnected = DateTime.Now;
+                TimeConnected = DateTime.UtcNow;
                 Connected = true;
 
                 BeginReceive();
@@ -169,9 +169,9 @@ namespace Launcher
                     Disconnect();
                     return;
                 }
-                else if (DateTime.Now >= RetryTime)
+                else if (DateTime.UtcNow >= RetryTime)
                 {
-                    RetryTime = DateTime.Now.AddSeconds(5);
+                    RetryTime = DateTime.UtcNow.AddSeconds(5);
                     Connect();
                 }
                 return;
