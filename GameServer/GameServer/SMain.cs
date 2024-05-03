@@ -320,9 +320,9 @@ public partial class SMain : Form
                 dataRow["背包大小"] = character.InventorySize;
                 dataRow["仓库大小"] = character.WarehouseSize;
                 dataRow["师门声望"] = character.师门声望;
-                dataRow["本期特权"] = character.本期特权;
+                dataRow["本期特权"] = character.CurrentPrivilege;
                 dataRow["本期日期"] = character.本期日期;
-                dataRow["上期特权"] = character.上期特权;
+                dataRow["上期特权"] = character.PreviousPrivilege;
                 dataRow["上期日期"] = character.上期日期;
                 dataRow["剩余特权"] = character.RemainingPrivileges;
                 dataRow["当前等级"] = character.Level;
@@ -389,7 +389,7 @@ public partial class SMain : Form
                     foreach (KeyValuePair<byte, EquipmentInfo> item2 in value3)
                     {
                         DataRow dataRow2 = EquipmentDataTable.NewRow();
-                        dataRow2["穿戴部位"] = (装备穿戴部位)item2.Key;
+                        dataRow2["穿戴部位"] = (EquipmentWearType)item2.Key;
                         dataRow2["穿戴装备"] = item2.Value;
                         EquipmentDataTable.Rows.Add(dataRow2);
                     }
