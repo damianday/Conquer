@@ -446,15 +446,15 @@ public sealed class PlayerObject : MapObject
 
     public override DictionaryMonitor<ushort, BuffInfo> Buffs => Character.Buff数据;
 
-    public override DictionaryMonitor<int, DateTime> Cooldowns => Character.冷却数据;
+    public override DictionaryMonitor<int, DateTime> Cooldowns => Character.Cooldowns;
 
     public DictionaryMonitor<ushort, SkillInfo> Skills => Character.Skills;
 
-    public int 最大负重 => this[Stat.最大负重];
+    public int MaxWeight => this[Stat.MaxWeight];
 
-    public int 最大穿戴 => this[Stat.最大穿戴];
+    public int MaxWearWeight => this[Stat.MaxWearWeight];
 
-    public int 最大腕力 => this[Stat.最大腕力];
+    public int MaxHandWeight => this[Stat.MaxHandWeight];
 
     public int InventoryWeight
     {
@@ -698,13 +698,13 @@ public sealed class PlayerObject : MapObject
     {
         get
         {
-            return Character.本期特权.V;
+            return Character.CurrentPrivilege.V;
         }
         set
         {
-            if (Character.本期特权.V != value)
+            if (Character.CurrentPrivilege.V != value)
             {
-                Character.本期特权.V = value;
+                Character.CurrentPrivilege.V = value;
             }
         }
     }
@@ -713,13 +713,13 @@ public sealed class PlayerObject : MapObject
     {
         get
         {
-            return Character.上期特权.V;
+            return Character.PreviousPrivilege.V;
         }
         set
         {
-            if (Character.上期特权.V != value)
+            if (Character.PreviousPrivilege.V != value)
             {
-                Character.上期特权.V = value;
+                Character.PreviousPrivilege.V = value;
             }
         }
     }
@@ -1048,7 +1048,7 @@ public sealed class PlayerObject : MapObject
             }
             if (string.Equals(value80.Name, "ProtectionRing", StringComparison.OrdinalIgnoreCase))
             {
-                ProtectionRing = true;
+                HasProtectionRing = true;
             }
             if (value80.Dura.V > 0)
             {
@@ -1216,7 +1216,7 @@ public sealed class PlayerObject : MapObject
             }
         }
 
-        玩家穿卸装备(装备穿戴部位.武器, null, null);
+        UserChangeEquipment(EquipmentWearType.Weapon, null, null);
         UpdateCombatPower();
         RefreshStats();
 
@@ -2007,7 +2007,7 @@ public sealed class PlayerObject : MapObject
             {
                 new ItemObject(item3.Info, item3, CurrentMap, CurrentPosition, new HashSet<CharacterInfo>());
                 Equipment.Remove(item3.Position);
-                玩家穿卸装备((装备穿戴部位)item3.Position, item3, null);
+                UserChangeEquipment((EquipmentWearType)item3.Position, item3, null);
                 Enqueue(new 玩家掉落装备
                 {
                     Description = item3.ToArray()
@@ -3599,13 +3599,13 @@ public sealed class PlayerObject : MapObject
         RefreshStats();
     }
 
-    public void 玩家穿卸装备(装备穿戴部位 装备部位, EquipmentInfo 原有装备, EquipmentInfo 现有装备)
+    public void UserChangeEquipment(EquipmentWearType wearType, EquipmentInfo oldItem, EquipmentInfo newItem)
     {
         if (ItemSetInfo.DataSheet.TryGetValue(0u, out var value))
         {
             BonusStats[套装编号] = value.Stats;
         }
-        if (装备部位 == 装备穿戴部位.武器 || 装备部位 == 装备穿戴部位.衣服 || 装备部位 == 装备穿戴部位.披风)
+        if (wearType == EquipmentWearType.Weapon || wearType == EquipmentWearType.Armour || wearType == EquipmentWearType.Cloak)
         {
             if (Buffs.TryGetValue(2555, out var v))
             {
@@ -3613,28 +3613,21 @@ public sealed class PlayerObject : MapObject
             }
             SendPacket(new 同步角色外形
             {
-                对象编号 = ObjectID,
-                装备部位 = (byte)装备部位,
-                装备编号 = (现有装备?.ID ?? 0),
-                升级次数 = (现有装备?.UpgradeCount.V ?? 0)
+                ObjectID = ObjectID,
+                WearType = (byte)wearType,
+                ItemID = (newItem?.ID ?? 0),
+                UpgradeCount = (newItem?.UpgradeCount.V ?? 0)
             });
         }
-        if (原有装备 != null)
+        if (oldItem != null)
         {
-            string 物品名字 = 原有装备.Name;
-            string text = 物品名字;
-            if (string.Equals(text, "ProtectionRing", StringComparison.OrdinalIgnoreCase) == false)
-            {
-                if (string.Equals(text, "ResurrectionRing", StringComparison.OrdinalIgnoreCase))
-                {
-                    HasResurrectionRing = false;
-                }
-            }
-            else
-            {
-                ProtectionRing = false;
-            }
-            if (原有装备.Type == ItemType.Weapon)
+            string iname = oldItem.Name;
+            if (string.Equals(iname, "ProtectionRing", StringComparison.OrdinalIgnoreCase) == false)
+                HasProtectionRing = false;
+            else if (string.Equals(iname, "ResurrectionRing", StringComparison.OrdinalIgnoreCase) == false)
+                HasResurrectionRing = false;
+
+            if (oldItem.Type == ItemType.Weapon)
             {
                 foreach (BuffInfo item in Buffs.Values.ToList())
                 {
@@ -3644,7 +3637,7 @@ public sealed class PlayerObject : MapObject
                     }
                 }
             }
-            if (原有装备.Type == ItemType.Weapon)
+            if (oldItem.Type == ItemType.Weapon)
             {
                 foreach (PetObject pet in Pets)
                 {
@@ -3654,7 +3647,7 @@ public sealed class PlayerObject : MapObject
             }
             if (Settings.Default.CurrentVersion >= 2)
             {
-                if (原有装备.Type == ItemType.Weapon)
+                if (oldItem.Type == ItemType.Weapon)
                 {
                     Character.祖玛套装件武器数.V = 0;
                     Character.赤月套装件武器数.V = 0;
@@ -3671,7 +3664,7 @@ public sealed class PlayerObject : MapObject
                     Character.通用套装5件武器数.V = 0;
                     Character.通用套装6件武器数.V = 0;
                 }
-                if (原有装备.Type == ItemType.Armour)
+                if (oldItem.Type == ItemType.Armour)
                 {
                     Character.祖玛套装件衣服数.V = 0;
                     Character.赤月套装件衣服数.V = 0;
@@ -3688,7 +3681,7 @@ public sealed class PlayerObject : MapObject
                     Character.通用套装5件衣服数.V = 0;
                     Character.通用套装6件衣服数.V = 0;
                 }
-                if (原有装备.Type == ItemType.Bracelet)
+                if (oldItem.Type == ItemType.Bracelet)
                 {
                     Character.祖玛套装件右手镯数.V = 0;
                     Character.祖玛套装件左手镯数.V = 0;
@@ -3719,7 +3712,7 @@ public sealed class PlayerObject : MapObject
                     Character.通用套装5件右手镯数.V = 0;
                     Character.通用套装6件右手镯数.V = 0;
                 }
-                if (原有装备.Type == ItemType.Ring)
+                if (oldItem.Type == ItemType.Ring)
                 {
                     Character.祖玛套装件右戒指数.V = 0;
                     Character.祖玛套装件左戒指数.V = 0;
@@ -3750,7 +3743,7 @@ public sealed class PlayerObject : MapObject
                     Character.通用套装5件右戒指数.V = 0;
                     Character.通用套装6件右戒指数.V = 0;
                 }
-                if (原有装备.Type == ItemType.Necklace)
+                if (oldItem.Type == ItemType.Necklace)
                 {
                     Character.祖玛套装件项链数.V = 0;
                     Character.赤月套装件项链数.V = 0;
@@ -3767,7 +3760,7 @@ public sealed class PlayerObject : MapObject
                     Character.通用套装5件项链数.V = 0;
                     Character.通用套装6件项链数.V = 0;
                 }
-                if (原有装备.Type == ItemType.Helmet)
+                if (oldItem.Type == ItemType.Helmet)
                 {
                     Character.祖玛套装件头盔数.V = 0;
                     Character.赤月套装件头盔数.V = 0;
@@ -3785,62 +3778,55 @@ public sealed class PlayerObject : MapObject
                     Character.通用套装6件头盔数.V = 0;
                 }
             }
-            if (原有装备.FirstInscription != null)
+            if (oldItem.FirstInscription != null)
             {
-                玩家装卸铭文(原有装备.FirstInscription.SkillID, 0);
+                玩家装卸铭文(oldItem.FirstInscription.SkillID, 0);
             }
-            if (原有装备.SecondInscription != null)
+            if (oldItem.SecondInscription != null)
             {
-                玩家装卸铭文(原有装备.SecondInscription.SkillID, 0);
+                玩家装卸铭文(oldItem.SecondInscription.SkillID, 0);
             }
-            if (Buffs.TryGetValue(原有装备.BuffID, out var v2))
+            if (Buffs.TryGetValue(oldItem.BuffID, out var v2))
             {
                 RemoveBuffEx(v2.ID.V);
             }
-            CombatPowerBonus.Remove(原有装备);
-            BonusStats.Remove(原有装备);
-            if (Settings.Default.装备技能开关 == 1 && !string.IsNullOrEmpty(原有装备.EquipInfo.装备特技) && GameSkill.DataSheet.TryGetValue(原有装备.EquipInfo.装备特技, out var value2))
+            CombatPowerBonus.Remove(oldItem);
+            BonusStats.Remove(oldItem);
+            if (Settings.Default.装备技能开关 == 1 && !string.IsNullOrEmpty(oldItem.EquipInfo.装备特技) && GameSkill.DataSheet.TryGetValue(oldItem.EquipInfo.装备特技, out var value2))
             {
                 RemoveSkill(value2.OwnSkillID);
             }
-            if ((原有装备 != null && 原有装备.ID == 99930026) || (现有装备 != null && 现有装备.ID == 99930026))
+            if ((oldItem != null && oldItem.ID == 99930026) || (newItem != null && newItem.ID == 99930026))
             {
                 ActivateParalysisRing();
             }
         }
-        if (现有装备 != null)
+        if (newItem != null)
         {
-            string 物品名字2 = 现有装备.Name;
-            string text2 = 物品名字2;
-            if (string.Equals(text2, "ResurrectionRing", StringComparison.OrdinalIgnoreCase) == false)
-            {
-                if (string.Equals(text2, "ProtectionRing", StringComparison.OrdinalIgnoreCase))
-                {
-                    ProtectionRing = true;
-                }
-            }
-            else
-            {
+            string iname = newItem.Name;
+            if (string.Equals(iname, "ResurrectionRing", StringComparison.OrdinalIgnoreCase))
                 HasResurrectionRing = true;
-            }
-            if (现有装备.FirstInscription != null)
+            else if (string.Equals(iname, "ProtectionRing", StringComparison.OrdinalIgnoreCase))
+                HasProtectionRing = true;
+
+            if (newItem.FirstInscription != null)
             {
-                玩家装卸铭文(现有装备.FirstInscription.SkillID, 现有装备.FirstInscription.ID);
+                玩家装卸铭文(newItem.FirstInscription.SkillID, newItem.FirstInscription.ID);
             }
-            if (现有装备.SecondInscription != null)
+            if (newItem.SecondInscription != null)
             {
-                玩家装卸铭文(现有装备.SecondInscription.SkillID, 现有装备.SecondInscription.ID);
+                玩家装卸铭文(newItem.SecondInscription.SkillID, newItem.SecondInscription.ID);
             }
-            CombatPowerBonus[现有装备] = 现有装备.CombatPower;
-            if (现有装备.Dura.V > 0)
+            CombatPowerBonus[newItem] = newItem.CombatPower;
+            if (newItem.Dura.V > 0)
             {
-                BonusStats.Add(现有装备, 现有装备.Stats);
+                BonusStats.Add(newItem, newItem.Stats);
             }
-            if (现有装备.Info.BuffID > 0)
+            if (newItem.Info.BuffID > 0)
             {
-                AddBuff(现有装备.BuffID, this);
+                AddBuff(newItem.BuffID, this);
             }
-            if (Settings.Default.装备技能开关 == 1 && !string.IsNullOrEmpty(现有装备.EquipInfo.装备特技) && GameSkill.DataSheet.TryGetValue(现有装备.EquipInfo.装备特技, out var value3))
+            if (Settings.Default.装备技能开关 == 1 && !string.IsNullOrEmpty(newItem.EquipInfo.装备特技) && GameSkill.DataSheet.TryGetValue(newItem.EquipInfo.装备特技, out var value3))
             {
                 AddSkill(value3.OwnSkillID);
             }
@@ -6354,7 +6340,7 @@ public sealed class PlayerObject : MapObject
                 }
             }
         }
-        if (原有装备 != null || 现有装备 != null)
+        if (oldItem != null || newItem != null)
         {
             UpdateCombatPower();
             RefreshStats();
@@ -6512,7 +6498,7 @@ public sealed class PlayerObject : MapObject
                     Grid = v.Grid.V,
                     Position = v.Location.V
                 });
-                玩家穿卸装备(装备穿戴部位.战具, v, null);
+                UserChangeEquipment(EquipmentWearType.战具, v, null);
                 Equipment.Remove(v.Location.V);
                 v.Remove();
             }
@@ -7502,11 +7488,11 @@ public sealed class PlayerObject : MapObject
         }
         else
         {
-            快捷对话模块(guard);
+            GuardSpeak(guard);
         }
     }
 
-    public void 快捷对话模块(GuardObject guard)
+    public void GuardSpeak(GuardObject guard)
     {
         if (Dead || StallState > 0 || TradeState >= 3)
             return;
@@ -11737,7 +11723,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     ObjectID = CurrentNPC.ObjectID,
-                                    Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{(装备穿戴部位)重铸部位}>")
+                                    Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{(EquipmentWearType)重铸部位}>")
                                 });
                             }
                             break;
@@ -11852,7 +11838,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     ObjectID = CurrentNPC.ObjectID,
-                                    Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{(装备穿戴部位)重铸部位}>")
+                                    Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{(EquipmentWearType)重铸部位}>")
                                 });
                             }
                             break;
@@ -11873,7 +11859,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     ObjectID = CurrentNPC.ObjectID,
-                                    Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{(装备穿戴部位)重铸部位}>")
+                                    Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{(EquipmentWearType)重铸部位}>")
                                 });
                             }
                             break;
@@ -11894,7 +11880,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     ObjectID = CurrentNPC.ObjectID,
-                                    Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{(装备穿戴部位)重铸部位}>")
+                                    Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{(EquipmentWearType)重铸部位}>")
                                 });
                             }
                             break;
@@ -11915,7 +11901,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     ObjectID = CurrentNPC.ObjectID,
-                                    Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{(装备穿戴部位)重铸部位}>")
+                                    Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{(EquipmentWearType)重铸部位}>")
                                 });
                             }
                             break;
@@ -11936,7 +11922,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     ObjectID = CurrentNPC.ObjectID,
-                                    Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{(装备穿戴部位)重铸部位}>")
+                                    Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{(EquipmentWearType)重铸部位}>")
                                 });
                             }
                             break;
@@ -11957,7 +11943,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     ObjectID = CurrentNPC.ObjectID,
-                                    Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{(装备穿戴部位)重铸部位}>")
+                                    Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{(EquipmentWearType)重铸部位}>")
                                 });
                             }
                             break;
@@ -11978,7 +11964,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     ObjectID = CurrentNPC.ObjectID,
-                                    Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{(装备穿戴部位)重铸部位}>")
+                                    Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{(EquipmentWearType)重铸部位}>")
                                 });
                             }
                             break;
@@ -12004,7 +11990,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     ObjectID = CurrentNPC.ObjectID,
-                                    Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{(装备穿戴部位)重铸部位}>")
+                                    Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{(EquipmentWearType)重铸部位}>")
                                 });
                             }
                             break;
@@ -12025,7 +12011,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     ObjectID = CurrentNPC.ObjectID,
-                                    Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{(装备穿戴部位)重铸部位}>")
+                                    Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{(EquipmentWearType)重铸部位}>")
                                 });
                             }
                             break;
@@ -12046,7 +12032,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     ObjectID = CurrentNPC.ObjectID,
-                                    Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{(装备穿戴部位)重铸部位}>")
+                                    Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{(EquipmentWearType)重铸部位}>")
                                 });
                             }
                             break;
@@ -12067,7 +12053,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     ObjectID = CurrentNPC.ObjectID,
-                                    Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{(装备穿戴部位)重铸部位}>")
+                                    Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{(EquipmentWearType)重铸部位}>")
                                 });
                             }
                             break;
@@ -12088,7 +12074,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     ObjectID = CurrentNPC.ObjectID,
-                                    Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{(装备穿戴部位)重铸部位}>")
+                                    Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{(EquipmentWearType)重铸部位}>")
                                 });
                             }
                             break;
@@ -12109,7 +12095,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     ObjectID = CurrentNPC.ObjectID,
-                                    Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{(装备穿戴部位)重铸部位}>")
+                                    Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{(EquipmentWearType)重铸部位}>")
                                 });
                             }
                             break;
@@ -12130,7 +12116,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     ObjectID = CurrentNPC.ObjectID,
-                                    Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{(装备穿戴部位)重铸部位}>")
+                                    Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{(EquipmentWearType)重铸部位}>")
                                 });
                             }
                             break;
@@ -12161,7 +12147,7 @@ public sealed class PlayerObject : MapObject
                         Enqueue(new 同步交互结果
                         {
                             ObjectID = CurrentNPC.ObjectID,
-                            Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{(装备穿戴部位)重铸部位}>")
+                            Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{(EquipmentWearType)重铸部位}>")
                         });
                     }
                     break;
@@ -16132,7 +16118,7 @@ public sealed class PlayerObject : MapObject
             });
             return;
         }
-        if (item.Weight != 0 && item.Weight > 最大负重 - InventoryWeight)
+        if (item.Weight != 0 && item.Weight > MaxWeight - InventoryWeight)
         {
             Enqueue(new GameErrorMessagePacket
             {
@@ -17781,7 +17767,7 @@ public sealed class PlayerObject : MapObject
         {
             物品数据2 = (角色资源背包.TryGetValue(targetLocation, out var v8) ? v8 : null);
         }
-        if (物品数据.背包锁定 || (物品数据 == null && 物品数据2 == null) || (grid == 0 && targetGrid == 0) || (grid == 0 && targetGrid == 2) || (grid == 2 && targetGrid == 0) || (物品数据 != null && grid == 0 && (物品数据 as EquipmentInfo).CanRemove) || (物品数据2 != null && targetGrid == 0 && (物品数据2 as EquipmentInfo).CanRemove) || (物品数据 != null && targetGrid == 0 && (!(物品数据 is EquipmentInfo 装备数据) || 装备数据.NeedLevel > CurrentLevel || (装备数据.NeedGender != 0 && 装备数据.NeedGender != Gender) || (装备数据.NeedRace != GameObjectRace.Any && 装备数据.NeedRace != Job) || 装备数据.NeedAttack > this[Stat.MaxDC] || 装备数据.NeedMagic > this[Stat.MaxMC] || 装备数据.NeedTaoism > this[Stat.MaxSC] || 装备数据.NeedPiercing > this[Stat.MaxNC] || 装备数据.NeedArchery > this[Stat.MaxBC] || (targetLocation == 0 && 装备数据.Weight > 最大腕力) || (targetLocation != 0 && 装备数据.Weight - 物品数据2?.Weight > 最大穿戴 - EquipmentWeight) || (targetLocation == 0 && 装备数据.Type != ItemType.Weapon) || (targetLocation == 1 && 装备数据.Type != ItemType.Armour) || (targetLocation == 2 && 装备数据.Type != ItemType.Cloak) || (targetLocation == 3 && 装备数据.Type != ItemType.Helmet) || (targetLocation == 4 && 装备数据.Type != ItemType.ShoulderPad) || (targetLocation == 5 && 装备数据.Type != ItemType.护腕) || (targetLocation == 6 && 装备数据.Type != ItemType.Belt) || (targetLocation == 7 && 装备数据.Type != ItemType.Boots) || (targetLocation == 8 && 装备数据.Type != ItemType.Necklace) || (targetLocation == 13 && 装备数据.Type != ItemType.Medal) || (targetLocation == 14 && 装备数据.Type != ItemType.玉佩) || (targetLocation == 15 && 装备数据.Type != ItemType.战具) || (targetLocation == 9 && 装备数据.Type != ItemType.Ring) || (targetLocation == 10 && 装备数据.Type != ItemType.Ring) || (targetLocation == 11 && 装备数据.Type != ItemType.Bracelet) || (targetLocation == 12 && 装备数据.Type != ItemType.Bracelet))) || (物品数据2 != null && grid == 0 && (!(物品数据2 is EquipmentInfo 装备数据2) || 装备数据2.NeedLevel > CurrentLevel || (装备数据2.NeedGender != 0 && 装备数据2.NeedGender != Gender) || (装备数据2.NeedRace != GameObjectRace.Any && 装备数据2.NeedRace != Job) || 装备数据2.NeedAttack > this[Stat.MaxDC] || 装备数据2.NeedMagic > this[Stat.MaxMC] || 装备数据2.NeedTaoism > this[Stat.MaxSC] || 装备数据2.NeedPiercing > this[Stat.MaxNC] || 装备数据2.NeedArchery > this[Stat.MaxBC] || (location == 0 && 装备数据2.Weight > 最大腕力) || (location != 0 && 装备数据2.Weight - 物品数据?.Weight > 最大穿戴 - EquipmentWeight) || (location == 0 && 装备数据2.Type != ItemType.Weapon) || (location == 1 && 装备数据2.Type != ItemType.Armour) || (location == 2 && 装备数据2.Type != ItemType.Cloak) || (location == 3 && 装备数据2.Type != ItemType.Helmet) || (location == 4 && 装备数据2.Type != ItemType.ShoulderPad) || (location == 5 && 装备数据2.Type != ItemType.护腕) || (location == 6 && 装备数据2.Type != ItemType.Belt) || (location == 7 && 装备数据2.Type != ItemType.Boots) || (location == 8 && 装备数据2.Type != ItemType.Necklace) || (location == 13 && 装备数据2.Type != ItemType.Medal) || (location == 14 && 装备数据2.Type != ItemType.玉佩) || (location == 15 && 装备数据2.Type != ItemType.战具) || (location == 9 && 装备数据2.Type != ItemType.Ring) || (location == 10 && 装备数据2.Type != ItemType.Ring) || (location == 11 && 装备数据2.Type != ItemType.Bracelet) || (location == 12 && 装备数据2.Type != ItemType.Bracelet))))
+        if (物品数据.背包锁定 || (物品数据 == null && 物品数据2 == null) || (grid == 0 && targetGrid == 0) || (grid == 0 && targetGrid == 2) || (grid == 2 && targetGrid == 0) || (物品数据 != null && grid == 0 && (物品数据 as EquipmentInfo).CanRemove) || (物品数据2 != null && targetGrid == 0 && (物品数据2 as EquipmentInfo).CanRemove) || (物品数据 != null && targetGrid == 0 && (!(物品数据 is EquipmentInfo 装备数据) || 装备数据.NeedLevel > CurrentLevel || (装备数据.NeedGender != 0 && 装备数据.NeedGender != Gender) || (装备数据.NeedRace != GameObjectRace.Any && 装备数据.NeedRace != Job) || 装备数据.NeedAttack > this[Stat.MaxDC] || 装备数据.NeedMagic > this[Stat.MaxMC] || 装备数据.NeedTaoism > this[Stat.MaxSC] || 装备数据.NeedPiercing > this[Stat.MaxNC] || 装备数据.NeedArchery > this[Stat.MaxBC] || (targetLocation == 0 && 装备数据.Weight > MaxHandWeight) || (targetLocation != 0 && 装备数据.Weight - 物品数据2?.Weight > MaxWearWeight - EquipmentWeight) || (targetLocation == 0 && 装备数据.Type != ItemType.Weapon) || (targetLocation == 1 && 装备数据.Type != ItemType.Armour) || (targetLocation == 2 && 装备数据.Type != ItemType.Cloak) || (targetLocation == 3 && 装备数据.Type != ItemType.Helmet) || (targetLocation == 4 && 装备数据.Type != ItemType.ShoulderPad) || (targetLocation == 5 && 装备数据.Type != ItemType.护腕) || (targetLocation == 6 && 装备数据.Type != ItemType.Belt) || (targetLocation == 7 && 装备数据.Type != ItemType.Boots) || (targetLocation == 8 && 装备数据.Type != ItemType.Necklace) || (targetLocation == 13 && 装备数据.Type != ItemType.Medal) || (targetLocation == 14 && 装备数据.Type != ItemType.玉佩) || (targetLocation == 15 && 装备数据.Type != ItemType.战具) || (targetLocation == 9 && 装备数据.Type != ItemType.Ring) || (targetLocation == 10 && 装备数据.Type != ItemType.Ring) || (targetLocation == 11 && 装备数据.Type != ItemType.Bracelet) || (targetLocation == 12 && 装备数据.Type != ItemType.Bracelet))) || (物品数据2 != null && grid == 0 && (!(物品数据2 is EquipmentInfo 装备数据2) || 装备数据2.NeedLevel > CurrentLevel || (装备数据2.NeedGender != 0 && 装备数据2.NeedGender != Gender) || (装备数据2.NeedRace != GameObjectRace.Any && 装备数据2.NeedRace != Job) || 装备数据2.NeedAttack > this[Stat.MaxDC] || 装备数据2.NeedMagic > this[Stat.MaxMC] || 装备数据2.NeedTaoism > this[Stat.MaxSC] || 装备数据2.NeedPiercing > this[Stat.MaxNC] || 装备数据2.NeedArchery > this[Stat.MaxBC] || (location == 0 && 装备数据2.Weight > MaxHandWeight) || (location != 0 && 装备数据2.Weight - 物品数据?.Weight > MaxWearWeight - EquipmentWeight) || (location == 0 && 装备数据2.Type != ItemType.Weapon) || (location == 1 && 装备数据2.Type != ItemType.Armour) || (location == 2 && 装备数据2.Type != ItemType.Cloak) || (location == 3 && 装备数据2.Type != ItemType.Helmet) || (location == 4 && 装备数据2.Type != ItemType.ShoulderPad) || (location == 5 && 装备数据2.Type != ItemType.护腕) || (location == 6 && 装备数据2.Type != ItemType.Belt) || (location == 7 && 装备数据2.Type != ItemType.Boots) || (location == 8 && 装备数据2.Type != ItemType.Necklace) || (location == 13 && 装备数据2.Type != ItemType.Medal) || (location == 14 && 装备数据2.Type != ItemType.玉佩) || (location == 15 && 装备数据2.Type != ItemType.战具) || (location == 9 && 装备数据2.Type != ItemType.Ring) || (location == 10 && 装备数据2.Type != ItemType.Ring) || (location == 11 && 装备数据2.Type != ItemType.Bracelet) || (location == 12 && 装备数据2.Type != ItemType.Bracelet))))
         {
             return;
         }
@@ -17910,11 +17896,11 @@ public sealed class PlayerObject : MapObject
         });
         if (targetGrid == 0)
         {
-            玩家穿卸装备((装备穿戴部位)targetLocation, (EquipmentInfo)物品数据2, (EquipmentInfo)物品数据);
+            UserChangeEquipment((EquipmentWearType)targetLocation, (EquipmentInfo)物品数据2, (EquipmentInfo)物品数据);
         }
         else if (grid == 0)
         {
-            玩家穿卸装备((装备穿戴部位)location, (EquipmentInfo)物品数据, (EquipmentInfo)物品数据2);
+            UserChangeEquipment((EquipmentWearType)location, (EquipmentInfo)物品数据, (EquipmentInfo)物品数据2);
         }
     }
 
@@ -18329,7 +18315,7 @@ public sealed class PlayerObject : MapObject
                 {
                     return;
                 }
-                快捷对话模块(守卫实例2);
+                GuardSpeak(守卫实例2);
             }
             switch (v.Name)
             {
@@ -24732,7 +24718,7 @@ public sealed class PlayerObject : MapObject
                         }
                     }
                     Equipment.Remove(0);
-                    玩家穿卸装备(装备穿戴部位.武器, v, null);
+                    UserChangeEquipment(EquipmentWearType.Weapon, v, null);
                     Enqueue(new DeleteItemPacket
                     {
                         Grid = 0,
@@ -25026,7 +25012,7 @@ public sealed class PlayerObject : MapObject
                                         }
                                         if (guard != null)
                                         {
-                                            快捷对话模块(guard);
+                                            GuardSpeak(guard);
                                         }
 
                                         break;
@@ -25700,7 +25686,7 @@ public sealed class PlayerObject : MapObject
             {
                 Index = character.Index.V,
                 Name = character.UserName.V,
-                会员等级 = character.本期特权.V,
+                会员等级 = character.CurrentPrivilege.V,
                 Job = (byte)character.Job.V,
                 Gender = (byte)character.Gender.V,
                 GuildName = (character.Guild.V?.GuildName.V ?? "")
