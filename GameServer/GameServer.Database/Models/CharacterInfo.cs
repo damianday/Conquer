@@ -107,14 +107,14 @@ public sealed class CharacterInfo : DBObject
     public readonly DictionaryMonitor<ushort, BuffInfo> Buff数据;
     public readonly DictionaryMonitor<ushort, SkillInfo> Skills;
 
-    public readonly DictionaryMonitor<int, DateTime> 冷却数据;
+    public readonly DictionaryMonitor<int, DateTime> Cooldowns;
 
     public readonly HashMonitor<MailInfo> Mail;
     public readonly HashMonitor<MailInfo> UnreadMail;
 
     public readonly DataMonitor<byte> 预定特权;
-    public readonly DataMonitor<byte> 本期特权;
-    public readonly DataMonitor<byte> 上期特权;
+    public readonly DataMonitor<byte> CurrentPrivilege;
+    public readonly DataMonitor<byte> PreviousPrivilege;
     public readonly DataMonitor<uint> 本期记录;
     public readonly DataMonitor<uint> 上期记录;
 
@@ -756,7 +756,7 @@ public sealed class CharacterInfo : DBObject
         {
             SMain.UpdateCharacter(this, "仓库大小", O);
         };
-        本期特权.Changed += delegate (byte O)
+        CurrentPrivilege.Changed += delegate (byte O)
         {
             SMain.UpdateCharacter(this, "本期特权", O);
         };
@@ -764,7 +764,7 @@ public sealed class CharacterInfo : DBObject
         {
             SMain.UpdateCharacter(this, "本期日期", O);
         };
-        上期特权.Changed += delegate (byte O)
+        PreviousPrivilege.Changed += delegate (byte O)
         {
             SMain.UpdateCharacter(this, "上期特权", O);
         };
