@@ -34,9 +34,9 @@ public enum Stat
     HealthRecovery = 37,// 体力恢复
     ManaRecovery = 38,  // 魔力恢复
     PoisonEvade = 45,   // 中毒躲避
-    最大腕力 = 50,
-    最大穿戴 = 51,
-    最大负重 = 52,
+    MaxHandWeight = 50, // 最大腕力
+    MaxWearWeight = 51, // 最大穿戴
+    MaxWeight = 52,     // 最大负重
     SkillSign = 56,     // 技能标志
     攻杀标志 = 57,
     MinHC = 67,         // 最小神圣伤害
