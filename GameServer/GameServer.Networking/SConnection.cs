@@ -1836,8 +1836,8 @@ public sealed class SConnection
             Player.ConsumeItem(Settings.Default.雕爷1号位铭文石, 物品2);
             Player.ConsumeItem(Settings.Default.雕爷1号位灵符, 物品);
             v.FirstInscription = InscriptionSkill.DataSheet[(ushort)P.铭文索引];
-            Player.玩家装卸铭文(v.FirstInscription.SkillID, 0);
-            Player.玩家装卸铭文(v.FirstInscription.SkillID, v.FirstInscription.ID);
+            Player.UserChangeInscription(v.FirstInscription.SkillID, 0);
+            Player.UserChangeInscription(v.FirstInscription.SkillID, v.FirstInscription.ID);
             SendPacket(new SyncItemPacket
             {
                 Description = v.ToArray()

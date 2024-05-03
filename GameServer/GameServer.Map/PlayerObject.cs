@@ -3547,7 +3547,7 @@ public sealed class PlayerObject : MapObject
         return true;
     }
 
-    public void 玩家装卸铭文(ushort skillID, byte inscriptionID)
+    public void UserChangeInscription(ushort skillID, byte inscriptionID)
     {
         if (!Skills.TryGetValue(skillID, out var skill) || skill.InscriptionID == inscriptionID)
             return;
@@ -3780,11 +3780,11 @@ public sealed class PlayerObject : MapObject
             }
             if (oldItem.FirstInscription != null)
             {
-                玩家装卸铭文(oldItem.FirstInscription.SkillID, 0);
+                UserChangeInscription(oldItem.FirstInscription.SkillID, 0);
             }
             if (oldItem.SecondInscription != null)
             {
-                玩家装卸铭文(oldItem.SecondInscription.SkillID, 0);
+                UserChangeInscription(oldItem.SecondInscription.SkillID, 0);
             }
             if (Buffs.TryGetValue(oldItem.BuffID, out var v2))
             {
@@ -3811,11 +3811,11 @@ public sealed class PlayerObject : MapObject
 
             if (newItem.FirstInscription != null)
             {
-                玩家装卸铭文(newItem.FirstInscription.SkillID, newItem.FirstInscription.ID);
+                UserChangeInscription(newItem.FirstInscription.SkillID, newItem.FirstInscription.ID);
             }
             if (newItem.SecondInscription != null)
             {
-                玩家装卸铭文(newItem.SecondInscription.SkillID, newItem.SecondInscription.ID);
+                UserChangeInscription(newItem.SecondInscription.SkillID, newItem.SecondInscription.ID);
             }
             CombatPowerBonus[newItem] = newItem.CombatPower;
             if (newItem.Dura.V > 0)
@@ -11430,12 +11430,12 @@ public sealed class PlayerObject : MapObject
                         CurrentNPCDialoguePage = 700101000;
                         if (v5.FirstInscription != null)
                         {
-                            玩家装卸铭文(v5.FirstInscription.SkillID, 0);
+                            UserChangeInscription(v5.FirstInscription.SkillID, 0);
                         }
                         if (Job == GameObjectRace.Warrior)
                         {
                             v5.FirstInscription = InscriptionSkill.RandomRefinement(Job);
-                            玩家装卸铭文(v5.FirstInscription.SkillID, v5.FirstInscription.ID);
+                            UserChangeInscription(v5.FirstInscription.SkillID, v5.FirstInscription.ID);
                             NetworkManager.SendAnnouncement($"[{this}]成功洗出来【{v5}】[{v5.FirstInscription.SkillName.Split('-').Last()}]");
                             Enqueue(new SyncItemPacket
                             {
@@ -11449,7 +11449,7 @@ public sealed class PlayerObject : MapObject
                         if (Job == GameObjectRace.Wizard)
                         {
                             v5.FirstInscription = InscriptionSkill.RandomRefinement(Job);
-                            玩家装卸铭文(v5.FirstInscription.SkillID, v5.FirstInscription.ID);
+                            UserChangeInscription(v5.FirstInscription.SkillID, v5.FirstInscription.ID);
                             NetworkManager.SendAnnouncement($"[{this}]成功洗出来【{v5}】[{v5.FirstInscription.SkillName.Split('-').Last()}]");
                             Enqueue(new SyncItemPacket
                             {
@@ -11463,7 +11463,7 @@ public sealed class PlayerObject : MapObject
                         if (Job == GameObjectRace.Assassin)
                         {
                             v5.FirstInscription = InscriptionSkill.RandomRefinement(Job);
-                            玩家装卸铭文(v5.FirstInscription.SkillID, v5.FirstInscription.ID);
+                            UserChangeInscription(v5.FirstInscription.SkillID, v5.FirstInscription.ID);
                             NetworkManager.SendAnnouncement($"[{this}]成功洗出来【{v5}】[{v5.FirstInscription.SkillName.Split('-').Last()}]");
                             Enqueue(new SyncItemPacket
                             {
@@ -11477,7 +11477,7 @@ public sealed class PlayerObject : MapObject
                         if (Job == GameObjectRace.Archer)
                         {
                             v5.FirstInscription = InscriptionSkill.RandomRefinement(Job);
-                            玩家装卸铭文(v5.FirstInscription.SkillID, v5.FirstInscription.ID);
+                            UserChangeInscription(v5.FirstInscription.SkillID, v5.FirstInscription.ID);
                             NetworkManager.SendAnnouncement($"[{this}]成功洗出来【{v5}】[{v5.FirstInscription.SkillName.Split('-').Last()}]");
                             Enqueue(new SyncItemPacket
                             {
@@ -11491,7 +11491,7 @@ public sealed class PlayerObject : MapObject
                         if (Job == GameObjectRace.Taoist)
                         {
                             v5.FirstInscription = InscriptionSkill.RandomRefinement(Job);
-                            玩家装卸铭文(v5.FirstInscription.SkillID, v5.FirstInscription.ID);
+                            UserChangeInscription(v5.FirstInscription.SkillID, v5.FirstInscription.ID);
                             NetworkManager.SendAnnouncement($"[{this}]成功洗出来【{v5}】[{v5.FirstInscription.SkillName.Split('-').Last()}]");
                             Enqueue(new SyncItemPacket
                             {
@@ -11505,7 +11505,7 @@ public sealed class PlayerObject : MapObject
                         if (Job == GameObjectRace.DragonLance)
                         {
                             v5.FirstInscription = InscriptionSkill.RandomRefinement(Job);
-                            玩家装卸铭文(v5.FirstInscription.SkillID, v5.FirstInscription.ID);
+                            UserChangeInscription(v5.FirstInscription.SkillID, v5.FirstInscription.ID);
                             NetworkManager.SendAnnouncement($"[{this}]成功洗出来【{v5}】[{v5.FirstInscription.SkillName.Split('-').Last()}]");
                             Enqueue(new SyncItemPacket
                             {
@@ -22233,20 +22233,20 @@ public sealed class PlayerObject : MapObject
                         }
                         if (v4.FirstInscription != null)
                         {
-                            玩家装卸铭文(v4.FirstInscription.SkillID, 0);
+                            UserChangeInscription(v4.FirstInscription.SkillID, 0);
                         }
                         if (v4.SecondInscription != null)
                         {
-                            玩家装卸铭文(v4.SecondInscription.SkillID, 0);
+                            UserChangeInscription(v4.SecondInscription.SkillID, 0);
                         }
                         v4.当前铭栏.V = (byte)((v4.当前铭栏.V == 0) ? 1u : 0u);
                         if (v4.FirstInscription != null)
                         {
-                            玩家装卸铭文(v4.FirstInscription.SkillID, v4.FirstInscription.ID);
+                            UserChangeInscription(v4.FirstInscription.SkillID, v4.FirstInscription.ID);
                         }
                         if (v4.SecondInscription != null)
                         {
-                            玩家装卸铭文(v4.SecondInscription.SkillID, v4.SecondInscription.ID);
+                            UserChangeInscription(v4.SecondInscription.SkillID, v4.SecondInscription.ID);
                         }
                         Enqueue(new SyncItemPacket
                         {
@@ -23841,14 +23841,14 @@ public sealed class PlayerObject : MapObject
                         }
                     }
                 }
-                玩家装卸铭文(装备数据.SecondInscription.SkillID, 装备数据.SecondInscription.ID);
+                UserChangeInscription(装备数据.SecondInscription.SkillID, 装备数据.SecondInscription.ID);
                 Character.铭文洗练次数2.V++;
             }
             else
             {
                 if (装备类型 == 0)
                 {
-                    玩家装卸铭文(装备数据.FirstInscription.SkillID, 0);
+                    UserChangeInscription(装备数据.FirstInscription.SkillID, 0);
                 }
                 InscriptionSkill 铭文技能7;
                 do
@@ -23990,7 +23990,7 @@ public sealed class PlayerObject : MapObject
                 }
                 if (装备类型 == 0)
                 {
-                    玩家装卸铭文(装备数据.FirstInscription.SkillID, 装备数据.FirstInscription.ID);
+                    UserChangeInscription(装备数据.FirstInscription.SkillID, 装备数据.FirstInscription.ID);
                     Character.铭文洗练次数1.V++;
                 }
             }
@@ -24271,12 +24271,12 @@ public sealed class PlayerObject : MapObject
         }
         if (装备类型 == 0)
         {
-            玩家装卸铭文(装备数据.WorstInscription.SkillID, 0);
+            UserChangeInscription(装备数据.WorstInscription.SkillID, 0);
         }
         装备数据.WorstInscription = 洗练铭文;
         if (装备类型 == 0)
         {
-            玩家装卸铭文(洗练铭文.SkillID, 洗练铭文.ID);
+            UserChangeInscription(洗练铭文.SkillID, 洗练铭文.ID);
         }
         Enqueue(new SyncItemPacket
         {
@@ -24329,12 +24329,12 @@ public sealed class PlayerObject : MapObject
         }
         if (装备类型 == 0)
         {
-            玩家装卸铭文(装备数据.BestInscription.SkillID, 0);
+            UserChangeInscription(装备数据.BestInscription.SkillID, 0);
         }
         装备数据.BestInscription = 洗练铭文;
         if (装备类型 == 0)
         {
-            玩家装卸铭文(洗练铭文.SkillID, 洗练铭文.ID);
+            UserChangeInscription(洗练铭文.SkillID, 洗练铭文.ID);
         }
         Enqueue(new SyncItemPacket
         {
