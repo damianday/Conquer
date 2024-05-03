@@ -24,6 +24,7 @@ public static class SAccounts
 
 
     public static int AccountCount => Accounts.Count;
+    public static int CreatedAccounts;
 
     public static string CreatePromoCode()
     {
@@ -91,6 +92,8 @@ public static class SAccounts
                 SaveAccount(referrer);
             }
         }
+
+        CreatedAccounts++;
     }
 
     public static void SaveAccount(AccountInfo account)

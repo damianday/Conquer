@@ -324,7 +324,6 @@ public sealed class SConnection
 			SAccounts.AddAccount(new AccountInfo(name, password, question, answer, referrerCode));
 			SendPacket(new AccountRegisterSuccessPacket());
 			SMain.AddLogMessage("Account registration is successful! Account: " + name);
-			SMain.CreatedAccounts++;
 		}
 	}
 

@@ -17,10 +17,8 @@ public static class SEngine
 	private static TcpListener Listener;
 	private static UdpClient TicketSender;
 
-	public static bool Running;
+	public static bool Running { get; set; }
 
-	public static uint 已登录连接数;
-	public static uint 已上线连接数;
 	public static long TotalBytesSent;
 	public static long TotalBytesReceived;
 
@@ -28,9 +26,9 @@ public static class SEngine
 	private static ConcurrentQueue<SConnection> RemovingConnections = new ConcurrentQueue<SConnection>();
 	private static ConcurrentQueue<SConnection> AddingConnections = new ConcurrentQueue<SConnection>();
 
-	public static bool StartService()
+	public static void StartService()
 	{
-		Running = true;
+		if (Running) return;
 
 		Connections.Clear();
 		RemovingConnections.Clear();
@@ -43,9 +41,9 @@ public static class SEngine
 			Listener.BeginAcceptTcpClient(Connection, null);
 
 			TicketSender = new UdpClient();
-			//_ticketClient = new UdpClient(new IPEndPoint(IPAddress.Any, (ushort)MainForm.Instance.LocalListeningPortEdit.Value));
 
-			Task.Run(delegate
+            Running = true;
+            Task.Run(delegate
 			{
 				while (Running)
 				{
@@ -54,7 +52,6 @@ public static class SEngine
 					Thread.Sleep(1);
 				}
 			});
-			return true;
 		}
 		catch (Exception ex)
 		{
@@ -65,13 +62,13 @@ public static class SEngine
 
 			TicketSender?.Close();
 			TicketSender = null;
-
-			return false;
 		}
 	}
 
 	public static void StopService()
 	{
+		if (!Running) return;
+
 		Running = false;
 
 		Listener?.Stop();

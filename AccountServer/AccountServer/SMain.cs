@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Windows.Forms;
 
-using Ionic.Zlib;
 using Newtonsoft.Json;
 
 using AccountServer.Networking;
@@ -32,7 +32,6 @@ public partial class SMain : Form
         public IPEndPoint PublicAddress;
     }
 
-    public static uint CreatedAccounts;
     public static uint TotalTickets;
     public static long TotalBytesReceived;
     public static long TotalBytesSent;
@@ -64,34 +63,14 @@ public partial class SMain : Form
         Instance = this;
 
         Settings.Default.Load();
-
-        LocalListeningPortEdit.Value = Settings.Default.LocalListeningPort;
-        TicketSendingPortEdit.Value = Settings.Default.TicketSendingPort;
-
-        if (!File.Exists(ServerConfigFile))
-        {
-            LogTextBox.AppendText("The server profile was not found, note the configuration\r\n");
-        }
-        if (!Directory.Exists(SAccounts.AccountDirectory))
-        {
-            LogTextBox.AppendText("The account configuration folder could not be found, please note the guide\r\n");
-        }
-        if (!File.Exists(".\\00000.pak"))
-        {
-            LogTextBox.AppendText("The game patch update file was not found, please check the import\r\n");
-        }
-        if (!File.Exists(PatchConfigFile))
-        {
-            LogTextBox.AppendText("The update profile was not found, please check configuration\r\n");
-        }
     }
 
     public static void UpdateServerStats()
     {
-        Instance?.BeginInvoke((MethodInvoker)delegate
+        Instance?.BeginInvoke(() =>
         {
             Instance.ExistingAccountsLabel.Text = $"Accounts: {SAccounts.AccountCount}";
-            Instance.NewAccountsLabel.Text = $"New Accounts: {CreatedAccounts}";
+            Instance.NewAccountsLabel.Text = $"New Accounts: {SAccounts.CreatedAccounts}";
             Instance.TicketsGeneratedLabel.Text = $"Tickets: {TotalTickets}";
             Instance.BytesReceivedLabel.Text = $"Bytes Received: {TotalBytesReceived}";
             Instance.BytesSentLabel.Text = $"Bytes Sent: {TotalBytesSent}";
@@ -100,17 +79,24 @@ public partial class SMain : Form
 
     public static void AddLogMessage(string message)
     {
-        Instance?.BeginInvoke((MethodInvoker)delegate
+        static void AddLog(string message)
         {
             Instance.LogTextBox.AppendText(message + "\r\n");
             Instance.LogTextBox.ScrollToCaret();
-        });
+        }
+
+        if (Instance == null) return;
+
+        if (Instance.InvokeRequired)
+            Instance.BeginInvoke(() => AddLog(message));
+        else
+            AddLog(message);
     }
 
     public static string CreateVerificationCode()
     {
-        string text = "";
-        for (int i = 0; i < 4; i++)
+        var text = string.Empty;
+        for (var i = 0; i < 4; i++)
         {
             text += RandomNumberChars[Random.Shared.Next(RandomNumberChars.Length)];
         }
@@ -125,6 +111,29 @@ public partial class SMain : Form
         return csum;
     }
 
+    private void SMain_Load(object sender, EventArgs e)
+    {
+        LocalListeningPortEdit.Value = Settings.Default.LocalListeningPort;
+        TicketSendingPortEdit.Value = Settings.Default.TicketSendingPort;
+
+        if (!File.Exists(ServerConfigFile))
+        {
+            AddLogMessage("The server profile was not found, note the configuration");
+        }
+        if (!Directory.Exists(SAccounts.AccountDirectory))
+        {
+            AddLogMessage("The account configuration folder could not be found, please note the guide");
+        }
+        if (!File.Exists(".\\00000.pak"))
+        {
+            AddLogMessage("The game patch update file was not found, please check the import");
+        }
+        if (!File.Exists(PatchConfigFile))
+        {
+            AddLogMessage("The update profile was not found, please check configuration");
+        }
+    }
+
     private void FormClosing_Click(object sender, FormClosingEventArgs e)
     {
         if (MessageBox.Show("Are you sure to shut down the server?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
@@ -133,10 +142,15 @@ public partial class SMain : Form
             Environment.Exit(0);
             return;
         }
+
+        e.Cancel = true;
+
+        // Check if we're running, if not dont move to background.
+        if (!SEngine.Running)
+            return;
+
         TrayIcon.Visible = true;
         Hide();
-        if (e != null)
-            e.Cancel = true;
         TrayIcon.ShowBalloonTip(1000, "", "The server has been turned to run in the background.", ToolTipIcon.Info);
     }
 
@@ -202,15 +216,17 @@ public partial class SMain : Form
         Settings.Default.TicketSendingPort = (ushort)TicketSendingPortEdit.Value;
         Settings.Default.Save();
 
-        if (SEngine.StartService())
-        {
-            stopServiceToolStripMenuItem.Enabled = true;
-            loadAccountsToolStripMenuItem.Enabled = false;
-            loadConfigurationToolStripMenuItem.Enabled = false;
-            startServiceToolStripMenuItem.Enabled = false;
-            LocalListeningPortEdit.Enabled = false;
-            TicketSendingPortEdit.Enabled = false;
-        }
+        SEngine.StartService();
+
+        if (!SEngine.Running)
+            return;
+
+        stopServiceToolStripMenuItem.Enabled = true;
+        loadAccountsToolStripMenuItem.Enabled = false;
+        loadConfigurationToolStripMenuItem.Enabled = false;
+        startServiceToolStripMenuItem.Enabled = false;
+        LocalListeningPortEdit.Enabled = false;
+        TicketSendingPortEdit.Enabled = false;
     }
 
     private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -220,7 +236,11 @@ public partial class SMain : Form
 
     private void stopServiceToolStripMenuItem_Click(object sender, EventArgs e)
     {
+        if (!SEngine.Running)
+            return;
+
         SEngine.StopService();
+
         stopServiceToolStripMenuItem.Enabled = false;
         loadAccountsToolStripMenuItem.Enabled = true;
         loadConfigurationToolStripMenuItem.Enabled = true;

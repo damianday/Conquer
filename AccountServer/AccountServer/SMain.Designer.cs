@@ -252,6 +252,7 @@ public partial class SMain
         // TrayIcon
         // 
         TrayIcon.ContextMenuStrip = TrayContextMenu;
+        TrayIcon.Icon = (Icon)resources.GetObject("TrayIcon.Icon");
         TrayIcon.Text = "Account Server";
         TrayIcon.MouseClick += RestoreWindow_Click;
         // 
@@ -295,27 +296,28 @@ public partial class SMain
         // startServiceToolStripMenuItem
         // 
         startServiceToolStripMenuItem.Name = "startServiceToolStripMenuItem";
-        startServiceToolStripMenuItem.Size = new Size(138, 22);
+        startServiceToolStripMenuItem.Size = new Size(180, 22);
         startServiceToolStripMenuItem.Text = "Start Service";
         startServiceToolStripMenuItem.Click += startServiceToolStripMenuItem_Click;
         // 
         // stopServiceToolStripMenuItem
         // 
+        stopServiceToolStripMenuItem.Enabled = false;
         stopServiceToolStripMenuItem.Name = "stopServiceToolStripMenuItem";
-        stopServiceToolStripMenuItem.Size = new Size(138, 22);
+        stopServiceToolStripMenuItem.Size = new Size(180, 22);
         stopServiceToolStripMenuItem.Text = "Stop Service";
         stopServiceToolStripMenuItem.Click += stopServiceToolStripMenuItem_Click;
         // 
         // toolStripMenuItem2
         // 
         toolStripMenuItem2.Name = "toolStripMenuItem2";
-        toolStripMenuItem2.Size = new Size(135, 6);
+        toolStripMenuItem2.Size = new Size(177, 6);
         // 
         // reloadToolStripMenuItem
         // 
         reloadToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { loadConfigurationToolStripMenuItem, loadAccountsToolStripMenuItem, LoadUpdateConfigurationToolStripMenuItem });
         reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
-        reloadToolStripMenuItem.Size = new Size(138, 22);
+        reloadToolStripMenuItem.Size = new Size(180, 22);
         reloadToolStripMenuItem.Text = "&Reload";
         // 
         // loadConfigurationToolStripMenuItem
@@ -339,12 +341,12 @@ public partial class SMain
         // toolStripMenuItem1
         // 
         toolStripMenuItem1.Name = "toolStripMenuItem1";
-        toolStripMenuItem1.Size = new Size(135, 6);
+        toolStripMenuItem1.Size = new Size(177, 6);
         // 
         // exitToolStripMenuItem
         // 
         exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-        exitToolStripMenuItem.Size = new Size(138, 22);
+        exitToolStripMenuItem.Size = new Size(180, 22);
         exitToolStripMenuItem.Text = "E&xit";
         exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
         // 
@@ -452,6 +454,7 @@ public partial class SMain
         StartPosition = FormStartPosition.CenterScreen;
         Text = "AccountServer";
         FormClosing += FormClosing_Click;
+        Load += SMain_Load;
         MainTabControl.ResumeLayout(false);
         LogsTabPage.ResumeLayout(false);
         AccountsTabPage.ResumeLayout(false);
