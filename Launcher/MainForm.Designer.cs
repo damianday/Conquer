@@ -404,7 +404,7 @@ namespace Launcher
             // 
             RegistrationErrorLabel.Font = new Font("Arial", 9F);
             RegistrationErrorLabel.ForeColor = Color.DodgerBlue;
-            RegistrationErrorLabel.Location = new Point(120, 246);
+            RegistrationErrorLabel.Location = new Point(120, 265);
             RegistrationErrorLabel.Margin = new Padding(4, 0, 4, 0);
             RegistrationErrorLabel.Name = "RegistrationErrorLabel";
             RegistrationErrorLabel.Size = new Size(391, 20);
@@ -473,7 +473,7 @@ namespace Launcher
             Register_ReferralCodeTextBox.Symbol = 61447;
             Register_ReferralCodeTextBox.SymbolColor = Color.LightSkyBlue;
             Register_ReferralCodeTextBox.SymbolSize = 22;
-            Register_ReferralCodeTextBox.TabIndex = 1;
+            Register_ReferralCodeTextBox.TabIndex = 5;
             Register_ReferralCodeTextBox.TextAlignment = ContentAlignment.MiddleLeft;
             Register_ReferralCodeTextBox.Watermark = "Referral Code - Optional";
             Register_ReferralCodeTextBox.WatermarkActiveColor = Color.DodgerBlue;

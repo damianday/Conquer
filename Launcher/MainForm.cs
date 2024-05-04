@@ -433,10 +433,10 @@ namespace Launcher
                 RegistrationErrorLabel.Text = "Security answer must be 2 to 18 characters long";
                 RegistrationErrorLabel.Visible = true;
             }
-            else if (Register_ReferralCodeTextBox.Text.Length != 4)
+            else if (Register_ReferralCodeTextBox.Text.Length > 0 && Register_ReferralCodeTextBox.Text.Length != 4)
             {
-                Register_ReferralCodeTextBox.Text = "Referral code must me 4 characters long";
-                Register_ReferralCodeTextBox.Visible = true;
+                RegistrationErrorLabel.Text = "Referral code must me 4 characters long";
+                RegistrationErrorLabel.Visible = true;
             }
             else
             {
@@ -453,7 +453,11 @@ namespace Launcher
                 });
 
                 UILock();
-                Register_PasswordTextBox.Text = Register_SecretAnswerTextBox.Text = "";
+                Register_AccountNameTextBox.Text = string.Empty;
+                Register_PasswordTextBox.Text = string.Empty;
+                Register_QuestionTextBox.Text = string.Empty;
+                Register_SecretAnswerTextBox.Text = string.Empty;
+                Register_ReferralCodeTextBox.Text = string.Empty;
                 InterfaceUpdateTimer.Enabled = true;
             }
         }
