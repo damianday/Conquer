@@ -118,19 +118,19 @@ public partial class SMain : Form
 
         if (!File.Exists(ServerConfigFile))
         {
-            AddLogMessage("The server profile was not found, note the configuration");
+            AddLogMessage(DateTime.Now.ToString() + " - The server profile was not found, note the configuration");
         }
         if (!Directory.Exists(SAccounts.AccountDirectory))
         {
-            AddLogMessage("The account configuration folder could not be found, please note the guide");
+            AddLogMessage(DateTime.Now.ToString() + " - The account configuration folder could not be found, please note the guide");
         }
         if (!File.Exists(".\\00000.pak"))
         {
-            AddLogMessage("The game patch update file was not found, please check the import");
+            AddLogMessage(DateTime.Now.ToString() + " - The game patch update file was not found, please check the import");
         }
         if (!File.Exists(PatchConfigFile))
         {
-            AddLogMessage("The update profile was not found, please check configuration");
+            AddLogMessage(DateTime.Now.ToString() + " - The update profile was not found, please check configuration");
         }
     }
 
@@ -192,7 +192,7 @@ public partial class SMain : Form
         PatchChecksum = CalcFileChecksum(buffer);
         PatchChunks = (int)Math.Ceiling((float)PatchData.Length / 40960f);
 
-        AddLogMessage($"{PatchData.Length} {PatchChecksum}");
+        AddLogMessage(DateTime.Now.ToString() + $" - {PatchData.Length} {PatchChecksum}");
     }
 
     private void startServiceToolStripMenuItem_Click(object sender, EventArgs e)
@@ -204,7 +204,7 @@ public partial class SMain : Form
 
         if (ServerList.Count == 0)
         {
-            AddLogMessage("The server configuration is empty and the startup fails");
+            AddLogMessage(DateTime.Now.ToString() + " - The server configuration is empty and the startup fails");
             return;
         }
         if (SAccounts.AccountCount == 0)
@@ -253,7 +253,7 @@ public partial class SMain : Form
     {
         if (!File.Exists(ServerConfigFile))
         {
-            AddLogMessage("The configuration file does not exist and has been created automatically");
+            AddLogMessage(DateTime.Now.ToString() + " - The configuration file does not exist and has been created automatically");
             File.WriteAllBytes(ServerConfigFile, Array.Empty<byte>());
         }
         Process.Start("notepad.exe", ServerConfigFile);
@@ -290,14 +290,14 @@ public partial class SMain : Form
             Environment.Exit(0);
         }
 
-        AddLogMessage($"The network configuration loaded {ServerList.Count}.");
+        AddLogMessage(DateTime.Now.ToString() + $" - The network configuration loaded {ServerList.Count}.");
     }
 
     private void openAccountDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
     {
         if (!Directory.Exists(SAccounts.AccountDirectory))
         {
-            AddLogMessage("The account directory does not exist and is automatically created");
+            AddLogMessage(DateTime.Now.ToString() + " - The account directory does not exist and is automatically created");
             Directory.CreateDirectory(SAccounts.AccountDirectory);
             return;
         }
@@ -309,14 +309,14 @@ public partial class SMain : Form
     {
         if (!Directory.Exists(SAccounts.AccountDirectory))
         {
-            AddLogMessage("The account directory does not exist and is automatically created");
+            AddLogMessage(DateTime.Now.ToString() + " - The account directory does not exist and is automatically created");
             Directory.CreateDirectory(SAccounts.AccountDirectory);
             return;
         }
 
         SAccounts.LoadAccounts();
 
-        AddLogMessage($"Account data loaded, the current number of accounts: {SAccounts.Accounts.Count}");
+        AddLogMessage(DateTime.Now.ToString() + $" - Account data loaded, the current number of accounts: {SAccounts.Accounts.Count}");
         ExistingAccountsLabel.Text = $"Accounts: {SAccounts.Accounts.Count}";
     }
 
@@ -324,7 +324,7 @@ public partial class SMain : Form
     {
         if (!File.Exists(PatchConfigFile))
         {
-            AddLogMessage("The configuration file does not exist and has been created automatically");
+            AddLogMessage(DateTime.Now.ToString() + $" - Account data loaded, the current number of accounts: {SAccounts.Accounts.Count}");
             File.WriteAllBytes(PatchConfigFile, Array.Empty<byte>());
         }
         Process.Start("notepad.exe", PatchConfigFile);
@@ -334,7 +334,7 @@ public partial class SMain : Form
     {
         if (!Directory.Exists(PatchDirectory))
         {
-            AddLogMessage("The patch directory does not exist and is automatically created");
+            AddLogMessage(DateTime.Now.ToString() + " - The patch directory does not exist and is automatically created");
             Directory.CreateDirectory(PatchDirectory);
         }
         else
