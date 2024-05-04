@@ -324,7 +324,7 @@ public partial class SMain : Form
     {
         if (!File.Exists(PatchConfigFile))
         {
-            AddLogMessage(DateTime.Now.ToString() + $" - Account data loaded, the current number of accounts: {SAccounts.Accounts.Count}");
+            AddLogMessage(DateTime.Now.ToString() + $" - The configuration file does not exist and has been created automatically");
             File.WriteAllBytes(PatchConfigFile, Array.Empty<byte>());
         }
         Process.Start("notepad.exe", PatchConfigFile);
