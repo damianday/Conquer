@@ -201,6 +201,7 @@ public partial class SMain : Form
         AddLogMessage(DateTime.Now.ToString() + $" - {PatchData.Length} {PatchChecksum}");
     }
 
+    #region Start/Stop Account Server
     private void startServiceToolStripMenuItem_Click(object sender, EventArgs e)
     {
         ReadPatchFile();
@@ -264,7 +265,7 @@ public partial class SMain : Form
         }
         Process.Start("notepad.exe", ServerConfigFile);
     }
-
+    #endregion
     private void loadConfigurationToolStripMenuItem_Click(object sender, EventArgs e)
     {
         if (!File.Exists(ServerConfigFile))
