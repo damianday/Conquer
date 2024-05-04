@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using Newtonsoft.Json;
 
 using AccountServer.Networking;
+using System.Drawing;
 
 namespace AccountServer;
 
@@ -74,6 +75,11 @@ public partial class SMain : Form
             Instance.TicketsGeneratedLabel.Text = $"Tickets: {TotalTickets}";
             Instance.BytesReceivedLabel.Text = $"Bytes Received: {TotalBytesReceived}";
             Instance.BytesSentLabel.Text = $"Bytes Sent: {TotalBytesSent}";
+
+            string gameServerProcessName = "GameServer";
+            bool gameServerProcessFound = Process.GetProcessesByName(gameServerProcessName).Length > 0;
+            Instance.GameServerLabel.Text = gameServerProcessFound ? "Game Server: Online" : "Game Server: Offline";
+            Instance.GameServerLabel.ForeColor = gameServerProcessFound ? Color.Green : Color.Red;
         });
     }
 

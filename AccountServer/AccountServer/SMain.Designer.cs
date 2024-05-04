@@ -74,6 +74,7 @@ public partial class SMain
         openPatchDirectoryToolStripMenuItem = new ToolStripMenuItem();
         openAccountDirectoryToolStripMenuItem = new ToolStripMenuItem();
         groupBox1 = new GroupBox();
+        GameServerLabel = new Label();
         TicketsGeneratedLabel = new Label();
         NewAccountsLabel = new Label();
         ExistingAccountsLabel = new Label();
@@ -296,7 +297,7 @@ public partial class SMain
         // startServiceToolStripMenuItem
         // 
         startServiceToolStripMenuItem.Name = "startServiceToolStripMenuItem";
-        startServiceToolStripMenuItem.Size = new Size(180, 22);
+        startServiceToolStripMenuItem.Size = new Size(138, 22);
         startServiceToolStripMenuItem.Text = "Start Service";
         startServiceToolStripMenuItem.Click += startServiceToolStripMenuItem_Click;
         // 
@@ -304,20 +305,20 @@ public partial class SMain
         // 
         stopServiceToolStripMenuItem.Enabled = false;
         stopServiceToolStripMenuItem.Name = "stopServiceToolStripMenuItem";
-        stopServiceToolStripMenuItem.Size = new Size(180, 22);
+        stopServiceToolStripMenuItem.Size = new Size(138, 22);
         stopServiceToolStripMenuItem.Text = "Stop Service";
         stopServiceToolStripMenuItem.Click += stopServiceToolStripMenuItem_Click;
         // 
         // toolStripMenuItem2
         // 
         toolStripMenuItem2.Name = "toolStripMenuItem2";
-        toolStripMenuItem2.Size = new Size(177, 6);
+        toolStripMenuItem2.Size = new Size(135, 6);
         // 
         // reloadToolStripMenuItem
         // 
         reloadToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { loadConfigurationToolStripMenuItem, loadAccountsToolStripMenuItem, LoadUpdateConfigurationToolStripMenuItem });
         reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
-        reloadToolStripMenuItem.Size = new Size(180, 22);
+        reloadToolStripMenuItem.Size = new Size(138, 22);
         reloadToolStripMenuItem.Text = "&Reload";
         // 
         // loadConfigurationToolStripMenuItem
@@ -341,12 +342,12 @@ public partial class SMain
         // toolStripMenuItem1
         // 
         toolStripMenuItem1.Name = "toolStripMenuItem1";
-        toolStripMenuItem1.Size = new Size(177, 6);
+        toolStripMenuItem1.Size = new Size(135, 6);
         // 
         // exitToolStripMenuItem
         // 
         exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-        exitToolStripMenuItem.Size = new Size(180, 22);
+        exitToolStripMenuItem.Size = new Size(138, 22);
         exitToolStripMenuItem.Text = "E&xit";
         exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
         // 
@@ -387,6 +388,7 @@ public partial class SMain
         // 
         // groupBox1
         // 
+        groupBox1.Controls.Add(GameServerLabel);
         groupBox1.Controls.Add(TicketsGeneratedLabel);
         groupBox1.Controls.Add(NewAccountsLabel);
         groupBox1.Controls.Add(ExistingAccountsLabel);
@@ -399,6 +401,17 @@ public partial class SMain
         groupBox1.TabIndex = 20;
         groupBox1.TabStop = false;
         groupBox1.Text = "Statistics";
+        // 
+        // GameServerLabel
+        // 
+        GameServerLabel.AutoSize = true;
+        GameServerLabel.ForeColor = SystemColors.ControlText;
+        GameServerLabel.Location = new Point(262, 49);
+        GameServerLabel.Margin = new Padding(4, 0, 4, 0);
+        GameServerLabel.Name = "GameServerLabel";
+        GameServerLabel.Size = new Size(76, 15);
+        GameServerLabel.TabIndex = 9;
+        GameServerLabel.Text = "Game Server:";
         // 
         // TicketsGeneratedLabel
         // 
@@ -513,4 +526,5 @@ public partial class SMain
     private ColumnHeader DateHeader;
     private ColumnHeader PromoHeader;
     private ColumnHeader ReferrerHeader;
+    private Label GameServerLabel;
 }

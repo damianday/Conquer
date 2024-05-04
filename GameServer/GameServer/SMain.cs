@@ -273,6 +273,11 @@ public partial class SMain : Form
             Main.CycleStatusLabel.Text = $"Cycles: {stats.CycleCount}";
             Main.DataSentStatusLabel.Text = $"Sent: {Compute.GetBytesReadable(stats.TotalSentBytes)}";
             Main.DataReceivedStatusLabel.Text = $"Received: {Compute.GetBytesReadable(stats.TotalReceivedBytes)}";
+
+            string processName = "AccountServer"; 
+            bool processFound = Process.GetProcessesByName(processName).Length > 0;
+            Main.AccountServerCheck.Text = processFound ? "Account Server Online" : "Account Server Offline";
+            Main.AccountServerCheck.BackColor = processFound ? Color.Green : Color.Red;
         });
     }
 

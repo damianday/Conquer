@@ -2263,6 +2263,7 @@ public partial class SMain
         CycleStatusLabel = new ToolStripStatusLabel();
         DataReceivedStatusLabel = new ToolStripStatusLabel();
         DataSentStatusLabel = new ToolStripStatusLabel();
+        AccountServerCheck = new ToolStripStatusLabel();
         角色右键菜单.SuspendLayout();
         下方控件页.SuspendLayout();
         功能模块1.SuspendLayout();
@@ -30970,7 +30971,7 @@ public partial class SMain
         // 
         // statusStrip1
         // 
-        statusStrip1.Items.AddRange(new ToolStripItem[] { PortStatusLabel, RunTimeStatusLabel, ConnectionsStatusLabel, OnlineStatusLabel, ObjectsStatusLabel, CycleStatusLabel, DataReceivedStatusLabel, DataSentStatusLabel });
+        statusStrip1.Items.AddRange(new ToolStripItem[] { PortStatusLabel, RunTimeStatusLabel, ConnectionsStatusLabel, OnlineStatusLabel, ObjectsStatusLabel, CycleStatusLabel, DataReceivedStatusLabel, DataSentStatusLabel, AccountServerCheck });
         statusStrip1.Location = new Point(0, 870);
         statusStrip1.Name = "statusStrip1";
         statusStrip1.Size = new Size(1620, 24);
@@ -31042,6 +31043,13 @@ public partial class SMain
         DataSentStatusLabel.Name = "DataSentStatusLabel";
         DataSentStatusLabel.Size = new Size(50, 19);
         DataSentStatusLabel.Text = "Sent: ??";
+        // 
+        // AccountServerCheck
+        // 
+        AccountServerCheck.BorderSides = (ToolStripStatusLabelBorderSides)(((ToolStripStatusLabelBorderSides.Left) | (ToolStripStatusLabelBorderSides.Top)) | (ToolStripStatusLabelBorderSides.Right)) | (ToolStripStatusLabelBorderSides.Bottom);
+        AccountServerCheck.BorderStyle = Border3DStyle.SunkenInner;
+        AccountServerCheck.Name = "AccountServerCheck";
+        AccountServerCheck.Size = new Size(4, 19);
         // 
         // SMain
         // 
@@ -36732,4 +36740,5 @@ public partial class SMain
     private Label label882;
     private NumericUpDown S_UpgradeXPLevel;
     private Label label887;
+    private ToolStripStatusLabel AccountServerCheck;
 }
