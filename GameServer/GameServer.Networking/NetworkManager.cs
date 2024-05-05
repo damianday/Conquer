@@ -222,96 +222,47 @@ public static class NetworkManager
 
     public static void SendMessage(PlayerObject player, string message)
     {
-        SendChatMessage(player, message);
-    }
-
-    public enum MsgType
-    {
-        Normal = 1,
-        RollingAnnouncement = 2,
-        Announcement = 3,
-    }
-
-    private static void SendChatMessage(PlayerObject player, string message)
-    {
         if (player == null || string.IsNullOrEmpty(message))
             return;
 
-        using MemoryStream memoryStream = new MemoryStream();
-        using BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
-        binaryWriter.Write(0);
-        binaryWriter.Write(0);
-        binaryWriter.Write(1);
-        binaryWriter.Write((int)player.CurrentLevel);
-        binaryWriter.Write(Encoding.UTF8.GetBytes(message + "\0"));
-        binaryWriter.Write(string.Empty);
-        binaryWriter.Write((byte)0);
+        var buffer = ComposeMessage(0, (uint)player.ObjectID, string.Empty, message, 1);
+
         player.Enqueue(new SystemMessagePacket
         {
-            Description = memoryStream.ToArray()
+            Description = buffer
         });
     }
 
     public static void SendAnnouncement(string message, bool rolling = false)
     {
-        using (MemoryStream memoryStream = new MemoryStream())
+        var buffer = ComposeMessage(0, rolling ? 0x90000002u : 0x90000003u, string.Empty, message, 
+            rolling ? (byte)2 : (byte)3);
+
+        Broadcast(new SystemMessagePacket
         {
-            using BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
-            binaryWriter.Write(0);
-            binaryWriter.Write(rolling ? 2415919106u : 2415919107u);
-            binaryWriter.Write(rolling ? 2 : 3);
-            binaryWriter.Write(0);
-            binaryWriter.Write(Encoding.UTF8.GetBytes(message + "\0"));
-            Broadcast(new SystemMessagePacket
-            {
-                Description = memoryStream.ToArray()
-            });
-        }
+            Description = buffer
+        });
+
         if (Settings.Default.系统窗口发送 == 1)
         {
             SMain.AddSystemLog(message);
         }
     }
 
-    /*public static void SendAnnouncement1(string message, string color, int sendType)
-    {
-        string format = "<font color='{0}'>{1}</font>";
-        format = string.Format(format, color, message);
-        using (MemoryStream memoryStream = new MemoryStream())
-        {
-            byte[] array = null;
-            using BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
-            binaryWriter.Write(0);
-            binaryWriter.Write((byte)3);
-            binaryWriter.Write((short)0);
-            binaryWriter.Write((byte)144);
-            binaryWriter.Write((short)sendType);
-            binaryWriter.Write(new byte[6]);
-            binaryWriter.Write(Encoding.UTF8.GetBytes(format + "\0"));
-            array = memoryStream.ToArray();
-            Broadcast(new SystemMessagePacket
-            {
-                Description = array
-            });
-        }
-        SMain.AddSystemLog(message);
-    }*/
-
-    public static void SendMessage(int sender, int target, string uname, string message, int level, MsgType type)
+    public static byte[] ComposeMessage(uint channel1, uint channel2, string sender, string message, byte type, int level = 0)
     {
         var ms = new MemoryStream();
         using var writer = new BinaryWriter(ms);
-        writer.Write(sender);
-        writer.Write(target);
+        writer.Write(channel1);
+        writer.Write(channel2);
         writer.Write((int)type);
         writer.Write(level);
-        writer.Write(Encoding.UTF8.GetBytes(message + "\0"));
-        writer.Write(Encoding.UTF8.GetBytes(uname + "\0"));
+        writer.Write(Encoding.UTF8.GetBytes(message));
+        writer.Write((byte)0);
+        writer.Write(Encoding.UTF8.GetBytes(sender));
+        writer.Write((byte)0);
 
-        Broadcast(new SystemMessagePacket
-        {
-            Description = ms.ToArray()
-        });
+        return ms.ToArray();
     }
 
     public static void Broadcast(GamePacket p)

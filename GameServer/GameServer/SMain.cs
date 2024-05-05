@@ -257,11 +257,11 @@ public partial class SMain : Form
         });
     }
 
-    public static void AddChatLog(string tag, byte[] message)
+    public static void AddChatLog(string tag, string message)
     {
         Main?.BeginInvoke(() =>
         {
-            Main.ChatLogsTextBox.AppendText($"[{DateTime.Now}] {tag + Encoding.UTF8.GetString(message).Trim(default(char))}" + "\r\n");
+            Main.ChatLogsTextBox.AppendText($"[{DateTime.Now}] {tag + message}" + "\r\n");
             Main.ChatLogsTextBox.ScrollToCaret();
             Main.saveChatLogsToolStripMenuItem.Enabled = true;
             Main.clearChatLogsToolStripMenuItem.Enabled = true;

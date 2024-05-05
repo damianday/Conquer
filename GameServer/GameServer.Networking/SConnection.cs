@@ -1395,7 +1395,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.ReceiveUserMessage(P.Description);
+            Player.ReceiveUserMessage(P.Channel, P.Description);
         }
     }
 
@@ -1483,7 +1483,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.UserSendMessage(P.Param1, P.Param2, P.Description);
+            Player.UserSendMessage(P.Param1, P.Channel, P.Description);
         }
     }
 

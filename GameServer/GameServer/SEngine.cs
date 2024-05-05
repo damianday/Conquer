@@ -82,7 +82,7 @@ public static class SEngine
         SMain.AddSystemLog(message);
     }
 
-    public static void AddChatLog(string tag, byte[] message)
+    public static void AddChatLog(string tag, string message)
     {
         SMain.AddChatLog(tag, message);
     }

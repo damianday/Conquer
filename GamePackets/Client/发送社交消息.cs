@@ -8,7 +8,7 @@ public sealed class 发送社交消息 : GamePacket
     public ushort Param1;
 
     [FieldAttribute(Position = 4, Length = 4)]
-    public int Param2;
+    public uint Channel;
 
     [FieldAttribute(Position = 8, Length = 0)]
     public byte[] Description;
