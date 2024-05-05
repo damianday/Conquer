@@ -21,7 +21,7 @@ public class EquipmentInfo : ItemInfo
     public readonly DataMonitor<byte> HolyDamage;
     public readonly DataMonitor<ushort> 圣石数量;
     public readonly DataMonitor<bool> 双铭文栏;
-    public readonly DataMonitor<byte> 当前铭栏;
+    public readonly DataMonitor<byte> CurrentInscription;
     public readonly DataMonitor<int> 洗练数一;
     public readonly DataMonitor<int> 洗练数二;
     public readonly DataMonitor<byte> Status;
@@ -32,7 +32,7 @@ public class EquipmentInfo : ItemInfo
     public readonly DictionaryMonitor<byte, InscriptionSkill> InscriptionSkills;
     public readonly DictionaryMonitor<byte, GameItem> 镶嵌灵石;
 
-    public EquipmentItem EquipInfo => base.Info as EquipmentItem;
+    public EquipmentItem EquipInfo => Info as EquipmentItem;
 
     public int CombatPower
     {
@@ -308,7 +308,7 @@ public class EquipmentInfo : ItemInfo
                         break;
                 }
             }
-            int num6 = RandomStats.Sum((RandomStats x) => x.CombatBonus);
+            int num6 = RandomStats.Sum(x => x.CombatBonus);
             return EquipInfo.BasePower + num4 + num6 + num5;
         }
     }
@@ -340,8 +340,6 @@ public class EquipmentInfo : ItemInfo
     public int NeedTaoism => EquipInfo.NeedTaoism;
     public int NeedPiercing => EquipInfo.NeedPiercing;
     public int NeedArchery => EquipInfo.NeedArchery;
-
-    public string Name => base.Info.Name;
 
     public bool CanRemove => ((EquipmentItem)Item.V).CanRemove;
     public bool CanRepair => PersistType == PersistentItemType.Equipment;
@@ -480,22 +478,16 @@ public class EquipmentInfo : ItemInfo
     {
         get
         {
-            if (当前铭栏.V == 0)
-            {
+            if (CurrentInscription.V == 0)
                 return InscriptionSkills[0];
-            }
             return InscriptionSkills[2];
         }
         set
         {
-            if (当前铭栏.V == 0)
-            {
+            if (CurrentInscription.V == 0)
                 InscriptionSkills[0] = value;
-            }
             else
-            {
                 InscriptionSkills[2] = value;
-            }
         }
     }
 
@@ -503,22 +495,16 @@ public class EquipmentInfo : ItemInfo
     {
         get
         {
-            if (当前铭栏.V == 0)
-            {
+            if (CurrentInscription.V == 0)
                 return InscriptionSkills[1];
-            }
             return InscriptionSkills[3];
         }
         set
         {
-            if (当前铭栏.V == 0)
-            {
+            if (CurrentInscription.V == 0)
                 InscriptionSkills[1] = value;
-            }
             else
-            {
                 InscriptionSkills[3] = value;
-            }
         }
     }
 
@@ -526,7 +512,7 @@ public class EquipmentInfo : ItemInfo
     {
         get
         {
-            if (当前铭栏.V == 0)
+            if (CurrentInscription.V == 0)
             {
                 if (InscriptionSkills[0].Quality < InscriptionSkills[1].Quality)
                 {
@@ -542,7 +528,7 @@ public class EquipmentInfo : ItemInfo
         }
         set
         {
-            if (当前铭栏.V == 0)
+            if (CurrentInscription.V == 0)
             {
                 if (InscriptionSkills[0].Quality >= InscriptionSkills[1].Quality)
                 {
@@ -568,7 +554,7 @@ public class EquipmentInfo : ItemInfo
     {
         get
         {
-            if (当前铭栏.V == 0)
+            if (CurrentInscription.V == 0)
             {
                 if (InscriptionSkills[0].Quality >= InscriptionSkills[1].Quality)
                 {
@@ -584,7 +570,7 @@ public class EquipmentInfo : ItemInfo
         }
         set
         {
-            if (当前铭栏.V == 0)
+            if (CurrentInscription.V == 0)
             {
                 if (InscriptionSkills[0].Quality < InscriptionSkills[1].Quality)
                 {
@@ -610,22 +596,16 @@ public class EquipmentInfo : ItemInfo
     {
         get
         {
-            if (当前铭栏.V == 0)
-            {
+            if (CurrentInscription.V == 0)
                 return 洗练数一.V;
-            }
             return 洗练数二.V;
         }
         set
         {
-            if (当前铭栏.V == 0)
-            {
+            if (CurrentInscription.V == 0)
                 洗练数一.V = value;
-            }
             else
-            {
                 洗练数二.V = value;
-            }
         }
     }
 
@@ -952,7 +932,7 @@ public class EquipmentInfo : ItemInfo
         writer.Write(MaxDura.V);
         writer.Write((byte)(IsBound ? 10u : 0u));
         int num = 256;
-        num = 0x100 | 当前铭栏.V;
+        num = 0x100 | CurrentInscription.V;
         if (双铭文栏.V)
         {
             num |= 0x200;

@@ -22239,7 +22239,7 @@ public sealed class PlayerObject : MapObject
                         {
                             UserChangeInscription(v4.SecondInscription.SkillID, 0);
                         }
-                        v4.当前铭栏.V = (byte)((v4.当前铭栏.V == 0) ? 1u : 0u);
+                        v4.CurrentInscription.V = (byte)((v4.CurrentInscription.V == 0) ? 1u : 0u);
                         if (v4.FirstInscription != null)
                         {
                             UserChangeInscription(v4.FirstInscription.SkillID, v4.FirstInscription.ID);
@@ -22254,7 +22254,7 @@ public sealed class PlayerObject : MapObject
                         });
                         Enqueue(new 双铭文位切换
                         {
-                            当前栏位 = v4.当前铭栏.V,
+                            当前栏位 = v4.CurrentInscription.V,
                             第一铭文 = (v4.FirstInscription?.Index ?? 0),
                             第二铭文 = (v4.SecondInscription?.Index ?? 0)
                         });
@@ -22267,7 +22267,7 @@ public sealed class PlayerObject : MapObject
                         ConsumeItem(1, v);
                         Enqueue(new 双铭文位切换
                         {
-                            当前栏位 = v4.当前铭栏.V,
+                            当前栏位 = v4.CurrentInscription.V,
                             第一铭文 = (v4.FirstInscription?.Index ?? 0),
                             第二铭文 = (v4.SecondInscription?.Index ?? 0)
                         });
@@ -24410,7 +24410,7 @@ public sealed class PlayerObject : MapObject
                 });
                 Enqueue(new 双铭文位切换
                 {
-                    当前栏位 = 装备数据.当前铭栏.V,
+                    当前栏位 = 装备数据.CurrentInscription.V,
                     第一铭文 = (装备数据.FirstInscription?.Index ?? 0),
                     第二铭文 = (装备数据.SecondInscription?.Index ?? 0)
                 });
@@ -24425,9 +24425,8 @@ public sealed class PlayerObject : MapObject
     public void 切换双铭文位(byte 装备类型, byte 装备位置, byte 操作参数)
     {
         if (Dead || StallState > 0 || TradeState >= 3)
-        {
             return;
-        }
+
         ItemInfo v;
         if (CurrentStoreNameID != "WeaponRune")
         {
@@ -24455,19 +24454,19 @@ public sealed class PlayerObject : MapObject
                 });
                 return;
             }
-            if (操作参数 == 装备数据.当前铭栏.V)
+            if (操作参数 == 装备数据.CurrentInscription.V)
             {
                 Connection?.Disconnect(new Exception("错误操作: 切换双铭文位.  错误: 切换铭位错误."));
                 return;
             }
-            装备数据.当前铭栏.V = 操作参数;
+            装备数据.CurrentInscription.V = 操作参数;
             Enqueue(new SyncItemPacket
             {
                 Description = 装备数据.ToArray()
             });
             Enqueue(new 双铭文位切换
             {
-                当前栏位 = 装备数据.当前铭栏.V,
+                当前栏位 = 装备数据.CurrentInscription.V,
                 第一铭文 = (装备数据.FirstInscription?.Index ?? 0),
                 第二铭文 = (装备数据.SecondInscription?.Index ?? 0)
             });
@@ -24524,8 +24523,8 @@ public sealed class PlayerObject : MapObject
                             ConsumeItem(num2, 物品列表);
                             装备数据2.FirstInscription = 装备数据.FirstInscription;
                             装备数据2.SecondInscription = 装备数据.SecondInscription;
-                            装备数据.InscriptionSkills.Remove((byte)(装备数据.当前铭栏.V * 2));
-                            装备数据.InscriptionSkills.Remove((byte)(装备数据.当前铭栏.V * 2 + 1));
+                            装备数据.InscriptionSkills.Remove((byte)(装备数据.CurrentInscription.V * 2));
+                            装备数据.InscriptionSkills.Remove((byte)(装备数据.CurrentInscription.V * 2 + 1));
                             Enqueue(new SyncItemPacket
                             {
                                 Description = 装备数据.ToArray()
