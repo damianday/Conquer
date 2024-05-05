@@ -669,7 +669,7 @@ public static class MapManager
                     {
                         if (MonsterInfo.DataSheet.TryGetValue(spawni.MonsterName, out var moni))
                         {
-                            SMain.添加怪物数据(moni);
+                            SMain.AddMonsterData(moni);
                             int duration = spawni.RevivalInterval * 60 * 1000;
                             for (int i = 0; i < spawni.SpawnCount; i++)
                             {
@@ -693,7 +693,7 @@ public static class MapManager
 
             map.MakeStoneMines();
 
-            SMain.添加地图数据(map);
+            SMain.AddMapData(map);
         }
     }
 

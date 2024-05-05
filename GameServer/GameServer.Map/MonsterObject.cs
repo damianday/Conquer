@@ -260,7 +260,7 @@ public sealed class MonsterObject : MapObject
         if (!forbidResurrection)
         {
             CurrentMap.TotalFixedMonsters++;
-            SMain.更新地图数据(CurrentMap, "固定怪物总数", CurrentMap.TotalFixedMonsters);
+            SMain.UpdateMapData(CurrentMap, "固定怪物总数", CurrentMap.TotalFixedMonsters);
         }
         if (立即刷新)
         {
@@ -443,7 +443,7 @@ public sealed class MonsterObject : MapObject
                 }
                 if (num > 0)
                 {
-                    SMain.更新地图数据(CurrentMap, "怪物掉落次数", num);
+                    SMain.UpdateMapData(CurrentMap, "怪物掉落次数", num);
                 }
                 foreach (var player in CurrentMap.Players)
                 {
@@ -908,11 +908,11 @@ public sealed class MonsterObject : MapObject
 
         if (goldCount > 0)
         {
-            SMain.更新地图数据(CurrentMap, "金币掉落总数", goldCount);
+            SMain.UpdateMapData(CurrentMap, "金币掉落总数", goldCount);
         }
         if (itemCount > 0)
         {
-            SMain.更新地图数据(CurrentMap, "怪物掉落次数", itemCount);
+            SMain.UpdateMapData(CurrentMap, "怪物掉落次数", itemCount);
         }
         if (goldCount > 0 || itemCount > 0)
         {
@@ -1623,11 +1623,11 @@ public sealed class MonsterObject : MapObject
         if (CurrentMap.QuestMap || !ForbidResurrection)
         {
             CurrentMap.TotalSurvivingMonsters++;
-            SMain.更新地图数据(CurrentMap, "存活怪物总数", 1);
+            SMain.UpdateMapData(CurrentMap, "存活怪物总数", 1);
             if (calculate)
             {
                 CurrentMap.TotalAmountMonsterResurrected++;
-                SMain.更新地图数据(CurrentMap, "怪物复活次数", 1);
+                SMain.UpdateMapData(CurrentMap, "怪物复活次数", 1);
             }
         }
 

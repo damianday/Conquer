@@ -33,8 +33,8 @@ public partial class SMain : Form
 
     private static Dictionary<CharacterInfo, DataRow> RoleDataRows;
     private static Dictionary<DataRow, CharacterInfo> 数据行角色;
-    private static Dictionary<GameMap, DataRow> 地图数据行;
-    private static Dictionary<MonsterInfo, DataRow> 怪物数据行;
+    private static Dictionary<GameMap, DataRow> MapDataRows;
+    private static Dictionary<MonsterInfo, DataRow> MonsterDataRows;
     private static Dictionary<DataRow, MonsterInfo> 数据行怪物;
     private static Dictionary<string, DataRow> BlockedDataRows;
     private static Dictionary<DataGridViewRow, DateTime> 公告数据表;
@@ -55,10 +55,10 @@ public partial class SMain : Form
 
         AddSystemLog("Loading system data...");
         MapDataTable = new System.Data.DataTable("地图数据表");
-        地图数据行 = new Dictionary<GameMap, DataRow>();
-        MapDataTable.Columns.Add("地图编号", typeof(string));
-        MapDataTable.Columns.Add("地图名字", typeof(string));
-        MapDataTable.Columns.Add("限制等级", typeof(string));
+        MapDataRows = new Dictionary<GameMap, DataRow>();
+        MapDataTable.Columns.Add("MapID", typeof(string));
+        MapDataTable.Columns.Add("MapName", typeof(string));
+        MapDataTable.Columns.Add("RequiredLevel", typeof(string));
         MapDataTable.Columns.Add("玩家数量", typeof(string));
         MapDataTable.Columns.Add("固定怪物总数", typeof(uint));
         MapDataTable.Columns.Add("存活怪物总数", typeof(uint));
@@ -70,7 +70,7 @@ public partial class SMain : Form
             Main.地图浏览表.DataSource = MapDataTable;
         });
         MonsterDataTable = new System.Data.DataTable("怪物数据表");
-        怪物数据行 = new Dictionary<MonsterInfo, DataRow>();
+        MonsterDataRows = new Dictionary<MonsterInfo, DataRow>();
         数据行怪物 = new Dictionary<DataRow, MonsterInfo>();
         MonsterDataTable.Columns.Add("模板编号", typeof(string));
         MonsterDataTable.Columns.Add("怪物名字", typeof(string));
@@ -509,46 +509,46 @@ public partial class SMain : Form
     #endregion
 
     #region Map Info
-    public static void 添加地图数据(Map.Map 地图)
+    public static void AddMapData(Map.Map map)
     {
         Main?.BeginInvoke(() =>
         {
-            if (!地图数据行.ContainsKey(地图.MapInfo))
+            if (!MapDataRows.ContainsKey(map.MapInfo))
             {
-                DataRow dataRow = MapDataTable.NewRow();
-                dataRow["地图编号"] = 地图.MapID;
-                dataRow["地图名字"] = 地图.MapInfo;
-                dataRow["限制等级"] = 地图.MinLevel;
-                dataRow["玩家数量"] = 地图.Players.Count;
-                dataRow["固定怪物总数"] = 地图.TotalFixedMonsters;
-                dataRow["存活怪物总数"] = 地图.TotalSurvivingMonsters;
-                dataRow["怪物复活次数"] = 地图.TotalAmountMonsterResurrected;
-                dataRow["怪物掉落次数"] = 地图.TotalAmountMonsterDrops;
-                dataRow["金币掉落总数"] = 地图.TotalAmountGoldDrops;
-                地图数据行[地图.MapInfo] = dataRow;
-                MapDataTable.Rows.Add(dataRow);
+                var row = MapDataTable.NewRow();
+                row["MapID"] = map.MapID;
+                row["MapName"] = map.MapInfo;
+                row["RequiredLevel"] = map.MinLevel;
+                row["玩家数量"] = map.Players.Count;
+                row["固定怪物总数"] = map.TotalFixedMonsters;
+                row["存活怪物总数"] = map.TotalSurvivingMonsters;
+                row["怪物复活次数"] = map.TotalAmountMonsterResurrected;
+                row["怪物掉落次数"] = map.TotalAmountMonsterDrops;
+                row["金币掉落总数"] = map.TotalAmountGoldDrops;
+                MapDataRows[map.MapInfo] = row;
+                MapDataTable.Rows.Add(row);
             }
         });
     }
 
-    public static void 更新地图数据(Map.Map 地图, string 表头, object 内容)
+    public static void UpdateMapData(Map.Map map, string key, object value)
     {
         Main?.BeginInvoke(() =>
         {
-            if (地图数据行.TryGetValue(地图.MapInfo, out var value))
+            if (MapDataRows.TryGetValue(map.MapInfo, out var row))
             {
-                switch (表头)
+                switch (key)
                 {
                     default:
-                        value[表头] = 内容;
+                        row[key] = value;
                         break;
                     case "金币掉落总数":
                     case "怪物掉落次数":
-                        value[表头] = Convert.ToInt64(value[表头]) + (int)内容;
+                        row[key] = Convert.ToInt64(row[key]) + (int)value;
                         break;
                     case "存活怪物总数":
                     case "怪物复活次数":
-                        value[表头] = Convert.ToUInt32(value[表头]) + (int)内容;
+                        row[key] = Convert.ToUInt32(row[key]) + (int)value;
                         break;
                 }
             }
@@ -557,24 +557,24 @@ public partial class SMain : Form
     #endregion
 
     #region Monster Info
-    public static void 添加怪物数据(MonsterInfo 怪物)
+    public static void AddMonsterData(MonsterInfo monster)
     {
         Main?.BeginInvoke(() =>
         {
-            if (!怪物数据行.ContainsKey(怪物))
+            if (!MonsterDataRows.ContainsKey(monster))
             {
-                DataRow dataRow = MonsterDataTable.NewRow();
-                dataRow["模板编号"] = 怪物.ID;
-                dataRow["怪物名字"] = 怪物.MonsterName;
-                dataRow["怪物等级"] = 怪物.Level;
-                dataRow["怪物级别"] = 怪物.Grade;
-                dataRow["怪物经验"] = 怪物.ProvideExperience;
-                dataRow["移动间隔"] = 怪物.MoveInterval;
-                dataRow["仇恨范围"] = 怪物.RangeHate;
-                dataRow["仇恨时长"] = 怪物.HateTime;
-                怪物数据行[怪物] = dataRow;
-                数据行怪物[dataRow] = 怪物;
-                MonsterDataTable.Rows.Add(dataRow);
+                var row = MonsterDataTable.NewRow();
+                row["模板编号"] = monster.ID;
+                row["怪物名字"] = monster.MonsterName;
+                row["怪物等级"] = monster.Level;
+                row["怪物级别"] = monster.Grade;
+                row["怪物经验"] = monster.ProvideExperience;
+                row["移动间隔"] = monster.MoveInterval;
+                row["仇恨范围"] = monster.RangeHate;
+                row["仇恨时长"] = monster.HateTime;
+                MonsterDataRows[monster] = row;
+                数据行怪物[row] = monster;
+                MonsterDataTable.Rows.Add(row);
             }
         });
     }
@@ -3058,10 +3058,10 @@ public partial class SMain : Form
         SEngine.StartService();
         Settings.Default.Save();
         MapDataTable = new System.Data.DataTable("地图数据表");
-        地图数据行 = new Dictionary<GameMap, DataRow>();
-        MapDataTable.Columns.Add("地图编号", typeof(string));
-        MapDataTable.Columns.Add("地图名字", typeof(string));
-        MapDataTable.Columns.Add("限制等级", typeof(string));
+        MapDataRows = new Dictionary<GameMap, DataRow>();
+        MapDataTable.Columns.Add("MapID", typeof(string));
+        MapDataTable.Columns.Add("MapName", typeof(string));
+        MapDataTable.Columns.Add("RequiredLevel", typeof(string));
         MapDataTable.Columns.Add("玩家数量", typeof(string));
         MapDataTable.Columns.Add("固定怪物总数", typeof(string));
         MapDataTable.Columns.Add("存活怪物总数", typeof(string));
@@ -3070,7 +3070,7 @@ public partial class SMain : Form
         MapDataTable.Columns.Add("金币掉落总数", typeof(string));
         Main.地图浏览表.DataSource = MapDataTable;
         MonsterDataTable = new System.Data.DataTable("怪物数据表");
-        怪物数据行 = new Dictionary<MonsterInfo, DataRow>();
+        MonsterDataRows = new Dictionary<MonsterInfo, DataRow>();
         数据行怪物 = new Dictionary<DataRow, MonsterInfo>();
         MonsterDataTable.Columns.Add("模板编号", typeof(string));
         MonsterDataTable.Columns.Add("怪物名字", typeof(string));
