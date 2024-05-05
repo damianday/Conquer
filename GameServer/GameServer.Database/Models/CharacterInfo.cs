@@ -509,7 +509,7 @@ public sealed class CharacterInfo : DBObject
         Connection.Player = null;
         Connection = null;
         DisconnectDate.V = SEngine.CurrentTime;
-        SMain.UpdateCharacter(this, "离线日期", DisconnectDate);
+        SMain.UpdateCharacter(this, "DisconnectDate", DisconnectDate);
     }
 
     public void Connect(SConnection conn)
@@ -529,7 +529,7 @@ public sealed class CharacterInfo : DBObject
         Connection = conn;
         MACAddress.V = conn.MACAddress;
         IPAddress.V = conn.IPAddress;
-        SMain.UpdateCharacter(this, "离线日期", null);
+        SMain.UpdateCharacter(this, "DisconnectDate", null);
         SMain.AddSystemLog($"Player [{UserName}][Lvl.{Level}] entered game (Thread: {地图分配线路.V})");
     }
 
@@ -683,53 +683,50 @@ public sealed class CharacterInfo : DBObject
         OnLoaded();
     }
 
-    public override string ToString()
-    {
-        return UserName?.V;
-    }
+    public override string ToString() => UserName?.V;
 
     private void SubscribeToEvents()
     {
         Account.Changed += delegate (AccountInfo O)
         {
-            SMain.UpdateCharacter(this, "所属账号", O);
-            SMain.UpdateCharacter(this, "账号封禁", (O.BlockDate.V != default(DateTime)) ? O.BlockDate : null);
+            SMain.UpdateCharacter(this, "AccountName", O);
+            SMain.UpdateCharacter(this, "AccountBlockDate", (O.BlockDate.V != default(DateTime)) ? O.BlockDate : null);
         };
         Account.V.BlockDate.Changed += delegate (DateTime O)
         {
-            SMain.UpdateCharacter(this, "账号封禁", (O != default(DateTime)) ? O : null);
+            SMain.UpdateCharacter(this, "AccountBlockDate", (O != default(DateTime)) ? O : null);
         };
         UserName.Changed += delegate (string O)
         {
-            SMain.UpdateCharacter(this, "角色名字", O);
+            SMain.UpdateCharacter(this, "Name", O);
         };
         BlockDate.Changed += delegate (DateTime O)
         {
-            SMain.UpdateCharacter(this, "角色封禁", (O != default(DateTime)) ? O : null);
+            SMain.UpdateCharacter(this, "BlockDate", (O != default(DateTime)) ? O : null);
         };
         FrozenDate.Changed += delegate (DateTime O)
         {
-            SMain.UpdateCharacter(this, "冻结日期", (O != default(DateTime)) ? O : null);
+            SMain.UpdateCharacter(this, "FreezeDate", (O != default(DateTime)) ? O : null);
         };
         DeletetionDate.Changed += delegate (DateTime O)
         {
-            SMain.UpdateCharacter(this, "删除日期", (O != default(DateTime)) ? O : null);
+            SMain.UpdateCharacter(this, "DeletetionDate", (O != default(DateTime)) ? O : null);
         };
         LoginDate.Changed += delegate (DateTime O)
         {
-            SMain.UpdateCharacter(this, "登录日期", (O != default(DateTime)) ? O : null);
+            SMain.UpdateCharacter(this, "LoginDate", (O != default(DateTime)) ? O : null);
         };
         DisconnectDate.Changed += delegate (DateTime O)
         {
-            SMain.UpdateCharacter(this, "离线日期", !Connected ? O : null);
+            SMain.UpdateCharacter(this, "DisconnectDate", !Connected ? O : null);
         };
         IPAddress.Changed += delegate (string O)
         {
-            SMain.UpdateCharacter(this, "网络地址", O);
+            SMain.UpdateCharacter(this, "IPAddress", O);
         };
         MACAddress.Changed += delegate (string O)
         {
-            SMain.UpdateCharacter(this, "物理地址", O);
+            SMain.UpdateCharacter(this, "MACAddress", O);
         };
         Job.Changed += delegate (GameObjectRace O)
         {
@@ -809,30 +806,30 @@ public sealed class CharacterInfo : DBObject
         };
         Skills.Changed += delegate (List<KeyValuePair<ushort, SkillInfo>> O)
         {
-            SMain.更新角色技能(this, O);
+            SMain.UpdateCharacterSkills(this, O);
         };
         Equipment.Changed += delegate (List<KeyValuePair<byte, EquipmentInfo>> O)
         {
-            SMain.更新角色装备(this, O);
+            SMain.UpdateCharacterEquipment(this, O);
         };
         Inventory.Changed += delegate (List<KeyValuePair<byte, ItemInfo>> O)
         {
-            SMain.更新角色背包(this, O);
+            SMain.UpdateCharacterInventory(this, O);
         };
         Storage.Changed += delegate (List<KeyValuePair<byte, ItemInfo>> O)
         {
-            SMain.更新角色仓库(this, O);
+            SMain.UpdateCharacterStorage(this, O);
         };
     }
 
     public override void OnLoaded()
     {
         SubscribeToEvents();
-        SMain.添加角色数据(this);
-        SMain.更新角色技能(this, Skills.ToList());
-        SMain.更新角色装备(this, Equipment.ToList());
-        SMain.更新角色背包(this, Inventory.ToList());
-        SMain.更新角色仓库(this, Storage.ToList());
+        SMain.AddCharacterInfo(this);
+        SMain.UpdateCharacterSkills(this, Skills.ToList());
+        SMain.UpdateCharacterEquipment(this, Equipment.ToList());
+        SMain.UpdateCharacterInventory(this, Inventory.ToList());
+        SMain.UpdateCharacterStorage(this, Storage.ToList());
     }
 
     public override void Remove()

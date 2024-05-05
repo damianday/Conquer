@@ -314,7 +314,7 @@ public static class Session
                 SMain.AddCommandLog($"开始清理[{character}]({character.Level}/{(int)(DateTime.UtcNow - character.DisconnectDate.V).TotalDays})...");
                 character.Remove();
                 count++;
-                SMain.移除角色数据(character);
+                SMain.RemoveCharacterInfo(character);
             }
         }
 

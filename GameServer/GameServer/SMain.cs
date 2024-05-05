@@ -36,13 +36,13 @@ public partial class SMain : Form
     private static Dictionary<GameMap, DataRow> 地图数据行;
     private static Dictionary<MonsterInfo, DataRow> 怪物数据行;
     private static Dictionary<DataRow, MonsterInfo> 数据行怪物;
-    private static Dictionary<string, DataRow> 封禁数据行;
+    private static Dictionary<string, DataRow> BlockedDataRows;
     private static Dictionary<DataGridViewRow, DateTime> 公告数据表;
 
-    private static Dictionary<CharacterInfo, List<KeyValuePair<ushort, SkillInfo>>> 角色技能表;
-    private static Dictionary<CharacterInfo, List<KeyValuePair<byte, EquipmentInfo>>> 角色装备表;
-    private static Dictionary<CharacterInfo, List<KeyValuePair<byte, ItemInfo>>> 角色背包表;
-    private static Dictionary<CharacterInfo, List<KeyValuePair<byte, ItemInfo>>> 角色仓库表;
+    private static Dictionary<CharacterInfo, List<KeyValuePair<ushort, SkillInfo>>> CharacterSkillsList;
+    private static Dictionary<CharacterInfo, List<KeyValuePair<byte, EquipmentInfo>>> CharacterEquipmentList;
+    private static Dictionary<CharacterInfo, List<KeyValuePair<byte, ItemInfo>>> CharacterInventoryList;
+    private static Dictionary<CharacterInfo, List<KeyValuePair<byte, ItemInfo>>> CharacterStorageList;
     private static Dictionary<MonsterInfo, List<KeyValuePair<GameItem, long>>> 怪物掉落表;
 
     #region LoadSystemData
@@ -110,16 +110,16 @@ public partial class SMain : Form
         RoleDataTable = new System.Data.DataTable("角色数据表");
         RoleDataRows = new Dictionary<CharacterInfo, DataRow>();
         数据行角色 = new Dictionary<DataRow, CharacterInfo>();
-        RoleDataTable.Columns.Add("角色名字", typeof(string));
-        RoleDataTable.Columns.Add("角色封禁", typeof(string));
-        RoleDataTable.Columns.Add("所属账号", typeof(string));
-        RoleDataTable.Columns.Add("账号封禁", typeof(string));
-        RoleDataTable.Columns.Add("冻结日期", typeof(string));
-        RoleDataTable.Columns.Add("删除日期", typeof(string));
-        RoleDataTable.Columns.Add("登录日期", typeof(string));
-        RoleDataTable.Columns.Add("离线日期", typeof(string));
-        RoleDataTable.Columns.Add("网络地址", typeof(string));
-        RoleDataTable.Columns.Add("物理地址", typeof(string));
+        RoleDataTable.Columns.Add("Name", typeof(string));
+        RoleDataTable.Columns.Add("AccountName", typeof(string));
+        RoleDataTable.Columns.Add("BlockDate", typeof(string));
+        RoleDataTable.Columns.Add("AccountBlockDate", typeof(string));
+        RoleDataTable.Columns.Add("FreezeDate", typeof(string));
+        RoleDataTable.Columns.Add("DeletetionDate", typeof(string));
+        RoleDataTable.Columns.Add("LoginDate", typeof(string));
+        RoleDataTable.Columns.Add("DisconnectDate", typeof(string));
+        RoleDataTable.Columns.Add("IPAddress", typeof(string));
+        RoleDataTable.Columns.Add("MACAddress", typeof(string));
         RoleDataTable.Columns.Add("角色职业", typeof(string));
         RoleDataTable.Columns.Add("角色性别", typeof(string));
         RoleDataTable.Columns.Add("所属行会", typeof(string));
@@ -151,7 +151,7 @@ public partial class SMain : Form
                 Main.角色浏览表.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             }
         });
-        角色技能表 = new Dictionary<CharacterInfo, List<KeyValuePair<ushort, SkillInfo>>>();
+        CharacterSkillsList = new Dictionary<CharacterInfo, List<KeyValuePair<ushort, SkillInfo>>>();
         SkillsDataTable.Columns.Add("技能名字", typeof(string));
         SkillsDataTable.Columns.Add("技能编号", typeof(string));
         SkillsDataTable.Columns.Add("当前等级", typeof(string));
@@ -160,21 +160,21 @@ public partial class SMain : Form
         {
             Main.技能浏览表.DataSource = SkillsDataTable;
         });
-        角色装备表 = new Dictionary<CharacterInfo, List<KeyValuePair<byte, EquipmentInfo>>>();
+        CharacterEquipmentList = new Dictionary<CharacterInfo, List<KeyValuePair<byte, EquipmentInfo>>>();
         EquipmentDataTable.Columns.Add("穿戴部位", typeof(string));
         EquipmentDataTable.Columns.Add("穿戴装备", typeof(string));
         Main?.BeginInvoke(() =>
         {
             Main.装备浏览表.DataSource = EquipmentDataTable;
         });
-        角色背包表 = new Dictionary<CharacterInfo, List<KeyValuePair<byte, ItemInfo>>>();
+        CharacterInventoryList = new Dictionary<CharacterInfo, List<KeyValuePair<byte, ItemInfo>>>();
         InventoryDataTable.Columns.Add("背包位置", typeof(string));
         InventoryDataTable.Columns.Add("背包物品", typeof(string));
         Main?.BeginInvoke(() =>
         {
             Main.背包浏览表.DataSource = InventoryDataTable;
         });
-        角色仓库表 = new Dictionary<CharacterInfo, List<KeyValuePair<byte, ItemInfo>>>();
+        CharacterStorageList = new Dictionary<CharacterInfo, List<KeyValuePair<byte, ItemInfo>>>();
         WarehouseDataTable.Columns.Add("仓库位置", typeof(string));
         WarehouseDataTable.Columns.Add("仓库物品", typeof(string));
         Main?.BeginInvoke(() =>
@@ -182,10 +182,10 @@ public partial class SMain : Form
             Main.仓库浏览表.DataSource = WarehouseDataTable;
         });
         BlockingDataTable = new System.Data.DataTable();
-        封禁数据行 = new Dictionary<string, DataRow>();
-        BlockingDataTable.Columns.Add("网络地址", typeof(string));
-        BlockingDataTable.Columns.Add("物理地址", typeof(string));
-        BlockingDataTable.Columns.Add("到期时间", typeof(string));
+        BlockedDataRows = new Dictionary<string, DataRow>();
+        BlockingDataTable.Columns.Add("IPAddress", typeof(string));
+        BlockingDataTable.Columns.Add("MACAddress", typeof(string));
+        BlockingDataTable.Columns.Add("ExpireDate", typeof(string));
         Main?.BeginInvoke(() =>
         {
             Main.封禁浏览表.DataSource = BlockingDataTable;
@@ -292,40 +292,40 @@ public partial class SMain : Form
     #endregion
 
     #region Character Info
-    public static void 添加数据显示(CharacterInfo 数据)
+    public static void 添加数据显示(CharacterInfo character)
     {
-        if (!RoleDataRows.ContainsKey(数据))
+        if (!RoleDataRows.ContainsKey(character))
         {
-            RoleDataRows[数据] = RoleDataTable.NewRow();
-            RoleDataTable.Rows.Add(RoleDataRows[数据]);
+            RoleDataRows[character] = RoleDataTable.NewRow();
+            RoleDataTable.Rows.Add(RoleDataRows[character]);
         }
     }
 
-    public static void 修改数据显示(CharacterInfo 数据, string 表头文本, string 表格内容)
+    public static void 修改数据显示(CharacterInfo character, string 表头文本, string 表格内容)
     {
-        if (RoleDataRows.ContainsKey(数据))
+        if (RoleDataRows.ContainsKey(character))
         {
-            RoleDataRows[数据][表头文本] = 表格内容;
+            RoleDataRows[character][表头文本] = 表格内容;
         }
     }
 
-    public static void 添加角色数据(CharacterInfo character)
+    public static void AddCharacterInfo(CharacterInfo character)
     {
         Main?.BeginInvoke(() =>
         {
             if (!RoleDataRows.ContainsKey(character))
             {
                 DataRow dataRow = RoleDataTable.NewRow();
-                dataRow["角色名字"] = character;
-                dataRow["所属账号"] = character.Account;
-                dataRow["账号封禁"] = ((character.Account.V.BlockDate.V != default(DateTime)) ? character.Account.V.BlockDate : null);
-                dataRow["角色封禁"] = ((character.BlockDate.V != default(DateTime)) ? character.BlockDate : null);
-                dataRow["冻结日期"] = ((character.FrozenDate.V != default(DateTime)) ? character.FrozenDate : null);
-                dataRow["删除日期"] = ((character.DeletetionDate.V != default(DateTime)) ? character.DeletetionDate : null);
-                dataRow["登录日期"] = ((character.LoginDate.V != default(DateTime)) ? character.LoginDate : null);
-                dataRow["离线日期"] = (!character.Connected ? character.DisconnectDate : null);
-                dataRow["网络地址"] = character.IPAddress;
-                dataRow["物理地址"] = character.MACAddress;
+                dataRow["Name"] = character;
+                dataRow["AccountName"] = character.Account;
+                dataRow["AccountBlockDate"] = ((character.Account.V.BlockDate.V != default(DateTime)) ? character.Account.V.BlockDate : null);
+                dataRow["BlockDate"] = ((character.BlockDate.V != default(DateTime)) ? character.BlockDate : null);
+                dataRow["FreezeDate"] = ((character.FrozenDate.V != default(DateTime)) ? character.FrozenDate : null);
+                dataRow["DeletetionDate"] = ((character.DeletetionDate.V != default(DateTime)) ? character.DeletetionDate : null);
+                dataRow["LoginDate"] = ((character.LoginDate.V != default(DateTime)) ? character.LoginDate : null);
+                dataRow["DisconnectDate"] = (!character.Connected ? character.DisconnectDate : null);
+                dataRow["IPAddress"] = character.IPAddress;
+                dataRow["MACAddress"] = character.MACAddress;
                 dataRow["角色职业"] = character.Job;
                 dataRow["角色性别"] = character.Gender;
                 dataRow["所属行会"] = character.Guild;
@@ -356,18 +356,18 @@ public partial class SMain : Form
         });
     }
 
-    public static void 移除角色数据(CharacterInfo 角色)
+    public static void RemoveCharacterInfo(CharacterInfo character)
     {
         Main?.BeginInvoke(() =>
         {
-            if (RoleDataRows.TryGetValue(角色, out var value))
+            if (RoleDataRows.TryGetValue(character, out var value))
             {
                 数据行角色.Remove(value);
                 RoleDataTable.Rows.Remove(value);
-                角色技能表.Remove(角色);
-                角色背包表.Remove(角色);
-                角色装备表.Remove(角色);
-                角色仓库表.Remove(角色);
+                CharacterSkillsList.Remove(character);
+                CharacterInventoryList.Remove(character);
+                CharacterEquipmentList.Remove(character);
+                CharacterStorageList.Remove(character);
             }
         });
     }
@@ -389,7 +389,7 @@ public partial class SMain : Form
             DataRow row = (Main.角色浏览表.Rows[Main.角色浏览表.SelectedRows[0].Index].DataBoundItem as DataRowView).Row;
             if (数据行角色.TryGetValue(row, out var value))
             {
-                if (角色技能表.TryGetValue(value, out var value2))
+                if (CharacterSkillsList.TryGetValue(value, out var value2))
                 {
                     foreach (KeyValuePair<ushort, SkillInfo> item in value2)
                     {
@@ -401,7 +401,7 @@ public partial class SMain : Form
                         SkillsDataTable.Rows.Add(dataRow);
                     }
                 }
-                if (角色装备表.TryGetValue(value, out var value3))
+                if (CharacterEquipmentList.TryGetValue(value, out var value3))
                 {
                     foreach (KeyValuePair<byte, EquipmentInfo> item2 in value3)
                     {
@@ -411,7 +411,7 @@ public partial class SMain : Form
                         EquipmentDataTable.Rows.Add(dataRow2);
                     }
                 }
-                if (角色背包表.TryGetValue(value, out var value4))
+                if (CharacterInventoryList.TryGetValue(value, out var value4))
                 {
                     foreach (KeyValuePair<byte, ItemInfo> item3 in value4)
                     {
@@ -421,7 +421,7 @@ public partial class SMain : Form
                         InventoryDataTable.Rows.Add(dataRow3);
                     }
                 }
-                if (角色仓库表.TryGetValue(value, out var value5))
+                if (CharacterStorageList.TryGetValue(value, out var value5))
                 {
                     foreach (KeyValuePair<byte, ItemInfo> item4 in value5)
                     {
@@ -464,35 +464,35 @@ public partial class SMain : Form
         });
     }
 
-    public static void 更新角色技能(CharacterInfo 角色, List<KeyValuePair<ushort, SkillInfo>> 技能)
+    public static void UpdateCharacterSkills(CharacterInfo character, List<KeyValuePair<ushort, SkillInfo>> skills)
     {
         Main?.BeginInvoke(() =>
         {
-            角色技能表[角色] = 技能;
+            CharacterSkillsList[character] = skills;
         });
     }
 
-    public static void 更新角色装备(CharacterInfo 角色, List<KeyValuePair<byte, EquipmentInfo>> 装备)
+    public static void UpdateCharacterEquipment(CharacterInfo character, List<KeyValuePair<byte, EquipmentInfo>> equipment)
     {
         Main?.BeginInvoke(() =>
         {
-            角色装备表[角色] = 装备;
+            CharacterEquipmentList[character] = equipment;
         });
     }
 
-    public static void 更新角色背包(CharacterInfo 角色, List<KeyValuePair<byte, ItemInfo>> 物品)
+    public static void UpdateCharacterInventory(CharacterInfo character, List<KeyValuePair<byte, ItemInfo>> inventory)
     {
         Main?.BeginInvoke(() =>
         {
-            角色背包表[角色] = 物品;
+            CharacterInventoryList[character] = inventory;
         });
     }
 
-    public static void 更新角色仓库(CharacterInfo 角色, List<KeyValuePair<byte, ItemInfo>> 物品)
+    public static void UpdateCharacterStorage(CharacterInfo character, List<KeyValuePair<byte, ItemInfo>> storage)
     {
         Main?.BeginInvoke(() =>
         {
-            角色仓库表[角色] = 物品;
+            CharacterStorageList[character] = storage;
         });
     }
     #endregion
@@ -579,47 +579,43 @@ public partial class SMain : Form
     #endregion
 
     #region Bans
-    public static void 添加封禁数据(string 地址, object 时间, bool 网络地址 = true)
+    public static void AddBlockData(string address, DateTime date, bool networkAddress = true)
     {
         Main?.BeginInvoke(() =>
         {
-            if (!封禁数据行.ContainsKey(地址))
+            if (!BlockedDataRows.ContainsKey(address))
             {
                 DataRow dataRow = BlockingDataTable.NewRow();
-                dataRow["网络地址"] = (网络地址 ? 地址 : null);
-                dataRow["物理地址"] = (网络地址 ? null : 地址);
-                dataRow["到期时间"] = 时间;
-                封禁数据行[地址] = dataRow;
+                dataRow["IPAddress"] = (networkAddress ? address : null);
+                dataRow["MACAddress"] = (networkAddress ? null : address);
+                dataRow["ExpireDate"] = date;
+                BlockedDataRows[address] = dataRow;
                 BlockingDataTable.Rows.Add(dataRow);
             }
         });
     }
 
-    public static void 更新封禁数据(string 地址, object 时间, bool 网络地址 = true)
+    public static void UpdateBlockData(string address, DateTime date, bool networkAddress = true)
     {
         Main?.BeginInvoke(() =>
         {
-            if (封禁数据行.TryGetValue(地址, out var value))
+            if (BlockedDataRows.TryGetValue(address, out var value))
             {
-                if (网络地址)
-                {
-                    value["网络地址"] = 时间;
-                }
+                if (networkAddress)
+                    value["IPAddress"] = date;
                 else
-                {
-                    value["物理地址"] = 时间;
-                }
+                    value["MACAddress"] = date;
             }
         });
     }
 
-    public static void 移除封禁数据(string 地址)
+    public static void RemoveBlockData(string address)
     {
         Main?.BeginInvoke(() =>
         {
-            if (封禁数据行.TryGetValue(地址, out var value))
+            if (BlockedDataRows.TryGetValue(address, out var value))
             {
-                封禁数据行.Remove(地址);
+                BlockedDataRows.Remove(address);
                 BlockingDataTable.Rows.Remove(value);
             }
         });
@@ -2683,19 +2679,19 @@ public partial class SMain : Form
             DataRow row = (Main.角色浏览表.Rows[Main.角色浏览表.SelectedRows[0].Index].DataBoundItem as DataRowView).Row;
             if (toolStripMenuItem.Name == "右键菜单_复制账号名字")
             {
-                Clipboard.SetDataObject(row["所属账号"]);
+                Clipboard.SetDataObject(row["AccountName"]);
             }
             if (toolStripMenuItem.Name == "右键菜单_复制角色名字")
             {
-                Clipboard.SetDataObject(row["角色名字"]);
+                Clipboard.SetDataObject(row["Name"]);
             }
             if (toolStripMenuItem.Name == "右键菜单_复制网络地址")
             {
-                Clipboard.SetDataObject(row["网络地址"]);
+                Clipboard.SetDataObject(row["IPAddress"]);
             }
             if (toolStripMenuItem.Name == "右键菜单_复制物理地址")
             {
-                Clipboard.SetDataObject(row["物理地址"]);
+                Clipboard.SetDataObject(row["MACAddress"]);
             }
         }
     }

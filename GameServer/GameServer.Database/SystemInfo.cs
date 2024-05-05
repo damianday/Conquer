@@ -210,12 +210,12 @@ public class SystemInfo : DBObject
         if (IPBans.ContainsKey(address))
         {
             IPBans[address] = time;
-            SMain.更新封禁数据(address, time);
+            SMain.UpdateBlockData(address, time);
         }
         else
         {
             IPBans[address] = time;
-            SMain.添加封禁数据(address, time);
+            SMain.AddBlockData(address, time);
         }
     }
 
@@ -224,12 +224,12 @@ public class SystemInfo : DBObject
         if (NICBans.ContainsKey(address))
         {
             NICBans[address] = time;
-            SMain.更新封禁数据(address, time, 网络地址: false);
+            SMain.UpdateBlockData(address, time, networkAddress: false);
         }
         else
         {
             NICBans[address] = time;
-            SMain.添加封禁数据(address, time, 网络地址: false);
+            SMain.AddBlockData(address, time, networkAddress: false);
         }
     }
 
@@ -237,7 +237,7 @@ public class SystemInfo : DBObject
     {
         if (IPBans.Remove(address))
         {
-            SMain.移除封禁数据(address);
+            SMain.RemoveBlockData(address);
         }
     }
 
@@ -245,7 +245,7 @@ public class SystemInfo : DBObject
     {
         if (NICBans.Remove(address))
         {
-            SMain.移除封禁数据(address);
+            SMain.RemoveBlockData(address);
         }
     }
 
@@ -265,11 +265,11 @@ public class SystemInfo : DBObject
     {
         foreach (KeyValuePair<string, DateTime> item in IPBans)
         {
-            SMain.添加封禁数据(item.Key, item.Value);
+            SMain.AddBlockData(item.Key, item.Value);
         }
         foreach (KeyValuePair<string, DateTime> item2 in NICBans)
         {
-            SMain.添加封禁数据(item2.Key, item2.Value, 网络地址: false);
+            SMain.AddBlockData(item2.Key, item2.Value, networkAddress: false);
         }
     }
 
