@@ -289,7 +289,7 @@ public static class Session
     public static void 清理角色(int 限制等级, int 限制天数)
     {
         SMain.AddCommandLog("Starting to clean up character data...");
-        DateTime dateTime = DateTime.Now.AddDays(-限制天数);
+        DateTime dateTime = DateTime.UtcNow.AddDays(-限制天数);
 
         int count = 0;
         foreach (DBObject item in CharacterInfoTable.DataSheet.Values.ToList())
@@ -298,20 +298,20 @@ public static class Session
             {
                 if (character.CurrentRanking.Count > 0)
                 {
-                    SMain.AddCommandLog($"[{character}]({character.Level}/{(int)(DateTime.Now - character.DisconnectDate.V).TotalDays}) 在排行榜单上, 已跳过清理");
+                    SMain.AddCommandLog($"[{character}]({character.Level}/{(int)(DateTime.UtcNow - character.DisconnectDate.V).TotalDays}) 在排行榜单上, 已跳过清理");
                     continue;
                 }
                 if (character.Ingot > 0)
                 {
-                    SMain.AddCommandLog($"[{character}]({character.Level}/{(int)(DateTime.Now - character.DisconnectDate.V).TotalDays}) 有未消费元宝, 已跳过清理");
+                    SMain.AddCommandLog($"[{character}]({character.Level}/{(int)(DateTime.UtcNow - character.DisconnectDate.V).TotalDays}) 有未消费元宝, 已跳过清理");
                     continue;
                 }
                 if (character.CurrentGuild?.PresidentInfo == character)
                 {
-                    SMain.AddCommandLog($"[{character}]({character.Level}/{(int)(DateTime.Now - character.DisconnectDate.V).TotalDays}) 是行会的会长, 已跳过清理");
+                    SMain.AddCommandLog($"[{character}]({character.Level}/{(int)(DateTime.UtcNow - character.DisconnectDate.V).TotalDays}) 是行会的会长, 已跳过清理");
                     continue;
                 }
-                SMain.AddCommandLog($"开始清理[{character}]({character.Level}/{(int)(DateTime.Now - character.DisconnectDate.V).TotalDays})...");
+                SMain.AddCommandLog($"开始清理[{character}]({character.Level}/{(int)(DateTime.UtcNow - character.DisconnectDate.V).TotalDays})...");
                 character.Remove();
                 count++;
                 SMain.移除角色数据(character);

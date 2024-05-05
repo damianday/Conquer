@@ -18,8 +18,8 @@ public sealed class BlockNetwork : GMCommand
     {
         if (Regex.IsMatch(MACAddress, "^([0-9a-fA-F]{2}(?:[:-]?[0-9a-fA-F]{2}){5})$"))
         {
-            SystemInfo.Info.AddNICBan(MACAddress, DateTime.Now.AddDays(Days));
-            SMain.AddCommandLog($"<= @{GetType().Name} The command has been executed, and the ban expires: {DateTime.Now.AddDays(Days)}");
+            SystemInfo.Info.AddNICBan(MACAddress, DateTime.UtcNow.AddDays(Days));
+            SMain.AddCommandLog($"<= @{GetType().Name} The command has been executed, and the ban expires: {DateTime.UtcNow.AddDays(Days)}");
         }
         else
         {

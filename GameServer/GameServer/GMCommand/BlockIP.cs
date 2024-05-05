@@ -18,8 +18,8 @@ public sealed class BlockIP : GMCommand
     {
         if (System.Net.IPAddress.TryParse(IPAddress, out var _))
         {
-            SystemInfo.Info.AddIPBan(IPAddress, DateTime.Now.AddDays(Days));
-            SMain.AddCommandLog($"<= @{GetType().Name} The command has been executed, and the ban expires: {DateTime.Now.AddDays(Days)}");
+            SystemInfo.Info.AddIPBan(IPAddress, DateTime.UtcNow.AddDays(Days));
+            SMain.AddCommandLog($"<= @{GetType().Name} The command has been executed, and the ban expires: {DateTime.UtcNow.AddDays(Days)}");
         }
         else
         {

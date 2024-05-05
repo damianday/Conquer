@@ -22,11 +22,11 @@ public sealed class CharacterTransfer : GMCommand
             {
                 SMain.AddCommandLog("<= @" + GetType().Name + " Failed to execute the command, character is deleted");
             }
-            else if (character.BlockDate.V > DateTime.Now)
+            else if (character.BlockDate.V > DateTime.UtcNow)
             {
                 SMain.AddCommandLog("<= @" + GetType().Name + " Failed to execute the command, character is blocked.");
             }
-            else if (character.Account.V.BlockDate.V > DateTime.Now)
+            else if (character.Account.V.BlockDate.V > DateTime.UtcNow)
             {
                 SMain.AddCommandLog("<= @" + GetType().Name + " Failed to execute the command, the original account is banned.");
             }
@@ -35,7 +35,7 @@ public sealed class CharacterTransfer : GMCommand
                 var account = Session.GetAccount(NewAccountName);
                 if (account != null)
                 {
-                    if (account.BlockDate.V > DateTime.Now)
+                    if (account.BlockDate.V > DateTime.UtcNow)
                     {
                         SMain.AddCommandLog("<= @" + GetType().Name + " Failed to execute the command, the transfer account is in the banned state");
                     }

@@ -101,7 +101,7 @@ public static class MapManager
 
     private static void ProcessSandCity()
     {
-        var day = DateTime.Now.DayOfWeek;
+        var day = DateTime.UtcNow.DayOfWeek;
 
         if (SEngine.CurrentTime.Hour + 2 >= Settings.Default.沙巴克开启 && Settings.Default.沙巴克每周攻沙时间 == 0)
         {
