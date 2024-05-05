@@ -1,0 +1,6 @@
+{
+  "AccountServerAddressIP": "127.0.0.1",
+  "AccountServerAddressPort": 7000,
+  "AccountName": "",
+  "ServerName": ""
+}
