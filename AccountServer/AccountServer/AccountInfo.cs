@@ -21,7 +21,7 @@ public sealed class AccountInfo
 		Password = password;
 		SecurityQuestion = question;
 		SecurityAnswer = answer;
-		CreationDate = DateTime.Now;
+		CreationDate = DateTime.UtcNow;
 		ReferrerCode = referrerCode;
 	}
 }

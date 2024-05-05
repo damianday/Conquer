@@ -80,7 +80,7 @@ public static class SEngine
 
 	public static void Process()
 	{
-		CurrentTime = DateTime.Now;
+		CurrentTime = DateTime.UtcNow;
 
 		foreach (var conn in Connections)
 			conn.Process();

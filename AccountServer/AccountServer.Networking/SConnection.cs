@@ -32,7 +32,7 @@ public sealed class SConnection
 		IPAddressObtained = false;
 		Connection = socket;
 		Connection.NoDelay = true;
-		ConnectionTime = DateTime.Now;
+		ConnectionTime = DateTime.UtcNow;
 		IPAddress = Connection.Client.RemoteEndPoint.ToString().Split(':')[0];
 		LoggedIn = false;
 		AccountName = string.Empty;
@@ -49,7 +49,7 @@ public sealed class SConnection
 		}
 		catch (Exception ex)
 		{
-            SMain.AddLogMessage(DateTime.Now.ToString() + " - Network processing error. Error: " + ex.Message);
+            SMain.AddLogMessage("Network processing error. Error: " + ex.Message);
             Connection?.Client?.Close();
 		}
 	}
@@ -98,7 +98,7 @@ public sealed class SConnection
 		}
 		catch (Exception ex)
 		{
-            SMain.AddLogMessage(DateTime.Now.ToString() + " - Asynchronous receive error. Error: " + ex.Message);
+            SMain.AddLogMessage("Asynchronous receive error. Error: " + ex.Message);
             Connection?.Client?.Close();
 		}
 	}
@@ -136,7 +136,7 @@ public sealed class SConnection
 		}
 		catch (Exception ex)
 		{
-            SMain.AddLogMessage(DateTime.Now.ToString() + " - Receive Completion Error. Error: " + ex.Message);
+            SMain.AddLogMessage("Receive Completion Error. Error: " + ex.Message);
             Connection?.Client?.Close();
 		}
 	}
@@ -149,7 +149,7 @@ public sealed class SConnection
 		}
 		catch (Exception ex)
 		{
-            SMain.AddLogMessage(DateTime.Now.ToString() + " - Asynchronous send error. Error: " + ex.Message);
+            SMain.AddLogMessage("Asynchronous send error. Error: " + ex.Message);
             Connection?.Client?.Close();
 		}
 	}
@@ -175,7 +175,7 @@ public sealed class SConnection
 
 	public void Disconnect(Exception e)
 	{
-        SMain.AddLogMessage(DateTime.Now.ToString() + " - Disconnecting. Message: " + e.Message);
+        SMain.AddLogMessage("Disconnecting. Message: " + e.Message);
         Connection?.Client?.Close();
 	}
 
@@ -240,7 +240,7 @@ public sealed class SConnection
 			account.Password = password;
 			SAccounts.SaveAccount(account);
 			SendPacket(new AccountChangePasswordSuccessPacket());
-            SMain.AddLogMessage(DateTime.Now.ToString() + " - Password change successful! Account: " + name);
+            SMain.AddLogMessage("Password change successful! Account: " + name);
         }
 	}
 
@@ -323,7 +323,7 @@ public sealed class SConnection
 			}
 			SAccounts.AddAccount(new AccountInfo(name, password, question, answer, referrerCode));
 			SendPacket(new AccountRegisterSuccessPacket());
-            SMain.AddLogMessage(DateTime.Now.ToString() + " - Account registration is successful! Account: " + name);
+            SMain.AddLogMessage("Account registration is successful! Account: " + name);
         }
     }
 
@@ -370,7 +370,7 @@ public sealed class SConnection
 			{
 				ServerListInformation = Encoding.UTF8.GetBytes(SMain.PublicServerInfo)
 			});
-            SMain.AddLogMessage(DateTime.Now.ToString() + " - Account login successful! Account: " + name);
+            SMain.AddLogMessage("Account login successful! Account: " + name);
         }
 	}
 
@@ -381,9 +381,9 @@ public sealed class SConnection
 			return;
 
 		if (!SMain.PhoneCaptchaTime.ContainsKey(number))
-			SMain.PhoneCaptchaTime.Add(number, DateTime.Now.AddMinutes(1.0));
+			SMain.PhoneCaptchaTime.Add(number, DateTime.UtcNow.AddMinutes(1.0));
 
-		if (!(SMain.PhoneCaptchaTime[number] > DateTime.Now))
+		if (!(SMain.PhoneCaptchaTime[number] > DateTime.UtcNow))
 		{
 			if (SMain.PhoneCaptcha.ContainsKey(number))
 				SMain.PhoneCaptcha.Remove(number);
@@ -466,7 +466,7 @@ public sealed class SConnection
 					Ticket = Encoding.UTF8.GetBytes(ticket)
 				});
 
-                SMain.AddLogMessage(DateTime.Now.ToString() + " - Ticket has been generated! Account: " + AccountName + " - " + ticket);
+                SMain.AddLogMessage("Ticket has been generated! Account: " + AccountName + " - " + ticket);
             }
 		}
 		else
