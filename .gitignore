@@ -42,7 +42,7 @@ Network Trash Folder
 *.pubxml.user
 
 # Launch settings
-*.launchSettings.json
+*launchSettings.json
 
 # Visual Studio Build Files
 obj/
