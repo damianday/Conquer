@@ -47,7 +47,7 @@ public class ItemInfo : DBObject
                     return 0;
                 case PersistentItemType.None:
                     return 1;
-                case PersistentItemType.装备:
+                case PersistentItemType.Equipment:
                     {
                         EquipmentInfo 装备数据2 = this as EquipmentInfo;
                         EquipmentItem 游戏装备 = Info as EquipmentItem;
@@ -292,7 +292,7 @@ public class ItemInfo : DBObject
     {
         get
         {
-            if (PersistType != PersistentItemType.装备)
+            if (PersistType != PersistentItemType.Equipment)
                 return Info.MaxDura;
             return Info.MaxDura * 1000;
         }

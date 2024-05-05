@@ -44,7 +44,7 @@ public sealed class StallObject
             writer.Write(Prices[kvp.Value]);
             writer.Write(0);
             writer.Write(0);
-            if (kvp.Value.PersistType == PersistentItemType.装备 && Settings.Default.CurrentVersion >= 1)
+            if (kvp.Value.PersistType == PersistentItemType.Equipment && Settings.Default.CurrentVersion >= 1)
             {
                 EquipmentInfo 装备数据 = kvp.Value as EquipmentInfo;
                 writer.Write(装备数据.ToArray());

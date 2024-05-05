@@ -6521,7 +6521,7 @@ public sealed class PlayerObject : MapObject
         {
             if (item.Dura.V > 0 && (CurrentPrivilege != 5 || !item.CanRepair) &&
                 (CurrentPrivilege != 4 || !Compute.CalculateProbability(0.5f)) &&
-                item.PersistType == PersistentItemType.装备 &&
+                item.PersistType == PersistentItemType.Equipment &&
                 Compute.CalculateProbability((item.Type == ItemType.Armour) ? 1f : 0.1f))
             {
                 DamageItem(item, damage);

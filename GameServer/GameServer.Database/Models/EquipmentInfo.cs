@@ -344,7 +344,7 @@ public class EquipmentInfo : ItemInfo
     public string Name => base.Info.Name;
 
     public bool CanRemove => ((EquipmentItem)Item.V).CanRemove;
-    public bool CanRepair => base.PersistType == PersistentItemType.装备;
+    public bool CanRepair => PersistType == PersistentItemType.Equipment;
 
     public int 传承材料
     {
@@ -929,9 +929,9 @@ public class EquipmentInfo : ItemInfo
         Location.V = location;
         CreatedDate.V = SEngine.CurrentTime;
         Status.V = 1;
-        MaxDura.V = ((item.PersistType == PersistentItemType.装备) ? (item.MaxDura * 1000) : item.MaxDura);
-        Dura.V = ((!random || item.PersistType != PersistentItemType.装备) ? MaxDura.V : SEngine.Random.Next(0, MaxDura.V));
-        if (random && item.PersistType == PersistentItemType.装备)
+        MaxDura.V = ((item.PersistType == PersistentItemType.Equipment) ? (item.MaxDura * 1000) : item.MaxDura);
+        Dura.V = ((!random || item.PersistType != PersistentItemType.Equipment) ? MaxDura.V : SEngine.Random.Next(0, MaxDura.V));
+        if (random && item.PersistType == PersistentItemType.Equipment)
         {
             RandomStats.SetValue(GameServer.Template.EquipmentStats.生成属性(base.Type));
         }
