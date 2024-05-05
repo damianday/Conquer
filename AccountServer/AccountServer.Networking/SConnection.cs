@@ -49,8 +49,8 @@ public sealed class SConnection
 		}
 		catch (Exception ex)
 		{
-			SMain.AddLogMessage("Network processing error. error:" + ex.Message);
-			Connection?.Client?.Close();
+            SMain.AddLogMessage(DateTime.Now.ToString() + " - Network processing error. Error: " + ex.Message);
+            Connection?.Client?.Close();
 		}
 	}
 
@@ -98,8 +98,8 @@ public sealed class SConnection
 		}
 		catch (Exception ex)
 		{
-			SMain.AddLogMessage("Asynchronous receive error. error:" + ex.Message);
-			Connection?.Client?.Close();
+            SMain.AddLogMessage(DateTime.Now.ToString() + " - Asynchronous receive error. Error: " + ex.Message);
+            Connection?.Client?.Close();
 		}
 	}
 
@@ -136,8 +136,8 @@ public sealed class SConnection
 		}
 		catch (Exception ex)
 		{
-			SMain.AddLogMessage("Receive Completion Error. error: " + ex.Message);
-			Connection?.Client?.Close();
+            SMain.AddLogMessage(DateTime.Now.ToString() + " - Receive Completion Error. Error: " + ex.Message);
+            Connection?.Client?.Close();
 		}
 	}
 
@@ -149,8 +149,8 @@ public sealed class SConnection
 		}
 		catch (Exception ex)
 		{
-			SMain.AddLogMessage("Asynchronous send error. error:" + ex.Message);
-			Connection?.Client?.Close();
+            SMain.AddLogMessage(DateTime.Now.ToString() + " - Asynchronous send error. Error: " + ex.Message);
+            Connection?.Client?.Close();
 		}
 	}
 
@@ -175,12 +175,12 @@ public sealed class SConnection
 
 	public void Disconnect(Exception e)
 	{
-		SMain.AddLogMessage("Disconnecting. Message: " + e.Message);
-		Connection?.Client?.Close();
+        SMain.AddLogMessage(DateTime.Now.ToString() + " - Disconnecting. Message: " + e.Message);
+        Connection?.Client?.Close();
 	}
 
-	public void Process(保持网络连接 P)
-	{
+	public void Process(保持网络连接 P) //Stay connected
+    {
 	}
 
 	public void Process(AccountLogOutPacket P)
@@ -240,8 +240,8 @@ public sealed class SConnection
 			account.Password = password;
 			SAccounts.SaveAccount(account);
 			SendPacket(new AccountChangePasswordSuccessPacket());
-			SMain.AddLogMessage("Password change successful! Account: " + name);
-		}
+            SMain.AddLogMessage(DateTime.Now.ToString() + " - Password change successful! Account: " + name);
+        }
 	}
 
 	public void Process(AccountRegisterPacket P)
@@ -323,12 +323,12 @@ public sealed class SConnection
 			}
 			SAccounts.AddAccount(new AccountInfo(name, password, question, answer, referrerCode));
 			SendPacket(new AccountRegisterSuccessPacket());
-			SMain.AddLogMessage("Account registration is successful! Account: " + name);
-		}
-	}
+            SMain.AddLogMessage(DateTime.Now.ToString() + " - Account registration is successful! Account: " + name);
+        }
+    }
 
-	public void Process(下载游戏文件 P)
-	{
+	public void Process(下载游戏文件 P) //Download game files
+    {
 		SMain.AddLogMessage(P.ToString());
 	}
 
@@ -370,8 +370,8 @@ public sealed class SConnection
 			{
 				ServerListInformation = Encoding.UTF8.GetBytes(SMain.PublicServerInfo)
 			});
-			SMain.AddLogMessage("Account login successful! Account: " + name);
-		}
+            SMain.AddLogMessage(DateTime.Now.ToString() + " - Account login successful! Account: " + name);
+        }
 	}
 
 	public void Process(AccountSMSVerificationRequestPacket P)
@@ -466,8 +466,8 @@ public sealed class SConnection
 					Ticket = Encoding.UTF8.GetBytes(ticket)
 				});
 
-				SMain.AddLogMessage("Ticket has been generated! Account: " + AccountName + " - " + ticket);
-			}
+                SMain.AddLogMessage(DateTime.Now.ToString() + " - Ticket has been generated! Account: " + AccountName + " - " + ticket);
+            }
 		}
 		else
 		{

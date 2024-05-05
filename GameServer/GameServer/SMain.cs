@@ -45,6 +45,7 @@ public partial class SMain : Form
     private static Dictionary<CharacterInfo, List<KeyValuePair<byte, ItemInfo>>> 角色仓库表;
     private static Dictionary<MonsterInfo, List<KeyValuePair<GameItem, long>>> 怪物掉落表;
 
+    #region LoadSystemData
     public static void LoadSystemData()
     {
         Main.allToolStripMenuItem.Visible = false;
@@ -95,7 +96,9 @@ public partial class SMain : Form
         SystemDataGateway.LoadData();
         AddSystemLog("The system data load is complete");
     }
+    #endregion
 
+    #region LoadUserData
     public static void LoadUserData()
     {
         AddSystemLog("Loading user data...");
@@ -191,7 +194,9 @@ public partial class SMain : Form
         Main.allToolStripMenuItem.Visible = true;
         AddSystemLog("The user data is loaded");
     }
+    #endregion
 
+    #region On/Off Service Completed
     public static void OnStartServiceCompleted()
     {
         Main?.BeginInvoke(() =>
@@ -228,7 +233,9 @@ public partial class SMain : Form
             公告数据表.Clear();
         });
     }
+    #endregion
 
+    #region Add Logs
     public static void AddSystemLog(string message)
     {
         Main?.BeginInvoke(() =>
@@ -260,7 +267,9 @@ public partial class SMain : Form
             Main.clearCommandsLogToolStripMenuItem.Enabled = true;
         });
     }
+    #endregion
 
+    #region UpdateStats
     public static void UpdateStats(SystemStatsState stats)
     {
         Main?.BeginInvoke(() =>
@@ -273,9 +282,16 @@ public partial class SMain : Form
             Main.CycleStatusLabel.Text = $"Cycles: {stats.CycleCount}";
             Main.DataSentStatusLabel.Text = $"Sent: {Compute.GetBytesReadable(stats.TotalSentBytes)}";
             Main.DataReceivedStatusLabel.Text = $"Received: {Compute.GetBytesReadable(stats.TotalReceivedBytes)}";
+
+            string processName = "AccountServer"; 
+            bool processFound = Process.GetProcessesByName(processName).Length > 0;
+            Main.AccountServerCheck.Text = processFound ? "Account Server Online" : "Account Server Offline";
+            Main.AccountServerCheck.BackColor = processFound ? Color.Green : Color.Red;
         });
     }
+    #endregion
 
+    #region Character Info
     public static void 添加数据显示(CharacterInfo 数据)
     {
         if (!RoleDataRows.ContainsKey(数据))
@@ -356,6 +372,7 @@ public partial class SMain : Form
         });
     }
 
+    #region Proccess Update UI
     public static void ProcessUpdateUI(object sender, EventArgs e)
     {
         SkillsDataTable.Rows.Clear();
@@ -433,7 +450,9 @@ public partial class SMain : Form
             DropDataTable.Rows.Add(dataRow5);
         }
     }
+    #endregion
 
+    #region Update Character
     public static void UpdateCharacter(CharacterInfo character, string key, object value)
     {
         Main?.BeginInvoke(() =>
@@ -476,7 +495,10 @@ public partial class SMain : Form
             角色仓库表[角色] = 物品;
         });
     }
+    #endregion
+    #endregion
 
+    #region Map Info
     public static void 添加地图数据(Map.Map 地图)
     {
         Main?.BeginInvoke(() =>
@@ -522,7 +544,9 @@ public partial class SMain : Form
             }
         });
     }
+    #endregion
 
+    #region Monster Info
     public static void 添加怪物数据(MonsterInfo 怪物)
     {
         Main?.BeginInvoke(() =>
@@ -552,7 +576,9 @@ public partial class SMain : Form
             怪物掉落表[怪物] = 物品;
         });
     }
+    #endregion
 
+    #region Bans
     public static void 添加封禁数据(string 地址, object 时间, bool 网络地址 = true)
     {
         Main?.BeginInvoke(() =>
@@ -598,7 +624,7 @@ public partial class SMain : Form
             }
         });
     }
-
+    #endregion
     public SMain()
     {
         int index;
@@ -3020,7 +3046,8 @@ public partial class SMain : Form
             Settings.Default.Save();
         }
     }
-    
+
+    #region Start/Stop Server Buttons
     private void startServerToolStripMenuItem_Click(object sender, EventArgs e)
     {
         SEngine.StartService();
@@ -3069,7 +3096,9 @@ public partial class SMain : Form
             stopServerToolStripMenuItem.Enabled = false;
         }
     }
+    #endregion
 
+    #region Save/Clear Logs
     private void saveSystemLogsToolStripMenuItem_Click(object sender, EventArgs e)
     {
         if (SystemLogsTextBox.Text != null && !(SystemLogsTextBox.Text == ""))
@@ -3115,7 +3144,7 @@ public partial class SMain : Form
         CommandLogsTextBox.Clear();
         clearCommandsLogToolStripMenuItem.Enabled = false;
     }
-
+#endregion
     private void savaDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
     {
         Task.Run(delegate
@@ -3127,6 +3156,7 @@ public partial class SMain : Form
         });
     }
 
+    #region Menu Click Events
     private void allToolStripMenuItem_Click(object sender, EventArgs e)
     {
         SystemDataGateway.ReloadData();
@@ -3256,4 +3286,5 @@ public partial class SMain : Form
     {
         SystemDataGateway.LoadVIPSystem();
     }
+#endregion
 }
