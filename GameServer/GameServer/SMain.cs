@@ -102,6 +102,7 @@ public partial class SMain : Form
     public static void LoadUserData()
     {
         AddSystemLog("Loading user data...");
+
         RoleDataTable = new System.Data.DataTable("角色数据表");
         SkillsDataTable = new System.Data.DataTable("技能数据表");
         EquipmentDataTable = new System.Data.DataTable("装备数据表");
@@ -110,6 +111,7 @@ public partial class SMain : Form
         RoleDataTable = new System.Data.DataTable("角色数据表");
         RoleDataRows = new Dictionary<CharacterInfo, DataRow>();
         数据行角色 = new Dictionary<DataRow, CharacterInfo>();
+
         RoleDataTable.Columns.Add("Name", typeof(string));
         RoleDataTable.Columns.Add("AccountName", typeof(string));
         RoleDataTable.Columns.Add("BlockDate", typeof(string));
@@ -143,6 +145,7 @@ public partial class SMain : Form
         RoleDataTable.Columns.Add("当前坐标", typeof(string));
         RoleDataTable.Columns.Add("当前PK值", typeof(string));
         RoleDataTable.Columns.Add("激活标识", typeof(string));
+
         Main?.BeginInvoke(() =>
         {
             Main.角色浏览表.DataSource = RoleDataTable;
@@ -151,6 +154,7 @@ public partial class SMain : Form
                 Main.角色浏览表.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             }
         });
+
         CharacterSkillsList = new Dictionary<CharacterInfo, List<KeyValuePair<ushort, SkillInfo>>>();
         SkillsDataTable.Columns.Add("技能名字", typeof(string));
         SkillsDataTable.Columns.Add("技能编号", typeof(string));
@@ -160,6 +164,7 @@ public partial class SMain : Form
         {
             Main.技能浏览表.DataSource = SkillsDataTable;
         });
+
         CharacterEquipmentList = new Dictionary<CharacterInfo, List<KeyValuePair<byte, EquipmentInfo>>>();
         EquipmentDataTable.Columns.Add("穿戴部位", typeof(string));
         EquipmentDataTable.Columns.Add("穿戴装备", typeof(string));
@@ -167,6 +172,7 @@ public partial class SMain : Form
         {
             Main.装备浏览表.DataSource = EquipmentDataTable;
         });
+
         CharacterInventoryList = new Dictionary<CharacterInfo, List<KeyValuePair<byte, ItemInfo>>>();
         InventoryDataTable.Columns.Add("背包位置", typeof(string));
         InventoryDataTable.Columns.Add("背包物品", typeof(string));
@@ -174,6 +180,7 @@ public partial class SMain : Form
         {
             Main.背包浏览表.DataSource = InventoryDataTable;
         });
+
         CharacterStorageList = new Dictionary<CharacterInfo, List<KeyValuePair<byte, ItemInfo>>>();
         WarehouseDataTable.Columns.Add("仓库位置", typeof(string));
         WarehouseDataTable.Columns.Add("仓库物品", typeof(string));
@@ -181,6 +188,7 @@ public partial class SMain : Form
         {
             Main.仓库浏览表.DataSource = WarehouseDataTable;
         });
+
         BlockingDataTable = new System.Data.DataTable();
         BlockedDataRows = new Dictionary<string, DataRow>();
         BlockingDataTable.Columns.Add("IPAddress", typeof(string));
@@ -190,7 +198,9 @@ public partial class SMain : Form
         {
             Main.封禁浏览表.DataSource = BlockingDataTable;
         });
+
         Session.Load();
+
         Main.allToolStripMenuItem.Visible = true;
         AddSystemLog("The user data is loaded");
     }
@@ -585,12 +595,12 @@ public partial class SMain : Form
         {
             if (!BlockedDataRows.ContainsKey(address))
             {
-                DataRow dataRow = BlockingDataTable.NewRow();
-                dataRow["IPAddress"] = (networkAddress ? address : null);
-                dataRow["MACAddress"] = (networkAddress ? null : address);
-                dataRow["ExpireDate"] = date;
-                BlockedDataRows[address] = dataRow;
-                BlockingDataTable.Rows.Add(dataRow);
+                var row = BlockingDataTable.NewRow();
+                row["IPAddress"] = (networkAddress ? address : null);
+                row["MACAddress"] = (networkAddress ? null : address);
+                row["ExpireDate"] = date;
+                BlockedDataRows[address] = row;
+                BlockingDataTable.Rows.Add(row);
             }
         });
     }
@@ -599,12 +609,11 @@ public partial class SMain : Form
     {
         Main?.BeginInvoke(() =>
         {
-            if (BlockedDataRows.TryGetValue(address, out var value))
+            if (BlockedDataRows.TryGetValue(address, out var row))
             {
-                if (networkAddress)
-                    value["IPAddress"] = date;
-                else
-                    value["MACAddress"] = date;
+                row["IPAddress"] = (networkAddress ? address : null);
+                row["MACAddress"] = (networkAddress ? null : address);
+                row["ExpireDate"] = date;
             }
         });
     }
