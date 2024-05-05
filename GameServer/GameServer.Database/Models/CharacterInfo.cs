@@ -654,7 +654,10 @@ public sealed class CharacterInfo : DBObject
 
             if (GameItem.DataSheetByName.TryGetValue(item.ItemName, out var val))
             {
-                Inventory[index] = new ItemInfo(val, this, 1, index);
+                if (val is EquipmentItem equipment)
+                    Inventory[index] = new EquipmentInfo(equipment, this, 1, index);
+                else
+                    Inventory[index] = new ItemInfo(val, this, 1, index);
             }
         }
 
