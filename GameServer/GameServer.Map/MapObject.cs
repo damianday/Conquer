@@ -1211,7 +1211,7 @@ public abstract class MapObject
                 float num2 = ((参数.技能伤害系数?.Length > skill.SkillLevel) ? 参数.技能伤害系数[skill.SkillLevel] : 0f);
                 if (this is MonsterObject)
                 {
-                    num += caster[Stat.怪物伤害];
+                    num += caster[Stat.MonsterDamage];
                 }
                 int num3 = 0;
                 float num4 = 0f;

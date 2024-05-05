@@ -70,7 +70,7 @@ public sealed class MountStats
                             obj.Stats[Stat.MaxMP] = reader.GetInt32("MaxMP");
                             obj.Stats[Stat.MinHC] = reader.GetInt32("MinHC");
                             obj.Stats[Stat.MaxHC] = reader.GetInt32("MaxHC");
-                            obj.Stats[Stat.怪物伤害] = reader.GetInt32("怪物伤害");
+                            obj.Stats[Stat.MonsterDamage] = reader.GetInt32("MonsterDamage");
 
                             DataSheet.Add(obj.MountID, obj);
                         }
@@ -119,7 +119,7 @@ public sealed class MountStats
                     obj.Stats[Stat.MaxMP] = csvReader.GetField<int>("最大魔力");
                     obj.Stats[Stat.MinHC] = csvReader.GetField<int>("最小神圣伤害");
                     obj.Stats[Stat.MaxHC] = csvReader.GetField<int>("最大神圣伤害");
-                    obj.Stats[Stat.怪物伤害] = csvReader.GetField<int>("怪物伤害");
+                    obj.Stats[Stat.MonsterDamage] = csvReader.GetField<int>("怪物伤害");
 
                     DataSheet.Add(obj.MountID, obj);
                 }

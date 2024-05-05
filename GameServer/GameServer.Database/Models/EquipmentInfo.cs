@@ -728,7 +728,7 @@ public class EquipmentInfo : ItemInfo
             }
             if (EquipInfo.怪物伤害 != 0)
             {
-                stats[Stat.怪物伤害] = EquipInfo.怪物伤害;
+                stats[Stat.MonsterDamage] = EquipInfo.怪物伤害;
             }
             if (Luck.V != 0)
             {
