@@ -33,9 +33,7 @@ public sealed class PlayerObject : MapObject
     public byte 重铸部位;
 
     public int CurrentNPCDialoguePage;
-
     public GuardObject CurrentNPC;
-
     public DateTime CurrentNPCTalkTime;
 
     public static MonsterObject 魔虫窟怪物;
@@ -1020,6 +1018,8 @@ public sealed class PlayerObject : MapObject
 
     public int 拾取停止次数 { get; set; }
 
+    public UserDegree CurrentDegree { get; set; }
+
     public bool GMNeverDie;
 
     public PlayerObject(CharacterInfo character, SConnection conn)
@@ -1227,6 +1227,10 @@ public sealed class PlayerObject : MapObject
         MapManager.AddActiveObject(this);
         character.LoginDate.V = SEngine.CurrentTime;
         character.Connect(conn);
+
+        CurrentDegree = UserDegree.User;
+        if (Administrator.DataSheet.TryGetValue(Name, out var degree))
+            CurrentDegree = degree.Degree;
 
         Enqueue(new SyncCharacterInfoPacket
         {
