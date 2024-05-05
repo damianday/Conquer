@@ -1,6 +1,5 @@
 using System;
 using GameServer.Database;
-using GameServer.Networking;
 
 using GamePackets.Server;
 
@@ -15,6 +14,7 @@ public sealed class RemoveIngot : GMCommand
     public int Amount;
 
     public override ExecuteCondition Priority => ExecuteCondition.Normal;
+    public override UserDegree Degree => UserDegree.Admin;
 
     public override void ExecuteCommand()
     {

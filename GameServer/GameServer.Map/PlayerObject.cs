@@ -24810,7 +24810,7 @@ public sealed class PlayerObject : MapObject
                 {
                     if (message.StartsWith("@"))
                     {
-                        if (SEngine.AddGMCommand(message))
+                        if (SEngine.AddGMCommand(message, CurrentDegree))
                             ;
                         else
                         {

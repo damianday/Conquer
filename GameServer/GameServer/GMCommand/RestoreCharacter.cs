@@ -9,6 +9,7 @@ public sealed class RestoreCharacter : GMCommand
     public string UserName;
 
     public override ExecuteCondition Priority => ExecuteCondition.Normal;
+    public override UserDegree Degree => UserDegree.SysOp;
 
     public override void ExecuteCommand()
     {

@@ -87,7 +87,7 @@ public static class SEngine
         SMain.AddChatLog(tag, message);
     }
 
-    public static bool AddGMCommand(string cmdText)
+    public static bool AddGMCommand(string cmdText, UserDegree degree)
     {
         if (string.IsNullOrEmpty(cmdText))
             return false;
@@ -106,30 +106,33 @@ public static class SEngine
 
         if (GMCommand.ParseCommand(cmdText, out var cmd))
         {
-            if (cmd.Priority == ExecuteCondition.Immediate)
+            if (degree >= cmd.Degree)
             {
-                cmd.ExecuteCommand();
-            }
-            else if (cmd.Priority == ExecuteCondition.Normal)
-            {
-                if (Running)
-                    ExternalCommands.Enqueue(cmd);
-                else
+                if (cmd.Priority == ExecuteCondition.Immediate)
+                {
                     cmd.ExecuteCommand();
-            }
-            else if (cmd.Priority == ExecuteCondition.Background)
-            {
-                if (Running)
-                    ExternalCommands.Enqueue(cmd);
-                else
-                    SMain.AddCommandLog("<= Command execution failed, the current command can only be executed when the server is running, please start the server first.");
-            }
-            else if (cmd.Priority == ExecuteCondition.Inactive)
-            {
-                if (!Running && (MainThread == null || !MainThread.IsAlive))
-                    cmd.ExecuteCommand();
-                else
-                    SMain.AddCommandLog("<= Command execution failed, the current command can only be executed when the server is not running, please shut down the server first.");
+                }
+                else if (cmd.Priority == ExecuteCondition.Normal)
+                {
+                    if (Running)
+                        ExternalCommands.Enqueue(cmd);
+                    else
+                        cmd.ExecuteCommand();
+                }
+                else if (cmd.Priority == ExecuteCondition.Background)
+                {
+                    if (Running)
+                        ExternalCommands.Enqueue(cmd);
+                    else
+                        SMain.AddCommandLog("<= Command execution failed, the current command can only be executed when the server is running, please start the server first.");
+                }
+                else if (cmd.Priority == ExecuteCondition.Inactive)
+                {
+                    if (!Running && (MainThread == null || !MainThread.IsAlive))
+                        cmd.ExecuteCommand();
+                    else
+                        SMain.AddCommandLog("<= Command execution failed, the current command can only be executed when the server is not running, please shut down the server first.");
+                }
             }
             return true;
         }

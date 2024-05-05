@@ -8,6 +8,7 @@ public sealed class ChangeMaxLevel : GMCommand
     public byte MaxLevel;
 
     public override ExecuteCondition Priority => ExecuteCondition.Background;
+    public override UserDegree Degree => UserDegree.SysOp;
 
     public override void ExecuteCommand()
     {

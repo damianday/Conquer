@@ -247,18 +247,18 @@ public static class Session
                 {
                     foreach (var kvp in GuildInfoTable.DataSheet)
                     {
-                        foreach (GuildLog item5 in ((GuildInfo)kvp.Value).GuildLogs)
+                        foreach (GuildLog log in ((GuildInfo)kvp.Value).GuildLogs)
                         {
-                            GuildLogType 事记类型2 = item5.LogType;
+                            GuildLogType 事记类型2 = log.LogType;
                             if ((uint)(事记类型2 - 9) <= 1u || (uint)(事记类型2 - 21) <= 1u)
                             {
-                                if (item5.Param1 == data.Index.V)
+                                if (log.Param1 == data.Index.V)
                                 {
-                                    item5.Param1 = num4;
+                                    log.Param1 = num4;
                                 }
-                                if (item5.Param2 == data.Index.V)
+                                if (log.Param2 == data.Index.V)
                                 {
-                                    item5.Param2 = num4;
+                                    log.Param2 = num4;
                                 }
                             }
                         }
@@ -270,7 +270,7 @@ public static class Session
             item.Value.Index = list.Count + num2;
             count += num3;
             item.Value.DataSheet = item.Value.DataSheet.ToDictionary((KeyValuePair<int, DBObject> x) => x.Value.Index.V, (KeyValuePair<int, DBObject> x) => x.Value);
-            SMain.AddCommandLog($"{item.Key.Name}已经整理完毕, 整理数量:{num3}");
+            SMain.AddCommandLog($"{item.Key.Name}Data sorting complete. Count:{num3}");
         }
 
         SMain.AddCommandLog($"User data has been collated, total collated:{count}");
@@ -286,43 +286,43 @@ public static class Session
         }
     }
 
-    public static void 清理角色(int 限制等级, int 限制天数)
+    public static void PurgeUsers(int restrictionLevel, int days)
     {
-        SMain.AddCommandLog("Starting to clean up character data...");
-        DateTime dateTime = DateTime.UtcNow.AddDays(-限制天数);
+        SMain.AddCommandLog("Starting to purge user data...");
+        DateTime dateTime = DateTime.UtcNow.AddDays(-days);
 
         int count = 0;
         foreach (DBObject item in CharacterInfoTable.DataSheet.Values.ToList())
         {
-            if (item is CharacterInfo character && character.Level.V < 限制等级 && !(character.DisconnectDate.V > dateTime))
+            if (item is CharacterInfo character && character.Level.V < restrictionLevel && !(character.DisconnectDate.V > dateTime))
             {
                 if (character.CurrentRanking.Count > 0)
                 {
-                    SMain.AddCommandLog($"[{character}]({character.Level}/{(int)(DateTime.UtcNow - character.DisconnectDate.V).TotalDays}) 在排行榜单上, 已跳过清理");
+                    SMain.AddCommandLog($"[{character}]({character.Level}/{(int)(DateTime.UtcNow - character.DisconnectDate.V).TotalDays}) On leaderboard, skipping purge.");
                     continue;
                 }
                 if (character.Ingot > 0)
                 {
-                    SMain.AddCommandLog($"[{character}]({character.Level}/{(int)(DateTime.UtcNow - character.DisconnectDate.V).TotalDays}) 有未消费元宝, 已跳过清理");
+                    SMain.AddCommandLog($"[{character}]({character.Level}/{(int)(DateTime.UtcNow - character.DisconnectDate.V).TotalDays}) Unspent treasure, skipping purge.");
                     continue;
                 }
                 if (character.CurrentGuild?.PresidentInfo == character)
                 {
-                    SMain.AddCommandLog($"[{character}]({character.Level}/{(int)(DateTime.UtcNow - character.DisconnectDate.V).TotalDays}) 是行会的会长, 已跳过清理");
+                    SMain.AddCommandLog($"[{character}]({character.Level}/{(int)(DateTime.UtcNow - character.DisconnectDate.V).TotalDays}) Guildmaster, skipping purge.");
                     continue;
                 }
-                SMain.AddCommandLog($"开始清理[{character}]({character.Level}/{(int)(DateTime.UtcNow - character.DisconnectDate.V).TotalDays})...");
+                SMain.AddCommandLog($"Starting to purge [{character}]({character.Level}/{(int)(DateTime.UtcNow - character.DisconnectDate.V).TotalDays})...");
                 character.Remove();
                 count++;
                 SMain.RemoveCharacterInfo(character);
             }
         }
 
-        SMain.AddCommandLog($"角色数据已经清理完成, 清理总数:{count}");
+        SMain.AddCommandLog($"User data purged, total:{count}");
 
         if (count > 0)
         {
-            SMain.AddCommandLog("The cleaned user data is being re-saved, it may take a long time, please wait...");
+            SMain.AddCommandLog("The purged user data is being re-saved, it may take a long time, please wait...");
             Save();
             SaveUsers();
             Load();

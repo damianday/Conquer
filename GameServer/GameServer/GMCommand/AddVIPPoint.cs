@@ -11,6 +11,7 @@ public sealed class AddVIPPoint : GMCommand
     public int Amount;
 
     public override ExecuteCondition Priority => ExecuteCondition.Normal;
+    public override UserDegree Degree => UserDegree.Admin;
 
     public override void ExecuteCommand()
     {

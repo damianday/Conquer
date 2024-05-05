@@ -13,6 +13,7 @@ public sealed class BlockNetwork : GMCommand
     public float Days;
 
     public override ExecuteCondition Priority => ExecuteCondition.Normal;
+    public override UserDegree Degree => UserDegree.SysOp;
 
     public override void ExecuteCommand()
     {

@@ -9,6 +9,7 @@ public sealed class UnblockAccount : GMCommand
     public string AccountName;
 
     public override ExecuteCondition Priority => ExecuteCondition.Normal;
+    public override UserDegree Degree => UserDegree.SysOp;
 
     public override void ExecuteCommand()
     {

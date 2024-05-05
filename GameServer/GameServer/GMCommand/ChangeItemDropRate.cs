@@ -8,6 +8,7 @@ public sealed class ChangeItemDropRate : GMCommand
     public decimal DropRate;
 
     public override ExecuteCondition Priority => ExecuteCondition.Background;
+    public override UserDegree Degree => UserDegree.SysOp;
 
     public override void ExecuteCommand()
     {

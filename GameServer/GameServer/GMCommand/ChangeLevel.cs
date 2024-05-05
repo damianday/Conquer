@@ -11,6 +11,7 @@ public sealed class ChangeLevel : GMCommand
     public int Level;
 
     public override ExecuteCondition Priority => ExecuteCondition.Normal;
+    public override UserDegree Degree => UserDegree.SysOp;
 
     public override void ExecuteCommand()
     {

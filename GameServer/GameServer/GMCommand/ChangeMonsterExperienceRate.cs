@@ -8,6 +8,7 @@ public sealed class ChangeMonsterExperienceRate : GMCommand
     public decimal ExperienceRate;
 
     public override ExecuteCondition Priority => ExecuteCondition.Background;
+    public override UserDegree Degree => UserDegree.SysOp;
 
     public override void ExecuteCommand()
     {

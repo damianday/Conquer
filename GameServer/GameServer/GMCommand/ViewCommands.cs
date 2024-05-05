@@ -5,6 +5,7 @@ namespace GameServer;
 public sealed class ViewCommands : GMCommand
 {
     public override ExecuteCondition Priority => ExecuteCondition.Immediate;
+    public override UserDegree Degree => UserDegree.User;
 
     public override void ExecuteCommand()
     {

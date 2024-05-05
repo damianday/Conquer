@@ -4,17 +4,25 @@ using GameServer.Database;
 
 namespace GameServer;
 
-public sealed class 整理数据 : GMCommand
+public sealed class PurgeUsers : GMCommand
 {
+    [FieldDescription(0, Index = 0)]
+    public int RestrictionLevel;
+
+    [FieldDescription(0, Index = 1)]
+    public int Days;
+
     public override ExecuteCondition Priority => ExecuteCondition.Inactive;
     public override UserDegree Degree => UserDegree.SysOp;
 
     public override void ExecuteCommand()
     {
-        if (MessageBox.Show("Organising data requires reordering all customer data to save ID resources\r\n\r\nThis operation is irreversible, please make a good backup of your data\r\n\r\nAre you sure you want to do this?", "Dangerous operation", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) != DialogResult.OK)
-        {
+        var msg = $"We will be permanently deleting the data of all characters whose level is less than [{RestrictionLevel}] and who have not logged in for [{Days}] days.\r\n\r\n" +
+                   "This operation is irreversible, please make a good backup of your data.\r\n\r\n" +
+                   "Are you sure you want to carry it out?";
+        if (MessageBox.Show(msg, "Dangerous operation", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) != DialogResult.OK)
             return;
-        }
+
         SMain.AddCommandLog("<= @" + GetType().Name + " Start executing the command, do not close the window during the process.");
         SMain.Main.BeginInvoke(() =>
         {
@@ -23,7 +31,7 @@ public sealed class 整理数据 : GMCommand
         });
         Task.Run(delegate
         {
-            Session.Save(commit: true);
+            Session.PurgeUsers(RestrictionLevel, Days);
             SMain.Main.BeginInvoke(() =>
             {
                 SMain.Main.SettingsPage.Enabled = true;

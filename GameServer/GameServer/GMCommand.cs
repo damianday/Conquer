@@ -9,10 +9,11 @@ public abstract class GMCommand
 {
     private static readonly Dictionary<string, Type> 命令字典;
     private static readonly Dictionary<string, FieldInfo[]> CommandParams;
-    private static readonly Dictionary<Type, Func<string, object>> 字段写入方法表;
+    private static readonly Dictionary<Type, Func<string, object>> FieldWriteMethodTable;
 
     public static readonly Dictionary<string, string> Commands;
     public abstract ExecuteCondition Priority { get; }
+    public abstract UserDegree Degree { get; }
 
     static GMCommand()
     {
@@ -47,7 +48,7 @@ public abstract class GMCommand
                 dictionary[name] = dictionary[name] + " " + fieldInfo2.Name;
             }
         }
-        字段写入方法表 = new Dictionary<Type, Func<string, object>>
+        FieldWriteMethodTable = new Dictionary<Type, Func<string, object>>
         {
             [typeof(string)] = (string s) => s,
             [typeof(int)] = (string s) => Convert.ToInt32(s),
@@ -77,11 +78,11 @@ public abstract class GMCommand
             {
                 try
                 {
-                    parts[i].SetValue(cmd, 字段写入方法表[parts[i].FieldType](array[i + 1]));
+                    parts[i].SetValue(cmd, FieldWriteMethodTable[parts[i].FieldType](array[i + 1]));
                 }
                 catch
                 {
-                    SMain.AddCommandLog("<= @参数转换错误. 不能将字符串 '" + array[i + 1] + "' 转换为参数 '" + parts[i].Name + "' 所需要的数据类型");
+                    SMain.AddCommandLog("<= @Parameter conversion error. Failed to convert a string '" + array[i + 1] + "' to parameter '" + parts[i].Name + "' required data types");
                     command = null;
                     return false;
                 }
@@ -89,7 +90,7 @@ public abstract class GMCommand
             command = cmd;
             return true;
         }
-        SMain.AddCommandLog("<= @命令解析错误, '" + cmdText + "' 不是支持的GM命令");
+        SMain.AddCommandLog("<= @Command parsing error, '" + cmdText + "' not a supported GM command");
         command = null;
         return false;
     }

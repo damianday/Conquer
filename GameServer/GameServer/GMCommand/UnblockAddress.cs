@@ -8,6 +8,7 @@ public sealed class UnblockAddress : GMCommand
     public string Address;
 
     public override ExecuteCondition Priority => ExecuteCondition.Normal;
+    public override UserDegree Degree => UserDegree.SysOp;
 
     public override void ExecuteCommand()
     {

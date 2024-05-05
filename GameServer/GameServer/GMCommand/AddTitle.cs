@@ -18,6 +18,7 @@ public sealed class AddTitle : GMCommand
     public int Duration;
 
     public override ExecuteCondition Priority => ExecuteCondition.Normal;
+    public override UserDegree Degree => UserDegree.Admin;
 
     public override void ExecuteCommand()
     {

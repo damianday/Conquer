@@ -12,6 +12,7 @@ public sealed class CharacterTransfer : GMCommand
     public string NewAccountName;
 
     public override ExecuteCondition Priority => ExecuteCondition.Normal;
+    public override UserDegree Degree => UserDegree.SysOp;
 
     public override void ExecuteCommand()
     {

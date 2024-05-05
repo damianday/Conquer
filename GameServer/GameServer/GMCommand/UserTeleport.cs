@@ -19,6 +19,7 @@ public sealed class UserTeleport : GMCommand
     public int MapY;
 
     public override ExecuteCondition Priority => ExecuteCondition.Normal;
+    public override UserDegree Degree => UserDegree.Admin;
 
     public override void ExecuteCommand()
     {

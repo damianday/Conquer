@@ -2676,7 +2676,7 @@ public partial class SMain : Form
 
         AddCommandLog("=> " + str);
 
-        if (SEngine.AddGMCommand(str))
+        if (SEngine.AddGMCommand(str, UserDegree.Admin))
             e.Handled = true;
         GMCommandTextBox.Clear();
     }

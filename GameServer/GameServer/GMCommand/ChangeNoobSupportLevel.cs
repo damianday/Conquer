@@ -8,6 +8,7 @@ public sealed class ChangeNoobSupportLevel : GMCommand
     public byte Level;
 
     public override ExecuteCondition Priority => ExecuteCondition.Background;
+    public override UserDegree Degree => UserDegree.SysOp;
 
     public override void ExecuteCommand()
     {

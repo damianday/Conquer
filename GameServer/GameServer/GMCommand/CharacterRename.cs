@@ -12,6 +12,7 @@ public sealed class CharacterRename : GMCommand
     public string NewUserName;
 
     public override ExecuteCondition Priority => ExecuteCondition.Normal;
+    public override UserDegree Degree => UserDegree.SysOp;
 
     public override void ExecuteCommand()
     {
