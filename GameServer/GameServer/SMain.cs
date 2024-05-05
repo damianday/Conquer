@@ -240,7 +240,7 @@ public partial class SMain : Form
     {
         Main?.BeginInvoke(() =>
         {
-            Main.SystemLogsTextBox.AppendText($"[{DateTime.Now:F}]: {message}" + "\r\n");
+            Main.SystemLogsTextBox.AppendText($"[{DateTime.Now}] {message}" + "\r\n");
             Main.SystemLogsTextBox.ScrollToCaret();
             Main.saveSystemLogsToolStripMenuItem.Enabled = true;
             Main.clearSystemLogsToolStripMenuItem.Enabled = true;
@@ -251,7 +251,7 @@ public partial class SMain : Form
     {
         Main?.BeginInvoke(() =>
         {
-            Main.ChatLogsTextBox.AppendText($"[{DateTime.Now:F}]: {tag + Encoding.UTF8.GetString(message).Trim(default(char))}" + "\r\n");
+            Main.ChatLogsTextBox.AppendText($"[{DateTime.Now}] {tag + Encoding.UTF8.GetString(message).Trim(default(char))}" + "\r\n");
             Main.ChatLogsTextBox.ScrollToCaret();
             Main.saveChatLogsToolStripMenuItem.Enabled = true;
             Main.clearChatLogsToolStripMenuItem.Enabled = true;
@@ -262,7 +262,7 @@ public partial class SMain : Form
     {
         Main?.BeginInvoke(() =>
         {
-            Main.CommandLogsTextBox.AppendText($"[{DateTime.Now:F}]: {message}" + "\r\n");
+            Main.CommandLogsTextBox.AppendText($"[{DateTime.Now}] {message}" + "\r\n");
             Main.CommandLogsTextBox.ScrollToCaret();
             Main.clearCommandsLogToolStripMenuItem.Enabled = true;
         });
@@ -3144,7 +3144,7 @@ public partial class SMain : Form
         CommandLogsTextBox.Clear();
         clearCommandsLogToolStripMenuItem.Enabled = false;
     }
-#endregion
+    #endregion
     private void savaDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
     {
         Task.Run(delegate
