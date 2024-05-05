@@ -41,6 +41,9 @@ Network Trash Folder
 *.csproj.user
 *.pubxml.user
 
+# Launch settings
+*.launchSettings.json
+
 # Visual Studio Build Files
 obj/
 bin/
