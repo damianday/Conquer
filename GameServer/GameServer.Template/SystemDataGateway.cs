@@ -101,7 +101,9 @@ public static class SystemDataGateway
     public static void LoadVIPSystem() => ReloadDataType(typeof(VIPSystem));
 
     public static void LoadTreasureChestInfos() => ReloadDataType(typeof(TreasureChestInfo));
-   
+
+    public static void LoadAdministrators() => ReloadDataType(typeof(Administrator));
+
     public static void ReloadData()
     {
         List<Type> templates = new List<Type>
@@ -131,7 +133,8 @@ public static class SystemDataGateway
             typeof(MountStats),
             typeof(ItemCrafting),
             typeof(VIPSystem),
-            typeof(TreasureChestInfo)
+            typeof(TreasureChestInfo),
+            typeof(Administrator)
         };
         Task.Run(delegate
         {
@@ -170,7 +173,8 @@ public static class SystemDataGateway
             typeof(MountStats),
             typeof(ItemCrafting),
             typeof(VIPSystem),
-            typeof(TreasureChestInfo)
+            typeof(TreasureChestInfo),
+            typeof(Administrator)
         };
 
         Task.Run(delegate
