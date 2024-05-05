@@ -297,14 +297,14 @@ public class ItemInfo : DBObject
     public bool CanStack => Info.PersistType == PersistentItemType.Stack;
     public bool 背包锁定 => Info.背包锁定;
     public bool CanDrop => Info.CanDrop;
-    public int 称号编号值 => Info.称号编号值;
+    public int TitleID => Info.称号编号值;
     public ushort AdditionalSkill => Info.AdditionalSkill;
     public int CurrencyModel => Info.CurrencyModel;
     public byte MountID => Info.MountID;
     public byte ChestID => Info.ChestID;
     public byte TeleportationAreaID => Info.TeleportationAreaID;
-    public int 给予物品 => Info.给予物品;
-    public int 给予物品数量 => Info.给予物品数量;
+    public int GrantedItemID => Info.给予物品;
+    public int GrantedItemCount => Info.给予物品数量;
     public int 货币面额 => Info.货币面额;
     public int HealthAmount => Info.HealthAmount;
     public int 书页分解 => Info.书页分解;

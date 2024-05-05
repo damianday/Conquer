@@ -17961,11 +17961,11 @@ public sealed class PlayerObject : MapObject
                 });
                 return;
             }
-            if (v.称号编号值 > 0)
+            if (v.TitleID > 0)
             {
                 if (ConsumeItem(1, v))
                 {
-                    AddTitle((byte)v.称号编号值);
+                    AddTitle((byte)v.TitleID);
                 }
                 return;
             }
@@ -18103,20 +18103,20 @@ public sealed class PlayerObject : MapObject
                 }
                 return;
             }
-            if (v.给予物品 > 0 && v.给予物品数量 > 0)
+            if (v.GrantedItemID > 0 && v.GrantedItemCount > 0)
             {
                 if (!ConsumeItem(1, v))
                 {
                     return;
                 }
                 GameItem value = null;
-                if (!GameItem.DataSheet.TryGetValue(v.给予物品, out value))
+                if (!GameItem.DataSheet.TryGetValue(v.GrantedItemID, out value))
                 {
                     return;
                 }
                 byte b = FindEmptyInventoryIndex();
                 Character.Inventory[b] = new ItemInfo(value, Character, 1, b, 1);
-                Character.Inventory[b].Dura.V = v.给予物品数量;
+                Character.Inventory[b].Dura.V = v.GrantedItemCount;
                 Character.Enqueue(new SyncItemPacket
                 {
                     Description = Character.Inventory[b].ToArray()
@@ -18131,193 +18131,64 @@ public sealed class PlayerObject : MapObject
                 }
                 return;
             }
-            if (v.ChestID > 0 && ConsumeItem(1, v))
+            if (v.ChestID > 0)
             {
-                if (!TreasureChestInfo.DataSheet.TryGetValue(v.ChestID, out var value2))
-                {
+                if (!ConsumeItem(1, v))
                     return;
-                }
-                if (GameItem.DataSheet.TryGetValue(value2.Item1ID, out var value3))
+
+                if (!TreasureChestInfo.DataSheet.TryGetValue(v.ChestID, out var chest))
+                    return;
+
+                void AddChestItem(int id, byte grid, int quantity)
                 {
-                    byte b3 = FindEmptyInventoryIndex();
-                    if (b3 == byte.MaxValue)
+                    if (GameItem.DataSheet.TryGetValue(id, out var value3))
                     {
-                        Enqueue(new GameErrorMessagePacket
+                        byte n = FindEmptyInventoryIndex();
+                        if (n == byte.MaxValue)
                         {
-                            ErrorCode = 1793
-                        });
-                        return;
-                    }
-                    Inventory[b3] = new ItemInfo(value3, Character, grid, b3, value2.Item1Quantity);
-                    Character.Enqueue(new SyncItemPacket
-                    {
-                        Description = Character.Inventory[b3].ToArray()
-                    });
-                }
-                if (GameItem.DataSheet.TryGetValue(value2.Item2ID, out var value4))
-                {
-                    byte b5 = byte.MaxValue;
-                    byte b6 = 0;
-                    while (b6 < InventorySize)
-                    {
-                        if (Inventory.ContainsKey(b6))
-                        {
-                            b6 = (byte)(b6 + 2);
-                            continue;
+                            Enqueue(new GameErrorMessagePacket { ErrorCode = 1793 });
+                            return;
                         }
-                        b5 = b6;
-                        break;
-                    }
-                    if (b5 == byte.MaxValue)
-                    {
-                        Enqueue(new GameErrorMessagePacket
+                        Inventory[n] = new ItemInfo(value3, Character, grid, n, quantity);
+                        Character.Enqueue(new SyncItemPacket
                         {
-                            ErrorCode = 1793
+                            Description = Character.Inventory[n].ToArray()
                         });
-                        return;
                     }
-                    Inventory[b5] = new ItemInfo(value4, Character, grid, b5, value2.Item2Quantity);
-                    Character.Enqueue(new SyncItemPacket
-                    {
-                        Description = Character.Inventory[b5].ToArray()
-                    });
                 }
-                if (GameItem.DataSheet.TryGetValue(value2.Item3ID, out var value5))
-                {
-                    byte b7 = byte.MaxValue;
-                    byte b8 = 0;
-                    while (b8 < InventorySize)
-                    {
-                        if (Inventory.ContainsKey(b8))
-                        {
-                            b8 = (byte)(b8 + 3);
-                            continue;
-                        }
-                        b7 = b8;
-                        break;
-                    }
-                    if (b7 == byte.MaxValue)
-                    {
-                        Enqueue(new GameErrorMessagePacket
-                        {
-                            ErrorCode = 1793
-                        });
-                        return;
-                    }
-                    Inventory[b7] = new ItemInfo(value5, Character, grid, b7, value2.Item3Quantity);
-                    Character.Enqueue(new SyncItemPacket
-                    {
-                        Description = Character.Inventory[b7].ToArray()
-                    });
-                }
-                if (GameItem.DataSheet.TryGetValue(value2.Item4ID, out var value6))
-                {
-                    byte b9 = byte.MaxValue;
-                    byte b10 = 0;
-                    while (b10 < InventorySize)
-                    {
-                        if (Inventory.ContainsKey(b10))
-                        {
-                            b10 = (byte)(b10 + 4);
-                            continue;
-                        }
-                        b9 = b10;
-                        break;
-                    }
-                    if (b9 == byte.MaxValue)
-                    {
-                        Enqueue(new GameErrorMessagePacket
-                        {
-                            ErrorCode = 1793
-                        });
-                        return;
-                    }
-                    Inventory[b9] = new ItemInfo(value6, Character, grid, b9, value2.Item4Quantity);
-                    Character.Enqueue(new SyncItemPacket
-                    {
-                        Description = Character.Inventory[b9].ToArray()
-                    });
-                }
-                if (GameItem.DataSheet.TryGetValue(value2.Item5ID, out var value7))
-                {
-                    byte b11 = byte.MaxValue;
-                    byte b12 = 0;
-                    while (b12 < InventorySize)
-                    {
-                        if (Inventory.ContainsKey(b12))
-                        {
-                            b12 = (byte)(b12 + 5);
-                            continue;
-                        }
-                        b11 = b12;
-                        break;
-                    }
-                    if (b11 == byte.MaxValue)
-                    {
-                        Enqueue(new GameErrorMessagePacket
-                        {
-                            ErrorCode = 1793
-                        });
-                        return;
-                    }
-                    Inventory[b11] = new ItemInfo(value7, Character, grid, b11, value2.Item5Quantity);
-                    Character.Enqueue(new SyncItemPacket
-                    {
-                        Description = Character.Inventory[b11].ToArray()
-                    });
-                }
-                if (GameItem.DataSheet.TryGetValue(value2.Item6ID, out var value8))
-                {
-                    byte b13 = byte.MaxValue;
-                    byte b14 = 0;
-                    while (b14 < InventorySize)
-                    {
-                        if (Inventory.ContainsKey(b14))
-                        {
-                            b14 = (byte)(b14 + 6);
-                            continue;
-                        }
-                        b13 = b14;
-                        break;
-                    }
-                    if (b13 == byte.MaxValue)
-                    {
-                        Enqueue(new GameErrorMessagePacket
-                        {
-                            ErrorCode = 1793
-                        });
-                        return;
-                    }
-                    Inventory[b13] = new ItemInfo(value8, Character, grid, b13, value2.Item6Quantity);
-                    Character.Enqueue(new SyncItemPacket
-                    {
-                        Description = Character.Inventory[b13].ToArray()
-                    });
-                }
+
+                AddChestItem(chest.Item1ID, grid, chest.Item1Quantity);
+                AddChestItem(chest.Item2ID, grid, chest.Item2Quantity);
+                AddChestItem(chest.Item3ID, grid, chest.Item3Quantity);
+                AddChestItem(chest.Item4ID, grid, chest.Item4Quantity);
+                AddChestItem(chest.Item5ID, grid, chest.Item5Quantity);
+                AddChestItem(chest.Item6ID, grid, chest.Item6Quantity);
             }
+
             if (v.ID == Settings.Default.会员物品对接)
             {
-                GuardObject 守卫实例2 = null;
+                GuardObject guard = null;
                 foreach (int key in MapManager.Guards.Keys)
                 {
                     if (MapManager.Guards[key].GuardID == 8482)
                     {
-                        守卫实例2 = MapManager.Guards[key];
+                        guard = MapManager.Guards[key];
                         break;
                     }
                 }
-                if (守卫实例2 != null)
+                if (guard != null)
                 {
-                    守卫实例2 = new GuardObject(GuardInfo.DataSheet[8482], CurrentMap, GameDirection.Down, new Point(CurrentPosition.X, CurrentPosition.Y + 1));
-                    守卫实例2.AutoDisappear = true;
-                    守卫实例2.ExistenceTime = SEngine.CurrentTime.AddSeconds(15.0);
+                    guard = new GuardObject(GuardInfo.DataSheet[8482], CurrentMap, GameDirection.Down, new Point(CurrentPosition.X, CurrentPosition.Y + 1));
+                    guard.AutoDisappear = true;
+                    guard.ExistenceTime = SEngine.CurrentTime.AddSeconds(15.0);
                 }
-                if (守卫实例2 == null)
+                if (guard == null)
                 {
                     return;
                 }
-                GuardSpeak(守卫实例2);
+                GuardSpeak(guard);
             }
+
             switch (v.Name)
             {
                 case "预言三件套":
@@ -23179,7 +23050,7 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    private void AddItemByID(int id, int quantity = 1)
+    private void AddItemByID(int id, byte grid = 1, int quantity = 1)
     {
         byte b = 0;
         byte b2 = 0;
@@ -23190,7 +23061,7 @@ public sealed class PlayerObject : MapObject
         {
             if (!Inventory.ContainsKey(b))
             {
-                Inventory[b] = new ItemInfo(item, Character, 1, b, 1);
+                Inventory[b] = new ItemInfo(item, Character, grid, b, 1);
                 Enqueue(new SyncItemPacket
                 {
                     Description = Inventory[b].ToArray()
