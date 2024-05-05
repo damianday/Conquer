@@ -305,7 +305,7 @@ public sealed class GuildInfo : DBObject
             });
             AddLog(new GuildLog
             {
-                LogType = GuildLogType.逐出公会,
+                LogType = GuildLogType.KickedFromGuild,
                 Param1 = member.ID,
                 Param2 = principal.ID,
                 LogTime = Compute.TimeSeconds(SEngine.CurrentTime)
@@ -373,7 +373,7 @@ public sealed class GuildInfo : DBObject
         });
         AddLog(new GuildLog
         {
-            LogType = GuildLogType.会长传位,
+            LogType = GuildLogType.ChangeLeader,
             Param1 = leader.ID,
             Param2 = member.ID,
             LogTime = Compute.TimeSeconds(SEngine.CurrentTime)
@@ -458,14 +458,14 @@ public sealed class GuildInfo : DBObject
         });
         AddLog(new GuildLog
         {
-            LogType = GuildLogType.行会敌对,
+            LogType = GuildLogType.AddRival,
             Param1 = ID,
             Param2 = guild.ID,
             LogTime = Compute.TimeSeconds(SEngine.CurrentTime)
         });
         guild.AddLog(new GuildLog
         {
-            LogType = GuildLogType.行会敌对,
+            LogType = GuildLogType.AddRival,
             Param1 = guild.ID,
             Param2 = ID,
             LogTime = Compute.TimeSeconds(SEngine.CurrentTime)
@@ -505,14 +505,14 @@ public sealed class GuildInfo : DBObject
         });
         AddLog(new GuildLog
         {
-            LogType = GuildLogType.行会结盟,
+            LogType = GuildLogType.AddAlliance,
             Param1 = ID,
             Param2 = guild.ID,
             LogTime = Compute.TimeSeconds(SEngine.CurrentTime)
         });
         guild.AddLog(new GuildLog
         {
-            LogType = GuildLogType.行会结盟,
+            LogType = GuildLogType.AddAlliance,
             Param1 = guild.ID,
             Param2 = ID,
             LogTime = Compute.TimeSeconds(SEngine.CurrentTime)
@@ -535,14 +535,14 @@ public sealed class GuildInfo : DBObject
         });
         AddLog(new GuildLog
         {
-            LogType = GuildLogType.取消结盟,
+            LogType = GuildLogType.RemoveAlliance,
             Param1 = ID,
             Param2 = guild.ID,
             LogTime = Compute.TimeSeconds(SEngine.CurrentTime)
         });
         guild.AddLog(new GuildLog
         {
-            LogType = GuildLogType.取消结盟,
+            LogType = GuildLogType.RemoveAlliance,
             Param1 = guild.ID,
             Param2 = ID,
             LogTime = Compute.TimeSeconds(SEngine.CurrentTime)
@@ -593,14 +593,14 @@ public sealed class GuildInfo : DBObject
         });
         AddLog(new GuildLog
         {
-            LogType = GuildLogType.取消敌对,
+            LogType = GuildLogType.RemoveRival,
             Param1 = ID,
             Param2 = guild.ID,
             LogTime = Compute.TimeSeconds(SEngine.CurrentTime)
         });
         guild.AddLog(new GuildLog
         {
-            LogType = GuildLogType.取消敌对,
+            LogType = GuildLogType.RemoveRival,
             Param1 = guild.ID,
             Param2 = ID,
             LogTime = Compute.TimeSeconds(SEngine.CurrentTime)

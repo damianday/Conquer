@@ -227,9 +227,9 @@ public static class Session
                                         item3.Param1 = num4;
                                     }
                                     break;
-                                case GuildLogType.逐出公会:
+                                case GuildLogType.KickedFromGuild:
                                 case GuildLogType.ChangeRank:
-                                case GuildLogType.会长传位:
+                                case GuildLogType.ChangeLeader:
                                     if (item3.Param1 == data.Index.V)
                                     {
                                         item3.Param1 = num4;
