@@ -1249,7 +1249,8 @@ public sealed class PlayerObject : MapObject
             CurrentTime = Compute.TimeSeconds(SEngine.CurrentTime),
             //AutoBattleMode = 2,
             MaxLevel = Settings.Default.MaxUserLevel,
-            SpecialRepairDiscount = (ushort)(Settings.Default.SpecialRepairDiscount * 10000m)
+            SpecialRepairDiscount = (ushort)(Settings.Default.SpecialRepairDiscount * 10000m),
+            GreyName = GreyName,
         });
         /*Enqueue(new 同步补充变量
         {

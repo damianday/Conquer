@@ -78,7 +78,7 @@ public sealed class SyncCharacterInfoPacket : GamePacket
     public byte 未知参数139;
 
     [FieldAttribute(Position = 143, Length = 1)]
-    public bool 是否灰名;
+    public bool GreyName;
 
 
     // TODO: Rename baove
