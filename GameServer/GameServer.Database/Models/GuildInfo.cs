@@ -21,14 +21,14 @@ public sealed class GuildInfo : DBObject
     public readonly DataMonitor<string> CreatorName;
     public readonly DataMonitor<string> GuildDeclaration;
     public readonly DataMonitor<string> GuildNotice;
-    public readonly DataMonitor<byte> 行会等级;
-    public readonly DataMonitor<int> 行会资金;
-    public readonly DataMonitor<int> 粮食数量;
-    public readonly DataMonitor<int> 木材数量;
-    public readonly DataMonitor<int> 石材数量;
-    public readonly DataMonitor<int> 铁矿数量;
-    public readonly DataMonitor<int> 行会排名;
-    public readonly ListMonitor<行会事记> 行会事记;
+    public readonly DataMonitor<byte> GuildLevel;
+    public readonly DataMonitor<int> GuildFunds;
+    public readonly DataMonitor<int> FoodAmount;
+    public readonly DataMonitor<int> WoodAmount;
+    public readonly DataMonitor<int> StoneAmount;
+    public readonly DataMonitor<int> OreAmount;
+    public readonly DataMonitor<int> GuildRanking;
+    public readonly ListMonitor<GuildLog> GuildLogs;
     public readonly DictionaryMonitor<CharacterInfo, GuildRank> Members;
     public readonly DictionaryMonitor<CharacterInfo, DateTime> BannedMembers;
     public readonly DictionaryMonitor<GuildInfo, DateTime> AllianceGuilds;
@@ -36,10 +36,10 @@ public sealed class GuildInfo : DBObject
 
     public Dictionary<CharacterInfo, DateTime> Applications;
     public Dictionary<CharacterInfo, DateTime> Invitations;
-    public Dictionary<GuildInfo, 外交申请> AllianceApplications;
+    public Dictionary<GuildInfo, AllianceApplication> AllianceApplications;
     public Dictionary<GuildInfo, DateTime> HostileReleaseApplications;
     public int ID => Index.V;
-    public int 创建时间 => Compute.TimeSeconds(CreatedDate.V);
+    public int CreationTime => Compute.TimeSeconds(CreatedDate.V);
     public string PresidentName => President.V.UserName.V;
 
     public CharacterInfo PresidentInfo
@@ -54,16 +54,13 @@ public sealed class GuildInfo : DBObject
 
     public DateTime ProcessTime { get; set; }
 
-    public override string ToString()
-    {
-        return GuildName?.V;
-    }
+    public override string ToString() => GuildName?.V;
 
     public GuildInfo()
     {
         Applications = new Dictionary<CharacterInfo, DateTime>();
         Invitations = new Dictionary<CharacterInfo, DateTime>();
-        AllianceApplications = new Dictionary<GuildInfo, 外交申请>();
+        AllianceApplications = new Dictionary<GuildInfo, AllianceApplication>();
         HostileReleaseApplications = new Dictionary<GuildInfo, DateTime>();
     }
 
@@ -71,34 +68,38 @@ public sealed class GuildInfo : DBObject
     {
         Applications = new Dictionary<CharacterInfo, DateTime>();
         Invitations = new Dictionary<CharacterInfo, DateTime>();
-        AllianceApplications = new Dictionary<GuildInfo, 外交申请>();
+        AllianceApplications = new Dictionary<GuildInfo, AllianceApplication>();
         HostileReleaseApplications = new Dictionary<GuildInfo, DateTime>();
-        this.GuildName.V = guildName;
-        this.GuildDeclaration.V = declaration;
+
+        GuildName.V = guildName;
+        GuildDeclaration.V = declaration;
         GuildNotice.V = "Have a great game.";
         President.V = player.Character;
         CreatorName.V = player.Name;
         Members.Add(player.Character, GuildRank.President);
-        添加事记(new 行会事记
+
+        AddLog(new GuildLog
         {
-            事记类型 = 事记类型.CreateGuild,
-            第一参数 = player.ObjectID,
-            事记时间 = Compute.TimeSeconds(SEngine.CurrentTime)
+            LogType = GuildLogType.CreateGuild,
+            Param1 = player.ObjectID,
+            LogTime = Compute.TimeSeconds(SEngine.CurrentTime)
         });
-        添加事记(new 行会事记
+        AddLog(new GuildLog
         {
-            事记类型 = 事记类型.JoinGuild,
-            第一参数 = player.ObjectID,
-            事记时间 = Compute.TimeSeconds(SEngine.CurrentTime)
+            LogType = GuildLogType.JoinGuild,
+            Param1 = player.ObjectID,
+            LogTime = Compute.TimeSeconds(SEngine.CurrentTime)
         });
-        行会等级.V = 1;
-        行会资金.V = 1000000;
-        粮食数量.V = 1000000;
-        木材数量.V = 1000000;
-        石材数量.V = 1000000;
-        铁矿数量.V = 1000000;
+
+        GuildLevel.V = 1;
+        GuildFunds.V = 1_000_000;
+        FoodAmount.V = 1_000_000;
+        WoodAmount.V = 1_000_000;
+        StoneAmount.V = 1_000_000;
+        OreAmount.V = 1_000_000;
         CreatedDate.V = SEngine.CurrentTime;
-        Session.GuildInfoTable.Add(this, indexed: true);
+
+        Session.GuildInfoTable.Add(this, true);
         SystemInfo.Info.UpdateGuildRanks(this);
     }
 
@@ -165,9 +166,9 @@ public sealed class GuildInfo : DBObject
                 HostileReleaseApplications.Remove(item5.Key);
             }
         }
-        foreach (KeyValuePair<GuildInfo, 外交申请> item6 in AllianceApplications.ToList())
+        foreach (KeyValuePair<GuildInfo, AllianceApplication> item6 in AllianceApplications.ToList())
         {
-            if (SEngine.CurrentTime > item6.Value.申请时间)
+            if (SEngine.CurrentTime > item6.Value.ValidTime)
             {
                 AllianceApplications.Remove(item6.Key);
             }
@@ -196,12 +197,12 @@ public sealed class GuildInfo : DBObject
                 对象编号 = key.ID
             });
         }
-        if (行会排名.V > 0)
+        if (GuildRanking.V > 0)
         {
-            SystemInfo.Info.GuildRanking.RemoveAt(行会排名.V - 1);
-            for (int i = 行会排名.V - 1; i < SystemInfo.Info.GuildRanking.Count; i++)
+            SystemInfo.Info.GuildRanking.RemoveAt(GuildRanking.V - 1);
+            for (int i = GuildRanking.V - 1; i < SystemInfo.Info.GuildRanking.Count; i++)
             {
-                SystemInfo.Info.GuildRanking[i].行会排名.V = i + 1;
+                SystemInfo.Info.GuildRanking[i].GuildRanking.V = i + 1;
             }
         }
         Members.Clear();
@@ -242,11 +243,11 @@ public sealed class GuildInfo : DBObject
         {
             Description = 行会信息描述()
         });
-        添加事记(new 行会事记
+        AddLog(new GuildLog
         {
-            事记类型 = 事记类型.JoinGuild,
-            第一参数 = member.ID,
-            事记时间 = Compute.TimeSeconds(SEngine.CurrentTime)
+            LogType = GuildLogType.JoinGuild,
+            Param1 = member.ID,
+            LogTime = Compute.TimeSeconds(SEngine.CurrentTime)
         });
         if (MapManager.Players.TryGetValue(member.ID, out var value))
         {
@@ -272,11 +273,11 @@ public sealed class GuildInfo : DBObject
         {
             对象编号 = member.ID
         });
-        添加事记(new 行会事记
+        AddLog(new GuildLog
         {
-            事记类型 = 事记类型.LeaveGuild,
-            第一参数 = member.ID,
-            事记时间 = Compute.TimeSeconds(SEngine.CurrentTime)
+            LogType = GuildLogType.LeaveGuild,
+            Param1 = member.ID,
+            LogTime = Compute.TimeSeconds(SEngine.CurrentTime)
         });
         if (MapManager.Players.TryGetValue(member.ID, out var player))
         {
@@ -302,12 +303,12 @@ public sealed class GuildInfo : DBObject
             {
                 对象编号 = member.ID
             });
-            添加事记(new 行会事记
+            AddLog(new GuildLog
             {
-                事记类型 = 事记类型.逐出公会,
-                第一参数 = member.ID,
-                第二参数 = principal.ID,
-                事记时间 = Compute.TimeSeconds(SEngine.CurrentTime)
+                LogType = GuildLogType.逐出公会,
+                Param1 = member.ID,
+                Param2 = principal.ID,
+                LogTime = Compute.TimeSeconds(SEngine.CurrentTime)
             });
             if (MapManager.Players.TryGetValue(member.ID, out var player))
             {
@@ -330,14 +331,14 @@ public sealed class GuildInfo : DBObject
             对象编号 = member.ID,
             对象职位 = (byte)rank
         });
-        添加事记(new 行会事记
+        AddLog(new GuildLog
         {
-            事记类型 = 事记类型.ChangeRank,
-            第一参数 = principal.ID,
-            第二参数 = member.ID,
-            第三参数 = (byte)行会职位3,
-            第四参数 = (byte)rank,
-            事记时间 = Compute.TimeSeconds(SEngine.CurrentTime)
+            LogType = GuildLogType.ChangeRank,
+            Param1 = principal.ID,
+            Param2 = member.ID,
+            Param3 = (byte)行会职位3,
+            Param4 = (byte)rank,
+            LogTime = Compute.TimeSeconds(SEngine.CurrentTime)
         });
     }
 
@@ -370,12 +371,12 @@ public sealed class GuildInfo : DBObject
             当前编号 = leader.ID,
             传位编号 = member.ID
         });
-        添加事记(new 行会事记
+        AddLog(new GuildLog
         {
-            事记类型 = 事记类型.会长传位,
-            第一参数 = leader.ID,
-            第二参数 = member.ID,
-            事记时间 = Compute.TimeSeconds(SEngine.CurrentTime)
+            LogType = GuildLogType.会长传位,
+            Param1 = leader.ID,
+            Param2 = member.ID,
+            LogTime = Compute.TimeSeconds(SEngine.CurrentTime)
         });
     }
 
@@ -407,7 +408,7 @@ public sealed class GuildInfo : DBObject
         }
     }
 
-    public void AddAllianceRequest(CharacterInfo principal, GuildInfo guild, byte 时间参数)
+    public void AddAllianceRequest(CharacterInfo principal, GuildInfo guild, byte time)
     {
         principal.Enqueue(new 申请结盟应答
         {
@@ -417,10 +418,10 @@ public sealed class GuildInfo : DBObject
         {
             guild.GuildAlert(GuildRank.副长, 2);
         }
-        guild.AllianceApplications[this] = new 外交申请
+        guild.AllianceApplications[this] = new AllianceApplication
         {
-            外交时间 = 时间参数,
-            申请时间 = SEngine.CurrentTime.AddHours(10.0)
+            DiplomaticHours = time,
+            ValidTime = SEngine.CurrentTime.AddHours(10.0)
         };
     }
 
@@ -442,7 +443,7 @@ public sealed class GuildInfo : DBObject
             外交类型 = 2,
             行会编号 = guild.ID,
             行会名字 = guild.GuildName.V,
-            行会等级 = guild.行会等级.V,
+            行会等级 = guild.GuildLevel.V,
             行会人数 = (byte)guild.Members.Count,
             外交时间 = (int)(HostileGuilds[guild] - SEngine.CurrentTime).TotalSeconds
         });
@@ -451,29 +452,29 @@ public sealed class GuildInfo : DBObject
             外交类型 = 2,
             行会编号 = ID,
             行会名字 = GuildName.V,
-            行会等级 = 行会等级.V,
+            行会等级 = GuildLevel.V,
             行会人数 = (byte)Members.Count,
             外交时间 = (int)(guild.HostileGuilds[this] - SEngine.CurrentTime).TotalSeconds
         });
-        添加事记(new 行会事记
+        AddLog(new GuildLog
         {
-            事记类型 = 事记类型.行会敌对,
-            第一参数 = ID,
-            第二参数 = guild.ID,
-            事记时间 = Compute.TimeSeconds(SEngine.CurrentTime)
+            LogType = GuildLogType.行会敌对,
+            Param1 = ID,
+            Param2 = guild.ID,
+            LogTime = Compute.TimeSeconds(SEngine.CurrentTime)
         });
-        guild.添加事记(new 行会事记
+        guild.AddLog(new GuildLog
         {
-            事记类型 = 事记类型.行会敌对,
-            第一参数 = guild.ID,
-            第二参数 = ID,
-            事记时间 = Compute.TimeSeconds(SEngine.CurrentTime)
+            LogType = GuildLogType.行会敌对,
+            Param1 = guild.ID,
+            Param2 = ID,
+            LogTime = Compute.TimeSeconds(SEngine.CurrentTime)
         });
     }
 
     public void AddAllianceGuild(GuildInfo guild)
     {
-        var days = AllianceApplications[guild].外交时间 switch
+        var days = AllianceApplications[guild].DiplomaticHours switch
         {
             2 => 3,
             1 => 1,
@@ -489,7 +490,7 @@ public sealed class GuildInfo : DBObject
             外交类型 = 1,
             行会名字 = guild.GuildName.V,
             行会编号 = guild.ID,
-            行会等级 = guild.行会等级.V,
+            行会等级 = guild.GuildLevel.V,
             行会人数 = (byte)guild.Members.Count,
             外交时间 = (int)(AllianceGuilds[guild] - SEngine.CurrentTime).TotalSeconds
         });
@@ -498,23 +499,23 @@ public sealed class GuildInfo : DBObject
             外交类型 = 1,
             行会名字 = GuildName.V,
             行会编号 = ID,
-            行会等级 = 行会等级.V,
+            行会等级 = GuildLevel.V,
             行会人数 = (byte)Members.Count,
             外交时间 = (int)(guild.AllianceGuilds[this] - SEngine.CurrentTime).TotalSeconds
         });
-        添加事记(new 行会事记
+        AddLog(new GuildLog
         {
-            事记类型 = 事记类型.行会结盟,
-            第一参数 = ID,
-            第二参数 = guild.ID,
-            事记时间 = Compute.TimeSeconds(SEngine.CurrentTime)
+            LogType = GuildLogType.行会结盟,
+            Param1 = ID,
+            Param2 = guild.ID,
+            LogTime = Compute.TimeSeconds(SEngine.CurrentTime)
         });
-        guild.添加事记(new 行会事记
+        guild.AddLog(new GuildLog
         {
-            事记类型 = 事记类型.行会结盟,
-            第一参数 = guild.ID,
-            第二参数 = ID,
-            事记时间 = Compute.TimeSeconds(SEngine.CurrentTime)
+            LogType = GuildLogType.行会结盟,
+            Param1 = guild.ID,
+            Param2 = ID,
+            LogTime = Compute.TimeSeconds(SEngine.CurrentTime)
         });
     }
 
@@ -532,19 +533,19 @@ public sealed class GuildInfo : DBObject
             外交类型 = 1,
             行会编号 = ID
         });
-        添加事记(new 行会事记
+        AddLog(new GuildLog
         {
-            事记类型 = 事记类型.取消结盟,
-            第一参数 = ID,
-            第二参数 = guild.ID,
-            事记时间 = Compute.TimeSeconds(SEngine.CurrentTime)
+            LogType = GuildLogType.取消结盟,
+            Param1 = ID,
+            Param2 = guild.ID,
+            LogTime = Compute.TimeSeconds(SEngine.CurrentTime)
         });
-        guild.添加事记(new 行会事记
+        guild.AddLog(new GuildLog
         {
-            事记类型 = 事记类型.取消结盟,
-            第一参数 = guild.ID,
-            第二参数 = ID,
-            事记时间 = Compute.TimeSeconds(SEngine.CurrentTime)
+            LogType = GuildLogType.取消结盟,
+            Param1 = guild.ID,
+            Param2 = ID,
+            LogTime = Compute.TimeSeconds(SEngine.CurrentTime)
         });
         principal.Enqueue(new SocialErrorPacket
         {
@@ -590,48 +591,48 @@ public sealed class GuildInfo : DBObject
             外交类型 = 2,
             行会编号 = ID
         });
-        添加事记(new 行会事记
+        AddLog(new GuildLog
         {
-            事记类型 = 事记类型.取消敌对,
-            第一参数 = ID,
-            第二参数 = guild.ID,
-            事记时间 = Compute.TimeSeconds(SEngine.CurrentTime)
+            LogType = GuildLogType.取消敌对,
+            Param1 = ID,
+            Param2 = guild.ID,
+            LogTime = Compute.TimeSeconds(SEngine.CurrentTime)
         });
-        guild.添加事记(new 行会事记
+        guild.AddLog(new GuildLog
         {
-            事记类型 = 事记类型.取消敌对,
-            第一参数 = guild.ID,
-            第二参数 = ID,
-            事记时间 = Compute.TimeSeconds(SEngine.CurrentTime)
+            LogType = GuildLogType.取消敌对,
+            Param1 = guild.ID,
+            Param2 = ID,
+            LogTime = Compute.TimeSeconds(SEngine.CurrentTime)
         });
     }
 
-    public void 发送邮件(GuildRank 职位, string 标题, string 内容)
+    public void SendMail(GuildRank rank, string subject, string msg)
     {
         foreach (KeyValuePair<CharacterInfo, GuildRank> item in Members)
         {
-            if (item.Value <= 职位)
+            if (item.Value <= rank)
             {
-                item.Key.SendMail(new MailInfo(null, 标题, 内容, null));
+                item.Key.SendMail(new MailInfo(null, subject, msg, null));
             }
         }
     }
 
-    public void 添加事记(行会事记 事记)
+    public void AddLog(GuildLog log)
     {
-        行会事记.Insert(0, 事记);
-        Broadcast(new 添加公会事记
+        GuildLogs.Insert(0, log);
+        Broadcast(new AddGuildLogPacket
         {
-            事记类型 = (byte)事记.事记类型,
-            第一参数 = 事记.第一参数,
-            第二参数 = 事记.第二参数,
-            第三参数 = 事记.第三参数,
-            第四参数 = 事记.第四参数,
-            事记时间 = 事记.事记时间
+            LogType = (byte)log.LogType,
+            Param1 = log.Param1,
+            Param2 = log.Param2,
+            Param3 = log.Param3,
+            Param4 = log.Param4,
+            LogTime = log.LogTime
         });
-        while (行会事记.Count > 10)
+        while (GuildLogs.Count > 10)
         {
-            行会事记.RemoveAt(行会事记.Count - 1);
+            GuildLogs.RemoveAt(GuildLogs.Count - 1);
         }
     }
 
@@ -657,7 +658,7 @@ public sealed class GuildInfo : DBObject
         byte[] array = new byte[25];
         Encoding.UTF8.GetBytes(GuildName.V).CopyTo(array, 0);
         binaryWriter.Write(array);
-        binaryWriter.Write(行会等级.V);
+        binaryWriter.Write(GuildLevel.V);
         binaryWriter.Write((byte)Members.Count);
         binaryWriter.Write(0);
         array = new byte[32];
@@ -666,7 +667,7 @@ public sealed class GuildInfo : DBObject
         array = new byte[32];
         Encoding.UTF8.GetBytes(CreatorName.V).CopyTo(array, 0);
         binaryWriter.Write(array);
-        binaryWriter.Write(创建时间);
+        binaryWriter.Write(CreationTime);
         array = new byte[101];
         Encoding.UTF8.GetBytes(GuildDeclaration.V).CopyTo(array, 0);
         binaryWriter.Write(array);
@@ -682,10 +683,10 @@ public sealed class GuildInfo : DBObject
         binaryWriter.Write(ID);
         binaryWriter.Write(Encoding.UTF8.GetBytes(GuildName.V));
         binaryWriter.Seek(29, SeekOrigin.Begin);
-        binaryWriter.Write(行会等级.V);
+        binaryWriter.Write(GuildLevel.V);
         binaryWriter.Write((byte)Members.Count);
-        binaryWriter.Write(行会资金.V);
-        binaryWriter.Write(创建时间);
+        binaryWriter.Write(GuildFunds.V);
+        binaryWriter.Write(CreationTime);
         binaryWriter.Seek(43, SeekOrigin.Begin);
         binaryWriter.Write(Encoding.UTF8.GetBytes(PresidentName));
         binaryWriter.Seek(75, SeekOrigin.Begin);
@@ -693,10 +694,10 @@ public sealed class GuildInfo : DBObject
         binaryWriter.Seek(107, SeekOrigin.Begin);
         binaryWriter.Write(Encoding.UTF8.GetBytes(GuildNotice.V));
         binaryWriter.Seek(4258, SeekOrigin.Begin);
-        binaryWriter.Write(粮食数量.V);
-        binaryWriter.Write(木材数量.V);
-        binaryWriter.Write(石材数量.V);
-        binaryWriter.Write(铁矿数量.V);
+        binaryWriter.Write(FoodAmount.V);
+        binaryWriter.Write(WoodAmount.V);
+        binaryWriter.Write(StoneAmount.V);
+        binaryWriter.Write(OreAmount.V);
         binaryWriter.Write(402);
         binaryWriter.Seek(7960, SeekOrigin.Begin);
         foreach (KeyValuePair<CharacterInfo, GuildRank> item in Members)
@@ -714,15 +715,15 @@ public sealed class GuildInfo : DBObject
             binaryWriter.Write(BannedMembers.ContainsKey(item.Key));
         }
         binaryWriter.Seek(330, SeekOrigin.Begin);
-        binaryWriter.Write((byte)Math.Min(10, 行会事记.Count));
-        for (int i = 0; i < 10 && i < 行会事记.Count; i++)
+        binaryWriter.Write((byte)Math.Min(10, GuildLogs.Count));
+        for (int i = 0; i < 10 && i < GuildLogs.Count; i++)
         {
-            binaryWriter.Write((byte)行会事记[i].事记类型);
-            binaryWriter.Write(行会事记[i].第一参数);
-            binaryWriter.Write(行会事记[i].第二参数);
-            binaryWriter.Write(行会事记[i].第三参数);
-            binaryWriter.Write(行会事记[i].第四参数);
-            binaryWriter.Write(行会事记[i].事记时间);
+            binaryWriter.Write((byte)GuildLogs[i].LogType);
+            binaryWriter.Write(GuildLogs[i].Param1);
+            binaryWriter.Write(GuildLogs[i].Param2);
+            binaryWriter.Write(GuildLogs[i].Param3);
+            binaryWriter.Write(GuildLogs[i].Param4);
+            binaryWriter.Write(GuildLogs[i].LogTime);
         }
         binaryWriter.Seek(1592, SeekOrigin.Begin);
         binaryWriter.Write((byte)AllianceGuilds.Count);
@@ -731,7 +732,7 @@ public sealed class GuildInfo : DBObject
             binaryWriter.Write((byte)1);
             binaryWriter.Write(item2.Key.ID);
             binaryWriter.Write(Compute.TimeSeconds(item2.Value));
-            binaryWriter.Write(item2.Key.行会等级.V);
+            binaryWriter.Write(item2.Key.GuildLevel.V);
             binaryWriter.Write((byte)item2.Key.Members.Count);
             byte[] array2 = new byte[25];
             Encoding.UTF8.GetBytes(item2.Key.GuildName.V).CopyTo(array2, 0);
@@ -744,7 +745,7 @@ public sealed class GuildInfo : DBObject
             binaryWriter.Write((byte)2);
             binaryWriter.Write(item3.Key.ID);
             binaryWriter.Write(Compute.TimeSeconds(item3.Value));
-            binaryWriter.Write(item3.Key.行会等级.V);
+            binaryWriter.Write(item3.Key.GuildLevel.V);
             binaryWriter.Write((byte)item3.Key.Members.Count);
             byte[] array3 = new byte[25];
             Encoding.UTF8.GetBytes(item3.Key.GuildName.V).CopyTo(array3, 0);
@@ -776,18 +777,18 @@ public sealed class GuildInfo : DBObject
         using MemoryStream memoryStream = new MemoryStream();
         using BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
         binaryWriter.Write((byte)AllianceApplications.Count);
-        foreach (KeyValuePair<GuildInfo, 外交申请> item in AllianceApplications)
+        foreach (KeyValuePair<GuildInfo, AllianceApplication> item in AllianceApplications)
         {
             binaryWriter.Write(item.Key.ID);
             byte[] array = new byte[25];
             Encoding.UTF8.GetBytes(item.Key.GuildName.V).CopyTo(array, 0);
             binaryWriter.Write(array);
-            binaryWriter.Write(item.Key.行会等级.V);
+            binaryWriter.Write(item.Key.GuildLevel.V);
             binaryWriter.Write((byte)item.Key.Members.Count);
             array = new byte[32];
             Encoding.UTF8.GetBytes(item.Key.PresidentName).CopyTo(array, 0);
             binaryWriter.Write(array);
-            binaryWriter.Write(Compute.TimeSeconds(item.Value.申请时间));
+            binaryWriter.Write(Compute.TimeSeconds(item.Value.ValidTime));
         }
         return memoryStream.ToArray();
     }
@@ -807,15 +808,15 @@ public sealed class GuildInfo : DBObject
     {
         using MemoryStream memoryStream = new MemoryStream();
         using BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
-        binaryWriter.Write((ushort)Math.Max(0, 行会事记.Count - 10));
-        for (int i = 10; i < 行会事记.Count; i++)
+        binaryWriter.Write((ushort)Math.Max(0, GuildLogs.Count - 10));
+        for (int i = 10; i < GuildLogs.Count; i++)
         {
-            binaryWriter.Write((byte)行会事记[i].事记类型);
-            binaryWriter.Write(行会事记[i].第一参数);
-            binaryWriter.Write(行会事记[i].第二参数);
-            binaryWriter.Write(行会事记[i].第三参数);
-            binaryWriter.Write(行会事记[i].第四参数);
-            binaryWriter.Write(行会事记[i].事记时间);
+            binaryWriter.Write((byte)GuildLogs[i].LogType);
+            binaryWriter.Write(GuildLogs[i].Param1);
+            binaryWriter.Write(GuildLogs[i].Param2);
+            binaryWriter.Write(GuildLogs[i].Param3);
+            binaryWriter.Write(GuildLogs[i].Param4);
+            binaryWriter.Write(GuildLogs[i].LogTime);
         }
         return memoryStream.ToArray();
     }

@@ -17929,10 +17929,7 @@ public sealed class PlayerObject : MapObject
             }
             if (!Inventory.TryGetValue(location, out var v))
             {
-                Enqueue(new GameErrorMessagePacket
-                {
-                    ErrorCode = 1802
-                });
+                Enqueue(new GameErrorMessagePacket { ErrorCode = 1802 });
                 return;
             }
             if (CurrentLevel < v.NeedLevel)
@@ -17947,20 +17944,15 @@ public sealed class PlayerObject : MapObject
             }
             if (Cooldowns.TryGetValue(v.ID | 0x2000000, out var v2) && SEngine.CurrentTime < v2)
             {
-                Enqueue(new GameErrorMessagePacket
-                {
-                    ErrorCode = 1825
-                });
+                Enqueue(new GameErrorMessagePacket { ErrorCode = 1825 });
                 return;
             }
             if (v.GroupID > 0 && Cooldowns.TryGetValue(v.GroupID | 0, out var v3) && SEngine.CurrentTime < v3)
             {
-                Enqueue(new GameErrorMessagePacket
-                {
-                    ErrorCode = 1825
-                });
+                Enqueue(new GameErrorMessagePacket { ErrorCode = 1825 });
                 return;
             }
+
             if (v.TitleID > 0)
             {
                 if (ConsumeItem(1, v))
@@ -17969,6 +17961,7 @@ public sealed class PlayerObject : MapObject
                 }
                 return;
             }
+
             if (v.AdditionalSkill > 0 && v.StoreType == SaleType.Book)
             {
                 if (!ConsumeItem(1, v))
@@ -17977,6 +17970,7 @@ public sealed class PlayerObject : MapObject
                 }
                 AddSkill(v.AdditionalSkill);
             }
+
             if (v.StoreType == SaleType.Pharmacy && v.DrugModel == 1 && v.HealthAmount > 0 && v.ManaAmount > 0)
             {
                 if (ConsumeItem(1, v))
@@ -18004,6 +17998,7 @@ public sealed class PlayerObject : MapObject
                 }
                 return;
             }
+
             if (v.StoreType == SaleType.Pharmacy && v.DrugModel == 2 && v.MaxUseCount > 0 && v.ManaAmount > 0)
             {
                 if (ConsumeItem(1, v))
@@ -18032,6 +18027,7 @@ public sealed class PlayerObject : MapObject
                 }
                 return;
             }
+
             if (v.StoreType == SaleType.Pharmacy && v.DrugModel == 3 && v.MaxUseCount > 0 && v.HealthAmount > 0)
             {
                 if (ConsumeItem(1, v))
@@ -18060,6 +18056,7 @@ public sealed class PlayerObject : MapObject
                 }
                 return;
             }
+
             if (v.StoreType == SaleType.Pharmacy && v.DrugModel == 4 && v.MaxUseCount > 0)
             {
                 if (ConsumeItem(1, v))
@@ -18072,6 +18069,7 @@ public sealed class PlayerObject : MapObject
                 }
                 return;
             }
+
             if (v.StoreType == SaleType.Currency && v.CurrencyModel >= 0 && v.货币面额 > 0)
             {
                 if (ConsumeItem(1, v))
@@ -18087,6 +18085,7 @@ public sealed class PlayerObject : MapObject
                 }
                 return;
             }
+
             if (v.StoreType == SaleType.Mounts && v.MountID > 0)
             {
                 if (ConsumeItem(1, v))
@@ -18095,6 +18094,7 @@ public sealed class PlayerObject : MapObject
                 }
                 return;
             }
+
             if (v.Experience > 0)
             {
                 if (ConsumeItem(1, v))
@@ -18103,6 +18103,7 @@ public sealed class PlayerObject : MapObject
                 }
                 return;
             }
+
             if (v.GrantedItemID > 0 && v.GrantedItemCount > 0)
             {
                 if (!ConsumeItem(1, v))
@@ -18123,6 +18124,7 @@ public sealed class PlayerObject : MapObject
                 });
                 return;
             }
+
             if (v.TeleportationAreaID > 0)
             {
                 if (ConsumeItem(1, v))
@@ -18131,6 +18133,7 @@ public sealed class PlayerObject : MapObject
                 }
                 return;
             }
+
             if (v.ChestID > 0)
             {
                 if (!ConsumeItem(1, v))
@@ -26291,7 +26294,7 @@ public sealed class PlayerObject : MapObject
                 创建时间 = guild.CreatedDate.V,
                 会长编号 = guild.President.V.Index.V,
                 行会人数 = (byte)guild.Members.Count,
-                行会等级 = guild.行会等级.V
+                行会等级 = guild.GuildLevel.V
             });
         }
         else
@@ -26314,7 +26317,7 @@ public sealed class PlayerObject : MapObject
     public void 查看行会列表(int id, byte 查看方式)
     {
         DBObject value;
-        int val = ((Session.GuildInfoTable.DataSheet.TryGetValue(id, out value) && value is GuildInfo guild) ? (guild.行会排名.V - 1) : 0);
+        int val = ((Session.GuildInfoTable.DataSheet.TryGetValue(id, out value) && value is GuildInfo guild) ? (guild.GuildRanking.V - 1) : 0);
         int num = Math.Max(0, val);
         int num2 = ((查看方式 == 2) ? Math.Max(0, num) : Math.Max(0, num - 11));
         int num3 = Math.Min(12, SystemInfo.Info.GuildRanking.Count - num2);
@@ -27275,7 +27278,7 @@ public sealed class PlayerObject : MapObject
                     {
                         行会编号 = 行会数据.ID
                     });
-                    行会数据.发送邮件(GuildRank.副长, "结盟申请被拒绝", "行会[" + Guild.GuildName.V + "]拒绝了你所在行会的结盟申请.");
+                    行会数据.SendMail(GuildRank.副长, "结盟申请被拒绝", "行会[" + Guild.GuildName.V + "]拒绝了你所在行会的结盟申请.");
                     Guild.AllianceApplications.Remove(行会数据);
                     break;
                 case 2:

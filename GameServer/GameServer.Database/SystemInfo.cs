@@ -77,11 +77,11 @@ public class SystemInfo : DBObject
 
     public readonly ListMonitor<GuildInfo> GuildRanking;
 
-    private static readonly CombatPowerComparer 战力计算器;
-    private static readonly LevelComparer 等级计算器;
-    private static readonly PrestigeComparer 声望计算器;
-    private static readonly PKPointComparer PK值计算器;
-    private static readonly GuildMemberComparer 行会计算器;
+    private static readonly CombatPowerComparer m_CombatPowerComparer;
+    private static readonly LevelComparer m_LevelComparer;
+    private static readonly PrestigeComparer m_PrestigeComparer;
+    private static readonly PKPointComparer m_PKPointComparer;
+    private static readonly GuildMemberComparer m_GuildMemberComparer;
 
     public static SystemInfo Info => Session.SystemInfoTable.DataSheet[1] as SystemInfo;
 
@@ -97,110 +97,110 @@ public class SystemInfo : DBObject
 
     public void UpdatePower(CharacterInfo character)
     {
-        UpdateRanks(IndividualBattleRanking, 6, character, 战力计算器);
+        UpdateRanks(IndividualBattleRanking, 6, character, m_CombatPowerComparer);
         switch (character.Job.V)
         {
             case GameObjectRace.Warrior:
-                UpdateRanks(WarriorBattleRanking, 7, character, 战力计算器);
+                UpdateRanks(WarriorBattleRanking, 7, character, m_CombatPowerComparer);
                 break;
             case GameObjectRace.Wizard:
-                UpdateRanks(WizardBattleRanking, 8, character, 战力计算器);
+                UpdateRanks(WizardBattleRanking, 8, character, m_CombatPowerComparer);
                 break;
             case GameObjectRace.Assassin:
-                UpdateRanks(AssassinBattleRanking, 10, character, 战力计算器);
+                UpdateRanks(AssassinBattleRanking, 10, character, m_CombatPowerComparer);
                 break;
             case GameObjectRace.Archer:
-                UpdateRanks(ArcherBattleRanking, 11, character, 战力计算器);
+                UpdateRanks(ArcherBattleRanking, 11, character, m_CombatPowerComparer);
                 break;
             case GameObjectRace.Taoist:
-                UpdateRanks(TaoistBattleRanking, 9, character, 战力计算器);
+                UpdateRanks(TaoistBattleRanking, 9, character, m_CombatPowerComparer);
                 break;
             case GameObjectRace.DragonLance:
-                UpdateRanks(DragonLanceBattleRanking, 37, character, 战力计算器);
+                UpdateRanks(DragonLanceBattleRanking, 37, character, m_CombatPowerComparer);
                 break;
         }
     }
 
     public void UpdateLevel(CharacterInfo character)
     {
-        UpdateRanks(IndividualRanking, 0, character, 等级计算器);
+        UpdateRanks(IndividualRanking, 0, character, m_LevelComparer);
         switch (character.Job.V)
         {
             case GameObjectRace.Warrior:
-                UpdateRanks(WarriorRanking, 1, character, 等级计算器);
+                UpdateRanks(WarriorRanking, 1, character, m_LevelComparer);
                 break;
             case GameObjectRace.Wizard:
-                UpdateRanks(WizardRanking, 2, character, 等级计算器);
+                UpdateRanks(WizardRanking, 2, character, m_LevelComparer);
                 break;
             case GameObjectRace.Assassin:
-                UpdateRanks(AssassinRanking, 4, character, 等级计算器);
+                UpdateRanks(AssassinRanking, 4, character, m_LevelComparer);
                 break;
             case GameObjectRace.Archer:
-                UpdateRanks(ArcherRanking, 5, character, 等级计算器);
+                UpdateRanks(ArcherRanking, 5, character, m_LevelComparer);
                 break;
             case GameObjectRace.Taoist:
-                UpdateRanks(TaoistRanking, 3, character, 等级计算器);
+                UpdateRanks(TaoistRanking, 3, character, m_LevelComparer);
                 break;
             case GameObjectRace.DragonLance:
-                UpdateRanks(DragonLanceRanking, 36, character, 等级计算器);
+                UpdateRanks(DragonLanceRanking, 36, character, m_LevelComparer);
                 break;
         }
     }
 
     public void 更新声望(CharacterInfo character)
     {
-        UpdateRanks(IndividualPrestigeRanking, 14, character, 声望计算器);
+        UpdateRanks(IndividualPrestigeRanking, 14, character, m_PrestigeComparer);
     }
 
     public void UpdatePKPoint(CharacterInfo character)
     {
-        UpdateRanks(IndividualPKRanking, 15, character, PK值计算器);
+        UpdateRanks(IndividualPKRanking, 15, character, m_PKPointComparer);
     }
 
     public void UpdateGuildRanks(GuildInfo guild)
     {
-        int num = guild.行会排名.V - 1;
+        int num = guild.GuildRanking.V - 1;
         if (GuildRanking.Count < 100)
         {
             if (num >= 0)
             {
                 GuildRanking.RemoveAt(num);
-                int num2 = BinarySearch(GuildRanking, guild, 行会计算器, 0, GuildRanking.Count);
+                int num2 = BinarySearch(GuildRanking, guild, m_GuildMemberComparer, 0, GuildRanking.Count);
                 GuildRanking.Insert(num2, guild);
                 for (int i = Math.Min(num, num2); i <= Math.Max(num, num2); i++)
                 {
-                    GuildRanking[i].行会排名.V = i + 1;
+                    GuildRanking[i].GuildRanking.V = i + 1;
                 }
             }
             else
             {
-                int num3 = BinarySearch(GuildRanking, guild, 行会计算器, 0, GuildRanking.Count);
+                int num3 = BinarySearch(GuildRanking, guild, m_GuildMemberComparer, 0, GuildRanking.Count);
                 GuildRanking.Insert(num3, guild);
                 for (int j = num3; j < GuildRanking.Count; j++)
                 {
-                    GuildRanking[j].行会排名.V = j + 1;
+                    GuildRanking[j].GuildRanking.V = j + 1;
                 }
             }
         }
         else if (num >= 0)
         {
             GuildRanking.RemoveAt(num);
-            int num4 = BinarySearch(GuildRanking, guild, 行会计算器, 0, GuildRanking.Count);
+            int num4 = BinarySearch(GuildRanking, guild, m_GuildMemberComparer, 0, GuildRanking.Count);
             GuildRanking.Insert(num4, guild);
             for (int k = Math.Min(num, num4); k <= Math.Max(num, num4); k++)
             {
-                GuildRanking[k].行会排名.V = k + 1;
+                GuildRanking[k].GuildRanking.V = k + 1;
             }
         }
-        else if (行会计算器.Compare(guild, GuildRanking.Last) > 0)
+        else if (m_GuildMemberComparer.Compare(guild, GuildRanking.Last) > 0)
         {
-            int num5 = BinarySearch(GuildRanking, guild, 行会计算器, 0, GuildRanking.Count);
+            int num5 = BinarySearch(GuildRanking, guild, m_GuildMemberComparer, 0, GuildRanking.Count);
             GuildRanking.Insert(num5, guild);
             for (int l = num5; l < GuildRanking.Count; l++)
             {
-                GuildRanking[l].行会排名.V = l + 1;
+                GuildRanking[l].GuildRanking.V = l + 1;
             }
-            GuildRanking[100].行会排名.V = 0;
+            GuildRanking[100].GuildRanking.V = 0;
             GuildRanking.RemoveAt(100);
         }
     }
@@ -291,7 +291,7 @@ public class SystemInfo : DBObject
             }
             else
             {
-                int index = BinarySearch(listing, character, 战力计算器, 0, listing.Count);
+                int index = BinarySearch(listing, character, m_CombatPowerComparer, 0, listing.Count);
                 listing.Insert(index, character);
                 for (int j = index; j < listing.Count; j++)
                 {
@@ -313,7 +313,7 @@ public class SystemInfo : DBObject
         }
         else if (comparer.Compare(character, listing.Last) > 0)
         {
-            int index = BinarySearch(listing, character, 战力计算器, 0, listing.Count);
+            int index = BinarySearch(listing, character, m_CombatPowerComparer, 0, listing.Count);
             listing.Insert(index, character);
             for (int l = index; l < listing.Count; l++)
             {
@@ -397,10 +397,10 @@ public class SystemInfo : DBObject
 
     static SystemInfo()
     {
-        战力计算器 = new CombatPowerComparer();
-        等级计算器 = new LevelComparer();
-        声望计算器 = new PrestigeComparer();
-        PK值计算器 = new PKPointComparer();
-        行会计算器 = new GuildMemberComparer();
+        m_CombatPowerComparer = new CombatPowerComparer();
+        m_LevelComparer = new LevelComparer();
+        m_PrestigeComparer = new PrestigeComparer();
+        m_PKPointComparer = new PKPointComparer();
+        m_GuildMemberComparer = new GuildMemberComparer();
     }
 }

@@ -215,28 +215,28 @@ public static class Session
                 {
                     foreach (var kvp in GuildInfoTable.DataSheet)
                     {
-                        foreach (行会事记 item3 in ((GuildInfo)kvp.Value).行会事记)
+                        foreach (GuildLog item3 in ((GuildInfo)kvp.Value).GuildLogs)
                         {
-                            switch (item3.事记类型)
+                            switch (item3.LogType)
                             {
-                                case 事记类型.CreateGuild:
-                                case 事记类型.JoinGuild:
-                                case 事记类型.LeaveGuild:
-                                    if (item3.第一参数 == data.Index.V)
+                                case GuildLogType.CreateGuild:
+                                case GuildLogType.JoinGuild:
+                                case GuildLogType.LeaveGuild:
+                                    if (item3.Param1 == data.Index.V)
                                     {
-                                        item3.第一参数 = num4;
+                                        item3.Param1 = num4;
                                     }
                                     break;
-                                case 事记类型.逐出公会:
-                                case 事记类型.ChangeRank:
-                                case 事记类型.会长传位:
-                                    if (item3.第一参数 == data.Index.V)
+                                case GuildLogType.逐出公会:
+                                case GuildLogType.ChangeRank:
+                                case GuildLogType.会长传位:
+                                    if (item3.Param1 == data.Index.V)
                                     {
-                                        item3.第一参数 = num4;
+                                        item3.Param1 = num4;
                                     }
-                                    if (item3.第二参数 == data.Index.V)
+                                    if (item3.Param2 == data.Index.V)
                                     {
-                                        item3.第二参数 = num4;
+                                        item3.Param2 = num4;
                                     }
                                     break;
                             }
@@ -247,18 +247,18 @@ public static class Session
                 {
                     foreach (var kvp in GuildInfoTable.DataSheet)
                     {
-                        foreach (行会事记 item5 in ((GuildInfo)kvp.Value).行会事记)
+                        foreach (GuildLog item5 in ((GuildInfo)kvp.Value).GuildLogs)
                         {
-                            事记类型 事记类型2 = item5.事记类型;
+                            GuildLogType 事记类型2 = item5.LogType;
                             if ((uint)(事记类型2 - 9) <= 1u || (uint)(事记类型2 - 21) <= 1u)
                             {
-                                if (item5.第一参数 == data.Index.V)
+                                if (item5.Param1 == data.Index.V)
                                 {
-                                    item5.第一参数 = num4;
+                                    item5.Param1 = num4;
                                 }
-                                if (item5.第二参数 == data.Index.V)
+                                if (item5.Param2 == data.Index.V)
                                 {
-                                    item5.第二参数 = num4;
+                                    item5.Param2 = num4;
                                 }
                             }
                         }
@@ -487,7 +487,7 @@ public static class Session
             dictionary[typeof(SystemInfo)].DataSheet[1] = new SystemInfo(1);
             foreach (KeyValuePair<int, DBObject> item10 in dictionary[typeof(GuildInfo)].DataSheet)
             {
-                ((GuildInfo)item10.Value).行会排名.V = 0;
+                ((GuildInfo)item10.Value).GuildRanking.V = 0;
             }
             foreach (KeyValuePair<int, DBObject> item11 in dictionary[typeof(CharacterInfo)].DataSheet)
             {

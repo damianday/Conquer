@@ -1,6 +1,6 @@
 namespace GameServer.Database;
 
-public enum 事记类型
+public enum GuildLogType
 {
     CreateGuild = 1,        // 创建公会
     JoinGuild = 2,          // 加入公会

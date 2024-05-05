@@ -276,20 +276,20 @@ public sealed class DBValue
                 }
                 return monitor;
             },
-            [typeof(ListMonitor<行会事记>)] = delegate (BinaryReader r, DBObject o, DBValue f)
+            [typeof(ListMonitor<GuildLog>)] = delegate (BinaryReader r, DBObject o, DBValue f)
             {
-                ListMonitor<行会事记> monitor = new ListMonitor<行会事记>(o);
+                ListMonitor<GuildLog> monitor = new ListMonitor<GuildLog>(o);
                 int count = r.ReadInt32();
                 for (int i = 0; i < count; i++)
                 {
-                    monitor.QuietlyAdd(new 行会事记
+                    monitor.QuietlyAdd(new GuildLog
                     {
-                        事记类型 = (事记类型)r.ReadByte(),
-                        第一参数 = r.ReadInt32(),
-                        第二参数 = r.ReadInt32(),
-                        第三参数 = r.ReadInt32(),
-                        第四参数 = r.ReadInt32(),
-                        事记时间 = r.ReadInt32()
+                        LogType = (GuildLogType)r.ReadByte(),
+                        Param1 = r.ReadInt32(),
+                        Param2 = r.ReadInt32(),
+                        Param3 = r.ReadInt32(),
+                        Param4 = r.ReadInt32(),
+                        LogTime = r.ReadInt32()
                     });
                 }
                 return monitor;
@@ -775,18 +775,18 @@ public sealed class DBValue
                     b.Write(item7.Index.V);
                 }
             },
-            [typeof(ListMonitor<行会事记>)] = delegate (BinaryWriter b, object o)
+            [typeof(ListMonitor<GuildLog>)] = delegate (BinaryWriter b, object o)
             {
-                ListMonitor<行会事记> 列表监视器4 = (ListMonitor<行会事记>)o;
+                ListMonitor<GuildLog> 列表监视器4 = (ListMonitor<GuildLog>)o;
                 b.Write(列表监视器4?.Count ?? 0);
-                foreach (行会事记 item8 in 列表监视器4)
+                foreach (GuildLog item8 in 列表监视器4)
                 {
-                    b.Write((byte)item8.事记类型);
-                    b.Write(item8.第一参数);
-                    b.Write(item8.第二参数);
-                    b.Write(item8.第三参数);
-                    b.Write(item8.第四参数);
-                    b.Write(item8.事记时间);
+                    b.Write((byte)item8.LogType);
+                    b.Write(item8.Param1);
+                    b.Write(item8.Param2);
+                    b.Write(item8.Param3);
+                    b.Write(item8.Param4);
+                    b.Write(item8.LogTime);
                 }
             },
             [typeof(ListMonitor<RandomStats>)] = delegate (BinaryWriter b, object o)
