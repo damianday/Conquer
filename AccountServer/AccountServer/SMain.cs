@@ -87,7 +87,7 @@ public partial class SMain : Form
     {
         static void AddLog(string message)
         {
-            Instance.LogTextBox.AppendText(DateTime.Now.ToString() + " - " + message + "\r\n");
+            Instance.LogTextBox.AppendText($"[{DateTime.Now}] {message}\r\n");
             Instance.LogTextBox.ScrollToCaret();
         }
 
