@@ -27,8 +27,6 @@ public sealed class Superman : GMCommand
             return;
         }
 
-        //if (!IsGM && !Settings.Default.TestServer) return;
-
         player.GMNeverDie = !player.GMNeverDie;
 
         var msg = player.GMNeverDie ? "Invincible Mode." : "Normal Mode.";
