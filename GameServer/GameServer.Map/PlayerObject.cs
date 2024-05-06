@@ -3266,6 +3266,17 @@ public sealed class PlayerObject : MapObject
             RouteStatus = CurrentMap.MapStatus
         });
 
+        Enqueue(new ObjectAppearPacket
+        {
+            Effect = 1,
+            ObjectID = ObjectID,
+            Position = CurrentPosition,
+            Height = CurrentHeight,
+            Direction = (ushort)CurrentDirection,
+            现身姿态 = (byte)((!Dead) ? 1u : 13u),
+            HealthPercent = (byte)(CurrentHP * 100 / this[Stat.MaxHP])
+        });
+
         BindGrid();
         UpdateAllNeighbours();
     }
@@ -6933,17 +6944,6 @@ public sealed class PlayerObject : MapObject
             Teleport(ResurrectionMap, (!RedName) ? AreaType.Resurrection : AreaType.RedName);
         }*/
         Teleport(ResurrectionMap, (!RedName) ? AreaType.Resurrection : AreaType.RedName);
-
-        Enqueue(new ObjectAppearPacket
-        {
-            Effect = 1,
-            ObjectID = ObjectID,
-            Position = CurrentPosition,
-            Height = CurrentHeight,
-            Direction = (ushort)CurrentDirection,
-            现身姿态 = (byte)((!Dead) ? 1u : 13u),
-            HealthPercent = (byte)(CurrentHP * 100 / this[Stat.MaxHP])
-        });
     }
 
     public void EnterTeleportGate(int id)
