@@ -3266,8 +3266,6 @@ public sealed class PlayerObject : MapObject
             RouteStatus = CurrentMap.MapStatus
         });
 
-        //OnLocationChanged(CurrentPosition);
-
         BindGrid();
         UpdateAllNeighbours();
     }
@@ -6900,19 +6898,14 @@ public sealed class PlayerObject : MapObject
             UnbindGrid();
             BindGrid();
             UpdateAllNeighbours();
+
             ResurrectionRingReady = false;
             AddBuff(47391, this);
             ReviveTime = SEngine.CurrentTime.AddSeconds(Settings.Default.ReviveInterval);
-            if (Equipment.TryGetValue(ResurrectionRingLocation, out var v))
-            {
-                v.Dura.V -= 1000;
-                Enqueue(new DurabilityChangedPacket
-                {
-                    Grid = v.Grid.V,
-                    Location = v.Location.V,
-                    Durability = v.Dura.V
-                });
-            }
+            
+            if (Equipment.TryGetValue(ResurrectionRingLocation, out var ring))
+                DamageItem(ring, 1_000);
+
             return;
         }
 
@@ -6940,6 +6933,17 @@ public sealed class PlayerObject : MapObject
             Teleport(ResurrectionMap, (!RedName) ? AreaType.Resurrection : AreaType.RedName);
         }*/
         Teleport(ResurrectionMap, (!RedName) ? AreaType.Resurrection : AreaType.RedName);
+
+        Enqueue(new ObjectAppearPacket
+        {
+            Effect = 1,
+            ObjectID = ObjectID,
+            Position = CurrentPosition,
+            Height = CurrentHeight,
+            Direction = (ushort)CurrentDirection,
+            现身姿态 = (byte)((!Dead) ? 1u : 13u),
+            HealthPercent = (byte)(CurrentHP * 100 / this[Stat.MaxHP])
+        });
     }
 
     public void EnterTeleportGate(int id)
