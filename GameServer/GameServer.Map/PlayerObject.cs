@@ -314,6 +314,8 @@ public sealed class PlayerObject : MapObject
         set { Character.CurrentLevel = value; }
     }
 
+    public override bool CanBeHit => !Dead && !SysOpMode;
+
     public override Point CurrentPosition
     {
         get { return Character.CurrentPosition.V; }
@@ -1020,6 +1022,7 @@ public sealed class PlayerObject : MapObject
 
     public UserDegree CurrentDegree { get; set; }
 
+    public bool SysOpMode;
     public bool GMNeverDie;
 
     public PlayerObject(CharacterInfo character, SConnection conn)

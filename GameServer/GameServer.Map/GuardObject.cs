@@ -296,7 +296,7 @@ public sealed class GuardObject : MapObject
         {
             return Target.SelectTarget(this);
         }
-        if (Target.Target.Dead)
+        if (Target.Target.CanBeHit)
         {
             Target.Remove(Target.Target);
         }

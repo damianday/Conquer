@@ -35,17 +35,17 @@ public sealed class HateObject
 
     public void Add(MapObject target, DateTime duration, int priority)
     {
-        if (!target.Dead)
+        if (!target.CanBeHit)
+            return;
+
+        if (TargetList.TryGetValue(target, out var value))
         {
-            if (TargetList.TryGetValue(target, out var value))
-            {
-                value.HateTime = ((value.HateTime < duration) ? duration : value.HateTime);
-                value.Priority += priority;
-            }
-            else
-            {
-                TargetList[target] = new HateInfo(duration, priority);
-            }
+            value.HateTime = ((value.HateTime < duration) ? duration : value.HateTime);
+            value.Priority += priority;
+        }
+        else
+        {
+            TargetList[target] = new HateInfo(duration, priority);
         }
     }
 

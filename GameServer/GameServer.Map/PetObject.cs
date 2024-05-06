@@ -617,7 +617,7 @@ public sealed class PetObject : MapObject
         {
             Target.SelectTargetTime = default(DateTime);
         }
-        else if (Target.Target.Dead)
+        else if (!Target.Target.CanBeHit)
         {
             Target.Remove(Target.Target);
         }

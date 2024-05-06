@@ -298,10 +298,11 @@ public abstract class MapObject
 
         if (this is MonsterObject monster)
         {
-            if (monster.ActiveAttackTarget && (target is PlayerObject || target is PetObject || (target is GuardObject 守卫实例2 && 守卫实例2.CanBeInjured)))
-            {
+            if (!monster.ActiveAttackTarget)
+                return false;
+
+            if (target is PlayerObject || target is PetObject || (target is GuardObject 守卫实例2 && 守卫实例2.CanBeInjured))
                 return true;
-            }
         }
         else if (this is GuardObject guard)
         {
@@ -569,43 +570,43 @@ public abstract class MapObject
             if (type == SpecifyTargetType.None)
                 return true;
 
-            if ((type & SpecifyTargetType.LowLevelTarget) == SpecifyTargetType.LowLevelTarget && CurrentLevel < attacker.CurrentLevel)
+            if (type.HasFlag(SpecifyTargetType.LowLevelTarget) && CurrentLevel < attacker.CurrentLevel)
                 return true;
 
-            if ((type & SpecifyTargetType.AllMonsters) == SpecifyTargetType.AllMonsters)
+            if (type.HasFlag(SpecifyTargetType.AllMonsters))
                 return true;
 
-            if ((type & SpecifyTargetType.LowLevelMonster) == SpecifyTargetType.LowLevelMonster && CurrentLevel < attacker.CurrentLevel)
+            if (type.HasFlag(SpecifyTargetType.LowLevelMonster) && CurrentLevel < attacker.CurrentLevel)
                 return true;
  
-            if ((type & SpecifyTargetType.LowHealthMonster) == SpecifyTargetType.LowHealthMonster && (float)CurrentHP / (float)this[Stat.MaxHP] < 0.4f)
+            if (type.HasFlag(SpecifyTargetType.LowHealthMonster) && (float)CurrentHP / (float)this[Stat.MaxHP] < 0.4f)
                 return true;
 
-            if ((type & SpecifyTargetType.Normal) == SpecifyTargetType.Normal && monster.Grade == MonsterGradeType.Normal)
+            if (type.HasFlag(SpecifyTargetType.Normal) && monster.Grade == MonsterGradeType.Normal)
                 return true;
 
-            if ((type & SpecifyTargetType.Undead) == SpecifyTargetType.Undead && monster.Race == MonsterRaceType.Undead)
+            if (type.HasFlag(SpecifyTargetType.Undead) && monster.Race == MonsterRaceType.Undead)
                 return true;
 
-            if ((type & SpecifyTargetType.ZergCreature) == SpecifyTargetType.ZergCreature && monster.Race == MonsterRaceType.ZergCreature)
+            if (type.HasFlag(SpecifyTargetType.ZergCreature) && monster.Race == MonsterRaceType.ZergCreature)
                 return true;
 
-            if ((type & SpecifyTargetType.WomaMonster) == SpecifyTargetType.WomaMonster && monster.Race == MonsterRaceType.WomaMonster)
+            if (type.HasFlag(SpecifyTargetType.WomaMonster) && monster.Race == MonsterRaceType.WomaMonster)
                 return true;
 
-            if ((type & SpecifyTargetType.PigMonster) == SpecifyTargetType.PigMonster && monster.Race == MonsterRaceType.PigMonster)
+            if (type.HasFlag(SpecifyTargetType.PigMonster) && monster.Race == MonsterRaceType.PigMonster)
                 return true;
 
-            if ((type & SpecifyTargetType.ZumaMonster) == SpecifyTargetType.ZumaMonster && monster.Race == MonsterRaceType.ZumaMonster)
+            if (type.HasFlag(SpecifyTargetType.ZumaMonster) && monster.Race == MonsterRaceType.ZumaMonster)
                 return true;
 
-            if ((type & SpecifyTargetType.DragonMonster) == SpecifyTargetType.DragonMonster && monster.Race == MonsterRaceType.DragonMonster)
+            if (type.HasFlag(SpecifyTargetType.DragonMonster) && monster.Race == MonsterRaceType.DragonMonster)
                 return true;
 
-            if ((type & SpecifyTargetType.EliteMonsters) == SpecifyTargetType.EliteMonsters && (monster.Grade == MonsterGradeType.Elite || monster.Grade == MonsterGradeType.Boss))
+            if (type.HasFlag(SpecifyTargetType.EliteMonsters) && (monster.Grade == MonsterGradeType.Elite || monster.Grade == MonsterGradeType.Boss))
                 return true;
 
-            if ((type & SpecifyTargetType.Backstab) == SpecifyTargetType.Backstab)
+            if (type.HasFlag(SpecifyTargetType.Backstab))
             {
                 if (IsValidBackstab())
                     return true;
@@ -616,10 +617,10 @@ public abstract class MapObject
             if (type == SpecifyTargetType.None)
                 return true;
 
-            if ((type & SpecifyTargetType.LowLevelTarget) == SpecifyTargetType.LowLevelTarget && CurrentLevel < attacker.CurrentLevel)
+            if (type.HasFlag(SpecifyTargetType.LowLevelTarget) && CurrentLevel < attacker.CurrentLevel)
                 return true;
 
-            if ((type & SpecifyTargetType.Backstab) == SpecifyTargetType.Backstab)
+            if (type.HasFlag(SpecifyTargetType.Backstab))
             {
                 if (IsValidBackstab())
                     return true;
@@ -630,19 +631,19 @@ public abstract class MapObject
             if (type == SpecifyTargetType.None)
                 return true;
 
-            if ((type & SpecifyTargetType.LowLevelTarget) == SpecifyTargetType.LowLevelTarget && CurrentLevel < attacker.CurrentLevel)
+            if (type.HasFlag(SpecifyTargetType.LowLevelTarget) && CurrentLevel < attacker.CurrentLevel)
                 return true;
 
-            if ((type & SpecifyTargetType.Undead) == SpecifyTargetType.Undead && pet.PetRace == MonsterRaceType.Undead)
+            if (type.HasFlag(SpecifyTargetType.Undead) && pet.PetRace == MonsterRaceType.Undead)
                 return true;
 
-            if ((type & SpecifyTargetType.ZergCreature) == SpecifyTargetType.ZergCreature && pet.PetRace == MonsterRaceType.ZergCreature)
+            if (type.HasFlag(SpecifyTargetType.ZergCreature) && pet.PetRace == MonsterRaceType.ZergCreature)
                 return true;
 
-            if ((type & SpecifyTargetType.AllPets) == SpecifyTargetType.AllPets)
+            if (type.HasFlag(SpecifyTargetType.AllPets))
                 return true;
 
-            if ((type & SpecifyTargetType.Backstab) == SpecifyTargetType.Backstab)
+            if (type.HasFlag(SpecifyTargetType.Backstab))
             {
                 if (IsValidBackstab())
                     return true;
@@ -650,23 +651,26 @@ public abstract class MapObject
         }
         else if (this is PlayerObject player)
         {
+            if (player.SysOpMode)
+                return false;
+
             if (type == SpecifyTargetType.None)
                 return true;
 
-            if ((type & SpecifyTargetType.LowLevelTarget) == SpecifyTargetType.LowLevelTarget && CurrentLevel < attacker.CurrentLevel)
+            if (type.HasFlag(SpecifyTargetType.LowLevelTarget) && CurrentLevel < attacker.CurrentLevel)
                 return true;
 
-            if ((type & SpecifyTargetType.ShieldMage) == SpecifyTargetType.ShieldMage && player.Job == GameObjectRace.Wizard && player.Buffs.ContainsKey(25350))
+            if (type.HasFlag(SpecifyTargetType.ShieldMage) && player.Job == GameObjectRace.Wizard && player.Buffs.ContainsKey(25350))
                 return true;
 
-            if ((type & SpecifyTargetType.Backstab) == SpecifyTargetType.Backstab)
+            if (type.HasFlag(SpecifyTargetType.AllPlayers))
+                return true;
+
+            if (type.HasFlag(SpecifyTargetType.Backstab))
             {
                 if (IsValidBackstab())
                     return true;
             }
-
-            if ((type & SpecifyTargetType.AllPlayers) == SpecifyTargetType.AllPlayers)
-                return true;
         }
         return false;
     }
@@ -1104,7 +1108,16 @@ public abstract class MapObject
     public void 被技能命中处理(SkillObject skill, C_01_CalculateHitTarget 参数)
     {
         MapObject caster = ((skill.Caster is TrapObject trap) ? trap.Caster : skill.Caster);
-        if (skill.HitList.ContainsKey(ObjectID) || !CanBeHit || (this != caster && !Neighbors.Contains(caster)) || skill.HitList.Count >= 参数.HitsLimit || (参数.LimitTargetRelationship & caster.GetRelationship(this)) == 0 || (参数.LimitTargetType & ObjectType) == 0 || !IsValidTarget(skill.Caster, 参数.LimitSpecificType) || ((参数.LimitTargetRelationship & GameObjectRelationship.Hostile) != 0 && (CheckStatus(GameObjectState.Invincible) || ((this is PlayerObject || this is PetObject) && (caster is PlayerObject || caster is PetObject) && (CurrentMap.IsSafeArea(CurrentPosition) || caster.CurrentMap.IsSafeArea(caster.CurrentPosition))) || (caster is MonsterObject && CurrentMap.IsSafeArea(CurrentPosition)))) || (this is MonsterObject 怪物实例2 && (怪物实例2.MonID == 8618 || 怪物实例2.MonID == 8621) && ((caster is PlayerObject 玩家实例2 && 玩家实例2.Guild != null && 玩家实例2.Guild == SystemInfo.Info.OccupyGuild.V) || (caster is PetObject 宠物实例2 && 宠物实例2.Master != null && 宠物实例2.Master.Guild != null && 宠物实例2.Master.Guild == SystemInfo.Info.OccupyGuild.V))) || (CurrentLevel <= Settings.Default.NoobProtectionLevel && ObjectType == GameObjectType.Player && (CurrentMap.MapID == Settings.Default.新手地图保护1 || CurrentMap.MapID == Settings.Default.新手地图保护2 || CurrentMap.MapID == Settings.Default.新手地图保护3 || CurrentMap.MapID == Settings.Default.新手地图保护4 || CurrentMap.MapID == Settings.Default.新手地图保护5 || CurrentMap.MapID == Settings.Default.新手地图保护6 || CurrentMap.MapID == Settings.Default.新手地图保护7 || CurrentMap.MapID == Settings.Default.新手地图保护8 || CurrentMap.MapID == Settings.Default.新手地图保护9 || CurrentMap.MapID == Settings.Default.新手地图保护10)))
+        if (skill.HitList.ContainsKey(ObjectID) || 
+            !CanBeHit || 
+            (this != caster && !Neighbors.Contains(caster)) || 
+            skill.HitList.Count >= 参数.HitsLimit || 
+            (参数.LimitTargetRelationship & caster.GetRelationship(this)) == 0 || 
+            (参数.LimitTargetType & ObjectType) == 0 || 
+            !IsValidTarget(skill.Caster, 参数.LimitSpecificType) || 
+            ((参数.LimitTargetRelationship & GameObjectRelationship.Hostile) != 0 && (CheckStatus(GameObjectState.Invincible) || ((this is PlayerObject || this is PetObject) && (caster is PlayerObject || caster is PetObject) && (CurrentMap.IsSafeArea(CurrentPosition) || caster.CurrentMap.IsSafeArea(caster.CurrentPosition))) || (caster is MonsterObject && CurrentMap.IsSafeArea(CurrentPosition)))) || 
+            (this is MonsterObject 怪物实例2 && (怪物实例2.MonID == 8618 || 怪物实例2.MonID == 8621) && ((caster is PlayerObject 玩家实例2 && 玩家实例2.Guild != null && 玩家实例2.Guild == SystemInfo.Info.OccupyGuild.V) || (caster is PetObject 宠物实例2 && 宠物实例2.Master != null && 宠物实例2.Master.Guild != null && 宠物实例2.Master.Guild == SystemInfo.Info.OccupyGuild.V))) || 
+            (CurrentLevel <= Settings.Default.NoobProtectionLevel && ObjectType == GameObjectType.Player && (CurrentMap.MapID == Settings.Default.新手地图保护1 || CurrentMap.MapID == Settings.Default.新手地图保护2 || CurrentMap.MapID == Settings.Default.新手地图保护3 || CurrentMap.MapID == Settings.Default.新手地图保护4 || CurrentMap.MapID == Settings.Default.新手地图保护5 || CurrentMap.MapID == Settings.Default.新手地图保护6 || CurrentMap.MapID == Settings.Default.新手地图保护7 || CurrentMap.MapID == Settings.Default.新手地图保护8 || CurrentMap.MapID == Settings.Default.新手地图保护9 || CurrentMap.MapID == Settings.Default.新手地图保护10)))
         {
             return;
         }
