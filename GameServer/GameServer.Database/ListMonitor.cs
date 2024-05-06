@@ -6,7 +6,7 @@ namespace GameServer.Database;
 
 public sealed class ListMonitor<T> : IEnumerable<T>, IEnumerable
 {
-    public delegate void ChangedDelegate(List<T> 更改列表);
+    public delegate void ChangedDelegate(List<T> changeList);
 
     private List<T> m_Value;
     private readonly DBObject m_Data;
