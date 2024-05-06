@@ -6,7 +6,7 @@ namespace GameServer.Database;
 
 public sealed class DictionaryMonitor<TK, TV> : IEnumerable<KeyValuePair<TK, TV>>, IEnumerable
 {
-    public delegate void ChangedDelegate(List<KeyValuePair<TK, TV>> 更改字典);
+    public delegate void ChangedDelegate(List<KeyValuePair<TK, TV>> changeDictionary);
 
     private readonly Dictionary<TK, TV> m_Value;
     private readonly DBObject m_Data;
@@ -29,7 +29,7 @@ public sealed class DictionaryMonitor<TK, TV> : IEnumerable<KeyValuePair<TK, TV>
 
     public ICollection<TK> Keys => m_Value.Keys;
     public ICollection<TV> Values => m_Value.Values;
-    public IDictionary IDictionary_0 => m_Value;
+    public IDictionary IDictionary => m_Value;
     public int Count => m_Value.Count;
 
     public event ChangedDelegate Changed;

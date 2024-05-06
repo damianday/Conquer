@@ -445,7 +445,7 @@ public sealed class DBValue
                 {
                     ushort num23 = r.ReadUInt16();
                     int 值索引8 = r.ReadInt32();
-                    DataLinkTable.添加任务(o, f, monitor.IDictionary_0, num23, null, typeof(ushort), typeof(BuffInfo), 0, 值索引8);
+                    DataLinkTable.添加任务(o, f, monitor.IDictionary, num23, null, typeof(ushort), typeof(BuffInfo), 0, 值索引8);
                 }
                 return monitor;
             },
@@ -457,7 +457,7 @@ public sealed class DBValue
                 {
                     ushort num20 = r.ReadUInt16();
                     int 值索引7 = r.ReadInt32();
-                    DataLinkTable.添加任务(o, f, monitor.IDictionary_0, num20, null, typeof(ushort), typeof(SkillInfo), 0, 值索引7);
+                    DataLinkTable.添加任务(o, f, monitor.IDictionary, num20, null, typeof(ushort), typeof(SkillInfo), 0, 值索引7);
                 }
                 return monitor;
             },
@@ -469,7 +469,7 @@ public sealed class DBValue
                 {
                     byte b4 = r.ReadByte();
                     int 值索引6 = r.ReadInt32();
-                    DataLinkTable.添加任务(o, f, monitor.IDictionary_0, b4, null, typeof(byte), typeof(SkillInfo), 0, 值索引6);
+                    DataLinkTable.添加任务(o, f, monitor.IDictionary, b4, null, typeof(byte), typeof(SkillInfo), 0, 值索引6);
                 }
                 return monitor;
             },
@@ -481,7 +481,7 @@ public sealed class DBValue
                 {
                     byte b3 = r.ReadByte();
                     int 值索引5 = r.ReadInt32();
-                    DataLinkTable.添加任务(o, f, monitor.IDictionary_0, b3, null, typeof(byte), typeof(EquipmentInfo), 0, 值索引5);
+                    DataLinkTable.添加任务(o, f, monitor.IDictionary, b3, null, typeof(byte), typeof(EquipmentInfo), 0, 值索引5);
                 }
                 return monitor;
             },
@@ -494,7 +494,7 @@ public sealed class DBValue
                     byte b2 = r.ReadByte();
                     bool flag = r.ReadBoolean();
                     int 值索引4 = r.ReadInt32();
-                    DataLinkTable.添加任务(o, f, monitor.IDictionary_0, b2, null, typeof(byte), flag ? typeof(EquipmentInfo) : typeof(ItemInfo), 0, 值索引4);
+                    DataLinkTable.添加任务(o, f, monitor.IDictionary, b2, null, typeof(byte), flag ? typeof(EquipmentInfo) : typeof(ItemInfo), 0, 值索引4);
                 }
                 return monitor;
             },
@@ -506,7 +506,7 @@ public sealed class DBValue
                 {
                     int num11 = r.ReadInt32();
                     int 值索引3 = r.ReadInt32();
-                    DataLinkTable.添加任务(o, f, monitor.IDictionary_0, num11, null, typeof(int), typeof(CharacterInfo), 0, 值索引3);
+                    DataLinkTable.添加任务(o, f, monitor.IDictionary, num11, null, typeof(int), typeof(CharacterInfo), 0, 值索引3);
                 }
                 return monitor;
             },
@@ -518,7 +518,7 @@ public sealed class DBValue
                 {
                     int num8 = r.ReadInt32();
                     int 值索引2 = r.ReadInt32();
-                    DataLinkTable.添加任务(o, f, monitor.IDictionary_0, num8, null, typeof(int), typeof(MailInfo), 0, 值索引2);
+                    DataLinkTable.添加任务(o, f, monitor.IDictionary, num8, null, typeof(int), typeof(MailInfo), 0, 值索引2);
                 }
                 return monitor;
             },
@@ -542,7 +542,7 @@ public sealed class DBValue
                 {
                     int 键索引3 = r.ReadInt32();
                     long dateData3 = r.ReadInt64();
-                    DataLinkTable.添加任务(o, f, monitor.IDictionary_0, null, DateTime.FromBinary(dateData3), typeof(GuildInfo), typeof(DateTime), 键索引3, 0);
+                    DataLinkTable.添加任务(o, f, monitor.IDictionary, null, DateTime.FromBinary(dateData3), typeof(GuildInfo), typeof(DateTime), 键索引3, 0);
                 }
                 return monitor;
             },
@@ -554,7 +554,7 @@ public sealed class DBValue
                 {
                     int 键索引2 = r.ReadInt32();
                     long dateData2 = r.ReadInt64();
-                    DataLinkTable.添加任务(o, f, monitor.IDictionary_0, null, DateTime.FromBinary(dateData2), typeof(CharacterInfo), typeof(DateTime), 键索引2, 0);
+                    DataLinkTable.添加任务(o, f, monitor.IDictionary, null, DateTime.FromBinary(dateData2), typeof(CharacterInfo), typeof(DateTime), 键索引2, 0);
                 }
                 return monitor;
             },
@@ -566,7 +566,7 @@ public sealed class DBValue
                 {
                     int 键索引 = r.ReadInt32();
                     int num3 = r.ReadInt32();
-                    DataLinkTable.添加任务(o, f, monitor.IDictionary_0, null, (GuildRank)num3, typeof(CharacterInfo), typeof(GuildRank), 键索引, 0);
+                    DataLinkTable.添加任务(o, f, monitor.IDictionary, null, (GuildRank)num3, typeof(CharacterInfo), typeof(GuildRank), 键索引, 0);
                 }
                 return monitor;
             },
@@ -578,7 +578,7 @@ public sealed class DBValue
                 {
                     long k = r.ReadInt64();
                     int v = r.ReadInt32();
-                    DataLinkTable.添加任务(o, f, monitor.IDictionary_0, DateTime.FromBinary(k), null, typeof(DateTime), typeof(GuildInfo), 0, v);
+                    DataLinkTable.添加任务(o, f, monitor.IDictionary, DateTime.FromBinary(k), null, typeof(DateTime), typeof(GuildInfo), 0, v);
                 }
                 return monitor;
             }
