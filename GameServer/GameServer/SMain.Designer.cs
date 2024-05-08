@@ -35,36 +35,36 @@ public partial class SMain
     {
         components = new Container();
         ComponentResourceManager resources = new ComponentResourceManager(typeof(SMain));
-        DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle13 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle14 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle15 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle16 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle17 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle18 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle19 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle20 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle21 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle22 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle23 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle24 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle25 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle26 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle27 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle28 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle29 = new DataGridViewCellStyle();
-        DataGridViewCellStyle dataGridViewCellStyle30 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle382 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle383 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle384 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle412 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle413 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle414 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle415 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle416 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle417 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle418 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle419 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle420 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle421 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle422 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle423 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle424 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle425 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle426 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle427 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle428 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle429 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle430 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle431 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle432 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle433 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle434 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle435 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle436 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle437 = new DataGridViewCellStyle();
+        DataGridViewCellStyle dataGridViewCellStyle438 = new DataGridViewCellStyle();
         角色右键菜单 = new ContextMenuStrip(components);
         右键菜单_复制角色名字 = new ToolStripMenuItem();
         右键菜单_复制账号名字 = new ToolStripMenuItem();
@@ -429,7 +429,6 @@ public partial class SMain
         label339 = new Label();
         label338 = new Label();
         groupBox20 = new GroupBox();
-        label135 = new Label();
         label106 = new Label();
         label105 = new Label();
         label104 = new Label();
@@ -968,8 +967,6 @@ public partial class SMain
         tabPage88 = new TabPage();
         groupBox240 = new GroupBox();
         groupBox223 = new GroupBox();
-        groupBox242 = new GroupBox();
-        label893 = new Label();
         label814 = new Label();
         groupBox230 = new GroupBox();
         转职内容控件 = new TextBox();
@@ -1200,12 +1197,6 @@ public partial class SMain
         label479 = new Label();
         label478 = new Label();
         label477 = new Label();
-        groupBox71 = new GroupBox();
-        label489 = new Label();
-        label488 = new Label();
-        label487 = new Label();
-        label486 = new Label();
-        label485 = new Label();
         label476 = new Label();
         label475 = new Label();
         label474 = new Label();
@@ -1529,11 +1520,6 @@ public partial class SMain
         label423 = new Label();
         S_BOSS卷轴地图开关 = new NumericUpDown();
         label422 = new Label();
-        groupBox64 = new GroupBox();
-        label421 = new Label();
-        label420 = new Label();
-        label419 = new Label();
-        label417 = new Label();
         label418 = new Label();
         BOSS卷轴四 = new Label();
         BOSS卷轴五 = new Label();
@@ -2821,7 +2807,6 @@ public partial class SMain
         ((ISupportInitialize)S_铭文战士保底开关).BeginInit();
         tabPage88.SuspendLayout();
         groupBox223.SuspendLayout();
-        groupBox242.SuspendLayout();
         groupBox230.SuspendLayout();
         ((ISupportInitialize)职业物品数量).BeginInit();
         ((ISupportInitialize)职业物品ID).BeginInit();
@@ -2954,7 +2939,6 @@ public partial class SMain
         ((ISupportInitialize)S_掉落苍月物品颜色).BeginInit();
         ((ISupportInitialize)S_掉落祖玛物品颜色).BeginInit();
         ((ISupportInitialize)S_掉落沃玛物品颜色).BeginInit();
-        groupBox71.SuspendLayout();
         ((ISupportInitialize)S_狂暴被杀玩家颜色).BeginInit();
         ((ISupportInitialize)S_狂暴击杀玩家颜色).BeginInit();
         ((ISupportInitialize)S_DropPlayerNameColor).BeginInit();
@@ -3094,7 +3078,6 @@ public partial class SMain
         groupBox63.SuspendLayout();
         ((ISupportInitialize)S_BOSS卷轴地图编号).BeginInit();
         ((ISupportInitialize)S_BOSS卷轴地图开关).BeginInit();
-        groupBox64.SuspendLayout();
         tabPage33.SuspendLayout();
         groupBox65.SuspendLayout();
         groupBox67.SuspendLayout();
@@ -6404,7 +6387,7 @@ public partial class SMain
         groupBox13.Size = new Size(912, 406);
         groupBox13.TabIndex = 18;
         groupBox13.TabStop = false;
-        groupBox13.Text = "Berserk System - Credit: 腾云驾雾琉璃仙 (Soaring Clouds and Riding Mist, Liuli Fairy)";
+        groupBox13.Text = "Berserk System";
         // 
         // label132
         // 
@@ -7993,7 +7976,6 @@ public partial class SMain
         // 
         // groupBox20
         // 
-        groupBox20.Controls.Add(label135);
         groupBox20.Controls.Add(label106);
         groupBox20.Controls.Add(label105);
         groupBox20.Controls.Add(label104);
@@ -8029,17 +8011,6 @@ public partial class SMain
         groupBox20.TabIndex = 60;
         groupBox20.TabStop = false;
         groupBox20.Text = "Teleporter - (1) Module";
-        // 
-        // label135
-        // 
-        label135.AutoSize = true;
-        label135.ForeColor = Color.Black;
-        label135.Location = new Point(6, 468);
-        label135.Margin = new Padding(4, 0, 4, 0);
-        label135.Name = "label135";
-        label135.Size = new Size(285, 14);
-        label135.TabIndex = 83;
-        label135.Text = "If you are not sure, you can ask your friends in the group";
         // 
         // label106
         // 
@@ -8411,7 +8382,7 @@ public partial class SMain
         groupBox39.Size = new Size(370, 505);
         groupBox39.TabIndex = 61;
         groupBox39.TabStop = false;
-        groupBox39.Text = "Teleporter - (2) Module    Credit: Emotiona";
+        groupBox39.Text = "Teleporter - (2) Module";
         // 
         // S_快捷传送六等级2
         // 
@@ -9067,7 +9038,6 @@ public partial class SMain
         groupBox143.Size = new Size(314, 104);
         groupBox143.TabIndex = 69;
         groupBox143.TabStop = false;
-        groupBox143.Text = "Thank you：Emotiona ";
         // 
         // 称号叠加模块13
         // 
@@ -10082,7 +10052,7 @@ public partial class SMain
         groupBox214.Size = new Size(335, 83);
         groupBox214.TabIndex = 1;
         groupBox214.TabStop = false;
-        groupBox214.Text = "Ability Features - Credits: Han - Standard Edition";
+        groupBox214.Text = "Ability Features";
         // 
         // label861
         // 
@@ -10148,7 +10118,7 @@ public partial class SMain
         groupBox239.Size = new Size(524, 243);
         groupBox239.TabIndex = 1;
         groupBox239.TabStop = false;
-        groupBox239.Text = "Shacheng Donation System - Standard Edition - Acknowledgments: Dudu Chuanyong";
+        groupBox239.Text = "Shacheng Donation System - Standard Edition ";
         // 
         // label885
         // 
@@ -10460,7 +10430,7 @@ public partial class SMain
         groupBox221.Size = new Size(354, 122);
         groupBox221.TabIndex = 0;
         groupBox221.TabStop = false;
-        groupBox221.Text = "Safe Zone Weapon Switching Thanks: Big Cousin";
+        groupBox221.Text = "Safe Zone Weapon Switching";
         // 
         // label812
         // 
@@ -10610,7 +10580,7 @@ public partial class SMain
         groupBox54.Size = new Size(595, 360);
         groupBox54.TabIndex = 6;
         groupBox54.TabStop = false;
-        groupBox54.Text = "Demon Hunter Acknowledgments: 〆I don't care what other people think. -JuntaoLi";
+        groupBox54.Text = "Demon Hunter";
         // 
         // label360
         // 
@@ -11063,7 +11033,7 @@ public partial class SMain
         label797.Location = new Point(205, 69);
         label797.Margin = new Padding(4, 0, 4, 0);
         label797.Name = "label797";
-        label797.Size = new Size(436, 75);
+        label797.Size = new Size(436, 45);
         label797.TabIndex = 4;
         label797.Text = resources.GetString("label797.Text");
         // 
@@ -11325,7 +11295,7 @@ public partial class SMain
         groupBox228.Size = new Size(411, 182);
         groupBox228.TabIndex = 0;
         groupBox228.TabStop = false;
-        groupBox228.Text = "Prison Fees - Regular Edition - Acknowledgments：Emotiona";
+        groupBox228.Text = "Prison Fees - Regular Edition";
         // 
         // label804
         // 
@@ -14947,7 +14917,6 @@ public partial class SMain
         // 
         // groupBox223
         // 
-        groupBox223.Controls.Add(groupBox242);
         groupBox223.Controls.Add(label814);
         groupBox223.Controls.Add(groupBox230);
         groupBox223.Controls.Add(label815);
@@ -14966,28 +14935,6 @@ public partial class SMain
         groupBox223.TabIndex = 1;
         groupBox223.TabStop = false;
         groupBox223.Text = "Full-Time Modules";
-        // 
-        // groupBox242
-        // 
-        groupBox242.Controls.Add(label893);
-        groupBox242.Location = new Point(244, 99);
-        groupBox242.Margin = new Padding(4, 3, 4, 3);
-        groupBox242.Name = "groupBox242";
-        groupBox242.Padding = new Padding(4, 3, 4, 3);
-        groupBox242.Size = new Size(198, 88);
-        groupBox242.TabIndex = 67;
-        groupBox242.TabStop = false;
-        groupBox242.Text = "Thanks:";
-        // 
-        // label893
-        // 
-        label893.AutoSize = true;
-        label893.Location = new Point(7, 21);
-        label893.Margin = new Padding(4, 0, 4, 0);
-        label893.Name = "label893";
-        label893.Size = new Size(156, 45);
-        label893.TabIndex = 0;
-        label893.Text = "使用阳寿攻击 牛奶真好喝 \r\n\r\n乐乐          Emotiona";
         // 
         // label814
         // 
@@ -15318,7 +15265,7 @@ public partial class SMain
         groupBox122.Size = new Size(643, 222);
         groupBox122.TabIndex = 41;
         groupBox122.TabStop = false;
-        groupBox122.Text = "Newbies will get a regular version of the item as a gift - thanks to: ALL Sword Demon";
+        groupBox122.Text = "Newbies will get a regular version of the item as a gift";
         // 
         // S_新手上线赠送物品6
         // 
@@ -15469,7 +15416,7 @@ public partial class SMain
         新手赠送.Size = new Size(348, 128);
         新手赠送.TabIndex = 8;
         新手赠送.TabStop = false;
-        新手赠送.Text = "Gift for newbies Thanks: Tengyun Riding Mist Liulixian";
+        新手赠送.Text = "Gift for newbies";
         // 
         // S_豪杰特权礼包
         // 
@@ -15784,7 +15731,7 @@ public partial class SMain
         groupBox154.Size = new Size(643, 145);
         groupBox154.TabIndex = 40;
         groupBox154.TabStop = false;
-        groupBox154.Text = "Novice Protection - Thanks to: Ling Xiao,";
+        groupBox154.Text = "Novice Protection";
         // 
         // S_新手地图保护5
         // 
@@ -17404,7 +17351,7 @@ public partial class SMain
         groupBox19.Size = new Size(462, 127);
         groupBox19.TabIndex = 34;
         groupBox19.TabStop = false;
-        groupBox19.Text = "Drug Response Control - Acknowledgments: JuntaoLi";
+        groupBox19.Text = "Drug Response Control";
         // 
         // S_万年雪霜MP
         // 
@@ -17609,7 +17556,7 @@ public partial class SMain
         groupBox55.Size = new Size(586, 143);
         groupBox55.TabIndex = 40;
         groupBox55.TabStop = false;
-        groupBox55.Text = "Various Reminder Switches - normal version";
+        groupBox55.Text = "Various Reminder Switches - Normal Version";
         // 
         // 系统窗口发送
         // 
@@ -17730,7 +17677,6 @@ public partial class SMain
         groupBox70.Controls.Add(label479);
         groupBox70.Controls.Add(label478);
         groupBox70.Controls.Add(label477);
-        groupBox70.Controls.Add(groupBox71);
         groupBox70.Controls.Add(label476);
         groupBox70.Controls.Add(label475);
         groupBox70.Controls.Add(label474);
@@ -17754,7 +17700,7 @@ public partial class SMain
         groupBox70.Margin = new Padding(4, 3, 4, 3);
         groupBox70.Name = "groupBox70";
         groupBox70.Padding = new Padding(4, 3, 4, 3);
-        groupBox70.Size = new Size(586, 395);
+        groupBox70.Size = new Size(586, 317);
         groupBox70.TabIndex = 46;
         groupBox70.TabStop = false;
         groupBox70.Text = "Font Message Color - Normal Edition";
@@ -17934,79 +17880,6 @@ public partial class SMain
         label477.Size = new Size(99, 15);
         label477.TabIndex = 46;
         label477.Text = "Drop Zuma Color";
-        // 
-        // groupBox71
-        // 
-        groupBox71.Controls.Add(label489);
-        groupBox71.Controls.Add(label488);
-        groupBox71.Controls.Add(label487);
-        groupBox71.Controls.Add(label486);
-        groupBox71.Controls.Add(label485);
-        groupBox71.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
-        groupBox71.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
-        groupBox71.Location = new Point(7, 294);
-        groupBox71.Margin = new Padding(4, 3, 4, 3);
-        groupBox71.Name = "groupBox71";
-        groupBox71.Padding = new Padding(4, 3, 4, 3);
-        groupBox71.Size = new Size(190, 93);
-        groupBox71.TabIndex = 45;
-        groupBox71.TabStop = false;
-        groupBox71.Text = "Acknowledgments List   ";
-        // 
-        // label489
-        // 
-        label489.AutoSize = true;
-        label489.ForeColor = Color.Black;
-        label489.Location = new Point(94, 27);
-        label489.Margin = new Padding(4, 0, 4, 0);
-        label489.Name = "label489";
-        label489.Size = new Size(72, 15);
-        label489.TabIndex = 43;
-        label489.Text = "牛奶真好喝";
-        // 
-        // label488
-        // 
-        label488.AutoSize = true;
-        label488.ForeColor = Color.Black;
-        label488.Location = new Point(9, 46);
-        label488.Margin = new Padding(4, 0, 4, 0);
-        label488.Name = "label488";
-        label488.Size = new Size(33, 15);
-        label488.TabIndex = 42;
-        label488.Text = "剑魔";
-        // 
-        // label487
-        // 
-        label487.AutoSize = true;
-        label487.ForeColor = Color.Black;
-        label487.Location = new Point(94, 46);
-        label487.Margin = new Padding(4, 0, 4, 0);
-        label487.Name = "label487";
-        label487.Size = new Size(59, 15);
-        label487.TabIndex = 41;
-        label487.Text = "梦想的鱼";
-        // 
-        // label486
-        // 
-        label486.AutoSize = true;
-        label486.ForeColor = Color.Black;
-        label486.Location = new Point(9, 65);
-        label486.Margin = new Padding(4, 0, 4, 0);
-        label486.Name = "label486";
-        label486.Size = new Size(33, 15);
-        label486.TabIndex = 40;
-        label486.Text = "迟良";
-        // 
-        // label485
-        // 
-        label485.AutoSize = true;
-        label485.ForeColor = Color.Black;
-        label485.Location = new Point(9, 27);
-        label485.Margin = new Padding(4, 0, 4, 0);
-        label485.Name = "label485";
-        label485.Size = new Size(52, 15);
-        label485.TabIndex = 39;
-        label485.Text = "JuntaoLi";
         // 
         // label476
         // 
@@ -18432,7 +18305,7 @@ public partial class SMain
         groupBox33.Size = new Size(860, 193);
         groupBox33.TabIndex = 88;
         groupBox33.TabStop = false;
-        groupBox33.Text = "Item Disassembly System - Credit: Kobe Bright";
+        groupBox33.Text = "Item Disassembly System";
         // 
         // label65
         // 
@@ -18696,7 +18569,7 @@ public partial class SMain
         groupBox57.Size = new Size(873, 197);
         groupBox57.TabIndex = 89;
         groupBox57.TabStop = false;
-        groupBox57.Text = "Item Disassembly System - Credit: Kobe Bright";
+        groupBox57.Text = "Item Disassembly System";
         // 
         // label894
         // 
@@ -18960,7 +18833,7 @@ public partial class SMain
         groupBox58.Size = new Size(873, 197);
         groupBox58.TabIndex = 89;
         groupBox58.TabStop = false;
-        groupBox58.Text = "Item Disassembly System - Credit: Kobe Bright";
+        groupBox58.Text = "Item Disassembly System";
         // 
         // label191
         // 
@@ -19223,7 +19096,7 @@ public partial class SMain
         groupBox59.Size = new Size(873, 197);
         groupBox59.TabIndex = 89;
         groupBox59.TabStop = false;
-        groupBox59.Text = "Item Disassembly System - Credit: Kobe Bright";
+        groupBox59.Text = "Item Disassembly System";
         // 
         // label375
         // 
@@ -19487,7 +19360,7 @@ public partial class SMain
         groupBox60.Size = new Size(873, 197);
         groupBox60.TabIndex = 89;
         groupBox60.TabStop = false;
-        groupBox60.Text = "Item Disassembly System - Credit: Kobe Bright";
+        groupBox60.Text = "Item Disassembly System";
         // 
         // label389
         // 
@@ -19750,7 +19623,7 @@ public partial class SMain
         groupBox61.Size = new Size(873, 197);
         groupBox61.TabIndex = 89;
         groupBox61.TabStop = false;
-        groupBox61.Text = "Item Disassembly System - Credit: Kobe Bright";
+        groupBox61.Text = "Item Disassembly System";
         // 
         // label401
         // 
@@ -20014,7 +19887,7 @@ public partial class SMain
         groupBox237.Size = new Size(873, 197);
         groupBox237.TabIndex = 90;
         groupBox237.TabStop = false;
-        groupBox237.Text = "Item Disassembly System - Credit: Kobe Bright";
+        groupBox237.Text = "Item Disassembly System";
         // 
         // label413
         // 
@@ -20278,7 +20151,7 @@ public partial class SMain
         groupBox238.Size = new Size(873, 197);
         groupBox238.TabIndex = 90;
         groupBox238.TabStop = false;
-        groupBox238.Text = "Item Disassembly System - Credit: Kobe Bright";
+        groupBox238.Text = "Item Disassembly System";
         // 
         // label874
         // 
@@ -21193,7 +21066,7 @@ public partial class SMain
         每周特惠.Size = new Size(327, 195);
         每周特惠.TabIndex = 4;
         每周特惠.TabStop = false;
-        每周特惠.Text = "Weekly Specials Thanks to: 腾云驾雾琉璃仙 (Tengyun Riding Mist Liulixian)";
+        每周特惠.Text = "Weekly Specials";
         // 
         // label272
         // 
@@ -21747,7 +21620,6 @@ public partial class SMain
         groupBox63.Controls.Add(label423);
         groupBox63.Controls.Add(S_BOSS卷轴地图开关);
         groupBox63.Controls.Add(label422);
-        groupBox63.Controls.Add(groupBox64);
         groupBox63.Controls.Add(label418);
         groupBox63.Controls.Add(BOSS卷轴四);
         groupBox63.Controls.Add(BOSS卷轴五);
@@ -22058,66 +21930,6 @@ public partial class SMain
         label422.Size = new Size(117, 15);
         label422.TabIndex = 80;
         label422.Text = "Map Specific Switch:";
-        // 
-        // groupBox64
-        // 
-        groupBox64.Controls.Add(label421);
-        groupBox64.Controls.Add(label420);
-        groupBox64.Controls.Add(label419);
-        groupBox64.Controls.Add(label417);
-        groupBox64.ForeColor = SystemColors.ControlDarkDark;
-        groupBox64.Location = new Point(141, 462);
-        groupBox64.Margin = new Padding(4, 3, 4, 3);
-        groupBox64.Name = "groupBox64";
-        groupBox64.Padding = new Padding(4, 3, 4, 3);
-        groupBox64.Size = new Size(214, 76);
-        groupBox64.TabIndex = 24;
-        groupBox64.TabStop = false;
-        groupBox64.Text = "Acknowledgments List";
-        // 
-        // label421
-        // 
-        label421.AutoSize = true;
-        label421.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label421.Location = new Point(7, 46);
-        label421.Margin = new Padding(4, 0, 4, 0);
-        label421.Name = "label421";
-        label421.Size = new Size(59, 15);
-        label421.TabIndex = 95;
-        label421.Text = "梦想的鱼";
-        // 
-        // label420
-        // 
-        label420.AutoSize = true;
-        label420.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label420.Location = new Point(96, 23);
-        label420.Margin = new Padding(4, 0, 4, 0);
-        label420.Name = "label420";
-        label420.Size = new Size(29, 15);
-        label420.TabIndex = 94;
-        label420.Text = "ABC";
-        // 
-        // label419
-        // 
-        label419.AutoSize = true;
-        label419.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label419.Location = new Point(96, 46);
-        label419.Margin = new Padding(4, 0, 4, 0);
-        label419.Name = "label419";
-        label419.Size = new Size(98, 15);
-        label419.TabIndex = 93;
-        label419.Text = "传永开服一条龙";
-        // 
-        // label417
-        // 
-        label417.AutoSize = true;
-        label417.ForeColor = Color.FromArgb((int)(byte)64, (int)(byte)64, (int)(byte)64);
-        label417.Location = new Point(7, 23);
-        label417.Margin = new Padding(4, 0, 4, 0);
-        label417.Name = "label417";
-        label417.Size = new Size(72, 15);
-        label417.TabIndex = 92;
-        label417.Text = "牛奶真好喝";
         // 
         // label418
         // 
@@ -22632,7 +22444,7 @@ public partial class SMain
         groupBox152.Size = new Size(1181, 73);
         groupBox152.TabIndex = 94;
         groupBox152.TabStop = false;
-        groupBox152.Text = "Normal Edition Credit: 腾云驾雾琉璃仙   (Tengyun Riding Mist Liulixian)";
+        groupBox152.Text = "Normal Edition";
         // 
         // label681
         // 
@@ -24109,9 +23921,9 @@ public partial class SMain
         label700.Location = new Point(22, 32);
         label700.Margin = new Padding(4, 0, 4, 0);
         label700.Name = "label700";
-        label700.Size = new Size(484, 90);
+        label700.Size = new Size(484, 45);
         label700.TabIndex = 0;
-        label700.Text = resources.GetString("label700.Text");
+        label700.Text = "Server name; primary sponsorship gift packs, such items, pay attention to the ID writing \r\n(the database ID is the same as the client PAK ID)\r\n(The database name is the same as the server name)";
         // 
         // groupBox169
         // 
@@ -27668,9 +27480,9 @@ public partial class SMain
         label438.Location = new Point(7, 21);
         label438.Margin = new Padding(4, 0, 4, 0);
         label438.Name = "label438";
-        label438.Size = new Size(131, 84);
+        label438.Size = new Size(131, 70);
         label438.TabIndex = 65;
-        label438.Text = "Thanks: 牛奶真好喝\r\n If you need to activate, \r\nyou can find another key.\r\nRegular version.\r\nOpening date:\r\nFebruary 25, 2023";
+        label438.Text = "If you need to activate, \r\nyou can find another key.\r\nRegular version.\r\nOpening date:\r\nFebruary 25, 2023";
         // 
         // groupBox131
         // 
@@ -29375,37 +29187,37 @@ public partial class SMain
         公告浏览表.AllowUserToResizeColumns = false;
         公告浏览表.AllowUserToResizeRows = false;
         公告浏览表.BackgroundColor = SystemColors.ControlLight;
-        dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle1.BackColor = SystemColors.Control;
-        dataGridViewCellStyle1.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-        dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-        dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-        公告浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+        dataGridViewCellStyle382.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle382.BackColor = SystemColors.Control;
+        dataGridViewCellStyle382.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
+        dataGridViewCellStyle382.ForeColor = SystemColors.WindowText;
+        dataGridViewCellStyle382.SelectionBackColor = SystemColors.Highlight;
+        dataGridViewCellStyle382.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle382.WrapMode = DataGridViewTriState.True;
+        公告浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle382;
         公告浏览表.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
         公告浏览表.Columns.AddRange(new DataGridViewColumn[] { 公告状态, 公告间隔, 公告次数, 剩余次数, 公告计时, 公告内容 });
-        dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle2.BackColor = Color.LightGray;
-        dataGridViewCellStyle2.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
-        dataGridViewCellStyle2.SelectionBackColor = SystemColors.ActiveBorder;
-        dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-        公告浏览表.DefaultCellStyle = dataGridViewCellStyle2;
+        dataGridViewCellStyle383.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle383.BackColor = Color.LightGray;
+        dataGridViewCellStyle383.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
+        dataGridViewCellStyle383.ForeColor = SystemColors.ControlText;
+        dataGridViewCellStyle383.SelectionBackColor = SystemColors.ActiveBorder;
+        dataGridViewCellStyle383.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle383.WrapMode = DataGridViewTriState.False;
+        公告浏览表.DefaultCellStyle = dataGridViewCellStyle383;
         公告浏览表.EditMode = DataGridViewEditMode.EditOnEnter;
         公告浏览表.Location = new Point(6, 3);
         公告浏览表.Margin = new Padding(4, 3, 4, 3);
         公告浏览表.MultiSelect = false;
         公告浏览表.Name = "公告浏览表";
-        dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.BottomCenter;
-        dataGridViewCellStyle3.BackColor = SystemColors.Control;
-        dataGridViewCellStyle3.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        dataGridViewCellStyle3.ForeColor = SystemColors.WindowText;
-        dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
-        dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
-        公告浏览表.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+        dataGridViewCellStyle384.Alignment = DataGridViewContentAlignment.BottomCenter;
+        dataGridViewCellStyle384.BackColor = SystemColors.Control;
+        dataGridViewCellStyle384.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
+        dataGridViewCellStyle384.ForeColor = SystemColors.WindowText;
+        dataGridViewCellStyle384.SelectionBackColor = SystemColors.Highlight;
+        dataGridViewCellStyle384.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle384.WrapMode = DataGridViewTriState.True;
+        公告浏览表.RowHeadersDefaultCellStyle = dataGridViewCellStyle384;
         公告浏览表.RowHeadersVisible = false;
         公告浏览表.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
         公告浏览表.RowTemplate.Height = 23;
@@ -29482,29 +29294,29 @@ public partial class SMain
         封禁浏览表.AllowUserToAddRows = false;
         封禁浏览表.AllowUserToDeleteRows = false;
         封禁浏览表.AllowUserToResizeRows = false;
-        dataGridViewCellStyle4.BackColor = Color.FromArgb((int)(byte)224, (int)(byte)224, (int)(byte)224);
-        封禁浏览表.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
+        dataGridViewCellStyle412.BackColor = Color.FromArgb((int)(byte)224, (int)(byte)224, (int)(byte)224);
+        封禁浏览表.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle412;
         封禁浏览表.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         封禁浏览表.BackgroundColor = Color.LightGray;
         封禁浏览表.BorderStyle = BorderStyle.Fixed3D;
         封禁浏览表.CellBorderStyle = DataGridViewCellBorderStyle.Raised;
-        dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle5.BackColor = SystemColors.Control;
-        dataGridViewCellStyle5.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
-        dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
-        dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-        封禁浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+        dataGridViewCellStyle413.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle413.BackColor = SystemColors.Control;
+        dataGridViewCellStyle413.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
+        dataGridViewCellStyle413.ForeColor = SystemColors.WindowText;
+        dataGridViewCellStyle413.SelectionBackColor = SystemColors.Highlight;
+        dataGridViewCellStyle413.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle413.WrapMode = DataGridViewTriState.True;
+        封禁浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle413;
         封禁浏览表.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-        dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle6.BackColor = SystemColors.Control;
-        dataGridViewCellStyle6.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        dataGridViewCellStyle6.ForeColor = SystemColors.ControlText;
-        dataGridViewCellStyle6.SelectionBackColor = SystemColors.ButtonShadow;
-        dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
-        封禁浏览表.DefaultCellStyle = dataGridViewCellStyle6;
+        dataGridViewCellStyle414.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle414.BackColor = SystemColors.Control;
+        dataGridViewCellStyle414.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
+        dataGridViewCellStyle414.ForeColor = SystemColors.ControlText;
+        dataGridViewCellStyle414.SelectionBackColor = SystemColors.ButtonShadow;
+        dataGridViewCellStyle414.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle414.WrapMode = DataGridViewTriState.False;
+        封禁浏览表.DefaultCellStyle = dataGridViewCellStyle414;
         封禁浏览表.GridColor = SystemColors.ActiveCaption;
         封禁浏览表.Location = new Point(147, 3);
         封禁浏览表.Margin = new Padding(4, 3, 4, 3);
@@ -29536,29 +29348,29 @@ public partial class SMain
         掉落浏览表.AllowUserToAddRows = false;
         掉落浏览表.AllowUserToDeleteRows = false;
         掉落浏览表.AllowUserToResizeRows = false;
-        dataGridViewCellStyle7.BackColor = Color.FromArgb((int)(byte)224, (int)(byte)224, (int)(byte)224);
-        掉落浏览表.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle7;
+        dataGridViewCellStyle415.BackColor = Color.FromArgb((int)(byte)224, (int)(byte)224, (int)(byte)224);
+        掉落浏览表.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle415;
         掉落浏览表.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         掉落浏览表.BackgroundColor = Color.LightGray;
         掉落浏览表.BorderStyle = BorderStyle.Fixed3D;
         掉落浏览表.CellBorderStyle = DataGridViewCellBorderStyle.Raised;
-        dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle8.BackColor = SystemColors.Control;
-        dataGridViewCellStyle8.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        dataGridViewCellStyle8.ForeColor = SystemColors.WindowText;
-        dataGridViewCellStyle8.SelectionBackColor = SystemColors.Highlight;
-        dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle8.WrapMode = DataGridViewTriState.True;
-        掉落浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
+        dataGridViewCellStyle416.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle416.BackColor = SystemColors.Control;
+        dataGridViewCellStyle416.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
+        dataGridViewCellStyle416.ForeColor = SystemColors.WindowText;
+        dataGridViewCellStyle416.SelectionBackColor = SystemColors.Highlight;
+        dataGridViewCellStyle416.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle416.WrapMode = DataGridViewTriState.True;
+        掉落浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle416;
         掉落浏览表.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-        dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle9.BackColor = SystemColors.Control;
-        dataGridViewCellStyle9.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        dataGridViewCellStyle9.ForeColor = SystemColors.ControlText;
-        dataGridViewCellStyle9.SelectionBackColor = SystemColors.ButtonShadow;
-        dataGridViewCellStyle9.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle9.WrapMode = DataGridViewTriState.False;
-        掉落浏览表.DefaultCellStyle = dataGridViewCellStyle9;
+        dataGridViewCellStyle417.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle417.BackColor = SystemColors.Control;
+        dataGridViewCellStyle417.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
+        dataGridViewCellStyle417.ForeColor = SystemColors.ControlText;
+        dataGridViewCellStyle417.SelectionBackColor = SystemColors.ButtonShadow;
+        dataGridViewCellStyle417.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle417.WrapMode = DataGridViewTriState.False;
+        掉落浏览表.DefaultCellStyle = dataGridViewCellStyle417;
         掉落浏览表.GridColor = SystemColors.ActiveCaption;
         掉落浏览表.Location = new Point(1052, 3);
         掉落浏览表.Margin = new Padding(4, 3, 4, 3);
@@ -29576,29 +29388,29 @@ public partial class SMain
         怪物浏览表.AllowUserToAddRows = false;
         怪物浏览表.AllowUserToDeleteRows = false;
         怪物浏览表.AllowUserToResizeRows = false;
-        dataGridViewCellStyle10.BackColor = Color.FromArgb((int)(byte)224, (int)(byte)224, (int)(byte)224);
-        怪物浏览表.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle10;
+        dataGridViewCellStyle418.BackColor = Color.FromArgb((int)(byte)224, (int)(byte)224, (int)(byte)224);
+        怪物浏览表.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle418;
         怪物浏览表.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         怪物浏览表.BackgroundColor = Color.LightGray;
         怪物浏览表.BorderStyle = BorderStyle.Fixed3D;
         怪物浏览表.CellBorderStyle = DataGridViewCellBorderStyle.Raised;
-        dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle11.BackColor = SystemColors.Control;
-        dataGridViewCellStyle11.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        dataGridViewCellStyle11.ForeColor = SystemColors.WindowText;
-        dataGridViewCellStyle11.SelectionBackColor = SystemColors.Highlight;
-        dataGridViewCellStyle11.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle11.WrapMode = DataGridViewTriState.True;
-        怪物浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
+        dataGridViewCellStyle419.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle419.BackColor = SystemColors.Control;
+        dataGridViewCellStyle419.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
+        dataGridViewCellStyle419.ForeColor = SystemColors.WindowText;
+        dataGridViewCellStyle419.SelectionBackColor = SystemColors.Highlight;
+        dataGridViewCellStyle419.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle419.WrapMode = DataGridViewTriState.True;
+        怪物浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle419;
         怪物浏览表.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-        dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle12.BackColor = SystemColors.Control;
-        dataGridViewCellStyle12.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        dataGridViewCellStyle12.ForeColor = SystemColors.ControlText;
-        dataGridViewCellStyle12.SelectionBackColor = SystemColors.ButtonShadow;
-        dataGridViewCellStyle12.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle12.WrapMode = DataGridViewTriState.False;
-        怪物浏览表.DefaultCellStyle = dataGridViewCellStyle12;
+        dataGridViewCellStyle420.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle420.BackColor = SystemColors.Control;
+        dataGridViewCellStyle420.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
+        dataGridViewCellStyle420.ForeColor = SystemColors.ControlText;
+        dataGridViewCellStyle420.SelectionBackColor = SystemColors.ButtonShadow;
+        dataGridViewCellStyle420.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle420.WrapMode = DataGridViewTriState.False;
+        怪物浏览表.DefaultCellStyle = dataGridViewCellStyle420;
         怪物浏览表.GridColor = SystemColors.ActiveCaption;
         怪物浏览表.Location = new Point(0, 3);
         怪物浏览表.Margin = new Padding(4, 3, 4, 3);
@@ -29630,29 +29442,29 @@ public partial class SMain
         地图浏览表.AllowUserToAddRows = false;
         地图浏览表.AllowUserToDeleteRows = false;
         地图浏览表.AllowUserToResizeRows = false;
-        dataGridViewCellStyle13.BackColor = Color.FromArgb((int)(byte)224, (int)(byte)224, (int)(byte)224);
-        地图浏览表.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle13;
+        dataGridViewCellStyle421.BackColor = Color.FromArgb((int)(byte)224, (int)(byte)224, (int)(byte)224);
+        地图浏览表.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle421;
         地图浏览表.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         地图浏览表.BackgroundColor = Color.LightGray;
         地图浏览表.BorderStyle = BorderStyle.Fixed3D;
         地图浏览表.CellBorderStyle = DataGridViewCellBorderStyle.Raised;
-        dataGridViewCellStyle14.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle14.BackColor = SystemColors.Control;
-        dataGridViewCellStyle14.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        dataGridViewCellStyle14.ForeColor = SystemColors.WindowText;
-        dataGridViewCellStyle14.SelectionBackColor = SystemColors.Highlight;
-        dataGridViewCellStyle14.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle14.WrapMode = DataGridViewTriState.True;
-        地图浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle14;
+        dataGridViewCellStyle422.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle422.BackColor = SystemColors.Control;
+        dataGridViewCellStyle422.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
+        dataGridViewCellStyle422.ForeColor = SystemColors.WindowText;
+        dataGridViewCellStyle422.SelectionBackColor = SystemColors.Highlight;
+        dataGridViewCellStyle422.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle422.WrapMode = DataGridViewTriState.True;
+        地图浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle422;
         地图浏览表.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-        dataGridViewCellStyle15.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle15.BackColor = SystemColors.Control;
-        dataGridViewCellStyle15.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        dataGridViewCellStyle15.ForeColor = SystemColors.ControlText;
-        dataGridViewCellStyle15.SelectionBackColor = SystemColors.ButtonShadow;
-        dataGridViewCellStyle15.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle15.WrapMode = DataGridViewTriState.False;
-        地图浏览表.DefaultCellStyle = dataGridViewCellStyle15;
+        dataGridViewCellStyle423.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle423.BackColor = SystemColors.Control;
+        dataGridViewCellStyle423.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
+        dataGridViewCellStyle423.ForeColor = SystemColors.ControlText;
+        dataGridViewCellStyle423.SelectionBackColor = SystemColors.ButtonShadow;
+        dataGridViewCellStyle423.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle423.WrapMode = DataGridViewTriState.False;
+        地图浏览表.DefaultCellStyle = dataGridViewCellStyle423;
         地图浏览表.GridColor = SystemColors.ActiveCaption;
         地图浏览表.Location = new Point(0, 3);
         地图浏览表.Margin = new Padding(4, 3, 4, 3);
@@ -29713,29 +29525,29 @@ public partial class SMain
         技能浏览表.AllowUserToAddRows = false;
         技能浏览表.AllowUserToDeleteRows = false;
         技能浏览表.AllowUserToResizeRows = false;
-        dataGridViewCellStyle16.BackColor = Color.FromArgb((int)(byte)224, (int)(byte)224, (int)(byte)224);
-        技能浏览表.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle16;
+        dataGridViewCellStyle424.BackColor = Color.FromArgb((int)(byte)224, (int)(byte)224, (int)(byte)224);
+        技能浏览表.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle424;
         技能浏览表.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         技能浏览表.BackgroundColor = Color.LightGray;
         技能浏览表.BorderStyle = BorderStyle.Fixed3D;
         技能浏览表.CellBorderStyle = DataGridViewCellBorderStyle.Raised;
-        dataGridViewCellStyle17.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle17.BackColor = SystemColors.Control;
-        dataGridViewCellStyle17.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
-        dataGridViewCellStyle17.ForeColor = SystemColors.WindowText;
-        dataGridViewCellStyle17.SelectionBackColor = SystemColors.Highlight;
-        dataGridViewCellStyle17.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle17.WrapMode = DataGridViewTriState.True;
-        技能浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle17;
+        dataGridViewCellStyle425.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle425.BackColor = SystemColors.Control;
+        dataGridViewCellStyle425.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
+        dataGridViewCellStyle425.ForeColor = SystemColors.WindowText;
+        dataGridViewCellStyle425.SelectionBackColor = SystemColors.Highlight;
+        dataGridViewCellStyle425.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle425.WrapMode = DataGridViewTriState.True;
+        技能浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle425;
         技能浏览表.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-        dataGridViewCellStyle18.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle18.BackColor = SystemColors.Control;
-        dataGridViewCellStyle18.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
-        dataGridViewCellStyle18.ForeColor = SystemColors.ControlText;
-        dataGridViewCellStyle18.SelectionBackColor = SystemColors.ButtonShadow;
-        dataGridViewCellStyle18.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle18.WrapMode = DataGridViewTriState.False;
-        技能浏览表.DefaultCellStyle = dataGridViewCellStyle18;
+        dataGridViewCellStyle426.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle426.BackColor = SystemColors.Control;
+        dataGridViewCellStyle426.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
+        dataGridViewCellStyle426.ForeColor = SystemColors.ControlText;
+        dataGridViewCellStyle426.SelectionBackColor = SystemColors.ButtonShadow;
+        dataGridViewCellStyle426.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle426.WrapMode = DataGridViewTriState.False;
+        技能浏览表.DefaultCellStyle = dataGridViewCellStyle426;
         技能浏览表.GridColor = SystemColors.ActiveCaption;
         技能浏览表.Location = new Point(0, 0);
         技能浏览表.Margin = new Padding(4, 3, 4, 3);
@@ -29765,29 +29577,29 @@ public partial class SMain
         装备浏览表.AllowUserToAddRows = false;
         装备浏览表.AllowUserToDeleteRows = false;
         装备浏览表.AllowUserToResizeRows = false;
-        dataGridViewCellStyle19.BackColor = Color.FromArgb((int)(byte)224, (int)(byte)224, (int)(byte)224);
-        装备浏览表.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle19;
+        dataGridViewCellStyle427.BackColor = Color.FromArgb((int)(byte)224, (int)(byte)224, (int)(byte)224);
+        装备浏览表.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle427;
         装备浏览表.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         装备浏览表.BackgroundColor = Color.LightGray;
         装备浏览表.BorderStyle = BorderStyle.Fixed3D;
         装备浏览表.CellBorderStyle = DataGridViewCellBorderStyle.Raised;
-        dataGridViewCellStyle20.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle20.BackColor = SystemColors.Control;
-        dataGridViewCellStyle20.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
-        dataGridViewCellStyle20.ForeColor = SystemColors.WindowText;
-        dataGridViewCellStyle20.SelectionBackColor = SystemColors.Highlight;
-        dataGridViewCellStyle20.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle20.WrapMode = DataGridViewTriState.True;
-        装备浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle20;
+        dataGridViewCellStyle428.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle428.BackColor = SystemColors.Control;
+        dataGridViewCellStyle428.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
+        dataGridViewCellStyle428.ForeColor = SystemColors.WindowText;
+        dataGridViewCellStyle428.SelectionBackColor = SystemColors.Highlight;
+        dataGridViewCellStyle428.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle428.WrapMode = DataGridViewTriState.True;
+        装备浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle428;
         装备浏览表.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-        dataGridViewCellStyle21.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle21.BackColor = SystemColors.Control;
-        dataGridViewCellStyle21.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
-        dataGridViewCellStyle21.ForeColor = SystemColors.ControlText;
-        dataGridViewCellStyle21.SelectionBackColor = SystemColors.ButtonShadow;
-        dataGridViewCellStyle21.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle21.WrapMode = DataGridViewTriState.False;
-        装备浏览表.DefaultCellStyle = dataGridViewCellStyle21;
+        dataGridViewCellStyle429.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle429.BackColor = SystemColors.Control;
+        dataGridViewCellStyle429.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
+        dataGridViewCellStyle429.ForeColor = SystemColors.ControlText;
+        dataGridViewCellStyle429.SelectionBackColor = SystemColors.ButtonShadow;
+        dataGridViewCellStyle429.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle429.WrapMode = DataGridViewTriState.False;
+        装备浏览表.DefaultCellStyle = dataGridViewCellStyle429;
         装备浏览表.GridColor = SystemColors.ActiveCaption;
         装备浏览表.Location = new Point(0, 0);
         装备浏览表.Margin = new Padding(4, 3, 4, 3);
@@ -29816,29 +29628,29 @@ public partial class SMain
         背包浏览表.AllowUserToAddRows = false;
         背包浏览表.AllowUserToDeleteRows = false;
         背包浏览表.AllowUserToResizeRows = false;
-        dataGridViewCellStyle22.BackColor = Color.FromArgb((int)(byte)224, (int)(byte)224, (int)(byte)224);
-        背包浏览表.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle22;
+        dataGridViewCellStyle430.BackColor = Color.FromArgb((int)(byte)224, (int)(byte)224, (int)(byte)224);
+        背包浏览表.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle430;
         背包浏览表.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         背包浏览表.BackgroundColor = Color.LightGray;
         背包浏览表.BorderStyle = BorderStyle.Fixed3D;
         背包浏览表.CellBorderStyle = DataGridViewCellBorderStyle.Raised;
-        dataGridViewCellStyle23.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle23.BackColor = SystemColors.Control;
-        dataGridViewCellStyle23.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
-        dataGridViewCellStyle23.ForeColor = SystemColors.WindowText;
-        dataGridViewCellStyle23.SelectionBackColor = SystemColors.Highlight;
-        dataGridViewCellStyle23.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle23.WrapMode = DataGridViewTriState.True;
-        背包浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle23;
+        dataGridViewCellStyle431.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle431.BackColor = SystemColors.Control;
+        dataGridViewCellStyle431.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
+        dataGridViewCellStyle431.ForeColor = SystemColors.WindowText;
+        dataGridViewCellStyle431.SelectionBackColor = SystemColors.Highlight;
+        dataGridViewCellStyle431.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle431.WrapMode = DataGridViewTriState.True;
+        背包浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle431;
         背包浏览表.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-        dataGridViewCellStyle24.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle24.BackColor = SystemColors.Control;
-        dataGridViewCellStyle24.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
-        dataGridViewCellStyle24.ForeColor = SystemColors.ControlText;
-        dataGridViewCellStyle24.SelectionBackColor = SystemColors.ButtonShadow;
-        dataGridViewCellStyle24.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle24.WrapMode = DataGridViewTriState.False;
-        背包浏览表.DefaultCellStyle = dataGridViewCellStyle24;
+        dataGridViewCellStyle432.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle432.BackColor = SystemColors.Control;
+        dataGridViewCellStyle432.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
+        dataGridViewCellStyle432.ForeColor = SystemColors.ControlText;
+        dataGridViewCellStyle432.SelectionBackColor = SystemColors.ButtonShadow;
+        dataGridViewCellStyle432.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle432.WrapMode = DataGridViewTriState.False;
+        背包浏览表.DefaultCellStyle = dataGridViewCellStyle432;
         背包浏览表.GridColor = SystemColors.ActiveCaption;
         背包浏览表.Location = new Point(0, 0);
         背包浏览表.Margin = new Padding(4, 3, 4, 3);
@@ -29867,29 +29679,29 @@ public partial class SMain
         仓库浏览表.AllowUserToAddRows = false;
         仓库浏览表.AllowUserToDeleteRows = false;
         仓库浏览表.AllowUserToResizeRows = false;
-        dataGridViewCellStyle25.BackColor = Color.FromArgb((int)(byte)224, (int)(byte)224, (int)(byte)224);
-        仓库浏览表.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle25;
+        dataGridViewCellStyle433.BackColor = Color.FromArgb((int)(byte)224, (int)(byte)224, (int)(byte)224);
+        仓库浏览表.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle433;
         仓库浏览表.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         仓库浏览表.BackgroundColor = Color.LightGray;
         仓库浏览表.BorderStyle = BorderStyle.Fixed3D;
         仓库浏览表.CellBorderStyle = DataGridViewCellBorderStyle.Raised;
-        dataGridViewCellStyle26.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle26.BackColor = SystemColors.Control;
-        dataGridViewCellStyle26.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
-        dataGridViewCellStyle26.ForeColor = SystemColors.WindowText;
-        dataGridViewCellStyle26.SelectionBackColor = SystemColors.Highlight;
-        dataGridViewCellStyle26.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle26.WrapMode = DataGridViewTriState.True;
-        仓库浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle26;
+        dataGridViewCellStyle434.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle434.BackColor = SystemColors.Control;
+        dataGridViewCellStyle434.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
+        dataGridViewCellStyle434.ForeColor = SystemColors.WindowText;
+        dataGridViewCellStyle434.SelectionBackColor = SystemColors.Highlight;
+        dataGridViewCellStyle434.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle434.WrapMode = DataGridViewTriState.True;
+        仓库浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle434;
         仓库浏览表.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-        dataGridViewCellStyle27.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle27.BackColor = SystemColors.Control;
-        dataGridViewCellStyle27.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
-        dataGridViewCellStyle27.ForeColor = SystemColors.ControlText;
-        dataGridViewCellStyle27.SelectionBackColor = SystemColors.ButtonShadow;
-        dataGridViewCellStyle27.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle27.WrapMode = DataGridViewTriState.False;
-        仓库浏览表.DefaultCellStyle = dataGridViewCellStyle27;
+        dataGridViewCellStyle435.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle435.BackColor = SystemColors.Control;
+        dataGridViewCellStyle435.Font = new Font("Calibri", 9.75F, FontStyle.Bold);
+        dataGridViewCellStyle435.ForeColor = SystemColors.ControlText;
+        dataGridViewCellStyle435.SelectionBackColor = SystemColors.ButtonShadow;
+        dataGridViewCellStyle435.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle435.WrapMode = DataGridViewTriState.False;
+        仓库浏览表.DefaultCellStyle = dataGridViewCellStyle435;
         仓库浏览表.GridColor = SystemColors.ActiveCaption;
         仓库浏览表.Location = new Point(0, 0);
         仓库浏览表.Margin = new Padding(4, 3, 4, 3);
@@ -29907,29 +29719,29 @@ public partial class SMain
         角色浏览表.AllowUserToAddRows = false;
         角色浏览表.AllowUserToDeleteRows = false;
         角色浏览表.AllowUserToResizeRows = false;
-        dataGridViewCellStyle28.BackColor = Color.FromArgb((int)(byte)224, (int)(byte)224, (int)(byte)224);
-        角色浏览表.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle28;
+        dataGridViewCellStyle436.BackColor = Color.FromArgb((int)(byte)224, (int)(byte)224, (int)(byte)224);
+        角色浏览表.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle436;
         角色浏览表.BackgroundColor = Color.LightGray;
         角色浏览表.BorderStyle = BorderStyle.Fixed3D;
         角色浏览表.CellBorderStyle = DataGridViewCellBorderStyle.Raised;
-        dataGridViewCellStyle29.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle29.BackColor = SystemColors.Control;
-        dataGridViewCellStyle29.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        dataGridViewCellStyle29.ForeColor = SystemColors.WindowText;
-        dataGridViewCellStyle29.SelectionBackColor = SystemColors.Highlight;
-        dataGridViewCellStyle29.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle29.WrapMode = DataGridViewTriState.True;
-        角色浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle29;
+        dataGridViewCellStyle437.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle437.BackColor = SystemColors.Control;
+        dataGridViewCellStyle437.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
+        dataGridViewCellStyle437.ForeColor = SystemColors.WindowText;
+        dataGridViewCellStyle437.SelectionBackColor = SystemColors.Highlight;
+        dataGridViewCellStyle437.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle437.WrapMode = DataGridViewTriState.True;
+        角色浏览表.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle437;
         角色浏览表.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
         角色浏览表.ContextMenuStrip = 角色右键菜单;
-        dataGridViewCellStyle30.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle30.BackColor = SystemColors.Control;
-        dataGridViewCellStyle30.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
-        dataGridViewCellStyle30.ForeColor = SystemColors.ControlText;
-        dataGridViewCellStyle30.SelectionBackColor = SystemColors.ButtonShadow;
-        dataGridViewCellStyle30.SelectionForeColor = SystemColors.HighlightText;
-        dataGridViewCellStyle30.WrapMode = DataGridViewTriState.False;
-        角色浏览表.DefaultCellStyle = dataGridViewCellStyle30;
+        dataGridViewCellStyle438.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        dataGridViewCellStyle438.BackColor = SystemColors.Control;
+        dataGridViewCellStyle438.Font = new Font("SimSun", 9F, FontStyle.Regular, GraphicsUnit.Point, (byte)134);
+        dataGridViewCellStyle438.ForeColor = SystemColors.ControlText;
+        dataGridViewCellStyle438.SelectionBackColor = SystemColors.ButtonShadow;
+        dataGridViewCellStyle438.SelectionForeColor = SystemColors.HighlightText;
+        dataGridViewCellStyle438.WrapMode = DataGridViewTriState.False;
+        角色浏览表.DefaultCellStyle = dataGridViewCellStyle438;
         角色浏览表.GridColor = SystemColors.ActiveCaption;
         角色浏览表.Location = new Point(0, 3);
         角色浏览表.Margin = new Padding(4, 3, 4, 3);
@@ -31706,8 +31518,6 @@ public partial class SMain
         tabPage88.ResumeLayout(false);
         groupBox223.ResumeLayout(false);
         groupBox223.PerformLayout();
-        groupBox242.ResumeLayout(false);
-        groupBox242.PerformLayout();
         groupBox230.ResumeLayout(false);
         groupBox230.PerformLayout();
         ((ISupportInitialize)职业物品数量).EndInit();
@@ -31866,8 +31676,6 @@ public partial class SMain
         ((ISupportInitialize)S_掉落苍月物品颜色).EndInit();
         ((ISupportInitialize)S_掉落祖玛物品颜色).EndInit();
         ((ISupportInitialize)S_掉落沃玛物品颜色).EndInit();
-        groupBox71.ResumeLayout(false);
-        groupBox71.PerformLayout();
         ((ISupportInitialize)S_狂暴被杀玩家颜色).EndInit();
         ((ISupportInitialize)S_狂暴击杀玩家颜色).EndInit();
         ((ISupportInitialize)S_DropPlayerNameColor).EndInit();
@@ -32025,8 +31833,6 @@ public partial class SMain
         groupBox63.PerformLayout();
         ((ISupportInitialize)S_BOSS卷轴地图编号).EndInit();
         ((ISupportInitialize)S_BOSS卷轴地图开关).EndInit();
-        groupBox64.ResumeLayout(false);
-        groupBox64.PerformLayout();
         tabPage33.ResumeLayout(false);
         groupBox65.ResumeLayout(false);
         groupBox65.PerformLayout();
@@ -32915,8 +32721,6 @@ public partial class SMain
     private GroupBox groupBox27;
 
     private GroupBox groupBox20;
-
-    private Label label135;
 
     private Label label106;
 
@@ -33970,16 +33774,6 @@ public partial class SMain
 
     private GroupBox groupBox63;
 
-    private GroupBox groupBox64;
-
-    private Label label421;
-
-    private Label label420;
-
-    private Label label419;
-
-    private Label label417;
-
     private Label label418;
 
     private Label BOSS卷轴四;
@@ -34128,8 +33922,6 @@ public partial class SMain
 
     private TabPage tabPage38;
 
-    private GroupBox groupBox71;
-
     private Label label476;
 
     private Label label475;
@@ -34183,16 +33975,6 @@ public partial class SMain
     private Label label478;
 
     private Label label477;
-
-    private Label label489;
-
-    private Label label488;
-
-    private Label label487;
-
-    private Label label486;
-
-    private Label label485;
 
     private NumericUpDown S_MaxUserConnections;
 
@@ -36545,10 +36327,6 @@ public partial class SMain
     private GroupBox groupBox240;
 
     private GroupBox groupBox223;
-
-    private GroupBox groupBox242;
-
-    private Label label893;
 
     private Label label814;
 

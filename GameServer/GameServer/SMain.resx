@@ -219,9 +219,7 @@ Release time: can be modified at any time
   <data name="label797.Text" xml:space="preserve">
     <value>Guaranteed number of lucky necklaces: natural income is not excluded
 Must succeed, you can set the number of times and must succeed lucky points
-1~3 setting, the maximum number of times setting is 1000000
-
-Thanks: ALL</value>
+1~3 setting, the maximum number of times setting is 1000000</value>
   </data>
   <data name="label818.Text" xml:space="preserve">
     <value>Prevent brushing currency rules, everyone can own items
@@ -257,14 +255,6 @@ All @ shortcut modes can be turned on or off
 @member panel ID: 848200000
 Automatic decomposition panel ID: 848201000
 This module is to pick up the decomposition mode</value>
-  </data>
-  <data name="label700.Text" xml:space="preserve">
-    <value>Server name; primary sponsorship gift packs, such items, pay attention to the ID writing 
-(the database ID is the same as the client PAK ID)
-(The database name is the same as the server name)
-
-- Acknowledgments:
-  剑魔     aLL</value>
   </data>
   <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>532, 17</value>
