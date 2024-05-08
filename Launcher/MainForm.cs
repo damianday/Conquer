@@ -14,6 +14,7 @@ namespace Launcher
 {
     public partial class MainForm : Form
     {
+        private Point offset; // Used to store the offset between the mouse cursor and the form's location
         public sealed class GameServerInfo
         {
             public string ServerName { get; set; }
@@ -159,7 +160,7 @@ namespace Launcher
                     var port = -1;
                     var name = arr[2];
 
-                    if (!int.TryParse(arr[1], out port) ||  string.IsNullOrEmpty(ip) || string.IsNullOrEmpty(name))
+                    if (!int.TryParse(arr[1], out port) || string.IsNullOrEmpty(ip) || string.IsNullOrEmpty(name))
                     {
                         MessageBox.Show("Server configuration error, parsing failed. Row: " + line);
                         Environment.Exit(0);
@@ -214,10 +215,10 @@ namespace Launcher
             {
                 if (ServerTable.TryGetValue(start_selected_zone.Text, out var value))
                 {
-                    string arguments = "-wegame=" + $"1,1,{value.PublicAddress.Address},{value.PublicAddress.Port}," + 
-                        $"1,1,{value.PublicAddress.Address},{value.PublicAddress.Port}," + start_selected_zone.Text + "  " + 
-                        $"/ip:1,1,{value.PublicAddress.Address} " + $"/port:{value.PublicAddress.Port} " + 
-                        "/ticket:" + ticket + 
+                    string arguments = "-wegame=" + $"1,1,{value.PublicAddress.Address},{value.PublicAddress.Port}," +
+                        $"1,1,{value.PublicAddress.Address},{value.PublicAddress.Port}," + start_selected_zone.Text + "  " +
+                        $"/ip:1,1,{value.PublicAddress.Address} " + $"/port:{value.PublicAddress.Port} " +
+                        "/ticket:" + ticket +
                         " /AreaName:" + start_selected_zone.Text;
 
                     Settings.Default.ServerName = start_selected_zone.Text;
@@ -351,7 +352,7 @@ namespace Launcher
                 LoggedIn = false;
                 Network.Instance.SendPacket(new AccountLogOutPacket { });
             }
-            
+
             Environment.Exit(Environment.ExitCode);
         }
         private void RegisterAccount_Click(object sender, EventArgs e)
@@ -609,6 +610,68 @@ namespace Launcher
         private void uiCheckBox2_CheckedChanged(object sender, EventArgs e)
         {
             uiCheckBox1.Checked = !uiCheckBox2.Checked;
+        }
+
+        private void ConfigButton_Click(object sender, EventArgs e)
+        {
+            ConfigForm configForm = new ConfigForm();
+            configForm.Show();
+        }
+
+        private void AccountLoginTab_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                // Capture the offset between the mouse cursor and the form's location
+                offset = new Point(e.X, e.Y);
+            }
+        }
+
+        private void AccountLoginTab_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                // Calculate the new location of the form based on the offset
+                Point newLocation = this.PointToScreen(new Point(e.X, e.Y));
+                newLocation.Offset(-offset.X, -offset.Y);
+
+                // Set the new location of the form
+                this.Location = newLocation;
+            }
+        }
+
+        private void AccountLoginTab_MouseUp(object sender, MouseEventArgs e)
+        {
+            // Reset the offset when the mouse button is released
+            offset = Point.Empty;
+        }
+
+        private void MainTab_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                // Capture the offset between the mouse cursor and the form's location
+                offset = new Point(e.X, e.Y);
+            }
+        }
+
+        private void MainTab_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                // Calculate the new location of the form based on the offset
+                Point newLocation = this.PointToScreen(new Point(e.X, e.Y));
+                newLocation.Offset(-offset.X, -offset.Y);
+
+                // Set the new location of the form
+                this.Location = newLocation;
+            }
+        }
+
+        private void MainTab_MouseUp(object sender, MouseEventArgs e)
+        {
+            // Reset the offset when the mouse button is released
+            offset = Point.Empty;
         }
     }
 }

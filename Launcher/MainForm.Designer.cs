@@ -21,6 +21,7 @@ namespace Launcher
             ComponentResourceManager resources = new ComponentResourceManager(typeof(MainForm));
             MainTab = new UITabControl();
             AccountLoginTab = new TabPage();
+            ConfigButton = new PictureBox();
             ConnectionStatusLabel = new UILabel();
             pictureBox2 = new PictureBox();
             pictureBox1 = new PictureBox();
@@ -67,6 +68,7 @@ namespace Launcher
             GameProcessTimer = new Timer(components);
             MainTab.SuspendLayout();
             AccountLoginTab.SuspendLayout();
+            ((ISupportInitialize)ConfigButton).BeginInit();
             ((ISupportInitialize)pictureBox2).BeginInit();
             ((ISupportInitialize)pictureBox1).BeginInit();
             RegistrationTab.SuspendLayout();
@@ -110,12 +112,16 @@ namespace Launcher
             MainTab.TipsFont = new Font("Arial", 9F);
             MainTab.TipsForeColor = Color.Transparent;
             MainTab.ZoomScaleRect = new Rectangle(0, 0, 0, 0);
+            MainTab.MouseDown += MainTab_MouseDown;
+            MainTab.MouseMove += MainTab_MouseMove;
+            MainTab.MouseUp += MainTab_MouseUp;
             // 
             // AccountLoginTab
             // 
             AccountLoginTab.BackColor = Color.Transparent;
             AccountLoginTab.BackgroundImage = (Image)resources.GetObject("AccountLoginTab.BackgroundImage");
             AccountLoginTab.BackgroundImageLayout = ImageLayout.None;
+            AccountLoginTab.Controls.Add(ConfigButton);
             AccountLoginTab.Controls.Add(ConnectionStatusLabel);
             AccountLoginTab.Controls.Add(pictureBox2);
             AccountLoginTab.Controls.Add(pictureBox1);
@@ -131,6 +137,18 @@ namespace Launcher
             AccountLoginTab.Size = new Size(600, 415);
             AccountLoginTab.TabIndex = 0;
             AccountLoginTab.Text = "Login";
+            AccountLoginTab.MouseDown += AccountLoginTab_MouseDown;
+            AccountLoginTab.MouseMove += AccountLoginTab_MouseMove;
+            AccountLoginTab.MouseUp += AccountLoginTab_MouseUp;
+            // 
+            // ConfigButton
+            // 
+            ConfigButton.Location = new Point(25, 23);
+            ConfigButton.Name = "ConfigButton";
+            ConfigButton.Size = new Size(24, 22);
+            ConfigButton.TabIndex = 20;
+            ConfigButton.TabStop = false;
+            ConfigButton.Click += ConfigButton_Click;
             // 
             // ConnectionStatusLabel
             // 
@@ -285,13 +303,13 @@ namespace Launcher
             RegisterAccountLabel.ZoomScaleRect = new Rectangle(0, 0, 0, 0);
             RegisterAccountLabel.Click += Login_Registertab_Click;
             // 
-            // login_error_label
+            // LoginErrorLabel
             // 
             LoginErrorLabel.Font = new Font("Arial", 9F);
             LoginErrorLabel.ForeColor = Color.DodgerBlue;
             LoginErrorLabel.Location = new Point(120, 200);
             LoginErrorLabel.Margin = new Padding(4, 0, 4, 0);
-            LoginErrorLabel.Name = "login_error_label";
+            LoginErrorLabel.Name = "LoginErrorLabel";
             LoginErrorLabel.Size = new Size(391, 20);
             LoginErrorLabel.Style = UIStyle.Custom;
             LoginErrorLabel.TabIndex = 15;
@@ -1085,12 +1103,13 @@ namespace Launcher
             Margin = new Padding(4, 2, 4, 2);
             MaximizeBox = false;
             Name = "MainForm";
-            StartPosition = FormStartPosition.CenterScreen;
+            StartPosition = FormStartPosition.Manual;
             TransparencyKey = Color.Black;
             FormClosing += MainForm_FormClosing;
             MainTab.ResumeLayout(false);
             AccountLoginTab.ResumeLayout(false);
             AccountLoginTab.PerformLayout();
+            ((ISupportInitialize)ConfigButton).EndInit();
             ((ISupportInitialize)pictureBox2).EndInit();
             ((ISupportInitialize)pictureBox1).EndInit();
             RegistrationTab.ResumeLayout(false);
@@ -1141,7 +1160,6 @@ namespace Launcher
         private global::System.Windows.Forms.ToolStripMenuItem OpenToolStripMenuItem;
         private global::System.Windows.Forms.ToolStripMenuItem QuitToolStripMenuItem;
         private System.Windows.Forms.Timer GameProcessTimer;
-        private PictureBox pictureBox1;
         private PictureBox pictureBox2;
         private PictureBox pictureBox3;
         private PictureBox pictureBox4;
@@ -1151,5 +1169,7 @@ namespace Launcher
         private UICheckBox uiCheckBox2;
         private UICheckBox uiCheckBox1;
         public UILabel ConnectionStatusLabel;
+        private PictureBox pictureBox1;
+        private PictureBox ConfigButton;
     }
 }
