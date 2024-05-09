@@ -12,3 +12,4 @@ using System.Runtime.InteropServices;
 [assembly: Guid("505af69b-46b7-4420-bfc8-ecf81e4b4075")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 [assembly: AssemblyVersion("1.0.0.0")]
+[assembly: System.Runtime.Versioning.SupportedOSPlatform("windows")]
