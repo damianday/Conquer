@@ -618,7 +618,7 @@ namespace Launcher
             configForm.Show();
         }
 
-        private void AccountLoginTab_MouseDown(object sender, MouseEventArgs e)
+        private void Tab_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -627,7 +627,7 @@ namespace Launcher
             }
         }
 
-        private void AccountLoginTab_MouseMove(object sender, MouseEventArgs e)
+        private void Tab_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -640,35 +640,7 @@ namespace Launcher
             }
         }
 
-        private void AccountLoginTab_MouseUp(object sender, MouseEventArgs e)
-        {
-            // Reset the offset when the mouse button is released
-            offset = Point.Empty;
-        }
-
-        private void MainTab_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                // Capture the offset between the mouse cursor and the form's location
-                offset = new Point(e.X, e.Y);
-            }
-        }
-
-        private void MainTab_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                // Calculate the new location of the form based on the offset
-                Point newLocation = this.PointToScreen(new Point(e.X, e.Y));
-                newLocation.Offset(-offset.X, -offset.Y);
-
-                // Set the new location of the form
-                this.Location = newLocation;
-            }
-        }
-
-        private void MainTab_MouseUp(object sender, MouseEventArgs e)
+        private void Tab_MouseUp(object sender, MouseEventArgs e)
         {
             // Reset the offset when the mouse button is released
             offset = Point.Empty;

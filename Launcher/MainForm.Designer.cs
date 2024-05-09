@@ -112,9 +112,9 @@ namespace Launcher
             MainTab.TipsFont = new Font("Arial", 9F);
             MainTab.TipsForeColor = Color.Transparent;
             MainTab.ZoomScaleRect = new Rectangle(0, 0, 0, 0);
-            MainTab.MouseDown += MainTab_MouseDown;
-            MainTab.MouseMove += MainTab_MouseMove;
-            MainTab.MouseUp += MainTab_MouseUp;
+            MainTab.MouseDown += Tab_MouseDown;
+            MainTab.MouseMove += Tab_MouseMove;
+            MainTab.MouseUp += Tab_MouseUp;
             // 
             // AccountLoginTab
             // 
@@ -137,9 +137,9 @@ namespace Launcher
             AccountLoginTab.Size = new Size(600, 415);
             AccountLoginTab.TabIndex = 0;
             AccountLoginTab.Text = "Login";
-            AccountLoginTab.MouseDown += AccountLoginTab_MouseDown;
-            AccountLoginTab.MouseMove += AccountLoginTab_MouseMove;
-            AccountLoginTab.MouseUp += AccountLoginTab_MouseUp;
+            AccountLoginTab.MouseDown += Tab_MouseDown;
+            AccountLoginTab.MouseMove += Tab_MouseMove;
+            AccountLoginTab.MouseUp += Tab_MouseUp;
             // 
             // ConfigButton
             // 
@@ -184,6 +184,7 @@ namespace Launcher
             pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox1.TabIndex = 17;
             pictureBox1.TabStop = false;
+            pictureBox1.Enabled = false;
             // 
             // LoginAccountLabel
             // 
@@ -376,6 +377,9 @@ namespace Launcher
             RegistrationTab.Size = new Size(200, 85);
             RegistrationTab.TabIndex = 1;
             RegistrationTab.Text = "Create Account";
+            RegistrationTab.MouseDown += Tab_MouseDown;
+            RegistrationTab.MouseMove += Tab_MouseMove;
+            RegistrationTab.MouseUp += Tab_MouseUp;
             // 
             // pictureBox3
             // 
@@ -647,6 +651,9 @@ namespace Launcher
             ChangePasswordTab.Size = new Size(200, 85);
             ChangePasswordTab.TabIndex = 2;
             ChangePasswordTab.Text = "Change Password";
+            ChangePasswordTab.MouseDown += Tab_MouseDown;
+            ChangePasswordTab.MouseMove += Tab_MouseMove;
+            ChangePasswordTab.MouseUp += Tab_MouseUp;
             // 
             // pictureBox4
             // 
@@ -884,6 +891,9 @@ namespace Launcher
             StartGameTab.Size = new Size(200, 85);
             StartGameTab.TabIndex = 3;
             StartGameTab.Text = "Start Game";
+            StartGameTab.MouseDown += Tab_MouseDown;
+            StartGameTab.MouseMove += Tab_MouseMove;
+            StartGameTab.MouseUp += Tab_MouseUp;
             // 
             // uiCheckBox2
             // 
