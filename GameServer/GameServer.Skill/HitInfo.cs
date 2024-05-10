@@ -25,7 +25,7 @@ public class HitInfo
         SkillFeedback = feedback;
     }
 
-    public static byte[] 命中描述(Dictionary<int, HitInfo> hitters, int 命中延迟)
+    public static byte[] HitDescription(Dictionary<int, HitInfo> hitters, int latency)
     {
         using var ms = new MemoryStream();
         using var writer = new BinaryWriter(ms);
@@ -35,7 +35,7 @@ public class HitInfo
         {
             writer.Write(kvp.Value.Target.ObjectID);
             writer.Write((ushort)kvp.Value.SkillFeedback);
-            writer.Write((ushort)命中延迟);
+            writer.Write((ushort)latency);
         }
         return ms.ToArray();
     }

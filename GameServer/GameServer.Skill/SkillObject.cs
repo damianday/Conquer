@@ -581,7 +581,7 @@ public class SkillObject
                 SkillLevel = SkillLevel,
                 InscriptionID = InscriptionID,
                 ActionID = ActionID,
-                HitDescription = HitInfo.命中描述(HitList, FlyTime)
+                HitDescription = HitInfo.HitDescription(HitList, FlyTime)
             });
         }
         else
@@ -593,7 +593,7 @@ public class SkillObject
                 SkillLevel = SkillLevel,
                 InscriptionID = InscriptionID,
                 ActionID = ActionID,
-                HitDescription = HitInfo.命中描述(HitList, FlyTime)
+                HitDescription = HitInfo.HitDescription(HitList, FlyTime)
             });
         }
         if (task.计算飞行耗时)
@@ -769,6 +769,7 @@ public class SkillObject
                     }
             }
         }
+
         if (HitList.Count == 0 && task.放空结束技能)
         {
             if (task.发送中断通知)
@@ -786,6 +787,7 @@ public class SkillObject
             Caster.ActiveSkills.Remove(this);
             return;
         }
+
         if (task.补发释放通知)
         {
             Caster.SendPacket(new 开始释放技能
@@ -800,10 +802,12 @@ public class SkillObject
                 ActionID = ActionID
             });
         }
+
         if (HitList.Count != 0 && task.攻速提升类型 != 0 && HitList[0].Target.IsValidTarget(Caster, task.攻速提升类型))
         {
             AttackSpeedDecrease = Compute.Clamp(Compute.CalcAttackSpeed(-5), AttackSpeedDecrease + Compute.CalcAttackSpeed(task.攻速提升幅度), Compute.CalcAttackSpeed(5));
         }
+
         if (task.清除目标状态 && task.清除状态列表.Count != 0)
         {
             foreach (KeyValuePair<int, HitInfo> item14 in HitList)
@@ -818,10 +822,12 @@ public class SkillObject
                 }
             }
         }
+
         if (task.触发被动技能 && HitList.Count != 0 && Compute.CalculateProbability(task.触发被动概率))
         {
             Caster[Stat.SkillSign] = 1;
         }
+
         if (task.GainSkillExp && HitList.Count != 0)
         {
             (Caster as PlayerObject).GainSkillExperience(task.ExpSkillID);
@@ -839,7 +845,7 @@ public class SkillObject
                 SkillLevel = SkillLevel,
                 InscriptionID = InscriptionID,
                 ActionID = ActionID,
-                HitDescription = HitInfo.命中描述(HitList, FlyTime)
+                HitDescription = HitInfo.HitDescription(HitList, FlyTime)
             });
         }
         if (task.技能扩展通知)
@@ -851,7 +857,7 @@ public class SkillObject
                 SkillLevel = SkillLevel,
                 InscriptionID = InscriptionID,
                 ActionID = ActionID,
-                HitDescription = HitInfo.命中描述(HitList, FlyTime)
+                HitDescription = HitInfo.HitDescription(HitList, FlyTime)
             });
         }
     }
