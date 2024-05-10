@@ -22,19 +22,19 @@ public sealed class SConnection
 
 	public bool Disconnecting;
 	public readonly DateTime ConnectionTime;
-	public readonly Socket Connection;
+	public readonly TcpClient Connection;
 	public bool IPAddressObtained;
 	public string IPAddress;
 	public bool LoggedIn;
 	public string AccountName;
 
-	public SConnection(Socket socket)
+	public SConnection(TcpClient socket)
 	{
 		IPAddressObtained = false;
 		Connection = socket;
 		Connection.NoDelay = true;
 		ConnectionTime = DateTime.UtcNow;
-		IPAddress = Connection.RemoteEndPoint.ToString().Split(':')[0];
+		IPAddress = Connection?.Client?.RemoteEndPoint.ToString().Split(':')[0];
 		LoggedIn = false;
 		AccountName = string.Empty;
 
@@ -58,7 +58,7 @@ public sealed class SConnection
 		}
 
 		SEngine.RemoveConnection(this);
-		Connection?.Shutdown(SocketShutdown.Both);
+		Connection?.Client?.Shutdown(SocketShutdown.Both);
 		Connection?.Close();
 		ReceivedPackets.Clear();
 		SendPackets.Clear();
@@ -103,11 +103,11 @@ public sealed class SConnection
 	private void BeginReceive()
 	{
 		if (Disconnecting) return;
-		if (Connection == null) return;
+		if (Connection == null || Connection.Client == null) return;
 
 		try
 		{
-			Connection.BeginReceive(_rawBytes, 0, _rawBytes.Length, SocketFlags.None, ReceiveData, _rawBytes);
+			Connection.Client.BeginReceive(_rawBytes, 0, _rawBytes.Length, SocketFlags.None, ReceiveData, _rawBytes);
 		}
 		catch (Exception ex)
 		{
@@ -120,9 +120,9 @@ public sealed class SConnection
 		try
 		{
 			if (Disconnecting) return;
-			if (Connection == null) return;
+			if (Connection == null || Connection.Client == null) return;
 
-			var dataRead = Connection.EndReceive(result);
+			var dataRead = Connection.Client.EndReceive(result);
 			if (dataRead == 0)
 			{
 				Disconnect(new Exception("Disconnect normally."));
@@ -155,9 +155,11 @@ public sealed class SConnection
 
 	private void BeginSend(List<byte> data)
 	{
-		try
+        if (Connection == null || Connection.Client == null) return;
+
+        try
 		{
-			Connection?.BeginSend(data.ToArray(), 0, data.Count, SocketFlags.None, SendComplete, null);
+			Connection.Client.BeginSend(data.ToArray(), 0, data.Count, SocketFlags.None, SendComplete, null);
 		}
 		catch (Exception ex)
 		{
@@ -167,9 +169,11 @@ public sealed class SConnection
 
 	private void SendComplete(IAsyncResult result)
 	{
-		try
+        if (Connection == null || Connection.Client == null) return;
+
+        try
 		{
-			var dataSent = Connection.EndSend(result);
+			var dataSent = Connection.Client.EndSend(result);
 
 			SEngine.TotalBytesSent += dataSent;
 			if (dataSent == 0)

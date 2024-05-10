@@ -116,7 +116,7 @@ public static class SEngine
 		{
 			if (!Running) return;
 
-			var client = Listener.EndAcceptSocket(result);
+			var client = Listener.EndAcceptTcpClient(result);
 			AddConnection(new SConnection(client));
 		}
 		catch (Exception ex)
