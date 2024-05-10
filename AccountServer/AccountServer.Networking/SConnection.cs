@@ -20,20 +20,21 @@ public sealed class SConnection
 	private ConcurrentQueue<GamePacket> ReceivedPackets = new ConcurrentQueue<GamePacket>();
 	private ConcurrentQueue<GamePacket> SendPackets = new ConcurrentQueue<GamePacket>();
 
+	public bool Disconnecting;
 	public readonly DateTime ConnectionTime;
-	public readonly TcpClient Connection;
+	public readonly Socket Connection;
 	public bool IPAddressObtained;
 	public string IPAddress;
 	public bool LoggedIn;
 	public string AccountName;
 
-	public SConnection(TcpClient socket)
+	public SConnection(Socket socket)
 	{
 		IPAddressObtained = false;
 		Connection = socket;
 		Connection.NoDelay = true;
 		ConnectionTime = DateTime.UtcNow;
-		IPAddress = Connection.Client.RemoteEndPoint.ToString().Split(':')[0];
+		IPAddress = Connection.RemoteEndPoint.ToString().Split(':')[0];
 		LoggedIn = false;
 		AccountName = string.Empty;
 
@@ -42,20 +43,31 @@ public sealed class SConnection
 
 	public void Process()
 	{
-		try
+		if (!Disconnecting)
 		{
-			ProcessReceivedPackets();
-			SendAllPackets();
+			try
+			{
+				ProcessReceivedPackets();
+				SendAllPackets();
+			}
+			catch (Exception ex)
+			{
+				Disconnect(new Exception("Network processing error. Error: " + ex.Message));
+			}
+			return;
 		}
-		catch (Exception ex)
-		{
-            SMain.AddLogMessage("Network processing error. Error: " + ex.Message);
-            Connection?.Client?.Close();
-		}
+
+		SEngine.RemoveConnection(this);
+		Connection?.Shutdown(SocketShutdown.Both);
+		Connection?.Close();
+		ReceivedPackets.Clear();
+		SendPackets.Clear();
 	}
 
 	public void SendPacket(GamePacket packet)
 	{
+		if (Disconnecting) return;
+
 		if (packet != null)
 			SendPackets.Enqueue(packet);
 	}
@@ -90,16 +102,16 @@ public sealed class SConnection
 
 	private void BeginReceive()
 	{
-		if (Connection == null || !Connection.Connected) return;
+		if (Disconnecting) return;
+		if (Connection == null) return;
 
 		try
 		{
-			Connection.Client.BeginReceive(_rawBytes, 0, _rawBytes.Length, SocketFlags.None, ReceiveData, _rawBytes);
+			Connection.BeginReceive(_rawBytes, 0, _rawBytes.Length, SocketFlags.None, ReceiveData, _rawBytes);
 		}
 		catch (Exception ex)
 		{
-            SMain.AddLogMessage("Asynchronous receive error. Error: " + ex.Message);
-            Connection?.Client?.Close();
+			Disconnect(new Exception("Asynchronous receive error: " + ex.Message));
 		}
 	}
 
@@ -107,9 +119,10 @@ public sealed class SConnection
 	{
 		try
 		{
-			if (Connection == null || Connection.Client == null) return;
+			if (Disconnecting) return;
+			if (Connection == null) return;
 
-			var dataRead = Connection.Client.EndReceive(result);
+			var dataRead = Connection.EndReceive(result);
 			if (dataRead == 0)
 			{
 				Disconnect(new Exception("Disconnect normally."));
@@ -136,8 +149,7 @@ public sealed class SConnection
 		}
 		catch (Exception ex)
 		{
-            SMain.AddLogMessage("Receive Completion Error. Error: " + ex.Message);
-            Connection?.Client?.Close();
+			Disconnect(new Exception("ReceiveData error :" + ex.Message));
 		}
 	}
 
@@ -145,12 +157,11 @@ public sealed class SConnection
 	{
 		try
 		{
-			Connection?.Client?.BeginSend(data.ToArray(), 0, data.Count, SocketFlags.None, SendComplete, null);
+			Connection?.BeginSend(data.ToArray(), 0, data.Count, SocketFlags.None, SendComplete, null);
 		}
 		catch (Exception ex)
 		{
-            SMain.AddLogMessage("Asynchronous send error. Error: " + ex.Message);
-            Connection?.Client?.Close();
+			Disconnect(new Exception("Asynchronous send error: " + ex.Message));
 		}
 	}
 
@@ -158,7 +169,7 @@ public sealed class SConnection
 	{
 		try
 		{
-			var dataSent = Connection.Client.EndSend(result);
+			var dataSent = Connection.EndSend(result);
 
 			SEngine.TotalBytesSent += dataSent;
 			if (dataSent == 0)
@@ -175,12 +186,15 @@ public sealed class SConnection
 
 	public void Disconnect(Exception e)
 	{
-        SMain.AddLogMessage("Disconnecting. Message: " + e.Message);
-        Connection?.Client?.Close();
+		if (!Disconnecting)
+		{
+			Disconnecting = true;
+			SMain.AddLogMessage("Disconnecting. Message: " + e.Message);
+		}
 	}
 
 	public void Process(保持网络连接 P) //Stay connected
-    {
+	{
 	}
 
 	public void Process(AccountLogOutPacket P)
@@ -240,8 +254,8 @@ public sealed class SConnection
 			account.Password = password;
 			SAccounts.SaveAccount(account);
 			SendPacket(new AccountChangePasswordSuccessPacket());
-            SMain.AddLogMessage("Password change successful! Account: " + name);
-        }
+			SMain.AddLogMessage("Password change successful! Account: " + name);
+		}
 	}
 
 	public void Process(AccountRegisterPacket P)
@@ -323,12 +337,12 @@ public sealed class SConnection
 			}
 			SAccounts.AddAccount(new AccountInfo(name, password, question, answer, referrerCode));
 			SendPacket(new AccountRegisterSuccessPacket());
-            SMain.AddLogMessage("Account registration is successful! Account: " + name);
-        }
-    }
+			SMain.AddLogMessage("Account registration is successful! Account: " + name);
+		}
+	}
 
 	public void Process(下载游戏文件 P) //Download game files
-    {
+	{
 		SMain.AddLogMessage(P.ToString());
 	}
 
@@ -370,8 +384,8 @@ public sealed class SConnection
 			{
 				ServerListInformation = Encoding.UTF8.GetBytes(SMain.PublicServerInfo)
 			});
-            SMain.AddLogMessage("Account login successful! Account: " + name);
-        }
+			SMain.AddLogMessage("Account login successful! Account: " + name);
+		}
 	}
 
 	public void Process(AccountSMSVerificationRequestPacket P)
@@ -466,8 +480,8 @@ public sealed class SConnection
 					Ticket = Encoding.UTF8.GetBytes(ticket)
 				});
 
-                SMain.AddLogMessage("Ticket has been generated! Account: " + AccountName + " - " + ticket);
-            }
+				SMain.AddLogMessage("Ticket has been generated! Account: " + AccountName + " - " + ticket);
+			}
 		}
 		else
 		{

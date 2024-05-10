@@ -11,7 +11,7 @@ namespace AccountServer.Networking;
 
 public static class SEngine
 {
-	public static DateTime CurrentTime;
+	public static DateTime CurrentTime { get; set; }
 	private static DateTime StatsTime;
 
 	private static TcpListener Listener;
@@ -36,14 +36,15 @@ public static class SEngine
 
 		try
 		{
+			Running = true;
+
 			Listener = new TcpListener(IPAddress.Parse(Settings.Default.LocalListeningIP), Settings.Default.LocalListeningPort);
 			Listener.Start();
-			Listener.BeginAcceptTcpClient(Connection, null);
+			ListenerBeginAccept();
 
 			TicketSender = new UdpClient();
 
-            Running = true;
-            Task.Run(delegate
+			Task.Run(delegate
 			{
 				while (Running)
 				{
@@ -78,7 +79,7 @@ public static class SEngine
 		TicketSender = null;
 	}
 
-	public static void Process()
+	private static void Process()
 	{
 		CurrentTime = DateTime.UtcNow;
 
@@ -98,27 +99,32 @@ public static class SEngine
 
 		if (CurrentTime > StatsTime)
 		{
-			SMain.UpdateServerStats();
 			StatsTime = CurrentTime.AddSeconds(1);
+			SMain.UpdateServerStats();
 		}
 	}
 
-	public static void Connection(IAsyncResult result)
+	private static void ListenerBeginAccept()
+	{
+		if (Running)
+			Listener.BeginAcceptTcpClient(Connection, null);
+	}
+
+	private static void Connection(IAsyncResult result)
 	{
 		try
 		{
 			if (!Running) return;
 
-			var client = Listener.EndAcceptTcpClient(result);
-			AddingConnections.Enqueue(new SConnection(client));
+			var client = Listener.EndAcceptSocket(result);
+			AddConnection(new SConnection(client));
 		}
 		catch (Exception ex)
 		{
 			SMain.AddLogMessage("Asynchronous connection exception: " + ex.ToString());
 		}
 
-		if (Running)
-			Listener.BeginAcceptTcpClient(Connection, null);
+		ListenerBeginAccept();
 	}
 
 	public static void AddConnection(SConnection conn)
@@ -133,7 +139,7 @@ public static class SEngine
 			RemovingConnections.Enqueue(conn);
 	}
 
-	public static bool SendData(IPEndPoint address, byte[] datagram)
+	private static bool SendData(IPEndPoint address, byte[] datagram)
 	{
 		if (TicketSender == null || datagram == null) return false;
 
