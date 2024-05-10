@@ -39,14 +39,14 @@ public partial class SMain : Form
 
     public static SMain Instance;
 
-    public static string PatchDirectory = ".\\Patches";
-    public static string ServerConfigFile = ".\\!ServerInfo.txt";
-    public static string PatchConfigFile = ".\\!Patch.txt";
+    public static string PatchDirectory = Path.Combine(".", "Patches");
+    public static string ServerConfigFile = Path.Combine(".", "!ServerInfo.txt");
+    public static string PatchConfigFile = Path.Combine(".", "!Patch.txt");
 
 
     public static List<GameServerInfo> ServerList = new List<GameServerInfo>();
 
-    public static string PatchFile = ".\\GameLogin.exe";
+    public static string PatchFile = Path.Combine(".", "GameLogin.exe");
     public static byte[] PatchData;
     public static ulong PatchChecksum;
     public static int PatchChunks;
