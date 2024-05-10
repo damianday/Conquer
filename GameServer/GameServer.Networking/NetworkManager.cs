@@ -50,7 +50,7 @@ public static class NetworkManager
 
         Listener = new TcpListener(IPAddress.Parse(Settings.Default.UserConnectionIP), Settings.Default.UserConnectionPort);
         Listener.Start();
-        Listener.BeginAcceptTcpClient(Connection, null);
+        ListenerBeginAccept();
 
         Tickets = new Dictionary<string, TicketInformation>();
         TicketListener = new UdpClient(new IPEndPoint(IPAddress.Any, Settings.Default.TicketReceivePort));
@@ -109,6 +109,12 @@ public static class NetworkManager
         }
     }
 
+    private static void ListenerBeginAccept()
+    {
+        if (!Stopped)
+            Listener.BeginAcceptTcpClient(Connection, null);
+    }
+
     private static void Connection(IAsyncResult result)
     {
         try
@@ -120,7 +126,7 @@ public static class NetworkManager
             if (!SystemInfo.Info.IPBans.ContainsKey(ip) || SystemInfo.Info.IPBans[ip] < SEngine.CurrentTime)
             {
                 if (Connections.Count < 65535)
-                    ConnectingConnections?.Enqueue(new SConnection(client));
+                    AddConnection(new SConnection(client));
             }
             else
             {
@@ -135,8 +141,7 @@ public static class NetworkManager
         while (!Stopped && Connections.Count > Settings.Default.MaxUserConnections)
             Thread.Sleep(1);
 
-        if (!Stopped)
-            Listener.BeginAcceptTcpClient(Connection, null);
+        ListenerBeginAccept();
     }
 
     private static void TicketBeginReceive()
@@ -159,13 +164,11 @@ public static class NetworkManager
 
         try
         {
-            var bytes = TicketListener.EndReceive(result, ref TicketSenderEndPoint);
-            if (bytes == null || bytes.Length == 0)
-            {
+            var datagram = TicketListener.EndReceive(result, ref TicketSenderEndPoint);
+            if (datagram == null || datagram.Length == 0)
                 return;
-            }
 
-            ProcessTicket(bytes);
+            ProcessTicket(datagram);
             TicketBeginReceive();
         }
         catch (Exception ex)
@@ -174,9 +177,13 @@ public static class NetworkManager
         }
     }
 
-    private static void ProcessTicket(byte[] buffer)
+    private static void ProcessTicket(byte[] datagram)
     {
-        var array = Encoding.UTF8.GetString(buffer).Split(';');
+        var str = Encoding.UTF8.GetString(datagram);
+        if (string.IsNullOrEmpty(str))
+            return;
+
+        var array = str.Split(';');
         if (array.Length == 4)
         {
             var ticket = array[0];
