@@ -19,7 +19,7 @@ public sealed class BlockAccount : GMCommand
         if (Session.AccountInfoTable.SearchTable.TryGetValue(AccountName, out var data) && data is AccountInfo account)
         {
             account.BlockDate.V = DateTime.UtcNow.AddDays(BanDays);
-            account.Connection?.Disconnect(new Exception("The account was banned and forcibly taken offline"));
+            account.Connection?.Close(new Exception("The account was banned and forcibly taken offline"));
             SMain.AddCommandLog($"<= @{GetType().Name} command has been executed, BlockDate: {account.BlockDate}");
         }
         else

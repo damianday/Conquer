@@ -165,7 +165,7 @@ public sealed class AccountInfo : DBObject
 
     public void 返回登录(SConnection conn)
     {
-        conn.Disconnect(new Exception("客户端返回登录."));
+        conn.Close(new Exception("客户端返回登录."));
     }
 
     public void NewCharacter(SConnection conn, 客户创建角色 P)
@@ -238,7 +238,7 @@ public sealed class AccountInfo : DBObject
             }
             if (FrozenCharacters.Count >= 5)
             {
-                conn.Disconnect(new Exception("When deleting a role, the retrieval list is full, disconnected."));
+                conn.Close(new Exception("When deleting a role, the retrieval list is full, disconnected."));
                 return;
             }
 
@@ -290,7 +290,7 @@ public sealed class AccountInfo : DBObject
         {
             if (Characters.Count >= 4)
             {
-                conn.Disconnect(new Exception("找回角色时角色列表已满, 断开连接."));
+                conn.Close(new Exception("找回角色时角色列表已满, 断开连接."));
                 return;
             }
             character.FrozenDate.V = default(DateTime);

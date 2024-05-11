@@ -65,7 +65,7 @@ public sealed class SConnection
                 }
                 else
                 {
-                    Disconnect(new Exception("The connection is unresponsive for a long time, disconnecting."));
+                    Close(new Exception("The connection is unresponsive for a long time, disconnecting."));
                 }
                 return;
             }
@@ -99,14 +99,7 @@ public sealed class SConnection
             }
         }
 
-        Player?.Disconnect();
-        Account?.Disconnect();
-        NetworkManager.RemoveConnection(this);
-        Connection.Client?.Shutdown(SocketShutdown.Both);
-        Connection?.Close();
-        ReceivedPackets.Clear();
-        SendPackets.Clear();
-        Stage = GameStage.Login;
+        Disconnect();
     }
 
     public void SendPacket(GamePacket packet)
@@ -141,13 +134,28 @@ public sealed class SConnection
         Connection.Client.Send(buffer);
     }
 
-    public void Disconnect(Exception e)
+    public void Close(Exception e)
     {
         if (!Disconnecting)
         {
             Disconnecting = true;
             ErrorEventHandler?.Invoke(this, e);
         }
+    }
+
+    public void Disconnect()
+    {
+        Player?.Disconnect();
+        Account?.Disconnect();
+
+        NetworkManager.RemoveConnection(this);
+        Connection.Client?.Shutdown(SocketShutdown.Both);
+        Connection?.Close();
+
+        ReceivedPackets.Clear();
+        SendPackets.Clear();
+
+        Stage = GameStage.Login;
     }
 
     private void ProcessReceivedPackets()
@@ -162,7 +170,7 @@ public sealed class SConnection
             {
                 ReceivedPackets.Clear();
                 NetworkManager.BlockIP(IPAddress);
-                Disconnect(new Exception("Too many packets, disconnect and restrict logins."));
+                Close(new Exception("Too many packets, disconnect and restrict logins."));
                 return;
             }
 
@@ -174,7 +182,7 @@ public sealed class SConnection
                 method.Invoke(this, [p]);
             }
         }
-        Disconnect(new Exception("No packet handling found, disconnected. Packet type: " + p.PacketType.FullName));
+        Close(new Exception("No packet handling found, disconnected. Packet type: " + p.PacketType.FullName));
     }
 
     private void SendAllPackets()
@@ -206,7 +214,7 @@ public sealed class SConnection
         }
         catch (Exception ex)
         {
-            Disconnect(new Exception("Asynchronous receive error: " + ex.Message));
+            Close(new Exception("Asynchronous receive error: " + ex.Message));
         }
     }
 
@@ -220,7 +228,7 @@ public sealed class SConnection
             int dataRead = Connection.Client?.EndReceive(result) ?? 0;
             if (dataRead == 0)
             {
-                Disconnect(new Exception("Exit the game."));
+                Close(new Exception("Exit the game."));
                 return;
             }
 
@@ -244,7 +252,7 @@ public sealed class SConnection
                 }
                 catch (Exception e)
                 {
-                    Disconnect(e);
+                    Close(e);
                 }
                 break;
             }
@@ -254,7 +262,7 @@ public sealed class SConnection
         }
         catch (Exception ex)
         {
-            Disconnect(new Exception("ReceiveData error :" + ex.Message));
+            Close(new Exception("ReceiveData error :" + ex.Message));
         }
     }
 
@@ -269,7 +277,7 @@ public sealed class SConnection
         {
             Sending = false;
             SendPackets.Clear();
-            Disconnect(new Exception("Asynchronous send error: " + ex.Message));
+            Close(new Exception("Asynchronous send error: " + ex.Message));
         }
     }
 
@@ -285,7 +293,7 @@ public sealed class SConnection
             if (dataSent == 0)
             {
                 SendPackets.Clear();
-                Disconnect(new Exception("Sending Callback Error!"));
+                Close(new Exception("Sending Callback Error!"));
             }
             Sending = false;
         }
@@ -293,7 +301,7 @@ public sealed class SConnection
         {
             Sending = false;
             SendPackets.Clear();
-            Disconnect(new Exception("Sending Callback Error: " + ex.Message));
+            Close(new Exception("Sending Callback Error: " + ex.Message));
         }
     }
 
@@ -301,7 +309,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Loading && Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.Process:{P.GetType()},CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.Process:{P.GetType()},CurrentStage:{Stage}"));
             return;
         }
         Player.EnterScene();
@@ -312,7 +320,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.Process:{P.GetType()},CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.Process:{P.GetType()},CurrentStage:{Stage}"));
         }
         else
         {
@@ -324,7 +332,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.Process:{P.GetType()},CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.Process:{P.GetType()},CurrentStage:{Stage}"));
             return;
         }
         Player.RemoveBuffEx(2555);
@@ -335,7 +343,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -347,7 +355,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
     }
 
@@ -374,7 +382,7 @@ public sealed class SConnection
         }
         else
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
     }
 
@@ -382,7 +390,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
     }
 
@@ -394,7 +402,7 @@ public sealed class SConnection
         }
         else
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
     }
 
@@ -402,7 +410,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
             return;
         }
         SendPacket(new 网速测试应答
@@ -415,7 +423,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
             return;
         }
         SendPacket(new 登陆查询应答
@@ -428,7 +436,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -441,7 +449,7 @@ public sealed class SConnection
         AttackMode result;
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else if (Enum.IsDefined(typeof(AttackMode), (int)P.攻击模式) && Enum.TryParse<AttackMode>(P.攻击模式.ToString(), out result))
         {
@@ -449,7 +457,7 @@ public sealed class SConnection
         }
         else
         {
-            Disconnect(new Exception("更改攻击模式时提供错误的枚举参数.即将断开连接."));
+            Close(new Exception("更改攻击模式时提供错误的枚举参数.即将断开连接."));
         }
     }
 
@@ -458,7 +466,7 @@ public sealed class SConnection
         PetMode result;
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else if (Enum.IsDefined(typeof(PetMode), (int)P.宠物模式) && Enum.TryParse<PetMode>(P.宠物模式.ToString(), out result))
         {
@@ -466,7 +474,7 @@ public sealed class SConnection
         }
         else
         {
-            Disconnect(new Exception($"更改宠物模式时提供错误的枚举参数.即将断开连接. 参数 - {P.宠物模式}"));
+            Close(new Exception($"更改宠物模式时提供错误的枚举参数.即将断开连接. 参数 - {P.宠物模式}"));
         }
     }
 
@@ -478,7 +486,7 @@ public sealed class SConnection
         }
         else
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
     }
 
@@ -492,12 +500,12 @@ public sealed class SConnection
             }
             else
             {
-                Disconnect(new Exception("玩家角色转动时提供错误的枚举参数.即将断开连接."));
+                Close(new Exception("玩家角色转动时提供错误的枚举参数.即将断开连接."));
             }
         }
         else
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
     }
 
@@ -509,7 +517,7 @@ public sealed class SConnection
         }
         else
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
     }
 
@@ -521,7 +529,7 @@ public sealed class SConnection
         }
         else
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
     }
 
@@ -529,7 +537,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -541,7 +549,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else if (P.技能栏位 < 32)
         {
@@ -549,7 +557,7 @@ public sealed class SConnection
         }
         else
         {
-            Disconnect(new Exception("玩家装配技能时提供错误的封包参数.即将断开连接."));
+            Close(new Exception("玩家装配技能时提供错误的封包参数.即将断开连接."));
         }
     }
 
@@ -557,7 +565,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -569,7 +577,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Loading && Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -586,7 +594,7 @@ public sealed class SConnection
         }
         else
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
     }
 
@@ -599,7 +607,7 @@ public sealed class SConnection
         }
         else
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
     }
 
@@ -607,7 +615,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Loading && Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -619,7 +627,7 @@ public sealed class SConnection
     {
         if (Stage == GameStage.Login)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -631,7 +639,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
     }
 
@@ -639,7 +647,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
     }
 
@@ -647,7 +655,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -666,7 +674,7 @@ public sealed class SConnection
         }
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -678,7 +686,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -690,7 +698,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -702,7 +710,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -718,7 +726,7 @@ public sealed class SConnection
         }
         else
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
     }
 
@@ -726,7 +734,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -738,7 +746,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -750,7 +758,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -762,7 +770,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else if (P.物品位置 < 100)
         {
@@ -770,7 +778,7 @@ public sealed class SConnection
         }
         else
         {
-            Disconnect(new Exception("玩家回购物品时提供错误的位置参数.即将断开连接."));
+            Close(new Exception("玩家回购物品时提供错误的位置参数.即将断开连接."));
         }
     }
 
@@ -778,7 +786,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -790,7 +798,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -802,7 +810,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -814,7 +822,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -826,7 +834,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -838,7 +846,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -850,7 +858,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -863,7 +871,7 @@ public sealed class SConnection
         物品背包分类 result;
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else if (Enum.TryParse<物品背包分类>(P.背包类型.ToString(), out result) && Enum.IsDefined(typeof(物品背包分类), result))
         {
@@ -871,7 +879,7 @@ public sealed class SConnection
         }
         else
         {
-            Disconnect(new Exception("玩家分解物品时提供错误的枚举参数.即将断开连接."));
+            Close(new Exception("玩家分解物品时提供错误的枚举参数.即将断开连接."));
         }
     }
 
@@ -879,7 +887,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -891,7 +899,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -903,7 +911,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -915,7 +923,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -927,7 +935,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -939,7 +947,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -951,7 +959,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -963,7 +971,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -975,7 +983,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -987,7 +995,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -999,7 +1007,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1011,7 +1019,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1023,7 +1031,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1035,7 +1043,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1047,7 +1055,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1059,7 +1067,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1071,7 +1079,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1083,7 +1091,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
     }
 
@@ -1091,7 +1099,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
     }
 
@@ -1099,7 +1107,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
     }
 
@@ -1107,7 +1115,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1119,7 +1127,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
     }
 
@@ -1127,7 +1135,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1139,7 +1147,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1151,7 +1159,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1163,7 +1171,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1175,7 +1183,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1187,7 +1195,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1199,7 +1207,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1211,7 +1219,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1223,7 +1231,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1235,7 +1243,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1247,7 +1255,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1259,7 +1267,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1271,7 +1279,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1283,7 +1291,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1295,7 +1303,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1307,7 +1315,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1319,7 +1327,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1331,7 +1339,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1343,7 +1351,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1355,7 +1363,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1367,7 +1375,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
     }
 
@@ -1375,7 +1383,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
     }
 
@@ -1383,15 +1391,15 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else if (P.Description.Length < 7)
         {
-            Disconnect(new Exception($"Data too short. disconnecting.  Process: {P.GetType()}, data length:{P.Description.Length}"));
+            Close(new Exception($"Data too short. disconnecting.  Process: {P.GetType()}, data length:{P.Description.Length}"));
         }
         else if (P.Description.Last() != 0)
         {
-            Disconnect(new Exception($"Data error, disconnecting.  Process: {P.GetType()}, no terminator."));
+            Close(new Exception($"Data error, disconnecting.  Process: {P.GetType()}, no terminator."));
         }
         else
         {
@@ -1403,7 +1411,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1415,7 +1423,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1427,7 +1435,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1439,7 +1447,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1451,7 +1459,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
     }
 
@@ -1459,11 +1467,11 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else if (P.Description.Last() != 0)
         {
-            Disconnect(new Exception($"Data error, disconnecting.  Process: {P.GetType()},  no terminator."));
+            Close(new Exception($"Data error, disconnecting.  Process: {P.GetType()},  no terminator."));
         }
         else
         {
@@ -1475,11 +1483,11 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else if (P.Description.Last() != 0)
         {
-            Disconnect(new Exception($"Data error, disconnecting.  Process: {P.GetType()},  no terminator."));
+            Close(new Exception($"Data error, disconnecting.  Process: {P.GetType()},  no terminator."));
         }
         else
         {
@@ -1491,7 +1499,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
             return;
         }
 
@@ -1502,7 +1510,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Loading && Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1514,7 +1522,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Loading && Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
     }
 
@@ -1522,7 +1530,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1534,7 +1542,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1546,7 +1554,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1558,7 +1566,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1570,7 +1578,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1582,7 +1590,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1594,7 +1602,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1606,7 +1614,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1618,7 +1626,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1630,7 +1638,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1642,7 +1650,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1654,7 +1662,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1666,7 +1674,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1678,7 +1686,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1690,7 +1698,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Loading && Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1702,7 +1710,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1714,7 +1722,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1726,7 +1734,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1738,7 +1746,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1750,7 +1758,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1762,7 +1770,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1774,7 +1782,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1787,7 +1795,7 @@ public sealed class SConnection
         ItemInfo 物品;
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else if (Player.FindItem(90226, out 物品))
         {
@@ -1829,7 +1837,7 @@ public sealed class SConnection
         EquipmentInfo v;
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else if (Player.FindItem(90226, out 物品) && Player.FindItem(P.物品编号, out 物品2) && P.解锁参数 == 0 && Player.Equipment.TryGetValue(P.装备部位, out v))
         {
@@ -1849,7 +1857,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1861,7 +1869,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1873,7 +1881,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1885,7 +1893,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1897,7 +1905,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1909,7 +1917,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1921,7 +1929,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1933,7 +1941,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1945,7 +1953,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1957,7 +1965,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1969,7 +1977,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1981,7 +1989,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -1993,7 +2001,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2005,7 +2013,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2017,7 +2025,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2029,7 +2037,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2041,7 +2049,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2053,7 +2061,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2065,7 +2073,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
     }
 
@@ -2073,7 +2081,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2085,7 +2093,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2097,7 +2105,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Loading && Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
     }
 
@@ -2105,7 +2113,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Phase exception, disconnected.  Processing packet: {P.GetType()}, Current phase: {Stage}"));
+            Close(new Exception($"Phase exception, disconnected.  Processing packet: {P.GetType()}, Current phase: {Stage}"));
         }
         else
         {
@@ -2117,7 +2125,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Phase exception, disconnected.  Processing packet: {P.GetType()}, Current phase: {Stage}"));
+            Close(new Exception($"Phase exception, disconnected.  Processing packet: {P.GetType()}, Current phase: {Stage}"));
         }
         else
         {
@@ -2129,7 +2137,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
     }
 
@@ -2137,7 +2145,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
     }
 
@@ -2145,7 +2153,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Loading && Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
     }
 
@@ -2153,7 +2161,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Loading && Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
     }
 
@@ -2161,7 +2169,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2173,7 +2181,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2185,7 +2193,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
     }
 
@@ -2193,7 +2201,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2205,7 +2213,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2217,7 +2225,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2229,7 +2237,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2241,7 +2249,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2253,7 +2261,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
     }
 
@@ -2261,7 +2269,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2273,7 +2281,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2285,7 +2293,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2297,7 +2305,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2309,7 +2317,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2321,7 +2329,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2333,7 +2341,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2345,7 +2353,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2357,7 +2365,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2369,7 +2377,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2381,7 +2389,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
     }
 
@@ -2389,7 +2397,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
     }
 
@@ -2397,7 +2405,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
     }
 
@@ -2405,7 +2413,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
     }
 
@@ -2413,7 +2421,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
     }
 
@@ -2421,7 +2429,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
             return;
         }
         SendPacket(new SocialErrorPacket { ErrorCode = 12804 });
@@ -2431,7 +2439,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
             return;
         }
         SendPacket(new SocialErrorPacket { ErrorCode = 12804 });
@@ -2441,7 +2449,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
             return;
         }
         SendPacket(new SocialErrorPacket { ErrorCode = 12804 });
@@ -2451,7 +2459,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
             return;
         }
         SendPacket(new SocialErrorPacket { ErrorCode = 12804 });
@@ -2461,7 +2469,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2473,7 +2481,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2485,7 +2493,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2497,7 +2505,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2509,7 +2517,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2521,7 +2529,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2533,7 +2541,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2545,7 +2553,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
     }
 
@@ -2555,7 +2563,7 @@ public sealed class SConnection
         {
             if (SystemInfo.Info.NICBans.TryGetValue(P.MACAddress, out var v) && v > SEngine.CurrentTime)
             {
-                Disconnect(new Exception("NIC blocking, restricting logins"));
+                Close(new Exception("NIC blocking, restricting logins"));
             }
             else if (NetworkManager.Tickets.TryGetValue(P.LoginTicket, out var ticket))
             {
@@ -2567,24 +2575,24 @@ public sealed class SConnection
                     else
                     {
                         account.Enqueue(new LoginErrorMessagePacket { ErrorCode = 260 });
-                        account.Connection.Disconnect(new Exception("Duplicate login of account, kicked offline."));
+                        account.Connection.Close(new Exception("Duplicate login of account, kicked offline."));
 
-                        Disconnect(new Exception("The account is already online and cannot be logged in."));
+                        Close(new Exception("The account is already online and cannot be logged in."));
                     }
                 }
                 else
                 {
-                    Disconnect(new Exception("The login ticket has expired."));
+                    Close(new Exception("The login ticket has expired."));
                 }
             }
             else
             {
-                Disconnect(new Exception("The logged-in ticket does not exist."));
+                Close(new Exception("The logged-in ticket does not exist."));
             }
         }
         else
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         NetworkManager.Tickets.Remove(P.LoginTicket);
     }
@@ -2593,7 +2601,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.SelectPlayer)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2605,7 +2613,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.SelectPlayer)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2617,7 +2625,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.SelectPlayer)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2629,7 +2637,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.SelectPlayer)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2641,7 +2649,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.SelectPlayer)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2653,7 +2661,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2665,7 +2673,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
         else
         {
@@ -2677,7 +2685,7 @@ public sealed class SConnection
     {
         if (Stage != GameStage.Game)
         {
-            Disconnect(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
+            Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
             return;
         }
 

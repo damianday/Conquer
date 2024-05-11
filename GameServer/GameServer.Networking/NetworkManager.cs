@@ -77,7 +77,7 @@ public static class NetworkManager
                 if (conn.Disconnecting || conn.Account != null || !(SEngine.CurrentTime.Subtract(conn.ConnectedTime).TotalSeconds > 30.0))
                     conn.Process();
                 else
-                    conn.Disconnect(new Exception("Login timed out, disconnected!"));
+                    conn.Close(new Exception("Login timed out, disconnected!"));
             }
 
             while (!DisconnectingConnections.IsEmpty)

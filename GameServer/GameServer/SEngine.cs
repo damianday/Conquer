@@ -157,7 +157,7 @@ public static class SEngine
             SMain.AddSystemLog("Server successfully started.");
             Running = true;
             SMain.OnStartServiceCompleted();
-            while (Running || NetworkManager.Connections.Count > 0)
+            while (Running || NetworkManager.ConnectionCount > 0)
             {
                 Thread.Sleep(1);
 
@@ -166,7 +166,7 @@ public static class SEngine
                 {
                     ProcessSaveData();
 
-                    Stats.Connections = (uint)NetworkManager.Connections.Count;
+                    Stats.Connections = NetworkManager.ConnectionCount;
                     Stats.ActiveConnections = NetworkManager.ActiveConnections;
                     Stats.ConnectionsOnline = NetworkManager.ConnectionsOnline;
                     Stats.ConnectionsOnline = NetworkManager.ConnectionsOnline1;

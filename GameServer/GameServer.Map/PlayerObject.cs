@@ -6704,7 +6704,7 @@ public sealed class PlayerObject : MapObject
         if (item.Dura.V > 0 && item.Dura.V < v)
             return true;
 
-        Connection?.Disconnect(new Exception("刷取非法道具,强制踢下线"));
+        Connection?.Close(new Exception("刷取非法道具,强制踢下线"));
         return false;
     }
 
@@ -7195,7 +7195,7 @@ public sealed class PlayerObject : MapObject
         }
         if (!Skills.TryGetValue(id, out var v) && !PassiveSkills.TryGetValue(id, out v))
         {
-            Connection?.Disconnect(new Exception("释放未学会的技能, 尝试断开连接."));
+            Connection?.Close(new Exception("释放未学会的技能, 尝试断开连接."));
             return;
         }
         foreach (string item in v.Inscription.SwitchSkills.ToList())
@@ -7244,7 +7244,7 @@ public sealed class PlayerObject : MapObject
 
         if (!Skills.TryGetValue(skillID, out var skill) && !PassiveSkills.TryGetValue(skillID, out skill))
         {
-            Connection?.Disconnect(new Exception($"错误操作: 玩家释放技能. 错误: 没有学会技能. 技能编号:{skillID}"));
+            Connection?.Close(new Exception($"错误操作: 玩家释放技能. 错误: 没有学会技能. 技能编号:{skillID}"));
             return;
         }
 
@@ -7488,15 +7488,15 @@ public sealed class PlayerObject : MapObject
 
         if (!MapManager.Guards.TryGetValue(id, out var guard))
         {
-            Connection?.Disconnect(new Exception("错误操作: 开始Npcc对话. 错误: 没有找到对象."));
+            Connection?.Close(new Exception("错误操作: 开始Npcc对话. 错误: 没有找到对象."));
         }
         else if (CurrentMap != guard.CurrentMap)
         {
-            Connection?.Disconnect(new Exception("错误操作: 开始Npcc对话. 错误: 跨越地图对话."));
+            Connection?.Close(new Exception("错误操作: 开始Npcc对话. 错误: 跨越地图对话."));
         }
         else if (GetDistance(guard) > 12)
         {
-            Connection?.Disconnect(new Exception("错误操作: 开始Npcc对话. 错误: 超长距离对话."));
+            Connection?.Close(new Exception("错误操作: 开始Npcc对话. 错误: 超长距离对话."));
         }
         else
         {
@@ -7744,15 +7744,15 @@ public sealed class PlayerObject : MapObject
 
         if (CurrentNPC == null)
         {
-            Connection?.Disconnect(new Exception("错误操作: 继续Npcc对话.  错误: 没有选中守卫."));
+            Connection?.Close(new Exception("错误操作: 继续Npcc对话.  错误: 没有选中守卫."));
         }
         else if (CurrentMap != CurrentNPC.CurrentMap)
         {
-            Connection?.Disconnect(new Exception("错误操作: 开始Npcc对话. 错误: 跨越地图对话."));
+            Connection?.Close(new Exception("错误操作: 开始Npcc对话. 错误: 跨越地图对话."));
         }
         else if (GetDistance(CurrentNPC) > 12)
         {
-            Connection?.Disconnect(new Exception("错误操作: 开始Npcc对话. 错误: 超长距离对话."));
+            Connection?.Close(new Exception("错误操作: 开始Npcc对话. 错误: 超长距离对话."));
         }
         else if (!(SEngine.CurrentTime > CurrentNPCTalkTime))
         {
@@ -13519,7 +13519,7 @@ public sealed class PlayerObject : MapObject
                 case 670508000:
                     if (Character.升级装备.V == null)
                     {
-                        Connection?.Disconnect(new Exception("错误操作: 继续Npcc对话.  错误: 尝试取回武器."));
+                        Connection?.Close(new Exception("错误操作: 继续Npcc对话.  错误: 尝试取回武器."));
                         break;
                     }
                     switch (选项编号)
@@ -14467,22 +14467,22 @@ public sealed class PlayerObject : MapObject
     {
         if (newSize == 0)
         {
-            Connection?.Disconnect(new Exception("Error: The player expanded the backpack.  Error: Expansion parameter error"));
+            Connection?.Close(new Exception("Error: The player expanded the backpack.  Error: Expansion parameter error"));
             return;
         }
         if (grid == 1 && InventorySize + newSize > 64)
         {
-            Connection?.Disconnect(new Exception("Error: The player expanded the backpack.  Error: The backpack has exceeded its limit."));
+            Connection?.Close(new Exception("Error: The player expanded the backpack.  Error: The backpack has exceeded its limit."));
             return;
         }
         if (grid == 2 && WarehouseSize + newSize > 144)
         {
-            Connection?.Disconnect(new Exception("Error: The player expanded the backpack.  Error: Warehouse limit exceeded."));
+            Connection?.Close(new Exception("Error: The player expanded the backpack.  Error: Warehouse limit exceeded."));
             return;
         }
         if (grid == 7 && 资源背包大小 + newSize > 216)
         {
-            Connection?.Disconnect(new Exception("Bug: Player expanding resource pack.  Error: The resource pack has exceeded its limit."));
+            Connection?.Close(new Exception("Bug: Player expanding resource pack.  Error: The resource pack has exceeded its limit."));
             return;
         }
         switch (grid)
@@ -14559,7 +14559,7 @@ public sealed class PlayerObject : MapObject
 
     public void 商店特修单件(byte 背包类型, byte 装备位置)
     {
-        Connection?.Disconnect(new Exception("错误操作: 特修单件装备.  错误: 功能已经屏蔽."));
+        Connection?.Close(new Exception("错误操作: 特修单件装备.  错误: 功能已经屏蔽."));
     }
 
     public void UserRepairItem(byte grid, byte location)
@@ -14570,11 +14570,11 @@ public sealed class PlayerObject : MapObject
         }
         if (CurrentNPC == null)
         {
-            Connection?.Disconnect(new Exception("错误操作: 商店修理单件.  错误: 没有选中Npc."));
+            Connection?.Close(new Exception("错误操作: 商店修理单件.  错误: 没有选中Npc."));
         }
         else if (CurrentStoreID == 0)
         {
-            Connection?.Disconnect(new Exception("错误操作: 商店修理单件.  错误: 没有打开商店."));
+            Connection?.Close(new Exception("错误操作: 商店修理单件.  错误: 没有打开商店."));
         }
         else if (CurrentMap == CurrentNPC.CurrentMap && GetDistance(CurrentNPC) <= 12)
         {
@@ -14676,7 +14676,7 @@ public sealed class PlayerObject : MapObject
         }
         else
         {
-            Connection?.Disconnect(new Exception("错误操作: 商店修理单件.  错误: 人物距离太远."));
+            Connection?.Close(new Exception("错误操作: 商店修理单件.  错误: 人物距离太远."));
         }
     }
 
@@ -14688,11 +14688,11 @@ public sealed class PlayerObject : MapObject
         }
         if (CurrentNPC == null)
         {
-            Connection?.Disconnect(new Exception("错误操作: 商店修理单件.  错误: 没有选中Npc."));
+            Connection?.Close(new Exception("错误操作: 商店修理单件.  错误: 没有选中Npc."));
         }
         else if (CurrentStoreID == 0)
         {
-            Connection?.Disconnect(new Exception("错误操作: 商店修理单件.  错误: 没有打开商店."));
+            Connection?.Close(new Exception("错误操作: 商店修理单件.  错误: 没有打开商店."));
         }
         else if (CurrentMap == CurrentNPC.CurrentMap && GetDistance(CurrentNPC) <= 12)
         {
@@ -14730,7 +14730,7 @@ public sealed class PlayerObject : MapObject
         }
         else
         {
-            Connection?.Disconnect(new Exception("错误操作: 商店修理单件.  错误: 人物距离太远."));
+            Connection?.Close(new Exception("错误操作: 商店修理单件.  错误: 人物距离太远."));
         }
     }
 
@@ -14742,7 +14742,7 @@ public sealed class PlayerObject : MapObject
         }
         if (物品编号 != 0)
         {
-            Connection?.Disconnect(new Exception("错误操作: 商店修理单件.  错误: 禁止使用物品."));
+            Connection?.Close(new Exception("错误操作: 商店修理单件.  错误: 禁止使用物品."));
             return;
         }
         switch (背包类型)
@@ -15440,7 +15440,7 @@ public sealed class PlayerObject : MapObject
     {
         if (礼包位置 >= 28)
         {
-            Connection?.Disconnect(new Exception("错误操作: 领取特权礼包  错误: 礼包位置错误"));
+            Connection?.Close(new Exception("错误操作: 领取特权礼包  错误: 礼包位置错误"));
             return;
         }
         switch (特权类型)
@@ -16277,7 +16277,7 @@ public sealed class PlayerObject : MapObject
             ItemInfo v;
             if (grid != 1)
             {
-                Connection?.Disconnect(new Exception("错误操作: 玩家分解物品.  错误: 背包类型错误."));
+                Connection?.Close(new Exception("错误操作: 玩家分解物品.  错误: 背包类型错误."));
             }
             else if (!Inventory.TryGetValue(location, out v))
             {
@@ -17926,7 +17926,7 @@ public sealed class PlayerObject : MapObject
         {
             if (grid != 1)
             {
-                Connection?.Disconnect(new Exception("错误操作: 玩家使用物品.  错误: 背包类型错误."));
+                Connection?.Close(new Exception("错误操作: 玩家使用物品.  错误: 背包类型错误."));
                 return;
             }
             if (!Inventory.TryGetValue(location, out var v))
@@ -17936,12 +17936,12 @@ public sealed class PlayerObject : MapObject
             }
             if (CurrentLevel < v.NeedLevel)
             {
-                Connection?.Disconnect(new Exception("错误操作: 玩家使用物品.  错误: 等级无法使用."));
+                Connection?.Close(new Exception("错误操作: 玩家使用物品.  错误: 等级无法使用."));
                 return;
             }
             if (v.NeedRace != GameObjectRace.Any && Job != v.NeedRace)
             {
-                Connection?.Disconnect(new Exception("错误操作: 玩家使用物品.  错误: 职业无法使用."));
+                Connection?.Close(new Exception("错误操作: 玩家使用物品.  错误: 职业无法使用."));
                 return;
             }
             if (Cooldowns.TryGetValue(v.ID | 0x2000000, out var v2) && SEngine.CurrentTime < v2)
@@ -23321,7 +23321,7 @@ public sealed class PlayerObject : MapObject
         }
         if (CurrentStoreNameID != "SoulEmbed")
         {
-            Connection?.Disconnect(new Exception("错误操作: 玩家镶嵌灵石.  错误: 没有打开界面"));
+            Connection?.Close(new Exception("错误操作: 玩家镶嵌灵石.  错误: 没有打开界面"));
         }
         else if (装备类型 == 1 && 灵石类型 == 1)
         {
@@ -23329,17 +23329,17 @@ public sealed class PlayerObject : MapObject
             {
                 if (!Inventory.TryGetValue(灵石位置, out var item))
                 {
-                    Connection?.Disconnect(new Exception("错误操作: 玩家镶嵌灵石.  错误: 没有找到灵石"));
+                    Connection?.Close(new Exception("错误操作: 玩家镶嵌灵石.  错误: 没有找到灵石"));
                     return;
                 }
                 if (装备数据.SlotColor.Count <= slot)
                 {
-                    Connection?.Disconnect(new Exception("错误操作: 玩家镶嵌灵石.  错误: 装备孔位错误"));
+                    Connection?.Close(new Exception("错误操作: 玩家镶嵌灵石.  错误: 装备孔位错误"));
                     return;
                 }
                 if (装备数据.镶嵌灵石.ContainsKey(slot))
                 {
-                    Connection?.Disconnect(new Exception("错误操作: 玩家镶嵌灵石.  错误: 已有镶嵌灵石"));
+                    Connection?.Close(new Exception("错误操作: 玩家镶嵌灵石.  错误: 已有镶嵌灵石"));
                     return;
                 }
                 if ((装备数据.SlotColor[slot] == EquipSlotColor.Green && item.Name.IndexOf("精绿灵石") == -1) || 
@@ -23351,7 +23351,7 @@ public sealed class PlayerObject : MapObject
                     (装备数据.SlotColor[slot] == EquipSlotColor.Red && item.Name.IndexOf("驭朱灵石") == -1 &&
                     item.Name.IndexOf("命朱灵石") == -1))
                 {
-                    Connection?.Disconnect(new Exception("错误操作: 玩家镶嵌灵石.  错误: 指定灵石错误"));
+                    Connection?.Close(new Exception("错误操作: 玩家镶嵌灵石.  错误: 指定灵石错误"));
                     return;
                 }
                 ConsumeItem(1, item);
@@ -23367,12 +23367,12 @@ public sealed class PlayerObject : MapObject
             }
             else
             {
-                Connection?.Disconnect(new Exception("错误操作: 玩家镶嵌灵石.  错误: 没有找到装备"));
+                Connection?.Close(new Exception("错误操作: 玩家镶嵌灵石.  错误: 没有找到装备"));
             }
         }
         else
         {
-            Connection?.Disconnect(new Exception("错误操作: 玩家镶嵌灵石.  错误: 不是角色背包"));
+            Connection?.Close(new Exception("错误操作: 玩家镶嵌灵石.  错误: 不是角色背包"));
         }
     }
 
@@ -23386,11 +23386,11 @@ public sealed class PlayerObject : MapObject
         ItemInfo v;
         if (CurrentStoreNameID != "SoulEmbed")
         {
-            Connection?.Disconnect(new Exception("错误操作: 玩家镶嵌灵石.  错误: 没有打开界面"));
+            Connection?.Close(new Exception("错误操作: 玩家镶嵌灵石.  错误: 没有打开界面"));
         }
         else if (装备类型 != 1)
         {
-            Connection?.Disconnect(new Exception("错误操作: 玩家镶嵌灵石.  错误: 不是角色背包"));
+            Connection?.Close(new Exception("错误操作: 玩家镶嵌灵石.  错误: 不是角色背包"));
         }
         else if (RemainingInventorySpace <= 0)
         {
@@ -23403,7 +23403,7 @@ public sealed class PlayerObject : MapObject
         {
             if (!装备数据.镶嵌灵石.TryGetValue(slot, out var v2))
             {
-                Connection?.Disconnect(new Exception("错误操作: 玩家镶嵌灵石.  错误: 没有镶嵌灵石"));
+                Connection?.Close(new Exception("错误操作: 玩家镶嵌灵石.  错误: 没有镶嵌灵石"));
                 return;
             }
             if (v2.Name.IndexOf("1级") > 0)
@@ -23476,7 +23476,7 @@ public sealed class PlayerObject : MapObject
         }
         else
         {
-            Connection?.Disconnect(new Exception("错误操作: 玩家镶嵌灵石.  错误: 没有找到装备"));
+            Connection?.Close(new Exception("错误操作: 玩家镶嵌灵石.  错误: 没有找到装备"));
         }
         return;
     IL_038c:
@@ -23499,7 +23499,7 @@ public sealed class PlayerObject : MapObject
         }
         if (CurrentStoreNameID != "WeaponRune")
         {
-            Connection?.Disconnect(new Exception("错误操作: 普通铭文洗练.  错误: 没有打开界面"));
+            Connection?.Close(new Exception("错误操作: 普通铭文洗练.  错误: 没有打开界面"));
         }
         else
         {
@@ -23525,12 +23525,12 @@ public sealed class PlayerObject : MapObject
             }
             if (装备数据.Type != ItemType.Weapon)
             {
-                Connection?.Disconnect(new Exception("错误操作: 普通铭文洗练.  错误: 物品类型错误."));
+                Connection?.Close(new Exception("错误操作: 普通铭文洗练.  错误: 物品类型错误."));
                 return;
             }
             if (物品编号 <= 0)
             {
-                Connection?.Disconnect(new Exception("错误操作: 普通铭文洗练.  错误: 材料编号错误."));
+                Connection?.Close(new Exception("错误操作: 普通铭文洗练.  错误: 材料编号错误."));
                 return;
             }
             if (!FindItem(物品编号, out var 物品))
@@ -23543,7 +23543,7 @@ public sealed class PlayerObject : MapObject
             }
             if (物品.Type != ItemType.普通铭文)
             {
-                Connection?.Disconnect(new Exception("错误操作: 普通铭文洗练.  错误: 材料类型错误."));
+                Connection?.Close(new Exception("错误操作: 普通铭文洗练.  错误: 材料类型错误."));
                 return;
             }
             Gold -= 10000;
@@ -23896,7 +23896,7 @@ public sealed class PlayerObject : MapObject
         }
         if (CurrentStoreNameID != "WeaponRune")
         {
-            Connection?.Disconnect(new Exception("错误操作: 普通铭文洗练.  错误: 没有打开界面"));
+            Connection?.Close(new Exception("错误操作: 普通铭文洗练.  错误: 没有打开界面"));
         }
         else
         {
@@ -23922,17 +23922,17 @@ public sealed class PlayerObject : MapObject
             }
             if (装备数据.Type != ItemType.Weapon)
             {
-                Connection?.Disconnect(new Exception("错误操作: 普通铭文洗练.  错误: 物品类型错误."));
+                Connection?.Close(new Exception("错误操作: 普通铭文洗练.  错误: 物品类型错误."));
                 return;
             }
             if (装备数据.SecondInscription == null)
             {
-                Connection?.Disconnect(new Exception("错误操作: 普通铭文洗练.  错误: 第二铭文为空."));
+                Connection?.Close(new Exception("错误操作: 普通铭文洗练.  错误: 第二铭文为空."));
                 return;
             }
             if (物品编号 <= 0)
             {
-                Connection?.Disconnect(new Exception("错误操作: 普通铭文洗练.  错误: 材料编号错误."));
+                Connection?.Close(new Exception("错误操作: 普通铭文洗练.  错误: 材料编号错误."));
                 return;
             }
             if (!FindItem(物品编号, out var 物品))
@@ -23945,7 +23945,7 @@ public sealed class PlayerObject : MapObject
             }
             if (物品.Type != ItemType.普通铭文)
             {
-                Connection?.Disconnect(new Exception("错误操作: 普通铭文洗练.  错误: 材料类型错误."));
+                Connection?.Close(new Exception("错误操作: 普通铭文洗练.  错误: 材料类型错误."));
                 return;
             }
             Gold -= 100000;
@@ -24015,7 +24015,7 @@ public sealed class PlayerObject : MapObject
         }
         if (CurrentStoreNameID != "WeaponRune")
         {
-            Connection?.Disconnect(new Exception("错误操作: 普通铭文洗练.  错误: 没有打开界面"));
+            Connection?.Close(new Exception("错误操作: 普通铭文洗练.  错误: 没有打开界面"));
         }
         else
         {
@@ -24041,17 +24041,17 @@ public sealed class PlayerObject : MapObject
             }
             if (装备数据.Type != ItemType.Weapon)
             {
-                Connection?.Disconnect(new Exception("错误操作: 普通铭文洗练.  错误: 物品类型错误."));
+                Connection?.Close(new Exception("错误操作: 普通铭文洗练.  错误: 物品类型错误."));
                 return;
             }
             if (装备数据.SecondInscription == null)
             {
-                Connection?.Disconnect(new Exception("错误操作: 普通铭文洗练.  错误: 第二铭文为空."));
+                Connection?.Close(new Exception("错误操作: 普通铭文洗练.  错误: 第二铭文为空."));
                 return;
             }
             if (物品编号 <= 0)
             {
-                Connection?.Disconnect(new Exception("错误操作: 普通铭文洗练.  错误: 材料编号错误."));
+                Connection?.Close(new Exception("错误操作: 普通铭文洗练.  错误: 材料编号错误."));
                 return;
             }
             if (!FindItem(num, 物品编号, out var 物品列表))
@@ -24064,7 +24064,7 @@ public sealed class PlayerObject : MapObject
             }
             if (物品列表.FirstOrDefault((ItemInfo O) => O.Type != ItemType.普通铭文) != null)
             {
-                Connection?.Disconnect(new Exception("错误操作: 普通铭文洗练.  错误: 材料类型错误."));
+                Connection?.Close(new Exception("错误操作: 普通铭文洗练.  错误: 材料类型错误."));
                 return;
             }
             Gold -= 1000000;
@@ -24120,7 +24120,7 @@ public sealed class PlayerObject : MapObject
         }
         if (CurrentStoreNameID != "WeaponRune")
         {
-            Connection?.Disconnect(new Exception("错误操作: 普通铭文洗练.  错误: 没有打开界面"));
+            Connection?.Close(new Exception("错误操作: 普通铭文洗练.  错误: 没有打开界面"));
             return;
         }
         if (装备数据 == null)
@@ -24133,17 +24133,17 @@ public sealed class PlayerObject : MapObject
         }
         if (洗练铭文 == null)
         {
-            Connection?.Disconnect(new Exception("错误操作: 确定替换铭文.  错误: 没有没有洗练记录."));
+            Connection?.Close(new Exception("错误操作: 确定替换铭文.  错误: 没有没有洗练记录."));
             return;
         }
         if (装备数据.Type != ItemType.Weapon)
         {
-            Connection?.Disconnect(new Exception("错误操作: 普通铭文洗练.  错误: 物品类型错误."));
+            Connection?.Close(new Exception("错误操作: 普通铭文洗练.  错误: 物品类型错误."));
             return;
         }
         if (装备数据.SecondInscription == null)
         {
-            Connection?.Disconnect(new Exception("错误操作: 普通铭文洗练.  错误: 第二铭文为空."));
+            Connection?.Close(new Exception("错误操作: 普通铭文洗练.  错误: 第二铭文为空."));
             return;
         }
         if (装备类型 == 0)
@@ -24178,7 +24178,7 @@ public sealed class PlayerObject : MapObject
         }
         if (CurrentStoreNameID != "WeaponRune")
         {
-            Connection?.Disconnect(new Exception("错误操作: 普通铭文洗练.  错误: 没有打开界面"));
+            Connection?.Close(new Exception("错误操作: 普通铭文洗练.  错误: 没有打开界面"));
             return;
         }
         if (装备数据 == null)
@@ -24191,17 +24191,17 @@ public sealed class PlayerObject : MapObject
         }
         if (洗练铭文 == null)
         {
-            Connection?.Disconnect(new Exception("错误操作: 确定替换铭文.  错误: 没有没有洗练记录."));
+            Connection?.Close(new Exception("错误操作: 确定替换铭文.  错误: 没有没有洗练记录."));
             return;
         }
         if (装备数据.Type != ItemType.Weapon)
         {
-            Connection?.Disconnect(new Exception("错误操作: 普通铭文洗练.  错误: 物品类型错误."));
+            Connection?.Close(new Exception("错误操作: 普通铭文洗练.  错误: 物品类型错误."));
             return;
         }
         if (装备数据.SecondInscription == null)
         {
-            Connection?.Disconnect(new Exception("错误操作: 普通铭文洗练.  错误: 第二铭文为空."));
+            Connection?.Close(new Exception("错误操作: 普通铭文洗练.  错误: 第二铭文为空."));
             return;
         }
         if (装备类型 == 0)
@@ -24241,7 +24241,7 @@ public sealed class PlayerObject : MapObject
         ItemInfo v;
         if (CurrentStoreNameID != "WeaponRune")
         {
-            Connection?.Disconnect(new Exception("错误操作: 解锁双铭文位.  错误: 没有打开界面"));
+            Connection?.Close(new Exception("错误操作: 解锁双铭文位.  错误: 没有打开界面"));
         }
         else if (装备类型 != 1)
         {
@@ -24254,7 +24254,7 @@ public sealed class PlayerObject : MapObject
         {
             if (装备数据.Type != ItemType.Weapon)
             {
-                Connection?.Disconnect(new Exception("错误操作: 解锁双铭文位.  错误: 物品类型错误."));
+                Connection?.Close(new Exception("错误操作: 解锁双铭文位.  错误: 物品类型错误."));
             }
             else if (操作参数 == 1)
             {
@@ -24295,7 +24295,7 @@ public sealed class PlayerObject : MapObject
         }
         else
         {
-            Connection?.Disconnect(new Exception("错误操作: 解锁双铭文位.  错误: 不是装备类型."));
+            Connection?.Close(new Exception("错误操作: 解锁双铭文位.  错误: 不是装备类型."));
         }
     }
 
@@ -24307,7 +24307,7 @@ public sealed class PlayerObject : MapObject
         ItemInfo v;
         if (CurrentStoreNameID != "WeaponRune")
         {
-            Connection?.Disconnect(new Exception("错误操作: 切换双铭文位.  错误: 没有打开界面"));
+            Connection?.Close(new Exception("错误操作: 切换双铭文位.  错误: 没有打开界面"));
         }
         else if (装备类型 != 1)
         {
@@ -24320,7 +24320,7 @@ public sealed class PlayerObject : MapObject
         {
             if (装备数据.Type != ItemType.Weapon)
             {
-                Connection?.Disconnect(new Exception("错误操作: 切换双铭文位.  错误: 物品类型错误."));
+                Connection?.Close(new Exception("错误操作: 切换双铭文位.  错误: 物品类型错误."));
                 return;
             }
             if (!装备数据.双铭文栏.V)
@@ -24333,7 +24333,7 @@ public sealed class PlayerObject : MapObject
             }
             if (操作参数 == 装备数据.CurrentInscription.V)
             {
-                Connection?.Disconnect(new Exception("错误操作: 切换双铭文位.  错误: 切换铭位错误."));
+                Connection?.Close(new Exception("错误操作: 切换双铭文位.  错误: 切换铭位错误."));
                 return;
             }
             装备数据.CurrentInscription.V = 操作参数;
@@ -24350,7 +24350,7 @@ public sealed class PlayerObject : MapObject
         }
         else
         {
-            Connection?.Disconnect(new Exception("错误操作: 切换双铭文位.  错误: 不是装备类型."));
+            Connection?.Close(new Exception("错误操作: 切换双铭文位.  错误: 不是装备类型."));
         }
     }
 
@@ -24364,7 +24364,7 @@ public sealed class PlayerObject : MapObject
         }
         if (CurrentStoreNameID != "WeaponRune")
         {
-            Connection?.Disconnect(new Exception("错误操作: 传承武器铭文.  错误: 没有打开界面"));
+            Connection?.Close(new Exception("错误操作: 传承武器铭文.  错误: 没有打开界面"));
         }
         else if (来源类型 == 1 && 目标类型 == 1)
         {
@@ -24430,12 +24430,12 @@ public sealed class PlayerObject : MapObject
                 }
                 else
                 {
-                    Connection?.Disconnect(new Exception("错误操作: 传承武器铭文.  错误: 物品类型错误."));
+                    Connection?.Close(new Exception("错误操作: 传承武器铭文.  错误: 物品类型错误."));
                 }
             }
             else
             {
-                Connection?.Disconnect(new Exception("错误操作: 传承武器铭文.  错误: 不是装备类型."));
+                Connection?.Close(new Exception("错误操作: 传承武器铭文.  错误: 不是装备类型."));
             }
         }
         else
@@ -24945,7 +24945,7 @@ public sealed class PlayerObject : MapObject
                                 break;
                             }
                         default:
-                            Connection?.Disconnect(new Exception($"Player provided wrong channel parameter when transmitting or broadcasting. Channel: {channel:X8}  Param:{msgtype}"));
+                            Connection?.Close(new Exception($"Player provided wrong channel parameter when transmitting or broadcasting. Channel: {channel:X8}  Param:{msgtype}"));
                             return;
                     }
 
@@ -24959,7 +24959,7 @@ public sealed class PlayerObject : MapObject
                     break;
                 }
             default:
-                Connection?.Disconnect(new Exception($"Player provided wrong channel parameters when sending broadcast. Channel: {channel:X8}"));
+                Connection?.Close(new Exception($"Player provided wrong channel parameters when sending broadcast. Channel: {channel:X8}"));
                 break;
         }
     }
@@ -26136,12 +26136,12 @@ public sealed class PlayerObject : MapObject
             }
             else
             {
-                Connection?.Disconnect(new Exception("错误操作: 申请发送邮件.  错误: 邮件文本错误."));
+                Connection?.Close(new Exception("错误操作: 申请发送邮件.  错误: 邮件文本错误."));
             }
         }
         else
         {
-            Connection?.Disconnect(new Exception("错误操作: 申请发送邮件.  错误: 数据长度错误."));
+            Connection?.Close(new Exception("错误操作: 申请发送邮件.  错误: 数据长度错误."));
         }
     }
 
@@ -26371,7 +26371,7 @@ public sealed class PlayerObject : MapObject
         ItemInfo 物品;
         if (CurrentStoreNameID != "Guild")
         {
-            Connection?.Disconnect(new Exception("错误操作: 申请创建行会. 错误: 没有打开界面."));
+            Connection?.Close(new Exception("错误操作: 申请创建行会. 错误: 没有打开界面."));
         }
         else if (Guild != null)
         {
@@ -26439,12 +26439,12 @@ public sealed class PlayerObject : MapObject
             }
             else
             {
-                Connection?.Disconnect(new Exception("错误操作: 申请创建行会. 错误: 字符长度错误."));
+                Connection?.Close(new Exception("错误操作: 申请创建行会. 错误: 字符长度错误."));
             }
         }
         else
         {
-            Connection?.Disconnect(new Exception("错误操作: 申请创建行会. 错误: 数据长度错误."));
+            Connection?.Close(new Exception("错误操作: 申请创建行会. 错误: 数据长度错误."));
         }
     }
 
@@ -26477,7 +26477,7 @@ public sealed class PlayerObject : MapObject
         }
         else
         {
-            Connection?.Disconnect(new Exception("错误操作: 更改行会公告. 错误: 数据长度错误"));
+            Connection?.Close(new Exception("错误操作: 更改行会公告. 错误: 数据长度错误"));
         }
     }
 
@@ -26510,7 +26510,7 @@ public sealed class PlayerObject : MapObject
         }
         else
         {
-            Connection?.Disconnect(new Exception("错误操作: 更改行会公告. 错误: 数据长度错误"));
+            Connection?.Close(new Exception("错误操作: 更改行会公告. 错误: 数据长度错误"));
         }
     }
 
@@ -27076,13 +27076,13 @@ public sealed class PlayerObject : MapObject
                         NetworkManager.SendAnnouncement($"[{Guild}]和[{guild}]成为敌对行会.");
                         break;
                     default:
-                        Connection?.Disconnect(new Exception("错误操作: 申请行会外交.  错误: 类型参数错误"));
+                        Connection?.Close(new Exception("错误操作: 申请行会外交.  错误: 类型参数错误"));
                         break;
                 }
             }
             else
             {
-                Connection?.Disconnect(new Exception("错误操作: 申请行会外交.  错误: 时间参数错误"));
+                Connection?.Close(new Exception("错误操作: 申请行会外交.  错误: 时间参数错误"));
             }
         }
         else
@@ -27141,7 +27141,7 @@ public sealed class PlayerObject : MapObject
             }
             else
             {
-                Connection?.Disconnect(new Exception("错误操作: 申请行会敌对.  错误: 时间参数错误"));
+                Connection?.Close(new Exception("错误操作: 申请行会敌对.  错误: 时间参数错误"));
             }
         }
         else
@@ -27237,7 +27237,7 @@ public sealed class PlayerObject : MapObject
                     Guild.AllianceApplications.Remove(行会数据);
                     break;
                 default:
-                    Connection?.Disconnect(new Exception("错误操作: 处理结盟申请.  错误: 处理类型错误."));
+                    Connection?.Close(new Exception("错误操作: 处理结盟申请.  错误: 处理类型错误."));
                     break;
             }
         }
@@ -27516,7 +27516,7 @@ public sealed class PlayerObject : MapObject
         {
             if (CurrentLevel < 99)
             {
-                Connection?.Disconnect(new Exception("错误操作: 同意拜师申请, 错误: 自身等级不够."));
+                Connection?.Close(new Exception("错误操作: 同意拜师申请, 错误: 自身等级不够."));
             }
             else if (character.CurrentLevel >= 30)
             {
@@ -27531,11 +27531,11 @@ public sealed class PlayerObject : MapObject
             }
             else if (Mentor == null)
             {
-                Connection?.Disconnect(new Exception("错误操作: 同意拜师申请, 错误: 尚未创建师门."));
+                Connection?.Close(new Exception("错误操作: 同意拜师申请, 错误: 尚未创建师门."));
             }
             else if (Mentor.MasterID != ObjectID)
             {
-                Connection?.Disconnect(new Exception("错误操作: 同意拜师申请, 错误: 自身尚未出师."));
+                Connection?.Close(new Exception("错误操作: 同意拜师申请, 错误: 自身尚未出师."));
             }
             else if (!Mentor.ApplicationsList.ContainsKey(character.ID))
             {
@@ -27591,12 +27591,12 @@ public sealed class PlayerObject : MapObject
         {
             if (Mentor == null)
             {
-                Connection?.Disconnect(new Exception("错误操作: 拒绝拜师申请, 错误: 尚未创建师门."));
+                Connection?.Close(new Exception("错误操作: 拒绝拜师申请, 错误: 尚未创建师门."));
                 return;
             }
             if (Mentor.MasterID != ObjectID)
             {
-                Connection?.Disconnect(new Exception("错误操作: 拒绝拜师申请, 错误: 自身尚未出师."));
+                Connection?.Close(new Exception("错误操作: 拒绝拜师申请, 错误: 自身尚未出师."));
                 return;
             }
             if (!Mentor.ApplicationsList.ContainsKey(character.ID))
@@ -27629,7 +27629,7 @@ public sealed class PlayerObject : MapObject
         {
             if (CurrentLevel < 99)
             {
-                Connection?.Disconnect(new Exception("错误操作: 玩家申请收徒, 错误: 自身等级不够."));
+                Connection?.Close(new Exception("错误操作: 玩家申请收徒, 错误: 自身等级不够."));
             }
             else if (character.CurrentLevel >= 30)
             {
@@ -27641,7 +27641,7 @@ public sealed class PlayerObject : MapObject
             }
             else if (Mentor != null && Mentor.MasterID != ObjectID)
             {
-                Connection?.Disconnect(new Exception("错误操作: 玩家申请收徒, 错误: 自身尚未出师."));
+                Connection?.Close(new Exception("错误操作: 玩家申请收徒, 错误: 自身尚未出师."));
             }
             else if (Mentor != null && Mentor.StudentCount >= 3)
             {
@@ -27691,15 +27691,15 @@ public sealed class PlayerObject : MapObject
             }
             else if (character.CurrentLevel < 30)
             {
-                Connection?.Disconnect(new Exception("错误操作: 同意收徒申请, 错误: 对方等级不够."));
+                Connection?.Close(new Exception("错误操作: 同意收徒申请, 错误: 对方等级不够."));
             }
             else if (character.CurrentMentor == null)
             {
-                Connection?.Disconnect(new Exception("错误操作: 同意收徒申请, 错误: 对方没有师门."));
+                Connection?.Close(new Exception("错误操作: 同意收徒申请, 错误: 对方没有师门."));
             }
             else if (character.CurrentMentor.MasterID != character.ID)
             {
-                Connection?.Disconnect(new Exception("错误操作: 同意收徒申请, 错误: 对方尚未出师."));
+                Connection?.Close(new Exception("错误操作: 同意收徒申请, 错误: 对方尚未出师."));
             }
             else if (!character.CurrentMentor.InvitationList.ContainsKey(ObjectID))
             {
@@ -27755,12 +27755,12 @@ public sealed class PlayerObject : MapObject
         {
             if (character.Mentor == null)
             {
-                Connection?.Disconnect(new Exception("错误操作: 拒绝收徒申请, 错误: 尚未创建师门."));
+                Connection?.Close(new Exception("错误操作: 拒绝收徒申请, 错误: 尚未创建师门."));
                 return;
             }
             if (character.CurrentMentor.MasterID != character.ID)
             {
-                Connection?.Disconnect(new Exception("错误操作: 拒绝拜师申请, 错误: 自身尚未出师."));
+                Connection?.Close(new Exception("错误操作: 拒绝拜师申请, 错误: 自身尚未出师."));
                 return;
             }
             if (!character.CurrentMentor.InvitationList.ContainsKey(ObjectID))
@@ -27804,11 +27804,11 @@ public sealed class PlayerObject : MapObject
         DBObject value;
         if (Mentor == null)
         {
-            Connection?.Disconnect(new Exception("错误操作: 逐出师门申请, 错误: 自身没有师门."));
+            Connection?.Close(new Exception("错误操作: 逐出师门申请, 错误: 自身没有师门."));
         }
         else if (Mentor.MasterID != ObjectID)
         {
-            Connection?.Disconnect(new Exception("错误操作: 逐出师门申请, 错误: 自己不是师父."));
+            Connection?.Close(new Exception("错误操作: 逐出师门申请, 错误: 自己不是师父."));
         }
         else if (Session.CharacterInfoTable.DataSheet.TryGetValue(对象编号, out value) && value is CharacterInfo character && Mentor.StudentsInfo.Contains(character))
         {
@@ -27860,7 +27860,7 @@ public sealed class PlayerObject : MapObject
         }
         if (Mentor == null)
         {
-            Connection?.Disconnect(new Exception("错误操作: 离开师门申请, 错误: 自身没有师门."));
+            Connection?.Close(new Exception("错误操作: 离开师门申请, 错误: 自身没有师门."));
         }
         else if (Mentor.StudentsInfo.Contains(Character))
         {
@@ -27898,7 +27898,7 @@ public sealed class PlayerObject : MapObject
         }
         else
         {
-            Connection?.Disconnect(new Exception("错误操作: 离开师门申请, 错误: 自身不是徒弟."));
+            Connection?.Close(new Exception("错误操作: 离开师门申请, 错误: 自身不是徒弟."));
         }
     }
 
@@ -27906,17 +27906,17 @@ public sealed class PlayerObject : MapObject
     {
         if (Mentor == null)
         {
-            Connection?.Disconnect(new Exception("错误操作: 提交出师申请, 错误: 自身没有师门."));
+            Connection?.Close(new Exception("错误操作: 提交出师申请, 错误: 自身没有师门."));
             return;
         }
         if (CurrentLevel < 99)
         {
-            Connection?.Disconnect(new Exception("错误操作: 提交出师申请, 错误: 自身等级不足."));
+            Connection?.Close(new Exception("错误操作: 提交出师申请, 错误: 自身等级不足."));
             return;
         }
         if (!Mentor.StudentsInfo.Contains(Character))
         {
-            Connection?.Disconnect(new Exception("错误操作: 提交出师申请, 错误: 自己不是徒弟."));
+            Connection?.Close(new Exception("错误操作: 提交出师申请, 错误: 自己不是徒弟."));
             return;
         }
         int num = Mentor.徒弟提供金币(Character);
@@ -27977,7 +27977,7 @@ public sealed class PlayerObject : MapObject
             else if (对象编号 == ObjectID)
             {
                 CurrentTrade?.BreakTrade();
-                Connection?.Disconnect(new Exception("错误操作: 玩家申请交易. 错误: 不能交易自己"));
+                Connection?.Close(new Exception("错误操作: 玩家申请交易. 错误: 不能交易自己"));
             }
             else if (!MapManager.Players.TryGetValue(对象编号, out value))
             {
@@ -28048,7 +28048,7 @@ public sealed class PlayerObject : MapObject
             else if (对象编号 == ObjectID)
             {
                 CurrentTrade?.BreakTrade();
-                Connection?.Disconnect(new Exception("错误操作: 玩家申请交易. 错误: 不能交易自己"));
+                Connection?.Close(new Exception("错误操作: 玩家申请交易. 错误: 不能交易自己"));
             }
             else if (!MapManager.Players.TryGetValue(对象编号, out value))
             {
@@ -28142,7 +28142,7 @@ public sealed class PlayerObject : MapObject
             if (CurrentTrade.金币重复(this))
             {
                 CurrentTrade?.BreakTrade();
-                Connection?.Disconnect(new Exception("错误操作: 玩家放入金币. 错误: 重复放入金币"));
+                Connection?.Close(new Exception("错误操作: 玩家放入金币. 错误: 重复放入金币"));
             }
             else
             {
@@ -28152,7 +28152,7 @@ public sealed class PlayerObject : MapObject
         else
         {
             CurrentTrade?.BreakTrade();
-            Connection?.Disconnect(new Exception("错误操作: 玩家放入金币. 错误: 金币数量错误"));
+            Connection?.Close(new Exception("错误操作: 玩家放入金币. 错误: 金币数量错误"));
         }
     }
 
@@ -28186,37 +28186,37 @@ public sealed class PlayerObject : MapObject
         else if (放入位置 >= 6)
         {
             CurrentTrade?.BreakTrade();
-            Connection?.Disconnect(new Exception("错误操作: 玩家放入物品. 错误: 放入位置错误"));
+            Connection?.Close(new Exception("错误操作: 玩家放入物品. 错误: 放入位置错误"));
         }
         else if (CurrentTrade.物品重复(this, 放入位置))
         {
             CurrentTrade?.BreakTrade();
-            Connection?.Disconnect(new Exception("错误操作: 玩家放入物品. 错误: 放入位置重复"));
+            Connection?.Close(new Exception("错误操作: 玩家放入物品. 错误: 放入位置重复"));
         }
         else if (放入物品 != 1)
         {
             CurrentTrade?.BreakTrade();
-            Connection?.Disconnect(new Exception("错误操作: 玩家放入物品. 错误: 禁止取回物品"));
+            Connection?.Close(new Exception("错误操作: 玩家放入物品. 错误: 禁止取回物品"));
         }
         else if (背包类型 != 1)
         {
             CurrentTrade?.BreakTrade();
-            Connection?.Disconnect(new Exception("错误操作: 玩家放入物品. 错误: 背包类型错误"));
+            Connection?.Close(new Exception("错误操作: 玩家放入物品. 错误: 背包类型错误"));
         }
         else if (!Inventory.TryGetValue(物品位置, out v))
         {
             CurrentTrade?.BreakTrade();
-            Connection?.Disconnect(new Exception("错误操作: 玩家放入物品. 错误: 物品数据错误"));
+            Connection?.Close(new Exception("错误操作: 玩家放入物品. 错误: 物品数据错误"));
         }
         else if (v.IsBound)
         {
             CurrentTrade?.BreakTrade();
-            Connection?.Disconnect(new Exception("错误操作: 玩家放入物品. 错误: 放入绑定物品"));
+            Connection?.Close(new Exception("错误操作: 玩家放入物品. 错误: 放入绑定物品"));
         }
         else if (CurrentTrade.物品重复(this, v))
         {
             CurrentTrade?.BreakTrade();
-            Connection?.Disconnect(new Exception("错误操作: 玩家放入物品. 错误: 重复放入物品"));
+            Connection?.Close(new Exception("错误操作: 玩家放入物品. 错误: 重复放入物品"));
         }
         else
         {
@@ -28492,42 +28492,42 @@ public sealed class PlayerObject : MapObject
         }
         if (放入位置 >= 10)
         {
-            Connection?.Disconnect(new Exception("错误操作: 放入摊位物品, 错误: 放入位置错误"));
+            Connection?.Close(new Exception("错误操作: 放入摊位物品, 错误: 放入位置错误"));
             return;
         }
         if (CurrentStall.Items.ContainsKey(放入位置))
         {
-            Connection?.Disconnect(new Exception("错误操作: 放入摊位物品, 错误: 重复放入位置"));
+            Connection?.Close(new Exception("错误操作: 放入摊位物品, 错误: 重复放入位置"));
             return;
         }
         if (背包类型 != 1)
         {
-            Connection?.Disconnect(new Exception("错误操作: 放入摊位物品, 错误: 背包类型错误"));
+            Connection?.Close(new Exception("错误操作: 放入摊位物品, 错误: 背包类型错误"));
             return;
         }
         if (物品价格 < 100)
         {
-            Connection?.Disconnect(new Exception("错误操作: 放入摊位物品, 错误: 物品价格错误"));
+            Connection?.Close(new Exception("错误操作: 放入摊位物品, 错误: 物品价格错误"));
             return;
         }
         if (!Inventory.TryGetValue(物品位置, out var v))
         {
-            Connection?.Disconnect(new Exception("错误操作: 放入摊位物品, 错误: 选中物品为空"));
+            Connection?.Close(new Exception("错误操作: 放入摊位物品, 错误: 选中物品为空"));
             return;
         }
         if (CurrentStall.Items.Values.FirstOrDefault((ItemInfo O) => O.Location.V == 物品位置) != null)
         {
-            Connection?.Disconnect(new Exception("错误操作: 放入摊位物品, 错误: 重复放入物品"));
+            Connection?.Close(new Exception("错误操作: 放入摊位物品, 错误: 重复放入物品"));
             return;
         }
         if (v.IsBound)
         {
-            Connection?.Disconnect(new Exception("错误操作: 放入摊位物品, 错误: 放入绑定物品"));
+            Connection?.Close(new Exception("错误操作: 放入摊位物品, 错误: 放入绑定物品"));
             return;
         }
         if (物品数量 > ((!v.CanStack) ? 1 : v.Dura.V))
         {
-            Connection?.Disconnect(new Exception("错误操作: 放入摊位物品, 错误: 物品数量错误"));
+            Connection?.Close(new Exception("错误操作: 放入摊位物品, 错误: 物品数量错误"));
             return;
         }
         CurrentStall.Items.Add(放入位置, v);
@@ -28555,7 +28555,7 @@ public sealed class PlayerObject : MapObject
         }
         if (!CurrentStall.Items.TryGetValue(取回位置, out var value))
         {
-            Connection?.Disconnect(new Exception("错误操作: 取回摊位物品, 错误: 选中物品为空"));
+            Connection?.Close(new Exception("错误操作: 取回摊位物品, 错误: 选中物品为空"));
             return;
         }
         CurrentStall.Prices.Remove(value);
