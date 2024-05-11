@@ -215,7 +215,7 @@ public sealed class MonsterObject : MapObject
         MapManager.AddObject(this);
     }
 
-    public MonsterObject(MonsterInfo info, Map map, int resInterval, Point location, int range, bool forbidResurrection, bool 立即刷新)
+    public MonsterObject(MonsterInfo info, Map map, int resInterval, Point location, int range, bool forbidResurrection, bool refreshNow)
     {
         ObjectID = ++MapManager.ObjectID;
         Info = info;
@@ -262,7 +262,7 @@ public sealed class MonsterObject : MapObject
             CurrentMap.TotalFixedMonsters++;
             SMain.UpdateMapData(CurrentMap, "固定怪物总数", CurrentMap.TotalFixedMonsters);
         }
-        if (立即刷新)
+        if (refreshNow)
         {
             Resurrect(false);
             return;
