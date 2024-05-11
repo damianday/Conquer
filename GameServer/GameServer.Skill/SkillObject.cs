@@ -195,13 +195,16 @@ public class SkillObject
 
     private void ProcessA_00_TriggerSubSkills(A_00_TriggerSubSkills task)
     {
-        if (GameSkill.DataSheet.TryGetValue(task.触发技能名字, out var value2))
+        if (GameSkill.DataSheet.TryGetValue(task.TriggerSkillName, out var skill))
         {
             bool flag = true;
             if (task.CalculateTriggerProbability)
             {
-                flag = !task.CalculateLuckyProbability ? Compute.CalculateProbability(task.技能触发概率 + (task.增加概率Buff == 0 || !Caster.Buffs.ContainsKey(task.增加概率Buff) ? 0f : task.Buff增加系数)) : Compute.CalculateProbability(Compute.CalcLuck(Caster[Stat.Luck]));
+                flag = !task.CalculateLuckyProbability ? 
+                    Compute.CalculateProbability(task.SkillTriggerProbability + (task.IncreaseProbabilityBuffID == 0 || !Caster.Buffs.ContainsKey(task.IncreaseProbabilityBuffID) ? 0f : task.BuffIncreaseFactor)) : 
+                    Compute.CalculateProbability(Compute.CalcLuck(Caster[Stat.Luck]));
             }
+
             if (flag && task.验证自身Buff)
             {
                 if (!Caster.Buffs.ContainsKey(task.自身Buff编号))
@@ -213,31 +216,39 @@ public class SkillObject
                     Caster.RemoveBuffEx(task.自身Buff编号);
                 }
             }
-            if (flag && task.验证铭文技能 && Caster is PlayerObject 玩家实例)
+
+            if (flag && task.ValidateInscriptionSkill && Caster is PlayerObject player)
             {
-                int num = task.所需铭文编号 / 10;
-                int num2 = task.所需铭文编号 % 10;
-                flag = 玩家实例.Skills.TryGetValue((ushort)num, out var v) && (task.同组铭文无效 ? num2 == v.InscriptionID : num2 == 0 || num2 == v.InscriptionID);
+                int num = task.RequiredInscriptionID / 10;
+                int num2 = task.RequiredInscriptionID % 10;
+                flag = player.Skills.TryGetValue((ushort)num, out var v) && (task.同组铭文无效 ? num2 == v.InscriptionID : num2 == 0 || num2 == v.InscriptionID);
             }
+
+            if (flag && task.TargetDistanceMin > 0)
+            {
+                if (Compute.GetDistance(CastLocation, TargetLocation) < task.TargetDistanceMin)
+                    flag = false;
+            }
+
             if (flag)
             {
-                switch (task.技能触发方式)
+                switch (task.SkillTriggerMethod)
                 {
                     case SkillTriggerMethod.OriginAbsolutePosition:
-                        new SkillObject(Caster, value2, Skill, ActionID, CurrentMap, CastLocation, Target, CastLocation, this);
+                        new SkillObject(Caster, skill, Skill, ActionID, CurrentMap, CastLocation, Target, CastLocation, this);
                         break;
                     case SkillTriggerMethod.AnchorAbsolutePosition:
-                        new SkillObject(Caster, value2, Skill, ActionID, CurrentMap, CastLocation, Target, TargetLocation, this);
+                        new SkillObject(Caster, skill, Skill, ActionID, CurrentMap, CastLocation, Target, TargetLocation, this);
                         break;
                     case SkillTriggerMethod.AssassinationAbsolutePosition:
-                        new SkillObject(Caster, value2, Skill, ActionID, CurrentMap, CastLocation, Target, Compute.GetFrontPosition(CastLocation, TargetLocation, 2), this);
+                        new SkillObject(Caster, skill, Skill, ActionID, CurrentMap, CastLocation, Target, Compute.GetFrontPosition(CastLocation, TargetLocation, 2), this);
                         break;
                     case SkillTriggerMethod.TargetHitDefinitely:
                         foreach (KeyValuePair<int, HitInfo> item in HitList)
                         {
                             if ((item.Value.SkillFeedback & SkillHitFeedback.Miss) == 0 && (item.Value.SkillFeedback & SkillHitFeedback.Lose) == 0)
                             {
-                                new SkillObject(Caster, value2, Skill, ActionID, CurrentMap, ParentSkill == null ? CastLocation : TargetLocation, item.Value.Target, item.Value.Target.CurrentPosition, this);
+                                new SkillObject(Caster, skill, Skill, ActionID, CurrentMap, ParentSkill == null ? CastLocation : TargetLocation, item.Value.Target, item.Value.Target.CurrentPosition, this);
                             }
                         }
                         break;
@@ -246,7 +257,7 @@ public class SkillObject
                         {
                             if (item2.Value.Target is MonsterObject && (item2.Value.SkillFeedback & SkillHitFeedback.Death) != 0)
                             {
-                                new SkillObject(Caster, value2, Skill, ActionID, CurrentMap, CastLocation, null, item2.Value.Target.CurrentPosition, this);
+                                new SkillObject(Caster, skill, Skill, ActionID, CurrentMap, CastLocation, null, item2.Value.Target.CurrentPosition, this);
                             }
                         }
                         break;
@@ -255,7 +266,7 @@ public class SkillObject
                         {
                             if (item3.Value.Target is MonsterObject && (item3.Value.SkillFeedback & SkillHitFeedback.Death) != 0)
                             {
-                                new SkillObject(Caster, value2, null, item3.Value.Target.ActionID++, CurrentMap, item3.Value.Target.CurrentPosition, item3.Value.Target, item3.Value.Target.CurrentPosition, this, null, targetBorrow: true);
+                                new SkillObject(Caster, skill, null, item3.Value.Target.ActionID++, CurrentMap, item3.Value.Target.CurrentPosition, item3.Value.Target, item3.Value.Target.CurrentPosition, this, null, targetBorrow: true);
                             }
                         }
                         break;
@@ -264,31 +275,31 @@ public class SkillObject
                         {
                             if (item4.Value.Target is MonsterObject && (item4.Value.SkillFeedback & SkillHitFeedback.Lose) == 0)
                             {
-                                new SkillObject(Caster, value2, Skill, ActionID, CurrentMap, ParentSkill == null ? CastLocation : TargetLocation, item4.Value.Target, item4.Value.Target.CurrentPosition, this);
+                                new SkillObject(Caster, skill, Skill, ActionID, CurrentMap, ParentSkill == null ? CastLocation : TargetLocation, item4.Value.Target, item4.Value.Target.CurrentPosition, this);
                             }
                         }
                         break;
                     case SkillTriggerMethod.NoTargetPosition:
                         if (HitList.Count == 0 || HitList.Values.FirstOrDefault((O) => O.SkillFeedback != SkillHitFeedback.Lose) == null)
                         {
-                            new SkillObject(Caster, value2, Skill, ActionID, CurrentMap, CastLocation, null, TargetLocation, this);
+                            new SkillObject(Caster, skill, Skill, ActionID, CurrentMap, CastLocation, null, TargetLocation, this);
                         }
                         break;
                     case SkillTriggerMethod.TargetPositionAbsolute:
                         foreach (KeyValuePair<int, HitInfo> item5 in HitList)
                         {
-                            new SkillObject(Caster, value2, Skill, ActionID, CurrentMap, CastLocation, item5.Value.Target, item5.Value.Target.CurrentPosition, this);
+                            new SkillObject(Caster, skill, Skill, ActionID, CurrentMap, CastLocation, item5.Value.Target, item5.Value.Target.CurrentPosition, this);
                         }
                         break;
                     case SkillTriggerMethod.ForehandAndBackhandRandom:
                         {
-                            if (Compute.CalculateProbability(0.5f) && GameSkill.DataSheet.TryGetValue(task.反手技能名字, out var value3))
+                            if (Compute.CalculateProbability(0.5f) && GameSkill.DataSheet.TryGetValue(task.BackhandSkillName, out var value3))
                             {
                                 new SkillObject(Caster, value3, Skill, ActionID, CurrentMap, CastLocation, null, TargetLocation, this);
                             }
                             else
                             {
-                                new SkillObject(Caster, value2, Skill, ActionID, CurrentMap, CastLocation, null, TargetLocation, this);
+                                new SkillObject(Caster, skill, Skill, ActionID, CurrentMap, CastLocation, null, TargetLocation, this);
                             }
                             break;
                         }
@@ -297,7 +308,7 @@ public class SkillObject
                         {
                             if ((item6.Value.SkillFeedback & SkillHitFeedback.Death) != 0)
                             {
-                                new SkillObject(Caster, value2, Skill, ActionID, CurrentMap, CastLocation, null, item6.Value.Target.CurrentPosition, this);
+                                new SkillObject(Caster, skill, Skill, ActionID, CurrentMap, CastLocation, null, item6.Value.Target.CurrentPosition, this);
                             }
                         }
                         break;
@@ -306,7 +317,7 @@ public class SkillObject
                         {
                             if ((item7.Value.SkillFeedback & SkillHitFeedback.Miss) != 0)
                             {
-                                new SkillObject(Caster, value2, Skill, ActionID, CurrentMap, CastLocation, null, item7.Value.Target.CurrentPosition, this);
+                                new SkillObject(Caster, skill, Skill, ActionID, CurrentMap, CastLocation, null, item7.Value.Target.CurrentPosition, this);
                             }
                         }
                         break;
@@ -317,7 +328,7 @@ public class SkillObject
 
     private void ProcessA_01_TriggerObjectBuff(A_01_TriggerObjectBuff task)
     {
-        bool flag2 = false;
+        bool success = false;
         if (task.角色自身添加)
         {
             bool flag3 = true;
@@ -326,10 +337,10 @@ public class SkillObject
             {
                 flag3 = false;
             }
-            if (flag3 && task.验证铭文技能 && Caster is PlayerObject 玩家实例2)
+            if (flag3 && task.ValidateInscriptionSkill && Caster is PlayerObject 玩家实例2)
             {
-                int num3 = task.所需铭文编号 / 10;
-                int num4 = task.所需铭文编号 % 10;
+                int num3 = task.RequiredInscriptionID / 10;
+                int num4 = task.RequiredInscriptionID % 10;
                 flag3 = 玩家实例2.Skills.TryGetValue((ushort)num3, out var v2) && (task.同组铭文无效 ? num4 == v2.InscriptionID : num4 == 0 || num4 == v2.InscriptionID);
             }
             if (flag3 && task.验证自身Buff)
@@ -358,7 +369,7 @@ public class SkillObject
             {
                 flag3 = false;
             }
-            if (flag3 && task.VerifyTargetType && HitList.Values.FirstOrDefault((O) => (O.SkillFeedback & SkillHitFeedback.Miss) == 0 && (O.SkillFeedback & SkillHitFeedback.Lose) == 0 && O.Target.IsValidTarget(Caster, task.所需目标类型)) == null)
+            if (flag3 && task.VerifyTargetType && HitList.Values.FirstOrDefault((O) => (O.SkillFeedback & SkillHitFeedback.Miss) == 0 && (O.SkillFeedback & SkillHitFeedback.Lose) == 0 && O.Target.IsValidTarget(Caster, task.RequiredTarget)) == null)
             {
                 flag3 = false;
             }
@@ -369,7 +380,7 @@ public class SkillObject
                 {
                     Caster.AddBuff(task.伴生Buff编号, Caster);
                 }
-                flag2 = true;
+                success = true;
             }
         }
         else
@@ -397,10 +408,10 @@ public class SkillObject
             {
                 flag4 = false;
             }
-            if (flag4 && task.验证铭文技能 && Caster is PlayerObject 玩家实例3)
+            if (flag4 && task.ValidateInscriptionSkill && Caster is PlayerObject 玩家实例3)
             {
-                int num5 = task.所需铭文编号 / 10;
-                int num6 = task.所需铭文编号 % 10;
+                int num5 = task.RequiredInscriptionID / 10;
+                int num6 = task.RequiredInscriptionID % 10;
                 flag4 = 玩家实例3.Skills.TryGetValue((ushort)num5, out var v3) && (task.同组铭文无效 ? num6 == v3.InscriptionID : num6 == 0 || num6 == v3.InscriptionID);
             }
             if (flag4)
@@ -416,7 +427,7 @@ public class SkillObject
                     {
                         flag5 = false;
                     }
-                    if (flag5 && task.VerifyTargetType && !item8.Value.Target.IsValidTarget(Caster, task.所需目标类型))
+                    if (flag5 && task.VerifyTargetType && !item8.Value.Target.IsValidTarget(Caster, task.RequiredTarget))
                     {
                         flag5 = false;
                     }
@@ -431,12 +442,12 @@ public class SkillObject
                         {
                             item8.Value.Target.AddBuff(task.伴生Buff编号, Caster);
                         }
-                        flag2 = true;
+                        success = true;
                     }
                 }
             }
         }
-        if (flag2 && task.GainSkillExp)
+        if (success && task.GainSkillExp)
         {
             (Caster as PlayerObject)?.GainSkillExperience(task.ExpSkillID);
         }
@@ -444,15 +455,15 @@ public class SkillObject
 
     private void ProcessA_02_TriggerTrapSkills(A_02_TriggerTrapSkills task)
     {
-        if (SkillTrap.DataSheet.TryGetValue(task.TriggerTrapSkills, out var 陷阱模板))
+        if (SkillTrap.DataSheet.TryGetValue(task.TriggerTrapSkills, out var trap))
         {
             int num7 = 0;
-            Point[] array = Compute.CalculateGrid(TargetLocation, Compute.DirectionFromPoint(CastLocation, TargetLocation), task.NumberTrapsTriggered);
-            foreach (Point 坐标 in array)
+            var grid = Compute.CalculateGrid(TargetLocation, Compute.DirectionFromPoint(CastLocation, TargetLocation), task.NumberTrapsTriggered);
+            foreach (Point point in grid)
             {
-                if (CurrentMap.ValidTerrain(坐标) && (陷阱模板.AllowStacking || CurrentMap[坐标].FirstOrDefault((O) => O is TrapObject 陷阱实例 && 陷阱实例.GroupID != 0 && 陷阱实例.GroupID == 陷阱模板.GroupID) == null))
+                if (CurrentMap.ValidTerrain(point) && (trap.AllowStacking || CurrentMap[point].FirstOrDefault((O) => O is TrapObject 陷阱实例 && 陷阱实例.GroupID != 0 && 陷阱实例.GroupID == trap.GroupID) == null))
                 {
-                    Caster.Traps.Add(new TrapObject(Caster, 陷阱模板, CurrentMap, 坐标));
+                    Caster.Traps.Add(new TrapObject(Caster, trap, CurrentMap, point));
                     num7++;
                 }
             }
@@ -480,7 +491,7 @@ public class SkillObject
 
     private void ProcessB_01_SkillReleaseNotification(B_01_SkillReleaseNotification task)
     {
-        if (task.调整角色朝向)
+        if (task.UpdateCharacterDirection)
         {
             GameDirection dir = Compute.DirectionFromPoint(CastLocation, TargetLocation);
             if (dir == Caster.CurrentDirection)
@@ -521,7 +532,7 @@ public class SkillObject
                 int num8 = task.SelfCooldown;
                 if (task.Buff增加冷却 && Caster.Buffs.ContainsKey(task.增加冷却Buff))
                 {
-                    num8 += task.冷却增加时间;
+                    num8 += task.CooldownIncreaseTime;
                 }
                 DateTime dateTime = ReleaseTime.AddMilliseconds(num8);
                 DateTime dateTime2 = Caster.Cooldowns.ContainsKey(SkillID | 0x1000000) ? Caster.Cooldowns[SkillID | 0x1000000] : default;
@@ -536,9 +547,9 @@ public class SkillObject
                 }
             }
         }
-        if (Caster is PlayerObject 玩家实例5 && task.分组冷却时间 != 0 && GroupID != 0)
+        if (Caster is PlayerObject 玩家实例5 && task.GroupCooldownTime != 0 && GroupID != 0)
         {
-            DateTime dateTime3 = ReleaseTime.AddMilliseconds(task.分组冷却时间);
+            DateTime dateTime3 = ReleaseTime.AddMilliseconds(task.GroupCooldownTime);
             DateTime dateTime4 = 玩家实例5.Cooldowns.ContainsKey(GroupID | 0) ? 玩家实例5.Cooldowns[GroupID | 0] : default;
             if (dateTime3 > dateTime4)
             {
@@ -547,14 +558,14 @@ public class SkillObject
             Caster.SendPacket(new 添加技能冷却
             {
                 冷却编号 = GroupID | 0,
-                冷却时间 = task.分组冷却时间
+                冷却时间 = task.GroupCooldownTime
             });
         }
         if (task.角色忙绿时间 != 0)
         {
             Caster.BusyTime = ReleaseTime.AddMilliseconds(task.角色忙绿时间);
         }
-        if (task.发送释放通知)
+        if (task.SendReleaseNotification)
         {
             Caster.SendPacket(new 开始释放技能
             {
@@ -572,7 +583,37 @@ public class SkillObject
 
     private void ProcessB_02_SkillHitNotification(B_02_SkillHitNotification task)
     {
-        if (task.命中扩展通知)
+        if (task.CalculateFlightTime)
+        {
+            FlyTime = Compute.GetDistance(CastLocation, TargetLocation) * task.SingleCellFlightTime;
+        }
+
+        /*if (task.技能命中通知)
+        {
+            Caster.SendPacket(new 触发技能正常
+            {
+                ObjectID = !TargetBorrow || Target == null ? Caster.ObjectID : Target.ObjectID,
+                SkillID = SkillID,
+                SkillLevel = SkillLevel,
+                InscriptionID = InscriptionID,
+                ActionID = ActionID,
+                HitDescription = HitInfo.HitDescription(HitList, FlyTime)
+            });
+        }
+        if (task.技能扩展通知)
+        {
+            Caster.SendPacket(new 触发技能扩展
+            {
+                ObjectID = !TargetBorrow || Target == null ? Caster.ObjectID : Target.ObjectID,
+                SkillID = SkillID,
+                SkillLevel = SkillLevel,
+                InscriptionID = InscriptionID,
+                ActionID = ActionID,
+                HitDescription = HitInfo.HitDescription(HitList, FlyTime)
+            });
+        }*/
+
+        if (task.HitExtensionNotification)
         {
             Caster.SendPacket(new 触发技能扩展
             {
@@ -596,15 +637,11 @@ public class SkillObject
                 HitDescription = HitInfo.HitDescription(HitList, FlyTime)
             });
         }
-        if (task.计算飞行耗时)
-        {
-            FlyTime = Compute.GetDistance(CastLocation, TargetLocation) * task.单格飞行耗时;
-        }
     }
 
     private void ProcessB_03_FrontSwingEndNotification(B_03_FrontSwingEndNotification task)
     {
-        if (task.计算攻速缩减)
+        if (task.CalculateAttackSpeedReduction)
         {
             AttackSpeedDecrease = Compute.Clamp(Compute.CalcAttackSpeed(-5), AttackSpeedDecrease + Compute.CalcAttackSpeed(Caster[Stat.AttackSpeed]), Compute.CalcAttackSpeed(5));
             if (AttackSpeedDecrease != 0)
@@ -624,19 +661,19 @@ public class SkillObject
                 }
             }
         }
-        if (task.禁止行走时间 != 0)
+        if (task.WalkTimeReduction != 0)
         {
-            Caster.WalkTime = ReleaseTime.AddMilliseconds(task.禁止行走时间);
+            Caster.WalkTime = ReleaseTime.AddMilliseconds(task.WalkTimeReduction);
         }
-        if (task.禁止奔跑时间 != 0)
+        if (task.RunTimeReduction != 0)
         {
-            Caster.RunTime = ReleaseTime.AddMilliseconds(task.禁止奔跑时间);
+            Caster.RunTime = ReleaseTime.AddMilliseconds(task.RunTimeReduction);
         }
-        if (task.角色硬直时间 != 0)
+        if (task.AttackTimeReduction != 0)
         {
-            Caster.HardStunTime = ReleaseTime.AddMilliseconds(task.计算攻速缩减 ? task.角色硬直时间 - AttackSpeedDecrease : task.角色硬直时间);
+            Caster.HitTime = ReleaseTime.AddMilliseconds(task.CalculateAttackSpeedReduction ? task.AttackTimeReduction - AttackSpeedDecrease : task.AttackTimeReduction);
         }
-        if (task.发送结束通知)
+        if (task.SendEndNotification)
         {
             Caster.SendPacket(new 触发技能正常
             {
@@ -647,7 +684,7 @@ public class SkillObject
                 ActionID = ActionID
             });
         }
-        if (task.解除技能陷阱)
+        if (task.DisarmTrapSkills)
         {
             (Caster as TrapObject)?.Disappear();
         }
@@ -660,7 +697,7 @@ public class SkillObject
             SkillID = SkillID,
             ActionID = ActionID
         });
-        if (task.后摇结束死亡)
+        if (task.CausesDeath)
         {
             Caster.Die(null, false);
         }
@@ -668,102 +705,94 @@ public class SkillObject
 
     private void ProcessC_00_CalculateSkillAnchor(C_00_CalculateSkillAnchor task)
     {
-        if (task.计算当前位置)
+        if (task.CalculateCurrentPosition)
         {
             Target = null;
-            if (task.计算当前方向)
-            {
-                TargetLocation = Compute.GetNextPosition(Caster.CurrentPosition, Caster.CurrentDirection, task.技能最近距离);
-            }
+            if (task.CalculateCurrentDirection)
+                TargetLocation = Compute.GetNextPosition(Caster.CurrentPosition, Caster.CurrentDirection, task.MinDistance);
             else
-            {
-                TargetLocation = Compute.GetFrontPosition(Caster.CurrentPosition, TargetLocation, task.技能最近距离);
-            }
+                TargetLocation = Compute.GetFrontPosition(Caster.CurrentPosition, TargetLocation, task.MinDistance);
         }
         else if (Compute.GetDistance(CastLocation, TargetLocation) > task.MaxDistance)
         {
             Target = null;
             TargetLocation = Compute.GetFrontPosition(CastLocation, TargetLocation, task.MaxDistance);
         }
-        else if (Compute.GetDistance(CastLocation, TargetLocation) < task.技能最近距离)
+        else if (Compute.GetDistance(CastLocation, TargetLocation) < task.MinDistance)
         {
             Target = null;
             if (CastLocation == TargetLocation)
-            {
-                TargetLocation = Compute.GetNextPosition(CastLocation, Caster.CurrentDirection, task.技能最近距离);
-            }
+                TargetLocation = Compute.GetNextPosition(CastLocation, Caster.CurrentDirection, task.MinDistance);
             else
-            {
-                TargetLocation = Compute.GetFrontPosition(CastLocation, TargetLocation, task.技能最近距离);
-            }
+                TargetLocation = Compute.GetFrontPosition(CastLocation, TargetLocation, task.MinDistance);
         }
     }
 
     private void ProcessC_01_CalculateHitTarget(C_01_CalculateHitTarget task)
     {
-        if (task.清空命中列表)
+        if (task.ClearHitList)
         {
             HitList = new Dictionary<int, HitInfo>();
         }
-        if (task.技能能否穿墙 || !CurrentMap.IsTerrainBlocked(CastLocation, TargetLocation))
+        if (task.PassThroughWall || !CurrentMap.IsTerrainBlocked(CastLocation, TargetLocation))
         {
-            switch (task.技能锁定方式)
+            switch (task.SkillLockMode)
             {
                 case SkillLockType.LockSelf:
-                    Caster.被技能命中处理(this, task);
+                    Caster.ProcessSkillHit(this, task);
                     break;
                 case SkillLockType.LockOnTarget:
-                    Target?.被技能命中处理(this, task);
+                    Target?.ProcessSkillHit(this, task);
                     break;
                 case SkillLockType.LockOnPosition:
                     {
-                        var grid = Compute.CalculateGrid(Caster.CurrentPosition, Compute.DirectionFromPoint(CastLocation, TargetLocation), task.技能范围类型);
+                        var grid = Compute.CalculateGrid(Caster.CurrentPosition, Compute.DirectionFromPoint(CastLocation, TargetLocation), task.SkillRangeType);
                         foreach (var point in grid)
                         {
                             foreach (var obj in CurrentMap[point])
                             {
-                                obj.被技能命中处理(this, task);
+                                obj.ProcessSkillHit(this, task);
                             }
                         }
                         break;
                     }
                 case SkillLockType.LockOnTargetPosition:
                     {
-                        var grid = Compute.CalculateGrid(Target?.CurrentPosition ?? TargetLocation, Compute.DirectionFromPoint(CastLocation, TargetLocation), task.技能范围类型);
+                        var grid = Compute.CalculateGrid(Target?.CurrentPosition ?? TargetLocation, Compute.DirectionFromPoint(CastLocation, TargetLocation), task.SkillRangeType);
                         foreach (var point in grid)
                         {
                             foreach (var obj in CurrentMap[point])
                             {
-                                obj.被技能命中处理(this, task);
+                                obj.ProcessSkillHit(this, task);
                             }
                         }
                         break;
                     }
                 case SkillLockType.LockAnchorPosition:
                     {
-                        var grid = Compute.CalculateGrid(TargetLocation, Compute.DirectionFromPoint(CastLocation, TargetLocation), task.技能范围类型);
+                        var grid = Compute.CalculateGrid(TargetLocation, Compute.DirectionFromPoint(CastLocation, TargetLocation), task.SkillRangeType);
                         foreach (var point in grid)
                         {
                             foreach (var obj in CurrentMap[point])
                             {
-                                obj.被技能命中处理(this, task);
+                                obj.ProcessSkillHit(this, task);
                             }
                         }
                         break;
                     }
                 case SkillLockType.EmptyLockSelf:
                     {
-                        var grid = Compute.CalculateGrid(TargetLocation, Compute.DirectionFromPoint(CastLocation, TargetLocation), task.技能范围类型);
+                        var grid = Compute.CalculateGrid(TargetLocation, Compute.DirectionFromPoint(CastLocation, TargetLocation), task.SkillRangeType);
                         foreach (var point in grid)
                         {
                             foreach (var obj in CurrentMap[point])
                             {
-                                obj.被技能命中处理(this, task);
+                                obj.ProcessSkillHit(this, task);
                             }
                         }
                         if (HitList.Count == 0)
                         {
-                            Caster.被技能命中处理(this, task);
+                            Caster.ProcessSkillHit(this, task);
                         }
                         break;
                     }
@@ -772,7 +801,7 @@ public class SkillObject
 
         if (HitList.Count == 0 && task.放空结束技能)
         {
-            if (task.发送中断通知)
+            if (task.SendInterruptNotification)
             {
                 Caster.SendPacket(new 技能释放中断
                 {
@@ -803,27 +832,24 @@ public class SkillObject
             });
         }
 
-        if (HitList.Count != 0 && task.攻速提升类型 != 0 && HitList[0].Target.IsValidTarget(Caster, task.攻速提升类型))
+        if (HitList.Count != 0 && task.AttackSpeedIncreaseType != 0 && HitList[0].Target.IsValidTarget(Caster, task.AttackSpeedIncreaseType))
         {
-            AttackSpeedDecrease = Compute.Clamp(Compute.CalcAttackSpeed(-5), AttackSpeedDecrease + Compute.CalcAttackSpeed(task.攻速提升幅度), Compute.CalcAttackSpeed(5));
+            AttackSpeedDecrease = Compute.Clamp(Compute.CalcAttackSpeed(-5), AttackSpeedDecrease + Compute.CalcAttackSpeed(task.AttackSpeedIncrease), Compute.CalcAttackSpeed(5));
         }
 
-        if (task.清除目标状态 && task.清除状态列表.Count != 0)
+        if (task.ClearTargetStatus && task.ClearStatusList.Count != 0)
         {
-            foreach (KeyValuePair<int, HitInfo> item14 in HitList)
+            foreach (var kvp in HitList)
             {
-                if ((item14.Value.SkillFeedback & SkillHitFeedback.Miss) != 0 || (item14.Value.SkillFeedback & SkillHitFeedback.Lose) != 0)
-                {
+                if (kvp.Value.SkillFeedback.HasFlag(SkillHitFeedback.Miss) || kvp.Value.SkillFeedback.HasFlag(SkillHitFeedback.Lose))
                     continue;
-                }
-                foreach (ushort item15 in task.清除状态列表.ToList())
-                {
-                    item14.Value.Target.RemoveBuffEx(item15);
-                }
+
+                foreach (var id in task.ClearStatusList)
+                    kvp.Value.Target.RemoveBuffEx(id);
             }
         }
 
-        if (task.触发被动技能 && HitList.Count != 0 && Compute.CalculateProbability(task.触发被动概率))
+        if (task.TriggerPassiveSkills && HitList.Count != 0 && Compute.CalculateProbability(task.TriggerPassiveSkillsProbability))
         {
             Caster[Stat.SkillSign] = 1;
         }
@@ -832,11 +858,11 @@ public class SkillObject
         {
             (Caster as PlayerObject).GainSkillExperience(task.ExpSkillID);
         }
-        if (task.计算飞行耗时 && task.单格飞行耗时 != 0)
+        if (task.CalculateFlightTime && task.SingleCellFlightTime != 0)
         {
-            FlyTime = Compute.GetDistance(CastLocation, TargetLocation) * task.单格飞行耗时;
+            FlyTime = Compute.GetDistance(CastLocation, TargetLocation) * task.SingleCellFlightTime;
         }
-        if (task.技能命中通知)
+        if (task.SendSkillHitNotification)
         {
             Caster.SendPacket(new 触发技能正常
             {
@@ -848,7 +874,7 @@ public class SkillObject
                 HitDescription = HitInfo.HitDescription(HitList, FlyTime)
             });
         }
-        if (task.技能扩展通知)
+        if (task.SendSkillExpansionNotification)
         {
             Caster.SendPacket(new 触发技能扩展
             {
@@ -886,7 +912,7 @@ public class SkillObject
 
             if (flag) continue;
 
-            hitter.Value.Target.被动受伤时处理(this, task, hitter.Value, num9);
+            hitter.Value.Target.ProcessSkillPassiveDamage(this, task, hitter.Value, num9);
             if ((hitter.Value.SkillFeedback & SkillHitFeedback.Lose) == 0)
             {
                 if (task.数量衰减伤害)
@@ -1007,11 +1033,11 @@ public class SkillObject
             {
                 if ((item20.Value.SkillFeedback & SkillHitFeedback.Miss) == 0 && (item20.Value.SkillFeedback & SkillHitFeedback.Lose) == 0 && item20.Value.Target is MonsterObject 怪物实例 && 怪物实例.Grade != MonsterGradeType.Boss)
                 {
-                    item20.Value.Target.HardStunTime = SEngine.CurrentTime.AddMilliseconds(task.目标硬直时间);
+                    item20.Value.Target.HitTime = SEngine.CurrentTime.AddMilliseconds(task.目标硬直时间);
                 }
             }
         }
-        if (task.清除目标状态 && task.清除状态列表.Count != 0)
+        if (task.ClearTargetStatus && task.ClearStatusList.Count != 0)
         {
             foreach (KeyValuePair<int, HitInfo> item21 in HitList)
             {
@@ -1019,7 +1045,7 @@ public class SkillObject
                 {
                     continue;
                 }
-                foreach (ushort item22 in task.清除状态列表)
+                foreach (ushort item22 in task.ClearStatusList)
                 {
                     item21.Value.Target.RemoveBuffEx(item22);
                 }
@@ -1081,7 +1107,7 @@ public class SkillObject
                     obj.CurrentDirection = Compute.DirectionFromPoint(obj.CurrentPosition, Caster.CurrentPosition);
                     Point point = Compute.GetNextPosition(obj.CurrentPosition, Compute.DirectionFromPoint(Caster.CurrentPosition, obj.CurrentPosition), 1);
                     obj.BusyTime = SEngine.CurrentTime.AddMilliseconds(task.目标位移耗时 * 60);
-                    obj.HardStunTime = SEngine.CurrentTime.AddMilliseconds(task.目标位移耗时 * 60 + task.目标硬直时间);
+                    obj.HitTime = SEngine.CurrentTime.AddMilliseconds(task.目标位移耗时 * 60 + task.目标硬直时间);
                     obj.SendPacket(new 对象被动位移
                     {
                         Position = point,
@@ -1140,7 +1166,7 @@ public class SkillObject
                 {
                     Caster.AddBuff(task.失败Buff编号, Caster);
                 }
-                Caster.HardStunTime = SEngine.CurrentTime.AddMilliseconds(task.自身硬直时间);
+                Caster.HitTime = SEngine.CurrentTime.AddMilliseconds(task.自身硬直时间);
                 SegmentID = b;
             }
             if (b > 1)
@@ -1187,7 +1213,7 @@ public class SkillObject
                     hitter.Value.Target.CurrentDirection = Compute.DirectionFromPoint(hitter.Value.Target.CurrentPosition, Caster.CurrentPosition);
                     ushort num22 = (ushort)(Compute.GetDistance(hitter.Value.Target.CurrentPosition, 终点2) * task.目标位移耗时);
                     hitter.Value.Target.BusyTime = SEngine.CurrentTime.AddMilliseconds(num22 * 60);
-                    hitter.Value.Target.HardStunTime = SEngine.CurrentTime.AddMilliseconds(num22 * 60 + task.目标硬直时间);
+                    hitter.Value.Target.HitTime = SEngine.CurrentTime.AddMilliseconds(num22 * 60 + task.目标硬直时间);
                     hitter.Value.Target.SendPacket(new 对象被动位移
                     {
                         Position = 终点2,
@@ -1218,7 +1244,7 @@ public class SkillObject
     {
         foreach (var kvp in HitList)
         {
-            kvp.Value.Target.被动回复时处理(this, task);
+            kvp.Value.Target.ProcessSkillPassiveResponse(this, task);
         }
         if (task.GainSkillExp && HitList.Count != 0)
         {

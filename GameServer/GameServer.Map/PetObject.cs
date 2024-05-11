@@ -96,18 +96,18 @@ public sealed class PetObject : MapObject
             if (base.BusyTime < value)
             {
                 base.BusyTime = value;
-                HardStunTime = value;
+                AttackTime = value;
             }
         }
     }
 
-    public override DateTime HardStunTime
+    public override DateTime HitTime
     {
-        get { return base.HardStunTime; }
+        get { return base.HitTime; }
         set
         {
-            if (base.HardStunTime < value)
-                base.HardStunTime = value;
+            if (base.HitTime < value)
+                base.HitTime = value;
         }
     }
 
@@ -397,7 +397,7 @@ public sealed class PetObject : MapObject
                 new SkillObject(this, ExitCombatSkill, null, ActionID++, CurrentMap, CurrentPosition, null, CurrentPosition, null);
                 CombatStance = false;
             }
-            else if (Master.PetMode == PetMode.Attack && SEngine.CurrentTime > BusyTime && SEngine.CurrentTime > HardStunTime)
+            else if (Master.PetMode == PetMode.Attack && SEngine.CurrentTime > BusyTime && SEngine.CurrentTime > AttackTime)
             {
                 if (Target.Target == null && !Neighbors.Contains(Master))
                 {

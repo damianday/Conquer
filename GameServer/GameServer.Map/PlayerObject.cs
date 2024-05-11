@@ -390,19 +390,19 @@ public sealed class PlayerObject : MapObject
             if (base.BusyTime < value)
             {
                 base.BusyTime = value;
-                HardStunTime = value;
+                HitTime = value;
             }
         }
     }
 
-    public override DateTime HardStunTime
+    public override DateTime HitTime
     {
-        get { return base.HardStunTime; }
+        get { return base.HitTime; }
         set
         {
-            if (base.HardStunTime < value)
+            if (base.HitTime < value)
             {
-                base.HardStunTime = value;
+                base.HitTime = value;
                 PickUpTime = value.AddMilliseconds(300.0);
             }
         }
@@ -6442,14 +6442,14 @@ public sealed class PlayerObject : MapObject
 
     public void UserTeleportSkill(SkillObject skill, C_07_CalculateTargetTeleportation task)
     {
-        if (Compute.CalculateProbability(task.每级成功概率[skill.SkillLevel]) && !(CurrentMap.GetRandomTeleportPosition(CurrentPosition) == default(Point)))
+        if (Compute.CalculateProbability(task.LevelSuccessProbability[skill.SkillLevel]) && !(CurrentMap.GetRandomTeleportPosition(CurrentPosition) == default(Point)))
         {
             Teleport(ResurrectionMap, AreaType.Random);
         }
         else
         {
-            AddBuff(task.瞬移失败提示, this);
-            AddBuff(task.失败添加Buff, this);
+            AddBuff(task.FailTeleportationTip, this);
+            AddBuff(task.FailTeleportationBuffID, this);
         }
         if (task.GainSkillExp)
         {
@@ -7159,7 +7159,7 @@ public sealed class PlayerObject : MapObject
             SendPacket(new SwitchBattleStancePacket
             {
                 ObjectID = ObjectID,
-                姿态编号 = 姿态编号,
+                StanceID = 姿态编号,
                 触发动作 = 1
             });
         }
@@ -7172,7 +7172,7 @@ public sealed class PlayerObject : MapObject
             SendPacket(new SwitchBattleStancePacket
             {
                 ObjectID = ObjectID,
-                姿态编号 = 姿态编号,
+                StanceID = 姿态编号,
                 触发动作 = 0
             });
         }
@@ -7181,19 +7181,19 @@ public sealed class PlayerObject : MapObject
             SendPacket(new SwitchBattleStancePacket
             {
                 ObjectID = ObjectID,
-                姿态编号 = 姿态编号,
+                StanceID = 姿态编号,
                 触发动作 = 0
             });
         }
     }
 
-    public void 玩家开关技能(ushort 技能编号)
+    public void UserSwitchSkill(ushort id)
     {
         if (Dead)
         {
             return;
         }
-        if (!Skills.TryGetValue(技能编号, out var v) && !被动技能.TryGetValue(技能编号, out v))
+        if (!Skills.TryGetValue(id, out var v) && !被动技能.TryGetValue(id, out v))
         {
             Connection?.Disconnect(new Exception("释放未学会的技能, 尝试断开连接."));
             return;
@@ -7204,22 +7204,22 @@ public sealed class PlayerObject : MapObject
             {
                 continue;
             }
-            if (Cooldowns.TryGetValue(技能编号 | 0x1000000, out var v2) && SEngine.CurrentTime < v2)
+            if (Cooldowns.TryGetValue(id | 0x1000000, out var v2) && SEngine.CurrentTime < v2)
             {
                 Enqueue(new 添加技能冷却
                 {
-                    冷却编号 = (技能编号 | 0x1000000),
+                    冷却编号 = (id | 0x1000000),
                     冷却时间 = (int)(v2 - SEngine.CurrentTime).TotalMilliseconds
                 });
                 Enqueue(new 技能释放完成
                 {
-                    SkillID = 技能编号,
+                    SkillID = id,
                     ActionID = base.ActionID
                 });
                 Enqueue(new GameErrorMessagePacket
                 {
                     ErrorCode = 1281,
-                    Param1 = 技能编号,
+                    Param1 = id,
                     Param2 = base.ActionID
                 });
                 continue;
@@ -7271,9 +7271,9 @@ public sealed class PlayerObject : MapObject
 
         if (Job == GameObjectRace.Assassin)
         {
-            foreach (BuffInfo item in Buffs.Values.ToList())
+            foreach (BuffInfo item in Buffs.Values)
             {
-                if ((item.BuffEffect & BuffEffectType.StatusFlag) != 0 && (item.Template.PlayerState & GameObjectState.Stealth) != 0)
+                if (item.BuffEffect.HasFlag(BuffEffectType.StatusFlag) && item.Template.PlayerState.HasFlag(GameObjectState.Stealth))
                 {
                     RemoveBuffEx(item.ID.V);
                 }
@@ -7326,12 +7326,12 @@ public sealed class PlayerObject : MapObject
                 });
                 break;
             }
-            if (gskill.CheckStunStatus && SEngine.CurrentTime < HardStunTime)
+            if (gskill.CheckStunStatus && SEngine.CurrentTime < HitTime)
             {
                 Enqueue(new 添加技能冷却
                 {
                     冷却编号 = (skillID | 0x1000000),
-                    冷却时间 = (int)(HardStunTime - SEngine.CurrentTime).TotalMilliseconds
+                    冷却时间 = (int)(HitTime - SEngine.CurrentTime).TotalMilliseconds
                 });
                 Enqueue(new 技能释放完成
                 {
@@ -14463,41 +14463,38 @@ public sealed class PlayerObject : MapObject
     {
     }
 
-    public void 玩家扩展背包(byte 背包类型, byte 扩展大小)
+    public void UserExtendGrid(byte grid, byte newSize)
     {
-        if (扩展大小 == 0)
+        if (newSize == 0)
         {
-            Connection?.Disconnect(new Exception("错误操作: 玩家扩展背包.  错误: 扩展参数错误."));
+            Connection?.Disconnect(new Exception("Error: The player expanded the backpack.  Error: Expansion parameter error"));
             return;
         }
-        if (背包类型 == 1 && InventorySize + 扩展大小 > 64)
+        if (grid == 1 && InventorySize + newSize > 64)
         {
-            Connection?.Disconnect(new Exception("错误操作: 玩家扩展背包.  错误: 背包超出限制."));
+            Connection?.Disconnect(new Exception("Error: The player expanded the backpack.  Error: The backpack has exceeded its limit."));
             return;
         }
-        if (背包类型 == 2 && WarehouseSize + 扩展大小 > 144)
+        if (grid == 2 && WarehouseSize + newSize > 144)
         {
-            Connection?.Disconnect(new Exception("错误操作: 玩家扩展背包.  错误: 仓库超出限制."));
+            Connection?.Disconnect(new Exception("Error: The player expanded the backpack.  Error: Warehouse limit exceeded."));
             return;
         }
-        if (背包类型 == 7 && 资源背包大小 + 扩展大小 > 216)
+        if (grid == 7 && 资源背包大小 + newSize > 216)
         {
-            Connection?.Disconnect(new Exception("错误操作: 玩家扩展资源背包.  错误: 资源背包超出限制."));
+            Connection?.Disconnect(new Exception("Bug: Player expanding resource pack.  Error: The resource pack has exceeded its limit."));
             return;
         }
-        switch (背包类型)
+        switch (grid)
         {
             case 7:
                 if (Settings.Default.资源包开关 == 1)
                 {
                     int num5 = 10000;
-                    int num6 = 扩展大小 * num5;
+                    int num6 = newSize * num5;
                     if (Gold < num6)
                     {
-                        Enqueue(new GameErrorMessagePacket
-                        {
-                            ErrorCode = 1821
-                        });
+                        Enqueue(new GameErrorMessagePacket { ErrorCode = 1821 });
                         break;
                     }
                     Gold -= num6;
@@ -14505,7 +14502,7 @@ public sealed class PlayerObject : MapObject
                     {
                         Description = 全部货币描述()
                     });
-                    资源背包大小 += 扩展大小;
+                    资源背包大小 += newSize;
                     Enqueue(new 背包容量改变
                     {
                         Grid = 7,
@@ -14515,14 +14512,11 @@ public sealed class PlayerObject : MapObject
                 break;
             case 2:
                 {
-                    int num3 = Compute.扩展仓库(WarehouseSize - 16);
-                    int num4 = Compute.扩展仓库(WarehouseSize + 扩展大小 - 16) - num3;
+                    int num3 = Compute.ExtendWarehouse(WarehouseSize - 16);
+                    int num4 = Compute.ExtendWarehouse(WarehouseSize + newSize - 16) - num3;
                     if (Gold < num4)
                     {
-                        Enqueue(new GameErrorMessagePacket
-                        {
-                            ErrorCode = 1821
-                        });
+                        Enqueue(new GameErrorMessagePacket { ErrorCode = 1821 });
                         break;
                     }
                     Gold -= num4;
@@ -14530,7 +14524,7 @@ public sealed class PlayerObject : MapObject
                     {
                         Description = 全部货币描述()
                     });
-                    WarehouseSize += 扩展大小;
+                    WarehouseSize += newSize;
                     Enqueue(new 背包容量改变
                     {
                         Grid = 2,
@@ -14540,14 +14534,11 @@ public sealed class PlayerObject : MapObject
                 }
             case 1:
                 {
-                    int num = Compute.扩展背包(InventorySize - 32);
-                    int num2 = Compute.扩展背包(InventorySize + 扩展大小 - 32) - num;
+                    int num = Compute.ExtendInventory(InventorySize - 32);
+                    int num2 = Compute.ExtendInventory(InventorySize + newSize - 32) - num;
                     if (Gold < num2)
                     {
-                        Enqueue(new GameErrorMessagePacket
-                        {
-                            ErrorCode = 1821
-                        });
+                        Enqueue(new GameErrorMessagePacket { ErrorCode = 1821 });
                         break;
                     }
                     Gold -= num2;
@@ -14555,7 +14546,7 @@ public sealed class PlayerObject : MapObject
                     {
                         Description = 全部货币描述()
                     });
-                    InventorySize += 扩展大小;
+                    InventorySize += newSize;
                     Enqueue(new 背包容量改变
                     {
                         Grid = 1,
@@ -14571,7 +14562,7 @@ public sealed class PlayerObject : MapObject
         Connection?.Disconnect(new Exception("错误操作: 特修单件装备.  错误: 功能已经屏蔽."));
     }
 
-    public void 商店修理单件(byte 背包类型, byte 装备位置)
+    public void UserRepairItem(byte grid, byte location)
     {
         if (Dead || StallState > 0 || TradeState >= 3)
         {
@@ -14587,11 +14578,11 @@ public sealed class PlayerObject : MapObject
         }
         else if (CurrentMap == CurrentNPC.CurrentMap && GetDistance(CurrentNPC) <= 12)
         {
-            switch (背包类型)
+            switch (grid)
             {
                 case 1:
                     {
-                        if (!Inventory.TryGetValue(装备位置, out var v2))
+                        if (!Inventory.TryGetValue(location, out var v2))
                         {
                             Enqueue(new GameErrorMessagePacket
                             {
@@ -14638,7 +14629,7 @@ public sealed class PlayerObject : MapObject
                     }
                 case 0:
                     {
-                        if (!Equipment.TryGetValue(装备位置, out var v))
+                        if (!Equipment.TryGetValue(location, out var v))
                         {
                             Enqueue(new GameErrorMessagePacket
                             {
@@ -14689,7 +14680,7 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 商店修理全部()
+    public void UserRepairAllItems()
     {
         if (Dead || StallState > 0 || TradeState >= 3)
         {
@@ -25444,7 +25435,7 @@ public sealed class PlayerObject : MapObject
                 SendPacket(new SwitchBattleStancePacket
                 {
                     ObjectID = ObjectID,
-                    姿态编号 = 1,
+                    StanceID = 1,
                     触发动作 = 1
                 });
             }

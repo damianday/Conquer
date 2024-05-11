@@ -30,4 +30,12 @@ public sealed class C_03_CalculateObjectDisplacement : SkillTask
     public SpecifyTargetType 限定附加类型;
     public float 附加Buff概率;
     public int 限定锚点距离;
+
+    public ushort 成功减少节点;
+    public int 每格减少时间;
+    public int 失败触发节点;
+    public int 角色位移方式;
+    public bool 互换目标坐标;
+    public int 互换最大距离;
+    public bool 反向推动目标;
 }

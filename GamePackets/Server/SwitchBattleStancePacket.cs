@@ -7,7 +7,7 @@ public sealed class SwitchBattleStancePacket : GamePacket
     public int ObjectID;
 
     [FieldAttribute(Position = 6, Length = 1)]
-    public byte 姿态编号;
+    public byte StanceID;
 
     [FieldAttribute(Position = 7, Length = 1)]
     public byte 触发动作;

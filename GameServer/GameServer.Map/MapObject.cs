@@ -77,7 +77,7 @@ public abstract class MapObject
     public virtual ushort CurrentHeight => CurrentMap.GetTerrainHeight(CurrentPosition);
 
     public virtual DateTime BusyTime { get; set; }
-    public virtual DateTime HardStunTime { get; set; }
+    public virtual DateTime HitTime { get; set; }
     public virtual DateTime WalkTime { get; set; }
     public virtual DateTime RunTime { get; set; }
 
@@ -1105,17 +1105,17 @@ public abstract class MapObject
         }
     }
 
-    public void 被技能命中处理(SkillObject skill, C_01_CalculateHitTarget 参数)
+    public void ProcessSkillHit(SkillObject skill, C_01_CalculateHitTarget task)
     {
         MapObject caster = ((skill.Caster is TrapObject trap) ? trap.Caster : skill.Caster);
         if (skill.HitList.ContainsKey(ObjectID) || 
             !CanBeHit || 
             (this != caster && !Neighbors.Contains(caster)) || 
-            skill.HitList.Count >= 参数.HitsLimit || 
-            (参数.LimitTargetRelationship & caster.GetRelationship(this)) == 0 || 
-            (参数.LimitTargetType & ObjectType) == 0 || 
-            !IsValidTarget(skill.Caster, 参数.LimitSpecificType) || 
-            ((参数.LimitTargetRelationship & GameObjectRelationship.Hostile) != 0 && (CheckStatus(GameObjectState.Invincible) || ((this is PlayerObject || this is PetObject) && (caster is PlayerObject || caster is PetObject) && (CurrentMap.IsSafeArea(CurrentPosition) || caster.CurrentMap.IsSafeArea(caster.CurrentPosition))) || (caster is MonsterObject && CurrentMap.IsSafeArea(CurrentPosition)))) || 
+            skill.HitList.Count >= task.HitsLimit || 
+            (task.LimitTargetRelationship & caster.GetRelationship(this)) == 0 || 
+            (task.LimitTargetType & ObjectType) == 0 || 
+            !IsValidTarget(skill.Caster, task.LimitSpecificType) || 
+            ((task.LimitTargetRelationship & GameObjectRelationship.Hostile) != 0 && (CheckStatus(GameObjectState.Invincible) || ((this is PlayerObject || this is PetObject) && (caster is PlayerObject || caster is PetObject) && (CurrentMap.IsSafeArea(CurrentPosition) || caster.CurrentMap.IsSafeArea(caster.CurrentPosition))) || (caster is MonsterObject && CurrentMap.IsSafeArea(CurrentPosition)))) || 
             (this is MonsterObject 怪物实例2 && (怪物实例2.MonID == 8618 || 怪物实例2.MonID == 8621) && ((caster is PlayerObject 玩家实例2 && 玩家实例2.Guild != null && 玩家实例2.Guild == SystemInfo.Info.OccupyGuild.V) || (caster is PetObject 宠物实例2 && 宠物实例2.Master != null && 宠物实例2.Master.Guild != null && 宠物实例2.Master.Guild == SystemInfo.Info.OccupyGuild.V))) || 
             (CurrentLevel <= Settings.Default.NoobProtectionLevel && ObjectType == GameObjectType.Player && (CurrentMap.MapID == Settings.Default.新手地图保护1 || CurrentMap.MapID == Settings.Default.新手地图保护2 || CurrentMap.MapID == Settings.Default.新手地图保护3 || CurrentMap.MapID == Settings.Default.新手地图保护4 || CurrentMap.MapID == Settings.Default.新手地图保护5 || CurrentMap.MapID == Settings.Default.新手地图保护6 || CurrentMap.MapID == Settings.Default.新手地图保护7 || CurrentMap.MapID == Settings.Default.新手地图保护8 || CurrentMap.MapID == Settings.Default.新手地图保护9 || CurrentMap.MapID == Settings.Default.新手地图保护10)))
         {
@@ -1125,7 +1125,7 @@ public abstract class MapObject
         float hit = 0f;
         int agility = 0;
         float evade = 0f;
-        switch (参数.SkillEvasion)
+        switch (task.SkillEvasion)
         {
             case SkillEvasionType.SkillCannotBeEvaded:
                 accuracy = 1;
@@ -1168,7 +1168,7 @@ public abstract class MapObject
         }
         HitInfo value = new HitInfo(this)
         {
-            SkillFeedback = (Compute.CalculateHit(accuracy, agility, hit, evade) ? 参数.SkillHitFeedback : SkillHitFeedback.Miss)
+            SkillFeedback = (Compute.CalculateHit(accuracy, agility, hit, evade) ? task.SkillHitFeedback : SkillHitFeedback.Miss)
         };
         skill.HitList.Add(ObjectID, value);
         int num5 = SEngine.Random.Next(100);
@@ -1178,7 +1178,7 @@ public abstract class MapObject
         }
     }
 
-    public void 被动受伤时处理(SkillObject skill, C_02_CalculateTargetDamage 参数, HitInfo 详情, float 伤害系数)
+    public void ProcessSkillPassiveDamage(SkillObject skill, C_02_CalculateTargetDamage task, HitInfo 详情, float 伤害系数)
     {
         if (Settings.Default.CurrentVersion >= 1 && skill.Caster is PlayerObject 玩家实例2 && 玩家实例2.ParalysisRing && Compute.CalculateProbability(Settings.Default.自定义麻痹几率))
         {
@@ -1214,35 +1214,35 @@ public abstract class MapObject
 
         if ((详情.SkillFeedback & SkillHitFeedback.Miss) == 0)
         {
-            if (参数.技能斩杀类型 != SpecifyTargetType.None && Compute.CalculateProbability(参数.技能斩杀概率) && IsValidTarget(caster, 参数.技能斩杀类型))
+            if (task.技能斩杀类型 != SpecifyTargetType.None && Compute.CalculateProbability(task.技能斩杀概率) && IsValidTarget(caster, task.技能斩杀类型))
             {
                 详情.SkillDamage = CurrentHP;
             }
             else
             {
-                int num = ((参数.技能伤害基数?.Length > skill.SkillLevel) ? 参数.技能伤害基数[skill.SkillLevel] : 0);
-                float num2 = ((参数.技能伤害系数?.Length > skill.SkillLevel) ? 参数.技能伤害系数[skill.SkillLevel] : 0f);
+                int num = ((task.技能伤害基数?.Length > skill.SkillLevel) ? task.技能伤害基数[skill.SkillLevel] : 0);
+                float num2 = ((task.技能伤害系数?.Length > skill.SkillLevel) ? task.技能伤害系数[skill.SkillLevel] : 0f);
                 if (this is MonsterObject)
                 {
                     num += caster[Stat.MonsterDamage];
                 }
                 int num3 = 0;
                 float num4 = 0f;
-                if (参数.技能增伤类型 != SpecifyTargetType.None && IsValidTarget(caster, 参数.技能增伤类型))
+                if (task.技能增伤类型 != SpecifyTargetType.None && IsValidTarget(caster, task.技能增伤类型))
                 {
-                    num3 = 参数.技能增伤基数;
-                    num4 = 参数.技能增伤系数;
+                    num3 = task.技能增伤基数;
+                    num4 = task.技能增伤系数;
                 }
                 int num5 = 0;
                 float num6 = 0f;
-                if (参数.技能破防概率 > 0f && Compute.CalculateProbability(参数.技能破防概率))
+                if (task.技能破防概率 > 0f && Compute.CalculateProbability(task.技能破防概率))
                 {
-                    num5 = 参数.技能破防基数;
-                    num6 = 参数.技能破防系数;
+                    num5 = task.技能破防基数;
+                    num6 = task.技能破防系数;
                 }
                 int num7 = 0;
                 int num8 = 0;
-                switch (参数.技能伤害类型)
+                switch (task.技能伤害类型)
                 {
                     case SkillDamageType.Attack:
                         num8 = Compute.CalculateDefence(this[Stat.MinDef], this[Stat.MaxDef]);
@@ -1285,7 +1285,7 @@ public abstract class MapObject
                         continue;
                     }
                     bool flag = false;
-                    switch (参数.技能伤害类型)
+                    switch (task.技能伤害类型)
                     {
                         case SkillDamageType.Magic:
                         case SkillDamageType.Taoism:
@@ -1355,7 +1355,7 @@ public abstract class MapObject
                         continue;
                     }
                     bool flag2 = false;
-                    switch (参数.技能伤害类型)
+                    switch (task.技能伤害类型)
                     {
                         case SkillDamageType.Magic:
                         case SkillDamageType.Taoism:
@@ -1463,7 +1463,7 @@ public abstract class MapObject
 
         if (this is MonsterObject 怪物实例3)
         {
-            怪物实例3.HardStunTime = SEngine.CurrentTime.AddMilliseconds(参数.目标硬直时间);
+            怪物实例3.AttackTime = SEngine.CurrentTime.AddMilliseconds(task.目标硬直时间);
             if (caster is PlayerObject || caster is PetObject)
             {
                 怪物实例3.Target.Add(caster, SEngine.CurrentTime.AddMilliseconds(怪物实例3.HateTime), 详情.SkillDamage);
@@ -1542,7 +1542,7 @@ public abstract class MapObject
                 {
                     if (item6.Neighbors.Contains(this))
                     {
-                        item6.Target.Add(this, SEngine.CurrentTime.AddMilliseconds(item6.HateDuration), 参数.增加宠物仇恨 ? 详情.SkillDamage : 0);
+                        item6.Target.Add(this, SEngine.CurrentTime.AddMilliseconds(item6.HateDuration), task.增加宠物仇恨 ? 详情.SkillDamage : 0);
                     }
                 }
             }
@@ -1598,17 +1598,18 @@ public abstract class MapObject
         }
     }
 
-    public void 被动回复时处理(SkillObject skill, C_05_CalculateTargetReply 参数)
+    public void ProcessSkillPassiveResponse(SkillObject skill, C_05_CalculateTargetReply task)
     {
         if (!Dead && CurrentMap == skill.Caster.CurrentMap && (this == skill.Caster || Neighbors.Contains(skill.Caster)))
         {
             MapObject caster = ((skill.Caster is TrapObject trap) ? trap.Caster : skill.Caster);
-            int num = ((参数.体力回复次数?.Length > skill.SkillLevel) ? 参数.体力回复次数[skill.SkillLevel] : 0);
-            int num2 = ((参数.HealthRecoveryBase?.Length > skill.SkillLevel) ? 参数.HealthRecoveryBase[skill.SkillLevel] : 0);
-            float num3 = ((参数.道术叠加次数?.Length > skill.SkillLevel) ? 参数.道术叠加次数[skill.SkillLevel] : 0f);
-            float num4 = ((参数.道术叠加基数?.Length > skill.SkillLevel) ? 参数.道术叠加基数[skill.SkillLevel] : 0f);
-            int num5 = ((参数.立即回复基数?.Length > skill.SkillLevel && caster == this) ? 参数.立即回复基数[skill.SkillLevel] : 0);
-            float num6 = ((!(参数.立即回复系数?.Length > skill.SkillLevel) || caster != this) ? 0f : 参数.立即回复系数[skill.SkillLevel]);
+            int num = ((task.HealthRestoreCount?.Length > skill.SkillLevel) ? task.HealthRestoreCount[skill.SkillLevel] : 0);
+            int num2 = ((task.HealthRecoveryBase?.Length > skill.SkillLevel) ? task.HealthRecoveryBase[skill.SkillLevel] : 0);
+            float num3 = ((task.道术叠加次数?.Length > skill.SkillLevel) ? task.道术叠加次数[skill.SkillLevel] : 0f);
+            float num4 = ((task.道术叠加基数?.Length > skill.SkillLevel) ? task.道术叠加基数[skill.SkillLevel] : 0f);
+            int num5 = ((task.立即回复基数?.Length > skill.SkillLevel && caster == this) ? task.立即回复基数[skill.SkillLevel] : 0);
+            float num6 = ((!(task.立即回复系数?.Length > skill.SkillLevel) || caster != this) ? 0f : task.立即回复系数[skill.SkillLevel]);
+            
             if (num3 > 0f)
             {
                 num += (int)(num3 * (float)Compute.CalculateAttack(caster[Stat.MinSC], caster[Stat.MaxSC], caster[Stat.Luck]));
@@ -1687,38 +1688,9 @@ public abstract class MapObject
         if (this is PlayerObject player)
         {
             player.CurrentTrade?.BreakTrade();
-            foreach (BuffInfo item in Buffs.Values.ToList())
+            foreach (BuffInfo buff in Buffs.Values)
             {
-                if ((item.BuffEffect & BuffEffectType.CreateTrap) != 0 && SkillTrap.DataSheet.TryGetValue(item.Template.TriggerTrapSkills, out var 陷阱模板2))
-                {
-                    int num = 0;
-                    while (true)
-                    {
-                        Point point = Compute.GetFrontPosition(CurrentPosition, location, num);
-                        if (point == location)
-                            break;
-                        Point[] array = Compute.CalculateGrid(point, CurrentDirection, item.Template.NumberTrapsTriggered);
-                        foreach (Point 坐标2 in array)
-                        {
-                            if (CurrentMap.ValidTerrain(坐标2) && CurrentMap[坐标2].FirstOrDefault((MapObject O) => O is TrapObject 陷阱实例3 && 陷阱实例3.GroupID != 0 && 陷阱实例3.GroupID == 陷阱模板2.GroupID) == null)
-                            {
-                                Traps.Add(new TrapObject(this, 陷阱模板2, CurrentMap, 坐标2));
-                            }
-                        }
-                        num++;
-                    }
-                }
-                if ((item.BuffEffect & BuffEffectType.StatusFlag) != 0 && (item.Template.PlayerState & GameObjectState.Invisible) != 0)
-                {
-                    RemoveBuffEx(item.ID.V);
-                }
-            }
-        }
-        else if (this is PetObject)
-        {
-            foreach (BuffInfo item2 in Buffs.Values.ToList())
-            {
-                if ((item2.BuffEffect & BuffEffectType.CreateTrap) != 0 && SkillTrap.DataSheet.TryGetValue(item2.Template.TriggerTrapSkills, out var 陷阱模板))
+                if ((buff.BuffEffect & BuffEffectType.CreateTrap) != 0 && SkillTrap.DataSheet.TryGetValue(buff.Template.TriggerTrapSkills, out var trap))
                 {
                     var n = 0;
                     while (true)
@@ -1726,20 +1698,49 @@ public abstract class MapObject
                         var next = Compute.GetFrontPosition(CurrentPosition, location, n);
                         if (next == location)
                             break;
-                        var grid = Compute.CalculateGrid(next, CurrentDirection, item2.Template.NumberTrapsTriggered);
-                        foreach (var point in grid)
+                        var grid = Compute.CalculateGrid(next, CurrentDirection, buff.Template.NumberTrapsTriggered);
+                        foreach (Point point in grid)
                         {
-                            if (CurrentMap.ValidTerrain(point) && CurrentMap[point].FirstOrDefault((MapObject O) => O is TrapObject 陷阱实例2 && 陷阱实例2.GroupID != 0 && 陷阱实例2.GroupID == 陷阱模板.GroupID) == null)
+                            if (CurrentMap.ValidTerrain(point) && CurrentMap[point].FirstOrDefault(O => O is TrapObject 陷阱实例3 && 陷阱实例3.GroupID != 0 && 陷阱实例3.GroupID == trap.GroupID) == null)
                             {
-                                Traps.Add(new TrapObject(this, 陷阱模板, CurrentMap, point));
+                                Traps.Add(new TrapObject(this, trap, CurrentMap, point));
                             }
                         }
                         n++;
                     }
                 }
-                if ((item2.BuffEffect & BuffEffectType.StatusFlag) != 0 && (item2.Template.PlayerState & GameObjectState.Invisible) != 0)
+                if ((buff.BuffEffect & BuffEffectType.StatusFlag) != 0 && (buff.Template.PlayerState & GameObjectState.Invisible) != 0)
                 {
-                    RemoveBuffEx(item2.ID.V);
+                    RemoveBuffEx(buff.ID.V);
+                }
+            }
+        }
+        else if (this is PetObject)
+        {
+            foreach (BuffInfo buff in Buffs.Values)
+            {
+                if ((buff.BuffEffect & BuffEffectType.CreateTrap) != 0 && SkillTrap.DataSheet.TryGetValue(buff.Template.TriggerTrapSkills, out var trap))
+                {
+                    var n = 0;
+                    while (true)
+                    {
+                        var next = Compute.GetFrontPosition(CurrentPosition, location, n);
+                        if (next == location)
+                            break;
+                        var grid = Compute.CalculateGrid(next, CurrentDirection, buff.Template.NumberTrapsTriggered);
+                        foreach (var point in grid)
+                        {
+                            if (CurrentMap.ValidTerrain(point) && CurrentMap[point].FirstOrDefault(O => O is TrapObject 陷阱实例2 && 陷阱实例2.GroupID != 0 && 陷阱实例2.GroupID == trap.GroupID) == null)
+                            {
+                                Traps.Add(new TrapObject(this, trap, CurrentMap, point));
+                            }
+                        }
+                        n++;
+                    }
+                }
+                if ((buff.BuffEffect & BuffEffectType.StatusFlag) != 0 && (buff.Template.PlayerState & GameObjectState.Invisible) != 0)
+                {
+                    RemoveBuffEx(buff.ID.V);
                 }
             }
         }

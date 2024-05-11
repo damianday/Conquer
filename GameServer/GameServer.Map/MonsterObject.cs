@@ -53,18 +53,18 @@ public sealed class MonsterObject : MapObject
             if (base.BusyTime < value)
             {
                 base.BusyTime = value;
-                HardStunTime = value;
+                HitTime = value;
             }
         }
     }
 
-    public override DateTime HardStunTime
+    public override DateTime HitTime
     {
-        get { return base.HardStunTime; }
+        get { return base.HitTime; }
         set
         {
-            if (base.HardStunTime < value)
-                base.HardStunTime = value;
+            if (base.HitTime < value)
+                base.HitTime = value;
         }
     }
 
@@ -329,7 +329,7 @@ public sealed class MonsterObject : MapObject
                 CurrentHP += HealAmount;
             }
 
-            if (SEngine.CurrentTime > BusyTime && SEngine.CurrentTime > HardStunTime)
+            if (SEngine.CurrentTime > BusyTime && SEngine.CurrentTime > HitTime)
             {
                 if (EnterCombatSkill != null && !CombatStance && Target.TargetList.Count != 0)
                 {

@@ -8,36 +8,35 @@ public static class Compute
 {
     public static readonly DateTime SystemTime;
 
-    public static int 扩展背包(int 扩展次数, int 当前消耗 = 0, int 当前位置 = 1, int 累计消耗 = 0)
+    public static int ExtendInventory(int extendCount, int currentCost = 0, int 当前位置 = 1, int 累计消耗 = 0)
     {
-        if (当前位置 > 扩展次数)
-        {
+        if (当前位置 > extendCount)
             return 累计消耗;
-        }
+
         if (当前位置 <= 1)
         {
             int num = 累计消耗;
-            当前消耗 = 2000;
+            currentCost = 2000;
             累计消耗 = num + 2000;
         }
         else if (当前位置 <= 16)
         {
-            累计消耗 += (当前消耗 += 1000);
+            累计消耗 += (currentCost += 1000);
         }
         else if (当前位置 == 17)
         {
             int num2 = 累计消耗;
-            当前消耗 = 20000;
+            currentCost = 20000;
             累计消耗 = num2 + 20000;
         }
         else
         {
-            累计消耗 += (当前消耗 += 10000);
+            累计消耗 += (currentCost += 10000);
         }
-        return 扩展背包(扩展次数, 当前消耗, 当前位置 + 1, 累计消耗);
+        return ExtendInventory(extendCount, currentCost, 当前位置 + 1, 累计消耗);
     }
 
-    public static int 扩展仓库(int 扩展次数, int 当前消耗 = 0, int 当前位置 = 1, int 累计消耗 = 0)
+    public static int ExtendWarehouse(int 扩展次数, int 当前消耗 = 0, int 当前位置 = 1, int 累计消耗 = 0)
     {
         if (当前位置 > 扩展次数)
         {
@@ -63,7 +62,7 @@ public static class Compute
         {
             累计消耗 += (当前消耗 += 10000);
         }
-        return 扩展仓库(扩展次数, 当前消耗, 当前位置 + 1, 累计消耗);
+        return ExtendWarehouse(扩展次数, 当前消耗, 当前位置 + 1, 累计消耗);
     }
 
     public static int 扩展资源背包(int 扩展次数, int 当前消耗 = 0, int 当前位置 = 1, int 累计消耗 = 0)

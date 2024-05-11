@@ -46,8 +46,13 @@ public sealed class GameSkill
     public int TargetClosestDistance;
     public int TargetFurthestDistance;
     public bool AutomaticAssembly;
+
     public ushort 友方技能编号;
-    public bool 增加技能经验;
+    public bool IncreaseSkillExperience; // 增加技能经验
+    public bool VerifyOwnHealthLevel; // 验证自身血量
+    public float OwnHealthLevelMinimum; // 自身血量低于
+    public bool ActionInterrupt; // 动作打断
+
     public SortedDictionary<int, SkillTask> Nodes = new SortedDictionary<int, SkillTask>();
 
     public static void LoadData()

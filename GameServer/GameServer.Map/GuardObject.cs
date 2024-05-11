@@ -40,19 +40,19 @@ public sealed class GuardObject : MapObject
         {
             if (base.BusyTime < value)
             {
-                HardStunTime = value;
+                HitTime = value;
                 base.BusyTime = value;
             }
         }
     }
 
-    public override DateTime HardStunTime
+    public override DateTime HitTime
     {
-        get { return base.HardStunTime; }
+        get { return base.HitTime; }
         set
         {
-            if (base.HardStunTime < value)
-                base.HardStunTime = value;
+            if (base.HitTime < value)
+                base.HitTime = value;
         }
     }
 
@@ -189,7 +189,7 @@ public sealed class GuardObject : MapObject
 
                 RecoveryTime = SEngine.CurrentTime.AddSeconds(5.0);
             }
-            if (ActiveAttackTarget && SEngine.CurrentTime > BusyTime && SEngine.CurrentTime > HardStunTime)
+            if (ActiveAttackTarget && SEngine.CurrentTime > BusyTime && SEngine.CurrentTime > HitTime)
             {
                 if (UpdateTarget())
                 {

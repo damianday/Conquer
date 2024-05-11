@@ -1,9 +1,15 @@
-namespace GameServer.Template;
+﻿namespace GameServer.Template;
 
 public sealed class C_00_CalculateSkillAnchor : SkillTask
 {
-    public bool 计算当前位置;
-    public bool 计算当前方向;
+    public bool CalculateCurrentPosition;
+    public bool CalculateCurrentDirection;
+    public int MinDistance;
     public int MaxDistance;
-    public int 技能最近距离;
+
+    public bool 计算BUFF目标;
+    public bool 验证BUFF来源;
+    public ushort 目标BUFF编号;
+    public ushort 搜索目标范围;
+    public bool 目标前方位置;
 }

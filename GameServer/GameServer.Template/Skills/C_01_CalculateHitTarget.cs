@@ -4,30 +4,36 @@ namespace GameServer.Template;
 
 public sealed class C_01_CalculateHitTarget : SkillTask
 {
-    public bool 清空命中列表;
-    public bool 技能能否穿墙;
+    public bool ClearHitList;
+    public bool PassThroughWall;
     public bool 技能能否招架;
-    public SkillLockType 技能锁定方式;
+    public SkillLockType SkillLockMode;
     public SkillEvasionType SkillEvasion;
     public SkillHitFeedback SkillHitFeedback;
-    public ObjectSize 技能范围类型;
+    public ObjectSize SkillRangeType;
     public bool 放空结束技能;
-    public bool 发送中断通知;
+    public bool SendInterruptNotification;
     public bool 补发释放通知;
-    public bool 技能命中通知;
-    public bool 技能扩展通知;
-    public bool 计算飞行耗时;
-    public int 单格飞行耗时;
+    public bool SendSkillHitNotification;
+    public bool SendSkillExpansionNotification;
+    public bool CalculateFlightTime;
+    public int SingleCellFlightTime;
     public int HitsLimit;
     public GameObjectType LimitTargetType;
     public GameObjectRelationship LimitTargetRelationship;
     public SpecifyTargetType LimitSpecificType;
-    public SpecifyTargetType 攻速提升类型;
-    public int 攻速提升幅度;
-    public bool 触发被动技能;
-    public float 触发被动概率;
+    public SpecifyTargetType AttackSpeedIncreaseType;
+    public int AttackSpeedIncrease;
+    public bool TriggerPassiveSkills;
+    public float TriggerPassiveSkillsProbability;
     public bool GainSkillExp;
     public ushort ExpSkillID;
-    public bool 清除目标状态;
-    public HashSet<ushort> 清除状态列表;
+    public bool ClearTargetStatus;
+    public HashSet<ushort> ClearStatusList;
+
+    //public CustomRange // 个性技能范围;
+    public bool EnableCustomRange;
+    public bool CalculateObjectDirection;
+    public bool 计算锚点自身;
+    public int 宠物模板编号;
 }

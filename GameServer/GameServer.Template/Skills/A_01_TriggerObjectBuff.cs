@@ -6,8 +6,8 @@ public sealed class A_01_TriggerObjectBuff : SkillTask
     public ushort 触发Buff编号;
     public ushort 伴生Buff编号;
     public float Buff触发概率;
-    public bool 验证铭文技能;
-    public ushort 所需铭文编号;
+    public bool ValidateInscriptionSkill;
+    public ushort RequiredInscriptionID;
     public bool 同组铭文无效;
     public bool 验证自身Buff;
     public ushort 自身Buff编号;
@@ -20,7 +20,11 @@ public sealed class A_01_TriggerObjectBuff : SkillTask
     public ushort 目标Buff编号;
     public byte 所需Buff层数;
     public bool VerifyTargetType;
-    public SpecifyTargetType 所需目标类型;
+    public SpecifyTargetType RequiredTarget;
     public bool GainSkillExp;
     public ushort ExpSkillID;
+
+    public bool 验证效果取反;
+    public ushort 增减目标BUFF;
+    public int 增减BUFF层数;
 }

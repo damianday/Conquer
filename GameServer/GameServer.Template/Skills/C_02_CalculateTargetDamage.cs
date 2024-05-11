@@ -41,6 +41,16 @@ public sealed class C_02_CalculateTargetDamage : SkillTask
     public bool 扣除武器持久;
     public bool GainSkillExp;
     public ushort ExpSkillID;
-    public bool 清除目标状态;
-    public HashSet<ushort> 清除状态列表;
+    public bool ClearTargetStatus;
+    public HashSet<ushort> ClearStatusList;
+
+    public bool 伤害不计神圣;
+    public ushort AdditionalEffectID;
+    public bool 命中概率减少;
+    public float 命中减少概率;
+    public float 点爆标记增伤;
+    public bool 不吸目标蓝量;
+    public float[] 技能吸蓝系数;
+    public bool 蓝不足转伤害;
+    public float[] 技能吸血系数;
 }

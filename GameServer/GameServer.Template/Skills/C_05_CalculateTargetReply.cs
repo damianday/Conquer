@@ -2,7 +2,7 @@ namespace GameServer.Template;
 
 public sealed class C_05_CalculateTargetReply : SkillTask
 {
-    public int[] 体力回复次数;
+    public int[] HealthRestoreCount;
     public float[] 道术叠加次数;
     public byte[] HealthRecoveryBase;
     public float[] 道术叠加基数;

@@ -533,7 +533,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.玩家开关技能(P.技能编号);
+            Player.UserSwitchSkill(P.技能编号);
         }
     }
 
@@ -706,7 +706,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.玩家扩展背包(P.背包类型, P.扩展大小);
+            Player.UserExtendGrid(P.背包类型, P.扩展大小);
         }
     }
 
@@ -782,7 +782,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.商店修理单件(P.背包类型, P.物品位置);
+            Player.UserRepairItem(P.背包类型, P.物品位置);
         }
     }
 
@@ -794,7 +794,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.商店修理全部();
+            Player.UserRepairAllItems();
         }
     }
 
