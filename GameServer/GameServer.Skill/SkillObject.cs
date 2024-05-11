@@ -588,31 +588,6 @@ public class SkillObject
             FlyTime = Compute.GetDistance(CastLocation, TargetLocation) * task.SingleCellFlightTime;
         }
 
-        /*if (task.技能命中通知)
-        {
-            Caster.SendPacket(new 触发技能正常
-            {
-                ObjectID = !TargetBorrow || Target == null ? Caster.ObjectID : Target.ObjectID,
-                SkillID = SkillID,
-                SkillLevel = SkillLevel,
-                InscriptionID = InscriptionID,
-                ActionID = ActionID,
-                HitDescription = HitInfo.HitDescription(HitList, FlyTime)
-            });
-        }
-        if (task.技能扩展通知)
-        {
-            Caster.SendPacket(new 触发技能扩展
-            {
-                ObjectID = !TargetBorrow || Target == null ? Caster.ObjectID : Target.ObjectID,
-                SkillID = SkillID,
-                SkillLevel = SkillLevel,
-                InscriptionID = InscriptionID,
-                ActionID = ActionID,
-                HitDescription = HitInfo.HitDescription(HitList, FlyTime)
-            });
-        }*/
-
         if (task.HitExtensionNotification)
         {
             Caster.SendPacket(new 触发技能扩展
@@ -731,9 +706,8 @@ public class SkillObject
     private void ProcessC_01_CalculateHitTarget(C_01_CalculateHitTarget task)
     {
         if (task.ClearHitList)
-        {
-            HitList = new Dictionary<int, HitInfo>();
-        }
+            HitList.Clear();
+        
         if (task.PassThroughWall || !CurrentMap.IsTerrainBlocked(CastLocation, TargetLocation))
         {
             switch (task.SkillLockMode)
@@ -1254,26 +1228,32 @@ public class SkillObject
 
     private void ProcessC_06_CalculatePetSummoning(C_06_CalculatePetSummoning task)
     {
+        if (string.IsNullOrEmpty(task.PetName))
+            return;
+
+        if (!MonsterInfo.DataSheet.TryGetValue(task.PetName, out var moni))
+            return;
+
         if (task.Companion)
         {
-            if (string.IsNullOrEmpty(task.PetName))
-                return;
-
-            if (MonsterInfo.DataSheet.TryGetValue(task.PetName, out var moni))
-            {
-                new MonsterObject(moni, CurrentMap, int.MaxValue, CastLocation, 1, true, true).SurvivalTime = SEngine.CurrentTime.AddMinutes(1.0);
-            }
+            new MonsterObject(moni, CurrentMap, int.MaxValue, CastLocation, 1, true, true).SurvivalTime = SEngine.CurrentTime.AddMinutes(1.0);
         }
         else if (Caster is PlayerObject player)
         {
-            if (task.CheckSkillInscriptions && (!player.Skills.TryGetValue(SkillID, out var v9) || v9.InscriptionID != InscriptionID) || string.IsNullOrEmpty(task.PetName))
+            if (task.CheckSkillInscriptions && (!player.Skills.TryGetValue(SkillID, out var v9) || v9.InscriptionID != InscriptionID))
                 return;
 
             int max = task.SpawnCount?.Length > SkillLevel ? task.SpawnCount[SkillLevel] : 0;
-            if (player.Pets.Count < max && MonsterInfo.DataSheet.TryGetValue(task.PetName, out var moni))
+            if (player.Pets.Count < max)
             {
-                byte levelMax = (byte)(task.LevelCap?.Length > SkillLevel ? task.LevelCap[SkillLevel] : 0);
-                PetObject pet = new PetObject(player, moni, SkillLevel, levelMax, task.PetBoundWeapons);
+                var levelMax = (byte)(task.LevelCap?.Length > SkillLevel ? task.LevelCap[SkillLevel] : 0);
+                var pet = new PetObject(player, moni, SkillLevel, levelMax, task.PetBoundWeapons);
+
+                pet.AddBuff(task.PetBindingBuffID, pet);
+
+                if (task.PetSurvivalTime > 0)
+                    pet.SurvivalTime = SEngine.CurrentTime.AddMinutes(task.PetSurvivalTime);
+
                 player.Enqueue(new SyncPetLevelPacket
                 {
                     ObjectID = pet.ObjectID,
