@@ -13,7 +13,7 @@ public sealed class C_06_CalculatePetSummoning : SkillTask
     public bool PetBoundWeapons;
     public bool CheckSkillInscriptions;
 
-    public ushort 宠物绑定BUFF;
+    public ushort PetBindingBuffID; // 宠物绑定BUFF
     //public 范围召唤怪物;
     public List<string> IgnorePetList = new List<string>();
     public int PetSurvivalTime;
