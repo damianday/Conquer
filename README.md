@@ -2,6 +2,8 @@
 
 [Latest Build](https://github.com/damianday/Conquer/tree/main/Release)
 
+[Discord](https://discord.gg/R8BgxJ7H)
+
 ## How to start
 
 ### Client & Launcher Configuration
