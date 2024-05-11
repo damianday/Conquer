@@ -38,9 +38,11 @@ public class Settings
     public string UserConnectionIP = "127.0.0.1";
     public ushort UserConnectionPort = 8701;
     public ushort TicketReceivePort = 6678;
+    public ushort StatusPort = 3000;
     public ushort PacketLimit = 100;
     public ushort AbnormalBlockTime = 5;
     public ushort DisconnectTime = 5;
+    public ushort StatusPortDisconnectTime = 10;
     public byte MaxUserLevel = 40;
     public byte NoobSupportLevel = 0;
     public decimal SpecialRepairDiscount = 1;

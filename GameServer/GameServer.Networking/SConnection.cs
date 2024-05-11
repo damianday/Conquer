@@ -2565,11 +2565,13 @@ public sealed class SConnection
             {
                 Close(new Exception("NIC blocking, restricting logins"));
             }
-            else if (NetworkManager.Tickets.TryGetValue(P.LoginTicket, out var ticket))
+            else if (NetworkManager.Tickets.TryRemove(P.LoginTicket, out var ticket))
             {
                 if (!(SEngine.CurrentTime > ticket.ValidTime))
                 {
-                    AccountInfo account = ((!Session.AccountInfoTable.SearchTable.TryGetValue(ticket.AccountName, out var data) || !(data is AccountInfo a)) ? new AccountInfo(ticket.AccountName) : a);
+                    AccountInfo account = Session.GetAccount(ticket.AccountName);
+                    if (account == null)
+                        account = new AccountInfo(ticket.AccountName);
                     if (account.Connection == null)
                         account.AccountLogin(this, P.MACAddress);
                     else
@@ -2594,7 +2596,6 @@ public sealed class SConnection
         {
             Close(new Exception($"Abnormal stage, disconnecting.  Process: {P.GetType()},  CurrentStage:{Stage}"));
         }
-        NetworkManager.Tickets.Remove(P.LoginTicket);
     }
 
     public void Process(客户创建角色 P)

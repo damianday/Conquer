@@ -21,51 +21,85 @@ public static class NetworkManager
 
     private static UdpClient TicketListener;
     private static TcpListener Listener;
+    private static TcpListener StatusListener;
 
     public static bool Stopped;
+    private static bool StatusPortEnabled = true;
 
-    public static uint ActiveConnections;
-    public static uint ConnectionsOnline;
-    public static uint ConnectionsOnline1;
-    public static uint ConnectionsOnline2;
+    public static uint ConnectionCount => (uint)Connections.Count;
+    public static uint ActiveConnections { get; set; }
+    public static uint ConnectionsOnline { get; set; }
+    public static uint ConnectionsOnline1 { get; set; }
+    public static uint ConnectionsOnline2 { get; set; }
 
     public static long TotalSentBytes;
     public static long TotalReceivedBytes;
 
-    public static HashSet<SConnection> Connections;
-    public static ConcurrentQueue<SConnection> DisconnectingConnections;
-    public static ConcurrentQueue<SConnection> ConnectingConnections;
-    public static ConcurrentQueue<GamePacket> ServerAnnouncements;
+    private static List<SConnection> Connections;
+    private static ConcurrentQueue<SConnection> DisconnectingConnections;
+    private static ConcurrentQueue<SConnection> ConnectingConnections;
 
-    public static Dictionary<string, TicketInformation> Tickets;
+    private static List<StatusConnection> StatusConnections = new List<StatusConnection>();
+    private static ConcurrentQueue<StatusConnection> StatusDisconnectingConnections;
+    private static ConcurrentQueue<StatusConnection> StatusConnectingConnections;
+
+    private static ConcurrentQueue<GamePacket> ServerBroadcasts;
+
+    public static ConcurrentDictionary<string, TicketInformation> Tickets;
 
     public static void StartService()
     {
         Stopped = false;
 
-        Connections = new HashSet<SConnection>();
+        Connections = new List<SConnection>();
         ConnectingConnections = new ConcurrentQueue<SConnection>();
         DisconnectingConnections = new ConcurrentQueue<SConnection>();
-        ServerAnnouncements = new ConcurrentQueue<GamePacket>();
+
+        StatusConnections = new List<StatusConnection>();
+        StatusDisconnectingConnections = new ConcurrentQueue<StatusConnection>();
+        StatusConnectingConnections = new ConcurrentQueue<StatusConnection>();
+
+        ServerBroadcasts = new ConcurrentQueue<GamePacket>();
 
         Listener = new TcpListener(IPAddress.Parse(Settings.Default.UserConnectionIP), Settings.Default.UserConnectionPort);
         Listener.Start();
         ListenerBeginAccept();
 
-        Tickets = new Dictionary<string, TicketInformation>();
+        Tickets = new ConcurrentDictionary<string, TicketInformation>();
         TicketListener = new UdpClient(new IPEndPoint(IPAddress.Any, Settings.Default.TicketReceivePort));
         TicketBeginReceive();
+
+        if (StatusPortEnabled)
+        {
+            StatusListener = new TcpListener(IPAddress.Parse(Settings.Default.UserConnectionIP), Settings.Default.StatusPort);
+            StatusListener.Start();
+            StatusListenerBeginAccept();
+        }
     }
 
     public static void StopService()
     {
         Stopped = true;
 
-        Listener?.Stop();
-        Listener = null;
+        if (Listener != null)
+        {
+            Listener.Stop();
+            Listener.Dispose();
+            Listener = null;
+        }
 
         TicketListener?.Close();
         TicketListener = null;
+
+        if (StatusPortEnabled)
+        {
+            if (StatusListener != null)
+            {
+                StatusListener.Stop();
+                StatusListener.Dispose();
+                StatusListener = null;
+            }
+        }
     }
 
     public static void Process()
@@ -92,9 +126,26 @@ public static class NetworkManager
                     Connections.Add(conn);
             }
 
-            while (!ServerAnnouncements.IsEmpty)
+
+            foreach (var conn in StatusConnections)
+                conn.Process();
+
+            while (!StatusDisconnectingConnections.IsEmpty)
             {
-                if (!ServerAnnouncements.TryDequeue(out var p))
+                if (StatusDisconnectingConnections.TryDequeue(out var conn))
+                    StatusConnections.Remove(conn);
+            }
+
+            while (!StatusConnectingConnections.IsEmpty)
+            {
+                if (StatusConnectingConnections.TryDequeue(out var conn))
+                    StatusConnections.Add(conn);
+            }
+
+
+            while (!ServerBroadcasts.IsEmpty)
+            {
+                if (!ServerBroadcasts.TryDequeue(out var p))
                     continue;
                 foreach (var conn in Connections)
                 {
@@ -111,7 +162,7 @@ public static class NetworkManager
 
     private static void ListenerBeginAccept()
     {
-        if (!Stopped)
+        if (!Stopped && Listener.Server.IsBound)
             Listener.BeginAcceptTcpClient(Connection, null);
     }
 
@@ -119,19 +170,15 @@ public static class NetworkManager
     {
         try
         {
-            if (Stopped) return;
+            if (Stopped || !Listener.Server.IsBound) return;
 
-            TcpClient client = Listener.EndAcceptTcpClient(result);
-            string ip = client.Client.RemoteEndPoint.ToString().Split(':')[0];
+            var client = Listener.EndAcceptTcpClient(result);
+            var ip = client.Client.RemoteEndPoint.ToString().Split(':')[0];
+
             if (!SystemInfo.Info.IPBans.ContainsKey(ip) || SystemInfo.Info.IPBans[ip] < SEngine.CurrentTime)
-            {
-                if (Connections.Count < 65535)
-                    AddConnection(new SConnection(client));
-            }
+                AddConnection(new SConnection(client));
             else
-            {
                 client.Client.Close();
-            }
         }
         catch (Exception ex)
         {
@@ -142,6 +189,37 @@ public static class NetworkManager
             Thread.Sleep(1);
 
         ListenerBeginAccept();
+    }
+
+    private static void StatusListenerBeginAccept()
+    {
+        if (!Stopped && StatusListener.Server.IsBound)
+            StatusListener.BeginAcceptTcpClient(StatusConnection, null);
+    }
+
+    private static void StatusConnection(IAsyncResult result)
+    {
+        if (Stopped || !StatusListener.Server.IsBound) return;
+
+        try
+        {
+            var client = Listener.EndAcceptSocket(result);
+            var ip = client.RemoteEndPoint.ToString().Split(':')[0];
+
+            if (!SystemInfo.Info.IPBans.ContainsKey(ip) || SystemInfo.Info.IPBans[ip] < SEngine.CurrentTime)
+                AddStatusConnection(new StatusConnection(client));
+            else
+                client.Close();
+        }
+        catch (Exception ex)
+        {
+            SEngine.AddSystemLog("Asynchronous connection exception: " + ex.ToString());
+        }
+
+        while (StatusConnections.Count >= 5) //Limit status connections
+            Thread.Sleep(1);
+
+        StatusListenerBeginAccept();
     }
 
     private static void TicketBeginReceive()
@@ -275,7 +353,7 @@ public static class NetworkManager
     public static void Broadcast(GamePacket p)
     {
         if (p != null)
-            ServerAnnouncements?.Enqueue(p);
+            ServerBroadcasts?.Enqueue(p);
     }
 
     public static void AddConnection(SConnection conn)
@@ -288,5 +366,17 @@ public static class NetworkManager
     {
         if (conn != null)
             DisconnectingConnections.Enqueue(conn);
+    }
+
+    public static void AddStatusConnection(StatusConnection conn)
+    {
+        if (conn != null)
+            StatusConnectingConnections.Enqueue(conn);
+    }
+
+    public static void RemoveStatusConnection(StatusConnection conn)
+    {
+        if (conn != null)
+            StatusDisconnectingConnections.Enqueue(conn);
     }
 }
