@@ -478,7 +478,7 @@ public static class MapManager
                 {
                     Map map = GetMap(Settings.Default.WorldBossMapID);
                     WorldBoss = new MonsterObject(value, map, int.MaxValue, new Point(Settings.Default.WorldBossMapPosX, Settings.Default.WorldBossMapPosY), 1,
-                        forbidResurrection: true, 立即刷新: true)
+                        forbidResurrection: true, refreshNow: true)
                     {
                         CurrentDirection = GameDirection.UpRight,
                         SurvivalTime = DateTime.MaxValue

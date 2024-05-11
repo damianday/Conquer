@@ -86,7 +86,7 @@ public sealed class PlayerObject : MapObject
 
     public Dictionary<object, int> CombatPowerBonus;
 
-    public readonly Dictionary<ushort, SkillInfo> 被动技能;
+    public readonly Dictionary<ushort, SkillInfo> PassiveSkills;
 
     public GameSkill 挂机技能;
 
@@ -1029,7 +1029,7 @@ public sealed class PlayerObject : MapObject
     {
         Character = character;
         Pets = new List<PetObject>();
-        被动技能 = new Dictionary<ushort, SkillInfo>();
+        PassiveSkills = new Dictionary<ushort, SkillInfo>();
         BonusStats[this] = CharacterProgression.GetData(Job, CurrentLevel);
         CombatPowerBonus = new Dictionary<object, int> { [this] = CurrentLevel * 10 };
         TitleTime = DateTime.MaxValue;
@@ -1072,7 +1072,7 @@ public sealed class PlayerObject : MapObject
             BonusStats[value81] = value81.BonusStats;
             foreach (ushort item in value81.PassiveSkills.ToList())
             {
-                被动技能.Add(item, value81);
+                PassiveSkills.Add(item, value81);
             }
         }
         foreach (BuffInfo value82 in Buffs.Values)
@@ -3468,7 +3468,7 @@ public sealed class PlayerObject : MapObject
         });
         foreach (ushort item in Skills[skillID].PassiveSkills)
         {
-            被动技能.Remove(item);
+            PassiveSkills.Remove(item);
         }
         foreach (ushort item2 in Skills[skillID].SkillBuffs)
         {
@@ -3537,7 +3537,7 @@ public sealed class PlayerObject : MapObject
         }
         foreach (ushort item in Skills[skillID].PassiveSkills)
         {
-            被动技能.Add(item, Skills[skillID]);
+            PassiveSkills.Add(item, Skills[skillID]);
         }
         foreach (ushort item2 in Skills[skillID].SkillBuffs)
         {
@@ -3571,7 +3571,7 @@ public sealed class PlayerObject : MapObject
 
         foreach (var id in skill.PassiveSkills)
         {
-            被动技能.Remove(id);
+            PassiveSkills.Remove(id);
         }
         foreach (var id in skill.SkillBuffs)
         {
@@ -3592,7 +3592,7 @@ public sealed class PlayerObject : MapObject
         });
         foreach (var id in skill.PassiveSkills)
         {
-            被动技能.Add(id, skill);
+            PassiveSkills.Add(id, skill);
         }
         foreach (var id in skill.SkillBuffs)
         {
@@ -3659,7 +3659,7 @@ public sealed class PlayerObject : MapObject
                 foreach (PetObject pet in Pets)
                 {
                     if (pet.BoundWeapon)
-                        pet.Die(null, skillDeath: false);
+                        pet.Die(null, false);
                 }
             }
             if (Settings.Default.CurrentVersion >= 2)
@@ -7193,7 +7193,7 @@ public sealed class PlayerObject : MapObject
         {
             return;
         }
-        if (!Skills.TryGetValue(id, out var v) && !被动技能.TryGetValue(id, out v))
+        if (!Skills.TryGetValue(id, out var v) && !PassiveSkills.TryGetValue(id, out v))
         {
             Connection?.Disconnect(new Exception("释放未学会的技能, 尝试断开连接."));
             return;
@@ -7242,7 +7242,7 @@ public sealed class PlayerObject : MapObject
         if (Dead || StallState > 0 || TradeState >= 3)
             return;
 
-        if (!Skills.TryGetValue(skillID, out var skill) && !被动技能.TryGetValue(skillID, out skill))
+        if (!Skills.TryGetValue(skillID, out var skill) && !PassiveSkills.TryGetValue(skillID, out skill))
         {
             Connection?.Disconnect(new Exception($"错误操作: 玩家释放技能. 错误: 没有学会技能. 技能编号:{skillID}"));
             return;
@@ -9845,7 +9845,7 @@ public sealed class PlayerObject : MapObject
                                     if (MonsterInfo.DataSheet.TryGetValue(Settings.Default.暗之门地图1BOSS, out var value28))
                                     {
                                         MonsterObject mon = new MonsterObject(value28, map, int.MaxValue, new Point(Settings.Default.暗之门地图1X, Settings.Default.暗之门地图1Y), 1,
-                                            forbidResurrection: true, 立即刷新: true);
+                                            forbidResurrection: true, refreshNow: true);
                                         mon.CurrentDirection = GameDirection.UpRight;
                                         mon.SurvivalTime = SEngine.CurrentTime.AddMinutes(30.0);
                                         九层妖塔BOSS1 = mon;
@@ -9872,7 +9872,7 @@ public sealed class PlayerObject : MapObject
                                     if (MonsterInfo.DataSheet.TryGetValue(Settings.Default.暗之门地图2BOSS, out var value30))
                                     {
                                         MonsterObject mon = new MonsterObject(value30, map, int.MaxValue, new Point(Settings.Default.暗之门地图2X, Settings.Default.暗之门地图2Y), 1,
-                                            forbidResurrection: true, 立即刷新: true);
+                                            forbidResurrection: true, refreshNow: true);
                                         mon.CurrentDirection = GameDirection.UpRight;
                                         mon.SurvivalTime = SEngine.CurrentTime.AddMinutes(30.0);
                                         九层妖塔BOSS1 = mon;
@@ -9899,7 +9899,7 @@ public sealed class PlayerObject : MapObject
                                     if (MonsterInfo.DataSheet.TryGetValue(Settings.Default.暗之门地图3BOSS, out var value26))
                                     {
                                         MonsterObject mon = new MonsterObject(value26, map, int.MaxValue, new Point(Settings.Default.暗之门地图3X, Settings.Default.暗之门地图3Y), 1,
-                                            forbidResurrection: true, 立即刷新: true);
+                                            forbidResurrection: true, refreshNow: true);
                                         mon.CurrentDirection = GameDirection.UpRight;
                                         mon.SurvivalTime = SEngine.CurrentTime.AddMinutes(30.0);
                                         九层妖塔BOSS1 = mon;
@@ -9926,7 +9926,7 @@ public sealed class PlayerObject : MapObject
                                     if (MonsterInfo.DataSheet.TryGetValue(Settings.Default.暗之门地图4BOSS, out var value24))
                                     {
                                         MonsterObject mon = new MonsterObject(value24, map, int.MaxValue, new Point(Settings.Default.暗之门地图4X, Settings.Default.暗之门地图4Y), 1,
-                                            forbidResurrection: true, 立即刷新: true);
+                                            forbidResurrection: true, refreshNow: true);
                                         mon.CurrentDirection = GameDirection.UpRight;
                                         mon.SurvivalTime = SEngine.CurrentTime.AddMinutes(30.0);
                                         九层妖塔BOSS1 = mon;
@@ -10027,7 +10027,7 @@ public sealed class PlayerObject : MapObject
                                             for (int j = 0; j < spawni.SpawnCount; j++)
                                             {
                                                 MonsterObject mon = new MonsterObject(moni, map, int.MaxValue, spawn.Coordinates, spawn.AreaRadius, 
-                                                    forbidResurrection: true, 立即刷新: true);
+                                                    forbidResurrection: true, refreshNow: true);
                                                 mon.CurrentDirection = GameDirection.UpRight;
                                                 mon.SurvivalTime = SEngine.CurrentTime.AddHours(Settings.Default.魔虫窟分钟限制);
                                                 魔虫窟怪物 = mon;
@@ -10083,7 +10083,7 @@ public sealed class PlayerObject : MapObject
                                             for (int l = 0; l < spawni.SpawnCount; l++)
                                             {
                                                 MonsterObject mon = new MonsterObject(value51, map, int.MaxValue, spawn.Coordinates, spawn.AreaRadius,
-                                                    forbidResurrection: true, 立即刷新: true);
+                                                    forbidResurrection: true, refreshNow: true);
                                                 mon.CurrentDirection = GameDirection.UpRight;
                                                 mon.SurvivalTime = SEngine.CurrentTime.AddHours(Settings.Default.魔虫窟分钟限制);
                                                 魔虫窟怪物 = mon;
@@ -10138,7 +10138,7 @@ public sealed class PlayerObject : MapObject
                                             for (int n = 0; n < spawni.SpawnCount; n++)
                                             {
                                                 MonsterObject mon = new MonsterObject(value53, map, int.MaxValue, spawn.Coordinates, spawn.AreaRadius,
-                                                    forbidResurrection: true, 立即刷新: true);
+                                                    forbidResurrection: true, refreshNow: true);
                                                 mon.CurrentDirection = GameDirection.UpRight;
                                                 mon.SurvivalTime = SEngine.CurrentTime.AddHours(Settings.Default.魔虫窟分钟限制);
                                                 魔虫窟怪物 = mon;

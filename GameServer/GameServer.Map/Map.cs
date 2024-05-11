@@ -192,7 +192,7 @@ public sealed class Map
                 if (MonsterInfo.DataSheet.TryGetValue(刷新信息.MonsterName, out var moni))
                 {
                     new MonsterObject(moni, this, int.MaxValue, new Point(995, 283), 1,
-                        forbidResurrection: true, 立即刷新: true).SurvivalTime = SEngine.CurrentTime.AddMinutes(30.0);
+                        forbidResurrection: true, refreshNow: true).SurvivalTime = SEngine.CurrentTime.AddMinutes(30.0);
                 }
                 if (++num3 >= 刷新信息.SpawnCount)
                 {
