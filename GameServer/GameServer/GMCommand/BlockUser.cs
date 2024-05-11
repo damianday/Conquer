@@ -19,7 +19,7 @@ public sealed class BlockUser : GMCommand
         if (Session.CharacterInfoTable.SearchTable.TryGetValue(UserName, out var value) && value is CharacterInfo character)
         {
             character.BlockDate.V = DateTime.UtcNow.AddDays(Days);
-            character.Connection?.Disconnect(new Exception("The character is banned and forcibly taken offline"));
+            character.Connection?.Close(new Exception("The character is banned and forcibly taken offline"));
             SMain.AddCommandLog($"<= @{GetType().Name} The command has been executed, and the ban expires: {character.BlockDate}");
         }
         else
