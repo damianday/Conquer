@@ -29,12 +29,13 @@ public sealed class PetObject : MapObject
 
     public PetInfo PInfo;
 
-    public bool Vanished { get; set; }
+    public bool Disappeared { get; set; }
 
     public DateTime AttackTime { get; set; }
     public DateTime RoamingTime { get; set; }
     public DateTime ResurrectionTime { get; set; }
     public DateTime DisappearTime { get; set; }
+    public DateTime SurvivalTime { get; set; }
 
     public int CurrentExp
     {
@@ -317,6 +318,7 @@ public sealed class PetObject : MapObject
         AttackTime = SEngine.CurrentTime.AddSeconds(1.0);
         BusyTime = SEngine.CurrentTime.AddSeconds(1.0);
         RoamingTime = SEngine.CurrentTime.AddMilliseconds(SEngine.Random.Next(5000) + RoamInterval);
+        SurvivalTime = DateTime.MaxValue;
         Target = new HateObject();
 
         if (!string.IsNullOrEmpty(MInfo.NormalAttackSkills))
@@ -353,9 +355,11 @@ public sealed class PetObject : MapObject
         if (SEngine.CurrentTime < ProcessTime)
             return;
 
-        if (Dead)
+        if (SEngine.CurrentTime >= SurvivalTime)
+            Despawn();
+        else if (Dead)
         {
-            if (!Vanished && SEngine.CurrentTime >= DisappearTime)
+            if (!Disappeared && SEngine.CurrentTime >= DisappearTime)
             {
                 Despawn();
             }
@@ -380,12 +384,14 @@ public sealed class PetObject : MapObject
                 }
                 RecoveryTime = SEngine.CurrentTime.AddSeconds(5.0);
             }
+
             if (SEngine.CurrentTime > HealTime && HealCount > 0)
             {
                 HealCount--;
                 HealTime = SEngine.CurrentTime.AddMilliseconds(500.0);
                 CurrentHP += HealAmount;
             }
+
             if (EnterCombatSkill != null && !CombatStance && Target.TargetList.Count != 0)
             {
                 new SkillObject(this, EnterCombatSkill, null, ActionID++, CurrentMap, CurrentPosition, null, CurrentPosition, null);
@@ -413,6 +419,7 @@ public sealed class PetObject : MapObject
                 }
             }
         }
+
         base.Process();
     }
 
