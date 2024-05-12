@@ -21,7 +21,7 @@ public sealed class EquipmentStats
     public int MaxRate;
     public StatsDetail[] Stats;
 
-    public static List<RandomStats> 生成属性(ItemType 部位, bool 重铸装备 = false)
+    public static List<RandomStats> GenerateStats(ItemType 部位, bool 重铸装备 = false)
     {
         if (DataSheet.TryGetValue((byte)部位, out var value) && ProbabilityTable.TryGetValue((byte)部位, out var value2) && value2.Length != 0 && (重铸装备 || Compute.CalculateProbability(value.MaxProbability)))
         {
@@ -94,7 +94,7 @@ public sealed class EquipmentStats
         return new List<RandomStats>();
     }
 
-    public static List<RandomStats> 生成属性1(ItemType 部位, bool 重铸装备 = false)
+    public static List<RandomStats> GenerateStats1(ItemType 部位, bool 重铸装备 = false)
     {
         if (DataSheet.TryGetValue((byte)部位, out var value) && 
             ProbabilityTable.TryGetValue((byte)部位, out var value2) && 
@@ -155,8 +155,7 @@ public sealed class EquipmentStats
         foreach (KeyValuePair<byte, EquipmentStats> item in DataSheet)
         {
             List<RandomStats> list = new List<RandomStats>();
-            StatsDetail[] array4 = item.Value.Stats;
-            foreach (StatsDetail stat in array4)
+            foreach (StatsDetail stat in item.Value.Stats)
             {
                 if (RandomStats.DataSheet.TryGetValue(stat.ID, out var value))
                 {

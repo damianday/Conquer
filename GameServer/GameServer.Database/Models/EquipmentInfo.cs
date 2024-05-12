@@ -913,7 +913,7 @@ public class EquipmentInfo : ItemInfo
         Dura.V = ((!random || item.PersistType != PersistentItemType.Equipment) ? MaxDura.V : SEngine.Random.Next(0, MaxDura.V));
         if (random && item.PersistType == PersistentItemType.Equipment)
         {
-            RandomStats.SetValue(GameServer.Template.EquipmentStats.生成属性(base.Type));
+            RandomStats.SetValue(GameServer.Template.EquipmentStats.GenerateStats(base.Type));
         }
         Session.EquipmentInfoTable.Add(this, true);
     }

@@ -36,7 +36,7 @@ public sealed class ItemObject : MapObject
     public override bool CanBeHit => false;
     public override GameObjectType ObjectType => GameObjectType.Item;
     public override ObjectSize Size => ObjectSize.Single1x1;
-    public PersistentItemType 持久类型 => Info.PersistType;
+    public PersistentItemType PersistenceType => Info.PersistType;
     public int MaxDura => Info.MaxDura;
     public int ItemID => Info?.ID ?? 0;
 

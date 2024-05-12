@@ -253,7 +253,7 @@ public class ItemInfo : DBObject
                         decimal num11 = (decimal)price * 0.1m;
                         return (int)(num10 + num11);
                     }
-                case PersistentItemType.消耗:
+                case PersistentItemType.Consumeable:
                     {
                         return (int)((decimal)Dura.V / (decimal)Info.MaxDura * (decimal)Info.SalePrice);
                     }
@@ -263,9 +263,8 @@ public class ItemInfo : DBObject
                     }
                 case PersistentItemType.回复:
                     return 1;
-                case PersistentItemType.容器:
-                    return Info.SalePrice;
-                case PersistentItemType.纯度:
+                case PersistentItemType.Container:
+                case PersistentItemType.Purity:
                     return Info.SalePrice;
                 default:
                     return 0;

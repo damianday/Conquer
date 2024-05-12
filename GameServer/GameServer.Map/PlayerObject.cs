@@ -11806,11 +11806,11 @@ public sealed class PlayerObject : MapObject
                         {
                             Description = 全部货币描述()
                         });
-                        v7.RandomStats.SetValue(EquipmentStats.生成属性(v7.Type, 重铸装备: true));
+                        v7.RandomStats.SetValue(EquipmentStats.GenerateStats(v7.Type, 重铸装备: true));
                         if (Character.幸运项链保底.V >= Settings.Default.幸运洗练次数保底 && 重铸部位 == 8 && Settings.Default.CurrentVersion >= 1 && Settings.Default.幸运保底开关)
                         {
                             Character.幸运项链保底.V = 0;
-                            v7.RandomStats.SetValue(EquipmentStats.生成属性1(v7.Type, 重铸装备: true));
+                            v7.RandomStats.SetValue(EquipmentStats.GenerateStats1(v7.Type, 重铸装备: true));
                         }
                         Enqueue(new SyncItemPacket
                         {
@@ -14994,21 +14994,21 @@ public sealed class PlayerObject : MapObject
             }
             else
             {
-                int 持久 = 0;
+                int dura = 0;
                 switch (value2.PersistType)
                 {
                     case PersistentItemType.Stack:
-                        持久 = num;
+                        dura = num;
                         break;
-                    case PersistentItemType.容器:
-                        持久 = 0;
+                    case PersistentItemType.Container:
+                        dura = 0;
                         break;
-                    case PersistentItemType.消耗:
-                    case PersistentItemType.纯度:
-                        持久 = value2.MaxDura;
+                    case PersistentItemType.Consumeable:
+                    case PersistentItemType.Purity:
+                        dura = value2.MaxDura;
                         break;
                 }
-                Inventory[(byte)num3] = new ItemInfo(value2, Character, 1, (byte)num3, 持久);
+                Inventory[(byte)num3] = new ItemInfo(value2, Character, 1, (byte)num3, dura);
             }
             Enqueue(new SyncItemPacket
             {
@@ -16165,15 +16165,15 @@ public sealed class PlayerObject : MapObject
             item.Item.Location.V = b;
             item.Item.Grid.V = 1;
         }
-        else if (item.Info is EquipmentItem 模板)
+        else if (item.Info is EquipmentItem equipment)
         {
-            Inventory[b] = new EquipmentInfo(模板, Character, 1, b, random: true);
+            Inventory[b] = new EquipmentInfo(equipment, Character, 1, b, random: true);
         }
-        else if (item.持久类型 == PersistentItemType.容器)
+        else if (item.PersistenceType == PersistentItemType.Container)
         {
             Inventory[b] = new ItemInfo(item.Info, Character, 1, b, 0);
         }
-        else if (item.持久类型 == PersistentItemType.Stack)
+        else if (item.PersistenceType == PersistentItemType.Stack)
         {
             Inventory[b] = new ItemInfo(item.Info, Character, 1, b, item.Quantity);
         }
@@ -23057,34 +23057,34 @@ public sealed class PlayerObject : MapObject
 
     private void AddItemByID(int id, byte grid = 1, int quantity = 1)
     {
-        byte b = 0;
-        byte b2 = 0;
+        byte location = 0;
+        int count = 0;
         if (!GameItem.DataSheet.TryGetValue(id, out var item))
             return;
 
-        while (b < InventorySize && b2 < quantity)
+        while (location < InventorySize && count < quantity)
         {
-            if (!Inventory.ContainsKey(b))
+            if (!Inventory.ContainsKey(location))
             {
-                Inventory[b] = new ItemInfo(item, Character, grid, b, 1);
+                Inventory[location] = new ItemInfo(item, Character, grid, location, 1);
                 Enqueue(new SyncItemPacket
                 {
-                    Description = Inventory[b].ToArray()
+                    Description = Inventory[location].ToArray()
                 });
-                b2 = (byte)(b2 + 1);
+                count++;
             }
-            b = (byte)(b + 1);
+            location = (byte)(location + 1);
         }
     }
 
     private void AddItemByName(string iname, int durability, int quantity = 1)
     {
         byte location = 0;
-        byte b2 = 0;
+        int count = 0;
         if (!GameItem.DataSheetByName.TryGetValue(iname, out var item))
             return;
 
-        while (location < InventorySize && b2 < quantity)
+        while (location < InventorySize && count < quantity)
         {
             if (!Inventory.ContainsKey(location))
             {
@@ -23093,7 +23093,7 @@ public sealed class PlayerObject : MapObject
                 {
                     Description = Inventory[location].ToArray()
                 });
-                b2 = (byte)(b2 + 1);
+                count++;
             }
             location = (byte)(location + 1);
         }
@@ -23195,27 +23195,27 @@ public sealed class PlayerObject : MapObject
             });
             return;
         }
-        if (value2 is EquipmentItem 模板)
+        if (value2 is EquipmentItem equipment)
         {
-            Inventory[(byte)num2] = new EquipmentInfo(模板, Character, 1, (byte)num2);
+            Inventory[(byte)num2] = new EquipmentInfo(equipment, Character, 1, (byte)num2);
         }
         else
         {
-            int 持久 = 0;
+            int dura = 0;
             switch (value2.PersistType)
             {
                 case PersistentItemType.Stack:
-                    持久 = num;
+                    dura = num;
                     break;
-                case PersistentItemType.容器:
-                    持久 = 0;
+                case PersistentItemType.Container:
+                    dura = 0;
                     break;
-                case PersistentItemType.消耗:
-                case PersistentItemType.纯度:
-                    持久 = value2.MaxDura;
+                case PersistentItemType.Consumeable:
+                case PersistentItemType.Purity:
+                    dura = value2.MaxDura;
                     break;
             }
-            Inventory[(byte)num2] = new ItemInfo(value2, Character, 1, (byte)num2, 持久);
+            Inventory[(byte)num2] = new ItemInfo(value2, Character, 1, (byte)num2, dura);
         }
         Enqueue(new SyncItemPacket
         {
