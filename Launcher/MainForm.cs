@@ -64,8 +64,10 @@ namespace Launcher
 
         private void PreLaunchChecks()
         {
-            bool ClientFound32Bit = File.Exists(".\\Binaries\\Win32\\MMOGame-Win32-Shipping.exe");
-            bool ClientFound64Bit = File.Exists(".\\Binaries\\Win64\\MMOGame-Win64-Shipping.exe");
+            var path32 = Path.Combine(".", "Binaries\\Win32\\MMOGame-Win32-Shipping.exe");
+            var path64 = Path.Combine(".", "Binaries\\Win64\\MMOGame-Win64-Shipping.exe");
+            bool ClientFound32Bit = File.Exists(path32);
+            bool ClientFound64Bit = File.Exists(path64);
 
             if (!ClientFound32Bit && !ClientFound64Bit)
             {
