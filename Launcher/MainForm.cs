@@ -64,12 +64,13 @@ namespace Launcher
 
         private void PreLaunchChecks()
         {
-            var path32 = Path.Combine(".", "Binaries\\Win32\\MMOGame-Win32-Shipping.exe");
-            var path64 = Path.Combine(".", "Binaries\\Win64\\MMOGame-Win64-Shipping.exe");
-            bool ClientFound32Bit = File.Exists(path32);
-            bool ClientFound64Bit = File.Exists(path64);
+            var currDir = Directory.GetCurrentDirectory();
+            var path32 = Path.Combine(currDir, "Binaries\\Win32\\MMOGame-Win32-Shipping.exe");
+            var path64 = Path.Combine(currDir, "Binaries\\Win64\\MMOGame-Win64-Shipping.exe");
+            var clientFound32Bit = File.Exists(path32);
+            var clientFound64Bit = File.Exists(path64);
 
-            if (!ClientFound32Bit && !ClientFound64Bit)
+            if (!clientFound32Bit && !clientFound64Bit)
             {
                 MessageBox.Show("Client Cannot Be Found!\r\nPlease Read The README.txt");
                 Environment.Exit(0);
