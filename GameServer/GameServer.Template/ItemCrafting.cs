@@ -9,7 +9,7 @@ namespace GameServer.Template;
 
 public sealed class ItemCrafting
 {
-    public static Dictionary<int, ItemCrafting> DataSheet;
+    public static Dictionary<int, ItemCrafting> DataSheet = new Dictionary<int, ItemCrafting>();
 
     public int RecipeItemID;
     public int MakeItemID;
@@ -32,7 +32,7 @@ public sealed class ItemCrafting
 
     public static void LoadData()
     {
-        DataSheet = new Dictionary<int, ItemCrafting>();
+        DataSheet.Clear();
 
         if (Settings.Default.DBMethod == 1)
         {

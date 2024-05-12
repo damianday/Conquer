@@ -5,7 +5,7 @@ namespace GameServer.Template;
 
 public sealed class RandomStats
 {
-    public static Dictionary<int, RandomStats> DataSheet;
+    public static Dictionary<int, RandomStats> DataSheet = new Dictionary<int, RandomStats>();
 
     public Stat Stat;
     public int Value;
@@ -15,7 +15,7 @@ public sealed class RandomStats
 
     public static void LoadData()
     {
-        DataSheet = new Dictionary<int, RandomStats>();
+        DataSheet.Clear();
 
         var path = Settings.Default.GameDataPath + "\\System\\Items\\RandomStats\\";
         if (!Directory.Exists(path))

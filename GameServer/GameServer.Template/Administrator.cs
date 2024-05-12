@@ -9,14 +9,14 @@ namespace GameServer.Template;
 
 public sealed class Administrator
 {
-    public static Dictionary<string, Administrator> DataSheet;
+    public static Dictionary<string, Administrator> DataSheet = new Dictionary<string, Administrator>();
 
     public UserDegree Degree;
     public string UserName;
 
     public static void LoadData()
     {
-        DataSheet = new Dictionary<string, Administrator>();
+        DataSheet.Clear();
 
         var path = Settings.Default.GameDataPath + "\\System";
         if (!Directory.Exists(path))

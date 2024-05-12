@@ -5,7 +5,7 @@ namespace GameServer.Template;
 
 public sealed class ItemSetInfo
 {
-    public static IDictionary<uint, ItemSetInfo> DataSheet;
+    public static IDictionary<uint, ItemSetInfo> DataSheet = new Dictionary<uint, ItemSetInfo>();
 
     public ushort SetID;
     public string Name;
@@ -13,7 +13,7 @@ public sealed class ItemSetInfo
 
     public static void LoadData()
     {
-        DataSheet = new Dictionary<uint, ItemSetInfo>();
+        DataSheet.Clear();
 
         var path = Settings.Default.GameDataPath + "\\System\\Items\\Sets\\";
         if (Directory.Exists(path))

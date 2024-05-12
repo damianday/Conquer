@@ -8,7 +8,7 @@ namespace GameServer.Template;
 
 public class MonsterBossTimedZen
 {
-    public static HashSet<MonsterBossTimedZen> DataSheet;
+    public static HashSet<MonsterBossTimedZen> DataSheet = new HashSet<MonsterBossTimedZen>();
 
     public byte MapID;
     public Point Coordinates = Point.Empty;
@@ -20,7 +20,7 @@ public class MonsterBossTimedZen
 
     public static void LoadData()
     {
-        DataSheet = new HashSet<MonsterBossTimedZen>();
+        DataSheet.Clear();
 
         if (Settings.Default.DBMethod == 0)
         {

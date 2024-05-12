@@ -9,7 +9,7 @@ namespace GameServer.Template;
 
 public sealed class GameMount
 {
-    public static IDictionary<uint, GameMount> DataSheet;
+    public static IDictionary<uint, GameMount> DataSheet = new Dictionary<uint, GameMount>();
 
     public ushort ID;
     public string Name;
@@ -24,7 +24,7 @@ public sealed class GameMount
 
     public static void LoadData()
     {
-        DataSheet = new Dictionary<uint, GameMount>();
+        DataSheet.Clear();
 
         if (Settings.Default.DBMethod == 0)
         {

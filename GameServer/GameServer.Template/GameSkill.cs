@@ -10,7 +10,7 @@ public abstract class SkillTask
 
 public sealed class GameSkill
 {
-    public static Dictionary<string, GameSkill> DataSheet;
+    public static Dictionary<string, GameSkill> DataSheet = new Dictionary<string, GameSkill>();
 
     public string SkillName;
     public GameObjectRace Race;
@@ -57,7 +57,7 @@ public sealed class GameSkill
 
     public static void LoadData()
     {
-        DataSheet = new Dictionary<string, GameSkill>();
+        DataSheet.Clear();
 
         var path = Settings.Default.GameDataPath + "\\System\\Skills\\Skills\\";
         if (!Directory.Exists(path))

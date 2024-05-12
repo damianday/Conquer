@@ -9,7 +9,7 @@ namespace GameServer.Template;
 
 public sealed class Terrain
 {
-    public static Dictionary<byte, Terrain> DataSheet;
+    public static Dictionary<byte, Terrain> DataSheet = new Dictionary<byte, Terrain>();
 
     public byte MapID;
     public string MapName;
@@ -52,7 +52,7 @@ public sealed class Terrain
 
     public static void LoadData()
     {
-        DataSheet = new Dictionary<byte, Terrain>();
+        DataSheet.Clear();
 
         var path = Settings.Default.GameDataPath + "\\System\\GameMap\\Terrains\\";
         if (!Directory.Exists(path))

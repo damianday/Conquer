@@ -7,7 +7,7 @@ namespace GameServer.Template;
 
 public sealed class MapGuard
 {
-    public static HashSet<MapGuard> DataSheet;
+    public static HashSet<MapGuard> DataSheet = new HashSet<MapGuard>();
 
     public ushort GuardID;
     public byte MapID;
@@ -18,7 +18,7 @@ public sealed class MapGuard
 
     public static void LoadData()
     {
-        DataSheet = new HashSet<MapGuard>();
+        DataSheet.Clear();
 
         if (Settings.Default.DBMethod == 0)
         {

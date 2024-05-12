@@ -7,7 +7,7 @@ namespace GameServer.Template;
 
 public class TeleportGate
 {
-    public static List<TeleportGate> DataSheet;
+    public static List<TeleportGate> DataSheet = new List<TeleportGate>();
 
     public byte GateID;
     public byte MapID;
@@ -22,7 +22,7 @@ public class TeleportGate
 
     public static void LoadData()
     {
-        DataSheet = new List<TeleportGate>();
+        DataSheet.Clear();
 
         if (Settings.Default.DBMethod == 0)
         {

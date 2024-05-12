@@ -7,7 +7,7 @@ namespace GameServer.Template;
 
 public class MapArea
 {
-    public static List<MapArea> DataSheet;
+    public static List<MapArea> DataSheet = new List<MapArea>();
 
     public byte MapID;
     public string MapName;
@@ -18,7 +18,7 @@ public class MapArea
 
     public static void LoadData()
     {
-        DataSheet = new List<MapArea>();
+        DataSheet.Clear();
 
         if (Settings.Default.DBMethod == 0)
         {

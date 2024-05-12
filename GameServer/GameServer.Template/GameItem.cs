@@ -5,8 +5,8 @@ namespace GameServer.Template;
 
 public class GameItem
 {
-    public static Dictionary<int, GameItem> DataSheet;
-    public static Dictionary<string, GameItem> DataSheetByName;
+    public static Dictionary<int, GameItem> DataSheet = new Dictionary<int, GameItem>();
+    public static Dictionary<string, GameItem> DataSheetByName = new Dictionary<string, GameItem>();
 
     public string Name;
     public int ID;
@@ -68,8 +68,8 @@ public class GameItem
 
     public static void LoadData()
     {
-        DataSheet = new Dictionary<int, GameItem>();
-        DataSheetByName = new Dictionary<string, GameItem>();
+        DataSheet.Clear();
+        DataSheetByName.Clear();
 
         var path = Settings.Default.GameDataPath + "\\System\\Items\\Common\\";
         if (Directory.Exists(path))

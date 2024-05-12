@@ -8,7 +8,7 @@ namespace GameServer.Template;
 
 public class MonsterSpawn
 {
-    public static HashSet<MonsterSpawn> DataSheet;
+    public static HashSet<MonsterSpawn> DataSheet = new HashSet<MonsterSpawn>();
 
     public byte MapID;
     public Point Coordinates = Point.Empty;
@@ -18,7 +18,7 @@ public class MonsterSpawn
 
     public static void LoadData()
     {
-        DataSheet = new HashSet<MonsterSpawn>();
+        DataSheet.Clear();
 
         if (Settings.Default.DBMethod == 0)
         {

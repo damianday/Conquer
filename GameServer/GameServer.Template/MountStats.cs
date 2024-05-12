@@ -9,7 +9,7 @@ namespace GameServer.Template;
 
 public sealed class MountStats
 {
-    public static IDictionary<uint, MountStats> DataSheet;
+    public static IDictionary<uint, MountStats> DataSheet = new Dictionary<uint, MountStats>();
 
     public ushort MountID;
     public string Name;
@@ -17,7 +17,7 @@ public sealed class MountStats
 
     public static void LoadData()
     {
-        DataSheet = new Dictionary<uint, MountStats>();
+        DataSheet.Clear();
 
         if (Settings.Default.DBMethod == 0)
         {

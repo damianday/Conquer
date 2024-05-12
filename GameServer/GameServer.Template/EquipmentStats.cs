@@ -12,7 +12,7 @@ public sealed class EquipmentStats
         public int Probability;     // 属性概率
     }
 
-    public static Dictionary<byte, EquipmentStats> DataSheet;
+    public static Dictionary<byte, EquipmentStats> DataSheet = new Dictionary<byte, EquipmentStats>();
     public static Dictionary<byte, RandomStats[]> ProbabilityTable;
 
     public ItemType ItemType;
@@ -141,7 +141,7 @@ public sealed class EquipmentStats
 
     public static void LoadData()
     {
-        DataSheet = new Dictionary<byte, EquipmentStats>();
+        DataSheet.Clear();
 
         var path = Settings.Default.GameDataPath + "\\System\\Items\\EquipmentStats\\";
         if (Directory.Exists(path))

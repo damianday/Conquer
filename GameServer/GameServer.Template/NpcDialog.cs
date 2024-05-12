@@ -10,8 +10,8 @@ namespace GameServer.Template;
 
 public sealed class NpcDialog
 {
-    public static Dictionary<int, string> DataSheet;
-    public static Dictionary<int, byte[]> DataById;
+    public static Dictionary<int, string> DataSheet = new Dictionary<int, string>();
+    public static Dictionary<int, byte[]> DataById = new Dictionary<int, byte[]>();
 
     public int ID;
     public string Content;
@@ -38,8 +38,8 @@ public sealed class NpcDialog
 
     public static void LoadData()
     {
-        DataSheet = new Dictionary<int, string>();
-        DataById = new Dictionary<int, byte[]>();
+        DataSheet.Clear();
+        DataById.Clear();
 
         if (Settings.Default.DBMethod == 0)
         {

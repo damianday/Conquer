@@ -6,7 +6,7 @@ namespace GameServer.Template;
 
 public sealed class GameMap
 {
-    public static Dictionary<byte, GameMap> DataSheet;
+    public static Dictionary<byte, GameMap> DataSheet = new Dictionary<byte, GameMap>();
 
     public byte MapID;
     public string MapName;
@@ -22,7 +22,7 @@ public sealed class GameMap
 
     public static void LoadData()
     {
-        DataSheet = new Dictionary<byte, GameMap>();
+        DataSheet.Clear();
 
         if (Settings.Default.DBMethod == 0)
         {

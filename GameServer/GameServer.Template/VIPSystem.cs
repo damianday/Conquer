@@ -9,7 +9,7 @@ namespace GameServer.Template;
 
 public sealed class VIPSystem
 {
-    public static Dictionary<int, VIPSystem> DataSheet;
+    public static Dictionary<int, VIPSystem> DataSheet = new Dictionary<int, VIPSystem>();
 
     public int VIPID;
     public int NeedVIPPoints;
@@ -25,7 +25,7 @@ public sealed class VIPSystem
 
     public static void LoadData()
     {
-        DataSheet = new Dictionary<int, VIPSystem>();
+        DataSheet.Clear();
 
         if (Settings.Default.DBMethod == 1)
         {

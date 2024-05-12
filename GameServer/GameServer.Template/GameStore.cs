@@ -22,7 +22,7 @@ public sealed class GameStore
     public static int StoreCount;
     public static int SellItemID;
 
-    public static Dictionary<int, GameStore> DataSheet;
+    public static Dictionary<int, GameStore> DataSheet = new Dictionary<int, GameStore>();
 
     public int StoreID;
     public string Name;
@@ -32,7 +32,7 @@ public sealed class GameStore
 
     public static void LoadData()
     {
-        DataSheet = new Dictionary<int, GameStore>();
+        DataSheet.Clear();
 
         if (Settings.Default.DBMethod == 0)
         {

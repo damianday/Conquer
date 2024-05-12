@@ -9,7 +9,7 @@ namespace GameServer.Template;
 
 public sealed class GameTitle
 {
-    public static Dictionary<byte, GameTitle> DataSheet;
+    public static Dictionary<byte, GameTitle> DataSheet = new Dictionary<byte, GameTitle>();
 
     public byte ID;
     public string Name;
@@ -19,7 +19,7 @@ public sealed class GameTitle
 
     public static void LoadData()
     {
-        DataSheet = new Dictionary<byte, GameTitle>();
+        DataSheet.Clear();
 
         if (Settings.Default.DBMethod == 0)
         {

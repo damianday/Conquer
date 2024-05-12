@@ -13,7 +13,7 @@ public sealed class RareTreasureItem
     public static byte[] Buffer;
     public static int Checksum;
     public static int TreasureCount;
-    public static Dictionary<int, RareTreasureItem> DataSheet;
+    public static Dictionary<int, RareTreasureItem> DataSheet = new Dictionary<int, RareTreasureItem>();
 
     public int ItemID;
     public int UnitCount;
@@ -32,7 +32,7 @@ public sealed class RareTreasureItem
 
     public static void LoadData()
     {
-        DataSheet = new Dictionary<int, RareTreasureItem>();
+        DataSheet.Clear();
 
         if (Settings.Default.DBMethod == 0)
         {

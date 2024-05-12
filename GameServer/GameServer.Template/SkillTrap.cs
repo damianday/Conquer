@@ -5,7 +5,7 @@ namespace GameServer.Template;
 
 public sealed class SkillTrap
 {
-    public static Dictionary<string, SkillTrap> DataSheet;
+    public static Dictionary<string, SkillTrap> DataSheet = new Dictionary<string, SkillTrap>();
 
     public string Name;
     public ushort ID;
@@ -42,7 +42,7 @@ public sealed class SkillTrap
 
     public static void LoadData()
     {
-        DataSheet = new Dictionary<string, SkillTrap>();
+        DataSheet.Clear();
 
         var path = Settings.Default.GameDataPath + "\\System\\Skills\\Traps\\";
         if (!Directory.Exists(path))

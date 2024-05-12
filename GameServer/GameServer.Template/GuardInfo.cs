@@ -6,7 +6,7 @@ namespace GameServer.Template;
 
 public sealed class GuardInfo
 {
-    public static Dictionary<ushort, GuardInfo> DataSheet;
+    public static Dictionary<ushort, GuardInfo> DataSheet = new Dictionary<ushort, GuardInfo>();
 
     public string Name;
     public ushort GuardID;
@@ -23,7 +23,7 @@ public sealed class GuardInfo
 
     public static void LoadData()
     {
-        DataSheet = new Dictionary<ushort, GuardInfo>();
+        DataSheet.Clear();
 
         if (Settings.Default.DBMethod == 0)
         {

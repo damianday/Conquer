@@ -5,7 +5,7 @@ namespace GameServer.Template;
 
 public sealed class InscriptionSkill
 {
-    public static Dictionary<ushort, InscriptionSkill> DataSheet;
+    public static Dictionary<ushort, InscriptionSkill> DataSheet = new Dictionary<ushort, InscriptionSkill>();
     private static Dictionary<byte, List<InscriptionSkill>> m_ProbabilityTable;
 
     public string SkillName;
@@ -70,7 +70,7 @@ public sealed class InscriptionSkill
 
     public static void LoadData()
     {
-        DataSheet = new Dictionary<ushort, InscriptionSkill>();
+        DataSheet.Clear();
 
         var path = Settings.Default.GameDataPath + "\\System\\Skills\\Inscriptions\\";
         if (Directory.Exists(path))

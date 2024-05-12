@@ -27,7 +27,7 @@ public struct InheritStat
 
 public sealed class MonsterInfo
 {
-    public static Dictionary<string, MonsterInfo> DataSheet;
+    public static Dictionary<string, MonsterInfo> DataSheet = new Dictionary<string, MonsterInfo>();
 
     public string MonsterName;
     public ushort ID;
@@ -156,7 +156,7 @@ public sealed class MonsterInfo
 
     public static void LoadData()
     {
-        DataSheet = new Dictionary<string, MonsterInfo>();
+        DataSheet.Clear();
 
         if (Settings.Default.DBMethod == 0)
         {

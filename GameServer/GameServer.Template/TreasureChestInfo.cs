@@ -9,7 +9,7 @@ namespace GameServer.Template;
 
 public sealed class TreasureChestInfo
 {
-    public static Dictionary<int, TreasureChestInfo> DataSheet;
+    public static Dictionary<int, TreasureChestInfo> DataSheet = new Dictionary<int, TreasureChestInfo>();
 
     public int ChestID;
     public int Item1ID;
@@ -28,7 +28,7 @@ public sealed class TreasureChestInfo
 
     public static void LoadData()
     {
-        DataSheet = new Dictionary<int, TreasureChestInfo>();
+        DataSheet.Clear();
 
         if (Settings.Default.DBMethod == 1)
         {

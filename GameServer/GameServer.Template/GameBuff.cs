@@ -5,7 +5,7 @@ namespace GameServer.Template;
 
 public sealed class GameBuff
 {
-    public static Dictionary<ushort, GameBuff> DataSheet;
+    public static Dictionary<ushort, GameBuff> DataSheet = new Dictionary<ushort, GameBuff>();
 
     public string Name;
     public ushort ID;
@@ -114,7 +114,7 @@ public sealed class GameBuff
 
     public static void LoadData()
     {
-        DataSheet = new Dictionary<ushort, GameBuff>();
+        DataSheet.Clear();
 
         var path = Settings.Default.GameDataPath + "\\System\\Skills\\Buffs\\";
         if (!Directory.Exists(path))
