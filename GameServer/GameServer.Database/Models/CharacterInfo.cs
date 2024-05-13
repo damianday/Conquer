@@ -67,9 +67,9 @@ public sealed class CharacterInfo : DBObject
 
     public readonly DataMonitor<byte> InventorySize;
 
-    public readonly DataMonitor<byte> WarehouseSize;
+    public readonly DataMonitor<byte> StorageSize;
 
-    public readonly DataMonitor<byte> 资源背包大小;
+    public readonly DataMonitor<byte> ResourcesSize;
 
     public readonly DataMonitor<long> 消耗元宝;
 
@@ -77,11 +77,11 @@ public sealed class CharacterInfo : DBObject
 
     public readonly ListMonitor<uint> PlayerSettings;
 
-    public readonly DataMonitor<EquipmentInfo> 升级装备;
+    public readonly DataMonitor<EquipmentInfo> UpgradeEquipment;
 
     public readonly DataMonitor<DateTime> 取回时间;
 
-    public readonly DataMonitor<bool> 升级成功;
+    public readonly DataMonitor<bool> UpgradeSuccess;
 
     public readonly DataMonitor<byte> CurrentTitle;
 
@@ -98,7 +98,7 @@ public sealed class CharacterInfo : DBObject
 
     public readonly DictionaryMonitor<byte, ItemInfo> Inventory;
     public readonly DictionaryMonitor<byte, ItemInfo> Storage;
-    public readonly DictionaryMonitor<byte, ItemInfo> 角色资源背包;
+    public readonly DictionaryMonitor<byte, ItemInfo> Resources;
     public readonly DictionaryMonitor<byte, EquipmentInfo> Equipment;
 
     public readonly DictionaryMonitor<byte, SkillInfo> HotKeys;
@@ -554,8 +554,8 @@ public sealed class CharacterInfo : DBObject
 
         Level.V = Settings.Default.StartingLevel;
         InventorySize.V = 32;
-        WarehouseSize.V = 16;
-        资源背包大小.V = 0;
+        StorageSize.V = 16;
+        ResourcesSize.V = 0;
         Account.V = account;
         UserName.V = uname;
         Job.V = job;
@@ -744,7 +744,7 @@ public sealed class CharacterInfo : DBObject
         {
             SMain.UpdateCharacter(this, "背包大小", O);
         };
-        WarehouseSize.Changed += delegate (byte O)
+        StorageSize.Changed += delegate (byte O)
         {
             SMain.UpdateCharacter(this, "仓库大小", O);
         };
@@ -829,7 +829,7 @@ public sealed class CharacterInfo : DBObject
         Account.V.Characters.Remove(this);
         Account.V.FrozenCharacters.Remove(this);
         Account.V.DeletedCharacters.Remove(this);
-        升级装备.V?.Remove();
+        UpgradeEquipment.V?.Remove();
         foreach (PetInfo item in Pets)
         {
             item.Remove();

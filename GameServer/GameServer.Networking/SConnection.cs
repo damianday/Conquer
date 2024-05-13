@@ -826,7 +826,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.随身修理单件(P.物品容器, P.物品位置, P.物品编号);
+            Player.UserSpecialRepairItem(P.物品容器, P.物品位置, P.物品编号);
         }
     }
 
@@ -838,7 +838,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.随身修理全部();
+            Player.UserSpecialRepairAllItems();
         }
     }
 
@@ -1035,7 +1035,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.升级武器普通(P.首饰组, P.材料组);
+            Player.UserUpgradeWeapon(P.首饰组, P.材料组);
         }
     }
 
@@ -2473,7 +2473,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.查询珍宝商店(P.数据版本);
+            Player.RequestTreasureStoreInfo(P.数据版本);
         }
     }
 
@@ -2497,7 +2497,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.购买珍宝商品(P.物品编号, P.购买数量);
+            Player.UserBuyTreasureItem(P.物品编号, P.购买数量);
         }
     }
 

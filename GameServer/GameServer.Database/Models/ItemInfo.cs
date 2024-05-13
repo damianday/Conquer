@@ -274,7 +274,7 @@ public class ItemInfo : DBObject
 
     public int StackSize => Info.MaxDura;
 
-    public int 默认持久
+    public int DefaultDurability
     {
         get
         {
@@ -294,7 +294,7 @@ public class ItemInfo : DBObject
     public bool IsResourceItem => Info.IsResourceItem;
     public bool CanSell => Info.CanSell;
     public bool CanStack => Info.PersistType == PersistentItemType.Stack;
-    public bool 背包锁定 => Info.背包锁定;
+    public bool LockedItem => Info.背包锁定;
     public bool CanDrop => Info.CanDrop;
     public int TitleID => Info.称号编号值;
     public ushort AdditionalSkill => Info.AdditionalSkill;

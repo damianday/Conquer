@@ -33,10 +33,10 @@ public class GameItem
     public int CurrencyModel;
     public int 货币面额;
     public int 称号编号值;
-    public bool 背包锁定;
+    public bool 背包锁定; // LockedItem
     public int 书页分解;
-    public int 给予物品;
-    public int 给予物品数量;
+    public int 给予物品; // GrantedItemID
+    public int 给予物品数量; // GrantedItemCount
     public byte MountID;
     public byte TeleportationAreaID;
     public int BuffDrugID;

@@ -344,7 +344,7 @@ public partial class SMain : Form
                 dataRow["金币数量"] = character.Gold;
                 dataRow["转出金币"] = character.TradeGold;
                 dataRow["背包大小"] = character.InventorySize;
-                dataRow["仓库大小"] = character.WarehouseSize;
+                dataRow["仓库大小"] = character.StorageSize;
                 dataRow["师门声望"] = character.师门声望;
                 dataRow["本期特权"] = character.CurrentPrivilege;
                 dataRow["本期日期"] = character.本期日期;

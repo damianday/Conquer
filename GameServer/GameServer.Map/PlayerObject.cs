@@ -613,25 +613,19 @@ public sealed class PlayerObject : MapObject
 
     public byte RemainingInventorySpace => (byte)(InventorySize - Inventory.Count);
 
-    public byte WarehouseSize
+    public byte StorageSize
     {
-        get { return Character.WarehouseSize.V; }
-        set { Character.WarehouseSize.V = value; }
+        get { return Character.StorageSize.V; }
+        set { Character.StorageSize.V = value; }
     }
 
-    public byte 资源背包大小
+    public byte ResourcesSize
     {
-        get
-        {
-            return Character.资源背包大小.V;
-        }
-        set
-        {
-            Character.资源背包大小.V = value;
-        }
+        get { return Character.ResourcesSize.V; }
+        set { Character.ResourcesSize.V = value; }
     }
 
-    public byte 宠物上限 { get; set; }
+    public byte PetMaxCount { get; set; }
 
     public bool IsEnoughBag => RemainingInventorySpace > 0;
 
@@ -696,31 +690,21 @@ public sealed class PlayerObject : MapObject
 
     public byte CurrentPrivilege
     {
-        get
-        {
-            return Character.CurrentPrivilege.V;
-        }
+        get { return Character.CurrentPrivilege.V; }
         set
         {
             if (Character.CurrentPrivilege.V != value)
-            {
                 Character.CurrentPrivilege.V = value;
-            }
         }
     }
 
     public byte PreviousPrivilege
     {
-        get
-        {
-            return Character.PreviousPrivilege.V;
-        }
+        get { return Character.PreviousPrivilege.V; }
         set
         {
             if (Character.PreviousPrivilege.V != value)
-            {
                 Character.PreviousPrivilege.V = value;
-            }
         }
     }
 
@@ -1000,7 +984,7 @@ public sealed class PlayerObject : MapObject
 
     public DictionaryMonitor<byte, ItemInfo> Inventory => Character.Inventory;
     public DictionaryMonitor<byte, ItemInfo> Storage => Character.Storage;
-    public DictionaryMonitor<byte, ItemInfo> 角色资源背包 => Character.角色资源背包;
+    public DictionaryMonitor<byte, ItemInfo> Resources => Character.Resources;
 
     public DictionaryMonitor<byte, EquipmentInfo> Equipment => Character.Equipment;
 
@@ -1269,8 +1253,8 @@ public sealed class PlayerObject : MapObject
         Enqueue(new SyncBackpackSizePacket
         {
             InventorySize = InventorySize,
-            WarehouseSize = WarehouseSize,
-            资源背包大小 = 资源背包大小
+            WarehouseSize = StorageSize,
+            资源背包大小 = ResourcesSize
         });
         Enqueue(new SyncSkillInfoPacket
         {
@@ -13517,7 +13501,7 @@ public sealed class PlayerObject : MapObject
                     }
                     break;
                 case 670508000:
-                    if (Character.升级装备.V == null)
+                    if (Character.UpgradeEquipment.V == null)
                     {
                         Connection?.Close(new Exception("错误操作: 继续Npcc对话.  错误: 尝试取回武器."));
                         break;
@@ -13536,7 +13520,7 @@ public sealed class PlayerObject : MapObject
                                     });
                                     break;
                                 }
-                                int num49 = (Character.升级装备.V.UpgradeCount.V + 1) * 100 * 10000;
+                                int num49 = (Character.UpgradeEquipment.V.UpgradeCount.V + 1) * 100 * 10000;
                                 if (Gold < num49)
                                 {
                                     CurrentNPCDialoguePage = 670510000;
@@ -13547,7 +13531,7 @@ public sealed class PlayerObject : MapObject
                                     });
                                     break;
                                 }
-                                int num50 = (Character.升级装备.V.UpgradeCount.V + 1) * 10;
+                                int num50 = (Character.UpgradeEquipment.V.UpgradeCount.V + 1) * 10;
                                 if (FindItem(num50, 110012, out var 物品列表23))
                                 {
                                     byte b32 = byte.MaxValue;
@@ -13576,8 +13560,8 @@ public sealed class PlayerObject : MapObject
                                             Description = 全部货币描述()
                                         });
                                         ConsumeItem(num50, 物品列表23);
-                                        Inventory[b32] = Character.升级装备.V;
-                                        Character.升级装备.V = null;
+                                        Inventory[b32] = Character.UpgradeEquipment.V;
+                                        Character.UpgradeEquipment.V = null;
                                         Inventory[b32].Grid.V = 1;
                                         Inventory[b32].Location.V = b32;
                                         Enqueue(new SyncItemPacket
@@ -13604,7 +13588,7 @@ public sealed class PlayerObject : MapObject
                                 break;
                             }
                         case 3:
-                            放弃升级武器();
+                            DestroyUpgradeEquipment();
                             break;
                     }
                     break;
@@ -13612,7 +13596,7 @@ public sealed class PlayerObject : MapObject
                     switch (选项编号)
                     {
                         case 1:
-                            if (Character.升级装备.V != null)
+                            if (Character.UpgradeEquipment.V != null)
                             {
                                 CurrentNPCDialoguePage = 670501000;
                                 Enqueue(new 同步交互结果
@@ -13633,7 +13617,7 @@ public sealed class PlayerObject : MapObject
                             }
                             break;
                         case 2:
-                            if (Character.升级装备.V == null)
+                            if (Character.UpgradeEquipment.V == null)
                             {
                                 CurrentNPCDialoguePage = 670503000;
                                 Enqueue(new 同步交互结果
@@ -13660,7 +13644,7 @@ public sealed class PlayerObject : MapObject
                                     Description = NpcDialog.GetBufferFromDialogID(CurrentNPCDialoguePage)
                                 });
                             }
-                            else if (玩家取回装备(0))
+                            else if (UserRetrieveUpgradeEquipment(0))
                             {
                                 CurrentNPCDialoguePage = 670507000;
                                 Enqueue(new 同步交互结果
@@ -13675,12 +13659,12 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     ObjectID = CurrentNPC.ObjectID,
-                                    Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{Character.升级装备.V.UpgradeCount.V * 10 + 10}><#P1:{Character.升级装备.V.UpgradeCount.V * 100 + 100}>")
+                                    Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{Character.UpgradeEquipment.V.UpgradeCount.V * 10 + 10}><#P1:{Character.UpgradeEquipment.V.UpgradeCount.V * 100 + 100}>")
                                 });
                             }
                             break;
                         case 3:
-                            if (Character.升级装备.V == null)
+                            if (Character.UpgradeEquipment.V == null)
                             {
                                 CurrentNPCDialoguePage = 670503000;
                                 Enqueue(new 同步交互结果
@@ -13716,7 +13700,7 @@ public sealed class PlayerObject : MapObject
                                     Description = NpcDialog.GetBufferFromDialogID(CurrentNPCDialoguePage)
                                 });
                             }
-                            else if (玩家取回装备(Settings.Default.武器强化消耗货币值))
+                            else if (UserRetrieveUpgradeEquipment(Settings.Default.武器强化消耗货币值))
                             {
                                 CurrentNPCDialoguePage = 670507000;
                                 Enqueue(new 同步交互结果
@@ -13732,7 +13716,7 @@ public sealed class PlayerObject : MapObject
                                 Enqueue(new 同步交互结果
                                 {
                                     ObjectID = CurrentNPC.ObjectID,
-                                    Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{Character.升级装备.V.UpgradeCount.V * 10 + 10}><#P1:{Character.升级装备.V.UpgradeCount.V * 100 + 100}>")
+                                    Description = NpcDialog.ConcatData(CurrentNPCDialoguePage, $"<#P0:{Character.UpgradeEquipment.V.UpgradeCount.V * 10 + 10}><#P1:{Character.UpgradeEquipment.V.UpgradeCount.V * 100 + 100}>")
                                 });
                             }
                             break;
@@ -14475,12 +14459,12 @@ public sealed class PlayerObject : MapObject
             Connection?.Close(new Exception("Error: The player expanded the backpack.  Error: The backpack has exceeded its limit."));
             return;
         }
-        if (grid == 2 && WarehouseSize + newSize > 144)
+        if (grid == 2 && StorageSize + newSize > 144)
         {
             Connection?.Close(new Exception("Error: The player expanded the backpack.  Error: Warehouse limit exceeded."));
             return;
         }
-        if (grid == 7 && 资源背包大小 + newSize > 216)
+        if (grid == 7 && ResourcesSize + newSize > 216)
         {
             Connection?.Close(new Exception("Bug: Player expanding resource pack.  Error: The resource pack has exceeded its limit."));
             return;
@@ -14502,18 +14486,18 @@ public sealed class PlayerObject : MapObject
                     {
                         Description = 全部货币描述()
                     });
-                    资源背包大小 += newSize;
+                    ResourcesSize += newSize;
                     Enqueue(new 背包容量改变
                     {
                         Grid = 7,
-                        Capacity = 资源背包大小
+                        Capacity = ResourcesSize
                     });
                 }
                 break;
             case 2:
                 {
-                    int num3 = Compute.ExtendWarehouse(WarehouseSize - 16);
-                    int num4 = Compute.ExtendWarehouse(WarehouseSize + newSize - 16) - num3;
+                    int num3 = Compute.ExtendWarehouse(StorageSize - 16);
+                    int num4 = Compute.ExtendWarehouse(StorageSize + newSize - 16) - num3;
                     if (Gold < num4)
                     {
                         Enqueue(new GameErrorMessagePacket { ErrorCode = 1821 });
@@ -14524,11 +14508,11 @@ public sealed class PlayerObject : MapObject
                     {
                         Description = 全部货币描述()
                     });
-                    WarehouseSize += newSize;
+                    StorageSize += newSize;
                     Enqueue(new 背包容量改变
                     {
                         Grid = 2,
-                        Capacity = WarehouseSize
+                        Capacity = StorageSize
                     });
                     break;
                 }
@@ -14565,16 +14549,15 @@ public sealed class PlayerObject : MapObject
     public void UserRepairItem(byte grid, byte location)
     {
         if (Dead || StallState > 0 || TradeState >= 3)
-        {
             return;
-        }
+
         if (CurrentNPC == null)
         {
-            Connection?.Close(new Exception("错误操作: 商店修理单件.  错误: 没有选中Npc."));
+            Connection?.Close(new Exception("[UserRepairItem] Error: Npc not selected."));
         }
         else if (CurrentStoreID == 0)
         {
-            Connection?.Close(new Exception("错误操作: 商店修理单件.  错误: 没有打开商店."));
+            Connection?.Close(new Exception("[UserRepairItem] Error: Store not open."));
         }
         else if (CurrentMap == CurrentNPC.CurrentMap && GetDistance(CurrentNPC) <= 12)
         {
@@ -14590,7 +14573,7 @@ public sealed class PlayerObject : MapObject
                             });
                             break;
                         }
-                        if (!(v2 is EquipmentInfo 装备数据))
+                        if (!(v2 is EquipmentInfo equipment))
                         {
                             Enqueue(new GameErrorMessagePacket
                             {
@@ -14598,7 +14581,7 @@ public sealed class PlayerObject : MapObject
                             });
                             break;
                         }
-                        if (!装备数据.CanRepair)
+                        if (!equipment.CanRepair)
                         {
                             Enqueue(new GameErrorMessagePacket
                             {
@@ -14606,7 +14589,7 @@ public sealed class PlayerObject : MapObject
                             });
                             break;
                         }
-                        if (Gold < 装备数据.RepairCost)
+                        if (Gold < equipment.RepairCost)
                         {
                             Enqueue(new GameErrorMessagePacket
                             {
@@ -14614,16 +14597,16 @@ public sealed class PlayerObject : MapObject
                             });
                             break;
                         }
-                        Gold -= 装备数据.RepairCost;
+                        Gold -= equipment.RepairCost;
                         Enqueue(new 同步货币数量
                         {
                             Description = 全部货币描述()
                         });
-                        装备数据.MaxDura.V = Math.Max(1000, 装备数据.MaxDura.V - 334);
-                        装备数据.Dura.V = 装备数据.MaxDura.V;
+                        equipment.MaxDura.V = Math.Max(1000, equipment.MaxDura.V - 334);
+                        equipment.Dura.V = equipment.MaxDura.V;
                         Enqueue(new SyncItemPacket
                         {
-                            Description = 装备数据.ToArray()
+                            Description = equipment.ToArray()
                         });
                         break;
                     }
@@ -14676,32 +14659,28 @@ public sealed class PlayerObject : MapObject
         }
         else
         {
-            Connection?.Close(new Exception("错误操作: 商店修理单件.  错误: 人物距离太远."));
+            Connection?.Close(new Exception("[UserRepairItem] Error: Characters are too far away."));
         }
     }
 
     public void UserRepairAllItems()
     {
         if (Dead || StallState > 0 || TradeState >= 3)
-        {
             return;
-        }
+
         if (CurrentNPC == null)
         {
-            Connection?.Close(new Exception("错误操作: 商店修理单件.  错误: 没有选中Npc."));
+            Connection?.Close(new Exception("[UserRepairAllItems] Error: Npc not selected."));
         }
         else if (CurrentStoreID == 0)
         {
-            Connection?.Close(new Exception("错误操作: 商店修理单件.  错误: 没有打开商店."));
+            Connection?.Close(new Exception("[UserRepairAllItems] Error: Store not open."));
         }
         else if (CurrentMap == CurrentNPC.CurrentMap && GetDistance(CurrentNPC) <= 12)
         {
             if (Gold < Equipment.Values.Sum((EquipmentInfo O) => O.CanRepair ? O.RepairCost : 0))
             {
-                Enqueue(new GameErrorMessagePacket
-                {
-                    ErrorCode = 1821
-                });
+                Enqueue(new GameErrorMessagePacket { ErrorCode = 1821 });
                 return;
             }
             foreach (EquipmentInfo value in Equipment.Values)
@@ -14730,99 +14709,77 @@ public sealed class PlayerObject : MapObject
         }
         else
         {
-            Connection?.Close(new Exception("错误操作: 商店修理单件.  错误: 人物距离太远."));
+            Connection?.Close(new Exception("[UserRepairAllItems] Error: Characters are too far away."));
         }
     }
 
-    public void 随身修理单件(byte 背包类型, byte 装备位置, int 物品编号)
+    public void UserSpecialRepairItem(byte grid, byte location, int itemId)
     {
         if (Dead || StallState > 0 || TradeState >= 3)
+            return;
+
+        if (itemId != 0)
         {
+            Connection?.Close(new Exception("[UserSpecialRepairItem] Error: Prohibited item."));
             return;
         }
-        if (物品编号 != 0)
-        {
-            Connection?.Close(new Exception("错误操作: 商店修理单件.  错误: 禁止使用物品."));
-            return;
-        }
-        switch (背包类型)
+        switch (grid)
         {
             case 1:
                 {
-                    if (!Inventory.TryGetValue(装备位置, out var v2))
+                    if (!Inventory.TryGetValue(location, out var v2))
                     {
-                        Enqueue(new GameErrorMessagePacket
-                        {
-                            ErrorCode = 1802
-                        });
+                        Enqueue(new GameErrorMessagePacket { ErrorCode = 1802 });
                         break;
                     }
-                    if (!(v2 is EquipmentInfo 装备数据))
+                    if (!(v2 is EquipmentInfo equipment))
                     {
-                        Enqueue(new GameErrorMessagePacket
-                        {
-                            ErrorCode = 1814
-                        });
+                        Enqueue(new GameErrorMessagePacket { ErrorCode = 1814 });
                         break;
                     }
-                    if (!装备数据.CanRepair)
+                    if (!equipment.CanRepair)
                     {
-                        Enqueue(new GameErrorMessagePacket
-                        {
-                            ErrorCode = 1814
-                        });
+                        Enqueue(new GameErrorMessagePacket { ErrorCode = 1814 });
                         break;
                     }
-                    if (Gold < 装备数据.SpecialRepairCost)
+                    if (Gold < equipment.SpecialRepairCost)
                     {
-                        Enqueue(new GameErrorMessagePacket
-                        {
-                            ErrorCode = 1821
-                        });
+                        Enqueue(new GameErrorMessagePacket { ErrorCode = 1821 });
                         break;
                     }
-                    Gold -= 装备数据.SpecialRepairCost;
+                    Gold -= equipment.SpecialRepairCost;
                     Enqueue(new 同步货币数量
                     {
                         Description = 全部货币描述()
                     });
-                    if (装备数据.Dura.V <= 0)
+                    if (equipment.Dura.V <= 0)
                     {
-                        BonusStats[装备数据] = 装备数据.Stats;
+                        BonusStats[equipment] = equipment.Stats;
                         RefreshStats();
                     }
-                    装备数据.Dura.V = 装备数据.MaxDura.V;
+                    equipment.Dura.V = equipment.MaxDura.V;
                     Enqueue(new SyncItemPacket
                     {
-                        Description = 装备数据.ToArray()
+                        Description = equipment.ToArray()
                     });
                     Enqueue(new 修理物品应答());
                     break;
                 }
             case 0:
                 {
-                    if (!Equipment.TryGetValue(装备位置, out var v))
+                    if (!Equipment.TryGetValue(location, out var v))
                     {
-                        Enqueue(new GameErrorMessagePacket
-                        {
-                            ErrorCode = 1802
-                        });
+                        Enqueue(new GameErrorMessagePacket { ErrorCode = 1802 });
                         break;
                     }
                     if (!v.CanRepair)
                     {
-                        Enqueue(new GameErrorMessagePacket
-                        {
-                            ErrorCode = 1814
-                        });
+                        Enqueue(new GameErrorMessagePacket { ErrorCode = 1814 });
                         break;
                     }
                     if (Gold < v.SpecialRepairCost)
                     {
-                        Enqueue(new GameErrorMessagePacket
-                        {
-                            ErrorCode = 1821
-                        });
+                        Enqueue(new GameErrorMessagePacket { ErrorCode = 1821 });
                         break;
                     }
                     Gold -= v.SpecialRepairCost;
@@ -14840,37 +14797,35 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 随身修理全部()
+    public void UserSpecialRepairAllItems()
     {
         if (Dead || StallState > 0 || TradeState >= 3)
             return;
 
-        if (Gold < Equipment.Values.Sum((EquipmentInfo O) => O.CanRepair ? O.SpecialRepairCost : 0))
+        if (Gold < Equipment.Values.Sum(x => x.CanRepair ? x.SpecialRepairCost : 0))
         {
-            Enqueue(new GameErrorMessagePacket
-            {
-                ErrorCode = 1821
-            });
+            Enqueue(new GameErrorMessagePacket { ErrorCode = 1821 });
             return;
         }
-        foreach (EquipmentInfo value in Equipment.Values)
+
+        foreach (var equipment in Equipment.Values)
         {
-            if (value.CanRepair)
+            if (equipment.CanRepair)
             {
-                Gold -= value.SpecialRepairCost;
+                Gold -= equipment.SpecialRepairCost;
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
                 });
-                if (value.Dura.V <= 0)
+                if (equipment.Dura.V <= 0)
                 {
-                    BonusStats[value] = value.Stats;
+                    BonusStats[equipment] = equipment.Stats;
                     RefreshStats();
                 }
-                value.Dura.V = value.MaxDura.V;
+                equipment.Dura.V = equipment.MaxDura.V;
                 Enqueue(new SyncItemPacket
                 {
-                    Description = value.ToArray()
+                    Description = equipment.ToArray()
                 });
             }
         }
@@ -14899,9 +14854,9 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 查询珍宝商店(int 数据版本)
+    public void RequestTreasureStoreInfo(int version)
     {
-        if (数据版本 != 0 && 数据版本 == RareTreasureItem.Checksum)
+        if (version != 0 && version == RareTreasureItem.Checksum)
         {
             Enqueue(new 同步珍宝数据
             {
@@ -14925,24 +14880,24 @@ public sealed class PlayerObject : MapObject
     {
     }
 
-    public void 购买珍宝商品(int 物品编号, int 购入数量)
+    public void UserBuyTreasureItem(int itemId, int quantity)
     {
-        if (!RareTreasureItem.DataSheet.TryGetValue(物品编号, out var value) || !GameItem.DataSheet.TryGetValue(物品编号, out var value2))
+        if (!RareTreasureItem.DataSheet.TryGetValue(itemId, out var treasure) || !GameItem.DataSheet.TryGetValue(itemId, out var item))
         {
             return;
         }
-        int num = ((购入数量 == 1 || value2.PersistType != PersistentItemType.Stack) ? 1 : Math.Min(购入数量, value2.MaxDura));
-        int num2 = value.CurrentPrice * num;
-        int num3 = -1;
+        int num = ((quantity == 1 || item.PersistType != PersistentItemType.Stack) ? 1 : Math.Min(quantity, item.MaxDura));
+        int cost = treasure.CurrentPrice * num;
+        int location = -1;
         byte b = 0;
         while (b < InventorySize)
         {
-            if (Inventory.TryGetValue(b, out var v) && (value2.PersistType != PersistentItemType.Stack || value2.ID != v.ID || v.Dura.V + 购入数量 > value2.MaxDura))
+            if (Inventory.TryGetValue(b, out var v) && (item.PersistType != PersistentItemType.Stack || item.ID != v.ID || v.Dura.V + quantity > item.MaxDura))
             {
                 b = (byte)(b + 1);
                 continue;
             }
-            num3 = b;
+            location = b;
             break;
         }
         if (num < 1)
@@ -14953,7 +14908,7 @@ public sealed class PlayerObject : MapObject
             });
             return;
         }
-        if (num3 == -1)
+        if (location == -1)
         {
             Enqueue(new GameErrorMessagePacket
             {
@@ -14961,7 +14916,7 @@ public sealed class PlayerObject : MapObject
             });
             return;
         }
-        if (Ingot < num2)
+        if (Ingot < cost)
         {
             Enqueue(new SocialErrorPacket
             {
@@ -14969,16 +14924,16 @@ public sealed class PlayerObject : MapObject
             });
             return;
         }
-        Ingot -= num2;
+        Ingot -= cost;
         Enqueue(new SyncIngotsPacket
         {
             Amount = Ingot
         });
-        if (物品编号 <= 1501000 || 物品编号 >= 1501005)
+        if (itemId <= 1501000 || itemId >= 1501005)
         {
-            Character.消耗元宝.V += num2;
+            Character.消耗元宝.V += cost;
         }
-        if (Inventory.TryGetValue((byte)num3, out var v2))
+        if (Inventory.TryGetValue((byte)location, out var v2))
         {
             v2.Dura.V += num;
             Enqueue(new SyncItemPacket
@@ -14988,14 +14943,14 @@ public sealed class PlayerObject : MapObject
         }
         else
         {
-            if (value2 is EquipmentItem 模板)
+            if (item is EquipmentItem equipment)
             {
-                Inventory[(byte)num3] = new EquipmentInfo(模板, Character, 1, (byte)num3);
+                Inventory[(byte)location] = new EquipmentInfo(equipment, Character, 1, (byte)location);
             }
             else
             {
                 int dura = 0;
-                switch (value2.PersistType)
+                switch (item.PersistType)
                 {
                     case PersistentItemType.Stack:
                         dura = num;
@@ -15005,23 +14960,23 @@ public sealed class PlayerObject : MapObject
                         break;
                     case PersistentItemType.Consumeable:
                     case PersistentItemType.Purity:
-                        dura = value2.MaxDura;
+                        dura = item.MaxDura;
                         break;
                 }
-                Inventory[(byte)num3] = new ItemInfo(value2, Character, 1, (byte)num3, dura);
+                Inventory[(byte)location] = new ItemInfo(item, Character, 1, (byte)location, dura);
             }
             Enqueue(new SyncItemPacket
             {
-                Description = Inventory[(byte)num3].ToArray()
+                Description = Inventory[(byte)location].ToArray()
             });
         }
         if (Settings.Default.CurrentVersion >= 1 && Settings.Default.珍宝阁提示开关 == 1)
         {
-            SEngine.AddSystemLog($"[{Name}][{CurrentLevel}级] 购买了 [{value2.Name}] * {num}, 消耗元宝[{num2}]");
+            SEngine.AddSystemLog($"[{Name}][{CurrentLevel}级] 购买了 [{item.Name}] * {num}, 消耗元宝[{cost}]");
         }
         if (Settings.Default.CurrentVersion == 0)
         {
-            SEngine.AddSystemLog($"[{Name}][{CurrentLevel}级] 购买了 [{value2.Name}] * {num}, 消耗元宝[{num2}]");
+            SEngine.AddSystemLog($"[{Name}][{CurrentLevel}级] 购买了 [{item.Name}] * {num}, 消耗元宝[{cost}]");
         }
     }
 
@@ -16084,8 +16039,8 @@ public sealed class PlayerObject : MapObject
         Enqueue(new SyncBackpackSizePacket
         {
             InventorySize = InventorySize,
-            WarehouseSize = WarehouseSize,
-            资源背包大小 = 资源背包大小
+            WarehouseSize = StorageSize,
+            资源背包大小 = ResourcesSize
         });
         Enqueue(new 同步背包信息
         {
@@ -17721,76 +17676,84 @@ public sealed class PlayerObject : MapObject
 
     public void UserMoveItem(byte grid, byte location, byte targetGrid, byte targetLocation)
     {
-        if (Dead || StallState > 0 || TradeState >= 3 || 
-            (grid == 0 && location >= 16) || 
+        if (Dead || StallState > 0 || TradeState >= 3)
+            return;
+
+        if ((grid == 0 && location >= 16) || 
             (grid == 1 && location >= InventorySize) || 
-            (grid == 2 && location >= WarehouseSize) || 
+            (grid == 2 && location >= StorageSize) || 
             (targetGrid == 0 && targetLocation >= 16) || 
             (targetGrid == 1 && targetLocation >= InventorySize) || 
-            (targetGrid == 2 && targetLocation >= WarehouseSize))
+            (targetGrid == 2 && targetLocation >= StorageSize))
         {
             return;
         }
-        ItemInfo 物品数据 = null;
+        ItemInfo source = null;
         if (grid == 0)
         {
-            物品数据 = (Equipment.TryGetValue(location, out var v) ? v : null);
+            source = (Equipment.TryGetValue(location, out var v) ? v : null);
         }
         if (grid == 1)
         {
-            物品数据 = (Inventory.TryGetValue(location, out var v2) ? v2 : null);
+            source = (Inventory.TryGetValue(location, out var v2) ? v2 : null);
         }
         if (grid == 2)
         {
-            物品数据 = (Storage.TryGetValue(location, out var v3) ? v3 : null);
+            source = (Storage.TryGetValue(location, out var v3) ? v3 : null);
         }
         if (grid == 7 && Settings.Default.资源包开关 == 1)
         {
-            物品数据 = (角色资源背包.TryGetValue(location, out var v4) ? v4 : null);
+            source = (Resources.TryGetValue(location, out var v4) ? v4 : null);
         }
-        if (物品数据.背包锁定)
-        {
+        if (source.LockedItem)
             return;
-        }
 
-        ItemInfo 物品数据2 = null;
+        ItemInfo target = null;
         if (targetGrid == 0)
         {
-            物品数据2 = (Equipment.TryGetValue(targetLocation, out var v5) ? v5 : null);
+            target = (Equipment.TryGetValue(targetLocation, out var v5) ? v5 : null);
         }
         if (targetGrid == 1)
         {
-            物品数据2 = (Inventory.TryGetValue(targetLocation, out var v6) ? v6 : null);
+            target = (Inventory.TryGetValue(targetLocation, out var v6) ? v6 : null);
         }
         if (targetGrid == 2)
         {
-            物品数据2 = (Storage.TryGetValue(targetLocation, out var v7) ? v7 : null);
+            target = (Storage.TryGetValue(targetLocation, out var v7) ? v7 : null);
         }
         if (targetGrid == 7 && Settings.Default.资源包开关 == 1)
         {
-            物品数据2 = (角色资源背包.TryGetValue(targetLocation, out var v8) ? v8 : null);
+            target = (Resources.TryGetValue(targetLocation, out var v8) ? v8 : null);
         }
-        if (物品数据.背包锁定 || (物品数据 == null && 物品数据2 == null) || (grid == 0 && targetGrid == 0) || (grid == 0 && targetGrid == 2) || (grid == 2 && targetGrid == 0) || (物品数据 != null && grid == 0 && (物品数据 as EquipmentInfo).CanRemove) || (物品数据2 != null && targetGrid == 0 && (物品数据2 as EquipmentInfo).CanRemove) || (物品数据 != null && targetGrid == 0 && (!(物品数据 is EquipmentInfo 装备数据) || 装备数据.NeedLevel > CurrentLevel || (装备数据.NeedGender != 0 && 装备数据.NeedGender != Gender) || (装备数据.NeedRace != GameObjectRace.Any && 装备数据.NeedRace != Job) || 装备数据.NeedAttack > this[Stat.MaxDC] || 装备数据.NeedMagic > this[Stat.MaxMC] || 装备数据.NeedTaoism > this[Stat.MaxSC] || 装备数据.NeedPiercing > this[Stat.MaxNC] || 装备数据.NeedArchery > this[Stat.MaxBC] || (targetLocation == 0 && 装备数据.Weight > MaxHandWeight) || (targetLocation != 0 && 装备数据.Weight - 物品数据2?.Weight > MaxWearWeight - EquipmentWeight) || (targetLocation == 0 && 装备数据.Type != ItemType.Weapon) || (targetLocation == 1 && 装备数据.Type != ItemType.Armour) || (targetLocation == 2 && 装备数据.Type != ItemType.Cloak) || (targetLocation == 3 && 装备数据.Type != ItemType.Helmet) || (targetLocation == 4 && 装备数据.Type != ItemType.ShoulderPad) || (targetLocation == 5 && 装备数据.Type != ItemType.护腕) || (targetLocation == 6 && 装备数据.Type != ItemType.Belt) || (targetLocation == 7 && 装备数据.Type != ItemType.Boots) || (targetLocation == 8 && 装备数据.Type != ItemType.Necklace) || (targetLocation == 13 && 装备数据.Type != ItemType.Medal) || (targetLocation == 14 && 装备数据.Type != ItemType.玉佩) || (targetLocation == 15 && 装备数据.Type != ItemType.战具) || (targetLocation == 9 && 装备数据.Type != ItemType.Ring) || (targetLocation == 10 && 装备数据.Type != ItemType.Ring) || (targetLocation == 11 && 装备数据.Type != ItemType.Bracelet) || (targetLocation == 12 && 装备数据.Type != ItemType.Bracelet))) || (物品数据2 != null && grid == 0 && (!(物品数据2 is EquipmentInfo 装备数据2) || 装备数据2.NeedLevel > CurrentLevel || (装备数据2.NeedGender != 0 && 装备数据2.NeedGender != Gender) || (装备数据2.NeedRace != GameObjectRace.Any && 装备数据2.NeedRace != Job) || 装备数据2.NeedAttack > this[Stat.MaxDC] || 装备数据2.NeedMagic > this[Stat.MaxMC] || 装备数据2.NeedTaoism > this[Stat.MaxSC] || 装备数据2.NeedPiercing > this[Stat.MaxNC] || 装备数据2.NeedArchery > this[Stat.MaxBC] || (location == 0 && 装备数据2.Weight > MaxHandWeight) || (location != 0 && 装备数据2.Weight - 物品数据?.Weight > MaxWearWeight - EquipmentWeight) || (location == 0 && 装备数据2.Type != ItemType.Weapon) || (location == 1 && 装备数据2.Type != ItemType.Armour) || (location == 2 && 装备数据2.Type != ItemType.Cloak) || (location == 3 && 装备数据2.Type != ItemType.Helmet) || (location == 4 && 装备数据2.Type != ItemType.ShoulderPad) || (location == 5 && 装备数据2.Type != ItemType.护腕) || (location == 6 && 装备数据2.Type != ItemType.Belt) || (location == 7 && 装备数据2.Type != ItemType.Boots) || (location == 8 && 装备数据2.Type != ItemType.Necklace) || (location == 13 && 装备数据2.Type != ItemType.Medal) || (location == 14 && 装备数据2.Type != ItemType.玉佩) || (location == 15 && 装备数据2.Type != ItemType.战具) || (location == 9 && 装备数据2.Type != ItemType.Ring) || (location == 10 && 装备数据2.Type != ItemType.Ring) || (location == 11 && 装备数据2.Type != ItemType.Bracelet) || (location == 12 && 装备数据2.Type != ItemType.Bracelet))))
+        if (source.LockedItem || 
+            (source == null && target == null) || 
+            (grid == 0 && targetGrid == 0) || 
+            (grid == 0 && targetGrid == 2) || 
+            (grid == 2 && targetGrid == 0) || 
+            (source != null && grid == 0 && (source as EquipmentInfo).CanRemove) || 
+            (target != null && targetGrid == 0 && (target as EquipmentInfo).CanRemove) || 
+            (source != null && targetGrid == 0 && (!(source is EquipmentInfo equipment) || equipment.NeedLevel > CurrentLevel || (equipment.NeedGender != 0 && equipment.NeedGender != Gender) || (equipment.NeedRace != GameObjectRace.Any && equipment.NeedRace != Job) || equipment.NeedAttack > this[Stat.MaxDC] || equipment.NeedMagic > this[Stat.MaxMC] || equipment.NeedTaoism > this[Stat.MaxSC] || equipment.NeedPiercing > this[Stat.MaxNC] || equipment.NeedArchery > this[Stat.MaxBC] || (targetLocation == 0 && equipment.Weight > MaxHandWeight) || (targetLocation != 0 && equipment.Weight - target?.Weight > MaxWearWeight - EquipmentWeight) || (targetLocation == 0 && equipment.Type != ItemType.Weapon) || (targetLocation == 1 && equipment.Type != ItemType.Armour) || (targetLocation == 2 && equipment.Type != ItemType.Cloak) || (targetLocation == 3 && equipment.Type != ItemType.Helmet) || (targetLocation == 4 && equipment.Type != ItemType.ShoulderPad) || (targetLocation == 5 && equipment.Type != ItemType.护腕) || (targetLocation == 6 && equipment.Type != ItemType.Belt) || (targetLocation == 7 && equipment.Type != ItemType.Boots) || (targetLocation == 8 && equipment.Type != ItemType.Necklace) || (targetLocation == 13 && equipment.Type != ItemType.Medal) || (targetLocation == 14 && equipment.Type != ItemType.玉佩) || (targetLocation == 15 && equipment.Type != ItemType.战具) || (targetLocation == 9 && equipment.Type != ItemType.Ring) || (targetLocation == 10 && equipment.Type != ItemType.Ring) || (targetLocation == 11 && equipment.Type != ItemType.Bracelet) || (targetLocation == 12 && equipment.Type != ItemType.Bracelet))) || 
+            (target != null && grid == 0 && (!(target is EquipmentInfo equipment2) || equipment2.NeedLevel > CurrentLevel || (equipment2.NeedGender != 0 && equipment2.NeedGender != Gender) || (equipment2.NeedRace != GameObjectRace.Any && equipment2.NeedRace != Job) || equipment2.NeedAttack > this[Stat.MaxDC] || equipment2.NeedMagic > this[Stat.MaxMC] || equipment2.NeedTaoism > this[Stat.MaxSC] || equipment2.NeedPiercing > this[Stat.MaxNC] || equipment2.NeedArchery > this[Stat.MaxBC] || (location == 0 && equipment2.Weight > MaxHandWeight) || (location != 0 && equipment2.Weight - source?.Weight > MaxWearWeight - EquipmentWeight) || (location == 0 && equipment2.Type != ItemType.Weapon) || (location == 1 && equipment2.Type != ItemType.Armour) || (location == 2 && equipment2.Type != ItemType.Cloak) || (location == 3 && equipment2.Type != ItemType.Helmet) || (location == 4 && equipment2.Type != ItemType.ShoulderPad) || (location == 5 && equipment2.Type != ItemType.护腕) || (location == 6 && equipment2.Type != ItemType.Belt) || (location == 7 && equipment2.Type != ItemType.Boots) || (location == 8 && equipment2.Type != ItemType.Necklace) || (location == 13 && equipment2.Type != ItemType.Medal) || (location == 14 && equipment2.Type != ItemType.玉佩) || (location == 15 && equipment2.Type != ItemType.战具) || (location == 9 && equipment2.Type != ItemType.Ring) || (location == 10 && equipment2.Type != ItemType.Ring) || (location == 11 && equipment2.Type != ItemType.Bracelet) || (location == 12 && equipment2.Type != ItemType.Bracelet))))
         {
             return;
         }
 
-        if (物品数据 != null && 物品数据2 != null && 物品数据.CanStack && 物品数据2.ID == 物品数据.ID && 物品数据.StackSize > 物品数据.Dura.V && 物品数据2.StackSize > 物品数据2.Dura.V)
+        if (source != null && target != null && source.CanStack && target.ID == source.ID && source.StackSize > source.Dura.V && target.StackSize > target.Dura.V)
         {
-            int num = Math.Min(物品数据.Dura.V, 物品数据2.StackSize - 物品数据2.Dura.V);
-            物品数据2.Dura.V += num;
-            物品数据.Dura.V -= num;
+            int num = Math.Min(source.Dura.V, target.StackSize - target.Dura.V);
+            target.Dura.V += num;
+            source.Dura.V -= num;
             Enqueue(new SyncItemPacket
             {
-                Description = 物品数据2.ToArray()
+                Description = target.ToArray()
             });
-            if (物品数据.Dura.V <= 0)
+            if (source.Dura.V <= 0)
             {
-                物品数据.Remove();
+                source.Remove();
                 switch (grid)
                 {
                     case 7:
-                        角色资源背包.Remove(location);
+                        Resources.Remove(location);
                         break;
                     case 2:
                         Storage.Remove(location);
@@ -17809,12 +17772,12 @@ public sealed class PlayerObject : MapObject
             {
                 Enqueue(new SyncItemPacket
                 {
-                    Description = 物品数据.ToArray()
+                    Description = source.ToArray()
                 });
             }
             return;
         }
-        if (物品数据 != null)
+        if (source != null)
         {
             switch (grid)
             {
@@ -17828,13 +17791,13 @@ public sealed class PlayerObject : MapObject
                     Storage.Remove(location);
                     break;
                 case 7:
-                    角色资源背包.Remove(location);
+                    Resources.Remove(location);
                     break;
             }
-            物品数据.Grid.V = targetGrid;
-            物品数据.Location.V = targetLocation;
+            source.Grid.V = targetGrid;
+            source.Location.V = targetLocation;
         }
-        if (物品数据2 != null)
+        if (target != null)
         {
             switch (targetGrid)
             {
@@ -17848,45 +17811,45 @@ public sealed class PlayerObject : MapObject
                     Storage.Remove(targetLocation);
                     break;
                 case 7:
-                    角色资源背包.Remove(location);
+                    Resources.Remove(location);
                     break;
             }
-            物品数据2.Grid.V = grid;
-            物品数据2.Location.V = location;
+            target.Grid.V = grid;
+            target.Location.V = location;
         }
-        if (物品数据 != null)
+        if (source != null)
         {
             switch (targetGrid)
             {
                 case 0:
-                    Equipment[targetLocation] = 物品数据 as EquipmentInfo;
+                    Equipment[targetLocation] = source as EquipmentInfo;
                     break;
                 case 1:
-                    Inventory[targetLocation] = 物品数据;
+                    Inventory[targetLocation] = source;
                     break;
                 case 2:
-                    Storage[targetLocation] = 物品数据;
+                    Storage[targetLocation] = source;
                     break;
                 case 7:
-                    角色资源背包[targetLocation] = 物品数据;
+                    Resources[targetLocation] = source;
                     break;
             }
         }
-        if (物品数据2 != null)
+        if (target != null)
         {
             switch (grid)
             {
                 case 0:
-                    Equipment[location] = 物品数据2 as EquipmentInfo;
+                    Equipment[location] = target as EquipmentInfo;
                     break;
                 case 1:
-                    Inventory[location] = 物品数据2;
+                    Inventory[location] = target;
                     break;
                 case 2:
-                    Storage[location] = 物品数据2;
+                    Storage[location] = target;
                     break;
                 case 7:
-                    角色资源背包[location] = 物品数据2;
+                    Resources[location] = target;
                     break;
             }
         }
@@ -17899,11 +17862,11 @@ public sealed class PlayerObject : MapObject
         });
         if (targetGrid == 0)
         {
-            UserChangeEquipment((EquipmentWearType)targetLocation, (EquipmentInfo)物品数据2, (EquipmentInfo)物品数据);
+            UserChangeEquipment((EquipmentWearType)targetLocation, (EquipmentInfo)target, (EquipmentInfo)source);
         }
         else if (grid == 0)
         {
-            UserChangeEquipment((EquipmentWearType)location, (EquipmentInfo)物品数据, (EquipmentInfo)物品数据2);
+            UserChangeEquipment((EquipmentWearType)location, (EquipmentInfo)source, (EquipmentInfo)target);
         }
     }
 
@@ -22948,7 +22911,7 @@ public sealed class PlayerObject : MapObject
                 });
                 return;
             }
-            if (装备数据.MaxDura.V >= 装备数据.默认持久 * 2)
+            if (装备数据.MaxDura.V >= 装备数据.DefaultDurability * 2)
             {
                 Enqueue(new GameErrorMessagePacket
                 {
@@ -22965,7 +22928,7 @@ public sealed class PlayerObject : MapObject
                 return;
             }
             ConsumeItem(1, 物品);
-            if (Compute.CalculateProbability(1f - (float)装备数据.MaxDura.V * 0.5f / (float)装备数据.默认持久))
+            if (Compute.CalculateProbability(1f - (float)装备数据.MaxDura.V * 0.5f / (float)装备数据.DefaultDurability))
             {
                 装备数据.MaxDura.V += 1000;
                 Enqueue(new 修复最大持久
@@ -24447,14 +24410,13 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 升级武器普通(byte[] 首饰组, byte[] 材料组)
+    public void UserUpgradeWeapon(byte[] 首饰组, byte[] 材料组)
     {
         if (Dead || StallState > 0 || TradeState >= 3)
-        {
             return;
-        }
+
         EquipmentInfo v;
-        if (Character.升级装备.V != null)
+        if (Character.UpgradeEquipment.V != null)
         {
             Enqueue(new GameErrorMessagePacket
             {
@@ -24475,7 +24437,7 @@ public sealed class PlayerObject : MapObject
                 ErrorCode = 1853
             });
         }
-        else if (v.MaxDura.V > 3000 && (float)v.MaxDura.V > (float)v.默认持久 * 0.5f)
+        else if (v.MaxDura.V > 3000 && (float)v.MaxDura.V > (float)v.DefaultDurability * 0.5f)
         {
             if (v.UpgradeCount.V >= 9)
             {
@@ -24651,9 +24613,9 @@ public sealed class PlayerObject : MapObject
                     float num5 = Math.Max(0f, num4 - 146);
                     int num6 = 90 - v.UpgradeCount.V * 10;
                     float 概率 = (num3 * (float)num6 * 0.001f + num5 * 0.01f) * (float)Settings.Default.锻造成功倍数;
-                    Character.升级装备.V = v;
+                    Character.UpgradeEquipment.V = v;
                     Character.取回时间.V = SEngine.CurrentTime.AddHours(2.0);
-                    if (Character.升级成功.V = Compute.CalculateProbability(概率))
+                    if (Character.UpgradeSuccess.V = Compute.CalculateProbability(概率))
                     {
                         v.UpgradeCount.V++;
                         switch (key)
@@ -24690,7 +24652,7 @@ public sealed class PlayerObject : MapObject
                         v.MaxDura.V -= 1000;
                         v.Dura.V = Math.Min(v.Dura.V, v.MaxDura.V);
                     }
-                    else if (num4 > 130 && Compute.CalculateProbability(1f - (float)v.MaxDura.V * 0.5f / (float)v.默认持久))
+                    else if (num4 > 130 && Compute.CalculateProbability(1f - (float)v.MaxDura.V * 0.5f / (float)v.DefaultDurability))
                     {
                         v.MaxDura.V += 1000;
                         v.Dura.V = Math.Min(v.Dura.V, v.MaxDura.V);
@@ -24717,13 +24679,13 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public bool 玩家取回装备(int 扣除金币)
+    public bool UserRetrieveUpgradeEquipment(int gold)
     {
-        if (Character.升级装备.V == null)
+        if (Character.UpgradeEquipment.V == null)
         {
             return false;
         }
-        if (Character.升级成功.V && Settings.Default.武器强化消耗货币开关 == 0)
+        if (Character.UpgradeSuccess.V && Settings.Default.武器强化消耗货币开关 == 0)
         {
             byte b = 0;
             while (b < InventorySize)
@@ -24733,12 +24695,12 @@ public sealed class PlayerObject : MapObject
                     b = (byte)(b + 1);
                     continue;
                 }
-                Gold -= 扣除金币;
+                Gold -= gold;
                 Enqueue(new 同步货币数量
                 {
                     Description = 全部货币描述()
                 });
-                Inventory[b] = Character.升级装备.V;
+                Inventory[b] = Character.UpgradeEquipment.V;
                 Inventory[b].Location.V = b;
                 Inventory[b].Grid.V = 1;
                 Enqueue(new SyncItemPacket
@@ -24747,16 +24709,16 @@ public sealed class PlayerObject : MapObject
                 });
                 Enqueue(new 取回升级武器());
                 Enqueue(new 武器升级结果());
-                if (Character.升级装备.V.UpgradeCount.V >= 5)
+                if (Character.UpgradeEquipment.V.UpgradeCount.V >= 5)
                 {
-                    NetworkManager.SendAnnouncement($"[{Name}] 成功将 [{Character.升级装备.V.Name}] 升级到 {Character.升级装备.V.UpgradeCount.V} 级.");
+                    NetworkManager.SendAnnouncement($"[{Name}] 成功将 [{Character.UpgradeEquipment.V.Name}] 升级到 {Character.UpgradeEquipment.V.UpgradeCount.V} 级.");
                 }
-                Character.升级装备.V = null;
-                return Character.升级成功.V;
+                Character.UpgradeEquipment.V = null;
+                return Character.UpgradeSuccess.V;
             }
-            Character.升级装备.V = null;
+            Character.UpgradeEquipment.V = null;
         }
-        else if (Character.升级成功.V && Settings.Default.武器强化消耗货币开关 == 1)
+        else if (Character.UpgradeSuccess.V && Settings.Default.武器强化消耗货币开关 == 1)
         {
             byte b2 = 0;
             while (b2 < InventorySize)
@@ -24766,8 +24728,8 @@ public sealed class PlayerObject : MapObject
                     b2 = (byte)(b2 + 1);
                     continue;
                 }
-                Ingot -= 扣除金币;
-                Inventory[b2] = Character.升级装备.V;
+                Ingot -= gold;
+                Inventory[b2] = Character.UpgradeEquipment.V;
                 Inventory[b2].Location.V = b2;
                 Inventory[b2].Grid.V = 1;
                 Enqueue(new SyncItemPacket
@@ -24776,22 +24738,22 @@ public sealed class PlayerObject : MapObject
                 });
                 Enqueue(new 取回升级武器());
                 Enqueue(new 武器升级结果());
-                if (Character.升级装备.V.UpgradeCount.V >= 5)
+                if (Character.UpgradeEquipment.V.UpgradeCount.V >= 5)
                 {
-                    NetworkManager.SendAnnouncement($"[{Name}] 成功将 [{Character.升级装备.V.Name}] 升级到 {Character.升级装备.V.UpgradeCount.V} 级.");
+                    NetworkManager.SendAnnouncement($"[{Name}] 成功将 [{Character.UpgradeEquipment.V.Name}] 升级到 {Character.UpgradeEquipment.V.UpgradeCount.V} 级.");
                 }
-                Character.升级装备.V = null;
-                return Character.升级成功.V;
+                Character.UpgradeEquipment.V = null;
+                return Character.UpgradeSuccess.V;
             }
-            Character.升级装备.V = null;
+            Character.UpgradeEquipment.V = null;
         }
-        return Character.升级成功.V;
+        return Character.UpgradeSuccess.V;
     }
 
-    public void 放弃升级武器()
+    public void DestroyUpgradeEquipment()
     {
-        Character.升级装备.V?.Remove();
-        Character.升级装备.V = null;
+        Character.UpgradeEquipment.V?.Remove();
+        Character.UpgradeEquipment.V = null;
         Enqueue(new 武器升级结果
         {
             升级结果 = 1
@@ -25198,191 +25160,158 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 玩家取消关注(int 对象编号)
+    public void 玩家取消关注(int id)
     {
-        if (Session.CharacterInfoTable.DataSheet.TryGetValue(对象编号, out var value) && value is CharacterInfo 角色数据)
+        var character = Session.GetCharacter(id);
+        if (character == null)
         {
-            if (!偶像列表.Contains(角色数据))
-            {
-                Enqueue(new SocialErrorPacket
-                {
-                    ErrorCode = 5121
-                });
-                return;
-            }
-            偶像列表.Remove(角色数据);
-            角色数据.粉丝列表.Remove(this.Character);
-            Enqueue(new 玩家取消关注
-            {
-                对象编号 = 角色数据.ID
-            });
-            if (FriendList.Contains(角色数据) || 角色数据.FriendList.Contains(this.Character))
-            {
-                FriendList.Remove(角色数据);
-                角色数据.FriendList.Remove(this.Character);
-            }
-            角色数据.Enqueue(new 对方取消关注
-            {
-                对象编号 = ObjectID,
-                对象名字 = Name
-            });
+            Enqueue(new GameErrorMessagePacket { ErrorCode = 6732 });
+            return;
         }
-        else
+
+        if (!偶像列表.Contains(character))
         {
-            Enqueue(new GameErrorMessagePacket
-            {
-                ErrorCode = 6732
-            });
+            Enqueue(new SocialErrorPacket { ErrorCode = 5121 });
+            return;
         }
+
+        偶像列表.Remove(character);
+        character.粉丝列表.Remove(this.Character);
+        Enqueue(new 玩家取消关注
+        {
+            对象编号 = character.ID
+        });
+        if (FriendList.Contains(character) || character.FriendList.Contains(this.Character))
+        {
+            FriendList.Remove(character);
+            character.FriendList.Remove(this.Character);
+        }
+        character.Enqueue(new 对方取消关注
+        {
+            对象编号 = ObjectID,
+            对象名字 = Name
+        });
     }
 
-    public void 玩家添加仇人(int 对象编号)
+    public void 玩家添加仇人(int id)
     {
-        if (Session.CharacterInfoTable.DataSheet.TryGetValue(对象编号, out var value) && value is CharacterInfo 角色数据)
+        var character = Session.GetCharacter(id);
+        if (character == null)
         {
-            if (仇人列表.Count >= 100)
-            {
-                Enqueue(new SocialErrorPacket
-                {
-                    ErrorCode = 5125
-                });
-                return;
-            }
-            if (偶像列表.Contains(角色数据))
-            {
-                Enqueue(new SocialErrorPacket
-                {
-                    ErrorCode = 5122
-                });
-                return;
-            }
-            仇人列表.Add(角色数据);
-            角色数据.仇恨列表.Add(this.Character);
-            Enqueue(new 玩家标记仇人
-            {
-                对象编号 = 角色数据.Index.V
-            });
-            Enqueue(new 同步好友列表
-            {
-                ObjectID = 角色数据.Index.V,
-                Name = 角色数据.UserName.V,
-                Job = (byte)角色数据.Job.V,
-                Gender = (byte)角色数据.Gender.V,
-                上线下线 = (byte)((!角色数据.Connected) ? 3u : 0u)
-            });
+            Enqueue(new GameErrorMessagePacket { ErrorCode = 6732 });
+            return;
         }
-        else
+
+        if (仇人列表.Count >= 100)
         {
-            Enqueue(new GameErrorMessagePacket
-            {
-                ErrorCode = 6732
-            });
+            Enqueue(new SocialErrorPacket { ErrorCode = 5125 });
+            return;
         }
+
+        if (偶像列表.Contains(character))
+        {
+            Enqueue(new SocialErrorPacket { ErrorCode = 5122 });
+            return;
+        }
+
+        仇人列表.Add(character);
+        character.仇恨列表.Add(this.Character);
+        Enqueue(new 玩家标记仇人
+        {
+            对象编号 = character.Index.V
+        });
+        Enqueue(new 同步好友列表
+        {
+            ObjectID = character.Index.V,
+            Name = character.UserName.V,
+            Job = (byte)character.Job.V,
+            Gender = (byte)character.Gender.V,
+            上线下线 = (byte)((!character.Connected) ? 3u : 0u)
+        });
     }
 
-    public void 玩家删除仇人(int 对象编号)
+    public void 玩家删除仇人(int id)
     {
-        if (Session.CharacterInfoTable.DataSheet.TryGetValue(对象编号, out var value) && value is CharacterInfo 角色数据)
+        var character = Session.GetCharacter(id);
+        if (character == null)
         {
-            if (!仇人列表.Contains(角色数据))
-            {
-                Enqueue(new SocialErrorPacket
-                {
-                    ErrorCode = 5126
-                });
-                return;
-            }
-            仇人列表.Remove(角色数据);
-            角色数据.仇恨列表.Remove(this.Character);
-            Enqueue(new 玩家移除仇人
-            {
-                对象编号 = 角色数据.Index.V
-            });
+            Enqueue(new GameErrorMessagePacket { ErrorCode = 6732 });
+            return;
         }
-        else
+
+        if (!仇人列表.Contains(character))
         {
-            Enqueue(new GameErrorMessagePacket
-            {
-                ErrorCode = 6732
-            });
+            Enqueue(new SocialErrorPacket { ErrorCode = 5126 });
+            return;
         }
+
+        仇人列表.Remove(character);
+        character.仇恨列表.Remove(this.Character);
+        Enqueue(new 玩家移除仇人
+        {
+            对象编号 = character.Index.V
+        });
     }
 
-    public void 玩家屏蔽目标(int 对象编号)
+    public void 玩家屏蔽目标(int id)
     {
-        if (Session.CharacterInfoTable.DataSheet.TryGetValue(对象编号, out var value) && value is CharacterInfo 角色数据)
+        var character = Session.GetCharacter(id);
+        if (character == null)
         {
-            if (BlackList.Count >= 100)
-            {
-                Enqueue(new SocialErrorPacket
-                {
-                    ErrorCode = 7428
-                });
-                return;
-            }
-            if (BlackList.Contains(角色数据))
-            {
-                Enqueue(new SocialErrorPacket
-                {
-                    ErrorCode = 7426
-                });
-                return;
-            }
-            if (对象编号 == ObjectID)
-            {
-                Enqueue(new SocialErrorPacket
-                {
-                    ErrorCode = 7429
-                });
-                return;
-            }
-            if (偶像列表.Contains(角色数据))
-            {
-                玩家取消关注(角色数据.ID);
-            }
-            BlackList.Add(角色数据);
-            角色数据.BlackList.Add(this.Character);
-            Enqueue(new 玩家屏蔽目标
-            {
-                对象编号 = 角色数据.Index.V,
-                对象名字 = 角色数据.UserName.V
-            });
+            Enqueue(new GameErrorMessagePacket { ErrorCode = 6732 });
+            return;
         }
-        else
+
+        if (BlackList.Count >= 100)
         {
-            Enqueue(new GameErrorMessagePacket
-            {
-                ErrorCode = 6732
-            });
+            Enqueue(new SocialErrorPacket { ErrorCode = 7428 });
+            return;
         }
+        if (BlackList.Contains(character))
+        {
+            Enqueue(new SocialErrorPacket { ErrorCode = 7426 });
+            return;
+        }
+        if (id == ObjectID)
+        {
+            Enqueue(new SocialErrorPacket { ErrorCode = 7429 });
+            return;
+        }
+
+        if (偶像列表.Contains(character))
+        {
+            玩家取消关注(character.ID);
+        }
+        BlackList.Add(character);
+        character.BlackList.Add(this.Character);
+        Enqueue(new 玩家屏蔽目标
+        {
+            对象编号 = character.Index.V,
+            对象名字 = character.UserName.V
+        });
     }
 
-    public void 玩家解除屏蔽(int 对象编号)
+    public void 玩家解除屏蔽(int id)
     {
-        if (Session.CharacterInfoTable.DataSheet.TryGetValue(对象编号, out var value) && value is CharacterInfo 角色数据)
+        var character = Session.GetCharacter(id);
+        if (character == null)
         {
-            if (!BlackList.Contains(角色数据))
-            {
-                Enqueue(new SocialErrorPacket
-                {
-                    ErrorCode = 7427
-                });
-                return;
-            }
-            BlackList.Remove(角色数据);
-            角色数据.BlackList.Remove(this.Character);
-            Enqueue(new 解除玩家屏蔽
-            {
-                对象编号 = 角色数据.Index.V
-            });
+            Enqueue(new GameErrorMessagePacket { ErrorCode = 6732 });
+            return;
         }
-        else
+
+        if (!BlackList.Contains(character))
         {
-            Enqueue(new GameErrorMessagePacket
-            {
-                ErrorCode = 6732
-            });
+            Enqueue(new SocialErrorPacket { ErrorCode = 7427 });
+            return;
         }
+
+        BlackList.Remove(character);
+        character.BlackList.Remove(this.Character);
+        Enqueue(new 解除玩家屏蔽
+        {
+            对象编号 = character.Index.V
+        });
     }
 
     public void RequestObjectAppearance(int id, int 状态编号)
@@ -29879,7 +29808,7 @@ public sealed class PlayerObject : MapObject
             if (item != null)
                 writer.Write(item.ToArray());
         }
-        foreach (var item in 角色资源背包.Values)
+        foreach (var item in Resources.Values)
         {
             if (item != null)
                 writer.Write(item.ToArray());
