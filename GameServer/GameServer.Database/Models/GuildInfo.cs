@@ -650,7 +650,7 @@ public sealed class GuildInfo : DBObject
         }
     }
 
-    public byte[] 行会检索描述()
+    public byte[] GuildSearchDescription()
     {
         using MemoryStream memoryStream = new MemoryStream(new byte[229]);
         using BinaryWriter binaryWriter = new BinaryWriter(memoryStream);

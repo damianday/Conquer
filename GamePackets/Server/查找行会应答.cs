@@ -4,5 +4,5 @@ namespace GamePackets.Server;
 public sealed class 查找行会应答 : GamePacket
 {
     [FieldAttribute(Position = 2, Length = 229)]
-    public byte[] 字节数据;
+    public byte[] Description;
 }

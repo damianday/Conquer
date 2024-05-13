@@ -1726,7 +1726,7 @@ public sealed class SConnection
         }
         else
         {
-            Player.查看行会列表(P.行会编号, P.查看方式);
+            Player.ViewGuildRanking(P.行会编号, P.查看方式);
         }
     }
 

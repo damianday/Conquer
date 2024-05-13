@@ -26193,23 +26193,23 @@ public sealed class PlayerObject : MapObject
     {
     }
 
-    public void 查看行会列表(int id, byte 查看方式)
+    public void ViewGuildRanking(int id, byte method)
     {
         DBObject value;
         int val = ((Session.GuildInfoTable.DataSheet.TryGetValue(id, out value) && value is GuildInfo guild) ? (guild.GuildRanking.V - 1) : 0);
         int num = Math.Max(0, val);
-        int num2 = ((查看方式 == 2) ? Math.Max(0, num) : Math.Max(0, num - 11));
+        int num2 = ((method == 2) ? Math.Max(0, num) : Math.Max(0, num - 11));
         int num3 = Math.Min(12, SystemInfo.Info.GuildRanking.Count - num2);
         if (num3 > 0)
         {
             List<GuildInfo> range = SystemInfo.Info.GuildRanking.GetRange(num2, num3);
             using MemoryStream memoryStream = new MemoryStream();
             using BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
-            binaryWriter.Write(查看方式);
+            binaryWriter.Write(method);
             binaryWriter.Write((byte)num3);
             foreach (GuildInfo item in range)
             {
-                binaryWriter.Write(item.行会检索描述());
+                binaryWriter.Write(item.GuildSearchDescription());
             }
             Enqueue(new 同步行会列表
             {
@@ -26219,7 +26219,7 @@ public sealed class PlayerObject : MapObject
         }
         using MemoryStream memoryStream2 = new MemoryStream();
         using BinaryWriter binaryWriter2 = new BinaryWriter(memoryStream2);
-        binaryWriter2.Write(查看方式);
+        binaryWriter2.Write(method);
         binaryWriter2.Write((byte)0);
         Enqueue(new 同步行会列表
         {
@@ -26233,7 +26233,7 @@ public sealed class PlayerObject : MapObject
         {
             Enqueue(new 查找行会应答
             {
-                字节数据 = guild.行会检索描述()
+                Description = guild.GuildSearchDescription()
             });
         }
         else
