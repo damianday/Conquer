@@ -54,7 +54,7 @@ public sealed class AddItem : GMCommand
             {
                 character.Inventory[position] = new EquipmentInfo(equip, character, 1, position, random: true);
             }
-            else if (item.PersistType == PersistentItemType.容器)
+            else if (item.PersistType == PersistentItemType.Container)
             {
                 character.Inventory[position] = new ItemInfo(item, character, 1, position, 0);
             }
