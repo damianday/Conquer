@@ -28,6 +28,9 @@ namespace Launcher
         public static MainForm CurrentForm;
         public static Dictionary<string, GameServerInfo> ServerTable = new Dictionary<string, GameServerInfo>();
 
+
+        public static string ClientPath32, ClientPath64;
+
         public bool Is64Bit => uiCheckBox2.Checked;
         public bool Is32Bit => uiCheckBox1.Checked;
 
@@ -36,6 +39,10 @@ namespace Launcher
             InitializeComponent();
 
             CurrentForm = this;
+
+            var currDir = Directory.GetCurrentDirectory();
+            ClientPath32 = Path.Combine(currDir, "Binaries\\Win32\\MMOGame-Win32-Shipping.exe");
+            ClientPath64 = Path.Combine(currDir, "Binaries\\Win64\\MMOGame-Win64-Shipping.exe");
 
             PreLaunchChecks();
             Settings.Default.Load();
@@ -64,11 +71,8 @@ namespace Launcher
 
         private void PreLaunchChecks()
         {
-            var currDir = Directory.GetCurrentDirectory();
-            var path32 = Path.Combine(currDir, "Binaries\\Win32\\MMOGame-Win32-Shipping.exe");
-            var path64 = Path.Combine(currDir, "Binaries\\Win64\\MMOGame-Win64-Shipping.exe");
-            var clientFound32Bit = File.Exists(path32);
-            var clientFound64Bit = File.Exists(path64);
+            var clientFound32Bit = File.Exists(ClientPath32);
+            var clientFound64Bit = File.Exists(ClientPath64);
 
             if (!clientFound32Bit && !clientFound64Bit)
             {
@@ -234,9 +238,9 @@ namespace Launcher
                         Environment.Exit(0);
                     }
                     else if (Is32Bit)
-                        GameProgress.StartInfo.FileName = ".\\Binaries\\Win32\\MMOGame-Win32-Shipping.exe";
+                        GameProgress.StartInfo.FileName = ClientPath32;
                     else if (Is64Bit)
-                        GameProgress.StartInfo.FileName = ".\\Binaries\\Win64\\MMOGame-Win64-Shipping.exe";
+                        GameProgress.StartInfo.FileName = ClientPath64;
 
                     GameProgress.StartInfo.Arguments = arguments;
                     GameProgress.Start();
