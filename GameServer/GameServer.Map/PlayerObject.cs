@@ -2267,9 +2267,9 @@ public sealed class PlayerObject : MapObject
         {
             if (Settings.Default.CurrentVersion >= 1)
             {
-                var val = Recharge.ReadAccount(Settings.Default.充值模块格式, Character.Account.V.AccountName.V);
+                var val = Recharge.ReadAccount(Settings.Default.RechargeSystemFormat, Character.Account.V.AccountName.V);
                 if (val > 0)
-                    玩家充值模块(val);
+                    RechargeCurrency(val);
             }
             
             RechargeIssueTime = SEngine.CurrentTime.AddSeconds(5.0);
@@ -6783,189 +6783,23 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 玩家充值模块(int amount)
+    public void RechargeCurrency(int amount)
     {
+        if (amount == 0) return;
 
-        if (amount != 0 && Settings.Default.平台开关模式 == 19)
+        var currency = (CurrencyType)Settings.Default.平台开关模式;
+
+        var val = Settings.Default.平台元宝充值模块 * amount;
+        if (currency == CurrencyType.Ingot || currency == CurrencyType.绑定元宝)
+            val *= 100;
+
+        Character.Currencies[currency] += val;
+        Character.VIPPoints.V += amount;
+        NetworkManager.SendAnnouncement($"Congratulations to player【{Name}】for recharging {currency} - {val}", rolling: true);
+        Enqueue(new 同步货币数量
         {
-            Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
-            Character.VIPPoints.V += amount;
-            NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}修罗声威", rolling: true);
-            Enqueue(new 同步货币数量
-            {
-                Description = 全部货币描述()
-            });
-        }
-        if (amount != 0 && Settings.Default.平台开关模式 == 18)
-        {
-            Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
-            Character.VIPPoints.V += amount;
-            NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}跨服秘宝", rolling: true);
-            Enqueue(new 同步货币数量
-            {
-                Description = 全部货币描述()
-            });
-        }
-        if (amount != 0 && Settings.Default.平台开关模式 == 17)
-        {
-            Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
-            Character.VIPPoints.V += amount;
-            NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}勇者金币", rolling: true);
-            Enqueue(new 同步货币数量
-            {
-                Description = 全部货币描述()
-            });
-        }
-        if (amount != 0 && Settings.Default.平台开关模式 == 16)
-        {
-            Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
-            Character.VIPPoints.V += amount;
-            NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}武道荣誉", rolling: true);
-            Enqueue(new 同步货币数量
-            {
-                Description = 全部货币描述()
-            });
-        }
-        if (amount != 0 && Settings.Default.平台开关模式 == 13)
-        {
-            Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
-            Character.VIPPoints.V += amount;
-            NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}成就点数", rolling: true);
-            Enqueue(new 同步货币数量
-            {
-                Description = 全部货币描述()
-            });
-        }
-        if (amount != 0 && Settings.Default.平台开关模式 == 15)
-        {
-            Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount * 100;
-            Character.VIPPoints.V += amount;
-            NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}绑定元宝", rolling: true);
-            Enqueue(new 同步货币数量
-            {
-                Description = 全部货币描述()
-            });
-        }
-        if (amount != 0 && Settings.Default.平台开关模式 == 12)
-        {
-            Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
-            Character.VIPPoints.V += amount;
-            NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}擂台积分", rolling: true);
-            Enqueue(new 同步货币数量
-            {
-                Description = 全部货币描述()
-            });
-        }
-        if (amount != 0 && Settings.Default.平台开关模式 == 11)
-        {
-            Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
-            Character.VIPPoints.V += amount;
-            NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}道义点数", rolling: true);
-            Enqueue(new 同步货币数量
-            {
-                Description = 全部货币描述()
-            });
-        }
-        if (amount != 0 && Settings.Default.平台开关模式 == 10)
-        {
-            Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
-            Character.VIPPoints.V += amount;
-            NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}修炼点数", rolling: true);
-            Enqueue(new 同步货币数量
-            {
-                Description = 全部货币描述()
-            });
-        }
-        if (amount != 0 && Settings.Default.平台开关模式 == 9)
-        {
-            Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
-            Character.VIPPoints.V += amount;
-            NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}公会贡献", rolling: true);
-            Enqueue(new 同步货币数量
-            {
-                Description = 全部货币描述()
-            });
-        }
-        if (amount != 0 && Settings.Default.平台开关模式 == 8)
-        {
-            Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
-            Character.VIPPoints.V += amount;
-            NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}战场点数", rolling: true);
-            Enqueue(new 同步货币数量
-            {
-                Description = 全部货币描述()
-            });
-        }
-        if (amount != 0 && Settings.Default.平台开关模式 == 7)
-        {
-            Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
-            Character.VIPPoints.V += amount;
-            NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}万法之气", rolling: true);
-            Enqueue(new 同步货币数量
-            {
-                Description = 全部货币描述()
-            });
-        }
-        if (amount != 0 && Settings.Default.平台开关模式 == 6)
-        {
-            Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
-            Character.VIPPoints.V += amount;
-            NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}名师声望", rolling: true);
-            Enqueue(new 同步货币数量
-            {
-                Description = 全部货币描述()
-            });
-        }
-        if (amount != 0 && Settings.Default.平台开关模式 == 3)
-        {
-            Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount * 100;
-            Character.VIPPoints.V += amount;
-            NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}元宝", rolling: true);
-            Enqueue(new 同步货币数量
-            {
-                Description = 全部货币描述()
-            });
-        }
-        if (amount != 0 && Settings.Default.平台开关模式 == 5)
-        {
-            Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
-            Character.VIPPoints.V += amount;
-            NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}魂值", rolling: true);
-            Enqueue(new 同步货币数量
-            {
-                Description = 全部货币描述()
-            });
-        }
-        if (amount != 0 && Settings.Default.平台开关模式 == 2)
-        {
-            Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
-            Character.VIPPoints.V += amount;
-            NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}声威", rolling: true);
-            Enqueue(new 同步货币数量
-            {
-                Description = 全部货币描述()
-            });
-        }
-        if (amount != 0 && Settings.Default.平台开关模式 == 0)
-        {
-            Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
-            Character.VIPPoints.V += amount;
-            NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}银币", rolling: true);
-            Enqueue(new 同步货币数量
-            {
-                Description = 全部货币描述()
-            });
-        }
-        if (amount != 0 && Settings.Default.平台开关模式 == 1)
-        {
-            Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
-            Character.VIPPoints.V += amount;
-            NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}金币", rolling: true);
-            Enqueue(new 同步货币数量
-            {
-                Description = 全部货币描述()
-            });
-        }
+            Description = 全部货币描述()
+        });
     }
 
     public void 继续Npcc对话(int 选项编号)
@@ -7912,9 +7746,9 @@ public sealed class PlayerObject : MapObject
                 case 710100000:
                     if (选项编号 == 1 && Settings.Default.CurrentVersion >= 1)
                     {
-                        var val = Recharge.ReadAccount(Settings.Default.充值模块格式, Character.Account.V.AccountName.V);
+                        var val = Recharge.ReadAccount(Settings.Default.RechargeSystemFormat, Character.Account.V.AccountName.V);
                         if (val > 0)
-                            玩家充值模块(val);
+                            RechargeCurrency(val);
                         else
                         {
                             CurrentNPCDialoguePage = 710100001;

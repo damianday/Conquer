@@ -944,7 +944,7 @@ public class Settings
     public int 直升物品7 = 999999;
     public int 直升物品8 = 999999;
     public int 直升物品9 = 999999;
-    public int 充值模块格式 = 0;
+    public int RechargeSystemFormat = 0;
     public int DefaultSkillLevel = 0;
     public int AutoPickUpMap1 = 0;
     public int AutoPickUpMap2 = 0;

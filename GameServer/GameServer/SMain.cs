@@ -1428,7 +1428,7 @@ public partial class SMain : Form
         S_直升物品7.Value = Settings.Default.直升物品7;
         S_直升物品8.Value = Settings.Default.直升物品8;
         S_直升物品9.Value = Settings.Default.直升物品9;
-        S_充值模块格式.Value = Settings.Default.充值模块格式;
+        S_RechargeSystemFormat.Value = Settings.Default.RechargeSystemFormat;
         DefaultSkillLevel.Value = Settings.Default.DefaultSkillLevel;
         S_沃玛分解物品一.Text = Settings.Default.沃玛分解物品一;
         S_沃玛分解物品二.Text = Settings.Default.沃玛分解物品二;
@@ -2427,7 +2427,7 @@ public partial class SMain : Form
             case nameof(S_直升经验7): Settings.Default.直升经验7 = (int)control.Value; break;
             case nameof(S_直升经验8): Settings.Default.直升经验8 = (int)control.Value; break;
             case nameof(S_直升经验9): Settings.Default.直升经验9 = (int)control.Value; break;
-            case nameof(S_充值模块格式): Settings.Default.充值模块格式 = (int)control.Value; break;
+            case nameof(S_RechargeSystemFormat): Settings.Default.RechargeSystemFormat = (int)control.Value; break;
             case nameof(DefaultSkillLevel): Settings.Default.DefaultSkillLevel = (int)control.Value; break;
             case nameof(S_其他分解几率一): Settings.Default.其他分解几率一 = (int)control.Value; break;
             case nameof(S_其他分解几率二): Settings.Default.其他分解几率二 = (int)control.Value; break;

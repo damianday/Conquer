@@ -2024,7 +2024,7 @@ public partial class SMain
         AllowRecharge = new NumericUpDown();
         label443 = new Label();
         label828 = new Label();
-        S_充值模块格式 = new NumericUpDown();
+        S_RechargeSystemFormat = new NumericUpDown();
         label827 = new Label();
         label734 = new Label();
         label692 = new Label();
@@ -3366,7 +3366,7 @@ public partial class SMain
         tabPage48.SuspendLayout();
         groupBox147.SuspendLayout();
         ((ISupportInitialize)AllowRecharge).BeginInit();
-        ((ISupportInitialize)S_充值模块格式).BeginInit();
+        ((ISupportInitialize)S_RechargeSystemFormat).BeginInit();
         ((ISupportInitialize)S_平台开关模式).BeginInit();
         ((ISupportInitialize)S_平台元宝充值模块).BeginInit();
         tabPage37.SuspendLayout();
@@ -28054,7 +28054,7 @@ public partial class SMain
         groupBox147.Controls.Add(AllowRecharge);
         groupBox147.Controls.Add(label443);
         groupBox147.Controls.Add(label828);
-        groupBox147.Controls.Add(S_充值模块格式);
+        groupBox147.Controls.Add(S_RechargeSystemFormat);
         groupBox147.Controls.Add(label827);
         groupBox147.Controls.Add(label734);
         groupBox147.Controls.Add(label692);
@@ -28119,16 +28119,16 @@ public partial class SMain
         label828.TabIndex = 37;
         label828.Text = "0 no special prefix\r\n1 YB1.txt prepended\r\n2 CZ1.txt front";
         // 
-        // S_充值模块格式
+        // S_RechargeSystemFormat
         // 
-        S_充值模块格式.Location = new Point(520, 108);
-        S_充值模块格式.Margin = new Padding(4, 3, 4, 3);
-        S_充值模块格式.Maximum = new decimal(new int[] { 2, 0, 0, 0 });
-        S_充值模块格式.Name = "S_充值模块格式";
-        S_充值模块格式.Size = new Size(70, 23);
-        S_充值模块格式.TabIndex = 36;
-        S_充值模块格式.TextAlign = HorizontalAlignment.Center;
-        S_充值模块格式.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
+        S_RechargeSystemFormat.Location = new Point(520, 108);
+        S_RechargeSystemFormat.Margin = new Padding(4, 3, 4, 3);
+        S_RechargeSystemFormat.Maximum = new decimal(new int[] { 2, 0, 0, 0 });
+        S_RechargeSystemFormat.Name = "S_RechargeSystemFormat";
+        S_RechargeSystemFormat.Size = new Size(70, 23);
+        S_RechargeSystemFormat.TabIndex = 36;
+        S_RechargeSystemFormat.TextAlign = HorizontalAlignment.Center;
+        S_RechargeSystemFormat.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label827
         // 
@@ -32204,7 +32204,7 @@ public partial class SMain
         groupBox147.ResumeLayout(false);
         groupBox147.PerformLayout();
         ((ISupportInitialize)AllowRecharge).EndInit();
-        ((ISupportInitialize)S_充值模块格式).EndInit();
+        ((ISupportInitialize)S_RechargeSystemFormat).EndInit();
         ((ISupportInitialize)S_平台开关模式).EndInit();
         ((ISupportInitialize)S_平台元宝充值模块).EndInit();
         tabPage37.ResumeLayout(false);
@@ -35896,7 +35896,7 @@ public partial class SMain
 
     private Label label828;
 
-    private NumericUpDown S_充值模块格式;
+    private NumericUpDown S_RechargeSystemFormat;
 
     private Label label827;
 
