@@ -1428,7 +1428,7 @@ public partial class SMain : Form
         S_直升物品7.Value = Settings.Default.直升物品7;
         S_直升物品8.Value = Settings.Default.直升物品8;
         S_直升物品9.Value = Settings.Default.直升物品9;
-        S_充值模块格式.Value = Settings.Default.充值模块格式;
+        S_RechargeSystemFormat.Value = Settings.Default.RechargeSystemFormat;
         DefaultSkillLevel.Value = Settings.Default.DefaultSkillLevel;
         S_沃玛分解物品一.Text = Settings.Default.沃玛分解物品一;
         S_沃玛分解物品二.Text = Settings.Default.沃玛分解物品二;
@@ -1489,7 +1489,7 @@ public partial class SMain : Form
         沙巴克皇宫传送数量.Value = Settings.Default.沙巴克皇宫传送数量;
         系统窗口发送.Value = Settings.Default.系统窗口发送;
         龙卫效果提示.Value = Settings.Default.龙卫效果提示;
-        充值平台切换.Value = Settings.Default.充值平台切换;
+        AllowRecharge.Value = Settings.Default.AllowRecharge;
         全服红包等级.Value = Settings.Default.全服红包等级;
         全服红包时间.Value = Settings.Default.全服红包时间;
         全服红包货币类型.Value = Settings.Default.GlobalBonusCurrencyType;
@@ -1523,10 +1523,10 @@ public partial class SMain : Form
         安全区收刀开关.Checked = Settings.Default.安全区收刀开关;
         屠魔殿等级限制.Value = Settings.Default.屠魔殿等级限制;
         职业等级.Value = Settings.Default.职业等级;
-        职业货币类型.Value = Settings.Default.职业货币类型;
-        职业货币值.Value = Settings.Default.职业货币值;
-        职业物品ID.Value = Settings.Default.职业物品ID;
-        职业物品数量.Value = Settings.Default.职业物品数量;
+        RaceChangeCurrencyType.Value = Settings.Default.RaceChangeCurrencyType;
+        RaceChangeCurrencyValue.Value = Settings.Default.RaceChangeCurrencyValue;
+        RaceChangeItemID.Value = Settings.Default.RaceChangeItemID;
+        RaceChangeItemQuantity.Value = Settings.Default.RaceChangeItemQuantity;
         武斗场杀人经验.Value = Settings.Default.武斗场杀人经验;
         武斗场杀人开关.Checked = Settings.Default.武斗场杀人开关;
         S_狂暴名称.Text = Settings.Default.狂暴名称;
@@ -2427,7 +2427,7 @@ public partial class SMain : Form
             case nameof(S_直升经验7): Settings.Default.直升经验7 = (int)control.Value; break;
             case nameof(S_直升经验8): Settings.Default.直升经验8 = (int)control.Value; break;
             case nameof(S_直升经验9): Settings.Default.直升经验9 = (int)control.Value; break;
-            case nameof(S_充值模块格式): Settings.Default.充值模块格式 = (int)control.Value; break;
+            case nameof(S_RechargeSystemFormat): Settings.Default.RechargeSystemFormat = (int)control.Value; break;
             case nameof(DefaultSkillLevel): Settings.Default.DefaultSkillLevel = (int)control.Value; break;
             case nameof(S_其他分解几率一): Settings.Default.其他分解几率一 = (int)control.Value; break;
             case nameof(S_其他分解几率二): Settings.Default.其他分解几率二 = (int)control.Value; break;
@@ -2480,7 +2480,7 @@ public partial class SMain : Form
             case nameof(沙巴克皇宫传送数量): Settings.Default.沙巴克皇宫传送数量 = (int)control.Value; break;
             case nameof(系统窗口发送): Settings.Default.系统窗口发送 = (int)control.Value; break;
             case nameof(龙卫效果提示): Settings.Default.龙卫效果提示 = (int)control.Value; break;
-            case nameof(充值平台切换): Settings.Default.充值平台切换 = (int)control.Value; break;
+            case nameof(AllowRecharge): Settings.Default.AllowRecharge = (int)control.Value; break;
             case nameof(全服红包等级): Settings.Default.全服红包等级 = (int)control.Value; break;
             case nameof(全服红包时间): Settings.Default.全服红包时间 = (int)control.Value; break;
             case nameof(全服红包货币类型): Settings.Default.GlobalBonusCurrencyType = (int)control.Value; break;
@@ -2506,10 +2506,10 @@ public partial class SMain : Form
             case nameof(龙卫焰焚烈火剑法): Settings.Default.龙卫焰焚烈火剑法 = (int)control.Value; break;
             case nameof(屠魔殿等级限制): Settings.Default.屠魔殿等级限制 = (int)control.Value; break;
             case nameof(职业等级): Settings.Default.职业等级 = (int)control.Value; break;
-            case nameof(职业货币类型): Settings.Default.职业货币类型 = (int)control.Value; break;
-            case nameof(职业货币值): Settings.Default.职业货币值 = (int)control.Value; break;
-            case nameof(职业物品ID): Settings.Default.职业物品ID = (int)control.Value; break;
-            case nameof(职业物品数量): Settings.Default.职业物品数量 = (int)control.Value; break;
+            case nameof(RaceChangeCurrencyType): Settings.Default.RaceChangeCurrencyType = (int)control.Value; break;
+            case nameof(RaceChangeCurrencyValue): Settings.Default.RaceChangeCurrencyValue = (int)control.Value; break;
+            case nameof(RaceChangeItemID): Settings.Default.RaceChangeItemID = (int)control.Value; break;
+            case nameof(RaceChangeItemQuantity): Settings.Default.RaceChangeItemQuantity = (int)control.Value; break;
 
             default:
                 MessageBox.Show("Unknown Control! " + control.Name);

@@ -1,0 +1,10 @@
+;ID, AccountName, Credit
+0, Archie, 1
+0, Damian, 100
+0, Damian, 1000
+1, Archie, 2
+1, Damian, 200
+1, Damian, 2000
+2, Archie, 3
+2, Damian, 300
+2, Damian, 3000

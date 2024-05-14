@@ -971,10 +971,10 @@ public partial class SMain
         groupBox230 = new GroupBox();
         转职内容控件 = new TextBox();
         label815 = new Label();
-        职业物品数量 = new NumericUpDown();
-        职业物品ID = new NumericUpDown();
-        职业货币值 = new NumericUpDown();
-        职业货币类型 = new NumericUpDown();
+        RaceChangeItemQuantity = new NumericUpDown();
+        RaceChangeItemID = new NumericUpDown();
+        RaceChangeCurrencyValue = new NumericUpDown();
+        RaceChangeCurrencyType = new NumericUpDown();
         职业等级 = new NumericUpDown();
         label886 = new Label();
         groupBox141 = new GroupBox();
@@ -2021,10 +2021,10 @@ public partial class SMain
         tabPage48 = new TabPage();
         groupBox147 = new GroupBox();
         label444 = new Label();
-        充值平台切换 = new NumericUpDown();
+        AllowRecharge = new NumericUpDown();
         label443 = new Label();
         label828 = new Label();
-        S_充值模块格式 = new NumericUpDown();
+        S_RechargeSystemFormat = new NumericUpDown();
         label827 = new Label();
         label734 = new Label();
         label692 = new Label();
@@ -2808,10 +2808,10 @@ public partial class SMain
         tabPage88.SuspendLayout();
         groupBox223.SuspendLayout();
         groupBox230.SuspendLayout();
-        ((ISupportInitialize)职业物品数量).BeginInit();
-        ((ISupportInitialize)职业物品ID).BeginInit();
-        ((ISupportInitialize)职业货币值).BeginInit();
-        ((ISupportInitialize)职业货币类型).BeginInit();
+        ((ISupportInitialize)RaceChangeItemQuantity).BeginInit();
+        ((ISupportInitialize)RaceChangeItemID).BeginInit();
+        ((ISupportInitialize)RaceChangeCurrencyValue).BeginInit();
+        ((ISupportInitialize)RaceChangeCurrencyType).BeginInit();
         ((ISupportInitialize)职业等级).BeginInit();
         groupBox141.SuspendLayout();
         groupBox142.SuspendLayout();
@@ -3365,8 +3365,8 @@ public partial class SMain
         ((ISupportInitialize)S_称号范围拾取判断).BeginInit();
         tabPage48.SuspendLayout();
         groupBox147.SuspendLayout();
-        ((ISupportInitialize)充值平台切换).BeginInit();
-        ((ISupportInitialize)S_充值模块格式).BeginInit();
+        ((ISupportInitialize)AllowRecharge).BeginInit();
+        ((ISupportInitialize)S_RechargeSystemFormat).BeginInit();
         ((ISupportInitialize)S_平台开关模式).BeginInit();
         ((ISupportInitialize)S_平台元宝充值模块).BeginInit();
         tabPage37.SuspendLayout();
@@ -14920,10 +14920,10 @@ public partial class SMain
         groupBox223.Controls.Add(label814);
         groupBox223.Controls.Add(groupBox230);
         groupBox223.Controls.Add(label815);
-        groupBox223.Controls.Add(职业物品数量);
-        groupBox223.Controls.Add(职业物品ID);
-        groupBox223.Controls.Add(职业货币值);
-        groupBox223.Controls.Add(职业货币类型);
+        groupBox223.Controls.Add(RaceChangeItemQuantity);
+        groupBox223.Controls.Add(RaceChangeItemID);
+        groupBox223.Controls.Add(RaceChangeCurrencyValue);
+        groupBox223.Controls.Add(RaceChangeCurrencyType);
         groupBox223.Controls.Add(职业等级);
         groupBox223.Controls.Add(label886);
         groupBox223.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
@@ -14981,53 +14981,53 @@ public partial class SMain
         label815.TabIndex = 51;
         label815.Text = "6162: Ji Miaoshou (professional NPC) setting content self-consideration";
         // 
-        // 职业物品数量
+        // RaceChangeItemQuantity
         // 
-        职业物品数量.Location = new Point(397, 40);
-        职业物品数量.Margin = new Padding(4, 3, 4, 3);
-        职业物品数量.Maximum = new decimal(new int[] { 21, 0, 0, 0 });
-        职业物品数量.Name = "职业物品数量";
-        职业物品数量.Size = new Size(47, 23);
-        职业物品数量.TabIndex = 50;
-        职业物品数量.TextAlign = HorizontalAlignment.Center;
-        职业物品数量.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        职业物品数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
+        RaceChangeItemQuantity.Location = new Point(397, 40);
+        RaceChangeItemQuantity.Margin = new Padding(4, 3, 4, 3);
+        RaceChangeItemQuantity.Maximum = new decimal(new int[] { 21, 0, 0, 0 });
+        RaceChangeItemQuantity.Name = "RaceChangeItemQuantity";
+        RaceChangeItemQuantity.Size = new Size(47, 23);
+        RaceChangeItemQuantity.TabIndex = 50;
+        RaceChangeItemQuantity.TextAlign = HorizontalAlignment.Center;
+        RaceChangeItemQuantity.Value = new decimal(new int[] { 1, 0, 0, 0 });
+        RaceChangeItemQuantity.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
-        // 职业物品ID
+        // RaceChangeItemID
         // 
-        职业物品ID.Location = new Point(289, 40);
-        职业物品ID.Margin = new Padding(4, 3, 4, 3);
-        职业物品ID.Maximum = new decimal(new int[] { 1410065408, 2, 0, 0 });
-        职业物品ID.Name = "职业物品ID";
-        职业物品ID.Size = new Size(90, 23);
-        职业物品ID.TabIndex = 49;
-        职业物品ID.TextAlign = HorizontalAlignment.Center;
-        职业物品ID.Value = new decimal(new int[] { 999999, 0, 0, 0 });
-        职业物品ID.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
+        RaceChangeItemID.Location = new Point(289, 40);
+        RaceChangeItemID.Margin = new Padding(4, 3, 4, 3);
+        RaceChangeItemID.Maximum = new decimal(new int[] { 1410065408, 2, 0, 0 });
+        RaceChangeItemID.Name = "RaceChangeItemID";
+        RaceChangeItemID.Size = new Size(90, 23);
+        RaceChangeItemID.TabIndex = 49;
+        RaceChangeItemID.TextAlign = HorizontalAlignment.Center;
+        RaceChangeItemID.Value = new decimal(new int[] { 999999, 0, 0, 0 });
+        RaceChangeItemID.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
-        // 职业货币值
+        // RaceChangeCurrencyValue
         // 
-        职业货币值.Location = new Point(174, 40);
-        职业货币值.Margin = new Padding(4, 3, 4, 3);
-        职业货币值.Maximum = new decimal(new int[] { 1410065408, 2, 0, 0 });
-        职业货币值.Name = "职业货币值";
-        职业货币值.Size = new Size(90, 23);
-        职业货币值.TabIndex = 48;
-        职业货币值.TextAlign = HorizontalAlignment.Center;
-        职业货币值.Value = new decimal(new int[] { 10000000, 0, 0, 0 });
-        职业货币值.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
+        RaceChangeCurrencyValue.Location = new Point(174, 40);
+        RaceChangeCurrencyValue.Margin = new Padding(4, 3, 4, 3);
+        RaceChangeCurrencyValue.Maximum = new decimal(new int[] { 1410065408, 2, 0, 0 });
+        RaceChangeCurrencyValue.Name = "RaceChangeCurrencyValue";
+        RaceChangeCurrencyValue.Size = new Size(90, 23);
+        RaceChangeCurrencyValue.TabIndex = 48;
+        RaceChangeCurrencyValue.TextAlign = HorizontalAlignment.Center;
+        RaceChangeCurrencyValue.Value = new decimal(new int[] { 10000000, 0, 0, 0 });
+        RaceChangeCurrencyValue.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
-        // 职业货币类型
+        // RaceChangeCurrencyType
         // 
-        职业货币类型.Location = new Point(85, 40);
-        职业货币类型.Margin = new Padding(4, 3, 4, 3);
-        职业货币类型.Maximum = new decimal(new int[] { 21, 0, 0, 0 });
-        职业货币类型.Name = "职业货币类型";
-        职业货币类型.Size = new Size(47, 23);
-        职业货币类型.TabIndex = 47;
-        职业货币类型.TextAlign = HorizontalAlignment.Center;
-        职业货币类型.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        职业货币类型.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
+        RaceChangeCurrencyType.Location = new Point(85, 40);
+        RaceChangeCurrencyType.Margin = new Padding(4, 3, 4, 3);
+        RaceChangeCurrencyType.Maximum = new decimal(new int[] { 21, 0, 0, 0 });
+        RaceChangeCurrencyType.Name = "RaceChangeCurrencyType";
+        RaceChangeCurrencyType.Size = new Size(47, 23);
+        RaceChangeCurrencyType.TabIndex = 47;
+        RaceChangeCurrencyType.TextAlign = HorizontalAlignment.Center;
+        RaceChangeCurrencyType.Value = new decimal(new int[] { 1, 0, 0, 0 });
+        RaceChangeCurrencyType.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 职业等级
         // 
@@ -28051,10 +28051,10 @@ public partial class SMain
         // groupBox147
         // 
         groupBox147.Controls.Add(label444);
-        groupBox147.Controls.Add(充值平台切换);
+        groupBox147.Controls.Add(AllowRecharge);
         groupBox147.Controls.Add(label443);
         groupBox147.Controls.Add(label828);
-        groupBox147.Controls.Add(S_充值模块格式);
+        groupBox147.Controls.Add(S_RechargeSystemFormat);
         groupBox147.Controls.Add(label827);
         groupBox147.Controls.Add(label734);
         groupBox147.Controls.Add(label692);
@@ -28087,16 +28087,16 @@ public partial class SMain
         label444.TabIndex = 40;
         label444.Text = "0 NPC Pick Up\r\n1 Automatically sent into the package \r\n(there is a problem of disappearing small returned cards)";
         // 
-        // 充值平台切换
+        // AllowRecharge
         // 
-        充值平台切换.Location = new Point(344, 186);
-        充值平台切换.Margin = new Padding(4, 3, 4, 3);
-        充值平台切换.Maximum = new decimal(new int[] { 1, 0, 0, 0 });
-        充值平台切换.Name = "充值平台切换";
-        充值平台切换.Size = new Size(70, 23);
-        充值平台切换.TabIndex = 39;
-        充值平台切换.TextAlign = HorizontalAlignment.Center;
-        充值平台切换.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
+        AllowRecharge.Location = new Point(344, 186);
+        AllowRecharge.Margin = new Padding(4, 3, 4, 3);
+        AllowRecharge.Maximum = new decimal(new int[] { 1, 0, 0, 0 });
+        AllowRecharge.Name = "AllowRecharge";
+        AllowRecharge.Size = new Size(70, 23);
+        AllowRecharge.TabIndex = 39;
+        AllowRecharge.TextAlign = HorizontalAlignment.Center;
+        AllowRecharge.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label443
         // 
@@ -28119,16 +28119,16 @@ public partial class SMain
         label828.TabIndex = 37;
         label828.Text = "0 no special prefix\r\n1 YB1.txt prepended\r\n2 CZ1.txt front";
         // 
-        // S_充值模块格式
+        // S_RechargeSystemFormat
         // 
-        S_充值模块格式.Location = new Point(520, 108);
-        S_充值模块格式.Margin = new Padding(4, 3, 4, 3);
-        S_充值模块格式.Maximum = new decimal(new int[] { 2, 0, 0, 0 });
-        S_充值模块格式.Name = "S_充值模块格式";
-        S_充值模块格式.Size = new Size(70, 23);
-        S_充值模块格式.TabIndex = 36;
-        S_充值模块格式.TextAlign = HorizontalAlignment.Center;
-        S_充值模块格式.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
+        S_RechargeSystemFormat.Location = new Point(520, 108);
+        S_RechargeSystemFormat.Margin = new Padding(4, 3, 4, 3);
+        S_RechargeSystemFormat.Maximum = new decimal(new int[] { 2, 0, 0, 0 });
+        S_RechargeSystemFormat.Name = "S_RechargeSystemFormat";
+        S_RechargeSystemFormat.Size = new Size(70, 23);
+        S_RechargeSystemFormat.TabIndex = 36;
+        S_RechargeSystemFormat.TextAlign = HorizontalAlignment.Center;
+        S_RechargeSystemFormat.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label827
         // 
@@ -31520,10 +31520,10 @@ public partial class SMain
         groupBox223.PerformLayout();
         groupBox230.ResumeLayout(false);
         groupBox230.PerformLayout();
-        ((ISupportInitialize)职业物品数量).EndInit();
-        ((ISupportInitialize)职业物品ID).EndInit();
-        ((ISupportInitialize)职业货币值).EndInit();
-        ((ISupportInitialize)职业货币类型).EndInit();
+        ((ISupportInitialize)RaceChangeItemQuantity).EndInit();
+        ((ISupportInitialize)RaceChangeItemID).EndInit();
+        ((ISupportInitialize)RaceChangeCurrencyValue).EndInit();
+        ((ISupportInitialize)RaceChangeCurrencyType).EndInit();
         ((ISupportInitialize)职业等级).EndInit();
         groupBox141.ResumeLayout(false);
         groupBox141.PerformLayout();
@@ -32203,8 +32203,8 @@ public partial class SMain
         tabPage48.ResumeLayout(false);
         groupBox147.ResumeLayout(false);
         groupBox147.PerformLayout();
-        ((ISupportInitialize)充值平台切换).EndInit();
-        ((ISupportInitialize)S_充值模块格式).EndInit();
+        ((ISupportInitialize)AllowRecharge).EndInit();
+        ((ISupportInitialize)S_RechargeSystemFormat).EndInit();
         ((ISupportInitialize)S_平台开关模式).EndInit();
         ((ISupportInitialize)S_平台元宝充值模块).EndInit();
         tabPage37.ResumeLayout(false);
@@ -35896,7 +35896,7 @@ public partial class SMain
 
     private Label label828;
 
-    private NumericUpDown S_充值模块格式;
+    private NumericUpDown S_RechargeSystemFormat;
 
     private Label label827;
 
@@ -36160,7 +36160,7 @@ public partial class SMain
 
     private Label label444;
 
-    private NumericUpDown 充值平台切换;
+    private NumericUpDown AllowRecharge;
 
     private Label label443;
 
@@ -36336,13 +36336,13 @@ public partial class SMain
 
     private Label label815;
 
-    private NumericUpDown 职业物品数量;
+    private NumericUpDown RaceChangeItemQuantity;
 
-    private NumericUpDown 职业物品ID;
+    private NumericUpDown RaceChangeItemID;
 
-    private NumericUpDown 职业货币值;
+    private NumericUpDown RaceChangeCurrencyValue;
 
-    private NumericUpDown 职业货币类型;
+    private NumericUpDown RaceChangeCurrencyType;
 
     private NumericUpDown 职业等级;
 

@@ -944,7 +944,7 @@ public class Settings
     public int 直升物品7 = 999999;
     public int 直升物品8 = 999999;
     public int 直升物品9 = 999999;
-    public int 充值模块格式 = 0;
+    public int RechargeSystemFormat = 0;
     public int DefaultSkillLevel = 0;
     public int AutoPickUpMap1 = 0;
     public int AutoPickUpMap2 = 0;
@@ -979,7 +979,7 @@ public class Settings
     public int 沙巴克皇宫传送数量 = 1;
     public int 系统窗口发送 = 0;
     public int 龙卫效果提示 = 0;
-    public int 充值平台切换 = 0;
+    public int AllowRecharge = 0;
     public int 全服红包等级 = 30;
     public int 全服红包时间 = 19;
     public int GlobalBonusCurrencyType = 3;
@@ -1013,10 +1013,10 @@ public class Settings
     public bool 安全区收刀开关 = false;
     public int 屠魔殿等级限制 = 25;
     public int 职业等级 = 40;
-    public int 职业货币类型 = 0;
-    public int 职业货币值 = 1000000;
-    public int 职业物品ID = 999999;
-    public int 职业物品数量 = 10;
+    public int RaceChangeCurrencyType = 0;
+    public int RaceChangeCurrencyValue = 1000000;
+    public int RaceChangeItemID = 999999;
+    public int RaceChangeItemQuantity = 10;
     public bool 武斗场杀人开关 = false;
     public int 武斗场杀人经验 = 100000;
     public int MaxUserConnections = 500;

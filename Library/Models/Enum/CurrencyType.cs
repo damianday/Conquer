@@ -1,7 +1,7 @@
 public enum CurrencyType
 {
-    Silver = 0,
-    Gold = 1,
+    Silver = 0,     // 银币
+    Gold = 1,       // 金币
     声威 = 2,
     Ingot = 3,      // 元宝
     魂值 = 5,
