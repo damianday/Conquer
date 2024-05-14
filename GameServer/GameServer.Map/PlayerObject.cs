@@ -2263,7 +2263,7 @@ public sealed class PlayerObject : MapObject
             }
         }
 
-        if (Settings.Default.CurrentVersion >= 2 && /*Settings.Default.AllowRecharge == 1 &&*/ SEngine.CurrentTime > RechargeIssueTime)
+        if (Settings.Default.CurrentVersion >= 2 && Settings.Default.AllowRecharge == 1 && SEngine.CurrentTime > RechargeIssueTime)
         {
             if (Settings.Default.CurrentVersion >= 1)
             {
