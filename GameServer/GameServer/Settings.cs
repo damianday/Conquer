@@ -979,7 +979,7 @@ public class Settings
     public int 沙巴克皇宫传送数量 = 1;
     public int 系统窗口发送 = 0;
     public int 龙卫效果提示 = 0;
-    public int 充值平台切换 = 0;
+    public int AllowRecharge = 0;
     public int 全服红包等级 = 30;
     public int 全服红包时间 = 19;
     public int GlobalBonusCurrencyType = 3;

@@ -2021,7 +2021,7 @@ public partial class SMain
         tabPage48 = new TabPage();
         groupBox147 = new GroupBox();
         label444 = new Label();
-        充值平台切换 = new NumericUpDown();
+        AllowRecharge = new NumericUpDown();
         label443 = new Label();
         label828 = new Label();
         S_充值模块格式 = new NumericUpDown();
@@ -3365,7 +3365,7 @@ public partial class SMain
         ((ISupportInitialize)S_称号范围拾取判断).BeginInit();
         tabPage48.SuspendLayout();
         groupBox147.SuspendLayout();
-        ((ISupportInitialize)充值平台切换).BeginInit();
+        ((ISupportInitialize)AllowRecharge).BeginInit();
         ((ISupportInitialize)S_充值模块格式).BeginInit();
         ((ISupportInitialize)S_平台开关模式).BeginInit();
         ((ISupportInitialize)S_平台元宝充值模块).BeginInit();
@@ -28051,7 +28051,7 @@ public partial class SMain
         // groupBox147
         // 
         groupBox147.Controls.Add(label444);
-        groupBox147.Controls.Add(充值平台切换);
+        groupBox147.Controls.Add(AllowRecharge);
         groupBox147.Controls.Add(label443);
         groupBox147.Controls.Add(label828);
         groupBox147.Controls.Add(S_充值模块格式);
@@ -28087,16 +28087,16 @@ public partial class SMain
         label444.TabIndex = 40;
         label444.Text = "0 NPC Pick Up\r\n1 Automatically sent into the package \r\n(there is a problem of disappearing small returned cards)";
         // 
-        // 充值平台切换
+        // AllowRecharge
         // 
-        充值平台切换.Location = new Point(344, 186);
-        充值平台切换.Margin = new Padding(4, 3, 4, 3);
-        充值平台切换.Maximum = new decimal(new int[] { 1, 0, 0, 0 });
-        充值平台切换.Name = "充值平台切换";
-        充值平台切换.Size = new Size(70, 23);
-        充值平台切换.TabIndex = 39;
-        充值平台切换.TextAlign = HorizontalAlignment.Center;
-        充值平台切换.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
+        AllowRecharge.Location = new Point(344, 186);
+        AllowRecharge.Margin = new Padding(4, 3, 4, 3);
+        AllowRecharge.Maximum = new decimal(new int[] { 1, 0, 0, 0 });
+        AllowRecharge.Name = "AllowRecharge";
+        AllowRecharge.Size = new Size(70, 23);
+        AllowRecharge.TabIndex = 39;
+        AllowRecharge.TextAlign = HorizontalAlignment.Center;
+        AllowRecharge.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // label443
         // 
@@ -32203,7 +32203,7 @@ public partial class SMain
         tabPage48.ResumeLayout(false);
         groupBox147.ResumeLayout(false);
         groupBox147.PerformLayout();
-        ((ISupportInitialize)充值平台切换).EndInit();
+        ((ISupportInitialize)AllowRecharge).EndInit();
         ((ISupportInitialize)S_充值模块格式).EndInit();
         ((ISupportInitialize)S_平台开关模式).EndInit();
         ((ISupportInitialize)S_平台元宝充值模块).EndInit();
@@ -36160,7 +36160,7 @@ public partial class SMain
 
     private Label label444;
 
-    private NumericUpDown 充值平台切换;
+    private NumericUpDown AllowRecharge;
 
     private Label label443;
 

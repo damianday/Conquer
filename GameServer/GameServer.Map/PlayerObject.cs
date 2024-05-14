@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WindowsFormsApp8;
 
 using GameServer.Database;
 using GameServer.Template;
@@ -76,7 +75,7 @@ public sealed class PlayerObject : MapObject
     public DateTime 回击计时;
     public DateTime ExperienceTime;
     public DateTime RoamTime;
-    public DateTime 充值发放;
+    public DateTime RechargeIssueTime;
     public DateTime 自动刷新背包时间;
     public DateTime VIPRewardTime;
 
@@ -2264,795 +2263,16 @@ public sealed class PlayerObject : MapObject
             }
         }
 
-        if (Settings.Default.CurrentVersion >= 2 && Settings.Default.充值平台切换 == 1 && SEngine.CurrentTime > 充值发放)
+        if (Settings.Default.CurrentVersion >= 2 && /*Settings.Default.AllowRecharge == 1 &&*/ SEngine.CurrentTime > RechargeIssueTime)
         {
-            if (Settings.Default.CurrentVersion >= 1 && Settings.Default.充值模块格式 == 0)
+            if (Settings.Default.CurrentVersion >= 1)
             {
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\1.txt";
-                bool flag = FileOperation.Read1(Character.Account.V.ToString());
-                if (flag)
-                {
-                    int 充值价值 = 1;
-                    玩家充值模块(flag, 充值价值);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\2.txt";
-                bool flag2 = FileOperation.Read2(Character.Account.V.ToString());
-                if (flag2)
-                {
-                    int 充值价值2 = 2;
-                    玩家充值模块(flag2, 充值价值2);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\3.txt";
-                bool flag3 = FileOperation.Read3(Character.Account.V.ToString());
-                if (flag3)
-                {
-                    int 充值价值3 = 3;
-                    玩家充值模块(flag3, 充值价值3);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\4.txt";
-                bool flag4 = FileOperation.Read4(Character.Account.V.ToString());
-                if (flag4)
-                {
-                    int 充值价值4 = 4;
-                    玩家充值模块(flag4, 充值价值4);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\5.txt";
-                bool flag5 = FileOperation.Read5(Character.Account.V.ToString());
-                if (flag5)
-                {
-                    int 充值价值5 = 5;
-                    玩家充值模块(flag5, 充值价值5);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\6.txt";
-                bool flag6 = FileOperation.Read6(Character.Account.V.ToString());
-                if (flag6)
-                {
-                    int 充值价值6 = 6;
-                    玩家充值模块(flag6, 充值价值6);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\7.txt";
-                bool flag7 = FileOperation.Read7(Character.Account.V.ToString());
-                if (flag7)
-                {
-                    int 充值价值7 = 7;
-                    玩家充值模块(flag7, 充值价值7);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\8.txt";
-                bool flag8 = FileOperation.Read8(Character.Account.V.ToString());
-                if (flag8)
-                {
-                    int 充值价值8 = 8;
-                    玩家充值模块(flag8, 充值价值8);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\9.txt";
-                bool flag9 = FileOperation.Read9(Character.Account.V.ToString());
-                if (flag9)
-                {
-                    int 充值价值9 = 9;
-                    玩家充值模块(flag9, 充值价值9);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\10.txt";
-                bool flag10 = FileOperation.Read10(Character.Account.V.ToString());
-                if (flag10)
-                {
-                    int 充值价值10 = 10;
-                    玩家充值模块(flag10, 充值价值10);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\20.txt";
-                bool flag11 = FileOperation.Read20(Character.Account.V.ToString());
-                if (flag11)
-                {
-                    int 充值价值11 = 20;
-                    玩家充值模块(flag11, 充值价值11);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\30.txt";
-                bool flag12 = FileOperation.Read30(Character.Account.V.ToString());
-                if (flag12)
-                {
-                    int 充值价值12 = 30;
-                    玩家充值模块(flag12, 充值价值12);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\40.txt";
-                bool flag13 = FileOperation.Read40(Character.Account.V.ToString());
-                if (flag13)
-                {
-                    int 充值价值13 = 40;
-                    玩家充值模块(flag13, 充值价值13);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\50.txt";
-                bool flag14 = FileOperation.Read50(Character.Account.V.ToString());
-                if (flag14)
-                {
-                    int 充值价值14 = 50;
-                    玩家充值模块(flag14, 充值价值14);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\60.txt";
-                bool flag15 = FileOperation.Read60(Character.Account.V.ToString());
-                if (flag15)
-                {
-                    int 充值价值15 = 60;
-                    玩家充值模块(flag15, 充值价值15);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\70.txt";
-                bool flag16 = FileOperation.Read70(Character.Account.V.ToString());
-                if (flag16)
-                {
-                    int 充值价值16 = 70;
-                    玩家充值模块(flag16, 充值价值16);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\80.txt";
-                bool flag17 = FileOperation.Read80(Character.Account.V.ToString());
-                if (flag17)
-                {
-                    int 充值价值17 = 80;
-                    玩家充值模块(flag17, 充值价值17);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\90.txt";
-                bool flag18 = FileOperation.Read90(Character.Account.V.ToString());
-                if (flag18)
-                {
-                    int 充值价值18 = 90;
-                    玩家充值模块(flag18, 充值价值18);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\100.txt";
-                bool flag19 = FileOperation.Read100(Character.Account.V.ToString());
-                if (flag19)
-                {
-                    int 充值价值19 = 100;
-                    玩家充值模块(flag19, 充值价值19);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\200.txt";
-                bool flag20 = FileOperation.Read200(Character.Account.V.ToString());
-                if (flag20)
-                {
-                    int 充值价值20 = 200;
-                    玩家充值模块(flag20, 充值价值20);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\300.txt";
-                bool flag21 = FileOperation.Read300(Character.Account.V.ToString());
-                if (flag21)
-                {
-                    int 充值价值21 = 300;
-                    玩家充值模块(flag21, 充值价值21);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\400.txt";
-                bool flag22 = FileOperation.Read400(Character.Account.V.ToString());
-                if (flag22)
-                {
-                    int 充值价值22 = 400;
-                    玩家充值模块(flag22, 充值价值22);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\500.txt";
-                bool flag23 = FileOperation.Read500(Character.Account.V.ToString());
-                if (flag23)
-                {
-                    int 充值价值23 = 500;
-                    玩家充值模块(flag23, 充值价值23);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\600.txt";
-                bool flag24 = FileOperation.Read600(Character.Account.V.ToString());
-                if (flag24)
-                {
-                    int 充值价值24 = 600;
-                    玩家充值模块(flag24, 充值价值24);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\700.txt";
-                bool flag25 = FileOperation.Read700(Character.Account.V.ToString());
-                if (flag25)
-                {
-                    int 充值价值25 = 700;
-                    玩家充值模块(flag25, 充值价值25);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\800.txt";
-                bool flag26 = FileOperation.Read800(Character.Account.V.ToString());
-                if (flag26)
-                {
-                    int 充值价值26 = 800;
-                    玩家充值模块(flag26, 充值价值26);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\900.txt";
-                bool flag27 = FileOperation.Read900(Character.Account.V.ToString());
-                if (flag27)
-                {
-                    int 充值价值27 = 900;
-                    玩家充值模块(flag27, 充值价值27);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\1000.txt";
-                bool flag28 = FileOperation.Read1000(Character.Account.V.ToString());
-                if (flag28)
-                {
-                    int 充值价值28 = 1000;
-                    玩家充值模块(flag28, 充值价值28);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\2000.txt";
-                bool flag29 = FileOperation.Read2000(Character.Account.V.ToString());
-                if (flag29)
-                {
-                    int 充值价值29 = 2000;
-                    玩家充值模块(flag29, 充值价值29);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\3000.txt";
-                bool flag30 = FileOperation.Read3000(Character.Account.V.ToString());
-                if (flag30)
-                {
-                    int 充值价值30 = 3000;
-                    玩家充值模块(flag30, 充值价值30);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\4000.txt";
-                bool flag31 = FileOperation.Read4000(Character.Account.V.ToString());
-                if (flag31)
-                {
-                    int 充值价值31 = 4000;
-                    玩家充值模块(flag31, 充值价值31);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\5000.txt";
-                bool flag32 = FileOperation.Read5000(Character.Account.V.ToString());
-                if (flag32)
-                {
-                    int 充值价值32 = 5000;
-                    玩家充值模块(flag32, 充值价值32);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\6000.txt";
-                bool flag33 = FileOperation.Read6000(Character.Account.V.ToString());
-                if (flag33)
-                {
-                    int 充值价值33 = 6000;
-                    玩家充值模块(flag33, 充值价值33);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\7000.txt";
-                bool flag34 = FileOperation.Read7000(Character.Account.V.ToString());
-                if (flag34)
-                {
-                    int 充值价值34 = 7000;
-                    玩家充值模块(flag34, 充值价值34);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\8000.txt";
-                bool flag35 = FileOperation.Read8000(Character.Account.V.ToString());
-                if (flag35)
-                {
-                    int 充值价值35 = 8000;
-                    玩家充值模块(flag35, 充值价值35);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\9000.txt";
-                bool flag36 = FileOperation.Read9000(Character.Account.V.ToString());
-                if (flag36)
-                {
-                    int 充值价值36 = 9000;
-                    玩家充值模块(flag36, 充值价值36);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\10000.txt";
-                bool flag37 = FileOperation.Read10000(Character.Account.V.ToString());
-                if (flag37)
-                {
-                    int 充值价值37 = 10000;
-                    玩家充值模块(flag37, 充值价值37);
-                }
+                var val = Recharge.ReadAccount(Settings.Default.充值模块格式, Character.Account.V.AccountName.V);
+                if (val > 0)
+                    玩家充值模块(val);
             }
-            if (Settings.Default.CurrentVersion >= 1 && Settings.Default.充值模块格式 == 1)
-            {
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\yb1.txt";
-                bool flag38 = FileOperation.Read1(Character.Account.V.ToString());
-                if (flag38)
-                {
-                    int 充值价值38 = 1;
-                    玩家充值模块(flag38, 充值价值38);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\yb2.txt";
-                bool flag39 = FileOperation.Read2(Character.Account.V.ToString());
-                if (flag39)
-                {
-                    int 充值价值39 = 2;
-                    玩家充值模块(flag39, 充值价值39);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\yb3.txt";
-                bool flag40 = FileOperation.Read3(Character.Account.V.ToString());
-                if (flag40)
-                {
-                    int 充值价值40 = 3;
-                    玩家充值模块(flag40, 充值价值40);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\yb4.txt";
-                bool flag41 = FileOperation.Read4(Character.Account.V.ToString());
-                if (flag41)
-                {
-                    int 充值价值41 = 4;
-                    玩家充值模块(flag41, 充值价值41);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\yb5.txt";
-                bool flag42 = FileOperation.Read5(Character.Account.V.ToString());
-                if (flag42)
-                {
-                    int 充值价值42 = 5;
-                    玩家充值模块(flag42, 充值价值42);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\yb6.txt";
-                bool flag43 = FileOperation.Read6(Character.Account.V.ToString());
-                if (flag43)
-                {
-                    int 充值价值43 = 6;
-                    玩家充值模块(flag43, 充值价值43);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\yb7.txt";
-                bool flag44 = FileOperation.Read7(Character.Account.V.ToString());
-                if (flag44)
-                {
-                    int 充值价值44 = 7;
-                    玩家充值模块(flag44, 充值价值44);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\yb8.txt";
-                bool flag45 = FileOperation.Read8(Character.Account.V.ToString());
-                if (flag45)
-                {
-                    int 充值价值45 = 8;
-                    玩家充值模块(flag45, 充值价值45);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\yb9.txt";
-                bool flag46 = FileOperation.Read9(Character.Account.V.ToString());
-                if (flag46)
-                {
-                    int 充值价值46 = 9;
-                    玩家充值模块(flag46, 充值价值46);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\yb10.txt";
-                bool flag47 = FileOperation.Read10(Character.Account.V.ToString());
-                if (flag47)
-                {
-                    int 充值价值47 = 10;
-                    玩家充值模块(flag47, 充值价值47);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\yb20.txt";
-                bool flag48 = FileOperation.Read20(Character.Account.V.ToString());
-                if (flag48)
-                {
-                    int 充值价值48 = 20;
-                    玩家充值模块(flag48, 充值价值48);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\yb30.txt";
-                bool flag49 = FileOperation.Read30(Character.Account.V.ToString());
-                if (flag49)
-                {
-                    int 充值价值49 = 30;
-                    玩家充值模块(flag49, 充值价值49);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\yb40.txt";
-                bool flag50 = FileOperation.Read40(Character.Account.V.ToString());
-                if (flag50)
-                {
-                    int 充值价值50 = 40;
-                    玩家充值模块(flag50, 充值价值50);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\yb50.txt";
-                bool flag51 = FileOperation.Read50(Character.Account.V.ToString());
-                if (flag51)
-                {
-                    int 充值价值51 = 50;
-                    玩家充值模块(flag51, 充值价值51);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\yb60.txt";
-                bool flag52 = FileOperation.Read60(Character.Account.V.ToString());
-                if (flag52)
-                {
-                    int 充值价值52 = 60;
-                    玩家充值模块(flag52, 充值价值52);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\yb70.txt";
-                bool flag53 = FileOperation.Read70(Character.Account.V.ToString());
-                if (flag53)
-                {
-                    int 充值价值53 = 70;
-                    玩家充值模块(flag53, 充值价值53);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\yb80.txt";
-                bool flag54 = FileOperation.Read80(Character.Account.V.ToString());
-                if (flag54)
-                {
-                    int 充值价值54 = 80;
-                    玩家充值模块(flag54, 充值价值54);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\yb90.txt";
-                bool flag55 = FileOperation.Read90(Character.Account.V.ToString());
-                if (flag55)
-                {
-                    int 充值价值55 = 90;
-                    玩家充值模块(flag55, 充值价值55);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\yb100.txt";
-                bool flag56 = FileOperation.Read100(Character.Account.V.ToString());
-                if (flag56)
-                {
-                    int 充值价值56 = 100;
-                    玩家充值模块(flag56, 充值价值56);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\yb200.txt";
-                bool flag57 = FileOperation.Read200(Character.Account.V.ToString());
-                if (flag57)
-                {
-                    int 充值价值57 = 200;
-                    玩家充值模块(flag57, 充值价值57);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\yb300.txt";
-                bool flag58 = FileOperation.Read300(Character.Account.V.ToString());
-                if (flag58)
-                {
-                    int 充值价值58 = 300;
-                    玩家充值模块(flag58, 充值价值58);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\yb400.txt";
-                bool flag59 = FileOperation.Read400(Character.Account.V.ToString());
-                if (flag59)
-                {
-                    int 充值价值59 = 400;
-                    玩家充值模块(flag59, 充值价值59);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\yb500.txt";
-                bool flag60 = FileOperation.Read500(Character.Account.V.ToString());
-                if (flag60)
-                {
-                    int 充值价值60 = 500;
-                    玩家充值模块(flag60, 充值价值60);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\yb600.txt";
-                bool flag61 = FileOperation.Read600(Character.Account.V.ToString());
-                if (flag61)
-                {
-                    int 充值价值61 = 600;
-                    玩家充值模块(flag61, 充值价值61);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\yb700.txt";
-                bool flag62 = FileOperation.Read700(Character.Account.V.ToString());
-                if (flag62)
-                {
-                    int 充值价值62 = 700;
-                    玩家充值模块(flag62, 充值价值62);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\yb800.txt";
-                bool flag63 = FileOperation.Read800(Character.Account.V.ToString());
-                if (flag63)
-                {
-                    int 充值价值63 = 800;
-                    玩家充值模块(flag63, 充值价值63);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\yb900.txt";
-                bool flag64 = FileOperation.Read900(Character.Account.V.ToString());
-                if (flag64)
-                {
-                    int 充值价值64 = 900;
-                    玩家充值模块(flag64, 充值价值64);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\yb1000.txt";
-                bool flag65 = FileOperation.Read1000(Character.Account.V.ToString());
-                if (flag65)
-                {
-                    int 充值价值65 = 1000;
-                    玩家充值模块(flag65, 充值价值65);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\yb2000.txt";
-                bool flag66 = FileOperation.Read2000(Character.Account.V.ToString());
-                if (flag66)
-                {
-                    int 充值价值66 = 2000;
-                    玩家充值模块(flag66, 充值价值66);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\yb3000.txt";
-                bool flag67 = FileOperation.Read3000(Character.Account.V.ToString());
-                if (flag67)
-                {
-                    int 充值价值67 = 3000;
-                    玩家充值模块(flag67, 充值价值67);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\yb4000.txt";
-                bool flag68 = FileOperation.Read4000(Character.Account.V.ToString());
-                if (flag68)
-                {
-                    int 充值价值68 = 4000;
-                    玩家充值模块(flag68, 充值价值68);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\yb5000.txt";
-                bool flag69 = FileOperation.Read5000(Character.Account.V.ToString());
-                if (flag69)
-                {
-                    int 充值价值69 = 5000;
-                    玩家充值模块(flag69, 充值价值69);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\yb6000.txt";
-                bool flag70 = FileOperation.Read6000(Character.Account.V.ToString());
-                if (flag70)
-                {
-                    int 充值价值70 = 6000;
-                    玩家充值模块(flag70, 充值价值70);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\yb7000.txt";
-                bool flag71 = FileOperation.Read7000(Character.Account.V.ToString());
-                if (flag71)
-                {
-                    int 充值价值71 = 7000;
-                    玩家充值模块(flag71, 充值价值71);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\yb8000.txt";
-                bool flag72 = FileOperation.Read8000(Character.Account.V.ToString());
-                if (flag72)
-                {
-                    int 充值价值72 = 8000;
-                    玩家充值模块(flag72, 充值价值72);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\yb9000.txt";
-                bool flag73 = FileOperation.Read9000(Character.Account.V.ToString());
-                if (flag73)
-                {
-                    int 充值价值73 = 9000;
-                    玩家充值模块(flag73, 充值价值73);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\yb10000.txt";
-                bool flag74 = FileOperation.Read10000(Character.Account.V.ToString());
-                if (flag74)
-                {
-                    int 充值价值74 = 10000;
-                    玩家充值模块(flag74, 充值价值74);
-                }
-            }
-            if (Settings.Default.CurrentVersion >= 1 && Settings.Default.充值模块格式 == 2)
-            {
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\cz1.txt";
-                bool flag75 = FileOperation.Read1(Character.Account.V.ToString());
-                if (flag75)
-                {
-                    int 充值价值75 = 1;
-                    玩家充值模块(flag75, 充值价值75);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\cz2.txt";
-                bool flag76 = FileOperation.Read2(Character.Account.V.ToString());
-                if (flag76)
-                {
-                    int 充值价值76 = 2;
-                    玩家充值模块(flag76, 充值价值76);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\cz3.txt";
-                bool flag77 = FileOperation.Read3(Character.Account.V.ToString());
-                if (flag77)
-                {
-                    int 充值价值77 = 3;
-                    玩家充值模块(flag77, 充值价值77);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\cz4.txt";
-                bool flag78 = FileOperation.Read4(Character.Account.V.ToString());
-                if (flag78)
-                {
-                    int 充值价值78 = 4;
-                    玩家充值模块(flag78, 充值价值78);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\cz5.txt";
-                bool flag79 = FileOperation.Read5(Character.Account.V.ToString());
-                if (flag79)
-                {
-                    int 充值价值79 = 5;
-                    玩家充值模块(flag79, 充值价值79);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\cz6.txt";
-                bool flag80 = FileOperation.Read6(Character.Account.V.ToString());
-                if (flag80)
-                {
-                    int 充值价值80 = 6;
-                    玩家充值模块(flag80, 充值价值80);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\cz7.txt";
-                bool flag81 = FileOperation.Read7(Character.Account.V.ToString());
-                if (flag81)
-                {
-                    int 充值价值81 = 7;
-                    玩家充值模块(flag81, 充值价值81);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\cz8.txt";
-                bool flag82 = FileOperation.Read8(Character.Account.V.ToString());
-                if (flag82)
-                {
-                    int 充值价值82 = 8;
-                    玩家充值模块(flag82, 充值价值82);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\cz9.txt";
-                bool flag83 = FileOperation.Read9(Character.Account.V.ToString());
-                if (flag83)
-                {
-                    int 充值价值83 = 9;
-                    玩家充值模块(flag83, 充值价值83);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\cz10.txt";
-                bool flag84 = FileOperation.Read10(Character.Account.V.ToString());
-                if (flag84)
-                {
-                    int 充值价值84 = 10;
-                    玩家充值模块(flag84, 充值价值84);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\cz20.txt";
-                bool flag85 = FileOperation.Read20(Character.Account.V.ToString());
-                if (flag85)
-                {
-                    int 充值价值85 = 20;
-                    玩家充值模块(flag85, 充值价值85);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\cz30.txt";
-                bool flag86 = FileOperation.Read30(Character.Account.V.ToString());
-                if (flag86)
-                {
-                    int 充值价值86 = 30;
-                    玩家充值模块(flag86, 充值价值86);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\cz40.txt";
-                bool flag87 = FileOperation.Read40(Character.Account.V.ToString());
-                if (flag87)
-                {
-                    int 充值价值87 = 40;
-                    玩家充值模块(flag87, 充值价值87);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\cz50.txt";
-                bool flag88 = FileOperation.Read50(Character.Account.V.ToString());
-                if (flag88)
-                {
-                    int 充值价值88 = 50;
-                    玩家充值模块(flag88, 充值价值88);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\cz60.txt";
-                bool flag89 = FileOperation.Read60(Character.Account.V.ToString());
-                if (flag89)
-                {
-                    int 充值价值89 = 60;
-                    玩家充值模块(flag89, 充值价值89);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\cz70.txt";
-                bool flag90 = FileOperation.Read70(Character.Account.V.ToString());
-                if (flag90)
-                {
-                    int 充值价值90 = 70;
-                    玩家充值模块(flag90, 充值价值90);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\cz80.txt";
-                bool flag91 = FileOperation.Read80(Character.Account.V.ToString());
-                if (flag91)
-                {
-                    int 充值价值91 = 80;
-                    玩家充值模块(flag91, 充值价值91);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\cz90.txt";
-                bool flag92 = FileOperation.Read90(Character.Account.V.ToString());
-                if (flag92)
-                {
-                    int 充值价值92 = 90;
-                    玩家充值模块(flag92, 充值价值92);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\cz100.txt";
-                bool flag93 = FileOperation.Read100(Character.Account.V.ToString());
-                if (flag93)
-                {
-                    int 充值价值93 = 100;
-                    玩家充值模块(flag93, 充值价值93);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\cz200.txt";
-                bool flag94 = FileOperation.Read200(Character.Account.V.ToString());
-                if (flag94)
-                {
-                    int 充值价值94 = 200;
-                    玩家充值模块(flag94, 充值价值94);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\cz300.txt";
-                bool flag95 = FileOperation.Read300(Character.Account.V.ToString());
-                if (flag95)
-                {
-                    int 充值价值95 = 300;
-                    玩家充值模块(flag95, 充值价值95);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\cz400.txt";
-                bool flag96 = FileOperation.Read400(Character.Account.V.ToString());
-                if (flag96)
-                {
-                    int 充值价值96 = 400;
-                    玩家充值模块(flag96, 充值价值96);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\cz500.txt";
-                bool flag97 = FileOperation.Read500(Character.Account.V.ToString());
-                if (flag97)
-                {
-                    int 充值价值97 = 500;
-                    玩家充值模块(flag97, 充值价值97);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\cz600.txt";
-                bool flag98 = FileOperation.Read600(Character.Account.V.ToString());
-                if (flag98)
-                {
-                    int 充值价值98 = 600;
-                    玩家充值模块(flag98, 充值价值98);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\cz700.txt";
-                bool flag99 = FileOperation.Read700(Character.Account.V.ToString());
-                if (flag99)
-                {
-                    int 充值价值99 = 700;
-                    玩家充值模块(flag99, 充值价值99);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\cz800.txt";
-                bool flag100 = FileOperation.Read800(Character.Account.V.ToString());
-                if (flag100)
-                {
-                    int 充值价值100 = 800;
-                    玩家充值模块(flag100, 充值价值100);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\cz900.txt";
-                bool flag101 = FileOperation.Read900(Character.Account.V.ToString());
-                if (flag101)
-                {
-                    int 充值价值101 = 900;
-                    玩家充值模块(flag101, 充值价值101);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\cz1000.txt";
-                bool flag102 = FileOperation.Read1000(Character.Account.V.ToString());
-                if (flag102)
-                {
-                    int 充值价值102 = 1000;
-                    玩家充值模块(flag102, 充值价值102);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\cz2000.txt";
-                bool flag103 = FileOperation.Read2000(Character.Account.V.ToString());
-                if (flag103)
-                {
-                    int 充值价值103 = 2000;
-                    玩家充值模块(flag103, 充值价值103);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\cz3000.txt";
-                bool flag104 = FileOperation.Read3000(Character.Account.V.ToString());
-                if (flag104)
-                {
-                    int 充值价值104 = 3000;
-                    玩家充值模块(flag104, 充值价值104);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\cz4000.txt";
-                bool flag105 = FileOperation.Read4000(Character.Account.V.ToString());
-                if (flag105)
-                {
-                    int 充值价值105 = 4000;
-                    玩家充值模块(flag105, 充值价值105);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\cz5000.txt";
-                bool flag106 = FileOperation.Read5000(Character.Account.V.ToString());
-                if (flag106)
-                {
-                    int 充值价值106 = 5000;
-                    玩家充值模块(flag106, 充值价值106);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\cz6000.txt";
-                bool flag107 = FileOperation.Read6000(Character.Account.V.ToString());
-                if (flag107)
-                {
-                    int 充值价值107 = 6000;
-                    玩家充值模块(flag107, 充值价值107);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\cz7000.txt";
-                bool flag108 = FileOperation.Read7000(Character.Account.V.ToString());
-                if (flag108)
-                {
-                    int 充值价值108 = 7000;
-                    玩家充值模块(flag108, 充值价值108);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\cz8000.txt";
-                bool flag109 = FileOperation.Read8000(Character.Account.V.ToString());
-                if (flag109)
-                {
-                    int 充值价值109 = 8000;
-                    玩家充值模块(flag109, 充值价值109);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\cz9000.txt";
-                bool flag110 = FileOperation.Read9000(Character.Account.V.ToString());
-                if (flag110)
-                {
-                    int 充值价值110 = 9000;
-                    玩家充值模块(flag110, 充值价值110);
-                }
-                FileOperation.Path = Settings.Default.平台接入目录 + "\\cz10000.txt";
-                bool flag111 = FileOperation.Read10000(Character.Account.V.ToString());
-                if (flag111)
-                {
-                    int 充值价值111 = 10000;
-                    玩家充值模块(flag111, 充值价值111);
-                }
-            }
-            充值发放 = SEngine.CurrentTime.AddSeconds(5.0);
+            
+            RechargeIssueTime = SEngine.CurrentTime.AddSeconds(5.0);
         }
         
         if (Settings.Default.CurrentVersion >= 2 && Character.CurrentLevel >= Settings.Default.全服红包等级 && Character.保底参数2.V == 0 && SEngine.CurrentTime.Hour == Settings.Default.全服红包时间 && Settings.Default.红包开关)
@@ -7563,190 +6783,188 @@ public sealed class PlayerObject : MapObject
         }
     }
 
-    public void 玩家充值模块(bool result, int amount)
+    public void 玩家充值模块(int amount)
     {
-        if (result)
+
+        if (amount != 0 && Settings.Default.平台开关模式 == 19)
         {
-            if (amount != 0 && Settings.Default.平台开关模式 == 19)
+            Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
+            Character.VIPPoints.V += amount;
+            NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}修罗声威", rolling: true);
+            Enqueue(new 同步货币数量
             {
-                Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
-                Character.VIPPoints.V += amount;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}修罗声威", rolling: true);
-                Enqueue(new 同步货币数量
-                {
-                    Description = 全部货币描述()
-                });
-            }
-            if (amount != 0 && Settings.Default.平台开关模式 == 18)
+                Description = 全部货币描述()
+            });
+        }
+        if (amount != 0 && Settings.Default.平台开关模式 == 18)
+        {
+            Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
+            Character.VIPPoints.V += amount;
+            NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}跨服秘宝", rolling: true);
+            Enqueue(new 同步货币数量
             {
-                Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
-                Character.VIPPoints.V += amount;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}跨服秘宝", rolling: true);
-                Enqueue(new 同步货币数量
-                {
-                    Description = 全部货币描述()
-                });
-            }
-            if (amount != 0 && Settings.Default.平台开关模式 == 17)
+                Description = 全部货币描述()
+            });
+        }
+        if (amount != 0 && Settings.Default.平台开关模式 == 17)
+        {
+            Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
+            Character.VIPPoints.V += amount;
+            NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}勇者金币", rolling: true);
+            Enqueue(new 同步货币数量
             {
-                Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
-                Character.VIPPoints.V += amount;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}勇者金币", rolling: true);
-                Enqueue(new 同步货币数量
-                {
-                    Description = 全部货币描述()
-                });
-            }
-            if (amount != 0 && Settings.Default.平台开关模式 == 16)
+                Description = 全部货币描述()
+            });
+        }
+        if (amount != 0 && Settings.Default.平台开关模式 == 16)
+        {
+            Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
+            Character.VIPPoints.V += amount;
+            NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}武道荣誉", rolling: true);
+            Enqueue(new 同步货币数量
             {
-                Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
-                Character.VIPPoints.V += amount;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}武道荣誉", rolling: true);
-                Enqueue(new 同步货币数量
-                {
-                    Description = 全部货币描述()
-                });
-            }
-            if (amount != 0 && Settings.Default.平台开关模式 == 13)
+                Description = 全部货币描述()
+            });
+        }
+        if (amount != 0 && Settings.Default.平台开关模式 == 13)
+        {
+            Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
+            Character.VIPPoints.V += amount;
+            NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}成就点数", rolling: true);
+            Enqueue(new 同步货币数量
             {
-                Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
-                Character.VIPPoints.V += amount;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}成就点数", rolling: true);
-                Enqueue(new 同步货币数量
-                {
-                    Description = 全部货币描述()
-                });
-            }
-            if (amount != 0 && Settings.Default.平台开关模式 == 15)
+                Description = 全部货币描述()
+            });
+        }
+        if (amount != 0 && Settings.Default.平台开关模式 == 15)
+        {
+            Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount * 100;
+            Character.VIPPoints.V += amount;
+            NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}绑定元宝", rolling: true);
+            Enqueue(new 同步货币数量
             {
-                Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount * 100;
-                Character.VIPPoints.V += amount;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}绑定元宝", rolling: true);
-                Enqueue(new 同步货币数量
-                {
-                    Description = 全部货币描述()
-                });
-            }
-            if (amount != 0 && Settings.Default.平台开关模式 == 12)
+                Description = 全部货币描述()
+            });
+        }
+        if (amount != 0 && Settings.Default.平台开关模式 == 12)
+        {
+            Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
+            Character.VIPPoints.V += amount;
+            NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}擂台积分", rolling: true);
+            Enqueue(new 同步货币数量
             {
-                Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
-                Character.VIPPoints.V += amount;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}擂台积分", rolling: true);
-                Enqueue(new 同步货币数量
-                {
-                    Description = 全部货币描述()
-                });
-            }
-            if (amount != 0 && Settings.Default.平台开关模式 == 11)
+                Description = 全部货币描述()
+            });
+        }
+        if (amount != 0 && Settings.Default.平台开关模式 == 11)
+        {
+            Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
+            Character.VIPPoints.V += amount;
+            NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}道义点数", rolling: true);
+            Enqueue(new 同步货币数量
             {
-                Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
-                Character.VIPPoints.V += amount;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}道义点数", rolling: true);
-                Enqueue(new 同步货币数量
-                {
-                    Description = 全部货币描述()
-                });
-            }
-            if (amount != 0 && Settings.Default.平台开关模式 == 10)
+                Description = 全部货币描述()
+            });
+        }
+        if (amount != 0 && Settings.Default.平台开关模式 == 10)
+        {
+            Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
+            Character.VIPPoints.V += amount;
+            NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}修炼点数", rolling: true);
+            Enqueue(new 同步货币数量
             {
-                Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
-                Character.VIPPoints.V += amount;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}修炼点数", rolling: true);
-                Enqueue(new 同步货币数量
-                {
-                    Description = 全部货币描述()
-                });
-            }
-            if (amount != 0 && Settings.Default.平台开关模式 == 9)
+                Description = 全部货币描述()
+            });
+        }
+        if (amount != 0 && Settings.Default.平台开关模式 == 9)
+        {
+            Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
+            Character.VIPPoints.V += amount;
+            NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}公会贡献", rolling: true);
+            Enqueue(new 同步货币数量
             {
-                Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
-                Character.VIPPoints.V += amount;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}公会贡献", rolling: true);
-                Enqueue(new 同步货币数量
-                {
-                    Description = 全部货币描述()
-                });
-            }
-            if (amount != 0 && Settings.Default.平台开关模式 == 8)
+                Description = 全部货币描述()
+            });
+        }
+        if (amount != 0 && Settings.Default.平台开关模式 == 8)
+        {
+            Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
+            Character.VIPPoints.V += amount;
+            NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}战场点数", rolling: true);
+            Enqueue(new 同步货币数量
             {
-                Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
-                Character.VIPPoints.V += amount;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}战场点数", rolling: true);
-                Enqueue(new 同步货币数量
-                {
-                    Description = 全部货币描述()
-                });
-            }
-            if (amount != 0 && Settings.Default.平台开关模式 == 7)
+                Description = 全部货币描述()
+            });
+        }
+        if (amount != 0 && Settings.Default.平台开关模式 == 7)
+        {
+            Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
+            Character.VIPPoints.V += amount;
+            NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}万法之气", rolling: true);
+            Enqueue(new 同步货币数量
             {
-                Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
-                Character.VIPPoints.V += amount;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}万法之气", rolling: true);
-                Enqueue(new 同步货币数量
-                {
-                    Description = 全部货币描述()
-                });
-            }
-            if (amount != 0 && Settings.Default.平台开关模式 == 6)
+                Description = 全部货币描述()
+            });
+        }
+        if (amount != 0 && Settings.Default.平台开关模式 == 6)
+        {
+            Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
+            Character.VIPPoints.V += amount;
+            NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}名师声望", rolling: true);
+            Enqueue(new 同步货币数量
             {
-                Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
-                Character.VIPPoints.V += amount;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}名师声望", rolling: true);
-                Enqueue(new 同步货币数量
-                {
-                    Description = 全部货币描述()
-                });
-            }
-            if (amount != 0 && Settings.Default.平台开关模式 == 3)
+                Description = 全部货币描述()
+            });
+        }
+        if (amount != 0 && Settings.Default.平台开关模式 == 3)
+        {
+            Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount * 100;
+            Character.VIPPoints.V += amount;
+            NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}元宝", rolling: true);
+            Enqueue(new 同步货币数量
             {
-                Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount * 100;
-                Character.VIPPoints.V += amount;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}元宝", rolling: true);
-                Enqueue(new 同步货币数量
-                {
-                    Description = 全部货币描述()
-                });
-            }
-            if (amount != 0 && Settings.Default.平台开关模式 == 5)
+                Description = 全部货币描述()
+            });
+        }
+        if (amount != 0 && Settings.Default.平台开关模式 == 5)
+        {
+            Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
+            Character.VIPPoints.V += amount;
+            NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}魂值", rolling: true);
+            Enqueue(new 同步货币数量
             {
-                Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
-                Character.VIPPoints.V += amount;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}魂值", rolling: true);
-                Enqueue(new 同步货币数量
-                {
-                    Description = 全部货币描述()
-                });
-            }
-            if (amount != 0 && Settings.Default.平台开关模式 == 2)
+                Description = 全部货币描述()
+            });
+        }
+        if (amount != 0 && Settings.Default.平台开关模式 == 2)
+        {
+            Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
+            Character.VIPPoints.V += amount;
+            NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}声威", rolling: true);
+            Enqueue(new 同步货币数量
             {
-                Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
-                Character.VIPPoints.V += amount;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}声威", rolling: true);
-                Enqueue(new 同步货币数量
-                {
-                    Description = 全部货币描述()
-                });
-            }
-            if (amount != 0 && Settings.Default.平台开关模式 == 0)
+                Description = 全部货币描述()
+            });
+        }
+        if (amount != 0 && Settings.Default.平台开关模式 == 0)
+        {
+            Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
+            Character.VIPPoints.V += amount;
+            NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}银币", rolling: true);
+            Enqueue(new 同步货币数量
             {
-                Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
-                Character.VIPPoints.V += amount;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}银币", rolling: true);
-                Enqueue(new 同步货币数量
-                {
-                    Description = 全部货币描述()
-                });
-            }
-            if (amount != 0 && Settings.Default.平台开关模式 == 1)
+                Description = 全部货币描述()
+            });
+        }
+        if (amount != 0 && Settings.Default.平台开关模式 == 1)
+        {
+            Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
+            Character.VIPPoints.V += amount;
+            NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}金币", rolling: true);
+            Enqueue(new 同步货币数量
             {
-                Character.Currencies[(CurrencyType)Settings.Default.平台开关模式] += Settings.Default.平台元宝充值模块 * amount;
-                Character.VIPPoints.V += amount;
-                NetworkManager.SendAnnouncement($"恭喜玩家【{Name}】充值了{Settings.Default.平台元宝充值模块 * amount}金币", rolling: true);
-                Enqueue(new 同步货币数量
-                {
-                    Description = 全部货币描述()
-                });
-            }
+                Description = 全部货币描述()
+            });
         }
     }
 
@@ -8692,263 +7910,12 @@ public sealed class PlayerObject : MapObject
                     }
                     break;
                 case 710100000:
-                    if (选项编号 == 1 && Settings.Default.CurrentVersion >= 1 && Settings.Default.充值模块格式 == 0)
+                    if (选项编号 == 1 && Settings.Default.CurrentVersion >= 1)
                     {
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\1.txt";
-                        bool flag = FileOperation.Read1(Character.Account.V.ToString());
-                        if (flag)
-                        {
-                            int 充值价值 = 1;
-                            玩家充值模块(flag, 充值价值);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\2.txt";
-                        bool flag2 = FileOperation.Read2(Character.Account.V.ToString());
-                        if (flag2)
-                        {
-                            int 充值价值2 = 2;
-                            玩家充值模块(flag2, 充值价值2);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\3.txt";
-                        bool flag3 = FileOperation.Read3(Character.Account.V.ToString());
-                        if (flag3)
-                        {
-                            int 充值价值3 = 3;
-                            玩家充值模块(flag3, 充值价值3);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\4.txt";
-                        bool flag4 = FileOperation.Read4(Character.Account.V.ToString());
-                        if (flag4)
-                        {
-                            int 充值价值4 = 4;
-                            玩家充值模块(flag4, 充值价值4);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\5.txt";
-                        bool flag5 = FileOperation.Read5(Character.Account.V.ToString());
-                        if (flag5)
-                        {
-                            int 充值价值5 = 5;
-                            玩家充值模块(flag5, 充值价值5);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\6.txt";
-                        bool flag6 = FileOperation.Read6(Character.Account.V.ToString());
-                        if (flag6)
-                        {
-                            int 充值价值6 = 6;
-                            玩家充值模块(flag6, 充值价值6);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\7.txt";
-                        bool flag7 = FileOperation.Read7(Character.Account.V.ToString());
-                        if (flag7)
-                        {
-                            int 充值价值7 = 7;
-                            玩家充值模块(flag7, 充值价值7);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\8.txt";
-                        bool flag8 = FileOperation.Read8(Character.Account.V.ToString());
-                        if (flag8)
-                        {
-                            int 充值价值8 = 8;
-                            玩家充值模块(flag8, 充值价值8);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\9.txt";
-                        bool flag9 = FileOperation.Read9(Character.Account.V.ToString());
-                        if (flag9)
-                        {
-                            int 充值价值9 = 9;
-                            玩家充值模块(flag9, 充值价值9);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\10.txt";
-                        bool flag10 = FileOperation.Read10(Character.Account.V.ToString());
-                        if (flag10)
-                        {
-                            int 充值价值10 = 10;
-                            玩家充值模块(flag10, 充值价值10);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\20.txt";
-                        bool flag11 = FileOperation.Read20(Character.Account.V.ToString());
-                        if (flag11)
-                        {
-                            int 充值价值11 = 20;
-                            玩家充值模块(flag11, 充值价值11);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\30.txt";
-                        bool flag12 = FileOperation.Read30(Character.Account.V.ToString());
-                        if (flag12)
-                        {
-                            int 充值价值12 = 30;
-                            玩家充值模块(flag12, 充值价值12);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\40.txt";
-                        bool flag13 = FileOperation.Read40(Character.Account.V.ToString());
-                        if (flag13)
-                        {
-                            int 充值价值13 = 40;
-                            玩家充值模块(flag13, 充值价值13);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\50.txt";
-                        bool flag14 = FileOperation.Read50(Character.Account.V.ToString());
-                        if (flag14)
-                        {
-                            int 充值价值14 = 50;
-                            玩家充值模块(flag14, 充值价值14);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\60.txt";
-                        bool flag15 = FileOperation.Read60(Character.Account.V.ToString());
-                        if (flag15)
-                        {
-                            int 充值价值15 = 60;
-                            玩家充值模块(flag15, 充值价值15);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\70.txt";
-                        bool flag16 = FileOperation.Read70(Character.Account.V.ToString());
-                        if (flag16)
-                        {
-                            int 充值价值16 = 70;
-                            玩家充值模块(flag16, 充值价值16);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\80.txt";
-                        bool flag17 = FileOperation.Read80(Character.Account.V.ToString());
-                        if (flag17)
-                        {
-                            int 充值价值17 = 80;
-                            玩家充值模块(flag17, 充值价值17);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\90.txt";
-                        bool flag18 = FileOperation.Read90(Character.Account.V.ToString());
-                        if (flag18)
-                        {
-                            int 充值价值18 = 90;
-                            玩家充值模块(flag18, 充值价值18);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\100.txt";
-                        bool flag19 = FileOperation.Read100(Character.Account.V.ToString());
-                        if (flag19)
-                        {
-                            int 充值价值19 = 100;
-                            玩家充值模块(flag19, 充值价值19);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\200.txt";
-                        bool flag20 = FileOperation.Read200(Character.Account.V.ToString());
-                        if (flag20)
-                        {
-                            int 充值价值20 = 200;
-                            玩家充值模块(flag20, 充值价值20);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\300.txt";
-                        bool flag21 = FileOperation.Read300(Character.Account.V.ToString());
-                        if (flag21)
-                        {
-                            int 充值价值21 = 300;
-                            玩家充值模块(flag21, 充值价值21);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\400.txt";
-                        bool flag22 = FileOperation.Read400(Character.Account.V.ToString());
-                        if (flag22)
-                        {
-                            int 充值价值22 = 400;
-                            玩家充值模块(flag22, 充值价值22);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\500.txt";
-                        bool flag23 = FileOperation.Read500(Character.Account.V.ToString());
-                        if (flag23)
-                        {
-                            int 充值价值23 = 500;
-                            玩家充值模块(flag23, 充值价值23);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\600.txt";
-                        bool flag24 = FileOperation.Read600(Character.Account.V.ToString());
-                        if (flag24)
-                        {
-                            int 充值价值24 = 600;
-                            玩家充值模块(flag24, 充值价值24);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\700.txt";
-                        bool flag25 = FileOperation.Read700(Character.Account.V.ToString());
-                        if (flag25)
-                        {
-                            int 充值价值25 = 700;
-                            玩家充值模块(flag25, 充值价值25);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\800.txt";
-                        bool flag26 = FileOperation.Read800(Character.Account.V.ToString());
-                        if (flag26)
-                        {
-                            int 充值价值26 = 800;
-                            玩家充值模块(flag26, 充值价值26);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\900.txt";
-                        bool flag27 = FileOperation.Read900(Character.Account.V.ToString());
-                        if (flag27)
-                        {
-                            int 充值价值27 = 900;
-                            玩家充值模块(flag27, 充值价值27);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\1000.txt";
-                        bool flag28 = FileOperation.Read1000(Character.Account.V.ToString());
-                        if (flag28)
-                        {
-                            int 充值价值28 = 1000;
-                            玩家充值模块(flag28, 充值价值28);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\2000.txt";
-                        bool flag29 = FileOperation.Read2000(Character.Account.V.ToString());
-                        if (flag29)
-                        {
-                            int 充值价值29 = 2000;
-                            玩家充值模块(flag29, 充值价值29);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\3000.txt";
-                        bool flag30 = FileOperation.Read3000(Character.Account.V.ToString());
-                        if (flag30)
-                        {
-                            int 充值价值30 = 3000;
-                            玩家充值模块(flag30, 充值价值30);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\4000.txt";
-                        bool flag31 = FileOperation.Read4000(Character.Account.V.ToString());
-                        if (flag31)
-                        {
-                            int 充值价值31 = 4000;
-                            玩家充值模块(flag31, 充值价值31);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\5000.txt";
-                        bool flag32 = FileOperation.Read5000(Character.Account.V.ToString());
-                        if (flag32)
-                        {
-                            int 充值价值32 = 5000;
-                            玩家充值模块(flag32, 充值价值32);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\6000.txt";
-                        bool flag33 = FileOperation.Read6000(Character.Account.V.ToString());
-                        if (flag33)
-                        {
-                            int 充值价值33 = 6000;
-                            玩家充值模块(flag33, 充值价值33);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\7000.txt";
-                        bool flag34 = FileOperation.Read7000(Character.Account.V.ToString());
-                        if (flag34)
-                        {
-                            int 充值价值34 = 7000;
-                            玩家充值模块(flag34, 充值价值34);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\8000.txt";
-                        bool flag35 = FileOperation.Read8000(Character.Account.V.ToString());
-                        if (flag35)
-                        {
-                            int 充值价值35 = 8000;
-                            玩家充值模块(flag35, 充值价值35);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\9000.txt";
-                        bool flag36 = FileOperation.Read9000(Character.Account.V.ToString());
-                        if (flag36)
-                        {
-                            int 充值价值36 = 9000;
-                            玩家充值模块(flag36, 充值价值36);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\10000.txt";
-                        bool flag37 = FileOperation.Read10000(Character.Account.V.ToString());
-                        if (!flag37)
+                        var val = Recharge.ReadAccount(Settings.Default.充值模块格式, Character.Account.V.AccountName.V);
+                        if (val > 0)
+                            玩家充值模块(val);
+                        else
                         {
                             CurrentNPCDialoguePage = 710100001;
                             Enqueue(new 同步交互结果
@@ -8958,547 +7925,8 @@ public sealed class PlayerObject : MapObject
                             });
                             break;
                         }
-                        int 充值价值37 = 10000;
-                        玩家充值模块(flag37, 充值价值37);
                     }
-                    if (选项编号 == 1 && Settings.Default.CurrentVersion >= 1 && Settings.Default.充值模块格式 == 1)
-                    {
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\yb1.txt";
-                        bool flag38 = FileOperation.Read1(Character.Account.V.ToString());
-                        if (flag38)
-                        {
-                            int 充值价值38 = 1;
-                            玩家充值模块(flag38, 充值价值38);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\yb2.txt";
-                        bool flag39 = FileOperation.Read2(Character.Account.V.ToString());
-                        if (flag39)
-                        {
-                            int 充值价值39 = 2;
-                            玩家充值模块(flag39, 充值价值39);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\yb3.txt";
-                        bool flag40 = FileOperation.Read3(Character.Account.V.ToString());
-                        if (flag40)
-                        {
-                            int 充值价值40 = 3;
-                            玩家充值模块(flag40, 充值价值40);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\yb4.txt";
-                        bool flag41 = FileOperation.Read4(Character.Account.V.ToString());
-                        if (flag41)
-                        {
-                            int 充值价值41 = 4;
-                            玩家充值模块(flag41, 充值价值41);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\yb5.txt";
-                        bool flag42 = FileOperation.Read5(Character.Account.V.ToString());
-                        if (flag42)
-                        {
-                            int 充值价值42 = 5;
-                            玩家充值模块(flag42, 充值价值42);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\yb6.txt";
-                        bool flag43 = FileOperation.Read6(Character.Account.V.ToString());
-                        if (flag43)
-                        {
-                            int 充值价值43 = 6;
-                            玩家充值模块(flag43, 充值价值43);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\yb7.txt";
-                        bool flag44 = FileOperation.Read7(Character.Account.V.ToString());
-                        if (flag44)
-                        {
-                            int 充值价值44 = 7;
-                            玩家充值模块(flag44, 充值价值44);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\yb8.txt";
-                        bool flag45 = FileOperation.Read8(Character.Account.V.ToString());
-                        if (flag45)
-                        {
-                            int 充值价值45 = 8;
-                            玩家充值模块(flag45, 充值价值45);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\yb9.txt";
-                        bool flag46 = FileOperation.Read9(Character.Account.V.ToString());
-                        if (flag46)
-                        {
-                            int 充值价值46 = 9;
-                            玩家充值模块(flag46, 充值价值46);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\yb10.txt";
-                        bool flag47 = FileOperation.Read10(Character.Account.V.ToString());
-                        if (flag47)
-                        {
-                            int 充值价值47 = 10;
-                            玩家充值模块(flag47, 充值价值47);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\yb20.txt";
-                        bool flag48 = FileOperation.Read20(Character.Account.V.ToString());
-                        if (flag48)
-                        {
-                            int 充值价值48 = 20;
-                            玩家充值模块(flag48, 充值价值48);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\yb30.txt";
-                        bool flag49 = FileOperation.Read30(Character.Account.V.ToString());
-                        if (flag49)
-                        {
-                            int 充值价值49 = 30;
-                            玩家充值模块(flag49, 充值价值49);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\yb40.txt";
-                        bool flag50 = FileOperation.Read40(Character.Account.V.ToString());
-                        if (flag50)
-                        {
-                            int 充值价值50 = 40;
-                            玩家充值模块(flag50, 充值价值50);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\yb50.txt";
-                        bool flag51 = FileOperation.Read50(Character.Account.V.ToString());
-                        if (flag51)
-                        {
-                            int 充值价值51 = 50;
-                            玩家充值模块(flag51, 充值价值51);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\yb60.txt";
-                        bool flag52 = FileOperation.Read60(Character.Account.V.ToString());
-                        if (flag52)
-                        {
-                            int 充值价值52 = 60;
-                            玩家充值模块(flag52, 充值价值52);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\yb70.txt";
-                        bool flag53 = FileOperation.Read70(Character.Account.V.ToString());
-                        if (flag53)
-                        {
-                            int 充值价值53 = 70;
-                            玩家充值模块(flag53, 充值价值53);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\yb80.txt";
-                        bool flag54 = FileOperation.Read80(Character.Account.V.ToString());
-                        if (flag54)
-                        {
-                            int 充值价值54 = 80;
-                            玩家充值模块(flag54, 充值价值54);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\yb90.txt";
-                        bool flag55 = FileOperation.Read90(Character.Account.V.ToString());
-                        if (flag55)
-                        {
-                            int 充值价值55 = 90;
-                            玩家充值模块(flag55, 充值价值55);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\yb100.txt";
-                        bool flag56 = FileOperation.Read100(Character.Account.V.ToString());
-                        if (flag56)
-                        {
-                            int 充值价值56 = 100;
-                            玩家充值模块(flag56, 充值价值56);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\yb200.txt";
-                        bool flag57 = FileOperation.Read200(Character.Account.V.ToString());
-                        if (flag57)
-                        {
-                            int 充值价值57 = 200;
-                            玩家充值模块(flag57, 充值价值57);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\yb300.txt";
-                        bool flag58 = FileOperation.Read300(Character.Account.V.ToString());
-                        if (flag58)
-                        {
-                            int 充值价值58 = 300;
-                            玩家充值模块(flag58, 充值价值58);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\yb400.txt";
-                        bool flag59 = FileOperation.Read400(Character.Account.V.ToString());
-                        if (flag59)
-                        {
-                            int 充值价值59 = 400;
-                            玩家充值模块(flag59, 充值价值59);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\yb500.txt";
-                        bool flag60 = FileOperation.Read500(Character.Account.V.ToString());
-                        if (flag60)
-                        {
-                            int 充值价值60 = 500;
-                            玩家充值模块(flag60, 充值价值60);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\yb600.txt";
-                        bool flag61 = FileOperation.Read600(Character.Account.V.ToString());
-                        if (flag61)
-                        {
-                            int 充值价值61 = 600;
-                            玩家充值模块(flag61, 充值价值61);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\yb700.txt";
-                        bool flag62 = FileOperation.Read700(Character.Account.V.ToString());
-                        if (flag62)
-                        {
-                            int 充值价值62 = 700;
-                            玩家充值模块(flag62, 充值价值62);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\yb800.txt";
-                        bool flag63 = FileOperation.Read800(Character.Account.V.ToString());
-                        if (flag63)
-                        {
-                            int 充值价值63 = 800;
-                            玩家充值模块(flag63, 充值价值63);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\yb900.txt";
-                        bool flag64 = FileOperation.Read900(Character.Account.V.ToString());
-                        if (flag64)
-                        {
-                            int 充值价值64 = 900;
-                            玩家充值模块(flag64, 充值价值64);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\yb1000.txt";
-                        bool flag65 = FileOperation.Read1000(Character.Account.V.ToString());
-                        if (flag65)
-                        {
-                            int 充值价值65 = 1000;
-                            玩家充值模块(flag65, 充值价值65);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\yb2000.txt";
-                        bool flag66 = FileOperation.Read2000(Character.Account.V.ToString());
-                        if (flag66)
-                        {
-                            int 充值价值66 = 2000;
-                            玩家充值模块(flag66, 充值价值66);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\yb3000.txt";
-                        bool flag67 = FileOperation.Read3000(Character.Account.V.ToString());
-                        if (flag67)
-                        {
-                            int 充值价值67 = 3000;
-                            玩家充值模块(flag67, 充值价值67);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\yb4000.txt";
-                        bool flag68 = FileOperation.Read4000(Character.Account.V.ToString());
-                        if (flag68)
-                        {
-                            int 充值价值68 = 4000;
-                            玩家充值模块(flag68, 充值价值68);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\yb5000.txt";
-                        bool flag69 = FileOperation.Read5000(Character.Account.V.ToString());
-                        if (flag69)
-                        {
-                            int 充值价值69 = 5000;
-                            玩家充值模块(flag69, 充值价值69);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\yb6000.txt";
-                        bool flag70 = FileOperation.Read6000(Character.Account.V.ToString());
-                        if (flag70)
-                        {
-                            int 充值价值70 = 6000;
-                            玩家充值模块(flag70, 充值价值70);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\yb7000.txt";
-                        bool flag71 = FileOperation.Read7000(Character.Account.V.ToString());
-                        if (flag71)
-                        {
-                            int 充值价值71 = 7000;
-                            玩家充值模块(flag71, 充值价值71);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\yb8000.txt";
-                        bool flag72 = FileOperation.Read8000(Character.Account.V.ToString());
-                        if (flag72)
-                        {
-                            int 充值价值72 = 8000;
-                            玩家充值模块(flag72, 充值价值72);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\yb9000.txt";
-                        bool flag73 = FileOperation.Read9000(Character.Account.V.ToString());
-                        if (flag73)
-                        {
-                            int 充值价值73 = 9000;
-                            玩家充值模块(flag73, 充值价值73);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\yb10000.txt";
-                        bool flag74 = FileOperation.Read10000(Character.Account.V.ToString());
-                        if (!flag74)
-                        {
-                            CurrentNPCDialoguePage = 710100001;
-                            Enqueue(new 同步交互结果
-                            {
-                                ObjectID = CurrentNPC.ObjectID,
-                                Description = NpcDialog.GetBufferFromDialogID(CurrentNPCDialoguePage)
-                            });
-                            break;
-                        }
-                        int 充值价值74 = 10000;
-                        玩家充值模块(flag74, 充值价值74);
-                    }
-                    if (选项编号 == 1 && Settings.Default.CurrentVersion >= 1 && Settings.Default.充值模块格式 == 2)
-                    {
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\cz1.txt";
-                        bool flag75 = FileOperation.Read1(Character.Account.V.ToString());
-                        if (flag75)
-                        {
-                            int 充值价值75 = 1;
-                            玩家充值模块(flag75, 充值价值75);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\cz2.txt";
-                        bool flag76 = FileOperation.Read2(Character.Account.V.ToString());
-                        if (flag76)
-                        {
-                            int 充值价值76 = 2;
-                            玩家充值模块(flag76, 充值价值76);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\cz3.txt";
-                        bool flag77 = FileOperation.Read3(Character.Account.V.ToString());
-                        if (flag77)
-                        {
-                            int 充值价值77 = 3;
-                            玩家充值模块(flag77, 充值价值77);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\cz4.txt";
-                        bool flag78 = FileOperation.Read4(Character.Account.V.ToString());
-                        if (flag78)
-                        {
-                            int 充值价值78 = 4;
-                            玩家充值模块(flag78, 充值价值78);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\cz5.txt";
-                        bool flag79 = FileOperation.Read5(Character.Account.V.ToString());
-                        if (flag79)
-                        {
-                            int 充值价值79 = 5;
-                            玩家充值模块(flag79, 充值价值79);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\cz6.txt";
-                        bool flag80 = FileOperation.Read6(Character.Account.V.ToString());
-                        if (flag80)
-                        {
-                            int 充值价值80 = 6;
-                            玩家充值模块(flag80, 充值价值80);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\cz7.txt";
-                        bool flag81 = FileOperation.Read7(Character.Account.V.ToString());
-                        if (flag81)
-                        {
-                            int 充值价值81 = 7;
-                            玩家充值模块(flag81, 充值价值81);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\cz8.txt";
-                        bool flag82 = FileOperation.Read8(Character.Account.V.ToString());
-                        if (flag82)
-                        {
-                            int 充值价值82 = 8;
-                            玩家充值模块(flag82, 充值价值82);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\cz9.txt";
-                        bool flag83 = FileOperation.Read9(Character.Account.V.ToString());
-                        if (flag83)
-                        {
-                            int 充值价值83 = 9;
-                            玩家充值模块(flag83, 充值价值83);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\cz10.txt";
-                        bool flag84 = FileOperation.Read10(Character.Account.V.ToString());
-                        if (flag84)
-                        {
-                            int 充值价值84 = 10;
-                            玩家充值模块(flag84, 充值价值84);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\cz20.txt";
-                        bool flag85 = FileOperation.Read20(Character.Account.V.ToString());
-                        if (flag85)
-                        {
-                            int 充值价值85 = 20;
-                            玩家充值模块(flag85, 充值价值85);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\cz30.txt";
-                        bool flag86 = FileOperation.Read30(Character.Account.V.ToString());
-                        if (flag86)
-                        {
-                            int 充值价值86 = 30;
-                            玩家充值模块(flag86, 充值价值86);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\cz40.txt";
-                        bool flag87 = FileOperation.Read40(Character.Account.V.ToString());
-                        if (flag87)
-                        {
-                            int 充值价值87 = 40;
-                            玩家充值模块(flag87, 充值价值87);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\cz50.txt";
-                        bool flag88 = FileOperation.Read50(Character.Account.V.ToString());
-                        if (flag88)
-                        {
-                            int 充值价值88 = 50;
-                            玩家充值模块(flag88, 充值价值88);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\cz60.txt";
-                        bool flag89 = FileOperation.Read60(Character.Account.V.ToString());
-                        if (flag89)
-                        {
-                            int 充值价值89 = 60;
-                            玩家充值模块(flag89, 充值价值89);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\cz70.txt";
-                        bool flag90 = FileOperation.Read70(Character.Account.V.ToString());
-                        if (flag90)
-                        {
-                            int 充值价值90 = 70;
-                            玩家充值模块(flag90, 充值价值90);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\cz80.txt";
-                        bool flag91 = FileOperation.Read80(Character.Account.V.ToString());
-                        if (flag91)
-                        {
-                            int 充值价值91 = 80;
-                            玩家充值模块(flag91, 充值价值91);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\cz90.txt";
-                        bool flag92 = FileOperation.Read90(Character.Account.V.ToString());
-                        if (flag92)
-                        {
-                            int 充值价值92 = 90;
-                            玩家充值模块(flag92, 充值价值92);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\cz100.txt";
-                        bool flag93 = FileOperation.Read100(Character.Account.V.ToString());
-                        if (flag93)
-                        {
-                            int 充值价值93 = 100;
-                            玩家充值模块(flag93, 充值价值93);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\cz200.txt";
-                        bool flag94 = FileOperation.Read200(Character.Account.V.ToString());
-                        if (flag94)
-                        {
-                            int 充值价值94 = 200;
-                            玩家充值模块(flag94, 充值价值94);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\cz300.txt";
-                        bool flag95 = FileOperation.Read300(Character.Account.V.ToString());
-                        if (flag95)
-                        {
-                            int 充值价值95 = 300;
-                            玩家充值模块(flag95, 充值价值95);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\cz400.txt";
-                        bool flag96 = FileOperation.Read400(Character.Account.V.ToString());
-                        if (flag96)
-                        {
-                            int 充值价值96 = 400;
-                            玩家充值模块(flag96, 充值价值96);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\cz500.txt";
-                        bool flag97 = FileOperation.Read500(Character.Account.V.ToString());
-                        if (flag97)
-                        {
-                            int 充值价值97 = 500;
-                            玩家充值模块(flag97, 充值价值97);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\cz600.txt";
-                        bool flag98 = FileOperation.Read600(Character.Account.V.ToString());
-                        if (flag98)
-                        {
-                            int 充值价值98 = 600;
-                            玩家充值模块(flag98, 充值价值98);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\cz700.txt";
-                        bool flag99 = FileOperation.Read700(Character.Account.V.ToString());
-                        if (flag99)
-                        {
-                            int 充值价值99 = 700;
-                            玩家充值模块(flag99, 充值价值99);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\cz800.txt";
-                        bool flag100 = FileOperation.Read800(Character.Account.V.ToString());
-                        if (flag100)
-                        {
-                            int 充值价值100 = 800;
-                            玩家充值模块(flag100, 充值价值100);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\cz900.txt";
-                        bool flag101 = FileOperation.Read900(Character.Account.V.ToString());
-                        if (flag101)
-                        {
-                            int 充值价值101 = 900;
-                            玩家充值模块(flag101, 充值价值101);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\cz1000.txt";
-                        bool flag102 = FileOperation.Read1000(Character.Account.V.ToString());
-                        if (flag102)
-                        {
-                            int 充值价值102 = 1000;
-                            玩家充值模块(flag102, 充值价值102);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\cz2000.txt";
-                        bool flag103 = FileOperation.Read2000(Character.Account.V.ToString());
-                        if (flag103)
-                        {
-                            int 充值价值103 = 2000;
-                            玩家充值模块(flag103, 充值价值103);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\cz3000.txt";
-                        bool flag104 = FileOperation.Read3000(Character.Account.V.ToString());
-                        if (flag104)
-                        {
-                            int 充值价值104 = 3000;
-                            玩家充值模块(flag104, 充值价值104);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\cz4000.txt";
-                        bool flag105 = FileOperation.Read4000(Character.Account.V.ToString());
-                        if (flag105)
-                        {
-                            int 充值价值105 = 4000;
-                            玩家充值模块(flag105, 充值价值105);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\cz5000.txt";
-                        bool flag106 = FileOperation.Read5000(Character.Account.V.ToString());
-                        if (flag106)
-                        {
-                            int 充值价值106 = 5000;
-                            玩家充值模块(flag106, 充值价值106);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\cz6000.txt";
-                        bool flag107 = FileOperation.Read6000(Character.Account.V.ToString());
-                        if (flag107)
-                        {
-                            int 充值价值107 = 6000;
-                            玩家充值模块(flag107, 充值价值107);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\cz7000.txt";
-                        bool flag108 = FileOperation.Read7000(Character.Account.V.ToString());
-                        if (flag108)
-                        {
-                            int 充值价值108 = 7000;
-                            玩家充值模块(flag108, 充值价值108);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\cz8000.txt";
-                        bool flag109 = FileOperation.Read8000(Character.Account.V.ToString());
-                        if (flag109)
-                        {
-                            int 充值价值109 = 8000;
-                            玩家充值模块(flag109, 充值价值109);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\cz9000.txt";
-                        bool flag110 = FileOperation.Read9000(Character.Account.V.ToString());
-                        if (flag110)
-                        {
-                            int 充值价值110 = 9000;
-                            玩家充值模块(flag110, 充值价值110);
-                        }
-                        FileOperation.Path = Settings.Default.平台接入目录 + "\\cz10000.txt";
-                        bool flag111 = FileOperation.Read10000(Character.Account.V.ToString());
-                        if (!flag111)
-                        {
-                            CurrentNPCDialoguePage = 710100001;
-                            Enqueue(new 同步交互结果
-                            {
-                                ObjectID = CurrentNPC.ObjectID,
-                                Description = NpcDialog.GetBufferFromDialogID(CurrentNPCDialoguePage)
-                            });
-                            break;
-                        }
-                        int 充值价值111 = 10000;
-                        玩家充值模块(flag111, 充值价值111);
-                    }
+
                     if (选项编号 == 2)
                     {
                         CurrentNPCDialoguePage = 710101000;

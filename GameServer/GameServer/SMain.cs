@@ -1489,7 +1489,7 @@ public partial class SMain : Form
         沙巴克皇宫传送数量.Value = Settings.Default.沙巴克皇宫传送数量;
         系统窗口发送.Value = Settings.Default.系统窗口发送;
         龙卫效果提示.Value = Settings.Default.龙卫效果提示;
-        充值平台切换.Value = Settings.Default.充值平台切换;
+        AllowRecharge.Value = Settings.Default.AllowRecharge;
         全服红包等级.Value = Settings.Default.全服红包等级;
         全服红包时间.Value = Settings.Default.全服红包时间;
         全服红包货币类型.Value = Settings.Default.GlobalBonusCurrencyType;
@@ -2480,7 +2480,7 @@ public partial class SMain : Form
             case nameof(沙巴克皇宫传送数量): Settings.Default.沙巴克皇宫传送数量 = (int)control.Value; break;
             case nameof(系统窗口发送): Settings.Default.系统窗口发送 = (int)control.Value; break;
             case nameof(龙卫效果提示): Settings.Default.龙卫效果提示 = (int)control.Value; break;
-            case nameof(充值平台切换): Settings.Default.充值平台切换 = (int)control.Value; break;
+            case nameof(AllowRecharge): Settings.Default.AllowRecharge = (int)control.Value; break;
             case nameof(全服红包等级): Settings.Default.全服红包等级 = (int)control.Value; break;
             case nameof(全服红包时间): Settings.Default.全服红包时间 = (int)control.Value; break;
             case nameof(全服红包货币类型): Settings.Default.GlobalBonusCurrencyType = (int)control.Value; break;
