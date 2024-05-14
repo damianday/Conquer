@@ -971,10 +971,10 @@ public partial class SMain
         groupBox230 = new GroupBox();
         转职内容控件 = new TextBox();
         label815 = new Label();
-        职业物品数量 = new NumericUpDown();
-        职业物品ID = new NumericUpDown();
-        职业货币值 = new NumericUpDown();
-        职业货币类型 = new NumericUpDown();
+        RaceChangeItemQuantity = new NumericUpDown();
+        RaceChangeItemID = new NumericUpDown();
+        RaceChangeCurrencyValue = new NumericUpDown();
+        RaceChangeCurrencyType = new NumericUpDown();
         职业等级 = new NumericUpDown();
         label886 = new Label();
         groupBox141 = new GroupBox();
@@ -2808,10 +2808,10 @@ public partial class SMain
         tabPage88.SuspendLayout();
         groupBox223.SuspendLayout();
         groupBox230.SuspendLayout();
-        ((ISupportInitialize)职业物品数量).BeginInit();
-        ((ISupportInitialize)职业物品ID).BeginInit();
-        ((ISupportInitialize)职业货币值).BeginInit();
-        ((ISupportInitialize)职业货币类型).BeginInit();
+        ((ISupportInitialize)RaceChangeItemQuantity).BeginInit();
+        ((ISupportInitialize)RaceChangeItemID).BeginInit();
+        ((ISupportInitialize)RaceChangeCurrencyValue).BeginInit();
+        ((ISupportInitialize)RaceChangeCurrencyType).BeginInit();
         ((ISupportInitialize)职业等级).BeginInit();
         groupBox141.SuspendLayout();
         groupBox142.SuspendLayout();
@@ -14920,10 +14920,10 @@ public partial class SMain
         groupBox223.Controls.Add(label814);
         groupBox223.Controls.Add(groupBox230);
         groupBox223.Controls.Add(label815);
-        groupBox223.Controls.Add(职业物品数量);
-        groupBox223.Controls.Add(职业物品ID);
-        groupBox223.Controls.Add(职业货币值);
-        groupBox223.Controls.Add(职业货币类型);
+        groupBox223.Controls.Add(RaceChangeItemQuantity);
+        groupBox223.Controls.Add(RaceChangeItemID);
+        groupBox223.Controls.Add(RaceChangeCurrencyValue);
+        groupBox223.Controls.Add(RaceChangeCurrencyType);
         groupBox223.Controls.Add(职业等级);
         groupBox223.Controls.Add(label886);
         groupBox223.ForeColor = Color.FromArgb((int)(byte)0, (int)(byte)64, (int)(byte)64);
@@ -14981,53 +14981,53 @@ public partial class SMain
         label815.TabIndex = 51;
         label815.Text = "6162: Ji Miaoshou (professional NPC) setting content self-consideration";
         // 
-        // 职业物品数量
+        // RaceChangeItemQuantity
         // 
-        职业物品数量.Location = new Point(397, 40);
-        职业物品数量.Margin = new Padding(4, 3, 4, 3);
-        职业物品数量.Maximum = new decimal(new int[] { 21, 0, 0, 0 });
-        职业物品数量.Name = "职业物品数量";
-        职业物品数量.Size = new Size(47, 23);
-        职业物品数量.TabIndex = 50;
-        职业物品数量.TextAlign = HorizontalAlignment.Center;
-        职业物品数量.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        职业物品数量.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
+        RaceChangeItemQuantity.Location = new Point(397, 40);
+        RaceChangeItemQuantity.Margin = new Padding(4, 3, 4, 3);
+        RaceChangeItemQuantity.Maximum = new decimal(new int[] { 21, 0, 0, 0 });
+        RaceChangeItemQuantity.Name = "RaceChangeItemQuantity";
+        RaceChangeItemQuantity.Size = new Size(47, 23);
+        RaceChangeItemQuantity.TabIndex = 50;
+        RaceChangeItemQuantity.TextAlign = HorizontalAlignment.Center;
+        RaceChangeItemQuantity.Value = new decimal(new int[] { 1, 0, 0, 0 });
+        RaceChangeItemQuantity.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
-        // 职业物品ID
+        // RaceChangeItemID
         // 
-        职业物品ID.Location = new Point(289, 40);
-        职业物品ID.Margin = new Padding(4, 3, 4, 3);
-        职业物品ID.Maximum = new decimal(new int[] { 1410065408, 2, 0, 0 });
-        职业物品ID.Name = "职业物品ID";
-        职业物品ID.Size = new Size(90, 23);
-        职业物品ID.TabIndex = 49;
-        职业物品ID.TextAlign = HorizontalAlignment.Center;
-        职业物品ID.Value = new decimal(new int[] { 999999, 0, 0, 0 });
-        职业物品ID.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
+        RaceChangeItemID.Location = new Point(289, 40);
+        RaceChangeItemID.Margin = new Padding(4, 3, 4, 3);
+        RaceChangeItemID.Maximum = new decimal(new int[] { 1410065408, 2, 0, 0 });
+        RaceChangeItemID.Name = "RaceChangeItemID";
+        RaceChangeItemID.Size = new Size(90, 23);
+        RaceChangeItemID.TabIndex = 49;
+        RaceChangeItemID.TextAlign = HorizontalAlignment.Center;
+        RaceChangeItemID.Value = new decimal(new int[] { 999999, 0, 0, 0 });
+        RaceChangeItemID.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
-        // 职业货币值
+        // RaceChangeCurrencyValue
         // 
-        职业货币值.Location = new Point(174, 40);
-        职业货币值.Margin = new Padding(4, 3, 4, 3);
-        职业货币值.Maximum = new decimal(new int[] { 1410065408, 2, 0, 0 });
-        职业货币值.Name = "职业货币值";
-        职业货币值.Size = new Size(90, 23);
-        职业货币值.TabIndex = 48;
-        职业货币值.TextAlign = HorizontalAlignment.Center;
-        职业货币值.Value = new decimal(new int[] { 10000000, 0, 0, 0 });
-        职业货币值.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
+        RaceChangeCurrencyValue.Location = new Point(174, 40);
+        RaceChangeCurrencyValue.Margin = new Padding(4, 3, 4, 3);
+        RaceChangeCurrencyValue.Maximum = new decimal(new int[] { 1410065408, 2, 0, 0 });
+        RaceChangeCurrencyValue.Name = "RaceChangeCurrencyValue";
+        RaceChangeCurrencyValue.Size = new Size(90, 23);
+        RaceChangeCurrencyValue.TabIndex = 48;
+        RaceChangeCurrencyValue.TextAlign = HorizontalAlignment.Center;
+        RaceChangeCurrencyValue.Value = new decimal(new int[] { 10000000, 0, 0, 0 });
+        RaceChangeCurrencyValue.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
-        // 职业货币类型
+        // RaceChangeCurrencyType
         // 
-        职业货币类型.Location = new Point(85, 40);
-        职业货币类型.Margin = new Padding(4, 3, 4, 3);
-        职业货币类型.Maximum = new decimal(new int[] { 21, 0, 0, 0 });
-        职业货币类型.Name = "职业货币类型";
-        职业货币类型.Size = new Size(47, 23);
-        职业货币类型.TabIndex = 47;
-        职业货币类型.TextAlign = HorizontalAlignment.Center;
-        职业货币类型.Value = new decimal(new int[] { 1, 0, 0, 0 });
-        职业货币类型.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
+        RaceChangeCurrencyType.Location = new Point(85, 40);
+        RaceChangeCurrencyType.Margin = new Padding(4, 3, 4, 3);
+        RaceChangeCurrencyType.Maximum = new decimal(new int[] { 21, 0, 0, 0 });
+        RaceChangeCurrencyType.Name = "RaceChangeCurrencyType";
+        RaceChangeCurrencyType.Size = new Size(47, 23);
+        RaceChangeCurrencyType.TabIndex = 47;
+        RaceChangeCurrencyType.TextAlign = HorizontalAlignment.Center;
+        RaceChangeCurrencyType.Value = new decimal(new int[] { 1, 0, 0, 0 });
+        RaceChangeCurrencyType.ValueChanged += (this.UpdateNumericSettingsValue_ValueChanged);
         // 
         // 职业等级
         // 
@@ -31520,10 +31520,10 @@ public partial class SMain
         groupBox223.PerformLayout();
         groupBox230.ResumeLayout(false);
         groupBox230.PerformLayout();
-        ((ISupportInitialize)职业物品数量).EndInit();
-        ((ISupportInitialize)职业物品ID).EndInit();
-        ((ISupportInitialize)职业货币值).EndInit();
-        ((ISupportInitialize)职业货币类型).EndInit();
+        ((ISupportInitialize)RaceChangeItemQuantity).EndInit();
+        ((ISupportInitialize)RaceChangeItemID).EndInit();
+        ((ISupportInitialize)RaceChangeCurrencyValue).EndInit();
+        ((ISupportInitialize)RaceChangeCurrencyType).EndInit();
         ((ISupportInitialize)职业等级).EndInit();
         groupBox141.ResumeLayout(false);
         groupBox141.PerformLayout();
@@ -36336,13 +36336,13 @@ public partial class SMain
 
     private Label label815;
 
-    private NumericUpDown 职业物品数量;
+    private NumericUpDown RaceChangeItemQuantity;
 
-    private NumericUpDown 职业物品ID;
+    private NumericUpDown RaceChangeItemID;
 
-    private NumericUpDown 职业货币值;
+    private NumericUpDown RaceChangeCurrencyValue;
 
-    private NumericUpDown 职业货币类型;
+    private NumericUpDown RaceChangeCurrencyType;
 
     private NumericUpDown 职业等级;
 

@@ -2670,13 +2670,13 @@ public sealed class PlayerObject : MapObject
         {
             技能编号 = skillID
         });
-        foreach (ushort item in Skills[skillID].PassiveSkills)
+        foreach (ushort id in Skills[skillID].PassiveSkills)
         {
-            PassiveSkills.Remove(item);
+            PassiveSkills.Remove(id);
         }
-        foreach (ushort item2 in Skills[skillID].SkillBuffs)
+        foreach (ushort id in Skills[skillID].SkillBuffs)
         {
-            RemoveBuffEx(item2);
+            RemoveBuffEx(id);
         }
         CombatPowerBonus[Skills[skillID]] = Skills[skillID].CombatBonus;
         UpdateCombatPower();
@@ -6802,7 +6802,7 @@ public sealed class PlayerObject : MapObject
         });
     }
 
-    public void 继续Npcc对话(int 选项编号)
+    public void 继续Npcc对话(int option)
     {
         if (Dead || StallState > 0 || TradeState >= 3)
             return;
@@ -6826,7 +6826,7 @@ public sealed class PlayerObject : MapObject
             switch (CurrentNPCDialoguePage)
             {
                 case 616200000:
-                    if (选项编号 == 1)
+                    if (option == 1)
                     {
                         CurrentNPCDialoguePage = 616200001;
                         Enqueue(new 同步交互结果
@@ -6835,7 +6835,7 @@ public sealed class PlayerObject : MapObject
                             ObjectID = CurrentNPC.ObjectID
                         });
                     }
-                    if (选项编号 == 2)
+                    if (option == 2)
                     {
                         CurrentNPCDialoguePage = 616200002;
                         Enqueue(new 同步交互结果
@@ -6848,7 +6848,7 @@ public sealed class PlayerObject : MapObject
                 case 616200001:
                     if (Settings.Default.变性内容控件 == "ASDZWEERRZCQA" || Settings.Default.CurrentVersion >= 3)
                     {
-                        switch (选项编号)
+                        switch (option)
                         {
                             case 1:
                                 {
@@ -6934,252 +6934,36 @@ public sealed class PlayerObject : MapObject
                 case 616200002:
                     if (Settings.Default.转职内容控件 == "EWQEQWCXQSADZ" || Settings.Default.CurrentVersion >= 3)
                     {
-                        switch (选项编号)
+                        switch (option)
                         {
                             case 1:
                                 {
-                                    List<ItemInfo> 物品列表4;
-                                    if (Character.Job.V == GameObjectRace.Warrior)
-                                    {
-                                        NetworkManager.SendMessage(this, "您是战士!禁止职业。");
-                                    }
-                                    else if (Character.Currencies[(CurrencyType)Settings.Default.职业货币类型] < Settings.Default.职业货币值)
-                                    {
-                                        NetworkManager.SendMessage(this, "货币不足!查看具体货币值。");
-                                    }
-                                    else if (FindItem(Settings.Default.职业物品数量, Settings.Default.职业物品ID, out 物品列表4))
-                                    {
-                                        if (Character.Currencies[(CurrencyType)Settings.Default.职业货币类型] >= Settings.Default.职业货币值)
-                                        {
-                                            Character.Currencies[(CurrencyType)Settings.Default.职业货币类型] -= Settings.Default.职业货币值;
-                                            ConsumeItem(Settings.Default.职业物品数量, 物品列表4);
-                                            Enqueue(new 同步货币数量
-                                            {
-                                                Description = 全部货币描述()
-                                            });
-                                            Character.Job.V = GameObjectRace.Warrior;
-                                            for (ushort num8 = 0; num8 < 26000; num8++)
-                                            {
-                                                RemoveSkill(num8);
-                                            }
-                                            NetworkManager.SendMessage(this, "小退上线后改变职业");
-                                            NetworkManager.SendMessage(this, "小退上线后改变职业");
-                                            NetworkManager.SendMessage(this, "小退上线后改变职业");
-                                        }
-                                        else
-                                        {
-                                            NetworkManager.SendMessage(this, "材料不满足！");
-                                        }
-                                    }
-                                    else
-                                    {
-                                        NetworkManager.SendMessage(this, "材料不满足！");
-                                    }
+                                    ChangeRace(GameObjectRace.Warrior);
                                     break;
                                 }
                             case 2:
                                 {
-                                    List<ItemInfo> 物品列表3;
-                                    if (Character.Job.V == GameObjectRace.Wizard)
-                                    {
-                                        NetworkManager.SendMessage(this, "您是法师!禁止职业。");
-                                    }
-                                    else if (Character.Currencies[(CurrencyType)Settings.Default.职业货币类型] < Settings.Default.职业货币值)
-                                    {
-                                        NetworkManager.SendMessage(this, "货币不足!查看具体货币值。");
-                                    }
-                                    else if (FindItem(Settings.Default.职业物品数量, Settings.Default.职业物品ID, out 物品列表3))
-                                    {
-                                        if (Character.Currencies[(CurrencyType)Settings.Default.职业货币类型] >= Settings.Default.职业货币值)
-                                        {
-                                            Character.Currencies[(CurrencyType)Settings.Default.职业货币类型] -= Settings.Default.职业货币值;
-                                            ConsumeItem(Settings.Default.职业物品数量, 物品列表3);
-                                            Enqueue(new 同步货币数量
-                                            {
-                                                Description = 全部货币描述()
-                                            });
-                                            Character.Job.V = GameObjectRace.Wizard;
-                                            for (ushort num7 = 0; num7 < 26000; num7++)
-                                            {
-                                                RemoveSkill(num7);
-                                            }
-                                            NetworkManager.SendMessage(this, "小退上线后改变职业");
-                                            NetworkManager.SendMessage(this, "小退上线后改变职业");
-                                            NetworkManager.SendMessage(this, "小退上线后改变职业");
-                                        }
-                                        else
-                                        {
-                                            NetworkManager.SendMessage(this, "材料不满足！");
-                                        }
-                                    }
-                                    else
-                                    {
-                                        NetworkManager.SendMessage(this, "材料不满足！");
-                                    }
+                                    ChangeRace(GameObjectRace.Wizard);
                                     break;
                                 }
                             case 3:
                                 {
-                                    List<ItemInfo> 物品列表5;
-                                    if (Character.Job.V == GameObjectRace.Assassin)
-                                    {
-                                        NetworkManager.SendMessage(this, "您是刺客!禁止职业。");
-                                    }
-                                    else if (Character.Currencies[(CurrencyType)Settings.Default.职业货币类型] < Settings.Default.职业货币值)
-                                    {
-                                        NetworkManager.SendMessage(this, "货币不足!查看具体货币值。");
-                                    }
-                                    else if (FindItem(Settings.Default.职业物品数量, Settings.Default.职业物品ID, out 物品列表5))
-                                    {
-                                        if (Character.Currencies[(CurrencyType)Settings.Default.职业货币类型] >= Settings.Default.职业货币值)
-                                        {
-                                            Character.Currencies[(CurrencyType)Settings.Default.职业货币类型] -= Settings.Default.职业货币值;
-                                            ConsumeItem(Settings.Default.职业物品数量, 物品列表5);
-                                            Enqueue(new 同步货币数量
-                                            {
-                                                Description = 全部货币描述()
-                                            });
-                                            Character.Job.V = GameObjectRace.Assassin;
-                                            for (ushort num9 = 0; num9 < 26000; num9++)
-                                            {
-                                                RemoveSkill(num9);
-                                            }
-                                            NetworkManager.SendMessage(this, "小退上线后改变职业");
-                                            NetworkManager.SendMessage(this, "小退上线后改变职业");
-                                            NetworkManager.SendMessage(this, "小退上线后改变职业");
-                                        }
-                                        else
-                                        {
-                                            NetworkManager.SendMessage(this, "材料不满足！");
-                                        }
-                                    }
-                                    else
-                                    {
-                                        NetworkManager.SendMessage(this, "材料不满足！");
-                                    }
+                                    ChangeRace(GameObjectRace.Assassin);
                                     break;
                                 }
                             case 4:
                                 {
-                                    List<ItemInfo> 物品列表6;
-                                    if (Character.Job.V == GameObjectRace.Archer)
-                                    {
-                                        NetworkManager.SendMessage(this, "您是弓手!禁止职业。");
-                                    }
-                                    else if (Character.Currencies[(CurrencyType)Settings.Default.职业货币类型] < Settings.Default.职业货币值)
-                                    {
-                                        NetworkManager.SendMessage(this, "货币不足!查看具体货币值。");
-                                    }
-                                    else if (FindItem(Settings.Default.职业物品数量, Settings.Default.职业物品ID, out 物品列表6))
-                                    {
-                                        if (Character.Currencies[(CurrencyType)Settings.Default.职业货币类型] >= Settings.Default.职业货币值)
-                                        {
-                                            Character.Currencies[(CurrencyType)Settings.Default.职业货币类型] -= Settings.Default.职业货币值;
-                                            ConsumeItem(Settings.Default.职业物品数量, 物品列表6);
-                                            Enqueue(new 同步货币数量
-                                            {
-                                                Description = 全部货币描述()
-                                            });
-                                            Character.Job.V = GameObjectRace.Archer;
-                                            for (ushort num10 = 0; num10 < 26000; num10++)
-                                            {
-                                                RemoveSkill(num10);
-                                            }
-                                            NetworkManager.SendMessage(this, "小退上线后改变职业");
-                                            NetworkManager.SendMessage(this, "小退上线后改变职业");
-                                            NetworkManager.SendMessage(this, "小退上线后改变职业");
-                                        }
-                                        else
-                                        {
-                                            NetworkManager.SendMessage(this, "材料不满足！");
-                                        }
-                                    }
-                                    else
-                                    {
-                                        NetworkManager.SendMessage(this, "材料不满足！");
-                                    }
+                                    ChangeRace(GameObjectRace.Archer);
                                     break;
                                 }
                             case 5:
                                 {
-                                    List<ItemInfo> 物品列表2;
-                                    if (Character.Job.V == GameObjectRace.Taoist)
-                                    {
-                                        NetworkManager.SendMessage(this, "您是道士!禁止职业。");
-                                    }
-                                    else if (Character.Currencies[(CurrencyType)Settings.Default.职业货币类型] < Settings.Default.职业货币值)
-                                    {
-                                        NetworkManager.SendMessage(this, "货币不足!查看具体货币值。");
-                                    }
-                                    else if (FindItem(Settings.Default.职业物品数量, Settings.Default.职业物品ID, out 物品列表2))
-                                    {
-                                        if (Character.Currencies[(CurrencyType)Settings.Default.职业货币类型] >= Settings.Default.职业货币值)
-                                        {
-                                            Character.Currencies[(CurrencyType)Settings.Default.职业货币类型] -= Settings.Default.职业货币值;
-                                            ConsumeItem(Settings.Default.职业物品数量, 物品列表2);
-                                            Enqueue(new 同步货币数量
-                                            {
-                                                Description = 全部货币描述()
-                                            });
-                                            Character.Job.V = GameObjectRace.Taoist;
-                                            for (ushort num6 = 0; num6 < 26000; num6++)
-                                            {
-                                                RemoveSkill(num6);
-                                            }
-                                            NetworkManager.SendMessage(this, "小退上线后改变职业");
-                                            NetworkManager.SendMessage(this, "小退上线后改变职业");
-                                            NetworkManager.SendMessage(this, "小退上线后改变职业");
-                                        }
-                                        else
-                                        {
-                                            NetworkManager.SendMessage(this, "材料不满足！");
-                                        }
-                                    }
-                                    else
-                                    {
-                                        NetworkManager.SendMessage(this, "材料不满足！");
-                                    }
+                                    ChangeRace(GameObjectRace.Taoist);
                                     break;
                                 }
                             case 6:
                                 {
-                                    List<ItemInfo> 物品列表;
-                                    if (Character.Job.V == GameObjectRace.DragonLance)
-                                    {
-                                        NetworkManager.SendMessage(this, "您是道士!禁止职业。");
-                                    }
-                                    else if (Character.Currencies[(CurrencyType)Settings.Default.职业货币类型] < Settings.Default.职业货币值)
-                                    {
-                                        NetworkManager.SendMessage(this, "货币不足!查看具体货币值。");
-                                    }
-                                    else if (FindItem(Settings.Default.职业物品数量, Settings.Default.职业物品ID, out 物品列表))
-                                    {
-                                        if (Character.Currencies[(CurrencyType)Settings.Default.职业货币类型] >= Settings.Default.职业货币值)
-                                        {
-                                            Character.Currencies[(CurrencyType)Settings.Default.职业货币类型] -= Settings.Default.职业货币值;
-                                            ConsumeItem(Settings.Default.职业物品数量, 物品列表);
-                                            Enqueue(new 同步货币数量
-                                            {
-                                                Description = 全部货币描述()
-                                            });
-                                            Character.Job.V = GameObjectRace.DragonLance;
-                                            for (ushort num5 = 0; num5 < 26000; num5++)
-                                            {
-                                                RemoveSkill(num5);
-                                            }
-                                            NetworkManager.SendMessage(this, "小退上线后改变职业");
-                                            NetworkManager.SendMessage(this, "小退上线后改变职业");
-                                            NetworkManager.SendMessage(this, "小退上线后改变职业");
-                                        }
-                                        else
-                                        {
-                                            NetworkManager.SendMessage(this, "材料不满足！");
-                                        }
-                                    }
-                                    else
-                                    {
-                                        NetworkManager.SendMessage(this, "材料不满足！");
-                                    }
+                                    ChangeRace(GameObjectRace.DragonLance);
                                     break;
                                 }
                         }
@@ -7191,7 +6975,7 @@ public sealed class PlayerObject : MapObject
                     break;
                 case 692300000:
                     {
-                        if (选项编号 != 1)
+                        if (option != 1)
                         {
                             break;
                         }
@@ -7273,7 +7057,7 @@ public sealed class PlayerObject : MapObject
                         break;
                     }
                 case 715100000:
-                    switch (选项编号)
+                    switch (option)
                     {
                         case 1:
                             if (Character.Level.V >= (byte)Settings.Default.直升等级1 && SEngine.CurrentTime > NPC间隔 && Character.升级直升变量.V == 0)
@@ -7624,7 +7408,7 @@ public sealed class PlayerObject : MapObject
                     }
                     break;
                 case 634000000:
-                    switch (选项编号)
+                    switch (option)
                     {
                         case 1:
                             {
@@ -7744,7 +7528,7 @@ public sealed class PlayerObject : MapObject
                     }
                     break;
                 case 710100000:
-                    if (选项编号 == 1 && Settings.Default.CurrentVersion >= 1)
+                    if (option == 1 && Settings.Default.CurrentVersion >= 1)
                     {
                         var val = Recharge.ReadAccount(Settings.Default.RechargeSystemFormat, Character.Account.V.AccountName.V);
                         if (val > 0)
@@ -7761,7 +7545,7 @@ public sealed class PlayerObject : MapObject
                         }
                     }
 
-                    if (选项编号 == 2)
+                    if (option == 2)
                     {
                         CurrentNPCDialoguePage = 710101000;
                         Enqueue(new 同步交互结果
@@ -7770,7 +7554,7 @@ public sealed class PlayerObject : MapObject
                             ObjectID = CurrentNPC.ObjectID
                         });
                     }
-                    if (选项编号 == 3 && Settings.Default.CurrentVersion >= 2)
+                    if (option == 3 && Settings.Default.CurrentVersion >= 2)
                     {
                         CurrentNPCDialoguePage = 710102000;
                         Enqueue(new 同步交互结果
@@ -7782,7 +7566,7 @@ public sealed class PlayerObject : MapObject
                     break;
                 case 710102000:
                     {
-                        if (选项编号 == 1 && VIPSystem.DataSheet.TryGetValue(1, out var value13))
+                        if (option == 1 && VIPSystem.DataSheet.TryGetValue(1, out var value13))
                         {
                             if (value13.NeedVIPPoints <= Character.VIPPoints.V && Character.VIPLevel.V == 0)
                             {
@@ -7801,7 +7585,7 @@ public sealed class PlayerObject : MapObject
                                 NetworkManager.SendMessage(this, "您可以已经激活过了,或者积分不足!");
                             }
                         }
-                        if (选项编号 == 2 && VIPSystem.DataSheet.TryGetValue(2, out var value14))
+                        if (option == 2 && VIPSystem.DataSheet.TryGetValue(2, out var value14))
                         {
                             if (value14.NeedVIPPoints <= Character.VIPPoints.V && Character.VIPLevel.V == 1)
                             {
@@ -7820,7 +7604,7 @@ public sealed class PlayerObject : MapObject
                                 NetworkManager.SendMessage(this, "您可以已经激活过了,或者积分不足!");
                             }
                         }
-                        if (选项编号 == 3 && VIPSystem.DataSheet.TryGetValue(3, out var value15))
+                        if (option == 3 && VIPSystem.DataSheet.TryGetValue(3, out var value15))
                         {
                             if (value15.NeedVIPPoints <= Character.VIPPoints.V && Character.VIPLevel.V == 2)
                             {
@@ -7839,7 +7623,7 @@ public sealed class PlayerObject : MapObject
                                 NetworkManager.SendMessage(this, "您可以已经激活过了,或者积分不足!");
                             }
                         }
-                        if (选项编号 == 4 && VIPSystem.DataSheet.TryGetValue(4, out var value16))
+                        if (option == 4 && VIPSystem.DataSheet.TryGetValue(4, out var value16))
                         {
                             if (value16.NeedVIPPoints <= Character.VIPPoints.V && Character.VIPLevel.V == 3)
                             {
@@ -7858,7 +7642,7 @@ public sealed class PlayerObject : MapObject
                                 NetworkManager.SendMessage(this, "您可以已经激活过了,或者积分不足!");
                             }
                         }
-                        if (选项编号 == 5 && VIPSystem.DataSheet.TryGetValue(5, out var value17))
+                        if (option == 5 && VIPSystem.DataSheet.TryGetValue(5, out var value17))
                         {
                             if (value17.NeedVIPPoints <= Character.VIPPoints.V && Character.VIPLevel.V == 4)
                             {
@@ -7877,7 +7661,7 @@ public sealed class PlayerObject : MapObject
                                 NetworkManager.SendMessage(this, "您可以已经激活过了,或者积分不足!");
                             }
                         }
-                        if (选项编号 == 6 && VIPSystem.DataSheet.TryGetValue(6, out var value18))
+                        if (option == 6 && VIPSystem.DataSheet.TryGetValue(6, out var value18))
                         {
                             if (value18.NeedVIPPoints <= Character.VIPPoints.V && Character.VIPLevel.V == 5)
                             {
@@ -7896,7 +7680,7 @@ public sealed class PlayerObject : MapObject
                                 NetworkManager.SendMessage(this, "您可以已经激活过了,或者积分不足!");
                             }
                         }
-                        if (选项编号 == 7 && VIPSystem.DataSheet.TryGetValue(7, out var value19))
+                        if (option == 7 && VIPSystem.DataSheet.TryGetValue(7, out var value19))
                         {
                             if (value19.NeedVIPPoints <= Character.VIPPoints.V && Character.VIPLevel.V == 6)
                             {
@@ -7915,7 +7699,7 @@ public sealed class PlayerObject : MapObject
                                 NetworkManager.SendMessage(this, "您可以已经激活过了,或者积分不足!");
                             }
                         }
-                        if (选项编号 == 8 && VIPSystem.DataSheet.TryGetValue(8, out var value20))
+                        if (option == 8 && VIPSystem.DataSheet.TryGetValue(8, out var value20))
                         {
                             if (value20.NeedVIPPoints <= Character.VIPPoints.V && Character.VIPLevel.V == 7)
                             {
@@ -7934,7 +7718,7 @@ public sealed class PlayerObject : MapObject
                                 NetworkManager.SendMessage(this, "您可以已经激活过了,或者积分不足!");
                             }
                         }
-                        if (选项编号 == 9 && VIPSystem.DataSheet.TryGetValue(9, out var value21))
+                        if (option == 9 && VIPSystem.DataSheet.TryGetValue(9, out var value21))
                         {
                             if (value21.NeedVIPPoints <= Character.VIPPoints.V && Character.VIPLevel.V == 8)
                             {
@@ -7953,7 +7737,7 @@ public sealed class PlayerObject : MapObject
                                 NetworkManager.SendMessage(this, "您可以已经激活过了,或者积分不足!");
                             }
                         }
-                        if (选项编号 == 10 && VIPSystem.DataSheet.TryGetValue(10, out var value22))
+                        if (option == 10 && VIPSystem.DataSheet.TryGetValue(10, out var value22))
                         {
                             if (value22.NeedVIPPoints <= Character.VIPPoints.V && Character.VIPLevel.V == 9)
                             {
@@ -7975,7 +7759,7 @@ public sealed class PlayerObject : MapObject
                         break;
                     }
                 case 710101000:
-                    if (选项编号 != 1 || Settings.Default.CurrentVersion < 2)
+                    if (option != 1 || Settings.Default.CurrentVersion < 2)
                     {
                         break;
                     }
@@ -8096,10 +7880,9 @@ public sealed class PlayerObject : MapObject
                     }
                     break;
                 case 658100000:
-                    if (选项编号 != 1)
-                    {
+                    if (option != 1)
                         break;
-                    }
+
                     switch (SEngine.Random.Next(1, 4))
                     {
                         case 1:
@@ -8214,7 +7997,7 @@ public sealed class PlayerObject : MapObject
                     break;
                 case 616700000:
                     {
-                        if (选项编号 != 1)
+                        if (option != 1)
                         {
                             break;
                         }
@@ -8433,7 +8216,7 @@ public sealed class PlayerObject : MapObject
                         break;
                     }
                 case 848200000:
-                    switch (选项编号)
+                    switch (option)
                     {
                         case 1:
                             CurrentNPCDialoguePage = 848201000;
@@ -8478,7 +8261,7 @@ public sealed class PlayerObject : MapObject
                     }
                     break;
                 case 848201000:
-                    switch (选项编号)
+                    switch (option)
                     {
                         case 1:
                             if (!沃玛分解开关)
@@ -8691,7 +8474,7 @@ public sealed class PlayerObject : MapObject
                 case 848202000:
                     if (Settings.Default.购买狂暴之力)
                     {
-                        if (选项编号 != 1)
+                        if (option != 1)
                         {
                             break;
                         }
@@ -8822,13 +8605,9 @@ public sealed class PlayerObject : MapObject
                             NetworkManager.SendMessage(this, "全屏拾取关闭");
                         }
                     }
-                    else
-                    {
-                        NetworkManager.SendMessage(this, "当前功能没有启动,联系QQ群：634564006");
-                    }
                     break;
                 case 479400000:
-                    if (选项编号 != 1)
+                    if (option != 1)
                     {
                         break;
                     }
@@ -8886,7 +8665,7 @@ public sealed class PlayerObject : MapObject
                     break;
                 case 611200000:
                     {
-                        if (选项编号 != 1)
+                        if (option != 1)
                         {
                             break;
                         }
@@ -9203,7 +8982,7 @@ public sealed class PlayerObject : MapObject
                 case 612300000:
                     {
                         int num4 = Settings.Default.九层妖塔数量2 + Settings.Default.九层妖塔数量3 + Settings.Default.九层妖塔数量4 + Settings.Default.九层妖塔数量5 + Settings.Default.九层妖塔数量6 + Settings.Default.九层妖塔数量7 + Settings.Default.九层妖塔数量8 + Settings.Default.九层妖塔数量9 + 16;
-                        if (选项编号 == 1)
+                        if (option == 1)
                         {
                             Map value4;
                             if (CurrentMap.TotalSurvivingMonsters != num4 && Settings.Default.九层妖塔统计开关 == 1)
@@ -9226,7 +9005,7 @@ public sealed class PlayerObject : MapObject
                 case 618300000:
                     {
                         int num30 = Settings.Default.九层妖塔数量3 + Settings.Default.九层妖塔数量4 + Settings.Default.九层妖塔数量5 + Settings.Default.九层妖塔数量6 + Settings.Default.九层妖塔数量7 + Settings.Default.九层妖塔数量8 + Settings.Default.九层妖塔数量9 + 14;
-                        if (选项编号 == 1)
+                        if (option == 1)
                         {
                             Map value36;
                             if (CurrentMap.TotalSurvivingMonsters != num30 && Settings.Default.九层妖塔统计开关 == 1)
@@ -9249,7 +9028,7 @@ public sealed class PlayerObject : MapObject
                 case 618400000:
                     {
                         int num14 = Settings.Default.九层妖塔数量4 + Settings.Default.九层妖塔数量5 + Settings.Default.九层妖塔数量6 + Settings.Default.九层妖塔数量7 + Settings.Default.九层妖塔数量8 + Settings.Default.九层妖塔数量9 + 12;
-                        if (选项编号 == 1)
+                        if (option == 1)
                         {
                             Map value11;
                             if (CurrentMap.TotalSurvivingMonsters != num14 && Settings.Default.九层妖塔统计开关 == 1)
@@ -9272,7 +9051,7 @@ public sealed class PlayerObject : MapObject
                 case 618500000:
                     {
                         int num66 = Settings.Default.九层妖塔数量5 + Settings.Default.九层妖塔数量6 + Settings.Default.九层妖塔数量7 + Settings.Default.九层妖塔数量8 + Settings.Default.九层妖塔数量9 + 10;
-                        if (选项编号 == 1)
+                        if (option == 1)
                         {
                             Map value57;
                             if (CurrentMap.TotalSurvivingMonsters != num66 && Settings.Default.九层妖塔统计开关 == 1)
@@ -9295,7 +9074,7 @@ public sealed class PlayerObject : MapObject
                 case 624300000:
                     {
                         int num31 = Settings.Default.九层妖塔数量6 + Settings.Default.九层妖塔数量7 + Settings.Default.九层妖塔数量8 + Settings.Default.九层妖塔数量9 + 8;
-                        if (选项编号 == 1)
+                        if (option == 1)
                         {
                             Map value37;
                             if (CurrentMap.TotalSurvivingMonsters != num31 && Settings.Default.九层妖塔统计开关 == 1)
@@ -9318,7 +9097,7 @@ public sealed class PlayerObject : MapObject
                 case 624400000:
                     {
                         int num18 = Settings.Default.九层妖塔数量7 + Settings.Default.九层妖塔数量8 + Settings.Default.九层妖塔数量9 + 6;
-                        if (选项编号 == 1)
+                        if (option == 1)
                         {
                             Map value12;
                             if (CurrentMap.TotalSurvivingMonsters != num18 && Settings.Default.九层妖塔统计开关 == 1)
@@ -9341,7 +9120,7 @@ public sealed class PlayerObject : MapObject
                 case 621500000:
                     {
                         int num48 = Settings.Default.九层妖塔数量8 + Settings.Default.九层妖塔数量9 + 4;
-                        if (选项编号 == 1)
+                        if (option == 1)
                         {
                             Map value47;
                             if (CurrentMap.TotalSurvivingMonsters != num48 && Settings.Default.九层妖塔统计开关 == 1)
@@ -9364,7 +9143,7 @@ public sealed class PlayerObject : MapObject
                 case 634200000:
                     {
                         int num55 = Settings.Default.九层妖塔数量9 + 2;
-                        if (选项编号 == 1)
+                        if (option == 1)
                         {
                             Map value54;
                             if (CurrentMap.TotalSurvivingMonsters != num55 && Settings.Default.九层妖塔统计开关 == 1)
@@ -9385,13 +9164,13 @@ public sealed class PlayerObject : MapObject
                         break;
                     }
                 case 479600000:
-                    if (选项编号 == 1)
+                    if (option == 1)
                     {
                         Teleport(MapManager.GetMap(RespawnMapIndex), AreaType.Resurrection);
                     }
                     break;
                 case 479500000:
-                    if (选项编号 != 1)
+                    if (option != 1)
                     {
                         break;
                     }
@@ -9450,7 +9229,7 @@ public sealed class PlayerObject : MapObject
                         int num16;
                         int 物品编号;
                         int num17;
-                        switch (选项编号)
+                        switch (option)
                         {
                             default:
                                 return;
@@ -9507,7 +9286,7 @@ public sealed class PlayerObject : MapObject
                     }
                 case 699700000:
                     {
-                        if (选项编号 != 1)
+                        if (option != 1)
                         {
                             break;
                         }
@@ -9627,7 +9406,7 @@ public sealed class PlayerObject : MapObject
                     }
                 case 643500000:
                     {
-                        if (选项编号 != 1)
+                        if (option != 1)
                         {
                             break;
                         }
@@ -9662,7 +9441,7 @@ public sealed class PlayerObject : MapObject
                 case 700100000:
                     {
                         EquipmentInfo v5;
-                        switch (选项编号)
+                        switch (option)
                         {
                             default:
                                 return;
@@ -9810,7 +9589,7 @@ public sealed class PlayerObject : MapObject
                         int 物品编号2;
                         byte b4;
                         int num22;
-                        switch (选项编号)
+                        switch (option)
                         {
                             default:
                                 return;
@@ -9879,7 +9658,7 @@ public sealed class PlayerObject : MapObject
                         break;
                     }
                 case 611400000:
-                    if (选项编号 == 1)
+                    if (option == 1)
                     {
                         int num69 = 223;
                         int 幽冥海副本价格 = Settings.Default.幽冥海副本价格;
@@ -9918,7 +9697,7 @@ public sealed class PlayerObject : MapObject
                         int num45 = 0;
                         int num46 = 0;
                         int num47 = 147;
-                        if (选项编号 == 1)
+                        if (option == 1)
                         {
                             if (CurrentLevel < num45)
                             {
@@ -9951,7 +9730,7 @@ public sealed class PlayerObject : MapObject
                         break;
                     }
                 case 677100000:
-                    if (选项编号 == 1)
+                    if (option == 1)
                     {
                         CurrentNPCDialoguePage = 677100001;
                         Enqueue(new 同步交互结果
@@ -9962,7 +9741,7 @@ public sealed class PlayerObject : MapObject
                     }
                     break;
                 case 677100001:
-                    switch (选项编号)
+                    switch (option)
                     {
                         case 1:
                             CurrentNPCDialoguePage = 677101000;
@@ -9991,7 +9770,7 @@ public sealed class PlayerObject : MapObject
                     }
                     break;
                 case 612600000:
-                    switch (选项编号)
+                    switch (option)
                     {
                         case 1:
                             if (!Equipment.TryGetValue(0, out v4))
@@ -10034,7 +9813,7 @@ public sealed class PlayerObject : MapObject
                     break;
                 case 612604000:
                     {
-                        if (选项编号 != 1)
+                        if (option != 1)
                         {
                             break;
                         }
@@ -10106,7 +9885,7 @@ public sealed class PlayerObject : MapObject
                         break;
                     }
                 case 612602000:
-                    switch (选项编号)
+                    switch (option)
                     {
                         case 1:
                             if (!Equipment.TryGetValue(9, out v4))
@@ -10258,7 +10037,7 @@ public sealed class PlayerObject : MapObject
                     }
                     break;
                 case 612601000:
-                    switch (选项编号)
+                    switch (option)
                     {
                         case 1:
                             if (!Equipment.TryGetValue(1, out v4))
@@ -10410,7 +10189,7 @@ public sealed class PlayerObject : MapObject
                     }
                     break;
                 case 619200000:
-                    switch (选项编号)
+                    switch (option)
                     {
                         default:
                             return;
@@ -10428,7 +10207,7 @@ public sealed class PlayerObject : MapObject
                     });
                     break;
                 case 612606000:
-                    if (选项编号 == 1)
+                    if (option == 1)
                     {
                         CurrentNPCDialoguePage = 612604000;
                         Enqueue(new 同步交互结果
@@ -10440,7 +10219,7 @@ public sealed class PlayerObject : MapObject
                     break;
                 case 619202500:
                     {
-                        if (选项编号 != 1)
+                        if (option != 1)
                         {
                             break;
                         }
@@ -10567,7 +10346,7 @@ public sealed class PlayerObject : MapObject
                 case 619202000:
                     {
                         EquipmentInfo v3 = null;
-                        switch (选项编号)
+                        switch (option)
                         {
                             default:
                                 return;
@@ -10626,7 +10405,7 @@ public sealed class PlayerObject : MapObject
                             });
                             break;
                         }
-                        雕色部位 = (byte)选项编号;
+                        雕色部位 = (byte)option;
                         if (v3.SlotColor.Count == 1)
                         {
                             CurrentNPCDialoguePage = 619202500;
@@ -10650,7 +10429,7 @@ public sealed class PlayerObject : MapObject
                 case 619201000:
                     {
                         EquipmentInfo v = null;
-                        switch (选项编号)
+                        switch (option)
                         {
                             default:
                                 return;
@@ -10721,7 +10500,7 @@ public sealed class PlayerObject : MapObject
                         break;
                     }
                 case 619400000:
-                    switch (选项编号)
+                    switch (option)
                     {
                         case 1:
                             CurrentNPCDialoguePage = 619401000;
@@ -10791,7 +10570,7 @@ public sealed class PlayerObject : MapObject
                     break;
                 case 619202600:
                     {
-                        if (选项编号 != 1)
+                        if (option != 1)
                         {
                             break;
                         }
@@ -10919,7 +10698,7 @@ public sealed class PlayerObject : MapObject
                     {
                         int num97 = 10;
                         int num98;
-                        switch (选项编号)
+                        switch (option)
                         {
                             default:
                                 return;
@@ -10975,7 +10754,7 @@ public sealed class PlayerObject : MapObject
                     {
                         int num59 = 10;
                         int num60;
-                        switch (选项编号)
+                        switch (option)
                         {
                             default:
                                 return;
@@ -11031,7 +10810,7 @@ public sealed class PlayerObject : MapObject
                     {
                         int num36 = 10;
                         int num37;
-                        switch (选项编号)
+                        switch (option)
                         {
                             default:
                                 return;
@@ -11087,7 +10866,7 @@ public sealed class PlayerObject : MapObject
                     {
                         int num26 = 10;
                         int num27;
-                        switch (选项编号)
+                        switch (option)
                         {
                             default:
                                 return;
@@ -11143,7 +10922,7 @@ public sealed class PlayerObject : MapObject
                     {
                         int num28 = 10;
                         int num29;
-                        switch (选项编号)
+                        switch (option)
                         {
                             default:
                                 return;
@@ -11199,7 +10978,7 @@ public sealed class PlayerObject : MapObject
                     {
                         int num11 = 10;
                         int num12;
-                        switch (选项编号)
+                        switch (option)
                         {
                             default:
                                 return;
@@ -11255,7 +11034,7 @@ public sealed class PlayerObject : MapObject
                     {
                         int num67 = 10;
                         int num68;
-                        switch (选项编号)
+                        switch (option)
                         {
                             default:
                                 return;
@@ -11311,7 +11090,7 @@ public sealed class PlayerObject : MapObject
                     {
                         int num61 = 10;
                         int num62;
-                        switch (选项编号)
+                        switch (option)
                         {
                             default:
                                 return;
@@ -11364,7 +11143,7 @@ public sealed class PlayerObject : MapObject
                         break;
                     }
                 case 625200000:
-                    if (选项编号 == 1)
+                    if (option == 1)
                     {
                         if (Character.屠魔令回收数量.V >= Settings.Default.屠魔令回收数量)
                         {
@@ -11394,7 +11173,7 @@ public sealed class PlayerObject : MapObject
                     break;
                 case 624200000:
                     {
-                        if (选项编号 != 1)
+                        if (option != 1)
                         {
                             break;
                         }
@@ -11519,7 +11298,7 @@ public sealed class PlayerObject : MapObject
                         break;
                     }
                 case 635800000:
-                    if (选项编号 == 1)
+                    if (option == 1)
                     {
                         Teleport((CurrentMap.MapID == 147) ? CurrentMap : MapManager.GetMap(147), AreaType.Resurrection);
                     }
@@ -11529,7 +11308,7 @@ public sealed class PlayerObject : MapObject
                         int num52 = 40;
                         int num53 = 100000;
                         int num54 = 87;
-                        if (选项编号 == 1)
+                        if (option == 1)
                         {
                             if (CurrentLevel < num52)
                             {
@@ -11562,7 +11341,7 @@ public sealed class PlayerObject : MapObject
                         break;
                     }
                 case 627400000:
-                    if (选项编号 != 1)
+                    if (option != 1)
                     {
                         break;
                     }
@@ -11644,7 +11423,7 @@ public sealed class PlayerObject : MapObject
                     }
                     break;
                 case 674001000:
-                    if (选项编号 == 1)
+                    if (option == 1)
                     {
                         ItemInfo 物品;
                         if (Guild == null)
@@ -11703,7 +11482,7 @@ public sealed class PlayerObject : MapObject
                     }
                     break;
                 case 636100000:
-                    if (选项编号 == 1)
+                    if (option == 1)
                     {
                         int num58 = 87;
                         int 未知暗点副本价格 = Settings.Default.未知暗点副本价格;
@@ -11738,7 +11517,7 @@ public sealed class PlayerObject : MapObject
                     }
                     break;
                 case 635900000:
-                    if (选项编号 == 1)
+                    if (option == 1)
                     {
                         int num44 = 88;
                         int 未知暗点二层价格 = Settings.Default.未知暗点二层价格;
@@ -11773,7 +11552,7 @@ public sealed class PlayerObject : MapObject
                     }
                     break;
                 case 674000000:
-                    switch (选项编号)
+                    switch (option)
                     {
                         case 1:
                             CurrentNPCDialoguePage = 674001000;
@@ -11797,7 +11576,7 @@ public sealed class PlayerObject : MapObject
                         Connection?.Close(new Exception("错误操作: 继续Npcc对话.  错误: 尝试取回武器."));
                         break;
                     }
-                    switch (选项编号)
+                    switch (option)
                     {
                         case 1:
                             {
@@ -11884,7 +11663,7 @@ public sealed class PlayerObject : MapObject
                     }
                     break;
                 case 670500000:
-                    switch (选项编号)
+                    switch (option)
                     {
                         case 1:
                             if (Character.UpgradeEquipment.V != null)
@@ -12014,7 +11793,7 @@ public sealed class PlayerObject : MapObject
                     }
                     break;
                 case 691900000:
-                    switch (选项编号)
+                    switch (option)
                     {
                         default:
                             return;
@@ -12039,7 +11818,7 @@ public sealed class PlayerObject : MapObject
                     break;
                 case 691901000:
                     {
-                        if (选项编号 != 1)
+                        if (option != 1)
                         {
                             break;
                         }
@@ -12092,7 +11871,7 @@ public sealed class PlayerObject : MapObject
                     }
                 case 691902000:
                     {
-                        if (选项编号 != 1)
+                        if (option != 1)
                         {
                             break;
                         }
@@ -12145,7 +11924,7 @@ public sealed class PlayerObject : MapObject
                     }
                 case 691903000:
                     {
-                        if (选项编号 != 1)
+                        if (option != 1)
                         {
                             break;
                         }
@@ -12198,7 +11977,7 @@ public sealed class PlayerObject : MapObject
                     }
                 case 691904000:
                     {
-                        if (选项编号 != 1)
+                        if (option != 1)
                         {
                             break;
                         }
@@ -12250,7 +12029,7 @@ public sealed class PlayerObject : MapObject
                         break;
                     }
                 case 711900000:
-                    switch (选项编号)
+                    switch (option)
                     {
                         default:
                             return;
@@ -12280,7 +12059,7 @@ public sealed class PlayerObject : MapObject
                     });
                     break;
                 case 711906000:
-                    if (Settings.Default.CurrentVersion < 3 || 选项编号 != 1)
+                    if (Settings.Default.CurrentVersion < 3 || option != 1)
                     {
                         break;
                     }
@@ -12321,7 +12100,7 @@ public sealed class PlayerObject : MapObject
                         int num63;
                         int num64;
                         int num65;
-                        switch (选项编号)
+                        switch (option)
                         {
                             default:
                                 return;
@@ -12405,7 +12184,7 @@ public sealed class PlayerObject : MapObject
                         int num41;
                         int num42;
                         int num43;
-                        switch (选项编号)
+                        switch (option)
                         {
                             default:
                                 return;
@@ -12484,7 +12263,7 @@ public sealed class PlayerObject : MapObject
                         int num33;
                         int num34;
                         int num35;
-                        switch (选项编号)
+                        switch (option)
                         {
                             default:
                                 return;
@@ -12553,7 +12332,7 @@ public sealed class PlayerObject : MapObject
                         int num23;
                         int num24;
                         int num25;
-                        switch (选项编号)
+                        switch (option)
                         {
                             default:
                                 return;
@@ -12607,7 +12386,7 @@ public sealed class PlayerObject : MapObject
                         int num;
                         int num2;
                         int num3;
-                        switch (选项编号)
+                        switch (option)
                         {
                             default:
                                 return;
@@ -12697,6 +12476,47 @@ public sealed class PlayerObject : MapObject
             {
                 ErrorCode = 3333
             });
+        }
+    }
+
+    private void ChangeRace(GameObjectRace race)
+    {
+        var currency = (CurrencyType)Settings.Default.RaceChangeCurrencyType;
+        List<ItemInfo> items;
+        if (Character.Job.V == race)
+        {
+            NetworkManager.SendMessage(this, $"You are a {race}! Race change is forbidden.");
+        }
+        else if (Character.Currencies[currency] < Settings.Default.RaceChangeCurrencyValue)
+        {
+            NetworkManager.SendMessage(this, "Insufficient currency! View specific currency values.");
+        }
+        else if (FindItem(Settings.Default.RaceChangeItemQuantity, Settings.Default.RaceChangeItemID, out items))
+        {
+            if (Character.Currencies[currency] >= Settings.Default.RaceChangeCurrencyValue)
+            {
+                Character.Currencies[currency] -= Settings.Default.RaceChangeCurrencyValue;
+                ConsumeItem(Settings.Default.RaceChangeItemQuantity, items);
+                Enqueue(new 同步货币数量
+                {
+                    Description = 全部货币描述()
+                });
+                Character.Job.V = race;
+
+                var skills = Skills.Keys.ToList();
+                foreach (var s in skills)
+                    RemoveSkill(s);
+
+                NetworkManager.SendMessage(this, "You must restart the game before it takes effect.");
+            }
+            else
+            {
+                NetworkManager.SendMessage(this, "The material does not satisfy!");
+            }
+        }
+        else
+        {
+            NetworkManager.SendMessage(this, "The material does not satisfy!");
         }
     }
 

@@ -1523,10 +1523,10 @@ public partial class SMain : Form
         安全区收刀开关.Checked = Settings.Default.安全区收刀开关;
         屠魔殿等级限制.Value = Settings.Default.屠魔殿等级限制;
         职业等级.Value = Settings.Default.职业等级;
-        职业货币类型.Value = Settings.Default.职业货币类型;
-        职业货币值.Value = Settings.Default.职业货币值;
-        职业物品ID.Value = Settings.Default.职业物品ID;
-        职业物品数量.Value = Settings.Default.职业物品数量;
+        RaceChangeCurrencyType.Value = Settings.Default.RaceChangeCurrencyType;
+        RaceChangeCurrencyValue.Value = Settings.Default.RaceChangeCurrencyValue;
+        RaceChangeItemID.Value = Settings.Default.RaceChangeItemID;
+        RaceChangeItemQuantity.Value = Settings.Default.RaceChangeItemQuantity;
         武斗场杀人经验.Value = Settings.Default.武斗场杀人经验;
         武斗场杀人开关.Checked = Settings.Default.武斗场杀人开关;
         S_狂暴名称.Text = Settings.Default.狂暴名称;
@@ -2506,10 +2506,10 @@ public partial class SMain : Form
             case nameof(龙卫焰焚烈火剑法): Settings.Default.龙卫焰焚烈火剑法 = (int)control.Value; break;
             case nameof(屠魔殿等级限制): Settings.Default.屠魔殿等级限制 = (int)control.Value; break;
             case nameof(职业等级): Settings.Default.职业等级 = (int)control.Value; break;
-            case nameof(职业货币类型): Settings.Default.职业货币类型 = (int)control.Value; break;
-            case nameof(职业货币值): Settings.Default.职业货币值 = (int)control.Value; break;
-            case nameof(职业物品ID): Settings.Default.职业物品ID = (int)control.Value; break;
-            case nameof(职业物品数量): Settings.Default.职业物品数量 = (int)control.Value; break;
+            case nameof(RaceChangeCurrencyType): Settings.Default.RaceChangeCurrencyType = (int)control.Value; break;
+            case nameof(RaceChangeCurrencyValue): Settings.Default.RaceChangeCurrencyValue = (int)control.Value; break;
+            case nameof(RaceChangeItemID): Settings.Default.RaceChangeItemID = (int)control.Value; break;
+            case nameof(RaceChangeItemQuantity): Settings.Default.RaceChangeItemQuantity = (int)control.Value; break;
 
             default:
                 MessageBox.Show("Unknown Control! " + control.Name);
