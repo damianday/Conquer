@@ -7,11 +7,11 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Windows.Forms;
-
 using Newtonsoft.Json;
-
 using AccountServer.Networking;
 using System.Drawing;
+using AccountServer.AccountServer;
+using AccountServer.AccountServer.Accounts;
 
 namespace AccountServer;
 
@@ -119,8 +119,6 @@ public partial class SMain : Form
 
     private void SMain_Load(object sender, EventArgs e)
     {
-        LocalListeningPortEdit.Value = Settings.Default.LocalListeningPort;
-        TicketSendingPortEdit.Value = Settings.Default.TicketSendingPort;
 
         if (!File.Exists(ServerConfigFile))
         {
@@ -219,8 +217,6 @@ public partial class SMain : Form
             loadAccountsToolStripMenuItem_Click(sender, e);
         }
 
-        Settings.Default.LocalListeningPort = (ushort)LocalListeningPortEdit.Value;
-        Settings.Default.TicketSendingPort = (ushort)TicketSendingPortEdit.Value;
         Settings.Default.Save();
 
         SEngine.StartService();
@@ -232,8 +228,6 @@ public partial class SMain : Form
         loadAccountsToolStripMenuItem.Enabled = false;
         loadConfigurationToolStripMenuItem.Enabled = false;
         startServiceToolStripMenuItem.Enabled = false;
-        LocalListeningPortEdit.Enabled = false;
-        TicketSendingPortEdit.Enabled = false;
     }
 
     private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -251,8 +245,6 @@ public partial class SMain : Form
         stopServiceToolStripMenuItem.Enabled = false;
         loadAccountsToolStripMenuItem.Enabled = true;
         loadConfigurationToolStripMenuItem.Enabled = true;
-        TicketSendingPortEdit.Enabled = true;
-        LocalListeningPortEdit.Enabled = true;
         startServiceToolStripMenuItem.Enabled = true;
     }
 
@@ -355,26 +347,17 @@ public partial class SMain : Form
         ReadPatchFile();
     }
 
-    private void LoadAccountsView()
+    private void configToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        AccountsListView.Items.Clear();
+        ConfigForm configForm = new ConfigForm();
 
-        foreach (var accountInfo in SAccounts.Accounts.Values)
-        {
-            var item = new ListViewItem(accountInfo.AccountName);
-            item.SubItems.Add(accountInfo.Password);
-            item.SubItems.Add(accountInfo.SecurityQuestion);
-            item.SubItems.Add(accountInfo.SecurityAnswer);
-            item.SubItems.Add(accountInfo.CreationDate.ToString("yyyy-MM-dd"));
-            item.SubItems.Add(accountInfo.PromoCode);
-            item.SubItems.Add(accountInfo.ReferrerCode);
-            AccountsListView.Items.Add(item);
-        }
+        configForm.ShowDialog();
     }
 
-    private void MainTabControl_SelectedIndexChanged(object sender, EventArgs e)
+    private void accountsToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        if (MainTabControl.SelectedIndex == 1)
-            LoadAccountsView();
+        AccountsForm accountsForm = new AccountsForm();
+
+        accountsForm.Show();
     }
 }
