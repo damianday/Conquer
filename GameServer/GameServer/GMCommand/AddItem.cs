@@ -1,6 +1,6 @@
+using System;
 using GameServer.Database;
 using GameServer.Template;
-using GameServer.Networking;
 
 using GamePackets.Server;
 
@@ -23,62 +23,59 @@ public sealed class AddItem : GMCommand
     public override void ExecuteCommand()
     {
         var character = Session.GetCharacter(UserName);
-        if (character != null)
+        if (character == null)
         {
-            if (!GameItem.DataSheetByName.TryGetValue(ItemName, out var item))
-            {
-                SMain.AddCommandLog("<= @" + GetType().Name + " Command failed. Item does not exist.");
-                return;
-            }
-            if (character.Inventory.Count >= character.InventorySize.V)
-            {
-                SMain.AddCommandLog("<= @" + GetType().Name + " Command failed. Character inventory is full.");
-                return;
-            }
-            if (item.MaxDura == 0)
-            {
-                SMain.AddCommandLog("<= @" + GetType().Name + " Failed to execute command, can't add item");
-                return;
-            }
-            byte position = byte.MaxValue;
-            for (byte i = 0; i < character.InventorySize.V; i++)
-            {
-                if (!character.Inventory.ContainsKey(i))
-                {
-                    position = i;
-                    break;
-                }
-            }
+            SMain.AddCommandLog("<= @" + GetType().Name + " Command failed, character does not exist");
+            return;
+        }
 
-            if (item is EquipmentItem equip)
-            {
-                character.Inventory[position] = new EquipmentInfo(equip, character, 1, position, random: true);
-            }
-            else if (item.PersistType == PersistentItemType.Container)
-            {
-                character.Inventory[position] = new ItemInfo(item, character, 1, position, 0);
-            }
-            else if (item.PersistType == PersistentItemType.Stack)
-            {
-                character.Inventory[position] = new ItemInfo(item, character, 1, position, 1);
-            }
-            else
-            {
-                character.Inventory[position] = new ItemInfo(item, character, 1, position, item.MaxDura);
-            }
-            if (Quantity > 1)
-            {
-                character.Inventory[position].Dura.V = Quantity;
-            }
-            character.Enqueue(new SyncItemPacket
-            {
-                Description = character.Inventory[position].ToArray()
-            });
-            SMain.AddCommandLog("<= @" + GetType().Name + " Command executed. Item added to character's inventory.");
+        if (!GameItem.DataSheetByName.TryGetValue(ItemName, out var item))
+        {
+            SMain.AddCommandLog("<= @" + GetType().Name + " Command failed. Item does not exist.");
+            return;
+        }
+        if (character.Inventory.Count >= character.InventorySize.V)
+        {
+            SMain.AddCommandLog("<= @" + GetType().Name + " Command failed. Character inventory is full.");
+            return;
+        }
+        if (item.MaxDura == 0)
+        {
+            SMain.AddCommandLog("<= @" + GetType().Name + " Failed to execute command, can't add item");
+            return;
+        }
+
+        int count = ((Quantity == 1 || item.PersistType != PersistentItemType.Stack) ? 1 : Math.Min(Quantity, item.MaxDura));
+
+        byte position = character.FindEmptyInventoryIndex();
+
+        if (item is EquipmentItem equipment)
+        {
+            character.Inventory[position] = new EquipmentInfo(equipment, character, 1, position);
         }
         else
         {
-            SMain.AddCommandLog("<= @" + GetType().Name + " Command failed, character does not exist");
+            int dura = 0;
+            switch (item.PersistType)
+            {
+                case PersistentItemType.Stack:
+                    dura = count;
+                    break;
+                case PersistentItemType.Container:
+                    dura = 0;
+                    break;
+                case PersistentItemType.Consumeable:
+                case PersistentItemType.Purity:
+                    dura = item.MaxDura;
+                    break;
+            }
+            character.Inventory[position] = new ItemInfo(item, character, 1, position, dura);
         }
+
+        character.Enqueue(new SyncItemPacket
+        {
+            Description = character.Inventory[position].ToArray()
+        });
+        SMain.AddCommandLog("<= @" + GetType().Name + " Command executed. Item added to character's inventory.");
     }
 }
