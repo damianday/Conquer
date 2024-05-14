@@ -35,24 +35,7 @@ public partial class SMain
     {
         components = new Container();
         ComponentResourceManager resources = new ComponentResourceManager(typeof(SMain));
-        MainTabControl = new TabControl();
-        LogsTabPage = new TabPage();
         LogTextBox = new RichTextBox();
-        AccountsTabPage = new TabPage();
-        AccountsListView = new ListView();
-        NameHeader = new ColumnHeader();
-        PasswordHeader = new ColumnHeader();
-        QuestionHeader = new ColumnHeader();
-        AnswerHeader = new ColumnHeader();
-        DateHeader = new ColumnHeader();
-        PromoHeader = new ColumnHeader();
-        ReferrerHeader = new ColumnHeader();
-        BytesSentLabel = new Label();
-        BytesReceivedLabel = new Label();
-        LocalListeningPortEdit = new NumericUpDown();
-        LocalListeningPortLabel = new Label();
-        TicketSendingPortLabel = new Label();
-        TicketSendingPortEdit = new NumericUpDown();
         TrayIcon = new NotifyIcon(components);
         TrayContextMenu = new ContextMenuStrip(components);
         OpenToolStripMenuItem = new ToolStripMenuItem();
@@ -68,187 +51,35 @@ public partial class SMain
         LoadUpdateConfigurationToolStripMenuItem = new ToolStripMenuItem();
         toolStripMenuItem1 = new ToolStripSeparator();
         exitToolStripMenuItem = new ToolStripMenuItem();
+        accountsToolStripMenuItem = new ToolStripMenuItem();
         optionsToolStripMenuItem = new ToolStripMenuItem();
         openServerConfigurationToolStripMenuItem = new ToolStripMenuItem();
         OpenUpdateConfigurationToolStripMenuItem = new ToolStripMenuItem();
         openPatchDirectoryToolStripMenuItem = new ToolStripMenuItem();
         openAccountDirectoryToolStripMenuItem = new ToolStripMenuItem();
-        groupBox1 = new GroupBox();
-        GameServerLabel = new Label();
-        TicketsGeneratedLabel = new Label();
-        NewAccountsLabel = new Label();
-        ExistingAccountsLabel = new Label();
-        MainTabControl.SuspendLayout();
-        LogsTabPage.SuspendLayout();
-        AccountsTabPage.SuspendLayout();
-        ((ISupportInitialize)LocalListeningPortEdit).BeginInit();
-        ((ISupportInitialize)TicketSendingPortEdit).BeginInit();
+        configToolStripMenuItem = new ToolStripMenuItem();
+        statusStrip1 = new StatusStrip();
+        ExistingAccountsLabel = new ToolStripStatusLabel();
+        NewAccountsLabel = new ToolStripStatusLabel();
+        TicketsGeneratedLabel = new ToolStripStatusLabel();
+        BytesSentLabel = new ToolStripStatusLabel();
+        BytesReceivedLabel = new ToolStripStatusLabel();
+        GameServerLabel = new ToolStripStatusLabel();
         TrayContextMenu.SuspendLayout();
         menuStrip1.SuspendLayout();
-        groupBox1.SuspendLayout();
+        statusStrip1.SuspendLayout();
         SuspendLayout();
-        // 
-        // MainTabControl
-        // 
-        MainTabControl.Controls.Add(LogsTabPage);
-        MainTabControl.Controls.Add(AccountsTabPage);
-        MainTabControl.ItemSize = new Size(60, 22);
-        MainTabControl.Location = new Point(12, 172);
-        MainTabControl.Margin = new Padding(4, 2, 4, 2);
-        MainTabControl.Name = "MainTabControl";
-        MainTabControl.SelectedIndex = 0;
-        MainTabControl.Size = new Size(519, 420);
-        MainTabControl.SizeMode = TabSizeMode.Fixed;
-        MainTabControl.TabIndex = 1;
-        MainTabControl.SelectedIndexChanged += MainTabControl_SelectedIndexChanged;
-        // 
-        // LogsTabPage
-        // 
-        LogsTabPage.BackColor = Color.FromArgb(224, 224, 224);
-        LogsTabPage.BorderStyle = BorderStyle.Fixed3D;
-        LogsTabPage.Controls.Add(LogTextBox);
-        LogsTabPage.Location = new Point(4, 26);
-        LogsTabPage.Margin = new Padding(4, 2, 4, 2);
-        LogsTabPage.Name = "LogsTabPage";
-        LogsTabPage.Padding = new Padding(4, 2, 4, 2);
-        LogsTabPage.Size = new Size(511, 390);
-        LogsTabPage.TabIndex = 0;
-        LogsTabPage.Text = "Log";
         // 
         // LogTextBox
         // 
         LogTextBox.BackColor = Color.Gainsboro;
-        LogTextBox.Dock = DockStyle.Fill;
-        LogTextBox.Location = new Point(4, 2);
+        LogTextBox.Location = new Point(13, 26);
         LogTextBox.Margin = new Padding(4, 2, 4, 2);
         LogTextBox.Name = "LogTextBox";
         LogTextBox.ReadOnly = true;
-        LogTextBox.Size = new Size(499, 382);
+        LogTextBox.Size = new Size(739, 362);
         LogTextBox.TabIndex = 0;
         LogTextBox.Text = "";
-        // 
-        // AccountsTabPage
-        // 
-        AccountsTabPage.Controls.Add(AccountsListView);
-        AccountsTabPage.Location = new Point(4, 26);
-        AccountsTabPage.Name = "AccountsTabPage";
-        AccountsTabPage.Padding = new Padding(3);
-        AccountsTabPage.Size = new Size(511, 390);
-        AccountsTabPage.TabIndex = 1;
-        AccountsTabPage.Text = "Accounts";
-        AccountsTabPage.UseVisualStyleBackColor = true;
-        // 
-        // AccountsListView
-        // 
-        AccountsListView.Columns.AddRange(new ColumnHeader[] { NameHeader, PasswordHeader, QuestionHeader, AnswerHeader, DateHeader, PromoHeader, ReferrerHeader });
-        AccountsListView.Dock = DockStyle.Fill;
-        AccountsListView.FullRowSelect = true;
-        AccountsListView.GridLines = true;
-        AccountsListView.Location = new Point(3, 3);
-        AccountsListView.Name = "AccountsListView";
-        AccountsListView.Size = new Size(505, 384);
-        AccountsListView.TabIndex = 0;
-        AccountsListView.UseCompatibleStateImageBehavior = false;
-        AccountsListView.View = View.Details;
-        // 
-        // NameHeader
-        // 
-        NameHeader.Text = "Account Name";
-        NameHeader.Width = 100;
-        // 
-        // PasswordHeader
-        // 
-        PasswordHeader.Text = "Password";
-        PasswordHeader.Width = 120;
-        // 
-        // QuestionHeader
-        // 
-        QuestionHeader.Text = "Question";
-        QuestionHeader.Width = 100;
-        // 
-        // AnswerHeader
-        // 
-        AnswerHeader.Text = "Answer";
-        AnswerHeader.Width = 100;
-        // 
-        // DateHeader
-        // 
-        DateHeader.Text = "Creation Date";
-        DateHeader.Width = 140;
-        // 
-        // PromoHeader
-        // 
-        PromoHeader.Text = "PromoCode";
-        // 
-        // ReferrerHeader
-        // 
-        ReferrerHeader.Text = "ReferrerCode";
-        // 
-        // BytesSentLabel
-        // 
-        BytesSentLabel.AutoSize = true;
-        BytesSentLabel.ForeColor = SystemColors.ControlText;
-        BytesSentLabel.Location = new Point(274, 19);
-        BytesSentLabel.Margin = new Padding(4, 0, 4, 0);
-        BytesSentLabel.Name = "BytesSentLabel";
-        BytesSentLabel.Size = new Size(73, 15);
-        BytesSentLabel.TabIndex = 6;
-        BytesSentLabel.Text = "Bytes Sent: 0";
-        // 
-        // BytesReceivedLabel
-        // 
-        BytesReceivedLabel.AutoSize = true;
-        BytesReceivedLabel.ForeColor = SystemColors.ControlText;
-        BytesReceivedLabel.Location = new Point(250, 34);
-        BytesReceivedLabel.Margin = new Padding(4, 0, 4, 0);
-        BytesReceivedLabel.Name = "BytesReceivedLabel";
-        BytesReceivedLabel.Size = new Size(97, 15);
-        BytesReceivedLabel.TabIndex = 7;
-        BytesReceivedLabel.Text = "Bytes Received: 0";
-        // 
-        // LocalListeningPortEdit
-        // 
-        LocalListeningPortEdit.Location = new Point(429, 115);
-        LocalListeningPortEdit.Margin = new Padding(4, 3, 4, 3);
-        LocalListeningPortEdit.Maximum = new decimal(new int[] { 65535, 0, 0, 0 });
-        LocalListeningPortEdit.Minimum = new decimal(new int[] { 100, 0, 0, 0 });
-        LocalListeningPortEdit.Name = "LocalListeningPortEdit";
-        LocalListeningPortEdit.Size = new Size(102, 23);
-        LocalListeningPortEdit.TabIndex = 8;
-        LocalListeningPortEdit.TextAlign = HorizontalAlignment.Center;
-        LocalListeningPortEdit.Value = new decimal(new int[] { 8001, 0, 0, 0 });
-        // 
-        // LocalListeningPortLabel
-        // 
-        LocalListeningPortLabel.AutoSize = true;
-        LocalListeningPortLabel.Location = new Point(358, 117);
-        LocalListeningPortLabel.Margin = new Padding(4, 0, 4, 0);
-        LocalListeningPortLabel.Name = "LocalListeningPortLabel";
-        LocalListeningPortLabel.Size = new Size(63, 15);
-        LocalListeningPortLabel.TabIndex = 9;
-        LocalListeningPortLabel.Text = "Local Port:";
-        // 
-        // TicketSendingPortLabel
-        // 
-        TicketSendingPortLabel.AutoSize = true;
-        TicketSendingPortLabel.Location = new Point(355, 146);
-        TicketSendingPortLabel.Margin = new Padding(4, 0, 4, 0);
-        TicketSendingPortLabel.Name = "TicketSendingPortLabel";
-        TicketSendingPortLabel.Size = new Size(66, 15);
-        TicketSendingPortLabel.TabIndex = 11;
-        TicketSendingPortLabel.Text = "Ticket Port:";
-        // 
-        // TicketSendingPortEdit
-        // 
-        TicketSendingPortEdit.Location = new Point(429, 144);
-        TicketSendingPortEdit.Margin = new Padding(4, 3, 4, 3);
-        TicketSendingPortEdit.Maximum = new decimal(new int[] { 65535, 0, 0, 0 });
-        TicketSendingPortEdit.Minimum = new decimal(new int[] { 100, 0, 0, 0 });
-        TicketSendingPortEdit.Name = "TicketSendingPortEdit";
-        TicketSendingPortEdit.Size = new Size(102, 23);
-        TicketSendingPortEdit.TabIndex = 10;
-        TicketSendingPortEdit.TextAlign = HorizontalAlignment.Center;
-        TicketSendingPortEdit.Value = new decimal(new int[] { 6678, 0, 0, 0 });
         // 
         // TrayIcon
         // 
@@ -280,10 +111,10 @@ public partial class SMain
         // 
         // menuStrip1
         // 
-        menuStrip1.Items.AddRange(new ToolStripItem[] { serviceToolStripMenuItem, optionsToolStripMenuItem });
+        menuStrip1.Items.AddRange(new ToolStripItem[] { serviceToolStripMenuItem, accountsToolStripMenuItem, optionsToolStripMenuItem, configToolStripMenuItem });
         menuStrip1.Location = new Point(0, 0);
         menuStrip1.Name = "menuStrip1";
-        menuStrip1.Size = new Size(543, 24);
+        menuStrip1.Size = new Size(765, 24);
         menuStrip1.TabIndex = 19;
         menuStrip1.Text = "menuStrip1";
         // 
@@ -351,6 +182,13 @@ public partial class SMain
         exitToolStripMenuItem.Text = "E&xit";
         exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
         // 
+        // accountsToolStripMenuItem
+        // 
+        accountsToolStripMenuItem.Name = "accountsToolStripMenuItem";
+        accountsToolStripMenuItem.Size = new Size(69, 20);
+        accountsToolStripMenuItem.Text = "Accounts";
+        accountsToolStripMenuItem.Click += accountsToolStripMenuItem_Click;
+        // 
         // optionsToolStripMenuItem
         // 
         optionsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { openServerConfigurationToolStripMenuItem, OpenUpdateConfigurationToolStripMenuItem, openPatchDirectoryToolStripMenuItem, openAccountDirectoryToolStripMenuItem });
@@ -386,78 +224,66 @@ public partial class SMain
         openAccountDirectoryToolStripMenuItem.Text = "Open Account Directory";
         openAccountDirectoryToolStripMenuItem.Click += openAccountDirectoryToolStripMenuItem_Click;
         // 
-        // groupBox1
+        // configToolStripMenuItem
         // 
-        groupBox1.Controls.Add(GameServerLabel);
-        groupBox1.Controls.Add(TicketsGeneratedLabel);
-        groupBox1.Controls.Add(NewAccountsLabel);
-        groupBox1.Controls.Add(ExistingAccountsLabel);
-        groupBox1.Controls.Add(BytesSentLabel);
-        groupBox1.Controls.Add(BytesReceivedLabel);
-        groupBox1.ForeColor = Color.Firebrick;
-        groupBox1.Location = new Point(12, 27);
-        groupBox1.Name = "groupBox1";
-        groupBox1.Size = new Size(519, 82);
-        groupBox1.TabIndex = 20;
-        groupBox1.TabStop = false;
-        groupBox1.Text = "Statistics";
+        configToolStripMenuItem.Name = "configToolStripMenuItem";
+        configToolStripMenuItem.Size = new Size(55, 20);
+        configToolStripMenuItem.Text = "Config";
+        configToolStripMenuItem.Click += configToolStripMenuItem_Click;
         // 
-        // GameServerLabel
+        // statusStrip1
         // 
-        GameServerLabel.AutoSize = true;
-        GameServerLabel.ForeColor = SystemColors.ControlText;
-        GameServerLabel.Location = new Point(262, 49);
-        GameServerLabel.Margin = new Padding(4, 0, 4, 0);
-        GameServerLabel.Name = "GameServerLabel";
-        GameServerLabel.Size = new Size(76, 15);
-        GameServerLabel.TabIndex = 9;
-        GameServerLabel.Text = "Game Server:";
-        // 
-        // TicketsGeneratedLabel
-        // 
-        TicketsGeneratedLabel.AutoSize = true;
-        TicketsGeneratedLabel.ForeColor = SystemColors.ControlText;
-        TicketsGeneratedLabel.Location = new Point(48, 49);
-        TicketsGeneratedLabel.Margin = new Padding(4, 0, 4, 0);
-        TicketsGeneratedLabel.Name = "TicketsGeneratedLabel";
-        TicketsGeneratedLabel.Size = new Size(55, 15);
-        TicketsGeneratedLabel.TabIndex = 8;
-        TicketsGeneratedLabel.Text = "Tickets: 0";
-        // 
-        // NewAccountsLabel
-        // 
-        NewAccountsLabel.AutoSize = true;
-        NewAccountsLabel.ForeColor = SystemColors.ControlText;
-        NewAccountsLabel.Location = new Point(7, 34);
-        NewAccountsLabel.Margin = new Padding(4, 0, 4, 0);
-        NewAccountsLabel.Name = "NewAccountsLabel";
-        NewAccountsLabel.Size = new Size(96, 15);
-        NewAccountsLabel.TabIndex = 7;
-        NewAccountsLabel.Text = "New Accounts: 0";
+        statusStrip1.Items.AddRange(new ToolStripItem[] { ExistingAccountsLabel, NewAccountsLabel, TicketsGeneratedLabel, BytesSentLabel, BytesReceivedLabel, GameServerLabel });
+        statusStrip1.Location = new Point(0, 401);
+        statusStrip1.Name = "statusStrip1";
+        statusStrip1.Size = new Size(765, 22);
+        statusStrip1.TabIndex = 21;
+        statusStrip1.Text = "statusStrip1";
         // 
         // ExistingAccountsLabel
         // 
-        ExistingAccountsLabel.AutoSize = true;
-        ExistingAccountsLabel.ForeColor = SystemColors.ControlText;
-        ExistingAccountsLabel.Location = new Point(34, 19);
-        ExistingAccountsLabel.Margin = new Padding(4, 0, 4, 0);
         ExistingAccountsLabel.Name = "ExistingAccountsLabel";
-        ExistingAccountsLabel.Size = new Size(69, 15);
-        ExistingAccountsLabel.TabIndex = 6;
+        ExistingAccountsLabel.Size = new Size(69, 17);
         ExistingAccountsLabel.Text = "Accounts: 0";
+        // 
+        // NewAccountsLabel
+        // 
+        NewAccountsLabel.Name = "NewAccountsLabel";
+        NewAccountsLabel.Size = new Size(96, 17);
+        NewAccountsLabel.Text = "New Accounts: 0";
+        // 
+        // TicketsGeneratedLabel
+        // 
+        TicketsGeneratedLabel.Name = "TicketsGeneratedLabel";
+        TicketsGeneratedLabel.Size = new Size(55, 17);
+        TicketsGeneratedLabel.Text = "Tickets: 0";
+        // 
+        // BytesSentLabel
+        // 
+        BytesSentLabel.Name = "BytesSentLabel";
+        BytesSentLabel.Size = new Size(73, 17);
+        BytesSentLabel.Text = "Bytes Sent: 0";
+        // 
+        // BytesReceivedLabel
+        // 
+        BytesReceivedLabel.Name = "BytesReceivedLabel";
+        BytesReceivedLabel.Size = new Size(97, 17);
+        BytesReceivedLabel.Text = "Bytes Received: 0";
+        // 
+        // GameServerLabel
+        // 
+        GameServerLabel.Name = "GameServerLabel";
+        GameServerLabel.Size = new Size(76, 17);
+        GameServerLabel.Text = "Game Server:";
         // 
         // SMain
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(543, 598);
-        Controls.Add(groupBox1);
+        ClientSize = new Size(765, 423);
+        Controls.Add(LogTextBox);
+        Controls.Add(statusStrip1);
         Controls.Add(menuStrip1);
-        Controls.Add(TicketSendingPortLabel);
-        Controls.Add(TicketSendingPortEdit);
-        Controls.Add(LocalListeningPortLabel);
-        Controls.Add(LocalListeningPortEdit);
-        Controls.Add(MainTabControl);
         FormBorderStyle = FormBorderStyle.FixedSingle;
         Icon = (Icon)resources.GetObject("$this.Icon");
         MainMenuStrip = menuStrip1;
@@ -468,31 +294,17 @@ public partial class SMain
         Text = "AccountServer";
         FormClosing += FormClosing_Click;
         Load += SMain_Load;
-        MainTabControl.ResumeLayout(false);
-        LogsTabPage.ResumeLayout(false);
-        AccountsTabPage.ResumeLayout(false);
-        ((ISupportInitialize)LocalListeningPortEdit).EndInit();
-        ((ISupportInitialize)TicketSendingPortEdit).EndInit();
         TrayContextMenu.ResumeLayout(false);
         menuStrip1.ResumeLayout(false);
         menuStrip1.PerformLayout();
-        groupBox1.ResumeLayout(false);
-        groupBox1.PerformLayout();
+        statusStrip1.ResumeLayout(false);
+        statusStrip1.PerformLayout();
         ResumeLayout(false);
         PerformLayout();
     }
 
     #endregion
-
-    private TabControl MainTabControl;
-    private TabPage LogsTabPage;
     private RichTextBox LogTextBox;
-    private Label BytesSentLabel;
-    private Label BytesReceivedLabel;
-    private Label LocalListeningPortLabel;
-    private Label TicketSendingPortLabel;
-    private NumericUpDown LocalListeningPortEdit;
-    private NumericUpDown TicketSendingPortEdit;
     private ContextMenuStrip TrayContextMenu;
     private ToolStripMenuItem OpenToolStripMenuItem;
     private ToolStripMenuItem QuitToolStripMenuItem;
@@ -508,23 +320,18 @@ public partial class SMain
     private ToolStripMenuItem openAccountDirectoryToolStripMenuItem;
     private ToolStripMenuItem OpenUpdateConfigurationToolStripMenuItem;
     private ToolStripMenuItem openPatchDirectoryToolStripMenuItem;
-    private GroupBox groupBox1;
-    private Label TicketsGeneratedLabel;
-    private Label NewAccountsLabel;
-    private Label ExistingAccountsLabel;
     private ToolStripSeparator toolStripMenuItem2;
     private ToolStripMenuItem reloadToolStripMenuItem;
     private ToolStripMenuItem loadConfigurationToolStripMenuItem;
     private ToolStripMenuItem loadAccountsToolStripMenuItem;
     private ToolStripMenuItem LoadUpdateConfigurationToolStripMenuItem;
-    private TabPage AccountsTabPage;
-    private ListView AccountsListView;
-    private ColumnHeader NameHeader;
-    private ColumnHeader PasswordHeader;
-    private ColumnHeader QuestionHeader;
-    private ColumnHeader AnswerHeader;
-    private ColumnHeader DateHeader;
-    private ColumnHeader PromoHeader;
-    private ColumnHeader ReferrerHeader;
-    private Label GameServerLabel;
+    private StatusStrip statusStrip1;
+    private ToolStripStatusLabel ExistingAccountsLabel;
+    private ToolStripStatusLabel NewAccountsLabel;
+    private ToolStripStatusLabel TicketsGeneratedLabel;
+    private ToolStripStatusLabel BytesSentLabel;
+    private ToolStripStatusLabel BytesReceivedLabel;
+    private ToolStripStatusLabel GameServerLabel;
+    private ToolStripMenuItem configToolStripMenuItem;
+    private ToolStripMenuItem accountsToolStripMenuItem;
 }
