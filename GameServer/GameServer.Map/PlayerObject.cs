@@ -2086,7 +2086,7 @@ public sealed class PlayerObject : MapObject
                 GainExperience(null, vip.VIPExperience);
                 VIPRewardTime = SEngine.CurrentTime.AddMinutes(vip.VIPRewardInterval);
 
-                if (GameItem.DataSheet.TryGetValue(vip.材料宝箱编号, out var value2))
+                if (GameItem.DataSheet.TryGetValue(vip.MaterialChestNumberID, out var value2))
                 {
                     byte b = byte.MaxValue;
                     byte b2 = 0;
@@ -2101,14 +2101,14 @@ public sealed class PlayerObject : MapObject
                     {
                         Enqueue(new GameErrorMessagePacket { ErrorCode = 1793 });
                     }
-                    Inventory[b] = new ItemInfo(value2, Character, 1, b, vip.材料宝箱数量);
+                    Inventory[b] = new ItemInfo(value2, Character, 1, b, vip.MaterialChestQuantity);
                     Enqueue(new SyncItemPacket
                     {
                         Description = Inventory[b].ToArray()
                     });
                 }
 
-                if (GameItem.DataSheet.TryGetValue(vip.装备宝箱编号, out var value3))
+                if (GameItem.DataSheet.TryGetValue(vip.EquipmentChestNumberID, out var value3))
                 {
                     byte b3 = byte.MaxValue;
                     byte b4 = 0;
@@ -2123,7 +2123,7 @@ public sealed class PlayerObject : MapObject
                     {
                         Enqueue(new GameErrorMessagePacket { ErrorCode = 1793 });
                     }
-                    Inventory[b3] = new ItemInfo(value3, Character, 1, b3, vip.装备宝箱数量);
+                    Inventory[b3] = new ItemInfo(value3, Character, 1, b3, vip.EquipmentChestQuantity);
                     Enqueue(new SyncItemPacket
                     {
                         Description = Inventory[b3].ToArray()
