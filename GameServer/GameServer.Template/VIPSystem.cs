@@ -15,10 +15,10 @@ public sealed class VIPSystem
     public int NeedVIPPoints;
     public int VIPIngot;
     public int VIPGoldCoin;
-    public int 装备宝箱编号;
-    public int 材料宝箱编号;
-    public int 装备宝箱数量;
-    public int 材料宝箱数量;
+    public int EquipmentChestNumberID;
+    public int MaterialChestNumberID;
+    public int EquipmentChestQuantity;
+    public int MaterialChestQuantity;
     public int VIPExperience;
     public int VIPRewardInterval;
     public int RequiredLevel;
@@ -46,17 +46,17 @@ public sealed class VIPSystem
                         {
                             var obj = new VIPSystem
                             {
-                                VIPID = reader.GetInt32("VIP编号"),
-                                NeedVIPPoints = reader.GetInt32("VIP所需积分"),
-                                VIPIngot = reader.GetInt32("VIP元宝受益"),
-                                VIPGoldCoin = reader.GetInt32("VIP金币受益"),
-                                装备宝箱编号 = reader.GetInt32("装备宝箱编号"),
-                                材料宝箱编号 = reader.GetInt32("材料宝箱编号"),
-                                装备宝箱数量 = reader.GetInt32("装备宝箱数量"),
-                                材料宝箱数量 = reader.GetInt32("材料宝箱数量"),
-                                VIPExperience = reader.GetInt32("VIP经验收益"),
-                                VIPRewardInterval = reader.GetInt32("VIP收益间隔"),
-                                RequiredLevel = reader.GetInt32("获得收益等级")
+                                VIPID = reader.GetInt32("VIPID"),
+                                NeedVIPPoints = reader.GetInt32("NeedVIPPoints"),
+                                VIPIngot = reader.GetInt32("VIPIngot"),
+                                VIPGoldCoin = reader.GetInt32("VIPGoldCoin"),
+                                EquipmentChestNumberID = reader.GetInt32("EquipmentChestNumberID"),
+                                MaterialChestNumberID = reader.GetInt32("MaterialChestNumberID"),
+                                EquipmentChestQuantity = reader.GetInt32("EquipmentChestQuantity"),
+                                MaterialChestQuantity = reader.GetInt32("MaterialChestQuantity"),
+                                VIPExperience = reader.GetInt32("VIPExperience"),
+                                VIPRewardInterval = reader.GetInt32("VIPRewardInterval"),
+                                RequiredLevel = reader.GetInt32("RequiredLevel")
                             };
                             DataSheet.Add(obj.VIPID, obj);
                         }
@@ -89,10 +89,10 @@ public sealed class VIPSystem
                         NeedVIPPoints = csvReader.GetField<int>("VIP所需积分"),
                         VIPIngot = csvReader.GetField<int>("VIP元宝受益"),
                         VIPGoldCoin = csvReader.GetField<int>("VIP金币受益"),
-                        装备宝箱编号 = csvReader.GetField<int>("装备宝箱编号"),
-                        材料宝箱编号 = csvReader.GetField<int>("材料宝箱编号"),
-                        装备宝箱数量 = csvReader.GetField<int>("装备宝箱数量"),
-                        材料宝箱数量 = csvReader.GetField<int>("材料宝箱数量"),
+                        EquipmentChestNumberID = csvReader.GetField<int>("装备宝箱编号"),
+                        MaterialChestNumberID = csvReader.GetField<int>("材料宝箱编号"),
+                        EquipmentChestQuantity = csvReader.GetField<int>("装备宝箱数量"),
+                        MaterialChestQuantity = csvReader.GetField<int>("材料宝箱数量"),
                         VIPExperience = csvReader.GetField<int>("VIP经验收益"),
                         VIPRewardInterval = csvReader.GetField<int>("VIP收益间隔"),
                         RequiredLevel = csvReader.GetField<int>("获得收益等级")
