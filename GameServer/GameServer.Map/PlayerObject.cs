@@ -6475,6 +6475,35 @@ public sealed class PlayerObject : MapObject
         }
     }
 
+    private bool RepairItem(EquipmentInfo equipment, float rate = 0F)
+    {
+        if (equipment.CanRepair)
+        {
+            rate = Math.Clamp(rate, 0F, 1F);
+            if (rate > 0)
+            {
+                var dmg = ((float)(equipment.MaxDura.V - equipment.Dura.V) * rate);
+                equipment.MaxDura.V = Math.Max(1000, equipment.MaxDura.V - (int)dmg);
+            }
+
+            if (equipment.Grid.V == 0)
+            {
+                if (equipment.Dura.V <= 0)
+                {
+                    BonusStats[equipment] = equipment.Stats;
+                    RefreshStats();
+                }
+            }
+            equipment.Dura.V = equipment.MaxDura.V;
+            Enqueue(new SyncItemPacket
+            {
+                Description = equipment.ToArray()
+            });
+            return true;
+        }
+        return false;
+    }
+
     public void DecreaseWeaponLuck()
     {
         if (Settings.Default.PK死亡幸运开关 == 1 && Equipment.TryGetValue(0, out var v) && v.Luck.V > -9 && Compute.CalculateProbability(0.1f))
@@ -14567,92 +14596,58 @@ public sealed class PlayerObject : MapObject
                     {
                         if (!Inventory.TryGetValue(location, out var v2))
                         {
-                            Enqueue(new GameErrorMessagePacket
-                            {
-                                ErrorCode = 1802
-                            });
+                            Enqueue(new GameErrorMessagePacket { ErrorCode = 1802 });
                             break;
                         }
                         if (!(v2 is EquipmentInfo equipment))
                         {
-                            Enqueue(new GameErrorMessagePacket
-                            {
-                                ErrorCode = 1814
-                            });
-                            break;
-                        }
-                        if (!equipment.CanRepair)
-                        {
-                            Enqueue(new GameErrorMessagePacket
-                            {
-                                ErrorCode = 1814
-                            });
+                            Enqueue(new GameErrorMessagePacket { ErrorCode = 1814 });
                             break;
                         }
                         if (Gold < equipment.RepairCost)
                         {
-                            Enqueue(new GameErrorMessagePacket
-                            {
-                                ErrorCode = 1821
-                            });
+                            Enqueue(new GameErrorMessagePacket { ErrorCode = 1821 });
                             break;
                         }
-                        Gold -= equipment.RepairCost;
-                        Enqueue(new 同步货币数量
+
+                        if (RepairItem(equipment, 0.035f))
                         {
-                            Description = 全部货币描述()
-                        });
-                        equipment.MaxDura.V = Math.Max(1000, equipment.MaxDura.V - 334);
-                        equipment.Dura.V = equipment.MaxDura.V;
-                        Enqueue(new SyncItemPacket
-                        {
-                            Description = equipment.ToArray()
-                        });
+                            Gold -= equipment.RepairCost;
+                            Enqueue(new 同步货币数量
+                            {
+                                Description = 全部货币描述()
+                            });
+                        }
+                        else
+                            Enqueue(new GameErrorMessagePacket { ErrorCode = 1814 });
+
                         break;
                     }
                 case 0:
                     {
                         if (!Equipment.TryGetValue(location, out var v))
                         {
-                            Enqueue(new GameErrorMessagePacket
-                            {
-                                ErrorCode = 1802
-                            });
-                            break;
-                        }
-                        if (!v.CanRepair)
-                        {
-                            Enqueue(new GameErrorMessagePacket
-                            {
-                                ErrorCode = 1814
-                            });
+                            Enqueue(new GameErrorMessagePacket { ErrorCode = 1802 });
                             break;
                         }
                         if (Gold < v.RepairCost)
                         {
-                            Enqueue(new GameErrorMessagePacket
-                            {
-                                ErrorCode = 1821
-                            });
+                            Enqueue(new GameErrorMessagePacket { ErrorCode = 1821 });
                             break;
                         }
-                        Gold -= v.RepairCost;
-                        Enqueue(new 同步货币数量
+
+                        if (RepairItem(v, 0.035f))
                         {
-                            Description = 全部货币描述()
-                        });
-                        v.MaxDura.V = Math.Max(1000, v.MaxDura.V - (int)((float)(v.MaxDura.V - v.Dura.V) * 0.035f));
-                        if (v.Dura.V <= 0)
-                        {
-                            BonusStats[v] = v.Stats;
-                            RefreshStats();
+                            Gold -= v.RepairCost;
+                            Enqueue(new 同步货币数量
+                            {
+                                Description = 全部货币描述()
+                            });
+                            Enqueue(new 修理物品应答());
                         }
-                        v.Dura.V = v.MaxDura.V;
-                        Enqueue(new SyncItemPacket
-                        {
-                            Description = v.ToArray()
-                        });
-                        Enqueue(new 修理物品应答());
+                        else
+                            Enqueue(new GameErrorMessagePacket { ErrorCode = 1814 });
+
                         break;
                     }
             }
@@ -14678,33 +14673,25 @@ public sealed class PlayerObject : MapObject
         }
         else if (CurrentMap == CurrentNPC.CurrentMap && GetDistance(CurrentNPC) <= 12)
         {
-            if (Gold < Equipment.Values.Sum((EquipmentInfo O) => O.CanRepair ? O.RepairCost : 0))
+            var cost = Equipment.Values.Sum(x => x.CanRepair ? x.RepairCost : 0);
+            if (Gold < cost)
             {
                 Enqueue(new GameErrorMessagePacket { ErrorCode = 1821 });
                 return;
             }
+
             foreach (EquipmentInfo value in Equipment.Values)
+                RepairItem(value, 0.035f);
+
+            if (cost > 0)
             {
-                if (value.CanRepair)
+                Gold -= cost;
+                Enqueue(new 同步货币数量
                 {
-                    Gold -= value.RepairCost;
-                    Enqueue(new 同步货币数量
-                    {
-                        Description = 全部货币描述()
-                    });
-                    value.MaxDura.V = Math.Max(1000, value.MaxDura.V - (int)((float)(value.MaxDura.V - value.Dura.V) * 0.035f));
-                    if (value.Dura.V <= 0)
-                    {
-                        BonusStats[value] = value.Stats;
-                        RefreshStats();
-                    }
-                    value.Dura.V = value.MaxDura.V;
-                    Enqueue(new SyncItemPacket
-                    {
-                        Description = value.ToArray()
-                    });
-                }
+                    Description = 全部货币描述()
+                });
             }
+
             Enqueue(new 修理物品应答());
         }
         else
@@ -14737,32 +14724,23 @@ public sealed class PlayerObject : MapObject
                         Enqueue(new GameErrorMessagePacket { ErrorCode = 1814 });
                         break;
                     }
-                    if (!equipment.CanRepair)
-                    {
-                        Enqueue(new GameErrorMessagePacket { ErrorCode = 1814 });
-                        break;
-                    }
                     if (Gold < equipment.SpecialRepairCost)
                     {
                         Enqueue(new GameErrorMessagePacket { ErrorCode = 1821 });
                         break;
                     }
-                    Gold -= equipment.SpecialRepairCost;
-                    Enqueue(new 同步货币数量
+
+                    if (RepairItem(equipment, 0))
                     {
-                        Description = 全部货币描述()
-                    });
-                    if (equipment.Dura.V <= 0)
-                    {
-                        BonusStats[equipment] = equipment.Stats;
-                        RefreshStats();
+                        Gold -= equipment.SpecialRepairCost;
+                        Enqueue(new 同步货币数量
+                        {
+                            Description = 全部货币描述()
+                        });
                     }
-                    equipment.Dura.V = equipment.MaxDura.V;
-                    Enqueue(new SyncItemPacket
-                    {
-                        Description = equipment.ToArray()
-                    });
-                    Enqueue(new 修理物品应答());
+                    else
+                        Enqueue(new GameErrorMessagePacket { ErrorCode = 1814 });
+
                     break;
                 }
             case 0:
@@ -14772,26 +14750,24 @@ public sealed class PlayerObject : MapObject
                         Enqueue(new GameErrorMessagePacket { ErrorCode = 1802 });
                         break;
                     }
-                    if (!v.CanRepair)
-                    {
-                        Enqueue(new GameErrorMessagePacket { ErrorCode = 1814 });
-                        break;
-                    }
                     if (Gold < v.SpecialRepairCost)
                     {
                         Enqueue(new GameErrorMessagePacket { ErrorCode = 1821 });
                         break;
                     }
-                    Gold -= v.SpecialRepairCost;
-                    Enqueue(new 同步货币数量
+
+                    if (RepairItem(v, 0))
                     {
-                        Description = 全部货币描述()
-                    });
-                    v.Dura.V = v.MaxDura.V;
-                    Enqueue(new SyncItemPacket
-                    {
-                        Description = v.ToArray()
-                    });
+                        Gold -= v.SpecialRepairCost;
+                        Enqueue(new 同步货币数量
+                        {
+                            Description = 全部货币描述()
+                        });
+                        Enqueue(new 修理物品应答());
+                    }
+                    else
+                        Enqueue(new GameErrorMessagePacket { ErrorCode = 1814 });
+
                     break;
                 }
         }
@@ -14802,33 +14778,25 @@ public sealed class PlayerObject : MapObject
         if (Dead || StallState > 0 || TradeState >= 3)
             return;
 
-        if (Gold < Equipment.Values.Sum(x => x.CanRepair ? x.SpecialRepairCost : 0))
+        var cost = Equipment.Values.Sum(x => x.CanRepair ? x.SpecialRepairCost : 0);
+        if (Gold < cost)
         {
             Enqueue(new GameErrorMessagePacket { ErrorCode = 1821 });
             return;
         }
 
         foreach (var equipment in Equipment.Values)
+            RepairItem(equipment, 0);
+
+        if (cost > 0)
         {
-            if (equipment.CanRepair)
+            Gold -= cost;
+            Enqueue(new 同步货币数量
             {
-                Gold -= equipment.SpecialRepairCost;
-                Enqueue(new 同步货币数量
-                {
-                    Description = 全部货币描述()
-                });
-                if (equipment.Dura.V <= 0)
-                {
-                    BonusStats[equipment] = equipment.Stats;
-                    RefreshStats();
-                }
-                equipment.Dura.V = equipment.MaxDura.V;
-                Enqueue(new SyncItemPacket
-                {
-                    Description = equipment.ToArray()
-                });
-            }
+                Description = 全部货币描述()
+            });
         }
+
         Enqueue(new 修理物品应答());
     }
 
@@ -23099,7 +23067,7 @@ public sealed class PlayerObject : MapObject
             return;
         }
         int num = ((quantity == 1 || value2.PersistType != PersistentItemType.Stack) ? 1 : Math.Min(quantity, value2.MaxDura));
-        GameStoreItem 游戏商品 = value.Products[location];
+        GameStoreItem product = value.Products[location];
         int num2 = -1;
         byte b = 0;
         while (b < InventorySize)
@@ -23120,14 +23088,14 @@ public sealed class PlayerObject : MapObject
             });
             return;
         }
-        int num3 = 游戏商品.Price * num;
-        if (游戏商品.CurrencyModel <= 19)
+        int num3 = product.Price * num;
+        if (product.CurrencyModel <= 19)
         {
-            if (!Enum.TryParse<CurrencyType>(游戏商品.CurrencyModel.ToString(), out var result) || !Enum.IsDefined(typeof(CurrencyType), result))
+            if (!Enum.TryParse<CurrencyType>(product.CurrencyModel.ToString(), out var result) || !Enum.IsDefined(typeof(CurrencyType), result))
             {
                 return;
             }
-            if (Character.Currencies[(CurrencyType)游戏商品.CurrencyModel] < num3)
+            if (Character.Currencies[(CurrencyType)product.CurrencyModel] < num3)
             {
                 Enqueue(new GameErrorMessagePacket
                 {
@@ -23135,7 +23103,7 @@ public sealed class PlayerObject : MapObject
                 });
                 return;
             }
-            Character.Currencies[(CurrencyType)游戏商品.CurrencyModel] -= num3;
+            Character.Currencies[(CurrencyType)product.CurrencyModel] -= num3;
             Enqueue(new 同步货币数量
             {
                 Description = 全部货币描述()
@@ -23143,7 +23111,7 @@ public sealed class PlayerObject : MapObject
         }
         else
         {
-            if (!FindItem(num3, 游戏商品.CurrencyModel, out var 物品列表))
+            if (!FindItem(num3, product.CurrencyModel, out var 物品列表))
             {
                 return;
             }
