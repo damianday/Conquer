@@ -2,11 +2,10 @@
 	<PropertyGroup>
 		<TargetFramework>net8.0-windows</TargetFramework>
 		<OutputType>WinExe</OutputType>
-		<StartupObject>Launcher.Program</StartupObject>
 		<ApplicationVersion>1.0.0.0</ApplicationVersion>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<UseWindowsForms>true</UseWindowsForms>
-		<PlatformTarget>x64</PlatformTarget>
+		<ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
 		<BaseOutputPath>..\Build\Launcher\</BaseOutputPath>
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
@@ -18,12 +17,14 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
 		<AssemblyName>Mir3DLauncher</AssemblyName>
 		<ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+		<StartupObject>Launcher.Program</StartupObject>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="SunnyUI" Version="3.6.6" />
+		<PackageReference Include="SunnyUI" Version="3.2.1" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<ProjectReference Include="..\GamePackets\GamePackets.csproj" />
 	</ItemGroup>
