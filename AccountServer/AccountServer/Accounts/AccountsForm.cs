@@ -29,9 +29,11 @@ namespace AccountServer.AccountServer.Accounts
             foreach (var accountInfo in SAccounts.Accounts.Values)
             {
                 var item = new ListViewItem(accountInfo.AccountName);
-                item.SubItems.Add(accountInfo.Password);
+                string hiddenPassword = new string('*', accountInfo.Password.Length);
+                string hiddenSecurityAnswer = new string('*', accountInfo.SecurityAnswer.Length);
+                item.SubItems.Add(hiddenPassword);
                 item.SubItems.Add(accountInfo.SecurityQuestion);
-                item.SubItems.Add(accountInfo.SecurityAnswer);
+                item.SubItems.Add(hiddenSecurityAnswer);
                 item.SubItems.Add(accountInfo.CreationDate.ToString("yyyy-MM-dd HH:mm:ss"));
                 item.SubItems.Add(accountInfo.PromoCode);
                 item.SubItems.Add(accountInfo.ReferrerCode);
@@ -78,6 +80,7 @@ namespace AccountServer.AccountServer.Accounts
             if (AccountsListView.SelectedItems.Count > 0)
             {
                 var selectedItem = AccountsListView.SelectedItems[0];
+
                 AccountIDBox.Text = selectedItem.SubItems[0].Text; // Account Name
                 PasswordBox.Text = selectedItem.SubItems[1].Text; // Password
                 QuestionBox.Text = selectedItem.SubItems[2].Text; // Security Question
@@ -142,6 +145,39 @@ namespace AccountServer.AccountServer.Accounts
             else
             {
                 MessageBox.Show("Please select an account to delete.", "Delete Account", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void ArchiveAccountButton_Click(object sender, EventArgs e)
+        {
+            if (AccountsListView.SelectedItems.Count > 0)
+            {
+                var selectedItem = AccountsListView.SelectedItems[0];
+                string accountName = selectedItem.SubItems[0].Text;
+                string filePath = Path.Combine(SAccounts.AccountDirectory, $"{accountName}.txt");
+                string archiveFolderPath = Path.Combine(SAccounts.AccountDirectory, "Archived");
+
+                try
+                {
+                    if (!Directory.Exists(archiveFolderPath))
+                    {
+                        Directory.CreateDirectory(archiveFolderPath);
+                    }
+
+                    string archivedFilePath = Path.Combine(archiveFolderPath, $"{accountName}.txt");
+                    File.Move(filePath, archivedFilePath);
+                    MessageBox.Show($"Account '{accountName}' has been successfully archived.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    AccountsListView.Items.Remove(selectedItem);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error archiving account: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select an account to archive.", "Archive Account", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
     }
