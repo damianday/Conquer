@@ -39,6 +39,7 @@
             ReferrerHeader = new System.Windows.Forms.ColumnHeader();
             AccountIDLabel = new System.Windows.Forms.Label();
             panel1 = new System.Windows.Forms.Panel();
+            ArchiveAccountButton = new System.Windows.Forms.Button();
             DeleteAccountButton = new System.Windows.Forms.Button();
             CreationDateBox = new System.Windows.Forms.TextBox();
             ReferrerCodeBox = new System.Windows.Forms.TextBox();
@@ -116,6 +117,7 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(ArchiveAccountButton);
             panel1.Controls.Add(DeleteAccountButton);
             panel1.Controls.Add(CreationDateBox);
             panel1.Controls.Add(ReferrerCodeBox);
@@ -135,6 +137,16 @@
             panel1.Name = "panel1";
             panel1.Size = new System.Drawing.Size(725, 236);
             panel1.TabIndex = 3;
+            // 
+            // ArchiveAccountButton
+            // 
+            ArchiveAccountButton.Location = new System.Drawing.Point(282, 53);
+            ArchiveAccountButton.Name = "ArchiveAccountButton";
+            ArchiveAccountButton.Size = new System.Drawing.Size(113, 23);
+            ArchiveAccountButton.TabIndex = 17;
+            ArchiveAccountButton.Text = "Archive Account";
+            ArchiveAccountButton.UseVisualStyleBackColor = true;
+            ArchiveAccountButton.Click += ArchiveAccountButton_Click;
             // 
             // DeleteAccountButton
             // 
@@ -259,7 +271,7 @@
             Controls.Add(AccountsListView);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             Name = "AccountsForm";
-            Text = "AccountsForm";
+            Text = "Accounts";
             FormClosing += AccountsForm_FormClosing;
             FormClosed += AccountsForm_FormClosed;
             Load += AccountsForm_Load;
@@ -294,5 +306,6 @@
         private System.Windows.Forms.Label CreationDateLabel;
         private System.Windows.Forms.TextBox CreationDateBox;
         private System.Windows.Forms.Button DeleteAccountButton;
+        private System.Windows.Forms.Button ArchiveAccountButton;
     }
 }
