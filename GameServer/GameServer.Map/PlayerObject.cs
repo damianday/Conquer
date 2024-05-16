@@ -1273,9 +1273,9 @@ public sealed class PlayerObject : MapObject
         {
             Locked = false // TODO: We should save this..
         });
-        Enqueue(new 同步角色属性
+        Enqueue(new SyncCharacterStatsPacket
         {
-            Description = 玩家属性描述()
+            Description = PlayerStatsDescription()
         });
         Enqueue(new 同步威望列表());
         Enqueue(new 同步客户变量
@@ -27734,25 +27734,26 @@ public sealed class PlayerObject : MapObject
 
 
     #region Descriptions
-    public byte[] 玩家属性描述()
+    public byte[] PlayerStatsDescription()
     {
-        using MemoryStream memoryStream = new MemoryStream();
-        using BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
-        for (byte b = 0; b <= 100; b = (byte)(b + 1))
+        using var ms = new MemoryStream();
+        using var writer = new BinaryWriter(ms);
+
+        for (byte b = 0; b <= (byte)Stat.MaxStat; b++)
         {
-            if (Enum.TryParse<Stat>(b.ToString(), out var result) && Enum.IsDefined(typeof(Stat), result))
+            if (Enum.TryParse<Stat>(b.ToString(), out var stat) && Enum.IsDefined(typeof(Stat), stat))
             {
-                binaryWriter.Write(b);
-                binaryWriter.Write(this[result]);
-                binaryWriter.Write(new byte[2]);
+                writer.Write(b);
+                writer.Write(this[stat]);
+                writer.Write(new byte[2]);
             }
             else
             {
-                binaryWriter.Write(b);
-                binaryWriter.Write(new byte[6]);
+                writer.Write(b);
+                writer.Write(new byte[6]);
             }
         }
-        return memoryStream.ToArray();
+        return ms.ToArray();
     }
 
     public byte[] 全部技能描述()
