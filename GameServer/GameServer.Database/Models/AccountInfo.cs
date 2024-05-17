@@ -44,7 +44,7 @@ public sealed class AccountInfo : DBObject
 
     public override string ToString() => AccountName?.V;
 
-    public byte[] 角色列表描述()
+    public byte[] AccountCharacterList()
     {
         using var ms = new MemoryStream();
         using var writer = new BinaryWriter(ms);
@@ -157,9 +157,9 @@ public sealed class AccountInfo : DBObject
         {
             整数变量 = 1
         });
-        Enqueue(new 返回角色列表
+        Enqueue(new CharacterSelectPacket
         {
-            Description = 角色列表描述()
+            Description = AccountCharacterList()
         });
     }
 
@@ -168,7 +168,7 @@ public sealed class AccountInfo : DBObject
         conn.Close(new Exception("客户端返回登录."));
     }
 
-    public void NewCharacter(SConnection conn, 客户创建角色 P)
+    public void NewCharacter(SConnection conn, CreateCharacterPacket P)
     {
         if (Session.CharacterInfoTable.DataSheet.Count >= 1_000_000)
         {
@@ -216,7 +216,7 @@ public sealed class AccountInfo : DBObject
             return;
         }
 
-        Enqueue(new 角色创建成功
+        Enqueue(new CreateCharacterSuccessPacket
         {
             Description = new CharacterInfo(this, P.Name, race, gender, hairStyle, hairColor, faceStyle).RoleDescription()
         });
@@ -307,7 +307,7 @@ public sealed class AccountInfo : DBObject
         }
     }
 
-    public void EnterGame(SConnection conn, 客户进入游戏 P)
+    public void EnterGame(SConnection conn, EnterGamePacket P)
     {
         if (Session.CharacterInfoTable.DataSheet.TryGetValue(P.CharacterID, out var value) && value is CharacterInfo character && Characters.Contains(character))
         {
@@ -355,9 +355,9 @@ public sealed class AccountInfo : DBObject
             ObjectID = conn.Player.ObjectID
         });
         conn.Player.Disconnect();
-        Enqueue(new 返回角色列表
+        Enqueue(new CharacterSelectPacket
         {
-            Description = 角色列表描述()
+            Description = AccountCharacterList()
         });
     }
 }

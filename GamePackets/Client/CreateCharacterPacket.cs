@@ -1,7 +1,7 @@
 namespace GamePackets.Client;
 
 [PacketInfo(Source = PacketSource.Client, ID = 1002, Length = 40, Description = "创建角色")]
-public sealed class 客户创建角色 : GamePacket
+public sealed class CreateCharacterPacket : GamePacket
 {
     [FieldAttribute(Position = 2, Length = 32)]
     public string Name;

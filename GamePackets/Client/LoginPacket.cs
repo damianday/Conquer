@@ -1,7 +1,7 @@
 namespace GamePackets.Client;
 
 [PacketInfo(Source = PacketSource.Client, ID = 1001, Length = 164, Description = "客户登录")]
-public sealed class 客户账号登录 : GamePacket
+public sealed class LoginPacket : GamePacket
 {
     [FieldAttribute(Position = 72, Length = 38)]
     public string LoginTicket;
@@ -14,7 +14,7 @@ public sealed class 客户账号登录 : GamePacket
 
     public override bool Encrypted { get; set; }
 
-    public 客户账号登录()
+    public LoginPacket()
     {
         Encrypted = false;
     }

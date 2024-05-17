@@ -276,7 +276,7 @@ namespace Launcher
             if (LoggedIn)
             {
                 LoggedIn = false;
-                Network.Instance.SendPacket(new AccountLogOutPacket { });
+                Network.Instance.SendPacket(new LauncherLogoutPacket { });
             }
 
             UIUnlock(null, null);
@@ -318,7 +318,7 @@ namespace Launcher
                 LoginPassword = AccountPasswordTextBox.Text;
 
                 var str = AccountTextBox.Text + '/' + AccountPasswordTextBox.Text;
-                Network.Instance.SendPacket(new AccountLogInPacket
+                Network.Instance.SendPacket(new LauncherLoginPacket
                 {
                     LoginInformation = Encoding.UTF8.GetBytes(str)
                 });
@@ -357,7 +357,7 @@ namespace Launcher
             if (LoggedIn)
             {
                 LoggedIn = false;
-                Network.Instance.SendPacket(new AccountLogOutPacket { });
+                Network.Instance.SendPacket(new LauncherLogoutPacket { });
             }
 
             Environment.Exit(Environment.ExitCode);
@@ -455,7 +455,7 @@ namespace Launcher
                     Register_QuestionTextBox.Text + '/' + Register_SecretAnswerTextBox.Text + '/' +
                     Register_ReferralCodeTextBox.Text;
 
-                Network.Instance.SendPacket(new AccountRegisterPacket
+                Network.Instance.SendPacket(new LauncherRegisterPacket
                 {
                     RegistrationInformation = Encoding.UTF8.GetBytes(str)
                 });
@@ -531,7 +531,7 @@ namespace Launcher
 
                 var str = Modify_AccountNameTextBox.Text + '/' + Modify_PasswordTextBox.Text + '/' +
                     Modify_QuestionTextBox.Text + '/' + Modify_AnswerTextBox.Text;
-                Network.Instance.SendPacket(new AccountChangePasswordPacket
+                Network.Instance.SendPacket(new LauncherChangePasswordPacket
                 {
                     AccountInformation = Encoding.UTF8.GetBytes(str)
                 });
@@ -556,7 +556,7 @@ namespace Launcher
             else
             {
                 var str = LoginAccount + '/' + start_selected_zone.Text;
-                Network.Instance.SendPacket(new AccountStartGamePacket
+                Network.Instance.SendPacket(new LauncherStartGamePacket
                 {
                     LoginInformation = Encoding.UTF8.GetBytes(str)
                 });

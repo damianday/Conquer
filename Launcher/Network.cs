@@ -215,53 +215,53 @@ namespace Launcher
                 BeginSend(data);
         }
 
-        public void Process(AccountRegisterSuccessPacket P)
+        public void Process(LauncherRegisterSuccessPacket P)
         {
             MainForm.CurrentForm.AccountRegisterSuccessUpdate();
         }
 
-        public void Process(AccountRegisterFailPacket P)
+        public void Process(LauncherRegisterFailPacket P)
         {
             var message = Encoding.UTF8.GetString(P.ErrorMessage);
             MainForm.CurrentForm.AccountRegisterFailUpdate(message);
         }
 
-        public void Process(AccountChangePasswordSuccessPacket P)
+        public void Process(LauncherChangePasswordSuccessPacket P)
         {
             MainForm.CurrentForm.AccountChangePasswordSuccessUpdate();
         }
 
-        public void Process(AccountChangePasswordFailPacket P)
+        public void Process(LauncherChangePasswordFailPacket P)
         {
             var message = Encoding.UTF8.GetString(P.ErrorMessage);
             MainForm.CurrentForm.AccountChangePasswordFailUpdate(message);
         }
 
-        public void Process(AccountLogInSuccessPacket P)
+        public void Process(LauncherLoginSuccessPacket P)
         {
             var data = Encoding.UTF8.GetString(P.ServerListInformation);
             MainForm.CurrentForm.AccountLogInSuccessUpdate(data);
         }
 
-        public void Process(AccountLogInFailPacket P)
+        public void Process(LauncherLoginFailPacket P)
         {
             var message = Encoding.UTF8.GetString(P.ErrorMessage);
             MainForm.CurrentForm.AccountLogInFailUpdate(message);
         }
 
-        public void Process(AccountLogOutSuccessPacket P)
+        public void Process(LauncherLogoutSuccessPacket P)
         {
             var message = Encoding.UTF8.GetString(P.ErrorMessage);
             MainForm.CurrentForm.AccountLogOutSuccessUpdate(message);
         }
 
-        public void Process(AccountStartGameSuccessPacket P)
+        public void Process(LauncherStartGameSuccessPacket P)
         {
             var ticket = Encoding.UTF8.GetString(P.Ticket);
             MainForm.CurrentForm.AccountStartGameSuccessUpdate(ticket);
         }
 
-        public void Process(AccountStartGameFailPacket P)
+        public void Process(LauncherStartGameFailPacket P)
         {
             var message = Encoding.UTF8.GetString(P.ErrorMessage);
             MainForm.CurrentForm.AccountStartGameFailUpdate(message);

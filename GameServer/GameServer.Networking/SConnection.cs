@@ -2557,7 +2557,7 @@ public sealed class SConnection
         }
     }
 
-    public void Process(客户账号登录 P)
+    public void Process(LoginPacket P)
     {
         if (Stage == GameStage.Login)
         {
@@ -2598,7 +2598,7 @@ public sealed class SConnection
         }
     }
 
-    public void Process(客户创建角色 P)
+    public void Process(CreateCharacterPacket P)
     {
         if (Stage != GameStage.SelectPlayer)
         {
@@ -2634,7 +2634,7 @@ public sealed class SConnection
         }
     }
 
-    public void Process(客户进入游戏 P)
+    public void Process(EnterGamePacket P)
     {
         if (Stage != GameStage.SelectPlayer)
         {

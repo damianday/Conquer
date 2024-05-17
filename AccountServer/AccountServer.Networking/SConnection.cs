@@ -201,17 +201,17 @@ public sealed class SConnection
 	{
 	}
 
-	public void Process(AccountLogOutPacket P)
+	public void Process(LauncherLogoutPacket P)
 	{
 		LoggedIn = false;
 		AccountName = string.Empty;
-		SendPacket(new AccountLogOutSuccessPacket
+		SendPacket(new LauncherLogoutSuccessPacket
 		{
 			ErrorMessage = Encoding.UTF8.GetBytes("Successfully logged out")
 		});
 	}
 
-	public void Process(AccountChangePasswordPacket P)
+	public void Process(LauncherChangePasswordPacket P)
 	{
 		string[] array = Encoding.UTF8.GetString(P.AccountInformation).Split('/');
 		if (array.Length == 4)
@@ -223,7 +223,7 @@ public sealed class SConnection
 
 			if (password.Length <= 1 || password.Length > 18)
 			{
-				SendPacket(new AccountChangePasswordFailPacket
+				SendPacket(new LauncherChangePasswordFailPacket
 				{
 					ErrorMessage = Encoding.UTF8.GetBytes("The password length is incorrect")
 				});
@@ -233,7 +233,7 @@ public sealed class SConnection
 			var account = SAccounts.Find(name);
 			if (account == null)
 			{
-				SendPacket(new AccountChangePasswordFailPacket
+				SendPacket(new LauncherChangePasswordFailPacket
 				{
 					ErrorMessage = Encoding.UTF8.GetBytes("The account does not exist")
 				});
@@ -241,7 +241,7 @@ public sealed class SConnection
 			}
 			if (question != account.SecurityQuestion)
 			{
-				SendPacket(new AccountChangePasswordFailPacket
+				SendPacket(new LauncherChangePasswordFailPacket
 				{
 					ErrorMessage = Encoding.UTF8.GetBytes("Password issue is incorrect")
 				});
@@ -249,7 +249,7 @@ public sealed class SConnection
 			}
 			if (answer != account.SecurityAnswer)
 			{
-				SendPacket(new AccountChangePasswordFailPacket
+				SendPacket(new LauncherChangePasswordFailPacket
 				{
 					ErrorMessage = Encoding.UTF8.GetBytes("The secret answer is incorrect")
 				});
@@ -257,12 +257,12 @@ public sealed class SConnection
 			}
 			account.Password = password;
 			SAccounts.SaveAccount(account);
-			SendPacket(new AccountChangePasswordSuccessPacket());
+			SendPacket(new LauncherChangePasswordSuccessPacket());
 			SMain.AddLogMessage("Password change successful! Account: " + name);
 		}
 	}
 
-	public void Process(AccountRegisterPacket P)
+	public void Process(LauncherRegisterPacket P)
 	{
 		string[] array = Encoding.UTF8.GetString(P.RegistrationInformation).Split('/');
 		if (array.Length == 5)
@@ -277,7 +277,7 @@ public sealed class SConnection
 
 			if (name.Length <= 5 || name.Length > 12)
 			{
-				SendPacket(new AccountRegisterFailPacket
+				SendPacket(new LauncherRegisterFailPacket
 				{
 					ErrorMessage = Encoding.UTF8.GetBytes("The username length is incorrect")
 				});
@@ -285,7 +285,7 @@ public sealed class SConnection
 			}
 			if (password.Length <= 5 || password.Length > 18)
 			{
-				SendPacket(new AccountRegisterFailPacket
+				SendPacket(new LauncherRegisterFailPacket
 				{
 					ErrorMessage = Encoding.UTF8.GetBytes("The password length is incorrect")
 				});
@@ -293,7 +293,7 @@ public sealed class SConnection
 			}
 			if (question.Length <= 1 || question.Length > 18)
 			{
-				SendPacket(new AccountRegisterFailPacket
+				SendPacket(new LauncherRegisterFailPacket
 				{
 					ErrorMessage = Encoding.UTF8.GetBytes("The security question length is incorrect")
 				});
@@ -301,7 +301,7 @@ public sealed class SConnection
 			}
 			if (answer.Length <= 1 || answer.Length > 18)
 			{
-				SendPacket(new AccountRegisterFailPacket
+				SendPacket(new LauncherRegisterFailPacket
 				{
 					ErrorMessage = Encoding.UTF8.GetBytes("The secret answer length is incorrect")
 				});
@@ -309,7 +309,7 @@ public sealed class SConnection
 			}
 			if (!string.IsNullOrEmpty(referrerCode) && (referrerCode.Length > 4 || !SAccounts.ReferrerExists(referrerCode)))
 			{
-				SendPacket(new AccountRegisterFailPacket
+				SendPacket(new LauncherRegisterFailPacket
 				{
 					ErrorMessage = Encoding.UTF8.GetBytes("If the promotion code is wrong, you can register directly without filling it in")
 				});
@@ -317,7 +317,7 @@ public sealed class SConnection
 			}
 			if (!Regex.IsMatch(name, "^[a-zA-Z]+.*$"))
 			{
-				SendPacket(new AccountRegisterFailPacket
+				SendPacket(new LauncherRegisterFailPacket
 				{
 					ErrorMessage = Encoding.UTF8.GetBytes("The username is formatted incorrectly")
 				});
@@ -325,7 +325,7 @@ public sealed class SConnection
 			}
 			if (!Regex.IsMatch(name, "^[a-zA-Z_][A-Za-z0-9_]*$"))
 			{
-				SendPacket(new AccountRegisterFailPacket
+				SendPacket(new LauncherRegisterFailPacket
 				{
 					ErrorMessage = Encoding.UTF8.GetBytes("The username is formatted incorrectly")
 				});
@@ -333,14 +333,14 @@ public sealed class SConnection
 			}
 			if (SAccounts.AccountExists(name))
 			{
-				SendPacket(new AccountRegisterFailPacket
+				SendPacket(new LauncherRegisterFailPacket
 				{
 					ErrorMessage = Encoding.UTF8.GetBytes("The username already exists")
 				});
 				return;
 			}
 			SAccounts.AddAccount(new AccountInfo(name, password, question, answer, referrerCode));
-			SendPacket(new AccountRegisterSuccessPacket());
+			SendPacket(new LauncherRegisterSuccessPacket());
 			SMain.AddLogMessage("Account registration is successful! Account: " + name);
 		}
 	}
@@ -365,7 +365,7 @@ public sealed class SConnection
 		}
 	}
 
-	public void Process(AccountLogInPacket P)
+	public void Process(LauncherLoginPacket P)
 	{
 		string[] array = Encoding.UTF8.GetString(P.LoginInformation).Split('/');
 		if (array.Length == 2)
@@ -376,7 +376,7 @@ public sealed class SConnection
 			var account = SAccounts.Find(name);
 			if (account == null || password != account.Password)
 			{
-				SendPacket(new AccountLogInFailPacket
+				SendPacket(new LauncherLoginFailPacket
 				{
 					ErrorMessage = Encoding.UTF8.GetBytes("Wrong username or password")
 				});
@@ -384,7 +384,7 @@ public sealed class SConnection
 			}
 			LoggedIn = true;
 			AccountName = name;
-			SendPacket(new AccountLogInSuccessPacket
+			SendPacket(new LauncherLoginSuccessPacket
 			{
 				ServerListInformation = Encoding.UTF8.GetBytes(SMain.PublicServerInfo)
 			});
@@ -417,7 +417,7 @@ public sealed class SConnection
 		Task.Run(delegate
 		{
 			var data = SMS.Send(phone, code);
-			SendPacket(new AccountRegisterFailPacket
+			SendPacket(new LauncherRegisterFailPacket
 			{
 				ErrorMessage = Encoding.UTF8.GetBytes(data)
 			});
@@ -456,7 +456,7 @@ public sealed class SConnection
 		}
 	}
 
-	public void Process(AccountStartGamePacket P)
+	public void Process(LauncherStartGamePacket P)
 	{
 		var array = Encoding.UTF8.GetString(P.LoginInformation).Split('/');
 		if (LoggedIn && array.Length == 2)
@@ -466,7 +466,7 @@ public sealed class SConnection
 
 			if (server == null)
 			{
-				SendPacket(new AccountStartGameFailPacket
+				SendPacket(new LauncherStartGameFailPacket
 				{
 					ErrorMessage = Encoding.UTF8.GetBytes("No server found")
 				});
@@ -479,7 +479,7 @@ public sealed class SConnection
 			{
 				SEngine.SendTicketToServer(server.TicketAddress, ticket, AccountName, account.PromoCode, account.ReferrerCode);
 
-				SendPacket(new AccountStartGameSuccessPacket
+				SendPacket(new LauncherStartGameSuccessPacket
 				{
 					Ticket = Encoding.UTF8.GetBytes(ticket)
 				});
@@ -489,7 +489,7 @@ public sealed class SConnection
 		}
 		else
 		{
-			SendPacket(new AccountStartGameFailPacket
+			SendPacket(new LauncherStartGameFailPacket
 			{
 				ErrorMessage = Encoding.UTF8.GetBytes("Not logged in yet!")
 			});
