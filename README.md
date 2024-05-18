@@ -80,6 +80,7 @@ To publish on the internet, you must open ports 7000 and 8701 on your router
 
 # Special Thanks
 
+* DontReallyMind
 * CraZyEriK
 * Wincha
 * Lilcooldoode
