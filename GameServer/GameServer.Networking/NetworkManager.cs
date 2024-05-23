@@ -262,7 +262,7 @@ public static class NetworkManager
             return;
 
         var array = str.Split(';');
-        if (array.Length == 4)
+        if (array.Length >= 4)
         {
             var ticket = array[0];
             var accountName = array[1];

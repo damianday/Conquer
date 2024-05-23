@@ -13,6 +13,7 @@ public sealed class AccountInfo
 	public string PromoCode;
 	public string ReferrerCode;
 	public List<string> Referrerals = new List<string>();
+	public string UUID;
 
 
 	public AccountInfo(string name, string password, string question, string answer, string referrerCode)
@@ -23,5 +24,6 @@ public sealed class AccountInfo
 		SecurityAnswer = answer;
 		CreationDate = DateTime.UtcNow;
 		ReferrerCode = referrerCode;
-	}
+		UUID = Guid.NewGuid().ToString();
+    }
 }

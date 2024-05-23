@@ -171,11 +171,11 @@ public static class SEngine
 		}
 	}
 
-	public static void SendTicketToServer(IPEndPoint address, string ticket, string account, string promoCode, string referralCode)
+	public static void SendTicketToServer(IPEndPoint address, string ticket, string account, string promoCode, string referralCode, string uuid)
 	{
 		try
 		{
-			var data = Encoding.UTF8.GetBytes(ticket + ";" + account + ";" + promoCode + ";" + referralCode);
+			var data = Encoding.UTF8.GetBytes(ticket + ";" + account + ";" + promoCode + ";" + referralCode + ";" + uuid);
 			if (SendData(address, data))
 				SMain.TotalTickets++;
 			else

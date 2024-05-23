@@ -473,11 +473,12 @@ public sealed class SConnection
 				return;
 			}
 
-			string ticket = SAccounts.GenerateTicket();
+			var ticket = SAccounts.GenerateTicket();
 			var account = SAccounts.Find(AccountName);
 			if (account != null)
 			{
-				SEngine.SendTicketToServer(server.TicketAddress, ticket, AccountName, account.PromoCode, account.ReferrerCode);
+				SEngine.SendTicketToServer(server.TicketAddress, ticket, AccountName,
+					account.PromoCode, account.ReferrerCode, account.UUID);
 
 				SendPacket(new AccountStartGameSuccessPacket
 				{
