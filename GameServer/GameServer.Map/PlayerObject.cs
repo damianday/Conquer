@@ -7785,7 +7785,7 @@ public sealed class PlayerObject : MapObject
                             Directory.CreateDirectory(".\\3DMIR文本\\沙城捐献系统");
                         }
                         File.WriteAllText(".\\3DMIR文本\\沙城捐献系统\\总捐献.txt", "赞助总人数:\r\n" + Settings.Default.沙城捐献赞助人数 + "\r\n赞助总金额:\r\n" + Settings.Default.沙城捐献赞助金额);
-                        SMain.AddSystemLog($"{Name}捐献{Settings.Default.沙城捐献货币类型}货币类型,捐献金额{Settings.Default.沙城捐献支付数量},累积捐献{Settings.Default.沙城捐献赞助金额},赞助总人数{Settings.Default.沙城捐献赞助人数}");
+                        SMain.AddSystemLog($"{Name}Donation{Settings.Default.沙城捐献货币类型}Currency type, donation amount{Settings.Default.沙城捐献支付数量},Cumulative donation{Settings.Default.沙城捐献赞助金额},Total number of sponsors{Settings.Default.沙城捐献赞助人数}");
                         if (GameItem.DataSheet.TryGetValue(Settings.Default.沙城捐献获得物品1, out var value33))
                         {
                             byte b7 = FindEmptyInventoryIndex();
@@ -13022,11 +13022,11 @@ public sealed class PlayerObject : MapObject
         }
         if (Settings.Default.CurrentVersion >= 1 && Settings.Default.珍宝阁提示开关 == 1)
         {
-            SEngine.AddSystemLog($"[{Name}][{CurrentLevel}级] 购买了 [{item.Name}] * {num}, 消耗元宝[{cost}]");
+            SEngine.AddSystemLog($"[{Name}][{CurrentLevel}Level] Purchased [{item.Name}] * {num}, Consume gold[{cost}]");
         }
         if (Settings.Default.CurrentVersion == 0)
         {
-            SEngine.AddSystemLog($"[{Name}][{CurrentLevel}级] 购买了 [{item.Name}] * {num}, 消耗元宝[{cost}]");
+            SEngine.AddSystemLog($"[{Name}][{CurrentLevel}CLass] Purchased [{item.Name}] * {num}, Consume gold[{cost}]");
         }
     }
 
@@ -13126,7 +13126,7 @@ public sealed class PlayerObject : MapObject
                         变量索引 = 112,
                         变量内容 = Compute.TimeSeconds(SEngine.CurrentTime)
                     });
-                    SEngine.AddSystemLog($"[{Name}][{CurrentLevel}级] 购买了 [每周补给礼包], 消耗元宝[{Settings.Default.每周特惠礼包一元宝 / 100}]");
+                    SEngine.AddSystemLog($"[{Name}][{CurrentLevel}Class] Purchased [Weekly Supply Pack], consuming gold[{Settings.Default.每周特惠礼包一元宝 / 100}]");
                 }
                 break;
             case 2:
@@ -13216,7 +13216,7 @@ public sealed class PlayerObject : MapObject
                             变量索引 = 975,
                             变量内容 = Compute.TimeSeconds(SEngine.CurrentTime)
                         });
-                        SEngine.AddSystemLog($"[{Name}][{CurrentLevel}级] 购买了 [每周战备礼包], 消耗元宝[{Settings.Default.每周特惠礼包二元宝 / 100}]");
+                        SEngine.AddSystemLog($"[{Name}][{CurrentLevel}Level] Purchased [Weekly War Preparation Pack], consuming gold[{Settings.Default.每周特惠礼包二元宝 / 100}]");
                         break;
                     }
                     byte b9 = byte.MaxValue;
@@ -13283,7 +13283,7 @@ public sealed class PlayerObject : MapObject
                         变量索引 = 975,
                         变量内容 = Compute.TimeSeconds(SEngine.CurrentTime)
                     });
-                    SEngine.AddSystemLog($"[{Name}][{CurrentLevel}级] 购买了 [每周战备礼包], 消耗元宝[{Settings.Default.每周特惠礼包二元宝 / 100}]");
+                    SEngine.AddSystemLog($"[{Name}][{CurrentLevel}Level] Purchased [Weekly War Preparation Pack], consuming gold[{Settings.Default.每周特惠礼包二元宝 / 100}]");
                 }
                 break;
             default:
@@ -13344,13 +13344,13 @@ public sealed class PlayerObject : MapObject
             switch (特权类型)
             {
                 case 3:
-                    SEngine.AddSystemLog("[" + Name + "] 购买了 [玛法名俊], 消耗元宝[12800]");
+                    SEngine.AddSystemLog("[" + Name + "] Purchased [Mafa Mingjun], cost [12800] gold");
                     break;
                 case 4:
-                    SEngine.AddSystemLog("[" + Name + "] 购买了 [玛法豪杰], 消耗元宝[28800]");
+                    SEngine.AddSystemLog("[" + Name + "] Purchased [Marfa Hero], cost [28800] gold");
                     break;
                 case 5:
-                    SEngine.AddSystemLog("[" + Name + "] 购买了 [玛法战将], 消耗元宝[28800]");
+                    SEngine.AddSystemLog("[" + Name + "] Purchased [Marfa Warrior], cost [28800] gold");
                     break;
             }
         }
@@ -13401,13 +13401,13 @@ public sealed class PlayerObject : MapObject
         switch (特权类型)
         {
             case 3:
-                SEngine.AddSystemLog("[" + Name + "] 购买了 [玛法名俊], 消耗元宝[12800]");
+                SEngine.AddSystemLog("[" + Name + "] Purchased [Mafa Mingjun], cost [12800] gold");
                 break;
             case 4:
-                SEngine.AddSystemLog("[" + Name + "] 购买了 [玛法豪杰], 消耗元宝[28800]");
+                SEngine.AddSystemLog("[" + Name + "] Purchased [Marfa Hero], cost [28800] gold");
                 break;
             case 5:
-                SEngine.AddSystemLog("[" + Name + "] 购买了 [玛法战将], 消耗元宝[28800]");
+                SEngine.AddSystemLog("[" + Name + "] Purchased [Marfa Warrior], cost [28800] gold");
                 break;
         }
     }
@@ -13445,7 +13445,7 @@ public sealed class PlayerObject : MapObject
     {
         if (礼包位置 >= 28)
         {
-            Connection?.Close(new Exception("错误操作: 领取特权礼包  错误: 礼包位置错误"));
+            Connection?.Close(new Exception("Error: Receive the privilege package Error: The package location is wrong"));
             return;
         }
         switch (特权类型)
@@ -26694,7 +26694,7 @@ public sealed class PlayerObject : MapObject
                 售出数量 = 购买数量,
                 售出收益 = (int)((float)num * 0.95f)
             });
-            SEngine.AddSystemLog($"[{Name}][{CurrentLevel}级] 购买了 [{value.Name}][{value.CurrentLevel}级] 的摊位物品[{Inventory[b]}] * {购买数量}, 花费金币[{num}]");
+            SEngine.AddSystemLog($"[{Name}][{CurrentLevel}Level] purchased [{value.Name}][{value.CurrentLevel}Level] stall items[{Inventory[b]}] * {购买数量}, Spend Gold[{num}]");
             if (value.CurrentStall.Quantities[value2] <= 0)
             {
                 value.CurrentStall.Items.Remove(物品位置);
@@ -26781,7 +26781,7 @@ public sealed class PlayerObject : MapObject
             售出数量 = 购买数量,
             售出收益 = (int)((float)num2 * 0.95f)
         });
-        SEngine.AddSystemLog($"[{Name}][{CurrentLevel}级] 购买了 [{value.Name}][{value.CurrentLevel}级] 的摊位物品[{Inventory[b3]}] * {购买数量}, 花费元宝[{num2}]");
+        SEngine.AddSystemLog($"[{Name}][{CurrentLevel}Level] purchased [{value.Name}][{value.CurrentLevel}Level] stall items[{Inventory[b3]}] * {购买数量}, Spend Ingot[{num2}]");
         if (value.CurrentStall.Quantities[value2] <= 0)
         {
             value.CurrentStall.Items.Remove(物品位置);
