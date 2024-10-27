@@ -59,36 +59,36 @@ public partial class SMain : Form
         MapDataTable.Columns.Add("MapID", typeof(string));
         MapDataTable.Columns.Add("MapName", typeof(string));
         MapDataTable.Columns.Add("RequiredLevel", typeof(string));
-        MapDataTable.Columns.Add("玩家数量", typeof(string));
-        MapDataTable.Columns.Add("固定怪物总数", typeof(uint));
-        MapDataTable.Columns.Add("存活怪物总数", typeof(uint));
-        MapDataTable.Columns.Add("怪物复活次数", typeof(uint));
-        MapDataTable.Columns.Add("怪物掉落次数", typeof(long));
-        MapDataTable.Columns.Add("金币掉落总数", typeof(long));
-        Main?.地图浏览表.BeginInvoke(() =>
+        MapDataTable.Columns.Add("Number of players", typeof(string));
+        MapDataTable.Columns.Add("Monster Cap", typeof(uint));
+        MapDataTable.Columns.Add("Monsters Alive", typeof(uint));
+        MapDataTable.Columns.Add("Monster resurrection times", typeof(uint));
+        MapDataTable.Columns.Add("Monster Drops", typeof(long));
+        MapDataTable.Columns.Add("Total gold dropped", typeof(long));
+        Main?.MapBrowser.BeginInvoke(() =>
         {
-            Main.地图浏览表.DataSource = MapDataTable;
+            Main.MapBrowser.DataSource = MapDataTable;
         });
         MonsterDataTable = new System.Data.DataTable("怪物数据表");
         MonsterDataRows = new Dictionary<MonsterInfo, DataRow>();
         数据行怪物 = new Dictionary<DataRow, MonsterInfo>();
-        MonsterDataTable.Columns.Add("模板编号", typeof(string));
-        MonsterDataTable.Columns.Add("怪物名字", typeof(string));
-        MonsterDataTable.Columns.Add("怪物等级", typeof(string));
-        MonsterDataTable.Columns.Add("怪物经验", typeof(string));
-        MonsterDataTable.Columns.Add("怪物级别", typeof(string));
-        MonsterDataTable.Columns.Add("移动间隔", typeof(string));
-        MonsterDataTable.Columns.Add("漫游间隔", typeof(string));
-        MonsterDataTable.Columns.Add("仇恨范围", typeof(string));
-        MonsterDataTable.Columns.Add("仇恨时长", typeof(string));
+        MonsterDataTable.Columns.Add("Monster ID", typeof(string));
+        MonsterDataTable.Columns.Add("Monster Name", typeof(string));
+        MonsterDataTable.Columns.Add("Level", typeof(string));
+        MonsterDataTable.Columns.Add("EXP", typeof(string));
+        MonsterDataTable.Columns.Add("Grade", typeof(string));
+        MonsterDataTable.Columns.Add("Move Time", typeof(string));
+        MonsterDataTable.Columns.Add("Roaming interval", typeof(string));
+        MonsterDataTable.Columns.Add("View Range", typeof(string));
+        MonsterDataTable.Columns.Add("Agro Time", typeof(string));
         Main?.怪物浏览表.BeginInvoke(() =>
         {
             Main.怪物浏览表.DataSource = MonsterDataTable;
         });
         DropDataTable = new System.Data.DataTable("掉落数据表");
         怪物掉落表 = new Dictionary<MonsterInfo, List<KeyValuePair<GameItem, long>>>();
-        DropDataTable.Columns.Add("物品名字", typeof(string));
-        DropDataTable.Columns.Add("掉落数量", typeof(string));
+        DropDataTable.Columns.Add("Item Name", typeof(string));
+        DropDataTable.Columns.Add("Drop Quantity", typeof(string));
         Main?.掉落浏览表.BeginInvoke(() =>
         {
             Main.掉落浏览表.DataSource = DropDataTable;
@@ -122,29 +122,29 @@ public partial class SMain : Form
         RoleDataTable.Columns.Add("DisconnectDate", typeof(string));
         RoleDataTable.Columns.Add("IPAddress", typeof(string));
         RoleDataTable.Columns.Add("MACAddress", typeof(string));
-        RoleDataTable.Columns.Add("角色职业", typeof(string));
-        RoleDataTable.Columns.Add("角色性别", typeof(string));
-        RoleDataTable.Columns.Add("所属行会", typeof(string));
-        RoleDataTable.Columns.Add("元宝数量", typeof(string));
-        RoleDataTable.Columns.Add("消耗元宝", typeof(string));
-        RoleDataTable.Columns.Add("金币数量", typeof(string));
-        RoleDataTable.Columns.Add("转出金币", typeof(string));
-        RoleDataTable.Columns.Add("背包大小", typeof(string));
-        RoleDataTable.Columns.Add("仓库大小", typeof(string));
-        RoleDataTable.Columns.Add("师门声望", typeof(string));
-        RoleDataTable.Columns.Add("本期特权", typeof(string));
-        RoleDataTable.Columns.Add("本期日期", typeof(string));
-        RoleDataTable.Columns.Add("上期特权", typeof(string));
-        RoleDataTable.Columns.Add("上期日期", typeof(string));
-        RoleDataTable.Columns.Add("剩余特权", typeof(string));
-        RoleDataTable.Columns.Add("当前等级", typeof(string));
-        RoleDataTable.Columns.Add("当前经验", typeof(string));
-        RoleDataTable.Columns.Add("双倍经验", typeof(string));
-        RoleDataTable.Columns.Add("当前战力", typeof(string));
-        RoleDataTable.Columns.Add("当前地图", typeof(string));
-        RoleDataTable.Columns.Add("当前坐标", typeof(string));
-        RoleDataTable.Columns.Add("当前PK值", typeof(string));
-        RoleDataTable.Columns.Add("激活标识", typeof(string));
+        RoleDataTable.Columns.Add("Class", typeof(string));
+        RoleDataTable.Columns.Add("Gender", typeof(string));
+        RoleDataTable.Columns.Add("Guild", typeof(string));
+        RoleDataTable.Columns.Add("Ingots", typeof(string));
+        RoleDataTable.Columns.Add("Consume gold", typeof(string));
+        RoleDataTable.Columns.Add("Gold", typeof(string));
+        RoleDataTable.Columns.Add("Traded Gold", typeof(string));
+        RoleDataTable.Columns.Add("InventorySize", typeof(string));
+        RoleDataTable.Columns.Add("StorageSize", typeof(string));
+        RoleDataTable.Columns.Add("Reputation of the Master", typeof(string));
+        RoleDataTable.Columns.Add("CurrentPrivilege", typeof(string));
+        RoleDataTable.Columns.Add("Issue Date", typeof(string));
+        RoleDataTable.Columns.Add("PreviousPrivilege", typeof(string));
+        RoleDataTable.Columns.Add("IssueDate", typeof(string));
+        RoleDataTable.Columns.Add("RemainingPrivileges", typeof(string));
+        RoleDataTable.Columns.Add("Level", typeof(string));
+        RoleDataTable.Columns.Add("EXP", typeof(string));
+        RoleDataTable.Columns.Add("EXP Rate", typeof(string));
+        RoleDataTable.Columns.Add("CombatPower", typeof(string));
+        RoleDataTable.Columns.Add("Current Map", typeof(string));
+        RoleDataTable.Columns.Add("Current Cords", typeof(string));
+        RoleDataTable.Columns.Add("CurrentPKPoint", typeof(string));
+        RoleDataTable.Columns.Add("Activation logo", typeof(string));
 
         Main?.BeginInvoke(() =>
         {
@@ -156,34 +156,34 @@ public partial class SMain : Form
         });
 
         CharacterSkillsList = new Dictionary<CharacterInfo, List<KeyValuePair<ushort, SkillInfo>>>();
-        SkillsDataTable.Columns.Add("技能名字", typeof(string));
-        SkillsDataTable.Columns.Add("技能编号", typeof(string));
-        SkillsDataTable.Columns.Add("当前等级", typeof(string));
-        SkillsDataTable.Columns.Add("当前经验", typeof(string));
+        SkillsDataTable.Columns.Add("Skill Name", typeof(string));
+        SkillsDataTable.Columns.Add("Skill Number", typeof(string));
+        SkillsDataTable.Columns.Add("Level", typeof(string));
+        SkillsDataTable.Columns.Add("EXP", typeof(string));
         Main?.BeginInvoke(() =>
         {
             Main.技能浏览表.DataSource = SkillsDataTable;
         });
 
         CharacterEquipmentList = new Dictionary<CharacterInfo, List<KeyValuePair<byte, EquipmentInfo>>>();
-        EquipmentDataTable.Columns.Add("穿戴部位", typeof(string));
-        EquipmentDataTable.Columns.Add("穿戴装备", typeof(string));
+        EquipmentDataTable.Columns.Add("Item Type", typeof(string));
+        EquipmentDataTable.Columns.Add("Item Name", typeof(string));
         Main?.BeginInvoke(() =>
         {
             Main.装备浏览表.DataSource = EquipmentDataTable;
         });
 
         CharacterInventoryList = new Dictionary<CharacterInfo, List<KeyValuePair<byte, ItemInfo>>>();
-        InventoryDataTable.Columns.Add("背包位置", typeof(string));
-        InventoryDataTable.Columns.Add("背包物品", typeof(string));
+        InventoryDataTable.Columns.Add("Bag Slot", typeof(string));
+        InventoryDataTable.Columns.Add("Item Name", typeof(string));
         Main?.BeginInvoke(() =>
         {
             Main.背包浏览表.DataSource = InventoryDataTable;
         });
 
         CharacterStorageList = new Dictionary<CharacterInfo, List<KeyValuePair<byte, ItemInfo>>>();
-        WarehouseDataTable.Columns.Add("仓库位置", typeof(string));
-        WarehouseDataTable.Columns.Add("仓库物品", typeof(string));
+        WarehouseDataTable.Columns.Add("Storage Slot", typeof(string));
+        WarehouseDataTable.Columns.Add("Item Name", typeof(string));
         Main?.BeginInvoke(() =>
         {
             Main.仓库浏览表.DataSource = WarehouseDataTable;
@@ -336,29 +336,29 @@ public partial class SMain : Form
                 dataRow["DisconnectDate"] = (!character.Connected ? character.DisconnectDate : null);
                 dataRow["IPAddress"] = character.IPAddress;
                 dataRow["MACAddress"] = character.MACAddress;
-                dataRow["角色职业"] = character.Job;
-                dataRow["角色性别"] = character.Gender;
-                dataRow["所属行会"] = character.Guild;
-                dataRow["元宝数量"] = character.Ingot;
-                dataRow["消耗元宝"] = character.消耗元宝;
-                dataRow["金币数量"] = character.Gold;
-                dataRow["转出金币"] = character.TradeGold;
-                dataRow["背包大小"] = character.InventorySize;
-                dataRow["仓库大小"] = character.StorageSize;
-                dataRow["师门声望"] = character.师门声望;
-                dataRow["本期特权"] = character.CurrentPrivilege;
-                dataRow["本期日期"] = character.本期日期;
-                dataRow["上期特权"] = character.PreviousPrivilege;
-                dataRow["上期日期"] = character.上期日期;
-                dataRow["剩余特权"] = character.RemainingPrivileges;
-                dataRow["当前等级"] = character.Level;
-                dataRow["当前经验"] = character.Experience;
-                dataRow["双倍经验"] = character.ExperienceRate;
-                dataRow["当前战力"] = character.CombatPower;
-                dataRow["当前地图"] = (GameMap.DataSheet.TryGetValue((byte)character.CurrentMap.V, out var value) ? ((object)value.MapName) : ((object)character.CurrentMap));
-                dataRow["当前PK值"] = character.CurrentPKPoint;
-                dataRow["当前坐标"] = $"{character.CurrentPosition.V.X}, {character.CurrentPosition.V.Y}";
-                dataRow["激活标识"] = character.激活标识;
+                dataRow["Class"] = character.Job;
+                dataRow["Gender"] = character.Gender;
+                dataRow["Guild"] = character.Guild;
+                dataRow["Ingots"] = character.Ingot;
+                dataRow["Consume gold"] = character.消耗元宝;
+                dataRow["Gold"] = character.Gold;
+                dataRow["Traded Gold"] = character.TradeGold;
+                dataRow["InventorySize"] = character.InventorySize;
+                dataRow["StorageSize"] = character.StorageSize;
+                dataRow["Reputation of the Master"] = character.师门声望;
+                dataRow["CurrentPrivilege"] = character.CurrentPrivilege;
+                dataRow["IssueDate"] = character.本期日期;
+                dataRow["PreviousPrivilege"] = character.PreviousPrivilege;
+                dataRow["IssueDate"] = character.上期日期;
+                dataRow["RemainingPrivileges"] = character.RemainingPrivileges;
+                dataRow["Level"] = character.Level;
+                dataRow["EXP"] = character.Experience;
+                dataRow["EXP Rate"] = character.ExperienceRate;
+                dataRow["CombatPower"] = character.CombatPower;
+                dataRow["Current Map"] = (GameMap.DataSheet.TryGetValue((byte)character.CurrentMap.V, out var value) ? ((object)value.MapName) : ((object)character.CurrentMap));
+                dataRow["CurrentPKPoint"] = character.CurrentPKPoint;
+                dataRow["Current Cords"] = $"{character.CurrentPosition.V.X}, {character.CurrentPosition.V.Y}";
+                dataRow["Activation logo"] = character.激活标识;
                 RoleDataRows[character] = dataRow;
                 数据行角色[dataRow] = character;
                 RoleDataTable.Rows.Add(dataRow);
@@ -404,10 +404,10 @@ public partial class SMain : Form
                     foreach (KeyValuePair<ushort, SkillInfo> item in value2)
                     {
                         DataRow dataRow = SkillsDataTable.NewRow();
-                        dataRow["技能名字"] = item.Value.Inscription.SkillName;
-                        dataRow["技能编号"] = item.Value.ID;
-                        dataRow["当前等级"] = item.Value.Level;
-                        dataRow["当前经验"] = item.Value.Experience;
+                        dataRow["Skill Name"] = item.Value.Inscription.SkillName;
+                        dataRow["Skill Number"] = item.Value.ID;
+                        dataRow["Level"] = item.Value.Level;
+                        dataRow["EXP"] = item.Value.Experience;
                         SkillsDataTable.Rows.Add(dataRow);
                     }
                 }
@@ -416,8 +416,8 @@ public partial class SMain : Form
                     foreach (KeyValuePair<byte, EquipmentInfo> item2 in value3)
                     {
                         DataRow dataRow2 = EquipmentDataTable.NewRow();
-                        dataRow2["穿戴部位"] = (EquipmentWearType)item2.Key;
-                        dataRow2["穿戴装备"] = item2.Value;
+                        dataRow2["Item Type"] = (EquipmentWearType)item2.Key;
+                        dataRow2["Item Name"] = item2.Value;
                         EquipmentDataTable.Rows.Add(dataRow2);
                     }
                 }
@@ -426,8 +426,8 @@ public partial class SMain : Form
                     foreach (KeyValuePair<byte, ItemInfo> item3 in value4)
                     {
                         DataRow dataRow3 = InventoryDataTable.NewRow();
-                        dataRow3["背包位置"] = item3.Key;
-                        dataRow3["背包物品"] = item3.Value;
+                        dataRow3["Bag Slot"] = item3.Key;
+                        dataRow3["Item Name"] = item3.Value;
                         InventoryDataTable.Rows.Add(dataRow3);
                     }
                 }
@@ -436,8 +436,8 @@ public partial class SMain : Form
                     foreach (KeyValuePair<byte, ItemInfo> item4 in value5)
                     {
                         DataRow dataRow4 = WarehouseDataTable.NewRow();
-                        dataRow4["仓库位置"] = item4.Key;
-                        dataRow4["仓库物品"] = item4.Value;
+                        dataRow4["Storage Slot"] = item4.Key;
+                        dataRow4["Item Name"] = item4.Value;
                         WarehouseDataTable.Rows.Add(dataRow4);
                     }
                 }
@@ -455,8 +455,8 @@ public partial class SMain : Form
         foreach (KeyValuePair<GameItem, long> item5 in value7)
         {
             DataRow dataRow5 = DropDataTable.NewRow();
-            dataRow5["物品名字"] = item5.Key.Name;
-            dataRow5["掉落数量"] = item5.Value;
+            dataRow5["Item Name"] = item5.Key.Name;
+            dataRow5["Drop Quantity"] = item5.Value;
             DropDataTable.Rows.Add(dataRow5);
         }
     }
@@ -519,12 +519,12 @@ public partial class SMain : Form
                 row["MapID"] = map.MapID;
                 row["MapName"] = map.MapInfo;
                 row["RequiredLevel"] = map.MinLevel;
-                row["玩家数量"] = map.Players.Count;
-                row["固定怪物总数"] = map.TotalFixedMonsters;
-                row["存活怪物总数"] = map.TotalSurvivingMonsters;
-                row["怪物复活次数"] = map.TotalAmountMonsterResurrected;
-                row["怪物掉落次数"] = map.TotalAmountMonsterDrops;
-                row["金币掉落总数"] = map.TotalAmountGoldDrops;
+                row["Number of players"] = map.Players.Count;
+                row["Monster Cap"] = map.TotalFixedMonsters;
+                row["Monsters Alive"] = map.TotalSurvivingMonsters;
+                row["Monster resurrection times"] = map.TotalAmountMonsterResurrected;
+                row["Monster Drops"] = map.TotalAmountMonsterDrops;
+                row["Total gold dropped"] = map.TotalAmountGoldDrops;
                 MapDataRows[map.MapInfo] = row;
                 MapDataTable.Rows.Add(row);
             }
@@ -542,12 +542,12 @@ public partial class SMain : Form
                     default:
                         row[key] = value;
                         break;
-                    case "金币掉落总数":
-                    case "怪物掉落次数":
+                    case "Total gold dropped":
+                    case "Monster Drops":
                         row[key] = Convert.ToInt64(row[key]) + (int)value;
                         break;
-                    case "存活怪物总数":
-                    case "怪物复活次数":
+                    case "Monsters Alive":
+                    case "Monster resurrection times":
                         row[key] = Convert.ToUInt32(row[key]) + (int)value;
                         break;
                 }
@@ -564,14 +564,14 @@ public partial class SMain : Form
             if (!MonsterDataRows.ContainsKey(monster))
             {
                 var row = MonsterDataTable.NewRow();
-                row["模板编号"] = monster.ID;
-                row["怪物名字"] = monster.MonsterName;
-                row["怪物等级"] = monster.Level;
-                row["怪物级别"] = monster.Grade;
-                row["怪物经验"] = monster.ProvideExperience;
-                row["移动间隔"] = monster.MoveInterval;
-                row["仇恨范围"] = monster.RangeHate;
-                row["仇恨时长"] = monster.HateTime;
+                row["Monster ID"] = monster.ID;
+                row["Monster Name"] = monster.MonsterName;
+                row["Level"] = monster.Level;
+                row["Grade"] = monster.Grade;
+                row["EXP"] = monster.ProvideExperience;
+                row["Move Time"] = monster.MoveInterval;
+                row["View Range"] = monster.RangeHate;
+                row["Agro Time"] = monster.HateTime;
                 MonsterDataRows[monster] = row;
                 数据行怪物[row] = monster;
                 MonsterDataTable.Rows.Add(row);
@@ -653,7 +653,7 @@ public partial class SMain : Form
             公告浏览表.Rows[index].Cells["公告内容"].Value = array2[2];
         }
 
-        角色浏览表.ColumnHeadersDefaultCellStyle.Font = (地图浏览表.ColumnHeadersDefaultCellStyle.Font = (怪物浏览表.ColumnHeadersDefaultCellStyle.Font = (掉落浏览表.ColumnHeadersDefaultCellStyle.Font = (封禁浏览表.ColumnHeadersDefaultCellStyle.Font = (角色浏览表.DefaultCellStyle.Font = (地图浏览表.DefaultCellStyle.Font = (怪物浏览表.DefaultCellStyle.Font = (封禁浏览表.DefaultCellStyle.Font = (掉落浏览表.DefaultCellStyle.Font = new Font("宋体", 9f))))))))));
+        角色浏览表.ColumnHeadersDefaultCellStyle.Font = (MapBrowser.ColumnHeadersDefaultCellStyle.Font = (怪物浏览表.ColumnHeadersDefaultCellStyle.Font = (掉落浏览表.ColumnHeadersDefaultCellStyle.Font = (封禁浏览表.ColumnHeadersDefaultCellStyle.Font = (角色浏览表.DefaultCellStyle.Font = (MapBrowser.DefaultCellStyle.Font = (怪物浏览表.DefaultCellStyle.Font = (封禁浏览表.DefaultCellStyle.Font = (掉落浏览表.DefaultCellStyle.Font = new Font("宋体", 9f))))))))));
         S_GameDataPath.Text = Settings.Default.GameDataPath;
         S_DataBackupPath.Text = Settings.Default.DataBackupPath;
         S_UserConnectionPort.Value = Settings.Default.UserConnectionPort;
@@ -3062,29 +3062,29 @@ public partial class SMain : Form
         MapDataTable.Columns.Add("MapID", typeof(string));
         MapDataTable.Columns.Add("MapName", typeof(string));
         MapDataTable.Columns.Add("RequiredLevel", typeof(string));
-        MapDataTable.Columns.Add("玩家数量", typeof(string));
-        MapDataTable.Columns.Add("固定怪物总数", typeof(string));
-        MapDataTable.Columns.Add("存活怪物总数", typeof(string));
-        MapDataTable.Columns.Add("怪物复活次数", typeof(string));
-        MapDataTable.Columns.Add("怪物掉落次数", typeof(string));
-        MapDataTable.Columns.Add("金币掉落总数", typeof(string));
-        Main.地图浏览表.DataSource = MapDataTable;
+        MapDataTable.Columns.Add("Number of players", typeof(string));
+        MapDataTable.Columns.Add("Monster Cap", typeof(string));
+        MapDataTable.Columns.Add("Monsters Alive", typeof(string));
+        MapDataTable.Columns.Add("Monster resurrection times", typeof(string));
+        MapDataTable.Columns.Add("Monster Drops", typeof(string));
+        MapDataTable.Columns.Add("Total gold dropped", typeof(string));
+        Main.MapBrowser.DataSource = MapDataTable;
         MonsterDataTable = new System.Data.DataTable("怪物数据表");
         MonsterDataRows = new Dictionary<MonsterInfo, DataRow>();
         数据行怪物 = new Dictionary<DataRow, MonsterInfo>();
-        MonsterDataTable.Columns.Add("模板编号", typeof(string));
-        MonsterDataTable.Columns.Add("怪物名字", typeof(string));
-        MonsterDataTable.Columns.Add("怪物等级", typeof(string));
-        MonsterDataTable.Columns.Add("怪物经验", typeof(string));
-        MonsterDataTable.Columns.Add("怪物级别", typeof(string));
-        MonsterDataTable.Columns.Add("移动间隔", typeof(string));
-        MonsterDataTable.Columns.Add("漫游间隔", typeof(string));
-        MonsterDataTable.Columns.Add("仇恨范围", typeof(string));
-        MonsterDataTable.Columns.Add("仇恨时长", typeof(string));
+        MonsterDataTable.Columns.Add("Monster ID", typeof(string));
+        MonsterDataTable.Columns.Add("Monster Name", typeof(string));
+        MonsterDataTable.Columns.Add("Level", typeof(string));
+        MonsterDataTable.Columns.Add("EXP", typeof(string));
+        MonsterDataTable.Columns.Add("Grade", typeof(string));
+        MonsterDataTable.Columns.Add("Move Time", typeof(string));
+        MonsterDataTable.Columns.Add("Roaming interval", typeof(string));
+        MonsterDataTable.Columns.Add("View Range", typeof(string));
+        MonsterDataTable.Columns.Add("Agro Time", typeof(string));
         Main.怪物浏览表.DataSource = MonsterDataTable;
         DropDataTable = new System.Data.DataTable("掉落数据表");
         怪物掉落表 = new Dictionary<MonsterInfo, List<KeyValuePair<GameItem, long>>>();
-        DropDataTable.Columns.Add("物品名字", typeof(string));
+        DropDataTable.Columns.Add("Item Name", typeof(string));
         DropDataTable.Columns.Add("掉落数量", typeof(string));
         Main.掉落浏览表.DataSource = DropDataTable;
         主选项卡.SelectedIndex = 0;

@@ -483,7 +483,7 @@ public static class MapManager
                         CurrentDirection = GameDirection.UpRight,
                         SurvivalTime = DateTime.MaxValue
                     };
-                    NetworkManager.SendAnnouncement("世界BOSS[ " + Settings.Default.WorldBossName + " ]已经降临秘宝广场, 想要参加的勇士请做好准备", rolling: true);
+                    NetworkManager.SendAnnouncement("The World Boss [ " + Settings.Default.WorldBossName + " ]has arrived at the Secret Treasure Square. Warriors who want to participate please be prepared", rolling: true);
                 }
                 MonsterWorldBossZenTime = SEngine.CurrentTime;
             }
