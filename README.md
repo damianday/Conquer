@@ -1,4 +1,4 @@
-# Mir 3D EMU Holy Cow
+# Conquer - Official Public HC Source
 
 [Latest Build](https://github.com/damianday/Conquer/tree/main/Release)
 
@@ -78,6 +78,11 @@ To publish on the internet, you must open ports 7000 and 8701 on your router
 
 ![Mir Network](https://www.mirfiles.com/resources/mir2/users/Jev/Mir%203DEMU/mir-network.png)
 
+# Useful Links:
+
+[Help](https://www.lomcn.net/forum/forums/mir-3d-bug-reports.813/) //
+[Tutorials](https://www.lomcn.net/forum/forums/mir-3d-tutorials.852/)
+
 # Special Thanks
 
 * DontReallyMind
@@ -89,3 +94,13 @@ To publish on the internet, you must open ports 7000 and 8701 on your router
 * Damian (CodePwr)
 * Jev
 * mir2pion
+
+# Other Projects:
+
+> [Mir 1](https://github.com/JevLOMCN/mir1/) // [Database](https://github.com/Suprcode/Carbon.Database)
+> 
+> [Mir 2](https://github.com/Suprcode/Crystal) | [Database](https://github.com/Suprcode/Crystal.Database) | [Map Editor](https://github.com/Suprcode/Crystal.MapEditor)
+> 
+> [Mir 3](https://github.com/Suprcode/Zircon)
+> 
+> [Mir 4](https://github.com/JevLOMCN/Topaz/)
