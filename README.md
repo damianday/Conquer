@@ -97,7 +97,7 @@ To publish on the internet, you must open ports 7000 and 8701 on your router
 
 # Other Projects:
 
-> [Mir 1](https://github.com/JevLOMCN/mir1/) // [Database](https://github.com/Suprcode/Carbon.Database)
+> [Mir 1](https://github.com/JevLOMCN/mir1/) | [Database](https://github.com/Suprcode/Carbon.Database)
 > 
 > [Mir 2](https://github.com/Suprcode/Crystal) | [Database](https://github.com/Suprcode/Crystal.Database) | [Map Editor](https://github.com/Suprcode/Crystal.MapEditor)
 > 
